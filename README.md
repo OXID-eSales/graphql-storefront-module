@@ -1,8 +1,7 @@
 # oxid-esales/graphql-storefront
 
-[![Build Status](https://flat.badgen.net/travis/OXID-eSales/graphql-storefront-module/?icon=travis&label=build&cache=300&scale=1.1)](https://travis-ci.com/OXID-eSales/graphql-storefront-module)
-[![PHP Version](https://flat.badgen.net/packagist/php/OXID-eSales/graphql-storefront/?cache=300&scale=1.1)](https://github.com/oxid-esales/graphql-storefront-module)
-[![Stable Version](https://flat.badgen.net/packagist/v/OXID-eSales/graphql-storefront/latest/?label=latest&cache=300&scale=1.1)](https://packagist.org/packages/oxid-esales/graphql-storefront)
+[![Build Status](https://img.shields.io/travis/com/OXID-eSales/graphql-storefront-module/master?style=for-the-badge&logo=travis)](https://travis-ci.com/OXID-eSales/graphql-storefront-module)
+[![Stable Version](https://img.shields.io/packagist/v/OXID-eSales/graphql-storefront?style=for-the-badge&logo=composer&label=latest)](https://packagist.org/packages/oxid-esales/graphql-storefront)
 
 This module provides [GraphQL](https://www.graphql.org) queries and mutations for the [OXID eShop](https://www.oxid-esales.com/) storefront.
 
