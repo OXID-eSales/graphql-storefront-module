@@ -1,0 +1,10 @@
+services:
+
+  _defaults:
+    public: false
+    autowire: true
+
+  OxidEsales\GraphQL\Storefront\:
+    resource: 'src/*'
+    exclude: 'src/**/{DataType,Exception}'
+    public: true
