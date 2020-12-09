@@ -42,6 +42,7 @@ final class Basket extends Basket_parent
         $voucher->load($voucherId);
 
         try {
+            $voucher->isInReservationTimeLimit();
             $voucher->getSerie();
             $this->_aVouchers[$voucher->getId()] = $voucher->getSimpleVoucher();
         } catch (EshopObjectException $exception) {

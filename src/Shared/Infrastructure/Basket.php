@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\DeliveryList as EshopDeliveryListModel;
 use OxidEsales\Eshop\Application\Model\DeliverySetList as EshopDeliverySetListModel;
+use OxidEsales\Eshop\Application\Model\DiscountList as EshopDiscountListModel;
 use OxidEsales\Eshop\Application\Model\UserBasket as EshopUserBasketModel;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Base\DataType\IDFilter;
@@ -63,6 +64,7 @@ final class Basket
         //reset in case we hit Basket::calculateBasket() more than once
         EshopRegistry::set(EshopDeliverySetListModel::class, null);
         EshopRegistry::set(EshopDeliveryListModel::class, null);
+        EshopRegistry::set(EshopDiscountListModel::class, null);
 
         $basketModel->onUpdate();
 
