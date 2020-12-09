@@ -29,6 +29,14 @@ final class PermissionProvider implements PermissionProviderInterface
                 'VIEW_INACTIVE_REVIEW',
                 'VIEW_INACTIVE_VENDOR',
                 'VIEW_USER',
+                'VIEW_WISHED_PRICES',
+                'DELETE_WISHED_PRICE',
+                'VIEW_RATINGS',
+                'DELETE_RATING',
+                'DELETE_REVIEW',
+                'VIEW_INACTIVE_COUNTRY',
+                'DELETE_DELIVERY_ADDRESS',
+                'DELETE_BASKET',
             ],
         ];
     }
