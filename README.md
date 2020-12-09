@@ -40,11 +40,12 @@ $ composer test
 
 - install this module into a running OXID eShop
 - change the `test_config.yml`
-  - add `oe/graphql-storefront` to the `partial_module_paths`
+  - add `oe/graphql-base,oe/graphql-storefront` to the `partial_module_paths`
   - set `activate_all_modules` to `true`
 
 ```bash
 $ ./vendor/bin/runtests
+$ ./vendor/bin/runtests-codeception
 ```
 
 ## Contributing
