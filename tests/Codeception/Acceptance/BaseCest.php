@@ -23,6 +23,11 @@ abstract class BaseCest
         $I->updateConfigInDatabase('iVoucherTimeout', (time() - 60), 'int');
     }
 
+    public function _after(AcceptanceTester $I): void
+    {
+        $I->logout();
+    }
+
     /**
      * Activates modules
      */

@@ -4,8 +4,8 @@ path: Acceptance
 bootstrap: _bootstrap.php
 modules:
   enabled:
-    - \OxidEsales\GraphQL\Storefront\Tests\Codeception\Helper\Acceptance
-    - Asserts:
+    - Asserts
+    - OxidEsales\GraphQL\Storefront\Tests\Codeception\Helper\Acceptance
     - Db:
         dsn: 'mysql:host=%DB_HOST%;dbname=%DB_NAME%;charset=utf8'
         user: '%DB_USERNAME%'
