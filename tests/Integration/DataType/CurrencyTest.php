@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
-use OxidEsales\GraphQL\Catalogue\Currency\DataType\Currency;
+use OxidEsales\GraphQL\Storefront\Currency\DataType\Currency;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Currency\DataType\Currency
+ * @covers OxidEsales\GraphQL\Storefront\Currency\DataType\Currency
  */
 final class CurrencyTest extends TestCase
 {

@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\Shared\Infrastructure;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Shared\Infrastructure;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository
+ * @covers OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository
  */
 final class RepositoryTest extends TestCase
 {
@@ -107,7 +107,7 @@ final class RepositoryTest extends TestCase
 
 // phpcs:disable
 
-final class EmptyFilterList extends \OxidEsales\GraphQL\Catalogue\Shared\DataType\FilterList
+final class EmptyFilterList extends \OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList
 {
     public function getFilters(): array
     {
@@ -152,7 +152,7 @@ final class AlsoWrongType
     }
 }
 
-namespace OxidEsales\GraphQL\Catalogue\Shared\Infrastructure;
+namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 
 if (!function_exists("\oxNew")) {
     function oxNew(string $class)

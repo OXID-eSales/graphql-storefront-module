@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Link\Controller;
+namespace OxidEsales\GraphQL\Storefront\Link\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Link\DataType\Link as LinkDataType;
-use OxidEsales\GraphQL\Catalogue\Link\DataType\LinkFilterList;
-use OxidEsales\GraphQL\Catalogue\Link\Service\Link as LinkService;
+use OxidEsales\GraphQL\Storefront\Link\DataType\Link as LinkDataType;
+use OxidEsales\GraphQL\Storefront\Link\DataType\LinkFilterList;
+use OxidEsales\GraphQL\Storefront\Link\Service\Link as LinkService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Link

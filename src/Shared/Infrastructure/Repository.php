@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Shared\Infrastructure;
+namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 
 use InvalidArgumentException;
 use OxidEsales\Eshop\Core\Model\BaseModel;
@@ -16,8 +16,8 @@ use OxidEsales\GraphQL\Base\DataType\FilterInterface;
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\Sorting;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\DataType;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use PDO;
 use RuntimeException;
 

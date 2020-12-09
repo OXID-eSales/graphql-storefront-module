@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
 use DateTimeImmutable;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Category;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Category;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Category\DataType\Category
+ * @covers OxidEsales\GraphQL\Storefront\Category\DataType\Category
  */
 final class CategoryTest extends TestCase
 {

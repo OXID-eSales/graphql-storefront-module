@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Link\Service;
+namespace OxidEsales\GraphQL\Storefront\Link\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Link\DataType\Link as LinkDataType;
-use OxidEsales\GraphQL\Catalogue\Link\DataType\LinkFilterList;
-use OxidEsales\GraphQL\Catalogue\Link\Exception\LinkNotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Link\DataType\Link as LinkDataType;
+use OxidEsales\GraphQL\Storefront\Link\DataType\LinkFilterList;
+use OxidEsales\GraphQL\Storefront\Link\Exception\LinkNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Link
 {

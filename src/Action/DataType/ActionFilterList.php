@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Action\DataType;
+namespace OxidEsales\GraphQL\Storefront\Action\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\BoolFilter;
 use OxidEsales\GraphQL\Base\DataType\IntegerFilter;
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class ActionFilterList extends FilterList

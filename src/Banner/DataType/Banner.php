@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Banner\DataType;
+namespace OxidEsales\GraphQL\Storefront\Banner\DataType;
 
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\DataType;
-use OxidEsales\GraphQL\Catalogue\Shared\Exception\WrongType;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Storefront\Shared\Exception\WrongType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;

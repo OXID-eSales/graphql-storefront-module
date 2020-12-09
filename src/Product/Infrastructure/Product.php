@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\Infrastructure;
+namespace OxidEsales\GraphQL\Storefront\Product\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
 use OxidEsales\Eshop\Application\Model\ArticleList as EshopProductListModel;
@@ -18,13 +18,13 @@ use OxidEsales\Eshop\Application\Model\Manufacturer as EshopManufacturerModel;
 use OxidEsales\Eshop\Application\Model\Review as EshopReviewModel;
 use OxidEsales\Eshop\Application\Model\SelectList as EshopSelectionListModel;
 use OxidEsales\Eshop\Application\Model\Vendor as EshopVendorModel;
-use OxidEsales\GraphQL\Catalogue\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product as ProductDataType;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductAttribute as ProductAttributeDataType;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductScalePrice as ProductScalePriceDataType;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\SelectionList as SelectionListDataType;
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Review as ReviewDataType;
-use OxidEsales\GraphQL\Catalogue\Vendor\DataType\Vendor as VendorDataType;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductAttribute as ProductAttributeDataType;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductScalePrice as ProductScalePriceDataType;
+use OxidEsales\GraphQL\Storefront\Product\DataType\SelectionList as SelectionListDataType;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
+use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
 
 use function array_map;
 use function count;

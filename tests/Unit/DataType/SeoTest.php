@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Seo;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Shared\DataType\Seo
+ * @covers OxidEsales\GraphQL\Storefront\Shared\DataType\Seo
  */
 final class SeoTest extends TestCase
 {

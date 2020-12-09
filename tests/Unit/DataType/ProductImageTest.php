@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductImage;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Product\DataType\ProductImage
+ * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage
  */
 final class ProductImageTest extends TestCase
 {

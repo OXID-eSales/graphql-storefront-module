@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\DataType;
+namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 
 final class ProductRatingFilterList extends FilterList
 {

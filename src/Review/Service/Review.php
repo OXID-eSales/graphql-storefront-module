@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Review\Service;
+namespace OxidEsales\GraphQL\Storefront\Review\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Review as ReviewDataType;
-use OxidEsales\GraphQL\Catalogue\Review\Exception\ReviewNotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
+use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Review
 {

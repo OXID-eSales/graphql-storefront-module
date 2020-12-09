@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\Shared\Service;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Shared\Service;
 
-use OxidEsales\GraphQL\Catalogue\Shared\Service\NamespaceMapper;
+use OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper;
 use PHPUnit\Framework\TestCase;
 
 final class NamespaceMapperTest extends TestCase
 {
     /**
-     * @covers OxidEsales\GraphQL\Catalogue\Shared\Service\NamespaceMapper
+     * @covers OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper
      */
     public function testNamespaceCounts(): void
     {

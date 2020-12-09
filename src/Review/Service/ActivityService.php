@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Review\Service;
+namespace OxidEsales\GraphQL\Storefront\Review\Service;
 
 use OxidEsales\GraphQL\Base\Service\Legacy;
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Review;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Review;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 

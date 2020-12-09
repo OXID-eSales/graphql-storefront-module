@@ -7,18 +7,18 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\Service;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Service;
 
 use OxidEsales\Eshop\Core\Price as EshopPriceModel;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
-use OxidEsales\GraphQL\Catalogue\Currency\Infrastructure\Repository as CurrencyRepository;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Price as PriceDataType;
-use OxidEsales\GraphQL\Catalogue\Shared\Service\PriceRelationService;
+use OxidEsales\GraphQL\Storefront\Currency\Infrastructure\Repository as CurrencyRepository;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Price as PriceDataType;
+use OxidEsales\GraphQL\Storefront\Shared\Service\PriceRelationService;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Shared\DataType\Price
+ * @covers OxidEsales\GraphQL\Storefront\Shared\DataType\Price
  */
 final class PriceRelationTest extends TestCase
 {

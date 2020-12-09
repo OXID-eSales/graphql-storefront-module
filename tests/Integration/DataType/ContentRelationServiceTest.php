@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Content\Service\RelationService
+ * @covers OxidEsales\GraphQL\Storefront\Content\Service\RelationService
  */
 final class ContentRelationServiceTest extends TokenTestCase
 {

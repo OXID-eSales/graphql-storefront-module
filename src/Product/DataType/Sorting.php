@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\DataType;
+namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\Sorting as BaseSorting;
 use TheCodingMachine\GraphQLite\Annotations\Factory;

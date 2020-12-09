@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Model\BaseModel as EshopBaseModel;

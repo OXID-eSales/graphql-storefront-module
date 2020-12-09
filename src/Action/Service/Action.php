@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Action\Service;
+namespace OxidEsales\GraphQL\Storefront\Action\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Action\DataType\Action as ActionDataType;
-use OxidEsales\GraphQL\Catalogue\Action\DataType\ActionFilterList;
-use OxidEsales\GraphQL\Catalogue\Action\Exception\ActionNotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Action\DataType\Action as ActionDataType;
+use OxidEsales\GraphQL\Storefront\Action\DataType\ActionFilterList;
+use OxidEsales\GraphQL\Storefront\Action\Exception\ActionNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Action
 {

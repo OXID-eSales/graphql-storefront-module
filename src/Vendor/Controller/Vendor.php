@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Vendor\Controller;
+namespace OxidEsales\GraphQL\Storefront\Vendor\Controller;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
-use OxidEsales\GraphQL\Catalogue\Vendor\DataType\Sorting;
-use OxidEsales\GraphQL\Catalogue\Vendor\DataType\Vendor as VendorDataType;
-use OxidEsales\GraphQL\Catalogue\Vendor\DataType\VendorFilterList;
-use OxidEsales\GraphQL\Catalogue\Vendor\Exception\VendorNotFound;
-use OxidEsales\GraphQL\Catalogue\Vendor\Service\Vendor as VendorService;
+use OxidEsales\GraphQL\Storefront\Vendor\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
+use OxidEsales\GraphQL\Storefront\Vendor\DataType\VendorFilterList;
+use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
+use OxidEsales\GraphQL\Storefront\Vendor\Service\Vendor as VendorService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Vendor

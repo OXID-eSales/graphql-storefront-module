@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Content\Controller;
+namespace OxidEsales\GraphQL\Storefront\Content\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Content\DataType\Content as ContentDataType;
-use OxidEsales\GraphQL\Catalogue\Content\DataType\ContentFilterList;
-use OxidEsales\GraphQL\Catalogue\Content\Service\Content as ContentService;
+use OxidEsales\GraphQL\Storefront\Content\DataType\Content as ContentDataType;
+use OxidEsales\GraphQL\Storefront\Content\DataType\ContentFilterList;
+use OxidEsales\GraphQL\Storefront\Content\Service\Content as ContentService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Content

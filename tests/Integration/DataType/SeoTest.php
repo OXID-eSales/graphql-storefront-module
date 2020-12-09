@@ -7,16 +7,16 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopProduct;
 use OxidEsales\Eshop\Core\Language as EshopLanguage;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Seo;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Shared\DataType\Seo
+ * @covers OxidEsales\GraphQL\Storefront\Shared\DataType\Seo
  */
 final class SeoTest extends TestCase
 {

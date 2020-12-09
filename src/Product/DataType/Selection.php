@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\DataType;
+namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\Eshop\Application\Model\Selection as EshopSelectionModel;
 use TheCodingMachine\GraphQLite\Annotations\Field;

@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Category\Controller;
+namespace OxidEsales\GraphQL\Storefront\Category\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Category as CategoryDataType;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\CategoryFilterList;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Sorting;
-use OxidEsales\GraphQL\Catalogue\Category\Service\Category as CategoryService;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
+use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Category

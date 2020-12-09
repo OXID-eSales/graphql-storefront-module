@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Currency\Controller;
+namespace OxidEsales\GraphQL\Storefront\Currency\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Currency\DataType\Currency as CurrencyDataType;
-use OxidEsales\GraphQL\Catalogue\Currency\Service\Currency as CurrencyService;
+use OxidEsales\GraphQL\Storefront\Currency\DataType\Currency as CurrencyDataType;
+use OxidEsales\GraphQL\Storefront\Currency\Service\Currency as CurrencyService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Currency

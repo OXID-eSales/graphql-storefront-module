@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\DataType;
+namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Price;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 

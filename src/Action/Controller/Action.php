@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Action\Controller;
+namespace OxidEsales\GraphQL\Storefront\Action\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Action\DataType\Action as ActionDataType;
-use OxidEsales\GraphQL\Catalogue\Action\DataType\ActionFilterList;
-use OxidEsales\GraphQL\Catalogue\Action\Service\Action as ActionService;
+use OxidEsales\GraphQL\Storefront\Action\DataType\Action as ActionDataType;
+use OxidEsales\GraphQL\Storefront\Action\DataType\ActionFilterList;
+use OxidEsales\GraphQL\Storefront\Action\Service\Action as ActionService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Action

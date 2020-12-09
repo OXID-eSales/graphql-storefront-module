@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Link\Exception;
+namespace OxidEsales\GraphQL\Storefront\Link\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 

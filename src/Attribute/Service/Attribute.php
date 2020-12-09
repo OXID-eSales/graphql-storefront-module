@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Attribute\Service;
+namespace OxidEsales\GraphQL\Storefront\Attribute\Service;
 
 use OxidEsales\GraphQL\Base\DataType\BoolFilter;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Attribute\DataType\Attribute as AttributeDataType;
-use OxidEsales\GraphQL\Catalogue\Attribute\DataType\AttributeFilterList;
-use OxidEsales\GraphQL\Catalogue\Attribute\Exception\AttributeNotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute as AttributeDataType;
+use OxidEsales\GraphQL\Storefront\Attribute\DataType\AttributeFilterList;
+use OxidEsales\GraphQL\Storefront\Attribute\Exception\AttributeNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Attribute
 {

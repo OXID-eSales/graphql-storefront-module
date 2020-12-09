@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Manufacturer\Controller;
+namespace OxidEsales\GraphQL\Storefront\Manufacturer\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
-use OxidEsales\GraphQL\Catalogue\Manufacturer\DataType\ManufacturerFilterList;
-use OxidEsales\GraphQL\Catalogue\Manufacturer\DataType\Sorting;
-use OxidEsales\GraphQL\Catalogue\Manufacturer\Service\Manufacturer as ManufacturerService;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Manufacturer\Service\Manufacturer as ManufacturerService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Manufacturer

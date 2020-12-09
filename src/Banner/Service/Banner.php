@@ -7,17 +7,17 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Banner\Service;
+namespace OxidEsales\GraphQL\Storefront\Banner\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\InvalidToken;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Banner\DataType\Banner as BannerDataType;
-use OxidEsales\GraphQL\Catalogue\Banner\Exception\BannerNotFound;
-use OxidEsales\GraphQL\Catalogue\Banner\Infrastructure\Banner as BannerInfrastructure;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner as BannerDataType;
+use OxidEsales\GraphQL\Storefront\Banner\Exception\BannerNotFound;
+use OxidEsales\GraphQL\Storefront\Banner\Infrastructure\Banner as BannerInfrastructure;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Banner
 {

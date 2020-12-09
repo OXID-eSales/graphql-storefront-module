@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Link\DataType;
+namespace OxidEsales\GraphQL\Storefront\Link\DataType;
 
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Links as LinkModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;

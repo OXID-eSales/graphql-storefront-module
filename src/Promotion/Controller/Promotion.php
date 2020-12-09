@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Promotion\Controller;
+namespace OxidEsales\GraphQL\Storefront\Promotion\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Promotion\DataType\Promotion as PromotionDataType;
-use OxidEsales\GraphQL\Catalogue\Promotion\Service\Promotion as PromotionService;
+use OxidEsales\GraphQL\Storefront\Promotion\DataType\Promotion as PromotionDataType;
+use OxidEsales\GraphQL\Storefront\Promotion\Service\Promotion as PromotionService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Promotion

@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Content\DataType;
+namespace OxidEsales\GraphQL\Storefront\Content\DataType;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class ContentFilterList extends FilterList

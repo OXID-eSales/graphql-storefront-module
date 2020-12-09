@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Shared\DataType;
+namespace OxidEsales\GraphQL\Storefront\Shared\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\BoolFilter;
 

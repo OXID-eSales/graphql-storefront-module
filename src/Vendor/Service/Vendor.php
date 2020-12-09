@@ -7,17 +7,17 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Vendor\Service;
+namespace OxidEsales\GraphQL\Storefront\Vendor\Service;
 
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Catalogue\Vendor\DataType\Sorting;
-use OxidEsales\GraphQL\Catalogue\Vendor\DataType\Vendor as VendorDataType;
-use OxidEsales\GraphQL\Catalogue\Vendor\DataType\VendorFilterList;
-use OxidEsales\GraphQL\Catalogue\Vendor\Exception\VendorNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Vendor\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
+use OxidEsales\GraphQL\Storefront\Vendor\DataType\VendorFilterList;
+use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
 
 final class Vendor
 {

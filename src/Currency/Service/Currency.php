@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Currency\Service;
+namespace OxidEsales\GraphQL\Storefront\Currency\Service;
 
-use OxidEsales\GraphQL\Catalogue\Currency\DataType\Currency as CurrencyDataType;
-use OxidEsales\GraphQL\Catalogue\Currency\Exception\CurrencyNotFound;
-use OxidEsales\GraphQL\Catalogue\Currency\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Currency\DataType\Currency as CurrencyDataType;
+use OxidEsales\GraphQL\Storefront\Currency\Exception\CurrencyNotFound;
+use OxidEsales\GraphQL\Storefront\Currency\Infrastructure\Repository;
 
 final class Currency
 {

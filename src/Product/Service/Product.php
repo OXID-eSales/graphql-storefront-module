@@ -7,17 +7,17 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\Service;
+namespace OxidEsales\GraphQL\Storefront\Product\Service;
 
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\Sorting;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product as ProductDataType;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductFilterList;
-use OxidEsales\GraphQL\Catalogue\Product\Exception\ProductNotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Product
 {

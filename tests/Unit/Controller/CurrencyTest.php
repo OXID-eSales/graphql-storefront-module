@@ -7,22 +7,22 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\Controller;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Controller;
 
 use OxidEsales\Eshop\Core\Config;
-use OxidEsales\GraphQL\Catalogue\Currency\Controller\Currency;
-use OxidEsales\GraphQL\Catalogue\Currency\DataType\Currency as CurrencyDataType;
-use OxidEsales\GraphQL\Catalogue\Currency\Exception\CurrencyNotFound;
-use OxidEsales\GraphQL\Catalogue\Currency\Infrastructure\Repository;
-use OxidEsales\GraphQL\Catalogue\Currency\Service\Currency as CurrencyService;
+use OxidEsales\GraphQL\Storefront\Currency\Controller\Currency;
+use OxidEsales\GraphQL\Storefront\Currency\DataType\Currency as CurrencyDataType;
+use OxidEsales\GraphQL\Storefront\Currency\Exception\CurrencyNotFound;
+use OxidEsales\GraphQL\Storefront\Currency\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Currency\Service\Currency as CurrencyService;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Currency\Controller\Currency
- * @covers OxidEsales\GraphQL\Catalogue\Currency\Infrastructure\Repository
- * @covers OxidEsales\GraphQL\Catalogue\Currency\Service\Currency
- * @covers OxidEsales\GraphQL\Catalogue\Currency\Exception\CurrencyNotFound
+ * @covers OxidEsales\GraphQL\Storefront\Currency\Controller\Currency
+ * @covers OxidEsales\GraphQL\Storefront\Currency\Infrastructure\Repository
+ * @covers OxidEsales\GraphQL\Storefront\Currency\Service\Currency
+ * @covers OxidEsales\GraphQL\Storefront\Currency\Exception\CurrencyNotFound
  */
 final class CurrencyTest extends TestCase
 {

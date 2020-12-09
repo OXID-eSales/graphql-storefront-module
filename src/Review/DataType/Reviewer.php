@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Review\DataType;
+namespace OxidEsales\GraphQL\Storefront\Review\DataType;
 
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 

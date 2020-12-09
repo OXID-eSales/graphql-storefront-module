@@ -7,23 +7,23 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopArticle;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Category\Service\Category as CategoryService;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductImage;
-use OxidEsales\GraphQL\Catalogue\Product\Infrastructure\Product as ProductInfrastructure;
-use OxidEsales\GraphQL\Catalogue\Product\Service\Product as ProductService;
-use OxidEsales\GraphQL\Catalogue\Product\Service\RelationService;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage;
+use OxidEsales\GraphQL\Storefront\Product\Infrastructure\Product as ProductInfrastructure;
+use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
+use OxidEsales\GraphQL\Storefront\Product\Service\RelationService;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Product\DataType\ProductImage
- * @covers OxidEsales\GraphQL\Catalogue\Product\Service\RelationService
+ * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage
+ * @covers OxidEsales\GraphQL\Storefront\Product\Service\RelationService
  */
 final class ProductImageGalleryTest extends TestCase
 {

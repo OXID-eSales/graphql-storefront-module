@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Currency\DataType;
+namespace OxidEsales\GraphQL\Storefront\Currency\DataType;
 
 use stdClass;
 use TheCodingMachine\GraphQLite\Annotations\Field;

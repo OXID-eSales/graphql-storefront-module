@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Attribute\DataType;
+namespace OxidEsales\GraphQL\Storefront\Attribute\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class AttributeFilterList extends FilterList

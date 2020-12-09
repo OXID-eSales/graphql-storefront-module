@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Category\DataType;
+namespace OxidEsales\GraphQL\Storefront\Category\DataType;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use InvalidArgumentException;

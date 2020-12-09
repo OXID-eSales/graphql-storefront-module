@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\Controller;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Application\Model\Content as EshopContent;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;

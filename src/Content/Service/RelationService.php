@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Content\Service;
+namespace OxidEsales\GraphQL\Storefront\Content\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Category as CategoryDataType;
-use OxidEsales\GraphQL\Catalogue\Category\Service\Category as CategoryService;
-use OxidEsales\GraphQL\Catalogue\Content\DataType\Content;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Seo;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
+use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
+use OxidEsales\GraphQL\Storefront\Content\DataType\Content;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
