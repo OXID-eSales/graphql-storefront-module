@@ -18,7 +18,8 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
- * @Type()
+ * @Type
+ * @dataType-extension
  */
 final class Payment implements DataType
 {
@@ -68,6 +69,11 @@ final class Payment implements DataType
     public function getUpdated(): ?DateTimeImmutable
     {
         return DateTimeImmutableFactory::fromString($this->payment->getFieldData('oxtimestamp'));
+    }
+
+    public function getEshopModel(): EshopPaymentModel
+    {
+        return $this->payment;
     }
 
     public static function getModelClass(): string

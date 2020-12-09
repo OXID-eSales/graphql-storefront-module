@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Voucher;
+namespace OxidEsales\GraphQLStorefront\Tests\Codeception\Acceptance\Voucher;
 
 use Codeception\Example;
 use Codeception\Util\HttpCode;
-use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
-use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use OxidEsales\GraphQLStorefront\Tests\Codeception\Acceptance\MultishopBaseCest;
+use OxidEsales\GraphQLStorefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group voucher

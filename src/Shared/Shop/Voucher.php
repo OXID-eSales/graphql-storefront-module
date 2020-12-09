@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Shop;
 
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\Discount as EshopDiscountModel;
+use OxidEsales\Eshop\Core\Exception\ObjectException as EshopObjectException;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 
@@ -34,6 +35,17 @@ final class Voucher extends Voucher_parent
                 ]
             );
             $this->save();
+        }
+    }
+
+    /**
+     * @throws EshopObjectException
+     */
+    public function isInReservationTimeLimit(): void
+    {
+        if ((0 < $this->getFieldData('oxreserved')) &&
+            ($this->getFieldData('oxreserved') < (time() - $this->_getVoucherTimeout()))) {
+            throw new EshopObjectException('Reservation has timed out');
         }
     }
 
