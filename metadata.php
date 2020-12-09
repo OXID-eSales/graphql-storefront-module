@@ -17,7 +17,6 @@ $aModule = [
     'id'            => 'oe_graphql_storefront',
     'title'         => 'GraphQL Storefront',
     'description'   => 'OXID GraphQL Storefront',
-    ,
     'thumbnail'   => 'out/pictures/logo.png',
     'version'     => '0.1.0',
     'author'      => 'OXID eSales',
