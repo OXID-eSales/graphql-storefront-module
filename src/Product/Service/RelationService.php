@@ -7,29 +7,29 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\Service;
+namespace OxidEsales\GraphQL\Storefront\Product\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Category;
-use OxidEsales\GraphQL\Catalogue\Category\Service\Category as CategoryService;
-use OxidEsales\GraphQL\Catalogue\Manufacturer\DataType\Manufacturer;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductAttribute;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductDeliveryTime;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductDimensions;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductImageGallery;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductRating;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductScalePrice;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductStock;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductUnit;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\SelectionList;
-use OxidEsales\GraphQL\Catalogue\Product\Exception\ProductNotFound;
-use OxidEsales\GraphQL\Catalogue\Product\Infrastructure\Product as ProductInfrastructure;
-use OxidEsales\GraphQL\Catalogue\Product\Service\Product as ProductService;
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Review;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Price;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Seo;
-use OxidEsales\GraphQL\Catalogue\Vendor\DataType\Vendor;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Category;
+use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductAttribute;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductDeliveryTime;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductDimensions;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductImageGallery;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductRating;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductScalePrice;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductStock;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductUnit;
+use OxidEsales\GraphQL\Storefront\Product\DataType\SelectionList;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
+use OxidEsales\GraphQL\Storefront\Product\Infrastructure\Product as ProductInfrastructure;
+use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Review;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
+use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 

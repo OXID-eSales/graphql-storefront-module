@@ -7,18 +7,18 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Category\Service;
+namespace OxidEsales\GraphQL\Storefront\Category\Service;
 
 use OxidEsales\GraphQL\Base\DataType\BoolFilter;
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Category as CategoryDataType;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\CategoryFilterList;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Sorting;
-use OxidEsales\GraphQL\Catalogue\Category\Exception\CategoryNotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
+use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Category
 {

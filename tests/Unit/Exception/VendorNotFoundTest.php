@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\Exception;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Exception;
 
-use OxidEsales\GraphQL\Catalogue\Vendor\Exception\VendorNotFound;
+use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Vendor\Exception\VendorNotFound
+ * @covers OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound
  */
 final class VendorNotFoundTest extends TestCase
 {

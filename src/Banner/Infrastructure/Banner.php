@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Banner\Infrastructure;
+namespace OxidEsales\GraphQL\Storefront\Banner\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\ActionList;
 use OxidEsales\Eshop\Application\Model\User;
-use OxidEsales\GraphQL\Catalogue\Banner\DataType\Banner as BannerDataType;
+use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner as BannerDataType;
 
 final class Banner
 {

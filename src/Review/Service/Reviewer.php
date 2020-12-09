@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Review\Service;
+namespace OxidEsales\GraphQL\Storefront\Review\Service;
 
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Reviewer as ReviewerDataType;
-use OxidEsales\GraphQL\Catalogue\Review\Exception\ReviewerNotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Reviewer as ReviewerDataType;
+use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewerNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Reviewer
 {

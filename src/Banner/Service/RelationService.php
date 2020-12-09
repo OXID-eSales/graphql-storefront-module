@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Banner\Service;
+namespace OxidEsales\GraphQL\Storefront\Banner\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
-use OxidEsales\GraphQL\Catalogue\Banner\DataType\Banner;
-use OxidEsales\GraphQL\Catalogue\Banner\Infrastructure\Banner as BannerInfrastructure;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product;
-use OxidEsales\GraphQL\Catalogue\Product\Exception\ProductNotFound;
-use OxidEsales\GraphQL\Catalogue\Product\Service\Product as ProductService;
+use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner;
+use OxidEsales\GraphQL\Storefront\Banner\Infrastructure\Banner as BannerInfrastructure;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
+use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 

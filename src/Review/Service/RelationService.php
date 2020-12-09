@@ -7,17 +7,17 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Review\Service;
+namespace OxidEsales\GraphQL\Storefront\Review\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product;
-use OxidEsales\GraphQL\Catalogue\Product\Exception\ProductNotFound;
-use OxidEsales\GraphQL\Catalogue\Product\Service\Product as ProductService;
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Review;
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Reviewer;
-use OxidEsales\GraphQL\Catalogue\Review\Infrastructure\Review as ReviewInfrastructure;
-use OxidEsales\GraphQL\Catalogue\Review\Service\Reviewer as ReviewerService;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Language;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
+use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Review;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Reviewer;
+use OxidEsales\GraphQL\Storefront\Review\Infrastructure\Review as ReviewInfrastructure;
+use OxidEsales\GraphQL\Storefront\Review\Service\Reviewer as ReviewerService;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Language;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 

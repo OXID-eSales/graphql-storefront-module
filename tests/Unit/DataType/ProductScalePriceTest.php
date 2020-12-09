@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductScalePrice;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductScalePrice;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Product\DataType\ProductScalePrice
+ * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductScalePrice
  */
 final class ProductScalePriceTest extends TestCase
 {

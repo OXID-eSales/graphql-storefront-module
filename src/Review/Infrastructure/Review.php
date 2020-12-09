@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Review\Infrastructure;
+namespace OxidEsales\GraphQL\Storefront\Review\Infrastructure;
 
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Review as ReviewDataType;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Language;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Language;
 
 final class Review
 {

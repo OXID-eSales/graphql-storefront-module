@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Promotion\Service;
+namespace OxidEsales\GraphQL\Storefront\Promotion\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Promotion\DataType\Promotion as PromotionDataType;
-use OxidEsales\GraphQL\Catalogue\Promotion\Exception\PromotionNotFound;
-use OxidEsales\GraphQL\Catalogue\Promotion\Infrastructure\Promotion as PromotionInfrastructure;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Promotion\DataType\Promotion as PromotionDataType;
+use OxidEsales\GraphQL\Storefront\Promotion\Exception\PromotionNotFound;
+use OxidEsales\GraphQL\Storefront\Promotion\Infrastructure\Promotion as PromotionInfrastructure;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Promotion
 {

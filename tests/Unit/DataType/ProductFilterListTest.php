@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\IDFilter;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductFilterList;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Product\DataType\ProductFilterList
+ * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList
  */
 final class ProductFilterListTest extends TestCase
 {

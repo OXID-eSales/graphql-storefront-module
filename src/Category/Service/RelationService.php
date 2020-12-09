@@ -7,22 +7,22 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Category\Service;
+namespace OxidEsales\GraphQL\Storefront\Category\Service;
 
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Category;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\CategoryFilterList;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\CategoryIDFilter;
-use OxidEsales\GraphQL\Catalogue\Category\DataType\Sorting;
-use OxidEsales\GraphQL\Catalogue\Category\Exception\CategoryNotFound;
-use OxidEsales\GraphQL\Catalogue\Category\Service\Category as CategoryService;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductFilterList;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Sorting as ProductSorting;
-use OxidEsales\GraphQL\Catalogue\Product\Service\Product as ProductService;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Seo;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Category;
+use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
+use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryIDFilter;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
+use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Sorting as ProductSorting;
+use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 

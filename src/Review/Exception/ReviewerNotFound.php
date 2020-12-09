@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Review\Exception;
+namespace OxidEsales\GraphQL\Storefront\Review\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 

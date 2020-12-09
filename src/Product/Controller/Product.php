@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\Controller;
+namespace OxidEsales\GraphQL\Storefront\Product\Controller;
 
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product as ProductDataType;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductFilterList;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Sorting;
-use OxidEsales\GraphQL\Catalogue\Product\Service\Product as ProductService;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Product

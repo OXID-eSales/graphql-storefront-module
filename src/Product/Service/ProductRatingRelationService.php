@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\Service;
+namespace OxidEsales\GraphQL\Storefront\Product\Service;
 
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductRating;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductRating;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 /**
  * @deprecated not used for catalogue, we keep the code and later move it to admin

@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Vendor\Exception;
+namespace OxidEsales\GraphQL\Storefront\Vendor\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 

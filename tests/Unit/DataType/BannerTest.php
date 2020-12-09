@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
 use DateTimeImmutable;
-use OxidEsales\GraphQL\Catalogue\Banner\DataType\Banner;
+use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \OxidEsales\GraphQL\Catalogue\Banner\DataType\Banner
+ * @covers \OxidEsales\GraphQL\Storefront\Banner\DataType\Banner
  */
 final class BannerTest extends TestCase
 {

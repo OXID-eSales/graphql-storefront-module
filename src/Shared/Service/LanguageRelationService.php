@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Shared\Service;
+namespace OxidEsales\GraphQL\Storefront\Shared\Service;
 
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Language;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\LanguageInfrastructure;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Language;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\LanguageInfrastructure;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 

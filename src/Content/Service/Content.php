@@ -7,15 +7,15 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Content\Service;
+namespace OxidEsales\GraphQL\Storefront\Content\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use OxidEsales\GraphQL\Catalogue\Content\DataType\Content as ContentDataType;
-use OxidEsales\GraphQL\Catalogue\Content\DataType\ContentFilterList;
-use OxidEsales\GraphQL\Catalogue\Content\Exception\ContentNotFound;
-use OxidEsales\GraphQL\Catalogue\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Content\DataType\Content as ContentDataType;
+use OxidEsales\GraphQL\Storefront\Content\DataType\ContentFilterList;
+use OxidEsales\GraphQL\Storefront\Content\Exception\ContentNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Content
 {

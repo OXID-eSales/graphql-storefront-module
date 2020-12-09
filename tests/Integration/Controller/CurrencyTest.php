@@ -7,14 +7,14 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Integration\Controller;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Currency\DataType\Currency
- * @covers OxidEsales\GraphQL\Catalogue\Currency\Controller\Currency
+ * @covers OxidEsales\GraphQL\Storefront\Currency\DataType\Currency
+ * @covers OxidEsales\GraphQL\Storefront\Currency\Controller\Currency
  */
 final class CurrencyTest extends TestCase
 {

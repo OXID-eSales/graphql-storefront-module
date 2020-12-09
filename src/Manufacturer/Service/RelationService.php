@@ -7,16 +7,16 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Manufacturer\Service;
+namespace OxidEsales\GraphQL\Storefront\Manufacturer\Service;
 
 use OxidEsales\GraphQL\Base\DataType\IDFilter;
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
-use OxidEsales\GraphQL\Catalogue\Manufacturer\DataType\Manufacturer;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Product as ProductDataType;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\ProductFilterList;
-use OxidEsales\GraphQL\Catalogue\Product\DataType\Sorting;
-use OxidEsales\GraphQL\Catalogue\Product\Service\Product as ProductService;
-use OxidEsales\GraphQL\Catalogue\Shared\DataType\Seo;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
+use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 

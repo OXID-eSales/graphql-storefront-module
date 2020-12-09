@@ -7,12 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Banner\Controller;
+namespace OxidEsales\GraphQL\Storefront\Banner\Controller;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
-use OxidEsales\GraphQL\Catalogue\Banner\DataType\Banner as BannerDataType;
-use OxidEsales\GraphQL\Catalogue\Banner\Exception\BannerNotFound;
-use OxidEsales\GraphQL\Catalogue\Banner\Service\Banner as BannerService;
+use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner as BannerDataType;
+use OxidEsales\GraphQL\Storefront\Banner\Exception\BannerNotFound;
+use OxidEsales\GraphQL\Storefront\Banner\Service\Banner as BannerService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Banner

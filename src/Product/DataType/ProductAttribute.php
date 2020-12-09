@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Product\DataType;
+namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\Eshop\Application\Model\Attribute as EshopAttributeModel;
-use OxidEsales\GraphQL\Catalogue\Attribute\DataType\Attribute;
+use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 

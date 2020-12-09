@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Review\Controller;
+namespace OxidEsales\GraphQL\Storefront\Review\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Review\DataType\Review as ReviewDataType;
-use OxidEsales\GraphQL\Catalogue\Review\Service\Review as ReviewService;
+use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
+use OxidEsales\GraphQL\Storefront\Review\Service\Review as ReviewService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Review

@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Shared\Infrastructure;
+namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 
 use OxidEsales\Eshop\Core\Language as LanguageService;
 

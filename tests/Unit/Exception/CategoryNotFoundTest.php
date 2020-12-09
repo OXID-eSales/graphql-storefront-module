@@ -7,13 +7,13 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Tests\Unit\Exception;
+namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Exception;
 
-use OxidEsales\GraphQL\Catalogue\Category\Exception\CategoryNotFound;
+use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers OxidEsales\GraphQL\Catalogue\Category\Exception\CategoryNotFound
+ * @covers OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound
  */
 final class CategoryNotFoundTest extends TestCase
 {

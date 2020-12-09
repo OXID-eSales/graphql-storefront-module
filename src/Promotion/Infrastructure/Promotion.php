@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Promotion\Infrastructure;
+namespace OxidEsales\GraphQL\Storefront\Promotion\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\ActionList;
-use OxidEsales\GraphQL\Catalogue\Promotion\DataType\Promotion as PromotionDataType;
+use OxidEsales\GraphQL\Storefront\Promotion\DataType\Promotion as PromotionDataType;
 
 final class Promotion
 {

@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Attribute\Controller;
+namespace OxidEsales\GraphQL\Storefront\Attribute\Controller;
 
-use OxidEsales\GraphQL\Catalogue\Attribute\DataType\Attribute as AttributeDataType;
-use OxidEsales\GraphQL\Catalogue\Attribute\DataType\AttributeFilterList;
-use OxidEsales\GraphQL\Catalogue\Attribute\Service\Attribute as AttributeService;
+use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute as AttributeDataType;
+use OxidEsales\GraphQL\Storefront\Attribute\DataType\AttributeFilterList;
+use OxidEsales\GraphQL\Storefront\Attribute\Service\Attribute as AttributeService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class Attribute

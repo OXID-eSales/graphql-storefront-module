@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Catalogue\Currency\Exception;
+namespace OxidEsales\GraphQL\Storefront\Currency\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 
