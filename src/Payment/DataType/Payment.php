@@ -19,9 +19,9 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @Type
- * @dataType-extension
+ * @extendable-dataType
  */
-final class Payment implements DataType
+class Payment implements DataType
 {
     /** @var EshopPaymentModel */
     private $payment;

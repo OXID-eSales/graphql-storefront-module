@@ -81,11 +81,8 @@ final class NamespaceMapper implements NamespaceMapperInterface
             '\\OxidEsales\\GraphQL\\Storefront\\NewsletterStatus\\Infrastructure'  => __DIR__ . '/../../NewsletterStatus/Infrastructure/',
             '\\OxidEsales\\GraphQL\\Storefront\\Country\\DataType'                 => __DIR__ . '/../../Country/DataType/',
             '\\OxidEsales\\GraphQL\\Storefront\\Country\\Service'                  => __DIR__ . '/../../Country/Service/',
-            '\\OxidEsales\\GraphQL\\Storefront\\Basket\\DataType'                  => __DIR__ . '/../../Basket/DataType/',
-            '\\OxidEsales\\GraphQL\\Storefront\\Basket\\Service'                   => __DIR__ . '/../../Basket/Service/',
             '\\OxidEsales\\GraphQL\\Storefront\\File\\DataType'                    => __DIR__ . '/../../File/DataType/',
             '\\OxidEsales\\GraphQL\\Storefront\\File\\Service'                     => __DIR__ . '/../../File/Service/',
-            '\\OxidEsales\\GraphQL\\Storefront\\Payment\\DataType'                 => __DIR__ . '/../../Payment/DataType/',
             '\\OxidEsales\\GraphQL\\Storefront\\Payment\\Service'                  => __DIR__ . '/../../Payment/Service/',
             '\\OxidEsales\\GraphQL\\Storefront\\Contact\\DataType'                 => __DIR__ . '/../../Contact/DataType/',
             '\\OxidEsales\\GraphQL\\Storefront\\Contact\\Service'                  => __DIR__ . '/../../Contact/Service/',
@@ -98,6 +95,12 @@ final class NamespaceMapper implements NamespaceMapperInterface
             '\\OxidEsales\\GraphQL\\Storefront\\Order\\Infrastructure'             => __DIR__ . '/../../Order/Infrastructure/',
             '\\OxidEsales\\GraphQL\\Storefront\\Voucher\\DataType'                 => __DIR__ . '/../../Voucher/DataType/',
             '\\OxidEsales\\GraphQL\\Storefront\\Voucher\\Service'                  => __DIR__ . '/../../Voucher/Service/',
+            '\\OxidEsales\\GraphQL\\Storefront\\Basket\\DataType'                  => __DIR__ . '/../../Basket/DataType/',
+            '\\OxidEsales\\GraphQL\\Storefront\\Basket\\Service'                   => __DIR__ . '/../../Basket/Service/',
+            '\\OxidEsales\\GraphQL\\Storefront\\Basket\\Infrastructure'            => __DIR__ . '/../../Basket/Infrastructure/',
+            '\\OxidEsales\\GraphQL\\Storefront\\DeliveryMethod\\DataType'          => __DIR__ . '/../../DeliveryMethod/DataType/',
+            '\\OxidEsales\\GraphQL\\Storefront\\Payment\\DataType'                 => __DIR__ . '/../../Payment/DataType/',
+            '\\OxidEsales\\GraphQL\\Storefront\\DeliveryMethod\\Service'           => __DIR__ . '/../../DeliveryMethod/Service/',
         ];
     }
 }

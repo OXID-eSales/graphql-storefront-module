@@ -11,9 +11,13 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Controller;
 
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
+use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
+use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
+use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Basket
 {
@@ -120,5 +124,65 @@ final class Basket
     public function basketRemoveVoucher(string $basketId, string $voucherId): BasketDataType
     {
         return $this->basketService->removeVoucher($basketId, $voucherId);
+    }
+
+    /**
+     * @Mutation()
+     * @Logged()
+     */
+    public function basketSetDeliveryAddress(string $basketId, string $deliveryAddressId): BasketDataType
+    {
+        return $this->basketService->setDeliveryAddress($basketId, $deliveryAddressId);
+    }
+
+    /**
+     * @Mutation()
+     * @Logged()
+     */
+    public function basketSetPayment(ID $basketId, ID $paymentId): BasketDataType
+    {
+        return $this->basketService->setPayment($basketId, $paymentId);
+    }
+
+    /**
+     * @Mutation()
+     * @Logged()
+     */
+    public function basketSetDeliveryMethod(ID $basketId, ID $deliveryMethodId): BasketDataType
+    {
+        return $this->basketService->setDeliveryMethod($basketId, $deliveryMethodId);
+    }
+
+    /**
+     * @Query
+     * @Logged()
+     *
+     * @return BasketDeliveryMethodDataType[]
+     */
+    public function basketDeliveryMethods(ID $basketId): array
+    {
+        return $this->basketService->getBasketDeliveryMethods($basketId);
+    }
+
+    /**
+     * Returns all payments that can be used for particular basket.
+     *
+     * @Query
+     * @Logged()
+     *
+     * @return BasketPayment[]
+     */
+    public function basketPayments(ID $basketId): array
+    {
+        return $this->basketService->getBasketPayments($basketId);
+    }
+
+    /**
+     * @Mutation()
+     * @Logged()
+     */
+    public function placeOrder(ID $basketId, ?bool $confirmTermsAndConditions = null): OrderDataType
+    {
+        return $this->basketService->placeOrder($basketId, $confirmTermsAndConditions);
     }
 }
