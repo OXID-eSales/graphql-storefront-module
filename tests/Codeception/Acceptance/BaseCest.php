@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQLStorefront\Tests\Codeception\Acceptance;
+namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance;
 
 use Codeception\Scenario;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Exception\ModuleSetupException;
-use OxidEsales\GraphQLStorefront\Tests\Codeception\AcceptanceTester;
+use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 abstract class BaseCest
 {
