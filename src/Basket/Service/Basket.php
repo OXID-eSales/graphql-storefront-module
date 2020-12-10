@@ -24,12 +24,9 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
-use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
-use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder as PlaceOrderException;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfraService;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Repository as BasketRepository;
-use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as StorefrontBasketService;
 
 use OxidEsales\GraphQL\Storefront\Country\DataType\Country as CountryDataType;
 use OxidEsales\GraphQL\Storefront\Country\Service\Country as CountryService;
@@ -38,13 +35,8 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer as CustomerInfrastructure;
 use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
-use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\DeliveryMethod as DeliveryMethodDataType;
-use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\MissingDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
-use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
-use OxidEsales\GraphQL\Storefront\Payment\DataType\Payment as PaymentDataType;
-use OxidEsales\GraphQL\Storefront\Payment\Exception\MissingPayment;
 use OxidEsales\GraphQL\Storefront\Payment\Exception\PaymentValidationFailed;
 use OxidEsales\GraphQL\Storefront\Payment\Exception\UnavailablePayment;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
@@ -99,17 +91,11 @@ final class Basket
     /** @var CustomerService */
     private $customerService;
 
-    /** @var StorefrontBasketService */
-    private $accountBasketService;
-
     /** @var CustomerInfrastructure */
     private $customerInfrastructure;
 
     /** @var DeliveryAddressService */
     private $deliveryAddressService;
-
-    /** @var BasketRelationService */
-    private $basketRelationService;
 
     public function __construct(
         Repository $repository,
@@ -122,12 +108,10 @@ final class Basket
         SharedInfrastructure $sharedInfrastructure,
         BasketVoucher $basketVoucherService,
         VoucherInfrastructure $voucherInfrastructure,
-        BasketRelationService $basketRelationService,
         CustomerInfrastructure $customerInfrastructure,
         BasketInfrastructure $basketInfrastructure,
         DeliveryAddressService $deliveryAddressService,
         VoucherRepository $voucherRepository,
-        StorefrontBasketService $accountBasketService,
         CountryService $countryService,
         CustomerService $customerService
     ) {
@@ -142,11 +126,9 @@ final class Basket
         $this->basketVoucherService   = $basketVoucherService;
         $this->voucherInfrastructure  = $voucherInfrastructure;
         $this->voucherRepository      = $voucherRepository;
-        $this->basketRelationService  = $basketRelationService;
         $this->basketInfrastructure   = $basketInfrastructure;
         $this->deliveryAddressService = $deliveryAddressService;
         $this->customerInfrastructure = $customerInfrastructure;
-        $this->accountBasketService   = $accountBasketService;
         $this->countryService         = $countryService;
         $this->customerService        = $customerService;
     }
@@ -349,7 +331,7 @@ final class Basket
      */
     public function setDeliveryAddress(string $basketId, string $deliveryAddressId): BasketDataType
     {
-        $basket = $this->accountBasketService->getAuthenticatedCustomerBasket($basketId);
+        $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
         if (!$this->deliveryAddressBelongsToUser($deliveryAddressId)) {
             throw DeliveryAddressNotFound::byId($deliveryAddressId);
@@ -390,7 +372,7 @@ final class Basket
      */
     public function isPaymentMethodAvailableForBasket(ID $basketId, ID $paymentId): bool
     {
-        $basket           = $this->accountBasketService->getAuthenticatedCustomerBasket((string) $basketId->val());
+        $basket           = $this->getAuthenticatedCustomerBasket((string) $basketId->val());
         $deliveryMethodId = $basket->getEshopModel()->getFieldData('oegql_deliverymethodid');
 
         if (!$deliveryMethodId) {
@@ -416,7 +398,7 @@ final class Basket
      */
     public function setPaymentIdBasket(ID $basketId, ID $paymentId): BasketDataType
     {
-        $basket = $this->accountBasketService->getAuthenticatedCustomerBasket((string) $basketId->val());
+        $basket = $this->getAuthenticatedCustomerBasket((string) $basketId->val());
 
         $this->basketInfrastructure->setPayment($basket, (string) $paymentId->val());
 
@@ -428,7 +410,7 @@ final class Basket
      */
     public function isDeliveryMethodAvailableForBasket(ID $basketId, ID $deliveryMethodId): bool
     {
-        $basket   = $this->accountBasketService->getAuthenticatedCustomerBasket((string) $basketId->val());
+        $basket   = $this->getAuthenticatedCustomerBasket((string) $basketId->val());
         $customer = $this->customerService->customer((string) $basket->getUserId()->val());
         $country  = $this->getBasketDeliveryCountryId($basket);
 
@@ -447,7 +429,7 @@ final class Basket
      */
     public function setDeliveryMethodIdToBasket(ID $basketId, ID $deliveryId): BasketDataType
     {
-        $basket = $this->accountBasketService->getAuthenticatedCustomerBasket((string) $basketId->val());
+        $basket = $this->getAuthenticatedCustomerBasket((string) $basketId->val());
 
         $this->basketInfrastructure->setDeliveryMethod($basket, (string) $deliveryId->val());
 
@@ -459,7 +441,7 @@ final class Basket
      */
     public function getBasketDeliveryMethods(ID $basketId): array
     {
-        $basket   = $this->accountBasketService->getAuthenticatedCustomerBasket((string) $basketId->val());
+        $basket   = $this->getAuthenticatedCustomerBasket((string) $basketId->val());
         $customer = $this->customerService->customer((string) $basket->getUserId()->val());
         $country  = $this->getBasketDeliveryCountryId($basket);
 
@@ -475,7 +457,7 @@ final class Basket
      */
     public function getBasketPayments(ID $basketId): array
     {
-        $basket   = $this->accountBasketService->getAuthenticatedCustomerBasket((string) $basketId->val());
+        $basket   = $this->getAuthenticatedCustomerBasket((string) $basketId->val());
         $customer = $this->customerService->customer((string) $basket->getUserId()->val());
         $country  = $this->getBasketDeliveryCountryId($basket);
 
@@ -494,50 +476,6 @@ final class Basket
         }
 
         return array_unique($result, SORT_REGULAR);
-    }
-
-    /**
-     * @throws UnavailableDeliveryMethod
-     * @throws UnavailablePayment
-     * @throws PlaceOrder
-     */
-    public function placeOrder(ID $basketId, ?bool $termsAndConditions = null): OrderDataType
-    {
-        $userBasket = $this->accountBasketService->getAuthenticatedCustomerBasket((string) $basketId->val());
-
-        $this->checkTermsAndConditionsConsent($userBasket, $termsAndConditions);
-
-        /** @var ?DeliveryMethodDataType $deliveryMethod */
-        $deliveryMethod = $this->basketRelationService->deliveryMethod($userBasket);
-
-        if ($deliveryMethod === null) {
-            throw MissingDeliveryMethod::provideDeliveryMethod();
-        }
-
-        if (!$this->isDeliveryMethodAvailableForBasket($userBasket->id(), $deliveryMethod->id())) {
-            throw UnavailableDeliveryMethod::byId((string) $deliveryMethod->id()->val());
-        }
-
-        /** @var ?PaymentDataType $payment */
-        $payment = $this->basketRelationService->payment($userBasket);
-
-        if ($payment === null) {
-            throw MissingPayment::providePayment();
-        }
-
-        if (!$this->isPaymentMethodAvailableForBasket($userBasket->id(), $payment->getId())) {
-            throw UnavailablePayment::byId((string) $payment->getId()->val());
-        }
-
-        /** @var CustomerDataType $customer */
-        $customer = $this->customerService->customer(
-            $this->authenticationService->getUserId()
-        );
-
-        return $this->basketInfrastructure->placeOrder(
-            $customer,
-            $userBasket
-        );
     }
 
     private function deliveryAddressBelongsToUser(string $deliveryAddressId): bool
@@ -575,14 +513,5 @@ final class Basket
         }
 
         return $this->countryService->country($countryId);
-    }
-
-    private function checkTermsAndConditionsConsent(BasketDataType $basket, ?bool $termsAndConditions): void
-    {
-        $confirmTermsAndConditions = $this->legacyService->getConfigParam('blConfirmAGB');
-
-        if (($confirmTermsAndConditions && !$termsAndConditions) || $termsAndConditions === false) {
-            throw PlaceOrderException::notAcceptedTOS((string) $basket->id()->val());
-        }
     }
 }

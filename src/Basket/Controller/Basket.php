@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Controller;
 
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
+use OxidEsales\GraphQL\Storefront\Basket\Service\PlaceOrder as PlaceOrderService;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
@@ -24,10 +25,15 @@ final class Basket
     /** @var BasketService */
     private $basketService;
 
+    /** @var PlaceOrderService */
+    private $placeOrderService;
+
     public function __construct(
-        BasketService $basketService
+        BasketService $basketService,
+        PlaceOrderService $placeOrderService
     ) {
-        $this->basketService = $basketService;
+        $this->basketService     = $basketService;
+        $this->placeOrderService = $placeOrderService;
     }
 
     /**
@@ -183,6 +189,6 @@ final class Basket
      */
     public function placeOrder(ID $basketId, ?bool $confirmTermsAndConditions = null): OrderDataType
     {
-        return $this->basketService->placeOrder($basketId, $confirmTermsAndConditions);
+        return $this->placeOrderService->placeOrder($basketId, $confirmTermsAndConditions);
     }
 }

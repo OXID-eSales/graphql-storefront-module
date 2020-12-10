@@ -19,7 +19,6 @@ use OxidEsales\GraphQL\Storefront\Review\DataType\ReviewFilterList;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewAlreadyExists;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewNotFound;
 use OxidEsales\GraphQL\Storefront\Review\Infrastructure\Repository as ReviewRepository;
-use OxidEsales\GraphQL\Storefront\Review\Service\Review as ReviewService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
 final class Review
@@ -29,9 +28,6 @@ final class Review
 
     /** @var ReviewRepository */
     private $reviewRepository;
-
-    /** @var ReviewService */
-    private $reviewService;
 
     /** @var Authentication */
     private $authenticationService;
@@ -48,7 +44,6 @@ final class Review
     public function __construct(
         Repository $repository,
         ReviewRepository $reviewRepository,
-        ReviewService $reviewService,
         Authentication $authenticationService,
         Authorization $authorizationService,
         ActivityService $reviewActivityService,
@@ -56,7 +51,6 @@ final class Review
     ) {
         $this->repository            = $repository;
         $this->reviewRepository      = $reviewRepository;
-        $this->reviewService         = $reviewService;
         $this->authenticationService = $authenticationService;
         $this->authorizationService  = $authorizationService;
         $this->reviewActivityService = $reviewActivityService;
@@ -98,7 +92,7 @@ final class Review
         if (!((bool) $this->legacyService->getConfigParam('blAllowUsersToManageTheirReviews'))) {
             throw new InvalidLogin('Unauthorized - users are not allowed to manage their reviews');
         }
-        $review = $this->reviewService->review($id);
+        $review = $this->review($id);
 
         //user can delete only its own review, admin can delete any review
         if (
