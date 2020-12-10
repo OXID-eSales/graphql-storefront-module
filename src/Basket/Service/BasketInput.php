@@ -47,7 +47,7 @@ final class BasketInput
     /**
      * @Factory()
      */
-    public function fromUserInput(string $title, bool $public = true): BasketDataType
+    public function fromUserInput(string $title, bool $public = false): BasketDataType
     {
         if ($this->doesBasketExist($title)) {
             throw BasketExists::byTitle($title);

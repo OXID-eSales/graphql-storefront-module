@@ -143,7 +143,7 @@ final class BasketCest extends BaseCest
         $basket = $result['data']['basketCreate'];
         $I->assertSame('Marc', $basket['owner']['firstName']);
         $I->assertNotEmpty($basket['id']);
-        $I->assertTrue($basket['public']);
+        $I->assertFalse($basket['public']);
         $I->assertEmpty($basket['items']);
 
         $this->basketRemoveMutation($I, $basket['id']);
