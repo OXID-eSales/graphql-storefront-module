@@ -16,10 +16,10 @@ $testDirectory = $testConfig->getEditionTestsPath($testConfig->getShopEdition())
 $serviceCaller->setParameter('importSql', '@' . $testDirectory . '/Fixtures/testdemodata.sql');
 $serviceCaller->callService('ShopPreparation', 1);
 
-$serviceCaller->setParameter('importSql', '@' . __DIR__ . '/Fixtures/testdemodata.sql');
+$serviceCaller->setParameter('importSql', '@' . __DIR__ . '/Fixtures/integrationtest.sql');
 $serviceCaller->callService('ShopPreparation', 1);
 
 if ((new Facts())->isEnterprise()) {
-    $serviceCaller->setParameter('importSql', '@' . __DIR__ . '/Fixtures/testdemodata_ee.sql');
+    $serviceCaller->setParameter('importSql', '@' . __DIR__ . '/Fixtures/integrationtest_ee.sql');
     $serviceCaller->callService('ShopPreparation', 1);
 }
