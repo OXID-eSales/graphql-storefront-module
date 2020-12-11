@@ -21,7 +21,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  */
 final class BasketPaymentCest extends BaseCest
 {
-    private const USERNAME = 'user@oxid-esales.com';
+    private const USERNAME = 'standarduser@oxid-esales.com';
 
     private const PASSWORD = 'useruser';
 

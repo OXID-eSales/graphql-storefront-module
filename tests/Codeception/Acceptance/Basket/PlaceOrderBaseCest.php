@@ -17,13 +17,13 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 abstract class PlaceOrderBaseCest extends BaseCest
 {
-    protected const USERNAME = 'user@oxid-esales.com';
+    protected const USERNAME = 'standarduser@oxid-esales.com';
 
-    protected const USER_OXID = 'e7af1c3b786fd02906ccd75698f4e6b9';
+    protected const USER_OXID = 'standarduser';
 
     protected const CHECKOUT_USERNAME = 'checkoutuser@oxid-esales.com';
 
-    protected const OTHER_USERNAME = 'otheruser@oxid-esales.com';
+    protected const OTHER_USERNAME = 'anotheruser@oxid-esales.com';
 
     protected const PASSWORD = 'useruser';
 

@@ -45,7 +45,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->prepareBasket($I, 'cart_with_voucher');
-        $this->addVoucherToBasket($I, $basketId, 'voucher1');
+        $this->addVoucherToBasket($I, $basketId, 'voucher1x');
 
         //check the basket costs
         $basketCosts = $this->checkBasketCosts($I, $basketId);
@@ -59,7 +59,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->assertEquals($orderId, $orders['id']);
         $I->assertEquals($basketCosts['total'], $orders['cost']['total']);
         $I->assertEquals($basketCosts['voucher'], $orders['cost']['voucher']);
-        $I->assertEquals($orders['vouchers'][0]['id'], 'voucher1id');
+        $I->assertEquals($orders['vouchers'][0]['id'], 'voucher1xid');
         $I->assertNotEmpty($orders['invoiceAddress']);
         $I->assertNull($orders['deliveryAddress']);
 
@@ -67,7 +67,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'voucher1id',
+                'oxid'           => 'voucher1xid',
                 'oxorderid'      => $orderId,
                 'oxreserved >'   => 0,
 
@@ -86,7 +86,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->prepareBasket($I, 'outdated_voucher');
-        $this->addVoucherToBasket($I, $basketId, 'voucher1');
+        $this->addVoucherToBasket($I, $basketId, 'voucher1x');
         $basketCosts = $this->checkBasketCosts($I, $basketId);
 
         //Voucher outdated after basket was created but before order is placed
@@ -96,7 +96,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
                 'oxreserved'     => time() - 10900,
             ],
             [
-                'oxid'           => 'voucher1id',
+                'oxid'           => 'voucher1xid',
                 'oegql_basketid' => $basketId,
             ]
         );
@@ -115,7 +115,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->prepareBasket($I, 'outdated_voucherseries');
-        $this->addVoucherToBasket($I, $basketId, 'voucher1');
+        $this->addVoucherToBasket($I, $basketId, 'voucher1x');
         $basketCosts = $this->checkBasketCosts($I, $basketId);
 
         $I->updateInDatabase(
@@ -124,7 +124,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
                 'OXENDDATE' => '2000-01-01',
             ],
             [
-                'oxid' => 'voucherserie1',
+                'oxid' => 'voucherserie1x',
             ]
         );
 
@@ -144,18 +144,18 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
             'oxobject2discount',
             [
                 'OXID'         => 'voucher_assigned_to_product',
-                'OXDISCOUNTID' => 'personal_voucher',
+                'OXDISCOUNTID' => 'my_personal_voucher',
                 'OXOBJECTID'   => self::PRODUCT_ID,
                 'OXTYPE'       => 'oxarticles',
             ]
         );
 
         $basketId = $this->prepareBasket($I, 'product_voucher_yes');
-        $this->addVoucherToBasket($I, $basketId, 'myVoucher');
+        $this->addVoucherToBasket($I, $basketId, 'myPersonalVoucher');
         $basketCosts = $this->checkBasketCosts($I, $basketId);
 
         //place the order
-        $this->checkPlaceOrder($I, $basketId, $basketCosts, 'personal_voucher_1');
+        $this->checkPlaceOrder($I, $basketId, $basketCosts, 'my_personal_voucher_1');
 
         //remove basket and voucher relation
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -217,11 +217,11 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         );
 
         $basketId = $this->prepareBasket($I, 'category_voucher_yes');
-        $this->addVoucherToBasket($I, $basketId, 'myVoucher');
+        $this->addVoucherToBasket($I, $basketId, 'myPersonalVoucher');
         $basketCosts = $this->checkBasketCosts($I, $basketId);
 
         //place the order
-        $this->checkPlaceOrder($I, $basketId, $basketCosts, 'personal_voucher_1');
+        $this->checkPlaceOrder($I, $basketId, $basketCosts, 'my_personal_voucher_1');
 
         //remove basket and discount relation
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -290,17 +290,17 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
             [
                 'OXID'       => 'voucher_assigned_to_user_group',
                 'OXSHOPID'   => 1,
-                'OXOBJECTID' => 'personal_voucher',
+                'OXOBJECTID' => 'my_personal_voucher',
                 'OXGROUPSID' => 'oxidcustomer',
             ]
         );
 
         $basketId = $this->prepareBasket($I, 'usergroup_voucher_yes');
-        $this->addVoucherToBasket($I, $basketId, 'myVoucher');
+        $this->addVoucherToBasket($I, $basketId, 'myPersonalVoucher');
         $basketCosts = $this->checkBasketCosts($I, $basketId);
 
         //place the order
-        $this->checkPlaceOrder($I, $basketId, $basketCosts, 'personal_voucher_1');
+        $this->checkPlaceOrder($I, $basketId, $basketCosts, 'my_personal_voucher_1');
 
         //remove basket and discount relation
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -366,15 +366,15 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxminimumvalue' => 20.00],
-            ['oxid'           => 'personal_voucher']
+            ['oxid'           => 'my_personal_voucher']
         );
 
         $basketId = $this->prepareBasket($I, 'minvalue_voucher_ok');
-        $this->addVoucherToBasket($I, $basketId, 'myVoucher');
+        $this->addVoucherToBasket($I, $basketId, 'myPersonalVoucher');
         $basketCosts = $this->checkBasketCosts($I, $basketId);
 
         //place the order
-        $this->checkPlaceOrder($I, $basketId, $basketCosts, 'personal_voucher_1');
+        $this->checkPlaceOrder($I, $basketId, $basketCosts, 'my_personal_voucher_1');
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -416,7 +416,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->prepareBasket($I, 'cart_for_deleted_voucher');
-        $this->addVoucherToBasket($I, $basketId, 'myVoucher');
+        $this->addVoucherToBasket($I, $basketId, 'myDeleteVoucher');
 
         //check the basket costs
         $basketCosts = $this->checkBasketCosts($I, $basketId);
@@ -425,7 +425,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->deleteFromDatabase(
             'oxvouchers',
             [
-                'oxid' => 'personal_voucher_1',
+                'oxid' => 'my_delete_voucher_1',
             ]
         );
 
@@ -448,10 +448,10 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
                 'OXORDERID'        => '',
                 'OXUSERID'         => '',
                 'OXRESERVED'       => 0,
-                'OXVOUCHERNR'      => 'myVoucher',
-                'OXVOUCHERSERIEID' => 'personal_voucher',
+                'OXVOUCHERNR'      => 'myDeleteVoucher',
+                'OXVOUCHERSERIEID' => 'delete_voucher',
                 'OXDISCOUNT'       => 5,
-                'OXID'             => 'personal_voucher_1',
+                'OXID'             => 'my_delete_voucher_1',
                 'OXTIMESTAMP'      => date('Y-m-d', strtotime('-1 day')),
                 'OEGQL_BASKETID'   => 'null',
             ]
@@ -514,7 +514,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         AcceptanceTester $I,
         string $basketId,
         array $basketCosts,
-        string $voucherId = 'voucher1id'
+        string $voucherId = 'voucher1xid'
     ): void {
         //place the order
         $result  = $this->placeOrder($I, $basketId);

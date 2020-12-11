@@ -41,7 +41,7 @@ function getTestDataDumpFilePath()
     $path = __DIR__ . '/../../Fixtures/testdemodata.sql';
 
     if ($facts->isEnterprise()) {
-        $path = __DIR__ . '/../../Fixtures/testdemodata' . '_ee' . '.sql';
+        $path = __DIR__ . '/../../Fixtures/testdemodata_ee.sql';
     }
 
     return $path;
