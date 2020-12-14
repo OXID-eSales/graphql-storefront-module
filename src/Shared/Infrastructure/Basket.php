@@ -45,7 +45,7 @@ final class Basket
         $basketModel = oxNew(EshopBasketModel::class);
 
         foreach ($savedItems as $key => $savedItem) {
-            $basketModel->addProductToBasket($savedItem, $key);
+            $basketModel->addProductToBasket($savedItem);
         }
 
         //Set user to basket otherwise delivery cost will not be calculated
