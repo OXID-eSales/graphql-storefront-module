@@ -206,6 +206,7 @@ final class Basket
 
         /** @var EshopBasketModel $basketModel */
         $basketModel = $this->sharedBasketInfrastructure->getCalculatedBasket($userBasket);
+        EshopRegistry::getSession()->setBasket($basketModel);
 
         /** @var OrderModel $orderModel */
         $orderModel = oxNew(OrderModel::class);
@@ -215,7 +216,7 @@ final class Basket
         if ($status === $orderModel::ORDER_STATE_OK || $status === $orderModel::ORDER_STATE_MAILINGERROR) {
             $userBasketModel->delete();
         } else {
-            throw PlaceOrderException::byBasketId($userBasketModel->getId(), (int) $status);
+            throw PlaceOrderException::byBasketId($userBasketModel->getId(), (string) $status);
         }
 
         //return order data type

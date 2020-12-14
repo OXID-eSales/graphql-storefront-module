@@ -31,9 +31,9 @@ final class PlaceOrder extends Exception implements ClientAware, HttpErrorInterf
         return ErrorCategories::REQUESTERROR;
     }
 
-    public static function byBasketId(string $id, int $status): self
+    public static function byBasketId(string $id, string $status): self
     {
-        return new self(vsprintf('Place order for user basket id: %s has status %i', [$id, $status]));
+        return new self(vsprintf('Place order for user basket id: %s has status %s', [$id, $status]));
     }
 
     public static function emptyBasket(string $id): self
