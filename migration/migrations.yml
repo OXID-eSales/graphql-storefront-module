@@ -1,0 +1,4 @@
+name: GraphQL Storefront module migration
+migrations_namespace: OxidEsales\GraphQL\Storefront\Migrations
+table_name: oxmigrations_graphql_storefront
+migrations_directory: data

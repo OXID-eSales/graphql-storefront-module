@@ -42,6 +42,8 @@ $ composer test
 - change the `test_config.yml`
   - add `oe/graphql-base,oe/graphql-storefront` to the `partial_module_paths`
   - set `activate_all_modules` to `true`
+- `composer require codeception/module-rest --dev`
+- `composer require codeception/module-phpbrowser --dev`
 
 ```bash
 $ ./vendor/bin/runtests

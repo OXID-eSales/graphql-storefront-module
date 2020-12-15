@@ -23,7 +23,14 @@ return PhpCsFixer\Config::create()
             'space' => 'none'
         ],
         'function_typehint_space' => true,
-        'final_class' => true,
+        'final_internal_class' => [
+            'annotation-white-list' => [],
+            'consider-absent-docblock-as-internal-class' => true,
+            'annotation-black-list' => [
+                '@eshopExtension',
+                '@extendable-dataType'
+            ],
+        ],
         'method_argument_space' => [
             'on_multiline' => 'ensure_fully_multiline',
         ],

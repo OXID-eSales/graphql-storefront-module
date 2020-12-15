@@ -4,3 +4,13 @@ parameters:
     scanFiles:
         - vendor/oxid-esales/oxideshop-ce/source/oxfunctions.php
         - vendor/oxid-esales/oxideshop-ce/source/overridablefunctions.php
+    ignoreErrors:
+        -
+            message: '#Method OxidEsales\\GraphQL\\Storefront\\Basket\\Infrastructure\\BasketCost::getBasketCurrencyObject\(\) has no return typehint specified#'
+            path: src/Basket/Infrastructure/BasketCost.php
+    excludes_analyse:
+        - src/Framework/ModuleSetup.php
+        - src/Shared/Infrastructure/Basket.php
+        - src/Shared/Shop/Basket.php
+        - src/Voucher/Infrastructure/Voucher.php
+        - src/Shared/Shop/Voucher.php
