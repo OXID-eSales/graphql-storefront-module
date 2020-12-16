@@ -220,6 +220,50 @@ final class BasketCest extends BaseCest
         $this->assertCost($I, $result['data']['basket']['cost']);
     }
 
+    public function testBasketCostForPublicBasketAndNotLoggedInUser(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'query{
+                basket(id: "' . self::PUBLIC_BASKET . '") {
+                    id
+                    cost {
+                        productNet {
+                            price
+                            vat
+                        }
+                        productGross {
+                            vats {
+                                vatRate
+                                vatPrice
+                            }
+                            sum
+                        }
+                        currency {
+                            name
+                            rate
+                        }
+                        payment {
+                            price
+                        }
+                        discount
+                        voucher
+                        total
+                        delivery {
+                            price
+                        }
+                    }
+                }
+            }'
+        );
+
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        //We have no user so delivery costs will not be calculated unless blCalculateDelCostIfNotLoggedIn is set
+        $this->assertCost($I, $result['data']['basket']['cost'], 0.0);
+    }
+
     protected function boolDataProvider(): array
     {
         return [
@@ -275,7 +319,7 @@ final class BasketCest extends BaseCest
         return $I->grabJsonResponseAsArray();
     }
 
-    private function assertCost(AcceptanceTester $I, array $costs): void
+    private function assertCost(AcceptanceTester $I, array $costs, float $expectedDeliveryPrice = 3.9): void
     {
         $expected = [
             'productNet'   => [
@@ -300,12 +344,12 @@ final class BasketCest extends BaseCest
             ],
             'discount'     => 0,
             'voucher'      => 0,
-            'total'        => 21.4,
+            'total'        => 17.5 + $expectedDeliveryPrice,
             'delivery'     => [
-                'price' => 3.9,
+                'price' => $expectedDeliveryPrice,
             ],
         ];
 
-        $I->assertSame($expected, $costs);
+        $I->assertEquals($expected, $costs);
     }
 }
