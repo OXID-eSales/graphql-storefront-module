@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.1",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-master"
+        "oxid-esales/graphql-base": "^5.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.5.20|^8.5|^9",
