@@ -18,6 +18,11 @@
         "doctrine/dbal": "^v2.7",
         "oxid-esales/graphql-base": "^5.1"
     },
+    "conflict": {
+        "oxid-esales/graphql-catalogue": "*",
+        "oxid-esales/graphql-account": "*",
+        "oxid-esales/graphql-checkout": "*"
+    },
     "require-dev": {
         "phpunit/phpunit": "^7.5.20|^8.5|^9",
         "friendsofphp/php-cs-fixer": "^2.16.1",
