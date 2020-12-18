@@ -28,4 +28,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception;
 final class AcceptanceTester extends \Codeception\Actor
 {
     use _generated\AcceptanceTesterActions;
+
+    use \Codeception\Lib\Actor\Shared\Retry;
 }

@@ -37,3 +37,5 @@ modules:
     - \OxidEsales\GraphQL\Base\Tests\Codeception\Module\AcceptanceHelper:
         depends:
             - REST
+step_decorators:
+    - \Codeception\Step\Retry
