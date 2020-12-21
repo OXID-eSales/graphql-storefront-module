@@ -211,7 +211,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
 
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxnewssubscribed',
             [
                 'OXID'      => '_othertestuser1',
@@ -219,7 +219,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
             ]
         );
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxnewssubscribed',
             [
                 'OXID'      => '_othertestuser2',
@@ -254,7 +254,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
 
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxnewssubscribed',
             [
                 'OXID'      => '_othertestuser2',

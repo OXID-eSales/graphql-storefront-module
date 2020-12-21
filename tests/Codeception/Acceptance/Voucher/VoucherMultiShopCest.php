@@ -172,7 +172,7 @@ final class VoucherMultiShopCest extends MultishopBaseCest
         $this->getBasket($I, self::SHOP1_BASKET);
 
         //the voucher from shop2 should now be marked as not reserved
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => self::SHOP2_VOUCHER_ID,

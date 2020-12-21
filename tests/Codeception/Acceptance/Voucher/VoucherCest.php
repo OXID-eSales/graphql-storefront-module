@@ -63,11 +63,16 @@ final class VoucherCest extends BaseCest
         $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
     }
 
+    /**
+     * @group sieg
+     *
+     * @param AcceptanceTester $I
+     */
     public function testAddVoucher(AcceptanceTester $I): void
     {
         $this->prepareVoucher($I, '', 'personal_voucher_1');
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_voucher_1',
@@ -140,7 +145,7 @@ final class VoucherCest extends BaseCest
     {
         $this->prepareVoucherInBasket($I);
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_series_voucher_1',
@@ -148,7 +153,7 @@ final class VoucherCest extends BaseCest
                 'oegql_basketid' => '',
             ]
         );
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_series_voucher_2',
@@ -183,7 +188,7 @@ final class VoucherCest extends BaseCest
         $this->prepareVoucherInBasket($I);
         $this->prepareSeriesVouchers($I, 'personal_series_voucher');
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_series_voucher_1',
@@ -191,7 +196,7 @@ final class VoucherCest extends BaseCest
                 'oegql_basketid' => '',
             ]
         );
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_series_voucher_2',
@@ -219,7 +224,7 @@ final class VoucherCest extends BaseCest
 
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_series_voucher_1',
@@ -227,7 +232,7 @@ final class VoucherCest extends BaseCest
                 'oegql_basketid' => '',
             ]
         );
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_series_voucher_2',
@@ -260,7 +265,7 @@ final class VoucherCest extends BaseCest
         $this->prepareVoucherInBasket($I);
         $this->prepareSeriesVouchers($I, 'series_voucher');
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_series_voucher_1',
@@ -268,7 +273,7 @@ final class VoucherCest extends BaseCest
                 'oegql_basketid' => '',
             ]
         );
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxvouchers',
             [
                 'oxid'           => 'personal_series_voucher_2',

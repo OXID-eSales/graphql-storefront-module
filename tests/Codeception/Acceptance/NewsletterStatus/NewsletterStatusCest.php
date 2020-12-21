@@ -133,7 +133,7 @@ final class NewsletterStatusCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxnewssubscribed',
             [
                 'OXUSERID'  => self::OTHER_USER_OXID,
@@ -195,7 +195,7 @@ final class NewsletterStatusCest extends BaseCest
 
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
 
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxnewssubscribed',
             [
                 'OXUSERID'  => self::OTHER_USER_OXID,

@@ -387,7 +387,7 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
     private function assertSubscriptionHasNoEmailErrors(AcceptanceTester $I, string $email = self::OTHER_USERNAME): void
     {
-        $I->canSeeInDatabase(
+        $I->seeInDatabase(
             'oxnewssubscribed',
             [
                 'OXEMAIL'       => $email,
