@@ -44,6 +44,7 @@ $ composer test
   - set `activate_all_modules` to `true`
 - `composer require codeception/module-rest --dev`
 - `composer require codeception/module-phpbrowser --dev`
+- `composer require codeception/module-db --dev`
 
 ```bash
 $ ./vendor/bin/runtests
