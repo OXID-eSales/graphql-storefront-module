@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group graphql_session
  */
-final class NoSessionUsageCestCest extends BaseCest
+final class NoSessionUsageCest extends BaseCest
 {
     private const USERNAME = 'user@oxid-esales.com';
 
@@ -45,8 +45,7 @@ final class NoSessionUsageCestCest extends BaseCest
             }',
             [],
             0,
-            1,
-            false
+            1
         );
 
         //graphql only processes skipSession calls but this will be handled in shop .htaccess in rewrite rule

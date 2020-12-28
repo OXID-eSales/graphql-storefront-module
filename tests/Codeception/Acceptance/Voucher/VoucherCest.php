@@ -64,8 +64,6 @@ final class VoucherCest extends BaseCest
     }
 
     /**
-     * @group sieg
-     *
      * @param AcceptanceTester $I
      */
     public function testAddVoucher(AcceptanceTester $I): void

@@ -18,13 +18,11 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  */
 final class NoSessionUsageMultishopCest extends MultishopBaseCest
 {
-    private const SUBSHOP_PRODUCT_ID = '_test_product_77'; //shop 2 product
+    private const SUBSHOP_PRODUCT_ID = '_test_product_77'; //product exist in shop 2 only
 
     private const USERNAME = 'user@oxid-esales.com';
 
     private const PASSWORD = 'useruser';
-
-    private const PUBLIC_BASKET = '_test_basket_public'; //belongs to shop 1 user
 
     public function _after(AcceptanceTester $I): void
     {
@@ -33,36 +31,6 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
 
     public function testSubshopIdFromSessionParameter(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery(
-            'query{
-                product(id: "' . self::SUBSHOP_PRODUCT_ID . '") {
-                    id
-                    title
-                }
-            }',
-            [],
-            0,
-            2
-        );
-
-        //product does exist in shop 2
-        $I->seeResponseCodeIs(HttpCode::OK);
-
-        $I->sendGQLQuery(
-            'query{
-                product(id: "' . self::SUBSHOP_PRODUCT_ID . '") {
-                    id
-                    title
-                }
-            }',
-            [],
-            0,
-            1
-        );
-
-        //product does not exist in shop 1
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
-
         //Try again but this time send shop 2 sid but no shp parameter.
         //EE is forced to check session for shp. So in case sid parameter is sent,
         //session would started and subshop id found in 'actshop' session variable.
@@ -79,22 +47,16 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             $sid
         );
 
-//        $result = $I->grabJsonResponseAsArray();
-//        var_dump($result);
-
-
         //product does not exist in shop 1
         $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+    }
 
-        //Commented lines only work without session fixes in graphql-base module
-        //$I->seeResponseCodeIs(HttpCode::OK);
-        //$I->seeResponseIsJson();
-        //$result = $I->grabJsonResponseAsArray();
-        //$I->assertEquals('Product 721', $result['data']['product']['title']);
-
+    public function testSubshopIdSetToSession(AcceptanceTester $I): void
+    {
         //Try again with sending shop 2 sid but no shp parameter.
         //Only that we remove 'actshop' from session before call so we'll end up
         //with shop id 1 (default) and product is not found.
+        $sid = $this->getSubShopSessionId($I);
         $this->setShopIdToSession($sid);
         $this->sendQueryWithSidWithoutShopIdParameter(
             $I,
