@@ -42,8 +42,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             }',
             [],
             0,
-            2,
-            true
+            2
         );
 
         //product does exist in shop 2
@@ -58,8 +57,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             }',
             [],
             0,
-            1,
-            true
+            1
         );
 
         //product does not exist in shop 1
@@ -81,7 +79,12 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             $sid
         );
 
-        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
+//        $result = $I->grabJsonResponseAsArray();
+//        var_dump($result);
+
+
+        //product does not exist in shop 1
+        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
 
         //Commented lines only work without session fixes in graphql-base module
         //$I->seeResponseCodeIs(HttpCode::OK);
@@ -104,7 +107,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             $sid
         );
 
-        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
+        //product does not exist in shop 1
+        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
     }
 
     public function testSubshopIdFromSessionCookie(AcceptanceTester $I): void
@@ -118,8 +122,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             }',
             [],
             0,
-            1,
-            true
+            1
         );
 
         //product does not exist in shop 1
@@ -141,11 +144,6 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         );
 
         $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
-
-        //Session::start() is called during Config::init(). If not sid parameter is
-        //sent in request, shop searches for a session cookie. We cannot prevent
-        //session cookie usage for graphql, but skipSession parameter will prevent
-        //Session start even if sid cookie is present.
     }
 
     private function getSubShopSessionId(AcceptanceTester $I): string
@@ -183,9 +181,11 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        Registry::getSession()->setId($sid);
-        Registry::getSession()->setVariable('actshop', $shopId);
-        Registry::getSession()->freeze();
+
+        $session = Registry::getSession();
+        $session->setId($sid);
+        $session->setVariable('actshop', $shopId);
+        $session->freeze();
     }
 
     private function sendQueryWithSidWithoutShopIdParameter(AcceptanceTester $I, string $query, string $sid): void
