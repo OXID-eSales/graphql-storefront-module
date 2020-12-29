@@ -106,7 +106,12 @@ final class VoucherMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery($this->removeVoucherMutation(self::SHOP1_BASKET, self::SHOP2_VOUCHER_ID));
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $result = $I->grabJsonResponseAsArray();
+        $I->assertEquals(
+            'MESSAGE_COUPON_NOT_APPLIED_FOR_SHOP',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveVoucherWithMallUser(AcceptanceTester $I): void

@@ -14,7 +14,7 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
-use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNotFound;
+use OxidEsales\GraphQL\Storefront\Voucher\Exception\SeriesNotConfigured;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRepository;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Voucher as VoucherInfrastructure;
 
@@ -57,7 +57,7 @@ final class BasketVoucher
         $voucher = $this->voucherRepository->getVoucherByNumber($voucherNumber);
 
         if (!$this->voucherInfrastructure->isVoucherSerieUsableInCurrentShop($voucher)) {
-            throw VoucherNotFound::byNumber($voucherNumber);
+            throw SeriesNotConfigured::wrongShop();
         }
 
         $this->voucherInfrastructure->checkProductAvailability($basket, $voucher);
@@ -78,7 +78,7 @@ final class BasketVoucher
         $voucher = $this->voucherRepository->getVoucherById($voucherId);
 
         if (!$this->voucherInfrastructure->isVoucherSerieUsableInCurrentShop($voucher)) {
-            throw VoucherNotFound::byId($voucherId);
+            throw SeriesNotConfigured::wrongShop();
         }
 
         $this->voucherInfrastructure->removeVoucher(
