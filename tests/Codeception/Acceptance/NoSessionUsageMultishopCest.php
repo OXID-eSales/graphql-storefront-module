@@ -47,8 +47,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             $sid
         );
 
-        //product does not exist in shop 1
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        //We prevent graphql from processing any request with already started session
+        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
     }
 
     public function testSubshopIdSetToSession(AcceptanceTester $I): void
@@ -69,8 +69,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             $sid
         );
 
-        //product does not exist in shop 1
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        //We prevent graphql from processing any request with already started session
+        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
     }
 
     public function testSubshopIdFromSessionCookie(AcceptanceTester $I): void
@@ -105,7 +105,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             $sid
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        //We prevent graphql from processing any request with already started session
+        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
     }
 
     private function getSubShopSessionId(AcceptanceTester $I): string
