@@ -20,6 +20,6 @@ final class VoucherNotUsable extends Exists
 
     public static function noProductsMessage(): self
     {
-        return new self("MESSAGE_COUPON_NOT_APPLIED_FOR_ARTICLES");
+        return new self('MESSAGE_COUPON_NOT_APPLIED_FOR_ARTICLES');
     }
 }

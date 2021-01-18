@@ -15,6 +15,6 @@ final class SeriesNotConfigured extends Exists
 {
     public static function wrongShop(): self
     {
-        return new self("MESSAGE_COUPON_NOT_APPLIED_FOR_SHOP");
+        return new self('MESSAGE_COUPON_NOT_APPLIED_FOR_SHOP');
     }
 }
