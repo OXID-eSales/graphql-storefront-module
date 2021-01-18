@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketIn
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNotApplied;
 use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNotFound;
+use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNotUsable;
 
 final class Voucher
 {
@@ -68,7 +69,7 @@ final class Voucher
         } catch (Exception $exception) {
             $this->transactionService->rollback();
 
-            throw VoucherNotFound::byNumber($voucher->voucher());
+            throw VoucherNotUsable::withMessage($exception->getMessage());
         }
         $this->transactionService->commit();
     }
@@ -153,7 +154,7 @@ final class Voucher
         }
 
         if (!$productIsInBasket) {
-            throw VoucherNotFound::byNumber($voucher->number());
+            throw VoucherNotUsable::noProductsMessage();
         }
     }
 
