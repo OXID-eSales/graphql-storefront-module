@@ -21,7 +21,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketIn
  * @mixin Voucher
  * @eshopExtension
  */
-final class Voucher extends Voucher_parent
+class Voucher extends Voucher_parent
 {
     public function unMarkAsReserved(): void
     {
