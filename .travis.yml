@@ -26,7 +26,7 @@ env:
     - DEFAULT_COMPOSER_FLAGS="--no-interaction --no-ansi --no-progress --no-suggest"
 
 before_install:
-    - composer self-update --1
+    - if [ "$DEPENDENCIES" == " --prefer-lowest" ]; then composer self-update --1; fi;
     - phpenv config-rm xdebug.ini
 
 install:
