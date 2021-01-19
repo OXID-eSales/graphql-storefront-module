@@ -21,7 +21,7 @@ use OxidEsales\Eshop\Core\Price as EshopPrice;
  * @mixin Basket
  * @eshopExtension
  */
-final class Basket extends Basket_parent
+class Basket extends Basket_parent
 {
     /**
      * Add product to basket without doing any check.
