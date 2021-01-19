@@ -63,9 +63,6 @@ final class VoucherCest extends BaseCest
         $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
     }
 
-    /**
-     * @param AcceptanceTester $I
-     */
     public function testAddVoucher(AcceptanceTester $I): void
     {
         $this->prepareVoucher($I, '', 'personal_voucher_1');
