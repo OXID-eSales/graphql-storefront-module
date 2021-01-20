@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Service;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforePlaceOrder;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder as PlaceOrderException;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
@@ -24,6 +25,7 @@ use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\Payment as PaymentDataType;
 use OxidEsales\GraphQL\Storefront\Payment\Exception\MissingPayment;
 use OxidEsales\GraphQL\Storefront\Payment\Exception\UnavailablePayment;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class PlaceOrder
@@ -46,13 +48,17 @@ final class PlaceOrder
     /** @var BasketRelationService */
     private $basketRelationService;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     public function __construct(
         Authentication $authenticationService,
         Legacy $legacyService,
         CustomerService $customerService,
         BasketInfrastructure $basketInfrastructure,
         BasketRelationService $basketRelationService,
-        BasketService $basketService
+        BasketService $basketService,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->authenticationService  = $authenticationService;
         $this->legacyService          = $legacyService;
@@ -60,6 +66,7 @@ final class PlaceOrder
         $this->basketRelationService  = $basketRelationService;
         $this->basketInfrastructure   = $basketInfrastructure;
         $this->basketService          = $basketService;
+        $this->eventDispatcher        = $eventDispatcher;
     }
 
     /**
@@ -69,6 +76,13 @@ final class PlaceOrder
      */
     public function placeOrder(ID $basketId, ?bool $termsAndConditions = null): OrderDataType
     {
+        $this->eventDispatcher->dispatch(
+            BeforePlaceOrder::NAME,
+            new BeforePlaceOrder(
+                $basketId
+            )
+        );
+
         $userBasket = $this->basketService->getAuthenticatedCustomerBasket((string) $basketId->val());
 
         $this->checkTermsAndConditionsConsent($userBasket, $termsAndConditions);
