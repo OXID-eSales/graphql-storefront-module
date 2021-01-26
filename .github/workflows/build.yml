@@ -1,0 +1,57 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+    DEFAULT_COMPOSER_FLAGS: --no-interaction --no-ansi --no-progress --no-suggest --prefer-dist
+
+jobs:
+    build:
+        runs-on: Ubuntu-20.04
+        strategy:
+            matrix:
+                php: ['7.1', '7.2', '7.3', '7.4']
+                DEPENDENCIES: ['', '--prefer-lowest']
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+
+            - name: Downgrade composer
+              if: ${{ matrix.DEPENDENCIES == '--prefer-lowest' }}
+              run: composer self-update --1
+
+            - name: Get composer cache directory
+              id: composer-cache
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            - name: Cache dependencies
+              uses: actions/cache@v2
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
+
+            - name: Install dependencies
+              run: composer update $DEFAULT_COMPOSER_FLAGS ${{ matrix.DEPENDENCIES }}
+
+            - name: Syntax Test
+              run: composer test:syntax
+
+            - name: Lint Test
+              run: composer test:lint
+
+            - name: Unit Tests
+              run: composer test:unit
+
+            - name: Static Analyzer
+              if: ${{ matrix.php == 7.4 && matrix.DEPENDENCIES == '' }}
+              run:  composer test:static
+
+            - name: Deptrac Analyzer
+              if: ${{ matrix.php == 7.4 && matrix.DEPENDENCIES == '' }}
+              run:  composer test:deptrac
