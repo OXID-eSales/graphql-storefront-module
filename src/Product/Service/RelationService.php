@@ -85,11 +85,11 @@ final class RelationService
     public function getListPrice(Product $product): ?Price
     {
         $listPrice = $product->getEshopModel()->getTPrice();
-        
+
         if ($listPrice === null) {
             return null;
         }
-        
+
         return new Price($listPrice);
     }
 
