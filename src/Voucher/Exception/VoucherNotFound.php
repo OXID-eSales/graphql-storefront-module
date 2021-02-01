@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Voucher\Exception;
 
-use OxidEsales\GraphQL\Base\Exception\NotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Exception\NotFound;
 
 final class VoucherNotFound extends NotFound
 {
