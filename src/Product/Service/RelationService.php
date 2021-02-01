@@ -82,11 +82,15 @@ final class RelationService
     /**
      * @Field()
      */
-    public function getListPrice(Product $product): Price
+    public function getListPrice(Product $product): ?Price
     {
-        return new Price(
-            $product->getEshopModel()->getTPrice()
-        );
+        $listPrice = $product->getEshopModel()->getTPrice();
+
+        if ($listPrice === null) { // @phpstan-ignore-line
+            return null;
+        }
+
+        return new Price($listPrice);
     }
 
     /**
