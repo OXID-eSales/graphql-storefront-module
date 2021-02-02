@@ -77,8 +77,13 @@ final class VoucherMultiShopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            sprintf('Voucher by number: %s was not found or was not applicable', self::SHOP1_VOUCHER_NR),
+            'ERROR_MESSAGE_VOUCHER_NOVOUCHER',
             $result['errors'][0]['message']
+        );
+
+        $I->assertEquals(
+            self::SHOP1_VOUCHER_NR,
+            $result['errors'][0]['extensions']['number']
         );
     }
 
@@ -93,8 +98,13 @@ final class VoucherMultiShopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            sprintf('Voucher by number: %s was not found or was not applicable', self::SHOP2_VOUCHER_NR),
+            'ERROR_MESSAGE_VOUCHER_NOVOUCHER',
             $result['errors'][0]['message']
+        );
+
+        $I->assertEquals(
+            self::SHOP2_VOUCHER_NR,
+            $result['errors'][0]['extensions']['number']
         );
     }
 

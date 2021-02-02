@@ -114,8 +114,13 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            sprintf('Voucher by number: %s was not found or was not applicable', self::WRONG_VOUCHER),
+            'ERROR_MESSAGE_VOUCHER_NOVOUCHER',
             $result['errors'][0]['message']
+        );
+
+        $I->assertEquals(
+            self::WRONG_VOUCHER,
+            $result['errors'][0]['extensions']['number']
         );
     }
 
@@ -131,8 +136,13 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            sprintf('Voucher by number: %s was not found or was not applicable', self::USED_VOUCHER),
+            'ERROR_MESSAGE_VOUCHER_NOVOUCHER',
             $result['errors'][0]['message']
+        );
+
+        $I->assertEquals(
+            self::USED_VOUCHER,
+            $result['errors'][0]['extensions']['number']
         );
     }
 
@@ -318,8 +328,13 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            sprintf('Voucher was not found by id: %s', self::WRONG_VOUCHER),
+            'ERROR_MESSAGE_VOUCHER_NOVOUCHER',
             $result['errors'][0]['message']
+        );
+
+        $I->assertEquals(
+            self::WRONG_VOUCHER,
+            $result['errors'][0]['extensions']['id']
         );
     }
 

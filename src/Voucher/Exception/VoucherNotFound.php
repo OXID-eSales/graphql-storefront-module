@@ -9,19 +9,39 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Voucher\Exception;
 
-use OxidEsales\GraphQL\Base\Exception\NotFound;
-
-use function sprintf;
+use OxidEsales\GraphQL\Storefront\Shared\Exception\NotFound;
 
 final class VoucherNotFound extends NotFound
 {
+    protected const DEFAULT_MESSAGE = 'ERROR_MESSAGE_VOUCHER_NOVOUCHER';
+
     public static function byId(string $id): self
     {
-        return new self(sprintf('Voucher was not found by id: %s', $id));
+        return new self(
+            self::DEFAULT_MESSAGE,
+            null,
+            null,
+            null,
+            null,
+            null,
+            [
+                'id' => $id,
+            ]
+        );
     }
 
     public static function byNumber(string $number): self
     {
-        return new self(sprintf('Voucher by number: %s was not found or was not applicable', $number));
+        return new self(
+            self::DEFAULT_MESSAGE,
+            null,
+            null,
+            null,
+            null,
+            null,
+            [
+                'number' => $number,
+            ]
+        );
     }
 }
