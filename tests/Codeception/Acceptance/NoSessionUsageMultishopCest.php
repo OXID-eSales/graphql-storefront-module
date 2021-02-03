@@ -136,7 +136,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
 
     private function setShopIdToSession(string $sid, int $shopId = 0): void
     {
-        $shopId = (0 === $shopId) ? null: $shopId;
+        $shopId = (0 === $shopId) ? null : $shopId;
 
         //Get 'actshop' variable value 2 (subshop) into this session/remove it.
         session_id($sid);
