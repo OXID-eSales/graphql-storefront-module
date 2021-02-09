@@ -51,7 +51,7 @@ final class Customer
         $orders     = [];
 
         foreach ($ordersList->getArray() as $orderId => $orderModel) {
-            /** @var EshopOrderModel @$orderModel */
+            /** @var EshopOrderModel $orderModel */
             $orders[] = new OrderDataType($orderModel);
         }
 
