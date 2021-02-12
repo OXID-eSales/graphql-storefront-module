@@ -71,6 +71,15 @@ return PhpCsFixer\Config::create()
         ],
         'declare_strict_types' => true,
         'dir_constant' => true,
+        'final_internal_class' => [
+            'annotation-white-list' => [],
+            'consider-absent-docblock-as-internal-class' => true,
+            'annotation-black-list' => [
+                '@eshopExtension',
+                '@dataType-extension',
+                '@extendable-dataType'
+            ],
+        ],
         'global_namespace_import' => [
             'import_classes' => true,
             'import_constants' => true,
