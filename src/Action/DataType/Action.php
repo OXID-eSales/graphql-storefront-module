@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Action\DataType;
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\ArticleList;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
@@ -33,7 +34,7 @@ final class Action implements DataType
         $this->action = $action;
 
         if (!in_array($action->getFieldData('oxtype'), self::ACTION_TYPE)) {
-            throw new \OxidEsales\GraphQL\Base\Exception\NotFound();
+            throw NotFound::notFound();
         }
     }
 

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Voucher\Exception;
 
-use OxidEsales\GraphQL\Storefront\Shared\Exception\NotFound;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 
 final class VoucherNotFound extends NotFound
 {
@@ -17,31 +17,11 @@ final class VoucherNotFound extends NotFound
 
     public static function byId(string $id): self
     {
-        return new self(
-            self::DEFAULT_MESSAGE,
-            null,
-            null,
-            null,
-            null,
-            null,
-            [
-                'id' => $id,
-            ]
-        );
+        return new self(self::DEFAULT_MESSAGE, 0, null, 'Exception', ['id' => $id]);
     }
 
     public static function byNumber(string $number): self
     {
-        return new self(
-            self::DEFAULT_MESSAGE,
-            null,
-            null,
-            null,
-            null,
-            null,
-            [
-                'number' => $number,
-            ]
-        );
+        return new self(self::DEFAULT_MESSAGE, 0, null, 'Exception', ['number' => $number]);
     }
 }
