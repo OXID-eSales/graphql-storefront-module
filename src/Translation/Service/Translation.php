@@ -12,16 +12,22 @@ namespace OxidEsales\GraphQL\Storefront\Translation\Service;
 use OxidEsales\GraphQL\Storefront\Translation\Exception\TranslationNotFound;
 use OxidEsales\GraphQL\Storefront\Translation\Infrastructure\Translation as TranslationInfrastructure;
 use OxidEsales\GraphQL\Storefront\Translation\DataType\Translation as TranslationDataType;
+use OxidEsales\GraphQL\Base\Infrastructure\Legacy as LegacyInfrastructure;
 
 final class Translation
 {
     /** @var TranslationInfrastructure */
     private $translationInfrastructure;
 
+    /** @var LegacyInfrastructure */
+    private $legacyInfrastructure;
+
     public function __construct(
-        TranslationInfrastructure $translationInfrastructure
+        TranslationInfrastructure $translationInfrastructure,
+        LegacyInfrastructure $legacyInfrastructure
     ) {
         $this->translationInfrastructure = $translationInfrastructure;
+        $this->legacyInfrastructure = $legacyInfrastructure;
     }
 
     /**
@@ -29,10 +35,10 @@ final class Translation
      */
     public function getTranslations(): array
     {
-        $translationsList = $this->translationInfrastructure->getTranslations(0);
+        $languageId = $this->legacyInfrastructure->getLanguageId();
+        $translationsList = $this->translationInfrastructure->getTranslations($languageId);
 
         $result = [];
-
         foreach ($translationsList as $key => $value) {
             if (!is_string($value)) {
                 continue;
@@ -46,7 +52,8 @@ final class Translation
 
     public function getTranslation(string $key): TranslationDataType
     {
-        $translations = $this->translationInfrastructure->getTranslations(0);
+        $languageId = $this->legacyInfrastructure->getLanguageId();
+        $translations = $this->translationInfrastructure->getTranslations($languageId);
 
         if (!isset($translations[$key])) {
             throw TranslationNotFound::byKey($key);

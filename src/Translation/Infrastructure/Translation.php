@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Translation\Infrastructure;
 
-use OxidEsales\GraphQL\Storefront\Translation\DataType\Translation as TranslationDataType;
-
 final class Translation
 {
     public function getTranslations(int $languageId): array
