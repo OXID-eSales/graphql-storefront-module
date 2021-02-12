@@ -37,6 +37,7 @@ final class NamespaceMapper implements NamespaceMapperInterface
             '\\OxidEsales\\GraphQL\\Storefront\\Basket\\Controller'                => __DIR__ . '/../../Basket/Controller/',
             '\\OxidEsales\\GraphQL\\Storefront\\Contact\\Controller'               => __DIR__ . '/../../Contact/Controller/',
             '\\OxidEsales\\GraphQL\\Storefront\\Address\\Controller'               => __DIR__ . '/../../Address/Controller/',
+            '\\OxidEsales\\GraphQL\\Storefront\\Translation\\Controller'           => __DIR__ . '/../../Translation/Controller/',
 
         ];
     }
@@ -101,6 +102,9 @@ final class NamespaceMapper implements NamespaceMapperInterface
             '\\OxidEsales\\GraphQL\\Storefront\\DeliveryMethod\\DataType'          => __DIR__ . '/../../DeliveryMethod/DataType/',
             '\\OxidEsales\\GraphQL\\Storefront\\Payment\\DataType'                 => __DIR__ . '/../../Payment/DataType/',
             '\\OxidEsales\\GraphQL\\Storefront\\DeliveryMethod\\Service'           => __DIR__ . '/../../DeliveryMethod/Service/',
+            '\\OxidEsales\\GraphQL\\Storefront\\Translation\\DataType'             => __DIR__ . '/../../Translation/DataType/',
+            '\\OxidEsales\\GraphQL\\Storefront\\Translation\\Infrastructure'       => __DIR__ . '/../../Translation/Infrastructure/',
+            '\\OxidEsales\\GraphQL\\Storefront\\Translation\\Service'              => __DIR__ . '/../../Translation/Service/',
         ];
     }
 }
