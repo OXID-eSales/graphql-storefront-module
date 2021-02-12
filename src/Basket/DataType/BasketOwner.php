@@ -28,6 +28,11 @@ final class BasketOwner implements DataType
         $this->owner = $owner;
     }
 
+    public function getEshopModel(): EshopUserModel
+    {
+        return $this->owner;
+    }
+
     /**
      * @Field()
      */
