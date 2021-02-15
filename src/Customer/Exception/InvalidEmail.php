@@ -9,21 +9,15 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Customer\Exception;
 
-use Exception;
-use GraphQL\Error\ClientAware;
+use OxidEsales\GraphQL\Base\Exception\Error;
 use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
 use OxidEsales\GraphQL\Base\Exception\HttpErrorInterface;
 
-final class InvalidEmail extends Exception implements ClientAware, HttpErrorInterface
+final class InvalidEmail extends Error implements HttpErrorInterface
 {
     public function getHttpStatus(): int
     {
         return 400;
-    }
-
-    public function isClientSafe(): bool
-    {
-        return true;
     }
 
     public function getCategory(): string
