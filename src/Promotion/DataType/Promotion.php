@@ -11,8 +11,8 @@ namespace OxidEsales\GraphQL\Storefront\Promotion\DataType;
 
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
-use OxidEsales\GraphQL\Storefront\Shared\Exception\WrongType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -32,7 +32,7 @@ final class Promotion implements DataType
         $this->actionsModel = $actionsModel;
 
         if ($actionsModel->getFieldData('oxtype') !== self::PROMOTION_ACTION_TYPE) {
-            throw new WrongType();
+            throw NotFound::notFound();
         }
     }
 
