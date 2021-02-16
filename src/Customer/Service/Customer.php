@@ -42,10 +42,10 @@ final class Customer
         Authentication $authenticationService,
         Legacy $legacyService
     ) {
-        $this->repository            = $repository;
-        $this->customerRepository    = $customerRepository;
-        $this->authenticationService = $authenticationService;
-        $this->legacyService         = $legacyService;
+        $this->repository             = $repository;
+        $this->customerRepository     = $customerRepository;
+        $this->authenticationService  = $authenticationService;
+        $this->legacyService          = $legacyService;
     }
 
     /**

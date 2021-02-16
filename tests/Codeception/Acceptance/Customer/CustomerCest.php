@@ -244,6 +244,14 @@ final class CustomerCest extends BaseCest
                 $customerData['birthdate']
             );
         }
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnotyetordered',
+            ]
+        );
     }
 
     /**

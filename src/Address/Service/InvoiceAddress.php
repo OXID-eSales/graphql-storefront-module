@@ -13,6 +13,7 @@ use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress as InvoiceAddressDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Shop\User;
 
 final class InvoiceAddress
 {
@@ -44,7 +45,11 @@ final class InvoiceAddress
             throw new InvalidLogin('Unauthorized');
         }
 
-        $this->repository->saveModel($invoiceAddress->getEshopModel());
+        $userModel = $invoiceAddress->getEshopModel();
+        $this->repository->saveModel($userModel);
+
+        /** @var User $userModel */
+        $userModel->setAutomaticUserGroups();
 
         return $invoiceAddress;
     }
