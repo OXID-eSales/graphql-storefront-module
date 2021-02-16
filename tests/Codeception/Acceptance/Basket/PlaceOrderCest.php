@@ -22,9 +22,12 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  */
 final class PlaceOrderCest extends PlaceOrderBaseCest
 {
+<<<<<<< HEAD
     /**
      * @group allowed_to_fail_for_anonymous_token
      */
+=======
+>>>>>>> e991761... OXDEV-4352 Use Rights annotation instead of Logged for create/modify basket and place an order
     public function placeOrderWithAnonymousUser(AcceptanceTester $I): void
     {
         $I->wantToTest('anonymous user is placing an order');
