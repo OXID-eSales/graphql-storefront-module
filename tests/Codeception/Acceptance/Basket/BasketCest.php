@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
 use Codeception\Util\HttpCode;
+use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -173,6 +174,17 @@ final class BasketCest extends BaseCest
         $this->basketCreateMutation($I, self::BASKET_WISH_LIST);
 
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+    }
+
+    public function testCreateBasketMutationAnonymousUser(AcceptanceTester $I): void
+    {
+        $I->login();
+
+        $result = $this->basketCreateMutation($I, self::BASKET_WISH_LIST);
+
+        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketCreate', 'Mutation', [], []);
+        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
     }
 
     public function testBasketCost(AcceptanceTester $I): void

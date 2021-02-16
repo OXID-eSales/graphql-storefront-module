@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Util\HttpCode;
+use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -21,6 +22,28 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  */
 final class PlaceOrderCest extends PlaceOrderBaseCest
 {
+    public function placeOrderWithAnonymousUser(AcceptanceTester $I): void
+    {
+        $I->wantToTest('anonymous user is placing an order');
+        $I->login(self::USERNAME, self::PASSWORD, 0);
+
+        //prepare basket
+        $basketId = $this->createBasket($I, 'my_anonymous_cart');
+        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
+        $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
+
+        //place the order
+        $I->logout();
+        $I->login(null, null, 0);
+        $result  = $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+
+        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('placeOrder', 'Mutation', [], []);
+        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+
+        $this->removeBasket($I, $basketId, self::USERNAME);
+    }
+
     public function placeOrderUsingInvoiceAddress(AcceptanceTester $I): void
     {
         $I->wantToTest('placing an order successfully with invoice address only');
@@ -655,5 +678,85 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //place the order
         $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+    }
+
+    public function placeOrderWithNewlyRegisteredCustomer(AcceptanceTester $I): void
+    {
+        $I->wantToTest('register new customer, place order, check user group assignment after each step');
+
+        //register customer
+        $username     = 'newcheckoutuser@oxid-esales.com';
+        $password     = self::PASSWORD;
+        $customerData = $this->registerCustomer($I, $username, $password);
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnotyetordered',
+            ]
+        );
+
+        $I->dontSeeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnewcustomer',
+            ]
+        );
+
+        //log in and set invoice address
+        $I->login($username, $password);
+        $this->setInvoiceAddress($I);
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnotyetordered',
+            ]
+        );
+
+        //only after invoice address is set, user will be assigned to oxidnewcustomer, based on his invoice country
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnewcustomer',
+            ]
+        );
+
+        //prepare basket
+        $basketId = $this->createBasket($I, 'not_yet_ordered');
+        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
+        $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
+
+        //place the order
+        $this->placeOrder($I, $basketId, HttpCode::OK);
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidcustomer',
+            ]
+        );
+
+        $I->dontSeeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnotyetordered',
+            ]
+        );
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnewcustomer',
+            ]
+        );
     }
 }

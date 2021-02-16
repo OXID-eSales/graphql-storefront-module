@@ -10,7 +10,8 @@ EOF;
 $finder = PhpCsFixer\Finder::create()
     ->exclude('Codeception/_support/_generated/')
     ->in(__DIR__ . '/src')
-    ->in(__DIR__ . '/tests/');
+    ->in(__DIR__ . '/tests/')
+    ->name('*.stub');
 
 return PhpCsFixer\Config::create()
     ->setFinder($finder)

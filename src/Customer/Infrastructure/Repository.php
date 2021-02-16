@@ -33,6 +33,9 @@ final class Repository
     {
         if (!$user->exists()) {
             $this->repository->saveModel($user);
+            //A newly created user will be assigned to oxidnotyetordered user groups,
+            //same as in \OxidEsales\EshopCommunity\Application\Component\UserComponent::createUser()
+            $user->addToGroup('oxidnotyetordered');
         }
 
         if (!$user->load($user->getId())) {
