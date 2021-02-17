@@ -9,13 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Storefront\Exception;
 
-use Exception;
-use GraphQL\Error\ClientAware;
+use OxidEsales\GraphQL\Base\Exception\Error;
 use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
 use OxidEsales\GraphQL\Base\Exception\HttpErrorInterface;
 use Throwable;
 
-final class CustomerNotDeletable extends Exception implements ClientAware, HttpErrorInterface
+final class CustomerNotDeletable extends Error implements HttpErrorInterface
 {
     /** @var int */
     private $httpStatus;
@@ -30,11 +29,6 @@ final class CustomerNotDeletable extends Exception implements ClientAware, HttpE
     public function getHttpStatus(): int
     {
         return $this->httpStatus;
-    }
-
-    public function isClientSafe(): bool
-    {
-        return true;
     }
 
     public function getCategory(): string

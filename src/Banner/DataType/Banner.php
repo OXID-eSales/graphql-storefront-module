@@ -12,8 +12,8 @@ namespace OxidEsales\GraphQL\Storefront\Banner\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
-use OxidEsales\GraphQL\Storefront\Shared\Exception\WrongType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -33,7 +33,7 @@ final class Banner implements DataType
         $this->actionsModel = $actionsModel;
 
         if ($actionsModel->getFieldData('oxtype') !== self::ACTION_TYPE) {
-            throw new WrongType();
+            throw NotFound::notFound();
         }
     }
 
