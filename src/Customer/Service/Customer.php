@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Customer\Service;
 
 use DateTimeInterface;
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
@@ -56,6 +57,14 @@ final class Customer
     {
         if ((string) $id !== (string) $this->authenticationService->getUserId()) {
             throw new InvalidLogin('Unauthorized');
+        }
+
+        if ($this->authenticationService->getUserMode() === false) {
+            //todo: move to infrastructure
+            $user = oxNew(User::class);
+            $user->setId($id);
+
+            return new CustomerDataType($user);
         }
 
         return $this->fetchCustomer($id);

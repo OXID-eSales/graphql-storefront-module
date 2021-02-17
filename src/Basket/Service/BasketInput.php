@@ -49,9 +49,9 @@ final class BasketInput
      */
     public function fromUserInput(string $title, bool $public = false): BasketDataType
     {
-//        if ($this->doesBasketExist($title)) {
-//            throw BasketExists::byTitle($title);
-//        }
+        if ($this->doesBasketExist($title)) {
+            throw BasketExists::byTitle($title);
+        }
 
         return $this->basketFactory->createBasket($this->authentication->getUserId(), $title, $public);
     }
