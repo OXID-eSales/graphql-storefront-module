@@ -250,6 +250,8 @@ final class Basket
     }
 
     /**
+     * @throws InvalidLogin
+     * @throws InvalidToken
      */
     public function store(BasketDataType $basket): bool
     {

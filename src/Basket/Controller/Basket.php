@@ -48,6 +48,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @Right("ADD_PRODUCT_TO_BASKET")
      */
     public function basketAddProduct(string $basketId, string $productId, float $amount): BasketDataType
     {
@@ -57,6 +58,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @Right("REMOVE_BASKET_PRODUCT")
      */
     public function basketRemoveProduct(string $basketId, string $productId, int $amount): BasketDataType
     {
@@ -65,6 +67,8 @@ final class Basket
 
     /**
      * @Mutation()
+     * @Logged()
+     * @Right("CREATE_BASKET")
      */
     public function basketCreate(BasketDataType $basket): BasketDataType
     {
