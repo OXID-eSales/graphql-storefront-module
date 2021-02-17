@@ -13,10 +13,10 @@ use OxidEsales\GraphQL\Storefront\Translation\DataType\Translation as Translatio
 use OxidEsales\GraphQL\Storefront\Translation\Service\Translation as TranslationService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
-class Translation
+final class Translation
 {
     /** @var TranslationService */
-    protected $translationService;
+    private $translationService;
 
     public function __construct(
         TranslationService $translationService
