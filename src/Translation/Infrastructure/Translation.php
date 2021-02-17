@@ -15,6 +15,7 @@ final class Translation
     {
         /** @var \OxidEsales\GraphQL\Storefront\Shared\Shop\Language $language */
         $language = \OxidEsales\Eshop\Core\Registry::getLang();
+
         return $language->getTranslationKeys($languageId);
     }
 }

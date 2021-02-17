@@ -27,7 +27,7 @@ final class Translation
         string $key,
         string $value
     ) {
-        $this->key = $key;
+        $this->key   = $key;
         $this->value = $value;
     }
 
