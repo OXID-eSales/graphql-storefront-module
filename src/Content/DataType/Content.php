@@ -71,6 +71,14 @@ final class Content implements DataType
     /**
      * @Field()
      */
+    public function getRawContent(): string
+    {
+        return $this->content->getFieldData('oxcontent');
+    }
+
+    /**
+     * @Field()
+     */
     public function getFolder(): string
     {
         return $this->content->getFieldData('oxfolder');

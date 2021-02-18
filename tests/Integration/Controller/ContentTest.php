@@ -23,6 +23,8 @@ final class ContentTest extends TokenTestCase
 
     private const CATEGORY_RELATED_TO_ACTIVE_CONTENT  = '0f4fb00809cec9aa0910aa9c8fe36751';
 
+    private const CONTENT_WITH_TEMPLATE  = '4d4106027b63b623b2c4ee1ea6838d7f';
+
     public function testGetSingleActiveContent(): void
     {
         $result = $this->query('query {
@@ -31,6 +33,7 @@ final class ContentTest extends TokenTestCase
                 active
                 title
                 content
+                rawContent
                 folder
                 version
                 seo {
@@ -58,12 +61,14 @@ final class ContentTest extends TokenTestCase
         $this->assertEquals($content['category']['title'], 'Kites');
         $this->assertRegExp('@https?://.*/GraphQL-content-with-category-DE/$@', $content['seo']['url']);
         $this->assertContains('Content DE', $content['content']);
+        $this->assertContains('Content DE', $content['rawContent']);
 
         $this->assertEmpty(array_diff(array_keys($content), [
             'id',
             'active',
             'title',
             'content',
+            'rawContent',
             'folder',
             'version',
             'seo',
@@ -103,6 +108,7 @@ final class ContentTest extends TokenTestCase
                 active
                 title
                 content
+                rawContent
                 folder
                 version
                 seo {
@@ -164,7 +170,7 @@ final class ContentTest extends TokenTestCase
             $result['status']
         );
         $this->assertCount(
-            49,
+            50,
             $result['body']['data']['contents']
         );
     }
@@ -181,7 +187,7 @@ final class ContentTest extends TokenTestCase
 
         $this->assertEquals(200, $result['status']);
         $this->assertCount(
-            50,
+            51,
             $result['body']['data']['contents']
         ); //for admin token we get the inactive one as well
     }
@@ -219,7 +225,7 @@ final class ContentTest extends TokenTestCase
 
         $this->assertEquals(200, $result['status']);
         $this->assertCount(
-            43,
+            44,
             $result['body']['data']['contents']
         );
     }
@@ -359,5 +365,24 @@ final class ContentTest extends TokenTestCase
                 $contentCategory
             );
         }
+    }
+
+    public function testContentWithTemplate(): void
+    {
+        $result = $this->query('query {
+            content (id: "' . self::CONTENT_WITH_TEMPLATE . '") {
+                id
+                rawContent
+            }
+        }');
+
+        $this->assertResponseStatus(
+            200,
+            $result
+        );
+
+        $content = $result['body']['data']['content'];
+        $this->assertSame(self::CONTENT_WITH_TEMPLATE, $content['id']);
+        $this->assertContains('GraphQL [{if true }]rendered [{/if}]content DE', $content['rawContent']);
     }
 }
