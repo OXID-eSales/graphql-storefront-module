@@ -11,6 +11,8 @@ parameters:
     excludes_analyse:
         - src/Framework/ModuleSetup.php
         - src/Shared/Infrastructure/Basket.php
-        - src/Shared/Shop/Basket.php
         - src/Voucher/Infrastructure/Voucher.php
+        - src/Translation/Infrastructure/Translation.php
+        - src/Shared/Shop/Basket.php
+        - src/Shared/Shop/Language.php
         - src/Shared/Shop/Voucher.php
