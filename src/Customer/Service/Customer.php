@@ -59,7 +59,7 @@ final class Customer
             throw new InvalidLogin('Unauthorized');
         }
 
-        if ($this->authenticationService->getUserMode() === false) {
+        if ($this->authenticationService->isUserAnonymous() === true) {
             //todo: move to infrastructure
             $user = oxNew(User::class);
             $user->setId($id);

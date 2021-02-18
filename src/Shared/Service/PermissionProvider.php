@@ -38,11 +38,17 @@ final class PermissionProvider implements PermissionProviderInterface
                 'DELETE_DELIVERY_ADDRESS',
                 'DELETE_BASKET',
             ],
-            'oxtoken' => [
+            'oxidanonymous' => [
                 'CREATE_BASKET',
                 'ADD_PRODUCT_TO_BASKET',
                 'REMOVE_BASKET_PRODUCT',
             ],
+            'oxidcustomer' => [
+                'CREATE_BASKET',
+                'ADD_PRODUCT_TO_BASKET',
+                'REMOVE_BASKET_PRODUCT',
+                'REMOVE_BASKET',
+            ]
         ];
     }
 }

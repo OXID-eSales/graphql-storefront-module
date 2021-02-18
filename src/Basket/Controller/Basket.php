@@ -80,6 +80,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @Right("REMOVE_BASKET")
      */
     public function basketRemove(string $id): bool
     {
