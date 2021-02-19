@@ -21,11 +21,11 @@ final class NamespaceMapperTest extends TestCase
     {
         $namespaceMapper = new NamespaceMapper();
         $this->assertCount(
-            21,
+            22,
             $namespaceMapper->getControllerNamespaceMapping()
         );
         $this->assertCount(
-            57,
+            60,
             $namespaceMapper->getTypeNamespaceMapping()
         );
     }

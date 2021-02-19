@@ -25,6 +25,7 @@ $aModule = [
     'extend'      => [
         \OxidEsales\Eshop\Application\Model\Basket::class => \OxidEsales\GraphQL\Storefront\Shared\Shop\Basket::class,
         \OxidEsales\Eshop\Application\Model\Voucher::class => \OxidEsales\GraphQL\Storefront\Shared\Shop\Voucher::class,
+        \OxidEsales\Eshop\Core\Language::class => \OxidEsales\GraphQL\Storefront\Shared\Shop\Language::class,
     ],
     'controllers' => [
     ],
