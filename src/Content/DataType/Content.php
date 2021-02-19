@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Content\DataType;
 
+use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Content as EshopContentModel;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -61,11 +63,23 @@ final class Content implements DataType
     }
 
     /**
+     * Returns rendered HTML string that might contain script and style tags
+     *
      * @Field()
      */
     public function getContent(): string
     {
-        return $this->content->getFieldData('oxcontent');
+        $oActView = oxNew(FrontendController::class);
+        $oActView->addGlobalParams();
+
+        /** @var \OxidEsales\Eshop\Core\UtilsView $oUtilsView */
+        $oUtilsView = Registry::getUtilsView();
+
+        return $oUtilsView->getRenderedContent(
+            $this->content->getFieldData('oxcontent'),
+            $oActView->getViewData(),
+            $this->content->getId()
+        );
     }
 
     /**
