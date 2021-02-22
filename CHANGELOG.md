@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.1] - Unreleased
 
+### Added
+- Schema documentation available at https://oxid-esales.github.io/graphql-storefront-module
+
 ### Fixed
 - Remove ``final`` statement from shop extending classes [PR-3](https://github.com/OXID-eSales/graphql-storefront-module/pull/3).
 
