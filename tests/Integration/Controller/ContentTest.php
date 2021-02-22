@@ -372,6 +372,7 @@ final class ContentTest extends TokenTestCase
         $result = $this->query('query {
             content (id: "' . self::CONTENT_WITH_TEMPLATE . '") {
                 id
+                content
                 rawContent
             }
         }');
@@ -383,25 +384,7 @@ final class ContentTest extends TokenTestCase
 
         $content = $result['body']['data']['content'];
         $this->assertSame(self::CONTENT_WITH_TEMPLATE, $content['id']);
-        $this->assertContains('GraphQL [{if true }]rendered [{/if}]content DE', $content['rawContent']);
-    }
-
-    public function testRenderedContentWithTemplate(): void
-    {
-        $result = $this->query('query {
-            content (id: "' . self::CONTENT_WITH_TEMPLATE . '") {
-                id
-                content
-            }
-        }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
-        $content = $result['body']['data']['content'];
-        $this->assertSame(self::CONTENT_WITH_TEMPLATE, $content['id']);
         $this->assertContains('GraphQL rendered content DE', $content['content']);
+        $this->assertContains('GraphQL [{if true }]rendered [{/if}]content DE', $content['rawContent']);
     }
 }
