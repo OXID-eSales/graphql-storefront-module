@@ -83,6 +83,8 @@ final class Content implements DataType
     }
 
     /**
+     * Return not rendered, raw content
+     *
      * @Field()
      */
     public function getRawContent(): string
