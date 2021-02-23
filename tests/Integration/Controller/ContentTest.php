@@ -23,8 +23,6 @@ final class ContentTest extends TokenTestCase
 
     private const CATEGORY_RELATED_TO_ACTIVE_CONTENT  = '0f4fb00809cec9aa0910aa9c8fe36751';
 
-    private const CONTENT_WITH_TEMPLATE  = '4d4106027b63b623b2c4ee1ea6838d7f';
-
     public function testGetSingleActiveContent(): void
     {
         $result = $this->query('query {
@@ -170,7 +168,7 @@ final class ContentTest extends TokenTestCase
             $result['status']
         );
         $this->assertCount(
-            50,
+            49,
             $result['body']['data']['contents']
         );
     }
@@ -187,7 +185,7 @@ final class ContentTest extends TokenTestCase
 
         $this->assertEquals(200, $result['status']);
         $this->assertCount(
-            51,
+            50,
             $result['body']['data']['contents']
         ); //for admin token we get the inactive one as well
     }
@@ -225,7 +223,7 @@ final class ContentTest extends TokenTestCase
 
         $this->assertEquals(200, $result['status']);
         $this->assertCount(
-            44,
+            43,
             $result['body']['data']['contents']
         );
     }
@@ -365,26 +363,5 @@ final class ContentTest extends TokenTestCase
                 $contentCategory
             );
         }
-    }
-
-    public function testContentWithTemplate(): void
-    {
-        $result = $this->query('query {
-            content (id: "' . self::CONTENT_WITH_TEMPLATE . '") {
-                id
-                content
-                rawContent
-            }
-        }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
-        $content = $result['body']['data']['content'];
-        $this->assertSame(self::CONTENT_WITH_TEMPLATE, $content['id']);
-        $this->assertContains('GraphQL rendered content DE', $content['content']);
-        $this->assertContains('GraphQL [{if true }]rendered [{/if}]content DE', $content['rawContent']);
     }
 }
