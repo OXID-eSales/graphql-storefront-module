@@ -37,6 +37,12 @@ final class PermissionProvider implements PermissionProviderInterface
                 'VIEW_INACTIVE_COUNTRY',
                 'DELETE_DELIVERY_ADDRESS',
                 'DELETE_BASKET',
+                'CREATE_BASKET',
+                'ADD_PRODUCT_TO_BASKET',
+                'REMOVE_BASKET_PRODUCT',
+                'ADD_VOUCHER',
+                'REMOVE_VOUCHER',
+                'PLACE_ORDER',
             ],
             'oxidanonymous' => [
                 'CREATE_BASKET',
@@ -44,7 +50,7 @@ final class PermissionProvider implements PermissionProviderInterface
                 'REMOVE_BASKET_PRODUCT',
                 'ADD_VOUCHER',
                 'REMOVE_VOUCHER',
-                'PLACE_ORDER'
+                'PLACE_ORDER',
             ],
             'oxidcustomer' => [
                 'CREATE_BASKET',
@@ -52,8 +58,8 @@ final class PermissionProvider implements PermissionProviderInterface
                 'REMOVE_BASKET_PRODUCT',
                 'ADD_VOUCHER',
                 'REMOVE_VOUCHER',
-                'PLACE_ORDER'
-            ]
+                'PLACE_ORDER',
+            ],
         ];
     }
 }
