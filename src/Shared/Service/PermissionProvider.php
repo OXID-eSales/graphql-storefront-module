@@ -52,7 +52,7 @@ final class PermissionProvider implements PermissionProviderInterface
                 'REMOVE_VOUCHER',
                 'PLACE_ORDER',
             ],
-            'oxidcustomer' => [
+            'oxididentified' => [
                 'CREATE_BASKET',
                 'ADD_PRODUCT_TO_BASKET',
                 'REMOVE_BASKET_PRODUCT',
