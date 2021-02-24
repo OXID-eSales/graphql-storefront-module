@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Customer\Service;
 
 use DateTimeInterface;
-use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
@@ -20,6 +19,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerExists;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotDeletable;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer as CustomerInfrastructure;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository as CustomerRepository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
@@ -37,16 +37,21 @@ final class Customer
     /** @var Legacy */
     private $legacyService;
 
+    /** @var CustomerInfrastructure */
+    private $customerInfrastructure;
+
     public function __construct(
         Repository $repository,
         CustomerRepository $customerRepository,
         Authentication $authenticationService,
-        Legacy $legacyService
+        Legacy $legacyService,
+        CustomerInfrastructure $customerInfrastructure
     ) {
-        $this->repository            = $repository;
-        $this->customerRepository    = $customerRepository;
-        $this->authenticationService = $authenticationService;
-        $this->legacyService         = $legacyService;
+        $this->repository             = $repository;
+        $this->customerRepository     = $customerRepository;
+        $this->authenticationService  = $authenticationService;
+        $this->legacyService          = $legacyService;
+        $this->customerInfrastructure = $customerInfrastructure;
     }
 
     /**
@@ -60,11 +65,7 @@ final class Customer
         }
 
         if ($this->authenticationService->isUserAnonymous() === true) {
-            //todo: move to infrastructure
-            $user = oxNew(User::class);
-            $user->setId($id);
-
-            return new CustomerDataType($user);
+            return $this->customerInfrastructure->createAnonymousUser($id);
         }
 
         return $this->fetchCustomer($id);

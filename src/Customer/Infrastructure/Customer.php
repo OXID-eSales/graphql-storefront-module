@@ -82,4 +82,13 @@ final class Customer
 
         return (string) $userModel->getActiveCountry();
     }
+
+    public function createAnonymousUser(string$id): CustomerDataType
+    {
+        /** @var EshopUserModel $userModel */
+        $user = oxNew(EshopUserModel::class);
+        $user->setId($id);
+
+        return new CustomerDataType($user);
+    }
 }
