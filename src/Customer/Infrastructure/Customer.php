@@ -15,11 +15,22 @@ use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\Eshop\Core\Model\ListModel as EshopListModel;
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
+use OxidEsales\GraphQL\Storefront\Customer\Event\CreateAnonymousUser;
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderFile;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class Customer
 {
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
+    public function __construct(
+        EventDispatcherInterface $eventDispatcher
+    ) {
+        $this->eventDispatcher        = $eventDispatcher;
+    }
+
     /**
      * @return OrderDataType[]
      */
@@ -88,6 +99,14 @@ final class Customer
         /** @var EshopUserModel $user */
         $user = oxNew(EshopUserModel::class);
         $user->setId($id);
+
+        $this->eventDispatcher->dispatch(
+            CreateAnonymousUser::NAME,
+            new CreateAnonymousUser(
+                $user,
+                $id
+            )
+        );
 
         return new CustomerDataType($user);
     }
