@@ -3,20 +3,12 @@ parameters:
     bootstrapFiles:
         - tests/phpstan-bootstrap.php
     stubFiles:
+        - tests/stubs/EshopBasket.stub
         - tests/stubs/EshopUser.stub
+        - tests/stubs/EshopVoucher.stub
+        - tests/stubs/EshopDiscount.stub
+        - tests/stubs/EshopRegistry.stub
     level: max
     scanFiles:
         - vendor/oxid-esales/oxideshop-ce/source/oxfunctions.php
         - vendor/oxid-esales/oxideshop-ce/source/overridablefunctions.php
-    ignoreErrors:
-        -
-            message: '#Method OxidEsales\\GraphQL\\Storefront\\Basket\\Infrastructure\\BasketCost::getBasketCurrencyObject\(\) has no return typehint specified#'
-            path: src/Basket/Infrastructure/BasketCost.php
-    excludes_analyse:
-        - src/Framework/ModuleSetup.php
-        - src/Shared/Infrastructure/Basket.php
-        - src/Voucher/Infrastructure/Voucher.php
-        - src/Translation/Infrastructure/Translation.php
-        - src/Shared/Shop/Basket.php
-        - src/Shared/Shop/Language.php
-        - src/Shared/Shop/Voucher.php

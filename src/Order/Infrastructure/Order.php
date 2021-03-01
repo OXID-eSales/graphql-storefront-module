@@ -13,7 +13,6 @@ use Iterator;
 use OxidEsales\Eshop\Application\Model\OrderArticle;
 use OxidEsales\Eshop\Application\Model\OrderFileList as OrderFileListModel;
 use OxidEsales\Eshop\Application\Model\UserPayment as EshopUserPaymentModel;
-use OxidEsales\Eshop\Application\Model\Voucher as EshopVoucherModel;
 use OxidEsales\Eshop\Application\Model\VoucherList as EshopVoucherListModel;
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderDelivery as OrderDeliveryDataType;
@@ -22,6 +21,7 @@ use OxidEsales\GraphQL\Storefront\Order\DataType\OrderFile;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderInvoiceAddress;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderItem;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderPayment;
+use OxidEsales\GraphQL\Storefront\Shared\Shop\Voucher as EshopVoucherModel;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher;
 
 final class Order

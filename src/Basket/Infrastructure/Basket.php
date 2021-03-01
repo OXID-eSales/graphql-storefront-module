@@ -234,7 +234,6 @@ final class Basket
         $basketModel->calculateBasket();
 
         //Reset delivery list otherwise wrong cost will be displayed
-        /** @phpstan-ignore-next-line */
         EshopRegistry::set(EshopDeliveryListModel::class, null);
 
         return new PriceDataType(

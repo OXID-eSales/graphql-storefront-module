@@ -13,10 +13,11 @@ use OxidEsales\Eshop\Core\Price as EshopPriceModel;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost as BasketCostDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketProductBruttoSum;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
+use stdClass;
 
 final class BasketCost
 {
-    public function getBasketCurrencyObject(BasketCostDataType $basketCost)
+    public function getBasketCurrencyObject(BasketCostDataType $basketCost): stdClass
     {
         return $basketCost->getEshopModel()->getBasketCurrency();
     }

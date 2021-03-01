@@ -17,7 +17,7 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Shop;
  */
 class Language extends Language_parent
 {
-    public function getTranslationKeys($languageId): array
+    public function getTranslationKeys(int $languageId): array
     {
         return $this->_getLanguageFileData(false, $languageId);
     }

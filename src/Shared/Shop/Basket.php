@@ -37,7 +37,7 @@ class Basket extends Basket_parent
      */
     public function applyVoucher(string $voucherId): void
     {
-        /** @var Voucher $voucher */
+        /** @var \OxidEsales\GraphQL\Storefront\Shared\Shop\Voucher $voucher */
         $voucher = oxNew(Voucher::class);
 
         $voucher->load($voucherId);

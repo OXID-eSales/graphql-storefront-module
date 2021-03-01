@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 
-use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\DeliveryList as EshopDeliveryListModel;
 use OxidEsales\Eshop\Application\Model\DeliverySetList as EshopDeliverySetListModel;
 use OxidEsales\Eshop\Application\Model\DiscountList as EshopDiscountListModel;
@@ -19,6 +18,7 @@ use OxidEsales\GraphQL\Base\DataType\IDFilter;
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketVoucherFilterList;
+use OxidEsales\GraphQL\Storefront\Shared\Shop\Basket as EshopBasketModel;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use TheCodingMachine\GraphQLite\Types\ID;
