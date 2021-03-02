@@ -47,9 +47,6 @@ UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = '1', `OXSUBSCRIBED` = '2020-04-01 11
 
 UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = 1 where `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
 
-REPLACE INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`, `OXTIMESTAMP`) VALUES
-('test_unsubscribe', 1, 'e7af1c3b786fd02906ccd75698f4e6b9', 'oxidnewsletter', '2012-06-04 07:04:54');
-
 REPLACE INTO `oxaddress` (`OXID`, `OXUSERID`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXCITY`, `OXCOUNTRY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXSAL`, `OXTIMESTAMP`) VALUES
 ('test_delivery_address',	'e7af1c3b786fd02906ccd75698f4e6b9',	'Marc',	'Muster',	'Hauptstr',	'13',	'Freiburg',	'Germany',	'a7c40f631fc920687.20179984', '',	'79098',	'MR',	'2020-07-14 14:12:48'),
 ('test_delivery_address_2',	'e7af1c3b786fd02906ccd75698f4e6b9',	'Marc',	'Muster',	'Hauptstr2',	'132',	'Freiburg',	'Austria',	'a7c40f6320aeb2ec2.72885259', '',	'79098',	'MR',	'2020-07-14 14:44:06'),
@@ -160,10 +157,17 @@ REPLACE INTO `oxuser` (`OXID`, `OXACTIVE`, `OXRIGHTS`, `OXSHOPID`, `OXUSERNAME`,
 ('checkoutuser', 1, 'user', 1, 'checkoutuser@oxid-esales.com',  '$2y$10$b186f117054b700a89de9uXDzfahkizUucitfPov3C2cwF5eit2M2', 'b186f117054b700a89de929ce90c6aef', 88, '', '', 'Marc', 'Muster', 'Hauptstr.', '13', '', 'Freiburg', 'a7c40f631fc920687.20179984', '', '79098', '', '', 'MR', 1000, '2011-02-01 08:41:25', '2011-02-01 08:41:25', '', '', '0000-00-00', '', '', 0, 0);
 
 REPLACE INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`) VALUES
+('test_unsubscribe', 1, 'e7af1c3b786fd02906ccd75698f4e6b9', 'oxidnewsletter'),
 ('g7a7197c7cf8e878e8ff2c18645788ab', 1, 'standarduser', 'oxidnewcustomer'),
 ('g7a3bc0ffde37901c6c1be9bdd43b9a5', 1, 'standarduser', 'oxidcustomer'),
 ('g7a50c8a8a31cb82b8ae4b38c64a78ba', 1, 'standarduser', 'oxidgoodcust'),
-('g5d1d2defe53c30aeca0f86bde4ae531', 1, 'standarduser', 'oxidmiddlecust');
+('g5d1d2defe53c30aeca0f86bde4ae531', 1, 'standarduser', 'oxidmiddlecust'),
+('123ad3b5380202966df6ff128e9eecb0', 1, '245ad3b5380202966df6ff128e9eecaq', 'oxidnotyetordered'),
+('123ad3b5380202966df6ff128e9eecb1', 1, '_45ad3b5380202966df6ff128e9eecaq', 'oxidcustomer'),
+('123ad3b5380202966df6ff128e9eecb2', 1, '309db395b6c85c3881fcb9b437a73ff5', 'oxidcustomer'),
+('123ad3b5380202966df6ff128e9eecb3', 1, 'anotheruser', 'oxidcustomer'),
+('123ad3b5380202966df6ff128e9eecb4', 1, 'checkoutuser', 'oxidcustomer'),
+('123ad3b5380202966df6ff128e9eecb5', 1, '9119cc8cd9593c214be93ee558235f3c', 'oxidcustomer');
 
 REPLACE INTO `oxuserbaskets` (`OXID`, `OXUSERID`, `OXTITLE`, `OXPUBLIC`, `OEGQL_PAYMENTID`, `OEGQL_DELIVERYMETHODID`, `OEGQL_DELADDRESSID`) VALUES
 ('basket_user', 'standarduser', 'savedbasket', true, null, null, null),
