@@ -154,7 +154,7 @@ final class BasketVoucherCest extends BaseCest
 
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
-        $result = $I->grabJsonResponseAsArray();
+        $result          = $I->grabJsonResponseAsArray();
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddVoucher', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
     }
@@ -182,7 +182,7 @@ final class BasketVoucherCest extends BaseCest
 
         $I->seeResponseIsJson();
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
-        $result = $I->grabJsonResponseAsArray();
+        $result          = $I->grabJsonResponseAsArray();
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketRemoveVoucher', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
     }
