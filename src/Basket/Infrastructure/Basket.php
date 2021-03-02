@@ -212,6 +212,9 @@ final class Basket
         $orderModel = oxNew(OrderModel::class);
         $status     = $orderModel->finalizeOrder($basketModel, $userModel);
 
+        // performing special actions after user finishes order (assignment to special user groups)
+        $userModel->onOrderExecute($userBasket, $status);
+
         //we need to delete the basket after order to prevent ordering it twice
         if ($status === $orderModel::ORDER_STATE_OK || $status === $orderModel::ORDER_STATE_MAILINGERROR) {
             $userBasketModel->delete();

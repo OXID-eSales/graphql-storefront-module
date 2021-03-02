@@ -679,4 +679,43 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //place the order
         $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
     }
+
+    public function placeOrderwithNewlyRegisteredCustomer(AcceptanceTester $I): void
+    {
+        $I->wantToTest('register new customer, place two orders, check user group assignment');
+
+        //register customer
+        $username     = 'newuser@oxid-esales.com';
+        $password     = 'useruser';
+        $customerData = $this->registerCustomer($I, $username, $password);
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnotyetordered',
+            ]
+        );
+
+        //log in and set invoice address
+        $I->login($username, $password);
+        $this->setInvoiceAddress($I);
+
+        //prepare basket
+        $basketId = $this->createBasket($I, 'not_yet_ordered');
+        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
+        $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
+
+        //place the order
+        $this->placeOrder($I, $basketId, HttpCode::OK);
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidcustomer',
+            ]
+        );
+    }
 }

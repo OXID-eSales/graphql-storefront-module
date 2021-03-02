@@ -45,6 +45,7 @@ final class InvoiceAddress
         }
 
         $this->repository->saveModel($invoiceAddress->getEshopModel());
+        $invoiceAddress->getEshopModel()->setAutomaticUserGroups();
 
         return $invoiceAddress;
     }

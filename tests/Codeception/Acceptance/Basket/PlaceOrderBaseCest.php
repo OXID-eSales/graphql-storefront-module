@@ -420,6 +420,83 @@ abstract class PlaceOrderBaseCest extends BaseCest
         return $result['data']['basket']['cost'];
     }
 
+    protected function registerCustomer(AcceptanceTester $I, string $email, string $password = 'useruser'): array
+    {
+        $variables = [
+            'email'    => $email,
+            'password' => $password,
+            'name',
+        ];
+
+        $I->sendGQLQuery(
+            'mutation ($email: String!, $password: String!) {
+            customerRegister (
+                customer: {
+                    email:    $email,
+                    password: $password
+                }
+            ) {
+                id
+                email
+            }
+        }',
+            $variables
+        );
+
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        return $result['data']['customerRegister'];
+    }
+
+    protected function setInvoiceAddress(AcceptanceTester $I): array
+    {
+        $variables = [
+            'firstName'    => 'Test',
+            'lastName'     => 'Registered',
+            'street'       => 'Landstraße',
+            'streetNumber' => '66',
+            'zipCode'      => '22547',
+            'city'         => 'Hamburg',
+            'countryId'    => new ID('a7c40f631fc920687.20179984'),
+        ];
+
+        $I->sendGQLQuery(
+            'mutation (
+                  $firstName: String!,
+                  $lastName: String!,
+                  $street: String!,
+                  $streetNumber: String!,
+                  $zipCode: String!,
+                  $city: String!,
+                  $countryId: ID!
+                ) {
+                customerInvoiceAddressSet (
+                    invoiceAddress: {
+                        firstName: $firstName,
+                        lastName: $lastName,
+                        street: $street,
+                        streetNumber: $streetNumber
+                        zipCode: $zipCode,
+                        city: $city,
+                        countryId: $countryId
+                    })
+                {
+                    firstName
+                    lastName
+                }
+            }',
+            $variables
+        );
+
+        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        return $result['data']['customerInvoiceAddressSet'];
+    }
+
     private function ensureBasketCode(AcceptanceTester $I, string $basketId, string $username, int $code): void
     {
         $I->login($username, self::PASSWORD);
