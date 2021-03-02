@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Schema documentation available at https://oxid-esales.github.io/graphql-storefront-module
+- Event `\OxidEsales\GraphQL\Storefront\Customer\Event\CreateAnonymousUser` dispatched in
+  `\OxidEsales\GraphQL\Storefront\Customer\InfrastructureCustomer::createAnonymousUser()`.
 
 ### Fixed
 - Remove ``final`` statement from shop extending classes [PR-3](https://github.com/OXID-eSales/graphql-storefront-module/pull/3).
