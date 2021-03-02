@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -54,7 +53,6 @@ final class BasketVoucherCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -124,7 +122,6 @@ final class BasketVoucherCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -156,7 +153,6 @@ final class BasketVoucherCest extends BaseCest
         $I->sendGQLQuery($mutation, $variables);
 
         $I->seeResponseIsJson();
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $result          = $I->grabJsonResponseAsArray();
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddVoucher', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
@@ -187,7 +183,6 @@ final class BasketVoucherCest extends BaseCest
         $I->sendGQLQuery($mutation, $variables);
 
         $I->seeResponseIsJson();
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $result          = $I->grabJsonResponseAsArray();
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketRemoveVoucher', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);

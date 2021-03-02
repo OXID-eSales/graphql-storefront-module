@@ -38,11 +38,6 @@ final class PromotionTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $promotion = $result['body']['data']['promotion'];
 
         $this->assertSame(self::ACTIVE_PROMOTION, $promotion['id']);
@@ -68,9 +63,10 @@ final class PromotionTest extends TokenTestCase
                 text
             }
         }');
-        $this->assertResponseStatus(
-            401,
-            $result
+
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -87,7 +83,6 @@ final class PromotionTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
         $this->assertEquals(
             [
                 'id'     => self::INACTIVE_PROMOTION,
@@ -109,9 +104,10 @@ final class PromotionTest extends TokenTestCase
                 text
             }
         }');
-        $this->assertResponseStatus(
-            404,
-            $result
+
+        $this->assertSame(
+            'Promotion was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -125,10 +121,7 @@ final class PromotionTest extends TokenTestCase
                 text
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 active promotions
         $this->assertEquals(
             2,
@@ -145,11 +138,6 @@ final class PromotionTest extends TokenTestCase
                 id
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         // TODO: Fixtures have 2 active and 4 inactive promotions
         //       These should be visible when using a valid token, for a total of 6
@@ -191,10 +179,6 @@ final class PromotionTest extends TokenTestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             [

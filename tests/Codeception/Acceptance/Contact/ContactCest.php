@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Contact;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -29,7 +28,6 @@ final class ContactCest extends BaseCest
             message:"some message"
         })}');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['contactRequest']);
@@ -41,10 +39,9 @@ final class ContactCest extends BaseCest
             email:"wrongEmail"
         })}');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $error = $result['errors'][0];
-        $I->assertSame('ERROR_MESSAGE_INPUT_NOVALIDEMAIL', $error['message']);
+        $I->assertSame('ERROR_MESSAGE_INPUT_NOVALIDEMAIL', $result['errors'][0]['message']);
     }
 }

@@ -34,10 +34,6 @@ final class CurrencyTest extends TestCase
         $configCurrency = Registry::getConfig()->getActShopCurrencyObject();
         $resultCurrency = $result['body']['data']['currency'];
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
         $this->assertSame(
             $configCurrency->id,
             $resultCurrency['id']
@@ -75,10 +71,6 @@ final class CurrencyTest extends TestCase
         $configCurrency = Registry::getConfig()->getCurrencyObject($name);
         $resultCurrency = $result['body']['data']['currency'];
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
         $this->assertSame(
             $configCurrency->id,
             $resultCurrency['id']
@@ -123,9 +115,9 @@ final class CurrencyTest extends TestCase
             }
         ', $name));
 
-        $this->assertResponseStatus(
-            404,
-            $result
+        $this->assertSame(
+            'Currency "' . $name . '" was not found',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -154,8 +146,6 @@ final class CurrencyTest extends TestCase
 
         $configCurrencies = Registry::getConfig()->getCurrencyArray();
         $resultCurrencies = $result['body']['data']['currencies'];
-
-        $this->assertResponseStatus(200, $result);
 
         foreach ($configCurrencies as $key => $expectedCurrency) {
             $this->assertSame(

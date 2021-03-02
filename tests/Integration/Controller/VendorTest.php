@@ -44,11 +44,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $vendor = $result['body']['data']['vendor'];
         $this->assertSame(self::ACTIVE_VENDOR, $vendor['id']);
         $this->assertTrue($vendor['active']);
@@ -100,9 +95,9 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            401,
-            $result
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -116,7 +111,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 'id' => self::INACTIVE_VENDOR,
@@ -133,7 +127,10 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(404, $result['status']);
+        $this->assertSame(
+            'Vendor was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
+        );
     }
 
     public function testGetVendorListWithoutFilter(): void
@@ -144,10 +141,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
         $this->assertCount(
             2,
             $result['body']['data']['vendors']
@@ -175,7 +168,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 [
@@ -204,7 +196,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 [
@@ -227,7 +218,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 [
@@ -250,7 +240,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             0,
             count($result['body']['data']['vendors'])
@@ -294,11 +283,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $sortedVendors = $result['body']['data']['vendors'];
         $expected      = $sortedVendors;
 
@@ -316,8 +300,6 @@ final class VendorTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertEquals(200, $result['status']);
 
         $products = $result['body']['data']['vendor']['products'];
 
@@ -378,11 +360,6 @@ final class VendorTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             $productCount,
@@ -450,11 +427,6 @@ final class VendorTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(
             $productCount,
             $result['body']['data']['vendors'][0]['products']
@@ -483,11 +455,6 @@ final class VendorTest extends TokenTestCase
             }
           }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $titles = [];
 

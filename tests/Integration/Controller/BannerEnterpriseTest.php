@@ -25,11 +25,6 @@ final class BannerEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(2, $result['body']['data']['banners']);
 
         $this->assertSame([

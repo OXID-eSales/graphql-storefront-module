@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -63,7 +62,6 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
             $this->basketSetDelivery(self::AVAILABLE_DELIVERY_SET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -113,7 +111,13 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
             $this->basketSetDelivery(self::UNAVAILABLE_DELIVERY_SET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            "Delivery set '" . self::UNAVAILABLE_DELIVERY_SET_ID . "' is unavailable!",
+            $result['errors'][0]['message']
+        );
     }
 
     public function setNonExistingDeliveryMethodToBasket(AcceptanceTester $I): void
@@ -122,7 +126,13 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
             $this->basketSetDelivery(self::NON_EXISTING_DELIVERY_SET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            "Delivery set '" . self::NON_EXISTING_DELIVERY_SET_ID . "' is unavailable!",
+            $result['errors'][0]['message']
+        );
     }
 
     public function setDeliveryMethodToWrongBasket(AcceptanceTester $I): void
@@ -133,7 +143,13 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
             $this->basketSetDelivery(self::AVAILABLE_DELIVERY_SET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
 
         // Login as the basket owner, because on _after the basket will be deleted
         $I->login(self::USERNAME, self::PASSWORD);
@@ -145,7 +161,13 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
             $this->basketSetDelivery(self::AVAILABLE_DELIVERY_SET_ID, self::NON_EXISTING_BASKET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: ' . self::NON_EXISTING_BASKET_ID,
+            $result['errors'][0]['message']
+        );
     }
 
     private function basketCreate(AcceptanceTester $I): void
@@ -160,7 +182,6 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $this->basketId = $result['data']['basketCreate']['id'];
@@ -178,7 +199,13 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            $this->basketId,
+            $result['data']['basketAddProduct']['id']
+        );
     }
 
     private function basketRemove($I): void
@@ -189,7 +216,12 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['basketRemove']
+        );
     }
 
     private function basketSetDelivery(string $deliveryMethodId, ?string $basketId = null): string

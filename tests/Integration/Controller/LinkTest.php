@@ -42,11 +42,6 @@ final class LinkTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $link = $result['body']['data']['link'];
 
         $this->assertSame(self::ACTIVE_LINK, $link['id']);
@@ -77,9 +72,10 @@ final class LinkTest extends TokenTestCase
                 active
             }
         }');
-        $this->assertResponseStatus(
-            401,
-            $result
+
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -93,11 +89,6 @@ final class LinkTest extends TokenTestCase
                 active
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             [
@@ -120,9 +111,10 @@ final class LinkTest extends TokenTestCase
                 creationDate
             }
         }');
-        $this->assertResponseStatus(
-            404,
-            $result
+
+        $this->assertSame(
+            'Link was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -138,10 +130,7 @@ final class LinkTest extends TokenTestCase
                 creationDate
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 active links
         $this->assertEquals(
             2,
@@ -160,10 +149,7 @@ final class LinkTest extends TokenTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 active links with lowercase a
         $this->assertEquals(
             2,
@@ -182,10 +168,7 @@ final class LinkTest extends TokenTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 inactive links starting with inactive
         $this->assertEquals(
             0,
@@ -204,10 +187,7 @@ final class LinkTest extends TokenTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 0 links with description matching DOES-NOT-EXIST
         $this->assertEquals(
             0,
@@ -247,10 +227,6 @@ final class LinkTest extends TokenTestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             [
@@ -296,10 +272,6 @@ final class LinkTest extends TokenTestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             $count,
@@ -317,11 +289,6 @@ final class LinkTest extends TokenTestCase
                 active
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             [

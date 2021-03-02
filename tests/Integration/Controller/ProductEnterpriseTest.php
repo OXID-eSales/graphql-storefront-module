@@ -35,9 +35,9 @@ final class ProductEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertEquals(
-            404,
-            $result['status']
+        $this->assertSame(
+            'Product was not found by id: ' . self::PRODUCT_ID,
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -57,11 +57,6 @@ final class ProductEnterpriseTest extends MultishopTestCase
                 title
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [
@@ -124,11 +119,6 @@ final class ProductEnterpriseTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'    => self::PRODUCT_ID,
                 'title' => $title,
@@ -159,11 +149,6 @@ final class ProductEnterpriseTest extends MultishopTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             $result['body']['data']['product']['variantLabels'],

@@ -11,15 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\Error;
 use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
-use OxidEsales\GraphQL\Base\Exception\HttpErrorInterface;
 
-final class MissingDeliveryMethod extends Error implements HttpErrorInterface
+final class MissingDeliveryMethod extends Error
 {
-    public function getHttpStatus(): int
-    {
-        return 400;
-    }
-
     public function getCategory(): string
     {
         return ErrorCategories::REQUESTERROR;

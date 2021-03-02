@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Customer;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -160,7 +159,6 @@ final class RelationServiceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
@@ -183,7 +181,6 @@ final class RelationServiceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
@@ -210,7 +207,6 @@ final class RelationServiceCest extends BaseCest
             1
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
@@ -232,7 +228,6 @@ final class RelationServiceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
@@ -259,7 +254,6 @@ final class RelationServiceCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
@@ -288,7 +282,6 @@ final class RelationServiceCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
@@ -307,7 +300,6 @@ final class RelationServiceCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -322,7 +314,6 @@ final class RelationServiceCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();

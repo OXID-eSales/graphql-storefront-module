@@ -52,10 +52,6 @@ final class ManufacturerTest extends TokenTestCase
                 }
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $manufacturer = $result['body']['data']['manufacturer'];
 
@@ -91,9 +87,9 @@ final class ManufacturerTest extends TokenTestCase
                 timestamp
             }
         }');
-        $this->assertResponseStatus(
-            401,
-            $result
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -109,9 +105,9 @@ final class ManufacturerTest extends TokenTestCase
                 timestamp
             }
         }');
-        $this->assertResponseStatus(
-            404,
-            $result
+        $this->assertSame(
+            'Manufacturer was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -127,10 +123,7 @@ final class ManufacturerTest extends TokenTestCase
                 timestamp
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 11 active manufacturers
         $this->assertEquals(
             11,
@@ -149,10 +142,7 @@ final class ManufacturerTest extends TokenTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 3 active manufacturers with lowercase l and 3 inactive
         $this->assertEquals(
             3,
@@ -171,10 +161,7 @@ final class ManufacturerTest extends TokenTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 inactive manufacturers starting with Fly
         $this->assertEquals(
             0,
@@ -193,10 +180,7 @@ final class ManufacturerTest extends TokenTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 0 manufacturers matching title DOES-NOT-EXIST
         $this->assertEquals(
             0,
@@ -216,7 +200,6 @@ final class ManufacturerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
         $this->assertEquals(
             [],
             $result['body']['data']['manufacturer']['products']
@@ -235,7 +218,6 @@ final class ManufacturerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
         $this->assertEquals(
             [
                 'id' => self::PRODUCT_RELATED_TO_ACTIVE_MANUFACTURER,
@@ -293,11 +275,6 @@ final class ManufacturerTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             $productCount,
@@ -360,7 +337,6 @@ final class ManufacturerTest extends TokenTestCase
             'limit'  => $limit,
         ]);
 
-        $this->assertResponseStatus(200, $result);
         $this->assertEquals(
             $numberOfExpectedProducts,
             count($result['body']['data']['manufacturer']['products'])
@@ -382,11 +358,6 @@ final class ManufacturerTest extends TokenTestCase
                 }
               }
             }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $titles = [];
 
@@ -439,11 +410,6 @@ final class ManufacturerTest extends TokenTestCase
                 title
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $sortedManufacturers = [];
 

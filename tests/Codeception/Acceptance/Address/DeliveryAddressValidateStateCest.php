@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Address;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -72,7 +71,6 @@ final class DeliveryAddressValidateStateCest extends BaseCest
             1
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -83,8 +81,6 @@ final class DeliveryAddressValidateStateCest extends BaseCest
             null,
             0
         );
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $country = $result['data']['customerDeliveryAddressAdd']['country'];
         $I->assertSame('Germany', $country['title']);

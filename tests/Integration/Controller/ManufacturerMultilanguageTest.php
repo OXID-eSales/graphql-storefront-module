@@ -61,12 +61,7 @@ final class ManufacturerMultilanguageTest extends TestCase
             $languageId
         );
 
-        $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
+        $result       = $this->query($query);
         $manufacturer = $result['body']['data']['manufacturer'];
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_MANUFACTURER, $manufacturer['id']);
@@ -110,10 +105,6 @@ final class ManufacturerMultilanguageTest extends TestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             $count,
@@ -150,11 +141,6 @@ final class ManufacturerMultilanguageTest extends TestCase
                 title
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $sortedManufacturers = [];
 

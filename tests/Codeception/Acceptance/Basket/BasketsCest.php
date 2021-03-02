@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -35,7 +34,6 @@ final class BasketsCest extends BaseCest
     public function testBasketsWithoutToken(AcceptanceTester $I): void
     {
         $response = $this->basketsQuery($I, self::USERNAME);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $baskets = $response['data']['baskets'];
 
@@ -49,7 +47,6 @@ final class BasketsCest extends BaseCest
 
         $I->logout();
         $response = $this->basketsQuery($I, self::USERNAME);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $baskets = $response['data']['baskets'];
         $I->assertSame(3, count($baskets));
@@ -66,7 +63,6 @@ final class BasketsCest extends BaseCest
 
         $I->login(self::USERNAME, self::PASSWORD);
         $response = $this->basketsQuery($I, self::OTHER_USERNAME);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $baskets = $response['data']['baskets'];
         $I->assertSame(1, count($baskets));
@@ -84,7 +80,6 @@ final class BasketsCest extends BaseCest
 
         $I->logout();
         $response = $this->basketsQuery($I, self::LAST_NAME);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $baskets = $response['data']['baskets'];
         $I->assertSame(6, count($baskets));
@@ -112,7 +107,6 @@ final class BasketsCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -216,7 +210,6 @@ final class BasketsCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();

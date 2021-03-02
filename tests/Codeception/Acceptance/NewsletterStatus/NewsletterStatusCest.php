@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\NewsletterStatus;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -19,6 +18,8 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 final class NewsletterStatusCest extends BaseCest
 {
     private const USERNAME = 'user@oxid-esales.com';
+
+    private const NONEXISTING_USERNAME = 'nouser@oxid-esales.com';
 
     private const PASSWORD = 'useruser';
 
@@ -42,7 +43,6 @@ final class NewsletterStatusCest extends BaseCest
           }
         }');
         $result = $I->grabJsonResponseAsArray();
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->assertEquals(
             'Newsletter subscription status was not found for: ' . self::OTHER_USERNAME,
             $result['errors'][0]['message']
@@ -63,10 +63,13 @@ final class NewsletterStatusCest extends BaseCest
           }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertEquals("Wrong e-mail confirmation code 'incorrect'!", $result['errors'][0]['message']);
+        $I->assertEquals(
+            "Wrong e-mail confirmation code 'incorrect'!",
+            $result['errors'][0]['message']
+        );
     }
 
     public function testNewsletterOptInEmptyEmail(AcceptanceTester $I): void
@@ -83,10 +86,13 @@ final class NewsletterStatusCest extends BaseCest
           }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertEquals('The e-mail address must not be empty!', $result['errors'][0]['message']);
+        $I->assertEquals(
+            'The e-mail address must not be empty!',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testNewsletterOptInWorks(AcceptanceTester $I): void
@@ -110,7 +116,6 @@ final class NewsletterStatusCest extends BaseCest
           }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $data = $result['data']['newsletterOptIn'];
@@ -129,7 +134,6 @@ final class NewsletterStatusCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
 
@@ -146,11 +150,16 @@ final class NewsletterStatusCest extends BaseCest
     {
         $I->sendGQLQuery('mutation {
             newsletterUnsubscribe (newsletterStatus: {
-              email: "nouser@oxid-esales.com"
+              email: "' . self::NONEXISTING_USERNAME . '"
             })
         }');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertEquals(
+            'Newsletter subscription status was not found for: ' . self::NONEXISTING_USERNAME,
+            $result['errors']['0']['message']
+        );
     }
 
     public function testNewsletterStatusUnsubscribeWithTokenOnly(AcceptanceTester $I): void
@@ -161,7 +170,6 @@ final class NewsletterStatusCest extends BaseCest
             newsletterUnsubscribe
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
@@ -173,7 +181,6 @@ final class NewsletterStatusCest extends BaseCest
             newsletterUnsubscribe
         }');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals('Missing subscriber email or token', $result['errors']['0']['message']);
@@ -190,7 +197,6 @@ final class NewsletterStatusCest extends BaseCest
             })
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['newsletterUnsubscribe']);

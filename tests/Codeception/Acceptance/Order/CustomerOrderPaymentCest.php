@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Order;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -49,7 +48,7 @@ final class CustomerOrderPaymentCest extends BaseCest
                 }
             }'
         );
-        $I->seeResponseCodeIs(HttpCode::OK);
+
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $orders = $result['data']['customer']['orders'];
@@ -96,7 +95,6 @@ final class CustomerOrderPaymentCest extends BaseCest
             1
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $orders = $result['data']['customer']['orders'];
@@ -138,7 +136,6 @@ final class CustomerOrderPaymentCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $orders = $result['data']['customer']['orders'];
@@ -174,7 +171,6 @@ final class CustomerOrderPaymentCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $orders = $result['data']['customer']['orders'];
@@ -220,7 +216,6 @@ final class CustomerOrderPaymentCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $orders = $result['data']['customer']['orders'];
@@ -261,7 +256,6 @@ final class CustomerOrderPaymentCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $orders = $result['data']['customer']['orders'];

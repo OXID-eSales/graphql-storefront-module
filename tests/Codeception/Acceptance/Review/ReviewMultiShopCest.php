@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Review;
 
 use Codeception\Example;
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -66,10 +65,32 @@ final class ReviewMultiShopCest extends MultishopBaseCest
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
 
         $result = $this->reviewSet($I, $data['productId'], $shopId);
-        $I->seeResponseCodeIs($data['expectedStatus']);
 
-        $this->reviewSet($I, $data['productId'], $shopId);
-        $I->seeResponseCodeIs($data['retryStatus']);
+        if (isset($data['expectedError'])) {
+            $I->assertSame(
+                sprintf($data['expectedError'], $data['productId']),
+                $result['errors'][0]['message']
+            );
+        } else {
+            $I->assertSame(
+                $data['productId'],
+                $result['data']['reviewSet']['product']['id']
+            );
+        }
+
+        $result = $this->reviewSet($I, $data['productId'], $shopId);
+
+        if (isset($data['retryExpectedError'])) {
+            $I->assertSame(
+                sprintf($data['retryExpectedError'], $data['productId']),
+                $result['errors'][0]['message']
+            );
+        } else {
+            $I->assertSame(
+                $data['productId'],
+                $result['data']['reviewSet']['product']['id']
+            );
+        }
 
         if (isset($result['data']['reviewSet']['id'])) {
             $this->createdReviews[] = [
@@ -86,8 +107,7 @@ final class ReviewMultiShopCest extends MultishopBaseCest
 
         $I->login(self::OTHER_USERNAME, self::PASSWORD, 1);
 
-        $result = $this->reviewSet($I, self::PRODUCT_ID_SHOP_1);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result                   = $this->reviewSet($I, self::PRODUCT_ID_SHOP_1);
         $reviewIdWithShop1Product = $result['data']['reviewSet']['id'];
         $this->createdReviews[]   = [
             'id'     => $reviewIdWithShop1Product,
@@ -95,8 +115,7 @@ final class ReviewMultiShopCest extends MultishopBaseCest
             'user'   => self::OTHER_USERNAME,
         ];
 
-        $result = $this->reviewSet($I, self::PRODUCT_ID_BOTH_SHOPS);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result                   = $this->reviewSet($I, self::PRODUCT_ID_BOTH_SHOPS);
         $this->createdReviews[]   = [
             'id'     => $result['data']['reviewSet']['id'],
             'shopId' => 1,
@@ -108,12 +127,15 @@ final class ReviewMultiShopCest extends MultishopBaseCest
         $I->login(self::OTHER_USERNAME, self::PASSWORD, 2);
 
         //user already did give a review in subshop 1 so he cannot add a another one for same product
-        $this->reviewSet($I, self::PRODUCT_ID_BOTH_SHOPS, 2);
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $result = $this->reviewSet($I, self::PRODUCT_ID_BOTH_SHOPS, 2);
+
+        $I->assertSame(
+            'Review for product with id: ' . self::PRODUCT_ID_BOTH_SHOPS . ' already exists',
+            $result['errors'][0]['message']
+        );
 
         //review another product
-        $result = $this->reviewSet($I, self::PRODUCT_ID_SHOP_2, 2);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result                   = $this->reviewSet($I, self::PRODUCT_ID_SHOP_2, 2);
         $this->createdReviews[]   = [
             'id'     => $result['data']['reviewSet']['id'],
             'shopId' => 2,
@@ -122,12 +144,10 @@ final class ReviewMultiShopCest extends MultishopBaseCest
 
         //get reviews for subshop
         $allReviews = $this->getReviews($I, false, 2);
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->assertEquals(3, count($allReviews['data']['customer']['reviews']));
 
         //Here we have the case, that one of the products is not available in the subshop
         $allReviews = $this->getReviews($I, true, 2);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $reviews = $this->restructureResult($allReviews['data']['customer']['reviews']);
         $I->assertNull($reviews[$reviewIdWithShop1Product]);
@@ -137,28 +157,25 @@ final class ReviewMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop1' => [
-                'shopId'         => 1,
-                'productId'      => self::PRODUCT_ID_SHOP_1,
-                'expectedStatus' => 200,
-                'retryStatus'    => 400,
+                'shopId'                => 1,
+                'productId'             => self::PRODUCT_ID_SHOP_1,
+                'retryExpectedError'    => 'Review for product with id: %s already exists',
             ],
             'shop2' => [
-                'shopId'         => 2,
-                'productId'      => self::PRODUCT_ID_SHOP_2,
-                'expectedStatus' => 200,
-                'retryStatus'    => 400,
+                'shopId'                => 2,
+                'productId'             => self::PRODUCT_ID_SHOP_2,
+                'retryExpectedError'    => 'Review for product with id: %s already exists',
             ],
             'shop1_with_shop2product' => [
-                'shopId'         => 1,
-                'productId'      => self::PRODUCT_ID_SHOP_2,
-                'expectedStatus' => 404,
-                'retryStatus'    => 404,
+                'shopId'                => 1,
+                'productId'             => self::PRODUCT_ID_SHOP_2,
+                'expectedError'         => 'Product was not found by id: %s',
+                'retryExpectedError'    => 'Product was not found by id: %s',
             ],
             'shop2_with_inheritedproduct' => [
-                'shopId'         => 2,
-                'productId'      => self::PRODUCT_ID_BOTH_SHOPS,
-                'expectedStatus' => 200,
-                'retryStatus'    => 400,
+                'shopId'                => 2,
+                'productId'             => self::PRODUCT_ID_BOTH_SHOPS,
+                'retryExpectedError'    => 'Review for product with id: %s already exists',
             ],
         ];
     }
@@ -200,7 +217,6 @@ final class ReviewMultiShopCest extends MultishopBaseCest
             0,
             $shopId
         );
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     private function getReviews(AcceptanceTester $I, bool $queryProducts, int $shopId = 1)

@@ -35,10 +35,6 @@ final class ActionMultiLanguageTest extends TokenTestCase
         $this->setGETRequestParameter('lang', $languageId);
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             $action['title'],

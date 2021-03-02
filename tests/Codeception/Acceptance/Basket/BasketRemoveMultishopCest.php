@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -36,35 +35,43 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD, 2);
 
-        $this->removeBasket($I, self::PRIVATE_BASKET, 2);
+        $result = $this->removeBasket($I, self::PRIVATE_BASKET, 2);
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveBasketFromDifferentShopNoToken(AcceptanceTester $I): void
     {
         $result = $this->removeBasket($I, self::PUBLIC_BASKET, 2);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->assertSame(
+            'Cannot query field "basketRemove" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveOwnedBasketFromDifferentShop(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result   = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
         $basketId = $result['data']['basketCreate']['id'];
 
         $I->logout();
         $I->login(self::USERNAME, self::PASSWORD, 2);
-        $this->removeBasket($I, $basketId, 2);
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $result = $this->removeBasket($I, $basketId, 2);
+
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
 
         $I->logout();
         $I->login(self::USERNAME, self::PASSWORD);
         $this->removeBasket($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     public function testRemoveBasketFromDifferentShopWithTokenForMallUser(AcceptanceTester $I): void
@@ -73,16 +80,18 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
 
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD, 2);
 
-        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false', 2);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result   = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false', 2);
         $basketId = $result['data']['basketCreate']['id'];
 
         $result = $this->removeBasket($I, $basketId, 2);
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->assertTrue($result['data']['basketRemove']);
 
-        $this->queryBasket($I, $basketId, 2);
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $result = $this->queryBasket($I, $basketId, 2);
+
+        $I->assertSame(
+            'Basket was not found by id: ' . $basketId,
+            $result['errors'][0]['message']
+        );
     }
 
     private function removeBasket(AcceptanceTester $I, string $id, int $shopId = 1): array

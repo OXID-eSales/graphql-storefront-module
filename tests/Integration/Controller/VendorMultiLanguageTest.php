@@ -39,9 +39,7 @@ final class VendorMultiLanguageTest extends TestCase
 
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query($query);
-        $this->assertResponseStatus(200, $result);
-
+        $result  = $this->query($query);
         $vendors = $result['body']['data']['vendors'];
 
         $this->assertCount(
@@ -116,7 +114,6 @@ final class VendorMultiLanguageTest extends TestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(200, $result);
 
         $this->assertEquals(
             [
@@ -174,11 +171,6 @@ final class VendorMultiLanguageTest extends TestCase
                 title
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $sortedVendors = $result['body']['data']['vendors'];
         $expected      = $sortedVendors;

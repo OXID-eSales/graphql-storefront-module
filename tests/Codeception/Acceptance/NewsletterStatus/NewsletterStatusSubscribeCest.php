@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\NewsletterS
 
 use Codeception\Example;
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -58,7 +57,13 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            "This e-mail address '' is invalid!",
+            $result['errors'][0]['message']
+        );
     }
 
     public function testNewsletterSubscribeMissingInputDataButToken(AcceptanceTester $I): void
@@ -73,7 +78,6 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals('MISSING_DOUBLE_OPTIN', $result['data']['newsletterSubscribe']['status']);
@@ -94,7 +98,6 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals('MISSING_DOUBLE_OPTIN', $result['data']['newsletterSubscribe']['status']);
@@ -115,7 +118,6 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals('MISSING_DOUBLE_OPTIN', $result['data']['newsletterSubscribe']['status']);
@@ -136,7 +138,6 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals('SUBSCRIBED', $result['data']['newsletterSubscribe']['status']);
@@ -166,7 +167,6 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals($input, $result['data']['newsletterSubscribe']);
@@ -227,7 +227,8 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }';
 
         $I->sendGQLQuery(sprintf($template, ...array_values($data['data'])));
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals($data['expected'], $result['errors'][0]['message']);
@@ -287,7 +288,6 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $expected = [
@@ -323,7 +323,6 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $expected = [
@@ -379,7 +378,6 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals($status, $result['data']['customer']['newsletterStatus']['status']);

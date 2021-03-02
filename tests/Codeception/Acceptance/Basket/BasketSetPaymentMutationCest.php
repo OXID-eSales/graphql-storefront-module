@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
@@ -73,7 +72,6 @@ final class BasketSetPaymentMutationCest extends BaseCest
             $this->basketSetPayment(self::AVAILABLE_PAYMENT_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -89,7 +87,13 @@ final class BasketSetPaymentMutationCest extends BaseCest
             $this->basketSetPayment(self::AVAILABLE_PAYMENT_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Delivery method must be provided!',
+            $result['errors'][0]['message']
+        );
     }
 
     public function setUnavailablePaymentToBasket(AcceptanceTester $I): void
@@ -100,7 +104,13 @@ final class BasketSetPaymentMutationCest extends BaseCest
             $this->basketSetPayment(self::UNAVAILABLE_PAYMENT_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            "Payment method '" . self::UNAVAILABLE_PAYMENT_ID . "' is unavailable!",
+            $result['errors'][0]['message']
+        );
     }
 
     public function setNonExistingPaymentToBasket(AcceptanceTester $I): void
@@ -111,7 +121,13 @@ final class BasketSetPaymentMutationCest extends BaseCest
             $this->basketSetPayment(self::NON_EXISTING_PAYMENT_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            "Payment method '" . self::NON_EXISTING_PAYMENT_ID . "' is unavailable!",
+            $result['errors'][0]['message']
+        );
     }
 
     public function setPaymentToWrongBasket(AcceptanceTester $I): void
@@ -122,7 +138,13 @@ final class BasketSetPaymentMutationCest extends BaseCest
             $this->basketSetPayment(self::AVAILABLE_PAYMENT_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
 
         // Login as the basket owner, because on _after the basket will be deleted
         $I->login(self::USERNAME, self::PASSWORD);
@@ -134,7 +156,13 @@ final class BasketSetPaymentMutationCest extends BaseCest
             $this->basketSetPayment(self::AVAILABLE_PAYMENT_ID, self::NON_EXISTING_BASKET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: ' . self::NON_EXISTING_BASKET_ID,
+            $result['errors'][0]['message']
+        );
     }
 
     public function setPaymentToBasketWithWrongCountry(AcceptanceTester $I): void
@@ -147,7 +175,13 @@ final class BasketSetPaymentMutationCest extends BaseCest
             $this->basketSetPayment(self::AVAILABLE_PAYMENT_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            "Payment method 'oxidinvoice' is unavailable!",
+            $result['errors'][0]['message']
+        );
 
         $this->setCountry(self::COUNTRY_DE);
     }
@@ -158,7 +192,6 @@ final class BasketSetPaymentMutationCest extends BaseCest
             $this->basketSetPayment(self::AVAILABLE_PAYMENT_ID, self::BASKET_PAYMENT_TITLE)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -193,7 +226,6 @@ final class BasketSetPaymentMutationCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $this->basketId = $result['data']['basketCreate']['id'];
@@ -209,7 +241,13 @@ final class BasketSetPaymentMutationCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            $this->basketId,
+            $result['data']['basketSetDeliveryMethod']['id']
+        );
     }
 
     private function basketRemove(AcceptanceTester $I): void
@@ -220,7 +258,12 @@ final class BasketSetPaymentMutationCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['basketRemove']
+        );
     }
 
     private function basketSetPayment(string $paymentId, ?string $basketId = null): string

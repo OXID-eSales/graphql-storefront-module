@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -47,7 +46,6 @@ final class DeliveryAddressCest extends BaseCest
             $this->basketSetDeliveryAddress($basketId, self::DELIVERY_ADDRESS_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -71,7 +69,12 @@ final class DeliveryAddressCest extends BaseCest
             $this->basketSetDeliveryAddress($basketId, self::DELIVERY_ADDRESS_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "basketSetDeliveryAddress" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
 
         $I->login(self::USERNAME, self::PASSWORD);
         $this->basketRemove($I, $basketId);
@@ -89,7 +92,12 @@ final class DeliveryAddressCest extends BaseCest
             $this->basketSetDeliveryAddress($basketId, self::DELIVERY_ADDRESS_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
 
         $I->login(self::OTHER_USERNAME, self::PASSWORD);
         $this->basketRemove($I, $basketId);
@@ -102,8 +110,12 @@ final class DeliveryAddressCest extends BaseCest
         $I->sendGQLQuery(
             $this->basketSetDeliveryAddress('non-existing-basket-id', self::DELIVERY_ADDRESS_ID)
         );
+        $result = $I->grabJsonResponseAsArray();
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->assertSame(
+            'Basket was not found by id: non-existing-basket-id',
+            $result['errors'][0]['message']
+        );
     }
 
     public function setWrongDeliveryAddressToBasket(AcceptanceTester $I): void
@@ -116,7 +128,13 @@ final class DeliveryAddressCest extends BaseCest
             $this->basketSetDeliveryAddress($basketId, self::WRONG_DELIVERY_ADDRESS_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+
+        $result = $I->grabJsonResponseAsArray();
+        $I->assertSame(
+            'Delivery address was not found by id: ' . self::WRONG_DELIVERY_ADDRESS_ID,
+            $result['errors'][0]['message']
+        );
 
         $this->basketRemove($I, $basketId);
     }
@@ -131,7 +149,13 @@ final class DeliveryAddressCest extends BaseCest
             $this->basketSetDeliveryAddress($basketId, 'non-existing-delivery-id')
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+
+        $result = $I->grabJsonResponseAsArray();
+        $I->assertSame(
+            'Delivery address was not found by id: non-existing-delivery-id',
+            $result['errors'][0]['message']
+        );
 
         $this->basketRemove($I, $basketId);
     }
@@ -150,7 +174,6 @@ final class DeliveryAddressCest extends BaseCest
             $this->basketDeliveryAddress($basketId)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -187,7 +210,6 @@ final class DeliveryAddressCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         return $result['data']['basketCreate']['id'];
@@ -201,7 +223,12 @@ final class DeliveryAddressCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['basketRemove']
+        );
     }
 
     private function basketSetDeliveryAddress(string $basketId, string $deliveryAddressId): string

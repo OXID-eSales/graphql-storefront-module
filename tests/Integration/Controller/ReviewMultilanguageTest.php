@@ -36,11 +36,6 @@ final class ReviewMultilanguageTest extends TestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $review = $result['body']['data']['review'];
 
         $this->assertSame($expectedLanguage, $review['language']);

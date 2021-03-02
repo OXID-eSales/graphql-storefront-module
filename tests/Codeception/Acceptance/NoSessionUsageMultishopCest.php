@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -48,7 +47,13 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         );
 
         //We prevent graphql from processing any request with already started session
-        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testSubshopIdSetToSession(AcceptanceTester $I): void
@@ -70,7 +75,13 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         );
 
         //We prevent graphql from processing any request with already started session
-        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testSubshopIdFromSessionCookie(AcceptanceTester $I): void
@@ -88,7 +99,13 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         );
 
         //product does not exist in shop 1
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Product was not found by id: ' . self::SUBSHOP_PRODUCT_ID,
+            $result['errors'][0]['message']
+        );
 
         //Try again but this time send shop 2 sid as cookie but no shp parameter.
         //EE is forced to check session for shp but as there is not sid request parameter,
@@ -106,7 +123,13 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         );
 
         //We prevent graphql from processing any request with already started session
-        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            $result['errors'][0]['message']
+        );
     }
 
     private function getSubShopSessionId(AcceptanceTester $I): string
@@ -125,7 +148,6 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             ]
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $sid = $I->extractSidFromResponseCookies();
         $I->assertNotEmpty($sid);
 

@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -30,7 +29,6 @@ final class BasketsMultishopCest extends MultishopBaseCest
         $basketsCount = $data[1];
 
         $response = $this->basketsQuery($I, self::USERNAME, $shopId);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $baskets = $response['data']['baskets'];
         $I->assertSame($basketsCount, count($baskets));
@@ -45,7 +43,6 @@ final class BasketsMultishopCest extends MultishopBaseCest
         $I->updateConfigInDatabaseForShops('blMallUsers', true, 'bool', [1, 2]);
 
         $response = $this->basketsQuery($I, self::USERNAME, $shopId);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $baskets = $response['data']['baskets'];
         $I->assertEquals(5, count($baskets));

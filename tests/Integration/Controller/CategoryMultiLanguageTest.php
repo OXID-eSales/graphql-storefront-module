@@ -42,11 +42,6 @@ final class CategoryMultiLanguageTest extends TestCase
 
         $result = $this->query($query);
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertEquals(
             [
                 'id'    => self::ACTIVE_CATEGORY,
@@ -88,11 +83,6 @@ final class CategoryMultiLanguageTest extends TestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             $products,
@@ -156,11 +146,6 @@ final class CategoryMultiLanguageTest extends TestCase
 
         $result = $this->query($query);
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(
             $count,
             $result['body']['data']['categories']
@@ -201,11 +186,6 @@ final class CategoryMultiLanguageTest extends TestCase
                 title
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $titles = [];
 
@@ -255,11 +235,6 @@ final class CategoryMultiLanguageTest extends TestCase
         }');
 
         $products = $result['body']['data']['category']['products'];
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             12,

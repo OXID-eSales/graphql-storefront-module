@@ -43,7 +43,6 @@ final class ContentMultiLanguageTest extends TestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(200, $result);
 
         $content = $result['body']['data']['content'];
         $this->assertEquals($content['id'], self::ACTIVE_CONTENT);

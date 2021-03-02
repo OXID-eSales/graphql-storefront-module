@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\NewsletterStatus;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -68,7 +67,6 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
             $data['shopId']
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame('SUBSCRIBED', $result['data']['newsletterOptIn']['status']);
@@ -93,7 +91,6 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
             $data['shopId']
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
@@ -136,10 +133,26 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
             2
         );
 
-        $I->seeResponseCodeIs($data['expected']);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        if ($data['expectedFailure'] === true) {
+            $I->assertSame(
+                'Newsletter subscription status was not found for: ' . self::OTHER_USERNAME,
+                $result['errors'][0]['message']
+            );
+        } else {
+            $I->assertSame(
+                'newsletter@oxid-esales.com',
+                $result['data']['newsletterOptIn']['email']
+            );
+            $I->assertSame(
+                'SUBSCRIBED',
+                $result['data']['newsletterOptIn']['status']
+            );
+        }
 
         if ($data['flag']) {
-            $result = $I->grabJsonResponseAsArray();
             $I->assertSame('SUBSCRIBED', $result['data']['newsletterOptIn']['status']);
         }
     }
@@ -165,10 +178,19 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
             2
         );
 
-        $I->seeResponseCodeIs($data['expected']);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        if ($data['expectedFailure'] === true) {
+            $I->assertSame(
+                'Newsletter subscription status was not found for: ' . self::OTHER_USERNAME,
+                $result['errors'][0]['message']
+            );
+        } else {
+            $I->assertTrue($result['data']['newsletterUnsubscribe']);
+        }
 
         if ($data['flag']) {
-            $result = $I->grabJsonResponseAsArray();
             $I->assertTrue($result['data']['newsletterUnsubscribe']);
         }
     }
@@ -177,12 +199,12 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
     {
         return [
             'malluser' => [
-                'flag'     => true,
-                'expected' => 200,
+                'flag'            => true,
+                'expectedFailure' => false,
             ],
             'no_malluser' => [
-                'flag'     => false,
-                'expected' => 404,
+                'flag'            => false,
+                'expectedFailure' => true,
             ],
         ];
     }
@@ -206,7 +228,6 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
             2
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
@@ -249,7 +270,6 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
             2
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['newsletterUnsubscribe']);

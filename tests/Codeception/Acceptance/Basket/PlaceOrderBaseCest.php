@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -65,11 +64,9 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function getGQLResponse(
         AcceptanceTester $I,
         string $query,
-        array $variables = [],
-        int $status = HttpCode::OK
+        array $variables = []
     ): array {
         $I->sendGQLQuery($query, $variables);
-        $I->seeResponseCodeIs($status);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
@@ -165,8 +162,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function setBasketDeliveryMethod(
         AcceptanceTester $I,
         string $basketId,
-        string $deliverySetId,
-        int $status = HttpCode::OK
+        string $deliverySetId
     ): string {
         $variables = [
             'basketId'   => new ID($basketId),
@@ -185,9 +181,10 @@ abstract class PlaceOrderBaseCest extends BaseCest
                 }
             }
         ';
-        $result = $this->getGQLResponse($I, $mutation, $variables, $status);
 
-        if ($status === HttpCode::BAD_REQUEST) {
+        $result = $this->getGQLResponse($I, $mutation, $variables);
+
+        if (array_key_exists('errors', $result)) {
             return (string) $result['errors'][0]['message'];
         }
 
@@ -264,7 +261,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
         return $result['data']['customer']['orders'][0];
     }
 
-    protected function placeOrder(AcceptanceTester $I, string $basketId, int $status = HttpCode::OK, ?bool $termsAndConditions = null): array
+    protected function placeOrder(AcceptanceTester $I, string $basketId, ?bool $termsAndConditions = null): array
     {
         //now actually place the order
         $variables = [
@@ -284,17 +281,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
             }
         ';
 
-        return $this->getGQLResponse($I, $mutation, $variables, $status);
-    }
-
-    protected function ensureBasketExist(AcceptanceTester $I, string $basketId, string $username): void
-    {
-        $this->ensureBasketCode($I, $basketId, $username, HttpCode::OK);
-    }
-
-    protected function ensureBasketDoesNotExist(AcceptanceTester $I, string $basketId, string $username): void
-    {
-        $this->ensureBasketCode($I, $basketId, $username, HttpCode::NOT_FOUND);
+        return $this->getGQLResponse($I, $mutation, $variables);
     }
 
     protected function removeBasket(AcceptanceTester $I, string $basketId, string $username): void
@@ -442,7 +429,6 @@ abstract class PlaceOrderBaseCest extends BaseCest
             $variables
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -489,28 +475,9 @@ abstract class PlaceOrderBaseCest extends BaseCest
             $variables
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         return $result['data']['customerInvoiceAddressSet'];
-    }
-
-    private function ensureBasketCode(AcceptanceTester $I, string $basketId, string $username, int $code): void
-    {
-        $I->login($username, self::PASSWORD);
-
-        $variables = [
-            'basketId' => $basketId,
-        ];
-
-        $query = 'query ($basketId: String!){
-            basket (id: $basketId) {
-                id
-            }
-        }';
-
-        $I->sendGQLQuery($query, $variables);
-        $I->seeResponseCodeIs($code);
     }
 }

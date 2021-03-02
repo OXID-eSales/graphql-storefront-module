@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Customer;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -62,7 +61,13 @@ final class CustomerCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "customer" on type "Query".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testCustomerForLoggedInUser(AcceptanceTester $I): void
@@ -86,7 +91,6 @@ final class CustomerCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -120,7 +124,6 @@ final class CustomerCest extends BaseCest
         }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -146,7 +149,6 @@ final class CustomerCest extends BaseCest
         }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -177,7 +179,6 @@ final class CustomerCest extends BaseCest
         }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -225,7 +226,6 @@ final class CustomerCest extends BaseCest
             []
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -261,7 +261,6 @@ final class CustomerCest extends BaseCest
     {
         $email    = $data['email'];
         $password = $data['password'];
-        $status   = $data['status'];
         $message  = $data['message'];
 
         $I->sendGQLQuery(
@@ -278,7 +277,6 @@ final class CustomerCest extends BaseCest
             []
         );
 
-        $I->seeResponseCodeIs($status);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -291,7 +289,6 @@ final class CustomerCest extends BaseCest
     public function testCustomerEmailUpdate(AcceptanceTester $I, Example $data): void
     {
         $email          = $data['email'];
-        $expectedStatus = $data['expectedStatus'];
         $expectedError  = $data['expectedError'];
 
         $I->login(self::USERNAME_FOR_EMAIL_CHANGE, 'useruser');
@@ -305,7 +302,6 @@ final class CustomerCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs($expectedStatus);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -323,14 +319,22 @@ final class CustomerCest extends BaseCest
     {
         $I->sendGQLQuery(
             '
-            customerBirthdateUpdate(birthdate: "1986-12-25") {
-                email
-                birthdate
+            mutation {
+                customerBirthdateUpdate(birthdate: "1986-12-25") {
+                    email
+                    birthdate
+                }
             }
         '
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "customerBirthdateUpdate" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testCustomerBirthdateUpdate(AcceptanceTester $I): void
@@ -346,7 +350,6 @@ final class CustomerCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -374,7 +377,6 @@ final class CustomerCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -389,7 +391,6 @@ final class CustomerCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $resultBasketCreate = $I->grabJsonResponseAsArray();
 
@@ -406,7 +407,6 @@ final class CustomerCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -430,7 +430,6 @@ final class CustomerCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -471,25 +470,21 @@ final class CustomerCest extends BaseCest
             [
                 'email'    => 'testUser1',
                 'password' => 'useruser',
-                'status'   => 400,
                 'message'  => "This e-mail address 'testUser1' is invalid!",
             ],
             [
                 'email'    => 'user@oxid-esales.com',
                 'password' => 'useruser',
-                'status'   => 400,
                 'message'  => "This e-mail address 'user@oxid-esales.com' already exists!",
             ],
             [
                 'email'    => 'testUser3@oxid-esales.com',
                 'password' => '',
-                'status'   => 403,
                 'message'  => 'Password does not match length requirements',
             ],
             [
                 'email'    => '',
                 'password' => 'useruser',
-                'status'   => 400,
                 'message'  => 'The e-mail address must not be empty!',
             ],
         ];
@@ -500,22 +495,18 @@ final class CustomerCest extends BaseCest
         return [
             [
                 'email'          => 'user@oxid-esales.com',
-                'expectedStatus' => 400,
                 'expectedError'  => "This e-mail address 'user@oxid-esales.com' already exists!",
             ],
             [
                 'email'          => '',
-                'expectedStatus' => 400,
                 'expectedError'  => 'The e-mail address must not be empty!',
             ],
             [
                 'email'          => 'someuser',
-                'expectedStatus' => 400,
                 'expectedError'  => "This e-mail address 'someuser' is invalid!",
             ],
             [
                 'email'          => 'newCustUser@oxid-esales.com',
-                'expectedStatus' => 200,
                 'expectedError'  => null,
             ],
         ];

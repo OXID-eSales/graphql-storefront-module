@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\WishedPrice
 
 use Codeception\Example;
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\Eshop\Application\Model\PriceAlarm;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -71,7 +70,13 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            $data['wishedPriceId'],
+            $result['data']['wishedPrice']['id']
+        );
     }
 
     /**
@@ -95,7 +100,13 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            $data['wishedPriceId'],
+            $result['data']['wishedPrice']['id']
+        );
     }
 
     public function dataProviderWishedPricePerShop()
@@ -130,7 +141,13 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Wished price was not found by id: ' . self::WISHED_PRICE_SHOP_1,
+            $result['errors'][0]['message']
+        );
     }
 
     public function testDeleteShop1WishedPriceFromShop2(AcceptanceTester $I): void
@@ -149,7 +166,13 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Wished price was not found by id: ' . self::WISHED_PRICE_TO_BE_DELETED,
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -177,11 +200,11 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
 
+        /** @var PriveAlarm */
         $wishedPrice = oxNew(PriceAlarm::class);
         $wishedPrice->load($result['data']['wishedPriceSet']['id']);
 
@@ -225,6 +248,12 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Product was not found by id: ' . self::PRODUCT_ID_SHOP_1,
+            $result['errors'][0]['message']
+        );
     }
 }

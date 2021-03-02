@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -39,7 +38,6 @@ final class BasketDeliveryMethodCest extends BaseCest
             $this->basketDeliveryMethodsMutation(self::BASKET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -70,7 +68,6 @@ final class BasketDeliveryMethodCest extends BaseCest
             $this->basketDeliveryMethodsMutation(self::BASKET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -83,7 +80,6 @@ final class BasketDeliveryMethodCest extends BaseCest
             $this->basketDeliveryMethodsMutation(self::BASKET_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -171,7 +167,6 @@ final class BasketDeliveryMethodCest extends BaseCest
             $this->basketDeliveryMethodsMutation(self::BASKET_SHIPPING_ID)
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -225,7 +220,13 @@ final class BasketDeliveryMethodCest extends BaseCest
             $this->basketDeliveryMethodsMutation($basketId)
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: ' . $basketId,
+            $result['errors'][0]['message']
+        );
     }
 
     private function basketDeliveryMethodsMutation(string $basketId): string
@@ -259,8 +260,13 @@ final class BasketDeliveryMethodCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET_ID,
+            $result['data']['basketAddProduct']['id']
+        );
     }
 
     private function basketRemoveProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
@@ -277,8 +283,13 @@ final class BasketDeliveryMethodCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET_ID,
+            $result['data']['basketRemoveProduct']['id']
+        );
     }
 
     private function shippingCosts(AcceptanceTester $I, array $deliveries, array $standard, array $graph): void

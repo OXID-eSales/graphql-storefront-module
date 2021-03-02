@@ -40,11 +40,6 @@ final class ActionTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $action = $result['body']['data']['action'];
 
         $this->assertEquals([
@@ -65,11 +60,6 @@ final class ActionTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $products = $result['body']['data']['action']['products'];
 
@@ -100,9 +90,9 @@ final class ActionTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            401,
-            $result
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -115,9 +105,9 @@ final class ActionTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            404,
-            $result
+        $this->assertSame(
+            'Action was not found by id: non_existing_id',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -130,9 +120,9 @@ final class ActionTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            404,
-            $result
+        $this->assertSame(
+            'Action was not found by id: ' . self::WRONG_TYPE_ACTION,
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -147,11 +137,6 @@ final class ActionTest extends TokenTestCase
                 active
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals([
             'id'     => self::INACTIVE_ACTION,
@@ -168,11 +153,6 @@ final class ActionTest extends TokenTestCase
                 title
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(6, $result['body']['data']['actions']);
 
@@ -215,11 +195,6 @@ final class ActionTest extends TokenTestCase
                 active
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(7, $result['body']['data']['actions']);
 
@@ -275,8 +250,6 @@ final class ActionTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(200, $result);
 
         $this->assertEquals($expected, $result['body']['data']['actions']);
     }
@@ -415,11 +388,6 @@ final class ActionTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(
             count($expectedProducts),
             $result['body']['data']['actions'][0]['products']
@@ -465,11 +433,6 @@ final class ActionTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             count($expectedProducts),
@@ -540,8 +503,6 @@ final class ActionTest extends TokenTestCase
                 active
             }
         }');
-
-        $this->assertResponseStatus(200, $result);
 
         $this->assertEquals($expected, $result['body']['data']['actions']);
     }

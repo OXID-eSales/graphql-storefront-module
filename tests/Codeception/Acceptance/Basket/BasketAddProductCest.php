@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -49,7 +48,13 @@ final class BasketAddProductCest extends BaseCest
     {
         $this->basketAddProductMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "basketAddProduct" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -61,7 +66,6 @@ final class BasketAddProductCest extends BaseCest
 
         $result = $this->basketAddProductMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddProduct', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
     }
@@ -72,7 +76,13 @@ final class BasketAddProductCest extends BaseCest
 
         $this->basketAddProductMutation($I, 'non_existing_basket_id', self::PRODUCT_ID);
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: non_existing_basket_id',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testAddProductToBasket(AcceptanceTester $I): void
@@ -80,8 +90,6 @@ final class BasketAddProductCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $result = $this->basketAddProductMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 2);
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $basketData = $result['data']['basketAddProduct'];
         $I->assertSame(self::PUBLIC_BASKET, $basketData['id']);
@@ -109,7 +117,13 @@ final class BasketAddProductCest extends BaseCest
 
         $this->basketAddProductMutation($I, self::PUBLIC_BASKET, 'non_existing_product');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Product was not found by id: non_existing_product',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testAddProductToSomeoneElseBasket(AcceptanceTester $I): void
@@ -117,7 +131,13 @@ final class BasketAddProductCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
         $this->basketAddProductMutation($I, self::PRIVATE_BASKET, self::PRODUCT_FOR_PRIVATE_BASKET);
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
     }
 
     private function basketAddProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array

@@ -70,11 +70,6 @@ final class PromotionEnterpriseMultilanguageTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'    => $promotionId,
                 'title' => $title,
@@ -105,11 +100,6 @@ final class PromotionEnterpriseMultilanguageTest extends MultishopTestCase
                 title
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [

@@ -34,11 +34,6 @@ final class PromotionEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $promotion = $result['body']['data']['promotion'];
 
         $this->assertSame(self::PROMOTION_SUB_SHOP_ID, $promotion['id']);
@@ -66,10 +61,7 @@ final class PromotionEnterpriseTest extends MultishopTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 active promotion for shop 2
         $this->assertCount(
             2,

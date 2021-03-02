@@ -44,7 +44,10 @@ final class ContentMultishopTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
+        $this->assertSame(
+            self::CONTENT_ID_FOR_SHOP_2,
+            $result['body']['data']['content']['id']
+        );
     }
 
     /**
@@ -61,7 +64,10 @@ final class ContentMultishopTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(404, $result);
+        $this->assertSame(
+            'Content was not found by id: ' . self::CONTENT_ID,
+            $result['body']['errors'][0]['message']
+        );
     }
 
     /**
@@ -77,7 +83,6 @@ final class ContentMultishopTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
         $this->assertCount(
             0,
             $result['body']['data']['contents']
@@ -101,7 +106,6 @@ final class ContentMultishopTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
         $this->assertEquals(
             [
                 'id'    => self::CONTENT_ID_FOR_SHOP_2,
@@ -125,7 +129,6 @@ final class ContentMultishopTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
         $this->assertCount(
             1,
             $result['body']['data']['contents']
@@ -189,8 +192,6 @@ final class ContentMultishopTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
-
         $this->assertEquals(
             [
                 'id'    => $id,
@@ -227,8 +228,6 @@ final class ContentMultishopTest extends MultishopTestCase
                 title
             }
         }');
-
-        $this->assertResponseStatus(200, $result);
 
         $this->assertEquals(
             [

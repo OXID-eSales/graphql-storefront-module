@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Voucher;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -51,7 +50,13 @@ final class VoucherCest extends BaseCest
     {
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET, self::VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "basketAddVoucher" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testAddVoucherUnauthorized(AcceptanceTester $I): void
@@ -60,7 +65,13 @@ final class VoucherCest extends BaseCest
 
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET, self::VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testAddVoucher(AcceptanceTester $I): void
@@ -80,7 +91,13 @@ final class VoucherCest extends BaseCest
 
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET, self::VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET,
+            $result['data']['basketAddVoucher']['id']
+        );
     }
 
     public function testAddVoucherNonExistingBasket(AcceptanceTester $I): void
@@ -90,8 +107,6 @@ final class VoucherCest extends BaseCest
         $basketId = 'non_existing';
 
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -107,8 +122,6 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET, self::WRONG_VOUCHER));
-
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -129,8 +142,6 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET, self::USED_VOUCHER));
-
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -172,12 +183,16 @@ final class VoucherCest extends BaseCest
         //Add first voucher
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::SERIES_VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET_PUBLIC,
+            $result['data']['basketAddVoucher']['id']
+        );
 
         //Add second voucher and get error
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::SERIES_VOUCHER));
-
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -215,12 +230,24 @@ final class VoucherCest extends BaseCest
         //Add first voucher
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::SERIES_VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET_PUBLIC,
+            $result['data']['basketAddVoucher']['id']
+        );
 
         //Add second voucher
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::SERIES_VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET_PUBLIC,
+            $result['data']['basketAddVoucher']['id']
+        );
     }
 
     public function testNotAllowDifferentSeriesVoucher(AcceptanceTester $I): void
@@ -249,12 +276,16 @@ final class VoucherCest extends BaseCest
         //Add voucher from first series
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::SERIES_VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET_PUBLIC,
+            $result['data']['basketAddVoucher']['id']
+        );
 
         //Add voucher from second series
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::OTHER_SERIES_VOUCHER));
-
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -292,19 +323,37 @@ final class VoucherCest extends BaseCest
         //Add voucher from first series
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::SERIES_VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET_PUBLIC,
+            $result['data']['basketAddVoucher']['id']
+        );
 
         //Add voucher from second series
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::OTHER_SERIES_VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET_PUBLIC,
+            $result['data']['basketAddVoucher']['id']
+        );
     }
 
     public function testRemoveVoucherNotLoggedIn(AcceptanceTester $I): void
     {
         $I->sendGQLQuery($this->removeVoucherMutation(self::BASKET, self::VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "basketRemoveVoucher" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveVoucherUnauthorized(AcceptanceTester $I): void
@@ -313,7 +362,13 @@ final class VoucherCest extends BaseCest
 
         $I->sendGQLQuery($this->removeVoucherMutation(self::BASKET, 'personal_voucher_1'));
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveNonExistingVoucher(AcceptanceTester $I): void
@@ -321,8 +376,6 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery($this->removeVoucherMutation(self::BASKET, self::WRONG_VOUCHER));
-
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -346,7 +399,13 @@ final class VoucherCest extends BaseCest
 
         $I->sendGQLQuery($this->removeVoucherMutation(self::BASKET, 'personal_voucher_1'));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::BASKET,
+            $result['data']['basketRemoveVoucher']['id']
+        );
     }
 
     public function testVoucherBasketDiscount(AcceptanceTester $I): void
@@ -358,8 +417,6 @@ final class VoucherCest extends BaseCest
 
         //Check basket discounts without applied voucher
         $I->sendGQLQuery($this->basketQuery(self::BASKET_PUBLIC));
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -376,11 +433,7 @@ final class VoucherCest extends BaseCest
         //Add voucher and check basket discount
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET_PUBLIC, self::VOUCHER));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
-
         $I->sendGQLQuery($this->basketQuery(self::BASKET_PUBLIC));
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->seeResponseIsJson();
         $discountResult = $I->grabJsonResponseAsArray();
@@ -407,7 +460,6 @@ final class VoucherCest extends BaseCest
 
         $I->sendGQLQuery($this->basketQuery(self::BASKET));
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -431,9 +483,8 @@ final class VoucherCest extends BaseCest
         // Create basket with voucher using graphql which is different than 'savedbasket'
         $graphqlBasketId = $this->basketCreateMutation($I, 'basket_with_vouchers');
         $I->sendGQLQuery($this->addVoucherMutation($graphqlBasketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::OK);
+
         $I->sendGQLQuery($this->basketQuery($graphqlBasketId));
-        $I->seeResponseCodeIs(HttpCode::OK);
         $vouchers = $I->grabJsonResponseAsArray()['data']['basket']['vouchers'];
 
         $I->assertCount(1, $vouchers);
@@ -441,7 +492,6 @@ final class VoucherCest extends BaseCest
         // Check 'savedbasket' owned by the same user, the vouchers should be 0
         $savedBasketId = $this->basketCreateMutation($I, 'savedbasket');
         $I->sendGQLQuery($this->basketQuery($savedBasketId));
-        $I->seeResponseCodeIs(HttpCode::OK);
         $vouchers = $I->grabJsonResponseAsArray()['data']['basket']['vouchers'];
 
         $I->assertCount(0, $vouchers);
@@ -455,7 +505,6 @@ final class VoucherCest extends BaseCest
 
         $basketId = $this->basketCreateMutation($I, 'basket_remove');
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->seeInDatabase('oxvouchers', [
             'oxid'           => 'personal_voucher_1',
@@ -464,7 +513,6 @@ final class VoucherCest extends BaseCest
         ]);
 
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->seeInDatabase('oxvouchers', [
             'oxid'           => 'personal_voucher_1',
@@ -491,7 +539,7 @@ final class VoucherCest extends BaseCest
         $basketId = $this->basketCreateMutation($I, 'basket_voucher_product');
         $this->basketAddProductMutation($I, $basketId, $productId2);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
             'MESSAGE_COUPON_NOT_APPLIED_FOR_ARTICLES',
@@ -500,7 +548,6 @@ final class VoucherCest extends BaseCest
 
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->seeInDatabase('oxvouchers', [
             'oxid'           => 'personal_voucher_1',
@@ -509,7 +556,7 @@ final class VoucherCest extends BaseCest
         ]);
 
         $I->sendGQLQuery($this->basketQuery($basketId));
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertSame(
             [
@@ -536,7 +583,6 @@ final class VoucherCest extends BaseCest
         // Reset DB
         $this->basketRemoveProductMutation($I, $basketId, $productId2);
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     public function testVoucherAssignedToSpecificCategory(AcceptanceTester $I): void
@@ -558,7 +604,8 @@ final class VoucherCest extends BaseCest
         $basketId = $this->basketCreateMutation($I, 'basket_voucher_category');
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
             'MESSAGE_COUPON_NOT_APPLIED_FOR_ARTICLES',
@@ -567,7 +614,6 @@ final class VoucherCest extends BaseCest
 
         $this->basketAddProductMutation($I, $basketId, $productId);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->seeInDatabase('oxvouchers', [
             'oxid'           => 'personal_voucher_1',
@@ -576,7 +622,6 @@ final class VoucherCest extends BaseCest
         ]);
 
         $I->sendGQLQuery($this->basketQuery($basketId));
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
         $I->assertSame(
             [
@@ -603,7 +648,6 @@ final class VoucherCest extends BaseCest
         // Reset DB
         $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     public function testAddVoucherWhichIsOutdated(AcceptanceTester $I): void
@@ -619,7 +663,8 @@ final class VoucherCest extends BaseCest
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
             'MESSAGE_COUPON_EXPIRED',
@@ -629,7 +674,6 @@ final class VoucherCest extends BaseCest
         // Reset DB
         $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxenddate' => '2050-12-31 00:00:00'],
@@ -650,7 +694,8 @@ final class VoucherCest extends BaseCest
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
             'ERROR_MESSAGE_VOUCHER_NOVOUCHER',
@@ -660,7 +705,6 @@ final class VoucherCest extends BaseCest
         // Reset DB
         $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxbegindate' => '2000-01-01 00:00:00'],
@@ -676,7 +720,6 @@ final class VoucherCest extends BaseCest
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         // Update the voucher and make it invalid
         $I->updateInDatabase(
@@ -702,7 +745,6 @@ final class VoucherCest extends BaseCest
         // Reset DB
         $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxenddate' => '2050-12-31 00:00:00'],
@@ -723,7 +765,8 @@ final class VoucherCest extends BaseCest
         $basketId = $this->basketCreateMutation($I, 'basket_with_min_voucher');
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
             'ERROR_MESSAGE_VOUCHER_INCORRECTPRICE',
@@ -732,7 +775,6 @@ final class VoucherCest extends BaseCest
 
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->seeInDatabase('oxvouchers', [
             'oxid'           => 'personal_voucher_1',
@@ -750,7 +792,6 @@ final class VoucherCest extends BaseCest
 
         // Reset DB
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxminimumvalue' => 0.00],
@@ -777,7 +818,8 @@ final class VoucherCest extends BaseCest
         $basketId = $this->basketCreateMutation($I, 'voucher_assigned_to_user_group');
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
             'ERROR_MESSAGE_VOUCHER_NOTVALIDUSERGROUP',
@@ -787,7 +829,6 @@ final class VoucherCest extends BaseCest
         // Reset DB
         $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         // Add voucher with user which is into the group
         $I->login(self::USERNAME, self::PASSWORD);
@@ -795,12 +836,10 @@ final class VoucherCest extends BaseCest
         $basketId = $this->basketCreateMutation($I, 'voucher_assigned_to_user_group');
         $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         // Reset DB
         $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
         $this->basketRemoveMutation($I, $basketId);
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     public function testBasketWithTimedOutVoucherReservation(AcceptanceTester $I): void
@@ -810,9 +849,9 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery($this->addVoucherMutation(self::BASKET, self::VOUCHER));
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->sendGQLQuery($this->basketQuery(self::BASKET));
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertNotEmpty($result['data']['basket']['vouchers']);
 
@@ -828,7 +867,8 @@ final class VoucherCest extends BaseCest
         );
 
         $I->sendGQLQuery($this->basketQuery(self::BASKET));
-        $I->seeResponseCodeIs(HttpCode::OK);
+
+        $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertEmpty($result['data']['basket']['vouchers']);
     }
@@ -842,7 +882,6 @@ final class VoucherCest extends BaseCest
         }');
 
         $I->seeResponseIsJson();
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     private function addVoucherMutation(string $basketId, string $voucherNumber)
@@ -894,7 +933,6 @@ final class VoucherCest extends BaseCest
         }');
 
         $I->seeResponseIsJson();
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -908,7 +946,6 @@ final class VoucherCest extends BaseCest
         }');
 
         $I->seeResponseIsJson();
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     private function basketAddProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
@@ -920,7 +957,6 @@ final class VoucherCest extends BaseCest
         }');
 
         $I->seeResponseIsJson();
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     private function prepareVoucherInBasket(AcceptanceTester $I): void

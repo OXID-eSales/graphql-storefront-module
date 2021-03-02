@@ -44,11 +44,6 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $content = $result['body']['data']['content'];
         $this->assertSame(self::ACTIVE_CONTENT, $content['id']);
         $this->assertTrue($content['active']);
@@ -83,11 +78,6 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $content = $result['body']['data']['content'];
         $this->assertSame(self::ACTIVE_CONTENT_AGB, $content['id']);
         $this->assertEquals(1, $content['version']);
@@ -119,9 +109,9 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            401,
-            $result
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -135,7 +125,6 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 'id' => self::INACTIVE_CONTENT,
@@ -152,7 +141,10 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(404, $result['status']);
+        $this->assertSame(
+            'Content was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
+        );
     }
 
     public function testGetContentListWithoutFilter(): void
@@ -163,10 +155,6 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
         $this->assertCount(
             49,
             $result['body']['data']['contents']
@@ -183,7 +171,6 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertCount(
             50,
             $result['body']['data']['contents']
@@ -202,7 +189,6 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertCount(
             25,
             $result['body']['data']['contents']
@@ -221,7 +207,6 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertCount(
             43,
             $result['body']['data']['contents']
@@ -240,7 +225,6 @@ final class ContentTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             0,
             count($result['body']['data']['contents'])
@@ -287,11 +271,6 @@ final class ContentTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $category = $result['body']['data']['content']['category'];
 
@@ -344,11 +323,6 @@ final class ContentTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $contentCategory = $result['body']['data']['contents'][0]['category'];
 

@@ -61,11 +61,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $category = $result['body']['data']['category'];
 
         $this->assertSame(self::ACTIVE_CATEGORY, $category['id']);
@@ -107,9 +102,9 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            401,
-            $result
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -123,8 +118,6 @@ final class CategoryTest extends TokenTestCase
                 active
             }
         }');
-
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 'id'     => self::INACTIVE_CATEGORY,
@@ -142,7 +135,10 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(404, $result['status']);
+        $this->assertSame(
+            'Category was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
+        );
     }
 
     public function testGetCategoryRelations(): void
@@ -161,11 +157,6 @@ final class CategoryTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $category = $result['body']['data']['category'];
 
@@ -195,11 +186,6 @@ final class CategoryTest extends TokenTestCase
 
         $children = $result['body']['data']['category']['children'];
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertSame(
             [],
             $children
@@ -216,11 +202,6 @@ final class CategoryTest extends TokenTestCase
                 }
             }
          }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $children = $result['body']['data']['category']['children'];
 
@@ -268,11 +249,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $child = $result['body']['data']['category']['children'][0];
 
         $this->assertSame('0f4270b89fbef1481958381410a0dbca', $child['id']);
@@ -314,10 +290,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
         $this->assertCount(
             24,
             $result['body']['data']['categories']
@@ -336,10 +308,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
         $this->assertEquals(
             [
                 ['id' => '30e44ab83fdee7564.23264141'],
@@ -362,10 +330,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
         $this->assertSame(
             [
                 [
@@ -390,10 +354,6 @@ final class CategoryTest extends TokenTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-        $this->assertEquals(
             0,
             count($result['body']['data']['categories'])
         );
@@ -416,11 +376,6 @@ final class CategoryTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             self::CATEGORY_WITH_CHILDREN,
@@ -453,11 +408,6 @@ final class CategoryTest extends TokenTestCase
         }');
 
         $products = $result['body']['data']['category']['products'];
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             12,
@@ -516,11 +466,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(
             $productCount,
             $result['body']['data']['category']['products']
@@ -567,11 +512,6 @@ final class CategoryTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             $expectedProducts,
@@ -742,11 +682,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $actualCategories = $result['body']['data']['categories'];
 
         $this->assertEquals($expectedCategories, $actualCategories);
@@ -819,11 +754,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $titles = [];
 
         foreach ($result['body']['data']['categories'] as $category) {
@@ -850,11 +780,6 @@ final class CategoryTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $otherResult = $this->query('query {
             categories(
                 sort: {
@@ -867,11 +792,6 @@ final class CategoryTest extends TokenTestCase
                 position
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $otherResult
-        );
 
         $this->assertNotSame($result, $otherResult);
     }
@@ -939,11 +859,6 @@ final class CategoryTest extends TokenTestCase
         }');
 
         $products = $result['body']['data']['category']['products'];
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             4,

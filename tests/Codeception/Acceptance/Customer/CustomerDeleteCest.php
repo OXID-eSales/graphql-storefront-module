@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Customer;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -32,8 +31,13 @@ final class CustomerDeleteCest extends BaseCest
             customerDelete
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertContains(
+            'Cannot query field "customerDelete" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testCustomerNotAllowedToBeDeleted(AcceptanceTester $I): void
@@ -46,7 +50,6 @@ final class CustomerDeleteCest extends BaseCest
             customerDelete
         }');
 
-        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -66,7 +69,6 @@ final class CustomerDeleteCest extends BaseCest
             customerDelete
         }');
 
-        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 

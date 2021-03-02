@@ -46,11 +46,6 @@ final class ReviewTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $review = $result['body']['data']['review'];
 
         $this->assertSame([
@@ -90,11 +85,6 @@ final class ReviewTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $review = $result['body']['data']['review'];
 
         $this->assertSame([
@@ -116,12 +106,12 @@ final class ReviewTest extends TokenTestCase
     /**
      * @dataProvider getInactiveReviewDataProvider
      *
-     * @param mixed $moderation
-     * @param mixed $withToken
-     * @param mixed $code
-     * @param mixed $active
+     * @param bool $moderation
+     * @param bool $withToken
+     * @param bool $expectError
+     * @param bool $active
      */
-    public function testGetInactiveReview($moderation, $withToken, $code, $active): void
+    public function testGetInactiveReview($moderation, $withToken, $expectError, $active): void
     {
         $this->getConfig()->setConfigParam('blGBModerate', $moderation);
 
@@ -136,12 +126,12 @@ final class ReviewTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            $code,
-            $result
-        );
-
-        if ($code === 200) {
+        if ($expectError === true) {
+            $this->assertSame(
+                'Unauthorized',
+                $result['body']['errors'][0]['message']
+            );
+        } else {
             $this->assertEquals(
                 [
                     'id'     => self::INACTIVE_REVIEW,
@@ -158,25 +148,25 @@ final class ReviewTest extends TokenTestCase
             [
                 'moderation'     => true,
                 'withToken'      => false,
-                'expectedCode'   => 401,
+                'expectError'    => true,
                 'expectedActive' => false,
             ],
             [
                 'moderation'     => false,
                 'withToken'      => false,
-                'expectedCode'   => 200,
+                'expectError'    => false,
                 'expectedActive' => true,
             ],
             [
                 'moderation'     => true,
                 'withToken'      => true,
-                'expectedCode'   => 200,
+                'expectError'    => false,
                 'expectedActive' => false,
             ],
             [
                 'moderation'     => false,
                 'withToken'      => true,
-                'expectedCode'   => 200,
+                'expectError'    => false,
                 'expectedActive' => true,
             ],
         ];
@@ -190,7 +180,10 @@ final class ReviewTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(404, $result['status']);
+        $this->assertSame(
+            'Review was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
+        );
     }
 
     public function providerGetReviewFromNotExistingReviewer()
@@ -234,7 +227,7 @@ final class ReviewTest extends TokenTestCase
     /**
      * @dataProvider nullProductIdsDataProvider
      */
-    public function testGetWrongProductCase(string $username, string $password, string $id, int $expected): void
+    public function testGetWrongProductCase(string $username, string $password, string $id): void
     {
         $this->prepareToken($username, $password);
 
@@ -246,11 +239,6 @@ final class ReviewTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            $expected,
-            $result
-        );
 
         $review = $result['body']['data']['review'];
 
@@ -267,25 +255,21 @@ final class ReviewTest extends TokenTestCase
                 'username' => 'admin',
                 'password' => 'admin',
                 'oxid'     => self::WRONG_PRODUCT,
-                'expected' => 200,
             ],
             'user_wrong_product'  => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
                 'oxid'     => self::WRONG_PRODUCT,
-                'expected' => 200,
             ],
             'admin_wrong_type' => [
                 'username' => 'admin',
                 'password' => 'admin',
                 'oxid'     => self::WRONG_OBJECT_TYPE,
-                'expected' => 200,
             ],
             'user_wrong_type'  => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
                 'oxid'     => self::WRONG_OBJECT_TYPE,
-                'expected' => 200,
             ],
         ];
     }
@@ -324,11 +308,6 @@ final class ReviewTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame([
             'id'      => self::ACTIVE_REVIEW,

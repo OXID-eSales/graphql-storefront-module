@@ -49,9 +49,9 @@ final class CategoryEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertEquals(
-            404,
-            $result['status']
+        $this->assertSame(
+            'Category was not found by id: ' . self::CATEGORY_IDS['shoes-active'],
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -71,11 +71,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
                 title
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [
@@ -137,11 +132,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'    => self::CATEGORY_IDS['shoes-active'],
                 'title' => $title,
@@ -162,10 +152,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             1,
@@ -199,11 +185,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'    => self::CATEGORY_IDS['shoes-active'],
                 'title' => $title,
@@ -226,11 +207,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
-
         $this->assertEmpty($result['body']['data']['categories']);
     }
 
@@ -247,11 +223,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
                 id
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [
@@ -280,11 +251,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
                 }
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [
@@ -316,11 +282,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
                 }
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertCount(
             3,
@@ -379,11 +340,6 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         }');
 
         $products = $result['body']['data']['category']['products'];
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             3,

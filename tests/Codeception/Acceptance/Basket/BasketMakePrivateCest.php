@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -53,7 +52,13 @@ final class BasketMakePrivateCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: this_is_no_saved_basket_id',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testMakePrivateBasketOfOtherCustomer(AcceptanceTester $I): void
@@ -68,7 +73,13 @@ final class BasketMakePrivateCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testMakePrivateBasketWithToken(AcceptanceTester $I): void
@@ -83,9 +94,8 @@ final class BasketMakePrivateCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         $I->assertFalse($result['data']['basketMakePrivate']['public']);
     }
@@ -105,7 +115,6 @@ final class BasketMakePrivateCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result      = $I->grabJsonResponseAsArray();
 
@@ -122,6 +131,11 @@ final class BasketMakePrivateCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['basketRemove']
+        );
     }
 }
