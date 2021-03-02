@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Util\HttpCode;
+use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -21,6 +22,28 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  */
 final class PlaceOrderCest extends PlaceOrderBaseCest
 {
+    public function placeOrderWithAnonymousUser(AcceptanceTester $I): void
+    {
+        $I->wantToTest('anonymous user is placing an order');
+        $I->login(self::USERNAME, self::PASSWORD, 0);
+
+        //prepare basket
+        $basketId = $this->createBasket($I, 'my_anonymous_cart');
+        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
+        $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
+
+        //place the order
+        $I->logout();
+        $I->login(null, null, 0);
+        $result  = $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+
+        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('placeOrder', 'Mutation', [], []);
+        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+
+        $this->removeBasket($I, $basketId, self::USERNAME);
+    }
+
     public function placeOrderUsingInvoiceAddress(AcceptanceTester $I): void
     {
         $I->wantToTest('placing an order successfully with invoice address only');

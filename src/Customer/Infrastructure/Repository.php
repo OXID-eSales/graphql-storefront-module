@@ -39,6 +39,9 @@ final class Repository
             throw CustomerNotFound::byId($user->getId());
         }
 
+        // TODO: Call addToGroup
+//        $user->addToGroup('oxidnotyetordered');
+
         return new CustomerDataType($user);
     }
 
