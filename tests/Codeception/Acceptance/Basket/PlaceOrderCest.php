@@ -680,9 +680,9 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
     }
 
-    public function placeOrderwithNewlyRegisteredCustomer(AcceptanceTester $I): void
+    public function placeOrderWithNewlyRegisteredCustomer(AcceptanceTester $I): void
     {
-        $I->wantToTest('register new customer, place two orders, check user group assignment');
+        $I->wantToTest('register new customer, place order, check user group assignment after each step');
 
         //register customer
         $username     = 'newuser@oxid-esales.com';
@@ -697,9 +697,34 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
             ]
         );
 
+        $I->dontSeeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnewcustomer',
+            ]
+        );
+
         //log in and set invoice address
         $I->login($username, $password);
         $this->setInvoiceAddress($I);
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnotyetordered',
+            ]
+        );
+
+        //only after invoice address is set, user will be assigned to oxidnewcustomer, based on his invoice country
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnewcustomer',
+            ]
+        );
 
         //prepare basket
         $basketId = $this->createBasket($I, 'not_yet_ordered');
@@ -715,6 +740,22 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
             [
                 'oxobjectid' => $customerData['id'],
                 'oxgroupsid' => 'oxidcustomer',
+            ]
+        );
+
+        $I->dontSeeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnotyetordered',
+            ]
+        );
+
+        $I->seeInDatabase(
+            'oxobject2group',
+            [
+                'oxobjectid' => $customerData['id'],
+                'oxgroupsid' => 'oxidnewcustomer',
             ]
         );
     }
