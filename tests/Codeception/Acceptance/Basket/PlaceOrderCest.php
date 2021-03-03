@@ -685,7 +685,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->wantToTest('register new customer, place order, check user group assignment after each step');
 
         //register customer
-        $username     = 'newuser@oxid-esales.com';
+        $username     = 'newcheckoutuser@oxid-esales.com';
         $password     = 'useruser';
         $customerData = $this->registerCustomer($I, $username, $password);
 
