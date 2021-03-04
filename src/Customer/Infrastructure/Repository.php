@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Customer\Infrastructure;
 
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
@@ -40,6 +41,17 @@ final class Repository
 
         if (!$user->load($user->getId())) {
             throw CustomerNotFound::byId($user->getId());
+        }
+
+        return new CustomerDataType($user);
+    }
+
+    public function loadUser(string $id): CustomerDataType
+    {
+        $user = oxNew(User::class);
+
+        if (!$user->load($id)) {
+            throw CustomerNotFound::byId($id);
         }
 
         return new CustomerDataType($user);
