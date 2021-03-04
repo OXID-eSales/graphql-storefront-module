@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove ``final`` statement from shop extending classes [PR-3](https://github.com/OXID-eSales/graphql-storefront-module/pull/3).
 
 ### Changed
-- Use Rights annotation instead of Logged so that an anonymus token user could create/modify basket and place an order.
+- Use Rights annotation instead of Logged so that an anonymous token user could create/modify basket and place an order.
 
 ## [0.1.0] - 2020-12-16
 

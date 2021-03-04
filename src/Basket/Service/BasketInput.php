@@ -12,11 +12,11 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Service;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketExists;
-use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\BasketFactory;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Repository as BasketRepository;
 use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BasketInput
 {
@@ -58,14 +58,9 @@ final class BasketInput
 
     private function doesBasketExist(string $title): bool
     {
-        $customer = $this->customerService->customer($this->authentication->getUserId());
-
-        try {
-            $this->basketRepository->customerBasketByTitle($customer, $title);
-        } catch (BasketNotFound $e) {
-            return false;
-        }
-
-        return true;
+        return $this->basketRepository->basketExistsByTitleAndUserId(
+            $title,
+            new ID($this->authentication->getUserId())
+        );
     }
 }
