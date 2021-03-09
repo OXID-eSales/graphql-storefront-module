@@ -14,7 +14,6 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketExists;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\BasketFactory;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Repository as BasketRepository;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -26,21 +25,16 @@ final class BasketInput
     /** @var BasketRepository */
     private $basketRepository;
 
-    /** @var CustomerService */
-    private $customerService;
-
     /** @var BasketFactory */
     private $basketFactory;
 
     public function __construct(
         Authentication $authentication,
         BasketRepository $basketRepository,
-        CustomerService $customerService,
         BasketFactory $basketFactory
     ) {
         $this->authentication   = $authentication;
         $this->basketRepository = $basketRepository;
-        $this->customerService  = $customerService;
         $this->basketFactory    = $basketFactory;
     }
 

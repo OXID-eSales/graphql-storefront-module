@@ -66,11 +66,6 @@ final class Customer
         return $this->customerRepository->createUser($customer->getEshopModel());
     }
 
-    public function load(string $id): CustomerDataType
-    {
-        return $this->customerRepository->loadUser($id);
-    }
-
     public function changeEmail(string $email): CustomerDataType
     {
         if (!((string) $id = $this->authenticationService->getUserId())) {

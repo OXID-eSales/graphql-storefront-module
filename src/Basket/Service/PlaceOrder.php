@@ -110,7 +110,7 @@ final class PlaceOrder
         }
 
         /** @var CustomerDataType $customer */
-        $customer = $this->customerService->load(
+        $customer = $this->customerService->customer(
             $this->authenticationService->getUserId()
         );
 
