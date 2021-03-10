@@ -29,6 +29,11 @@ $ ./bin/oe-console oe:module:activate oe_graphql_base
 $ ./bin/oe-console oe:module:activate oe_graphql_storefront
 ```
 
+## Branch Compatibility
+
+* master branch is compatible `graphql-base` master branch
+* b-6.x branch is compatible with `graphql-base` b-6.x branch
+
 ### How to use
 
 A good starting point is to check the [How to use section in the GraphQL Base Module](https://github.com/OXID-eSales/graphql-base-module/#how-to-use)

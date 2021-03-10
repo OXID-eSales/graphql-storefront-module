@@ -86,7 +86,7 @@ final class RelationService
     {
         $listPrice = $product->getEshopModel()->getTPrice();
 
-        if ($listPrice === null) { // @phpstan-ignore-line
+        if ($listPrice === null) {
             return null;
         }
 

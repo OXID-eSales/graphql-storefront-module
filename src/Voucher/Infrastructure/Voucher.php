@@ -12,9 +12,10 @@ namespace OxidEsales\GraphQL\Storefront\Voucher\Infrastructure;
 use Exception;
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Core\Exception\ObjectException as EshopObjectException;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\TransactionService as EshopDatabaseTransactionService;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\TransactionServiceInterface as EshopDatabaseTransactionService;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
+use OxidEsales\GraphQL\Storefront\Shared\Shop\Voucher as StorefrontVoucherModel;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNotApplied;
 use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNotFound;
@@ -109,7 +110,10 @@ final class Voucher
      */
     public function checkProductAvailability(BasketDataType $basket, VoucherDataType $voucher): void
     {
-        if (!$voucher->getEshopModel()->isProductVoucher()) {
+        /** @var StorefrontVoucherModel $voucherModel */
+        $voucherModel = $voucher->getEshopModel();
+
+        if (!$voucherModel->isProductVoucher()) {
             return;
         }
 
@@ -121,7 +125,10 @@ final class Voucher
      */
     public function checkCategoryAvailability(BasketDataType $basket, VoucherDataType $voucher): void
     {
-        if (!$voucher->getEshopModel()->isCategoryVoucher()) {
+        /** @var StorefrontVoucherModel $voucherModel */
+        $voucherModel = $voucher->getEshopModel();
+
+        if (!$voucherModel->isCategoryVoucher()) {
             return;
         }
 
@@ -133,7 +140,10 @@ final class Voucher
      */
     private function checkForVoucherRelatedProducts(BasketDataType $basket, VoucherDataType $voucher): void
     {
-        $discountModel = $voucher->getEshopModel()->getSerieDiscount();
+        /** @var StorefrontVoucherModel $voucherModel */
+        $voucherModel = $voucher->getEshopModel();
+
+        $discountModel = $voucherModel->getSerieDiscount();
         $basketModel   = $this->sharedBasketInfrastructure->getBasket($basket);
         $items         = $basketModel->getContents();
 

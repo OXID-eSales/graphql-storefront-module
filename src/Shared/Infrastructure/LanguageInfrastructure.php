@@ -9,27 +9,18 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 
-use OxidEsales\Eshop\Core\Language as LanguageService;
+use OxidEsales\Eshop\Core\Registry;
 
 final class LanguageInfrastructure
 {
-    /** @var LanguageService */
-    private $languageService;
-
-    public function __construct(
-        LanguageService $languageService
-    ) {
-        $this->languageService = $languageService;
-    }
-
     public function getLanguageCode(int $languageId): string
     {
-        return $this->languageService->getLanguageAbbr($languageId);
+        return Registry::getLang()->getLanguageAbbr($languageId);
     }
 
     public function getLanguageName(int $languageId): string
     {
-        $languageNames = $this->languageService->getLanguageNames();
+        $languageNames = Registry::getLang()->getLanguageNames();
 
         return $languageNames[$languageId];
     }

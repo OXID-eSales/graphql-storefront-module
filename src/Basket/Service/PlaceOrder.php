@@ -77,10 +77,10 @@ final class PlaceOrder
     public function placeOrder(ID $basketId, ?bool $termsAndConditions = null): OrderDataType
     {
         $this->eventDispatcher->dispatch(
-            BeforePlaceOrder::NAME,
             new BeforePlaceOrder(
                 $basketId
-            )
+            ),
+            BeforePlaceOrder::NAME
         );
 
         $userBasket = $this->basketService->getAuthenticatedCustomerBasket((string) $basketId->val());

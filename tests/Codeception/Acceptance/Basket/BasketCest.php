@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
-use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -200,7 +199,7 @@ final class BasketCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "basketCreate" on type "Mutation".',
+            'The token is invalid',
             $result['errors'][0]['message']
         );
     }
@@ -214,8 +213,7 @@ final class BasketCest extends BaseCest
 
         $result = $this->basketCreateMutation($I, self::BASKET_WISH_LIST);
 
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketCreate', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+        $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
     }
 
     public function testBasketCost(AcceptanceTester $I): void

@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Voucher\DataType;
 
 use DateTimeInterface;
+use OxidEsales\Eshop\Application\Model\Voucher as EshopVoucherModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
-use OxidEsales\GraphQL\Storefront\Shared\Shop\Voucher as EshopVoucherModel;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;

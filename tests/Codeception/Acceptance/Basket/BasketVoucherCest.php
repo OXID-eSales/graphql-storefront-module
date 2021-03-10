@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -135,27 +134,17 @@ final class BasketVoucherCest extends BaseCest
     {
         $I->login();
 
-        $variables = [
-            'basketId'      => self::PRIVATE_BASKET,
-            'voucherNumber' => 'voucher-number',
-        ];
-
-        $mutation = '
-            mutation ($basketId: String!, $voucherNumber: String!) {
-                basketAddVoucher(basketId: $basketId, voucherNumber: $voucherNumber) {
-                    vouchers {
-                        number
-                    }
+        $I->sendGQLQuery('mutation {
+            basketAddVoucher(basketId: "' . self::PRIVATE_BASKET . '", voucherNumber: "voucher-number") {
+                vouchers {
+                    number
                 }
             }
-        ';
-
-        $I->sendGQLQuery($mutation, $variables);
+        }');
 
         $I->seeResponseIsJson();
         $result          = $I->grabJsonResponseAsArray();
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddVoucher', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+        $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
     }
 
     /**
@@ -165,26 +154,16 @@ final class BasketVoucherCest extends BaseCest
     {
         $I->login();
 
-        $variables = [
-            'basketId'      => self::PRIVATE_BASKET,
-            'voucherNumber' => 'voucher-number',
-        ];
-
-        $mutation = '
-            mutation ($basketId: String!, $voucherNumber: String!) {
-                basketRemoveVoucher(basketId: $basketId, voucherNumber: $voucherNumber) {
-                    vouchers {
-                        number
-                    }
+        $I->sendGQLQuery('mutation{
+            basketRemoveVoucher(basketId: "' . self::PRIVATE_BASKET . '", voucherId: "voucher-number") {
+                vouchers {
+                    number
                 }
             }
-        ';
-
-        $I->sendGQLQuery($mutation, $variables);
+        }');
 
         $I->seeResponseIsJson();
         $result          = $I->grabJsonResponseAsArray();
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketRemoveVoucher', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+        $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
     }
 }

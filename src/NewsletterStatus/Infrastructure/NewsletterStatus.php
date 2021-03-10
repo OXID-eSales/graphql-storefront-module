@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure;
 
+use OxidEsales\Eshop\Application\Model\NewsSubscribed;
 use OxidEsales\Eshop\Application\Model\NewsSubscribed as EshopNewsletterSubscriptionStatusModel;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy as LegacyService;
@@ -83,6 +84,7 @@ final class NewsletterStatus
                 'oxfname'    => $input->firstName(),
                 'oxlname'    => $input->lastName(),
                 'oxusername' => $input->email(),
+                'oxpassword' => '',
             ]
         );
 
@@ -92,6 +94,12 @@ final class NewsletterStatus
     private function setNewsSubscription(SubscriberDataType $subscriber, bool $flag): bool
     {
         $sendOptinMail = $this->legacyService->getConfigParam('blOrderOptInEmail');
+
+        /** @var NewsSubscribed $newsletterModel */
+        $newsletterModel = $subscriber->getEshopModel()->getNewsSubscription();
+        $newsletterModel->setOptInStatus(
+            $newsletterModel->getFieldData('oxnewssubscribed__oxdboptin') ?: 0
+        );
 
         return $subscriber->getEshopModel()->setNewsSubscription($flag, $sendOptinMail);
     }

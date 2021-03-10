@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -52,7 +51,7 @@ final class BasketAddProductCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "basketAddProduct" on type "Mutation".',
+            'You do not have sufficient rights to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -66,8 +65,7 @@ final class BasketAddProductCest extends BaseCest
 
         $result = $this->basketAddProductMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID);
 
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddProduct', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+        $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
     }
 
     public function testAddProductToBasketWrongBasketId(AcceptanceTester $I): void

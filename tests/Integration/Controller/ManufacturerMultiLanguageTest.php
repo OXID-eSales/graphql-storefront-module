@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
 
-final class ManufacturerMultilanguageTest extends TestCase
+final class ManufacturerMultiLanguageTest extends TestCase
 {
     private const ACTIVE_MULTILANGUAGE_MANUFACTURER = 'adc6df0977329923a6330cc8f3c0a906';
 
@@ -66,7 +66,7 @@ final class ManufacturerMultilanguageTest extends TestCase
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_MANUFACTURER, $manufacturer['id']);
         $this->assertEquals($title, $manufacturer['title']);
-        $this->assertRegExp('@https?://.*' . $seoUrl . '$@', $manufacturer['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*' . $seoUrl . '$@', $manufacturer['seo']['url']);
         $this->assertSame($productDescription, $manufacturer['products'][0]['shortDescription']);
     }
 
