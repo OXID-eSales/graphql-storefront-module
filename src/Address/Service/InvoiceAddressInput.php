@@ -38,7 +38,7 @@ final class InvoiceAddressInput
     }
 
     /**
-     * @Factory(name="InvoiceAddressInput")
+     * @Factory(name="InvoiceAddressInput", default=true)
      */
     public function fromUserInput(
         ?string $salutation = null,

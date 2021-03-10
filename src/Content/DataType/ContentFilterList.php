@@ -47,7 +47,7 @@ final class ContentFilterList extends FilterList
     }
 
     /**
-     * @Factory(name="ContentFilterList")
+     * @Factory(name="ContentFilterList", default=true)
      */
     public static function createContentFilterList(
         ?StringFilter $folder = null
