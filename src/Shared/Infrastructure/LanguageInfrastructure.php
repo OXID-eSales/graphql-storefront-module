@@ -16,11 +16,12 @@ final class LanguageInfrastructure
     /** @var LanguageService */
     private $languageService;
 
-    public function __construct(
-        LanguageService $languageService
-    ) {
-        $this->languageService = $languageService;
-    }
+    //TODO: Language is not accessable
+//    public function __construct(
+//        LanguageService $languageService
+//    ) {
+//        $this->languageService = $languageService;
+//    }
 
     public function getLanguageCode(int $languageId): string
     {
