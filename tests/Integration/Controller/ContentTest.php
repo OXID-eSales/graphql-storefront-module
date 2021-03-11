@@ -50,11 +50,11 @@ final class ContentTest extends TokenTestCase
         $this->assertEquals('GraphQL content with category DE', $content['title']);
         $this->assertEquals('CMSFOLDER_CATEGORY', $content['folder']);
         $this->assertEmpty($content['version']);
-        $this->assertEquals($content['category']['id'], '0f4fb00809cec9aa0910aa9c8fe36751');
-        $this->assertEquals($content['category']['title'], 'Kites');
-        $this->assertRegExp('@https?://.*/GraphQL-content-with-category-DE/$@', $content['seo']['url']);
-        $this->assertContains('Content DE', $content['content']);
-        $this->assertContains('Content DE', $content['rawContent']);
+        $this->assertEquals('0f4fb00809cec9aa0910aa9c8fe36751', $content['category']['id']);
+        $this->assertEquals('Kites', $content['category']['title']);
+        $this->assertMatchesRegularExpression('@https?://.*/GraphQL-content-with-category-DE/$@', $content['seo']['url']);
+        $this->assertEquals('Content DE', $content['content']);
+        $this->assertEquals('Content DE', $content['rawContent']);
 
         $this->assertEmpty(array_diff(array_keys($content), [
             'id',

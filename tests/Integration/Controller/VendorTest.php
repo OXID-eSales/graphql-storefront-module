@@ -50,11 +50,11 @@ final class VendorTest extends TokenTestCase
         $this->assertNull($vendor['icon']);
         $this->assertEquals('www.true-fashion.com', $vendor['title']);
         $this->assertSame('Ethical style outlet', $vendor['shortdesc']);
-        $this->assertRegExp('@https?://.*/Nach-Lieferant/www-true-fashion-com/$@', $vendor['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*/Nach-Lieferant/www-true-fashion-com/$@', $vendor['seo']['url']);
         $this->assertEquals('', $vendor['seo']['description']);
         $this->assertEquals('', $vendor['seo']['keywords']);
 
-        $dateTimeType = DateTimeType::getInstance();
+        $dateTimeType = new DateTimeType();
         //Fixture timestamp can have few seconds difference
         $this->assertLessThanOrEqual(
             $dateTimeType->serialize(new DateTimeImmutable('now')),

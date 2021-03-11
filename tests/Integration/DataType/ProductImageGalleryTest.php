@@ -38,12 +38,12 @@ final class ProductImageGalleryTest extends TestCase
 
         $imageGallery = $productRelation->getImageGallery($product);
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@^http.*?/out/pictures/generated/product/1/390_245_75/cabrinha_caliber_2011.jpg$@msi',
             $imageGallery->getThumb()
         );
 
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@^http.*?/out/pictures/generated/product/1/87_87_75/cabrinha_caliber_2011.jpg$@msi',
             $imageGallery->getIcon()
         );
@@ -90,9 +90,9 @@ final class ProductImageGalleryTest extends TestCase
         /** @var ProductImage[] $images */
         $images = $imageGallery->getImages();
 
-        $this->assertRegExp($image, $images[$key]->getImage());
-        $this->assertRegExp($icon, $images[$key]->getIcon());
-        $this->assertRegExp($zoom, $images[$key]->getZoom());
+        $this->assertMatchesRegularExpression($image, $images[$key]->getImage());
+        $this->assertMatchesRegularExpression($icon, $images[$key]->getIcon());
+        $this->assertMatchesRegularExpression($zoom, $images[$key]->getZoom());
     }
 
     public function getImageGalleryImagesContentDataProvider()

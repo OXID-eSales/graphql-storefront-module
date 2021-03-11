@@ -75,7 +75,7 @@ final class CategoryTest extends TokenTestCase
         $this->assertEmpty($category['template']);
         $this->assertSame(0.0, $category['priceFrom']);
         $this->assertSame(0.0, $category['priceTo']);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/category/icon/.*/shoes_1_cico.jpg@',
             $category['icon']
         );
@@ -83,7 +83,7 @@ final class CategoryTest extends TokenTestCase
         $this->assertNull($category['vat']);
         $this->assertFalse($category['skipDiscount']);
         $this->assertTrue($category['showSuffix']);
-        $this->assertRegExp('@https?://.*/Bekleidung/Sportswear/Neopren/Schuhe/@', $category['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*/Bekleidung/Sportswear/Neopren/Schuhe/@', $category['seo']['url']);
         $this->assertInstanceOf(
             DateTimeInterface::class,
             new DateTimeImmutable($category['timestamp'])
@@ -263,18 +263,18 @@ final class CategoryTest extends TokenTestCase
         $this->assertEmpty($child['template']);
         $this->assertSame(0.0, $child['priceFrom']);
         $this->assertSame(0.0, $child['priceTo']);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/category/icon/.*/wakeboarding_boards_1_cico.jpg@',
             $child['icon']
         );
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/category/promo_icon/.*/cat_promo_wakeboards_pico.jpg@',
             $child['promotionIcon']
         );
         $this->assertNull($child['vat']);
         $this->assertFalse($child['skipDiscount']);
         $this->assertTrue($child['showSuffix']);
-        $this->assertRegExp('@https?://.*/Wakeboarding/Wakeboards/@', $child['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*/Wakeboarding/Wakeboards/@', $child['seo']['url']);
         $this->assertInstanceOf(
             DateTimeInterface::class,
             new DateTimeImmutable($child['timestamp'])

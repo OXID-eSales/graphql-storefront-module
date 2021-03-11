@@ -66,7 +66,7 @@ final class ManufacturerMultiLanguageTest extends TestCase
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_MANUFACTURER, $manufacturer['id']);
         $this->assertEquals($title, $manufacturer['title']);
-        $this->assertRegExp('@https?://.*' . $seoUrl . '$@', $manufacturer['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*' . $seoUrl . '$@', $manufacturer['seo']['url']);
         $this->assertSame($productDescription, $manufacturer['products'][0]['shortDescription']);
     }
 
