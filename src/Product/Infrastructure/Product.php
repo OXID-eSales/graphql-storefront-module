@@ -212,7 +212,8 @@ final class Product
      */
     public function getVariants(ProductDataType $product): array
     {
-        $productVariants = $product->getEshopModel()->getVariants();
+        // when using getVariants() product relations are returned as SimpleVariant type
+        $productVariants = $product->getEshopModel()->getFullVariants();
 
         if (!is_iterable($productVariants) || count($productVariants) === 0) {
             return [];

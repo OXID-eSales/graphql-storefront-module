@@ -112,6 +112,9 @@ final class ProductTest extends TokenTestCase
                 }
                 accessories {
                     id
+                    variants {
+                        id
+                    }
                 }
                 deliveryTime {
                     minDeliveryTime
@@ -1638,6 +1641,250 @@ final class ProductTest extends TokenTestCase
 
         $actualProducts = $productListResult['body']['data']['products'];
         $this->assertEquals([$actualProduct], $actualProducts);
+    }
+
+    public function testProductRelationVariants(): void
+    {
+        $response = $this->query('query {
+            product(id: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '"){
+                accessories {
+                    variants {
+                        id
+                        accessories {
+                            variants {
+                                id
+                            }
+                        }
+                        crossSelling {
+                            variants {
+                                id
+                            }
+                        }
+                    }
+                }
+                crossSelling {
+                    variants {
+                       id
+                       accessories {
+                           variants {
+                               id
+                           }
+                       }
+                       crossSelling {
+                           variants {
+                               id
+                           }
+                       }
+                   }
+                }
+            }
+        }');
+
+        $expectedProduct = [
+            'accessories'  => [],
+            'crossSelling' => [
+                [
+                    'variants' => [
+                        [
+                            'id'           => '6b6b9f89cb8decee837d1a4c60742875',
+                            'accessories'  => [],
+                            'crossSelling' => [],
+                        ],
+                        [
+                            'id'           => '6b63ed599fcfa07768dbfbd93991543b',
+                            'accessories'  => [],
+                            'crossSelling' => [],
+                        ],
+                        [
+                            'id'           => '6b6b42499614ce3bfbee01f6eaba2f30',
+                            'accessories'  => [],
+                            'crossSelling' => [],
+                        ],
+                    ],
+                ],
+                [
+                    'variants' => [
+                        [
+                            'id'           => '6b62700a4eb25d6c370ea2ae3807b9e3',
+                            'accessories'  => [],
+                            'crossSelling' => [],
+                        ],
+                        [
+                            'id'           => '6b6a6aedca3e438e98d51f0a5d586c0b',
+                            'accessories'  => [],
+                            'crossSelling' => [],
+                        ],
+                        [
+                            'id'           => '6b6b6abed58b118ee988c92856b8b675',
+                            'accessories'  => [],
+                            'crossSelling' => [],
+                        ],
+                    ],
+                ],
+                ['variants' => []],
+                ['variants' => []],
+            ],
+        ];
+
+        $actualProduct = $response['body']['data']['product'];
+        $this->assertEquals($expectedProduct, $actualProduct);
+    }
+
+    public function testProductListRelationVariants(): void
+    {
+        $response = $this->query('query {
+            products(filter:{title:{contains:"Kuyichi"}} pagination:{limit:2}){
+                accessories {
+                    variants {
+                        id
+                        accessories {
+                            variants {
+                                id
+                            }
+                        }
+                        crossSelling {
+                            variants {
+                                id
+                            }
+                        }
+                    }
+                }
+                crossSelling {
+                    variants {
+                        id
+                        accessories {
+                            variants {
+                                id
+                            }
+                        }
+                        crossSelling {
+                            variants {
+                                id
+                            }
+                        }
+                   }
+                }
+            }
+        }');
+
+        $expectedProducts = [
+            [
+                'accessories'  => [],
+                'crossSelling' => [
+                    [
+                        'variants' => [
+                            [
+                                'id'           => '6b6b9f89cb8decee837d1a4c60742875',
+                                'accessories'  => [],
+                                'crossSelling' => [],
+                            ],
+                            [
+                                'id'           => '6b63ed599fcfa07768dbfbd93991543b',
+                                'accessories'  => [],
+                                'crossSelling' => [],
+                            ],
+                            [
+                                'id'           => '6b6b42499614ce3bfbee01f6eaba2f30',
+                                'accessories'  => [],
+                                'crossSelling' => [],
+                            ],
+                        ],
+                    ],
+                    [
+                        'variants' => [
+                            [
+                                'id'           => '6b62700a4eb25d6c370ea2ae3807b9e3',
+                                'accessories'  => [],
+                                'crossSelling' => [],
+                            ],
+                            [
+                                'id'           => '6b6a6aedca3e438e98d51f0a5d586c0b',
+                                'accessories'  => [],
+                                'crossSelling' => [],
+                            ],
+                            [
+                                'id'           => '6b6b6abed58b118ee988c92856b8b675',
+                                'accessories'  => [],
+                                'crossSelling' => [],
+                            ],
+                        ],
+                    ],
+                    ['variants' => []],
+                    ['variants' => []],
+                ],
+            ],
+            [
+                'accessories'  => [],
+                'crossSelling' => [
+                    [
+                        'variants' => [
+                            [
+                                'id'           => '09646538b54bac72b4ccb92fb5e3649f',
+                                'accessories'  => [],
+                                'crossSelling' => [
+                                    ['variants' => []],
+                                    ['variants' => []],
+                                    [
+                                        'variants' => [
+                                            ['id' => '5316bbab81c19d81d5e36e59ecd7f506'],
+                                        ],
+                                    ],
+                                    ['variants' => []],
+                                ],
+                            ],
+                            [
+                                'id'           => '0964a33fb0e51ca6b907a34fbede7c2e',
+                                'accessories'  => [],
+                                'crossSelling' => [
+                                    [
+                                        'variants' => [
+                                            ['id' => '5316bbab81c19d81d5e36e59ecd7f506'],
+                                        ],
+                                    ],
+                                    ['variants' => []],
+                                    ['variants' => []],
+                                    ['variants' => []],
+                                ],
+                            ],
+                            [
+                                'id'           => '096e38032896a847682651d565966c45',
+                                'accessories'  => [],
+                                'crossSelling' => [
+                                    ['variants' => []],
+                                    ['variants' => []],
+                                    [
+                                        'variants' => [
+                                            ['id' => '5316bbab81c19d81d5e36e59ecd7f506'],
+                                        ],
+                                    ],
+                                    ['variants' => []],
+                                ],
+                            ],
+                            [
+                                'id'           => '096a1b0849d5ffa4dd48cd388902420b',
+                                'accessories'  => [],
+                                'crossSelling' => [
+                                    ['variants' => []],
+                                    ['variants' => []],
+                                    [
+                                        'variants' => [
+                                            ['id' => '5316bbab81c19d81d5e36e59ecd7f506'],
+                                        ],
+                                    ],
+                                    ['variants' => []],
+                                ],
+                            ],
+                        ],
+                    ],
+                    ['variants' => []],
+                    ['variants' => []],
+                    ['variants' => []],
+                ],
+            ],
+        ];
+
+        $actualProducts = $response['body']['data']['products'];
+        $this->assertEquals($expectedProducts, $actualProducts);
     }
 
     public function testProductListDefaultSort(): void

@@ -3,6 +3,8 @@ parameters:
     bootstrapFiles:
         - tests/phpstan-bootstrap.php
     stubFiles:
+        - tests/stubs/EshopArticle.stub
+        - tests/stubs/EshopArticleList.stub
         - tests/stubs/EshopBasket.stub
         - tests/stubs/EshopUser.stub
         - tests/stubs/EshopVoucher.stub
