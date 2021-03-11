@@ -43,7 +43,7 @@ final class BannerMultiLanguageTest extends TokenTestCase
 
         $banner = $result['body']['data']['banner'];
         $this->assertSame('Banner 1 en', $banner['title']);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/en/Gear/Sportswear/Neoprene/Suits/Wetsuit-NPX-ASSASSIN.html$@',
             $banner['link']
         );
@@ -83,7 +83,7 @@ final class BannerMultiLanguageTest extends TokenTestCase
 
         $banner = $result['body']['data']['banner'];
         $this->assertSame('Banner 4 en', $banner['title']);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/Wakeboarding/Wakeboards/.*?$@',
             $banner['link']
         );

@@ -61,10 +61,10 @@ final class ManufacturerTest extends TokenTestCase
 
         $this->assertSame(self::ACTIVE_MANUFACTURER, $manufacturer['id']);
         $this->assertSame(true, $manufacturer['active']);
-        $this->assertRegExp('@https?://.*oreilly_1_mico.png$@', $manufacturer['icon']);
+        $this->assertMatchesRegularExpression('@https?://.*oreilly_1_mico.png$@', $manufacturer['icon']);
         $this->assertEquals('O&#039;Reilly', $manufacturer['title']);
         $this->assertSame('', $manufacturer['shortdesc']);
-        $this->assertRegExp('@https?://.*Nach-Hersteller/O-Reilly/$@', $manufacturer['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*Nach-Hersteller/O-Reilly/$@', $manufacturer['seo']['url']);
         $this->assertEquals('german manufacturer seo description', $manufacturer['seo']['description']);
         $this->assertEquals('german manufacturer seo keywords', $manufacturer['seo']['keywords']);
 
