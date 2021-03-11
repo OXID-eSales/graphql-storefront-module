@@ -52,6 +52,9 @@ final class BasketAddProductCest extends BaseCest
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
     }
 
+    /**
+     * @group allowed_to_fail_for_anonymous_token
+     */
     public function testAddProductToBasketWithAnonymousUser(AcceptanceTester $I): void
     {
         $I->login();
