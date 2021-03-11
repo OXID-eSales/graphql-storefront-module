@@ -9,11 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Base\Tests\Integration\MultishopTestCase;
 
-final class PromotionMultilanguageTest extends TestCase
+final class PromotionEnterpriseMultiLanguageTest extends MultishopTestCase
 {
     private const PROMOTION_ID = 'test_active_promotion_1';
+
+    private const PROMOTION_SUB_SHOP_ID = 'test_active_sub_shop_promotion_1';
 
     /**
      * @return array
@@ -30,6 +32,16 @@ final class PromotionMultilanguageTest extends TestCase
                 'shopId'     => '1',
                 'languageId' => '1',
                 'title'      => 'Current Promotion 1 EN',
+            ],
+            'shop_2_de' => [
+                'shopId'     => '2',
+                'languageId' => '0',
+                'title'      => 'Current sub shop Promotion 1 DE',
+            ],
+            'shop_2_en' => [
+                'shopId'     => '2',
+                'languageId' => '1',
+                'title'      => 'Current sub shop Promotion 1 EN',
             ],
         ];
     }
@@ -48,8 +60,10 @@ final class PromotionMultilanguageTest extends TestCase
         $this->setGETRequestParameter('shp', $shopId);
         $this->setGETRequestParameter('lang', $languageId);
 
+        $promotionId = $this->getPromotionIdForShop($shopId);
+
         $result = $this->query('query {
-            promotion (id: "' . self::PROMOTION_ID . '") {
+            promotion (id: "' . $promotionId . '") {
                 id
                 title
             }
@@ -57,7 +71,7 @@ final class PromotionMultilanguageTest extends TestCase
 
         $this->assertEquals(
             [
-                'id'    => self::PROMOTION_ID,
+                'id'    => $promotionId,
                 'title' => $title,
             ],
             $result['body']['data']['promotion']
@@ -78,8 +92,10 @@ final class PromotionMultilanguageTest extends TestCase
         $this->setGETRequestParameter('shp', $shopId);
         $this->setGETRequestParameter('lang', $languageId);
 
+        $promotionId = $this->getPromotionIdForShop($shopId);
+
         $result = $this->query('query {
-            promotion (id: "' . self::PROMOTION_ID . '") {
+            promotion (id: "' . $promotionId . '") {
                 id
                 title
             }
@@ -87,10 +103,15 @@ final class PromotionMultilanguageTest extends TestCase
 
         $this->assertEquals(
             [
-                'id'    => self::PROMOTION_ID,
+                'id'    => $promotionId,
                 'title' => $title,
             ],
             $result['body']['data']['promotion']
         );
+    }
+
+    private function getPromotionIdForShop($shopId)
+    {
+        return $shopId == 1 ? self::PROMOTION_ID : self::PROMOTION_SUB_SHOP_ID;
     }
 }
