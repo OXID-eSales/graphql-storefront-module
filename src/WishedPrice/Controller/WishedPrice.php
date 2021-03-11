@@ -64,8 +64,6 @@ final class WishedPrice
     /**
      * @Mutation()
      * @Logged()
-     *
-     * @return true
      */
     public function wishedPriceDelete(string $id): bool
     {
