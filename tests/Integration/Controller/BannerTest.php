@@ -54,7 +54,7 @@ final class BannerTest extends TokenTestCase
         $this->assertSame(4, $banner['sorting']);
         $this->assertSame([
             'id'    => self::ACTIVE_BANNER_PRODUCT,
-            'title' => 'Neoprenanzug NPX ASSASSIN',$banner['product']
+            'title' => 'Neoprenanzug NPX ASSASSIN', $banner['product'],
         ], $banner['product']);
         $this->assertEquals('Banner 1', $banner['title']);
 
