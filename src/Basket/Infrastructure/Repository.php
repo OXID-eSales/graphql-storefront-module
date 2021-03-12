@@ -13,8 +13,13 @@ use Doctrine\DBAL\FetchMode;
 use OxidEsales\Eshop\Application\Model\UserBasket as UserBasketEshopModel;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\GraphQL\Base\DataType\IDFilter;
+use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
+use OxidEsales\GraphQL\Base\DataType\StringFilter;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
+use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketByTitleAndUserIdFilterList;
+use OxidEsales\GraphQL\Storefront\Basket\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
@@ -36,6 +41,23 @@ final class Repository
     ) {
         $this->sharedRepository    = $sharedRepository;
         $this->queryBuilderFactory = $queryBuilderFactory;
+    }
+
+    public function basketExistsByTitleAndUserId(string $title, ID $userId): bool
+    {
+        $filter = new BasketByTitleAndUserIdFilterList(
+            new StringFilter($title),
+            new IDFilter($userId)
+        );
+
+        $fromDb = $this->sharedRepository->getList(
+            BasketDataType::class,
+            $filter,
+            new PaginationFilter(),
+            new Sorting()
+        );
+
+        return (bool) count($fromDb);
     }
 
     /**

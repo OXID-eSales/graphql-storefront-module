@@ -41,6 +41,9 @@ final class BasketRemoveProductCest extends BaseCest
         $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
     }
 
+    /**
+     * @group allowed_to_fail_for_anonymous_token
+     */
     public function testRemoveBasketProductAnonymousUser(AcceptanceTester $I): void
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);

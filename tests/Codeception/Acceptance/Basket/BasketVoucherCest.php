@@ -131,6 +131,9 @@ final class BasketVoucherCest extends BaseCest
         $I->assertEmpty($result['data']['basket']['vouchers']);
     }
 
+    /**
+     * @group allowed_to_fail_for_anonymous_token
+     */
     public function basketAddVoucherWithAnonymousUser(AcceptanceTester $I): void
     {
         $I->login();
@@ -159,6 +162,9 @@ final class BasketVoucherCest extends BaseCest
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
     }
 
+    /**
+     * @group allowed_to_fail_for_anonymous_token
+     */
     public function basketRemoveVoucherWithAnonymousUser(AcceptanceTester $I): void
     {
         $I->login();

@@ -22,6 +22,9 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  */
 final class PlaceOrderCest extends PlaceOrderBaseCest
 {
+    /**
+     * @group allowed_to_fail_for_anonymous_token
+     */
     public function placeOrderWithAnonymousUser(AcceptanceTester $I): void
     {
         $I->wantToTest('anonymous user is placing an order');
