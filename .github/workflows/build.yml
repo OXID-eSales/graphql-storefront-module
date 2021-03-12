@@ -10,7 +10,7 @@ jobs:
         runs-on: Ubuntu-20.04
         strategy:
             matrix:
-                php: ['7.1', '7.2', '7.3', '7.4']
+                php: ['7.3', '7.4']
                 DEPENDENCIES: ['', '--prefer-lowest']
         steps:
             - name: Checkout
