@@ -110,6 +110,8 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
 
     /**
      * @dataProvider incorrectCurrencyNames
+     *
+     * @param mixed $name
      */
     public function testGetCurrencyByNameShouldFail($name): void
     {
