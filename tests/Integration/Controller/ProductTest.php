@@ -160,11 +160,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $product = $result['body']['data']['product'];
 
         $this->assertSame(self::ACTIVE_PRODUCT, $product['id']);
@@ -299,9 +294,9 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            401,
-            $result
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -316,7 +311,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 'id'     => self::INACTIVE_PRODUCT,
@@ -334,7 +328,10 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(404, $result['status']);
+        $this->assertSame(
+            'Product was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
+        );
     }
 
     public function testGetProductVariants(): void
@@ -351,11 +348,6 @@ final class ProductTest extends TokenTestCase
                 }
             }
         ');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             $result['body']['data']['product']['variantLabels'],
@@ -457,11 +449,6 @@ final class ProductTest extends TokenTestCase
             }
         ');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(
             0,
             $result['body']['data']['product']['variants']
@@ -475,11 +462,6 @@ final class ProductTest extends TokenTestCase
                 id
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             53,
@@ -651,11 +633,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $orderedProducts = [];
 
         foreach ($result['body']['data']['products'] as $product) {
@@ -698,11 +675,6 @@ final class ProductTest extends TokenTestCase
                 id
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals($expectedProducts, $result['body']['data']['products']);
     }
@@ -756,11 +728,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(
             $expectedCount,
             $result['body']['data']['products']
@@ -801,11 +768,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(
             $expectedCount,
             $result['body']['data']['products']
@@ -843,11 +805,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(
             $expectedCount,
             $result['body']['data']['products']
@@ -881,8 +838,6 @@ final class ProductTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(200, $result);
 
         $category = $result['body']['data']['products'][0]['categories'][0];
         $this->assertNull($category);
@@ -938,11 +893,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertSame(
             [],
             $result['body']['data']['products']
@@ -961,11 +911,6 @@ final class ProductTest extends TokenTestCase
                 id
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             [
@@ -1047,11 +992,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $productVendor = $result['body']['data']['product']['vendor'];
         $this->assertSame($expectedVendor, $productVendor);
     }
@@ -1127,11 +1067,6 @@ final class ProductTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $productManufacturer = $result['body']['data']['product']['manufacturer'];
         $this->assertSame($expectedManufacturer, $productManufacturer);
@@ -1213,11 +1148,6 @@ final class ProductTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $productCrossSelling = $result['body']['data']['product']['crossSelling'];
 
@@ -1302,11 +1232,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount($expectedCategory ? 1 : 0, $result['body']['data']['product']['categories']);
         $productMainCategory = $result['body']['data']['product']['categories'][0];
 
@@ -1323,11 +1248,6 @@ final class ProductTest extends TokenTestCase
                     }
                 }
             }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $expectedCategories = [
             [
@@ -1453,11 +1373,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $actualProducts = $result['body']['data']['products'];
 
         $this->assertEquals($expectedProducts, $actualProducts);
@@ -1565,11 +1480,6 @@ final class ProductTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $actualProducts = $result['body']['data']['products'];
 
@@ -1679,11 +1589,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $actualProducts = $result['body']['data']['products'];
         $this->assertEquals($expectedProducts, $actualProducts);
     }
@@ -1701,8 +1606,6 @@ final class ProductTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(200, $productResult);
 
         $expectedProduct = [
             'id'         => self::ACTIVE_PRODUCT,
@@ -1733,8 +1636,6 @@ final class ProductTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $productListResult);
-
         $actualProducts = $productListResult['body']['data']['products'];
         $this->assertEquals([$actualProduct], $actualProducts);
     }
@@ -1752,11 +1653,6 @@ final class ProductTest extends TokenTestCase
                 id
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             $expectedProducts,

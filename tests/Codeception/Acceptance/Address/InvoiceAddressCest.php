@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Address;
 
 use Codeception\Example;
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -70,8 +69,13 @@ final class InvoiceAddressCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "customerInvoiceAddress" on type "Query".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testInvoiceAddressForLoggedInUser(AcceptanceTester $I): void
@@ -96,7 +100,6 @@ final class InvoiceAddressCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -164,7 +167,6 @@ final class InvoiceAddressCest extends BaseCest
         }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -193,7 +195,7 @@ final class InvoiceAddressCest extends BaseCest
     public function testCustomerInvoiceAddressSetValidationFail(AcceptanceTester $I, Example $data): void
     {
         $invoiceData    = $data['invoiceData'];
-        $expectedStatus = $data['expectedStatus'];
+        $expectedError  = $data['expectedError'];
 
         $I->login(self::USERNAME, self::PASSWORD);
 
@@ -229,8 +231,13 @@ final class InvoiceAddressCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs($expectedStatus);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            $expectedError,
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -273,8 +280,13 @@ final class InvoiceAddressCest extends BaseCest
         }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "customerInvoiceAddressSet" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -320,7 +332,6 @@ final class InvoiceAddressCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -374,7 +385,6 @@ final class InvoiceAddressCest extends BaseCest
         }
         $expected = rtrim(implode(', ', $expected), ', ');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -452,7 +462,7 @@ final class InvoiceAddressCest extends BaseCest
                     'mobile' => '',
                     'fax'    => '',
                 ],
-                'expectedStatus' => 400,
+                'expectedError' => 'Invoice address is missing required fields: fname, lname, street, streetnr, zip, city, countryid',
             ],
             'set2' => [
                 'invoiceData' => [
@@ -474,7 +484,7 @@ final class InvoiceAddressCest extends BaseCest
                     'mobile' => '',
                     'fax'    => '',
                 ],
-                'expectedStatus' => 401,
+                'expectedError' => 'Unauthorized',
             ],
             'set3' => [
                 'invoiceData' => [
@@ -492,7 +502,7 @@ final class InvoiceAddressCest extends BaseCest
                         'title' => 'Philippinen',
                     ],
                 ],
-                'expectedStatus' => 400,
+                'expectedError' => 'Invoice address is missing required fields: fname, lname, street, streetnr, zip',
             ],
         ];
     }

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -38,7 +37,14 @@ final class BasketRemoveProductCest extends BaseCest
 
         $I->logout();
         $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "basketRemoveProduct" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -53,7 +59,6 @@ final class BasketRemoveProductCest extends BaseCest
         $I->login();
         $result = $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketRemoveProduct', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
     }
@@ -63,7 +68,14 @@ final class BasketRemoveProductCest extends BaseCest
         $I->login('admin', 'admin');
 
         $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID_2);
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveBasketProduct(AcceptanceTester $I): void
@@ -72,7 +84,6 @@ final class BasketRemoveProductCest extends BaseCest
         $this->basketAddProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
 
         $result = $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $items = $result['data']['basketRemoveProduct']['items'];
         $I->assertSame(1, count($items));
@@ -96,7 +107,6 @@ final class BasketRemoveProductCest extends BaseCest
         }
 
         $result = $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID, 2);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $items = $result['data']['basketRemoveProduct']['items'];
         $I->assertSame(2, count($items));
@@ -117,7 +127,14 @@ final class BasketRemoveProductCest extends BaseCest
         $this->basketAddProductMutation($I, self::BASKET_ID, self::PRODUCT_ID_1);
 
         $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket item with id ' . self::PRODUCT_ID . ' not found in your basket ' . self::BASKET_ID,
+            $result['errors'][0]['message']
+        );
 
         // clean up database
         $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID_1);
@@ -128,7 +145,14 @@ final class BasketRemoveProductCest extends BaseCest
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
 
         $this->basketRemoveProductMutation($I, self::BASKET_ID, 'not_a_product');
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket item with id not_a_product not found in your basket ' . self::BASKET_ID,
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveAllProductsFromBasket(AcceptanceTester $I): void
@@ -136,7 +160,6 @@ final class BasketRemoveProductCest extends BaseCest
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
 
         $result = $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID_2);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $items = $result['data']['basketRemoveProduct']['items'];
         $I->assertEmpty($items);

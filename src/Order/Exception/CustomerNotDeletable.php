@@ -11,24 +11,13 @@ namespace OxidEsales\GraphQL\Storefront\Storefront\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\Error;
 use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
-use OxidEsales\GraphQL\Base\Exception\HttpErrorInterface;
 use Throwable;
 
-final class CustomerNotDeletable extends Error implements HttpErrorInterface
+final class CustomerNotDeletable extends Error
 {
-    /** @var int */
-    private $httpStatus;
-
     public function __construct(string $message = '', int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
-
-        $this->httpStatus = $code;
-    }
-
-    public function getHttpStatus(): int
-    {
-        return $this->httpStatus;
     }
 
     public function getCategory(): string

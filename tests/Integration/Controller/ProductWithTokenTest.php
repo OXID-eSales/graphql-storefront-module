@@ -36,8 +36,6 @@ final class ProductWithTokenTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
-
         $product = $result['body']['data']['product'];
 
         $this->assertSame(self::ACTIVE_PRODUCT, $product['id']);
@@ -65,8 +63,6 @@ final class ProductWithTokenTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
-
         $this->assertEquals(
             [
                 'id' => self::INACTIVE_PRODUCT,
@@ -83,7 +79,10 @@ final class ProductWithTokenTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(404, $result['status']);
+        $this->assertSame(
+            'Product was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
+        );
     }
 
     public function testGetAllProducts(): void
@@ -93,8 +92,6 @@ final class ProductWithTokenTest extends TokenTestCase
                 id
             }
         }');
-
-        $this->assertEquals(200, $result['status']);
 
         $this->assertCount(
             54,

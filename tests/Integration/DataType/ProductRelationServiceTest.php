@@ -54,11 +54,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $product = $result['body']['data']['product'];
 
         $this->assertSame(
@@ -97,11 +92,6 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $product = $result['body']['data']['product'];
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertSame(
             [
                 ['id' => 'adcb9deae73557006a8ac748f45288b4'],
@@ -129,8 +119,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         ');
-
-        $this->assertEquals(200, $result['status']);
 
         $this->assertSame(
             sort($expected),
@@ -193,11 +181,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $product = $result['body']['data']['product'];
 
         $this->assertCount(
@@ -245,11 +228,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $product = $result['body']['data']['product'];
 
@@ -299,11 +277,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $product = $result['body']['data']['product'];
 
         $this->assertSame(
@@ -327,11 +300,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             0,
@@ -357,11 +325,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertSame('g', $result['body']['data']['product']['unit']['name']);
         $this->assertSame(0.42, $result['body']['data']['product']['unit']['price']['price']);
     }
@@ -381,11 +344,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertSame('2999-12-31T00:00:00+01:00', $result['body']['data']['product']['stock']['restockDate']);
     }
 
@@ -399,11 +357,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             'a57c56e3ba710eafb2225e98f058d989',
@@ -422,11 +375,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             3,
@@ -453,11 +401,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertSame(
             [],
             $result['body']['data']['product']['crossSelling']
@@ -474,11 +417,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             '9434afb379a46d6c141de9c9e5b94fcf',
@@ -497,7 +435,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
         $this->assertNull($result['body']['data']['product']['manufacturer']);
     }
 
@@ -515,11 +452,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertNull($result['body']['data']['product']['bundleProduct']);
 
@@ -548,11 +480,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertNull($result['body']['data']['product']['bundleProduct']);
 
@@ -588,11 +515,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertNull($result['body']['data']['product']['bundleProduct']);
 
         $queryBuilder = $queryBuilderFactory->create();
@@ -616,11 +538,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             '_test_inactive_bundle',
@@ -650,11 +567,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM,
@@ -688,11 +600,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             3,
@@ -740,11 +647,6 @@ final class ProductRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame(
             '0f40c6a077b68c21f164767c4a903fd2',

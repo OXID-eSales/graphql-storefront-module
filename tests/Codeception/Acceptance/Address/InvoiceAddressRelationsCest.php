@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Address;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
@@ -28,13 +27,13 @@ final class InvoiceAddressRelationsCest extends BaseCest
 
     private const COUNTRY_ID = 'a7c40f631fc920687.20179984'; //Germany
 
+    private const COUNTRY_TITLE_DE = 'Deutschland';
+
     public function testGetCountryRelation(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
         $result = $this->queryCountryRelation($I, 1);
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $invoiceAddress = $result['data']['customerInvoiceAddress'];
         $I->assertEquals(1, count($invoiceAddress['country']));
@@ -49,7 +48,13 @@ final class InvoiceAddressRelationsCest extends BaseCest
 
         $this->queryCountryRelation($I);
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
 
         $this->setCountryActiveStatus(self::COUNTRY_ID, 1);
     }
@@ -60,9 +65,12 @@ final class InvoiceAddressRelationsCest extends BaseCest
 
         $I->login('admin', 'admin');
 
-        $this->queryCountryRelation($I);
+        $result = $this->queryCountryRelation($I);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->assertSame(
+            self::COUNTRY_TITLE_DE,
+            $result['data']['customerInvoiceAddress']['country']['title']
+        );
 
         $this->setCountryActiveStatus(self::COUNTRY_ID, 1);
     }
@@ -72,8 +80,6 @@ final class InvoiceAddressRelationsCest extends BaseCest
         $I->login(self::US_USERNAME, self::PASSWORD);
 
         $result = $this->queryStateRelation($I, 1);
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $invoiceAddress = $result['data']['customerInvoiceAddress'];
         $I->assertNotEmpty($invoiceAddress['state']);
@@ -85,8 +91,6 @@ final class InvoiceAddressRelationsCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $result = $this->queryStateRelation($I);
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $invoiceAddress = $result['data']['customerInvoiceAddress'];
         $I->assertNull($invoiceAddress['state']);

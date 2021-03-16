@@ -10,13 +10,12 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\WishedPrice;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\Eshop\Application\Model\PriceAlarm;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
- * @group wishedpricefoo
+ * @group wishedprice
  */
 final class WishedPriceCest extends BaseCest
 {
@@ -50,6 +49,8 @@ final class WishedPriceCest extends BaseCest
 
     private const PRODUCT_ID = '058e613db53d782adfc9f2ccb43c45fe';
 
+    private const UNAUTHORZIED_MESSAGE = 'Unauthorized';
+
     public function _after(AcceptanceTester $I): void
     {
         $this->setShopOrderMail($I);
@@ -79,7 +80,6 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result      = $I->grabJsonResponseAsArray();
@@ -114,7 +114,6 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result      = $I->grabJsonResponseAsArray();
@@ -131,7 +130,13 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthenticated',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -147,35 +152,44 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs($data['status']);
+        $I->seeResponseIsJson();
+        $result        = $I->grabJsonResponseAsArray();
+        $error_message = $result['errors'][0]['message'];
+
+        if (isset($data['unauthorized'])) {
+            $I->assertSame(self::UNAUTHORZIED_MESSAGE, $error_message);
+        } elseif (isset($data['product_id'])) {
+            $I->assertSame(sprintf('Product was not found by id: %s', $data['product_id']), $error_message);
+        } else {
+            $I->assertSame(sprintf('Wished price was not found by id: %s', $data['id']), $error_message);
+        }
     }
 
     public function dataProviderWishedPrices404and401()
     {
         return [
             [
-                'id'     => self::WISHED_PRICE_WITHOUT_USER,
-                'status' => HttpCode::UNAUTHORIZED,
+                'id'           => self::WISHED_PRICE_WITHOUT_USER,
+                'unauthorized' => true,
             ],
             [
-                'id'     => self::WISHED_PRICE_ASSIGNED_TO_OTHER_USER,
-                'status' => HttpCode::UNAUTHORIZED,
+                'id'           => self::WISHED_PRICE_ASSIGNED_TO_OTHER_USER,
+                'unauthorized' => true,
             ],
             [
-                'id'     => self::WISHED_PRICE_WITH_INACTIVE_PRODUCT,
-                'status' => HttpCode::UNAUTHORIZED,
+                'id'           => self::WISHED_PRICE_WITH_INACTIVE_PRODUCT,
+                'unauthorized' => true,
             ],
             [
                 'id'     => self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
-                'status' => HttpCode::NOT_FOUND,
             ],
             [
-                'id'     => self::WISHED_PRICE_WITH_NON_EXISTING_PRODUCT,
-                'status' => HttpCode::NOT_FOUND,
+                'id'         => self::WISHED_PRICE_WITH_NON_EXISTING_PRODUCT,
+                'product_id' => 'does_not_exist',
             ],
             [
-                'id'     => self::WISHED_PRICE_WITH_NON_EXISTING_USER,
-                'status' => HttpCode::UNAUTHORIZED,
+                'id'           => self::WISHED_PRICE_WITH_NON_EXISTING_USER,
+                'unauthorized' => true,
             ],
         ];
     }
@@ -193,7 +207,13 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            $data['id'],
+            $result['data']['wishedPrice']['id']
+        );
     }
 
     public function dataProviderWishedPricesWithAuthorization()
@@ -223,7 +243,13 @@ final class WishedPriceCest extends BaseCest
             wishedPriceDelete(id: "' . self::WISHED_PRICE_TO_BE_DELETED . '")
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "wishedPriceDelete" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -237,10 +263,15 @@ final class WishedPriceCest extends BaseCest
             wishedPriceDelete(id: "' . $data['oxid'] . '")
         }');
 
-        $I->seeResponseCodeIs($data['expected']);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
 
-        if (HttpCode::OK === $data['expected']) {
-            $result = $I->grabJsonResponseAsArray();
+        if (isset($data['expected'])) {
+            $I->assertSame(
+                'Unauthorized',
+                $result['errors'][0]['message']
+            );
+        } else {
             $I->assertTrue($result['data']['wishedPriceDelete']);
         }
     }
@@ -256,7 +287,10 @@ final class WishedPriceCest extends BaseCest
             wishedPriceDelete(id: "non_existing_wished_price")
         }');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+
+        $result = $I->grabJsonResponseAsArray();
+        $I->assertArrayHasKey('errors', $result);
     }
 
     public function providerDeleteWishedPrice()
@@ -266,19 +300,17 @@ final class WishedPriceCest extends BaseCest
                 'username' => 'admin',
                 'password' => 'admin',
                 'oxid'     => self::WISHED_PRICE_TO_BE_DELETED . '1_',
-                'expected' => 200,
             ],
             'user' => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
                 'oxid'     => self::WISHED_PRICE_TO_BE_DELETED . '2_',
-                'expected' => 200,
             ],
             'otheruser' => [
                 'username' => 'otheruser@oxid-esales.com',
                 'password' => 'useruser',
                 'oxid'     => self::WISHED_PRICE_TO_BE_DELETED . '3_',
-                'expected' => 401,
+                'expected' => 'error',
             ],
         ];
     }
@@ -291,7 +323,13 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'The token is invalid',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -307,7 +345,6 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -349,7 +386,13 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "wishedPriceSet" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -369,7 +412,6 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs($data['status']);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -384,35 +426,30 @@ final class WishedPriceCest extends BaseCest
                 'currency'  => 'EUR',
                 'price'     => '15.0',
                 'message'   => 'Product was not found by id: DOES-NOT-EXIST',
-                'status'    => HttpCode::NOT_FOUND,
             ],
             'not_existing_currency' => [
                 'productId' => self::PRODUCT_ID,
                 'currency'  => 'ABC',
                 'price'     => '15.0',
                 'message'   => 'Currency "ABC" was not found',
-                'status'    => HttpCode::NOT_FOUND,
             ],
             'wished_price_disabled' => [
                 'productId' => self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
                 'currency'  => 'EUR',
                 'price'     => '15.0',
                 'message'   => 'Product was not found by id: ' . self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
-                'status'    => HttpCode::NOT_FOUND,
             ],
             'invalid_price' => [
                 'productId' => self::PRODUCT_ID,
                 'currency'  => 'EUR',
                 'price'     => 'this_is_not_a_vald_price',
                 'message'   => 'Field "wishedPriceSet" argument "wishedPrice" requires type Float!, found this_is_not_a_vald_price.',
-                'status'    => HttpCode::BAD_REQUEST,
             ],
             'negative_price' => [
                 'productId' => self::PRODUCT_ID,
                 'currency'  => 'EUR',
                 'price'     => -123,
                 'message'   => 'Wished price must be positive, was: -123',
-                'status'    => HttpCode::BAD_REQUEST,
             ],
         ];
     }
@@ -441,7 +478,6 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -484,10 +520,9 @@ final class WishedPriceCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::INTERNAL_SERVER_ERROR);
         $I->seeResponseIsJson();
-
         $result = $I->grabJsonResponseAsArray();
+
         $I->assertContains(
             'Failed to send notification: Invalid address:  (to):',
             $result['errors']['0']['message']

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -56,7 +55,13 @@ final class BasketOwnerRelationCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Customer was not found by id: ' . self::USER_ID,
+            $result['errors'][0]['message']
+        );
     }
 
     private function createPublicBasket(AcceptanceTester $I): string
@@ -69,7 +74,6 @@ final class BasketOwnerRelationCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result      = $I->grabJsonResponseAsArray();
 

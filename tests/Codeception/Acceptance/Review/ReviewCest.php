@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Review;
 
 use Codeception\Example;
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -78,7 +77,13 @@ final class ReviewCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "reviewSet" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -94,7 +99,6 @@ final class ReviewCest extends BaseCest
             $data['text'],
             $data['rating']
         );
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $reviewData = $result['data']['reviewSet'];
         $id         = $reviewData['id'];
@@ -134,7 +138,6 @@ final class ReviewCest extends BaseCest
 
         $result = $this->reviewSet($I, self::TEST_PRODUCT_ID, null, null);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->assertSame(
             'Review input cannot have both empty text and rating value.',
             $result['errors'][0]['message']
@@ -147,7 +150,6 @@ final class ReviewCest extends BaseCest
 
         $result = $this->reviewSet($I, self::TEST_PRODUCT_ID, self::TEXT, '6');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->assertSame(
             'Rating must be between 1 and 5, was 6',
             $result['errors'][0]['message']
@@ -160,7 +162,6 @@ final class ReviewCest extends BaseCest
 
         $result = $this->reviewSet($I, 'some_not_existing_product', self::TEXT, '5');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->assertSame(
             'Product was not found by id: some_not_existing_product',
             $result['errors'][0]['message']
@@ -173,7 +174,6 @@ final class ReviewCest extends BaseCest
 
         $result = $this->reviewSet($I, self::PRODUCT_WITH_EXISTING_REVIEW_ID, self::TEXT, '4');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->assertSame(
             'Review for product with id: ' . self::PRODUCT_WITH_EXISTING_REVIEW_ID . ' already exists',
             $result['errors'][0]['message']
@@ -198,7 +198,6 @@ final class ReviewCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(3, count($result['data']['customer']['reviews']));
@@ -213,8 +212,6 @@ final class ReviewCest extends BaseCest
     public function testProductReviewsByLanguage(AcceptanceTester $I, Example $data): void
     {
         $result = $this->queryProduct($I, self::PRODUCT_WITH_EXISTING_REVIEW_ID, $data['language']);
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $I->assertEquals($data['expected'], count($result['data']['product']['reviews']));
     }
@@ -238,21 +235,18 @@ final class ReviewCest extends BaseCest
         $I->login('admin', 'admin');
 
         //query, expected result: 2 ratings, average 2.0
-        $result = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result        = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
         $productRating = $result['data']['product']['rating'];
         $I->assertSame(2, $productRating['count']);
         $I->assertEquals(2.0, $productRating['rating']);
 
         //create
         $result = $this->reviewSet($I, self::PRODUCT_WITH_AVERAGE_RATING, self::TEXT, '5');
-        $I->seeResponseCodeIs(HttpCode::OK);
         $review = $result['data']['reviewSet'];
         $I->assertSame(5, $review['rating']);
 
         //query, expected result: 3 ratings, average 3.0
-        $result = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result        = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
         $productRating = $result['data']['product']['rating'];
         $I->assertEquals(3, $productRating['rating']);
         $I->assertSame(3, $productRating['count']);
@@ -261,21 +255,18 @@ final class ReviewCest extends BaseCest
         $this->reviewDelete($I, $review['id']);
 
         //query, expected result: 2 ratings, average 2.0
-        $result = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result        = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
         $productRating = $result['data']['product']['rating'];
         $I->assertEquals(2, $productRating['rating']);
         $I->assertSame(2, $productRating['count']);
 
         //rate again
         $result = $this->reviewSet($I, self::PRODUCT_WITH_AVERAGE_RATING, self::TEXT, '4');
-        $I->seeResponseCodeIs(HttpCode::OK);
         $rating = $result['data']['reviewSet']['rating'];
         $I->assertSame(4, $rating);
 
         //query, expected result: 3 ratings, average 2.7
-        $result = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result        = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
         $productRating = $result['data']['product']['rating'];
         $I->assertSame(2.7, $productRating['rating']);
         $I->assertSame(3, $productRating['count']);
@@ -287,13 +278,11 @@ final class ReviewCest extends BaseCest
 
         //Add review without rating
         $result = $this->reviewSet($I, self::TEST_PRODUCT_ID, self::TEXT, null);
-        $I->seeResponseCodeIs(HttpCode::OK);
         $review = $result['data']['reviewSet'];
         $I->assertSame(0, $review['rating']);
 
         //Make sure the product is without rating
-        $result = $this->queryProduct($I, self::TEST_PRODUCT_ID);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result        = $this->queryProduct($I, self::TEST_PRODUCT_ID);
         $productRating = $result['data']['product']['rating'];
         $I->assertSame(0, $productRating['count']);
         $I->assertEquals(0, $productRating['rating']);
@@ -303,13 +292,11 @@ final class ReviewCest extends BaseCest
 
         //Add review with rating
         $result = $this->reviewSet($I, self::TEST_PRODUCT_ID, self::TEXT, '5');
-        $I->seeResponseCodeIs(HttpCode::OK);
         $review = $result['data']['reviewSet'];
         $I->assertSame(5, $review['rating']);
 
         //Check product's average rating
-        $result = $this->queryProduct($I, self::TEST_PRODUCT_ID);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result        = $this->queryProduct($I, self::TEST_PRODUCT_ID);
         $productRating = $result['data']['product']['rating'];
         $I->assertSame(1, $productRating['count']);
         $I->assertEquals(5, $productRating['rating']);
@@ -321,14 +308,19 @@ final class ReviewCest extends BaseCest
             reviewDelete(id: "' . self::TEST_DATA_REVIEW . '")
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "reviewDelete" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testDeleteReviewByOtherUser(AcceptanceTester $I): void
     {
         $I->login(self::DIFFERENT_USERNAME, self::DIFFERENT_USER_PASSWORD);
-        $result = $this->reviewSet($I, self::PRODUCT_ID, self::REVIEW_TEXT, '4');
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result   = $this->reviewSet($I, self::PRODUCT_ID, self::REVIEW_TEXT, '4');
         $reviewId = $result['data']['reviewSet']['id'];
 
         $I->login(self::USERNAME, self::PASSWORD);
@@ -337,7 +329,13 @@ final class ReviewCest extends BaseCest
             reviewDelete(id: "' . $reviewId . '")
         }');
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testDeleteNonExistentReview(AcceptanceTester $I): void
@@ -348,14 +346,18 @@ final class ReviewCest extends BaseCest
             reviewDelete(id: "something-that-does-not-exist")
         }');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Review was not found by id: something-that-does-not-exist',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testDeleteFailsIfManageFlagSetToFalse(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
-        $result = $this->reviewSet($I, self::TEST_PRODUCT_ID, self::REVIEW_TEXT, '4');
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result   = $this->reviewSet($I, self::TEST_PRODUCT_ID, self::REVIEW_TEXT, '4');
         $reviewId = $result['data']['reviewSet']['id'];
 
         $I->updateConfigInDatabase('blAllowUsersToManageTheirReviews', false, 'bool');
@@ -366,7 +368,13 @@ final class ReviewCest extends BaseCest
 
         $I->updateConfigInDatabase('blAllowUsersToManageTheirReviews', true, 'bool');
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthorized - users are not allowed to manage their reviews',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testDeleteReviewWithoutRating(AcceptanceTester $I): void
@@ -375,7 +383,6 @@ final class ReviewCest extends BaseCest
 
         //Add review without rating
         $result = $this->reviewSet($I, self::TEST_PRODUCT_ID, self::TEXT, null);
-        $I->seeResponseCodeIs(HttpCode::OK);
         $review = $result['data']['reviewSet'];
         $I->assertSame(0, $review['rating']);
 
@@ -429,7 +436,6 @@ final class ReviewCest extends BaseCest
              reviewDelete(id: "' . $id . '")
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();

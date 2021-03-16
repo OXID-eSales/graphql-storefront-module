@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
@@ -39,7 +38,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //place the order
         $I->logout();
         $I->login(null, null, 0);
-        $result  = $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result  = $this->placeOrder($I, $basketId);
 
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('placeOrder', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
@@ -78,7 +77,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertNotEmpty($orders['invoiceAddress']);
         $I->assertNull($orders['deliveryAddress']);
 
-        $this->ensureBasketDoesNotExist($I, $basketId, self::USERNAME);
+        //remove basket
+        $this->removeBasket($I, $basketId, self::USERNAME);
     }
 
     public function placeOrderUsingInvoiceAddressAndDefaultSavedBasket(AcceptanceTester $I): void
@@ -114,7 +114,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertNotEmpty($orders['invoiceAddress']);
         $I->assertNull($orders['deliveryAddress']);
 
-        $this->ensureBasketDoesNotExist($I, $basketId, self::CHECKOUT_USERNAME);
+        //remove basket
+        $this->removeBasket($I, $basketId, self::USERNAME);
     }
 
     public function placeOrderRemovesCorrectBasket(AcceptanceTester $I): void
@@ -133,15 +134,11 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketDeliveryMethod($I, $basketId, self::TEST_SHIPPING);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_TEST);
 
-        $this->ensureBasketExist($I, $basketId, self::CHECKOUT_USERNAME);
-        $this->ensureBasketExist($I, $defaultBasketId, self::CHECKOUT_USERNAME);
-
         //place the order
         $this->placeOrder($I, $basketId);
 
-        //both baskets removed
-        $this->ensureBasketDoesNotExist($I, $basketId, self::CHECKOUT_USERNAME);
-        $this->ensureBasketExist($I, $defaultBasketId, self::CHECKOUT_USERNAME);
+        $I->assertFalse($this->basketExists($I, $basketId));
+        $I->assertTrue($this->basketExists($I, $defaultBasketId));
     }
 
     public function placeOrderUsingDeliveryAddress(AcceptanceTester $I): void
@@ -167,7 +164,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertNotEmpty($orders['deliveryAddress']);
 
         //remove basket
-        $this->ensureBasketDoesNotExist($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId, self::USERNAME);
     }
 
     public function placeOrderWithoutToken(AcceptanceTester $I): void
@@ -185,7 +182,9 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->logout();
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result = $this->placeOrder($I, $basketId);
+
+        $I->assertSame('Cannot query field "placeOrder" on type "Mutation".', $result['errors'][0]['message']);
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -207,7 +206,12 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //log in different user and place the order
         $I->login(self::OTHER_USERNAME, self::PASSWORD);
-        $this->placeOrder($I, $basketId, HttpCode::UNAUTHORIZED);
+        $result = $this->placeOrder($I, $basketId);
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -224,7 +228,12 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result = $this->placeOrder($I, $basketId);
+
+        $I->assertSame(
+            'Order cannot be placed. Basket with id: ' . $basketId . ' is empty',
+            $result['errors'][0]['message']
+        );
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -241,7 +250,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketDeliveryAddress($I, $basketId, self::ALTERNATE_COUNTRY);
 
         //shipping method not supported
-        $errorMessage         = $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD, HttpCode::BAD_REQUEST);
+        $errorMessage         = $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $expectedError        = UnavailableDeliveryMethod::byId(self::SHIPPING_STANDARD);
         $expectedErrorMessage = $expectedError->getMessage();
         $I->assertEquals($expectedErrorMessage, $errorMessage);
@@ -266,7 +275,12 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketDeliveryAddress($I, $basketId, self::ALTERNATE_COUNTRY);
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result = $this->placeOrder($I, $basketId);
+
+        $I->assertSame(
+            "Delivery set '" . self::SHIPPING_STANDARD . "' is unavailable!",
+            $result['errors'][0]['message']
+        );
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -286,7 +300,12 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->updateInDatabase('oxuserbaskets', ['oegql_paymentid' => self::PAYMENT_TEST], ['oxid' => $basketId]);
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result = $this->placeOrder($I, $basketId);
+
+        $I->assertSame(
+            "Payment method '" . self::PAYMENT_TEST . "' is unavailable!",
+            $result['errors'][0]['message']
+        );
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -327,7 +346,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($basketCosts['discount'], $orders['cost']['discount']);
         $I->assertEquals($basketCosts['voucher'], $orders['cost']['voucher']);
 
-        $this->ensureBasketDoesNotExist($I, $basketId, self::USERNAME);
+        //remove basket
+        $this->removeBasket($I, $basketId, self::USERNAME);
 
         $I->updateInDatabase('oxdiscount', ['oxactive' => 0]);
         $I->updateInDatabase('oxdiscount', ['oxactive' => 1], ['oxid' => self::DEFAULT_DISCOUNT_ID]);
@@ -364,7 +384,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($orderId, $orders['id']);
         $I->assertEquals($basketCosts['total'], $orders['cost']['total']);
 
-        $this->ensureBasketDoesNotExist($I, $basketId, self::USERNAME);
+        //remove basket
+        $this->removeBasket($I, $basketId, self::USERNAME);
     }
 
     /**
@@ -384,7 +405,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId, HttpCode::OK, true);
+        $result  = $this->placeOrder($I, $basketId, true);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -392,7 +413,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($orders['id'], $orderId);
         $I->assertEquals($orders['cost']['total'], 41.3);
 
-        $this->ensureBasketDoesNotExist($I, $basketId, self::USERNAME);
+        //remove basket
+        $this->removeBasket($I, $basketId, self::USERNAME);
         $I->updateConfigInDatabase('blConfirmAGB', false);
     }
 
@@ -413,7 +435,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result               = $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result               = $this->placeOrder($I, $basketId);
         $actualErrorMessage   = (string) $result['errors'][0]['message'];
         $expectedErrorMessage = PlaceOrder::notAcceptedTOS($basketId)->getMessage();
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
@@ -440,7 +462,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result               = $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST, false);
+        $result               = $this->placeOrder($I, $basketId, false);
         $actualErrorMessage   = (string) $result['errors'][0]['message'];
         $expectedErrorMessage = PlaceOrder::notAcceptedTOS($basketId)->getMessage();
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
@@ -467,7 +489,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result               = $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST, null);
+        $result               = $this->placeOrder($I, $basketId, null);
         $actualErrorMessage   = (string) $result['errors'][0]['message'];
         $expectedErrorMessage = PlaceOrder::notAcceptedTOS($basketId)->getMessage();
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
@@ -493,7 +515,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId, HttpCode::OK, true);
+        $result  = $this->placeOrder($I, $basketId, true);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -501,7 +523,9 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($orders['id'], $orderId);
         $I->assertEquals($orders['cost']['total'], 41.3);
 
-        $this->ensureBasketDoesNotExist($I, $basketId, self::USERNAME);
+        //remove basket
+        $this->removeBasket($I, $basketId, self::USERNAME);
+        $I->updateConfigInDatabase('blConfirmAGB', false);
     }
 
     /**
@@ -520,7 +544,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result               = $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST, false);
+        $result               = $this->placeOrder($I, $basketId, false);
         $actualErrorMessage   = (string) $result['errors'][0]['message'];
         $expectedErrorMessage = PlaceOrder::notAcceptedTOS($basketId)->getMessage();
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
@@ -545,7 +569,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId, HttpCode::OK);
+        $result  = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -570,7 +594,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId, HttpCode::OK, null);
+        $result  = $this->placeOrder($I, $basketId, null);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -625,7 +649,12 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->updateConfigInDatabase('iMinOrderPrice', '100', 'str');
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result = $this->placeOrder($I, $basketId);
+
+        $I->assertSame(
+            'Place order for user basket id: ' . $basketId . ' has status 8',
+            $result['errors'][0]['message']
+        );
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -647,7 +676,12 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->updateInDatabase('oxarticles', ['oxstock' => '3', 'oxstockflag' => '3'], ['oxid' => self::PRODUCT_ID]);
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result = $this->placeOrder($I, $basketId);
+
+        $I->assertSame(
+            'ERROR_MESSAGE_OUTOFSTOCK_OUTOFSTOCK',
+            $result['errors'][0]['debugMessage']
+        );
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);
@@ -665,7 +699,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result = $this->placeOrder($I, $basketId);
+        $I->assertSame('Delivery set must be selected!', $result['errors'][0]['message']);
     }
 
     public function placeOrderWithoutPaymentMethod(AcceptanceTester $I): void
@@ -680,7 +715,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::BAD_REQUEST);
+        $result = $this->placeOrder($I, $basketId);
+        $I->assertSame('Payment must be selected!', $result['errors'][0]['message']);
     }
 
     public function placeOrderWithNewlyRegisteredCustomer(AcceptanceTester $I): void
@@ -736,7 +772,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $this->placeOrder($I, $basketId, HttpCode::OK);
+        $this->placeOrder($I, $basketId);
 
         $I->seeInDatabase(
             'oxobject2group',
@@ -761,5 +797,26 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
                 'oxgroupsid' => 'oxidnewcustomer',
             ]
         );
+    }
+
+    private function basketExists(AcceptanceTester $I, $basketId)
+    {
+        $variables = [
+            'basketId' => $basketId,
+        ];
+
+        $query = 'query ($basketId: String!){
+            basket (id: $basketId) {
+                id
+            }
+        }';
+
+        $result = $this->getGQLResponse($I, $query, $variables);
+
+        if (array_key_exists('errors', $result)) {
+            return false;
+        }
+
+        return true;
     }
 }

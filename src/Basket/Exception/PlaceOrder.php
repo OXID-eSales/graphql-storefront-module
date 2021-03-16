@@ -11,15 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\Error;
 use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
-use OxidEsales\GraphQL\Base\Exception\HttpErrorInterface;
 
-final class PlaceOrder extends Error implements HttpErrorInterface
+final class PlaceOrder extends Error
 {
-    public function getHttpStatus(): int
-    {
-        return 400;
-    }
-
     public function getCategory(): string
     {
         return ErrorCategories::REQUESTERROR;

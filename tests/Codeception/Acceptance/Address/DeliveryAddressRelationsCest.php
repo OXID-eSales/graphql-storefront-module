@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Address;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
@@ -33,7 +32,6 @@ final class DeliveryAddressRelationsCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $result = $this->queryCountryRelation($I, 1);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $deliveryAddresses = $result['data']['customerDeliveryAddresses'];
         $I->assertEquals(2, count($deliveryAddresses));
@@ -55,7 +53,13 @@ final class DeliveryAddressRelationsCest extends BaseCest
 
         $this->queryCountryRelation($I);
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
 
         $this->setCountryActiveStatus(self::COUNTRY_ID, 1);
     }
@@ -65,9 +69,11 @@ final class DeliveryAddressRelationsCest extends BaseCest
         $this->setCountryActiveStatus(self::COUNTRY_ID, 0);
         $I->login('admin', 'admin');
 
-        $this->queryCountryRelation($I);
+        $result = $this->queryCountryRelation($I);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->assertEmpty(
+            $result['data']['customerDeliveryAddresses']
+        );
 
         $this->setCountryActiveStatus(self::COUNTRY_ID, 1);
     }
@@ -77,8 +83,6 @@ final class DeliveryAddressRelationsCest extends BaseCest
         $I->login(self::US_USERNAME, self::PASSWORD);
 
         $result = $this->queryStateRelation($I, 1);
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $deliveryAddresses = $result['data']['customerDeliveryAddresses'];
         $I->assertCount(1, $deliveryAddresses);
@@ -94,8 +98,6 @@ final class DeliveryAddressRelationsCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $result = $this->queryStateRelation($I);
-
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $deliveryAddresses = $result['data']['customerDeliveryAddresses'];
         $I->assertEquals(2, count($deliveryAddresses));

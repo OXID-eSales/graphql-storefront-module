@@ -36,11 +36,6 @@ final class AttributeTest extends TestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $attribute = $result['body']['data']['attribute'];
 
         $this->assertEquals(
@@ -57,9 +52,9 @@ final class AttributeTest extends TestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            404,
-            $result
+        $this->assertSame(
+            'Attribute was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -94,10 +89,6 @@ final class AttributeTest extends TestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             [
@@ -115,10 +106,6 @@ final class AttributeTest extends TestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
         $this->assertCount(
             12,
             $result['body']['data']['attributes']
@@ -137,10 +124,6 @@ final class AttributeTest extends TestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
         $this->assertCount(
             1,
             $result['body']['data']['attributes']
@@ -162,11 +145,6 @@ final class AttributeTest extends TestCase
                 title
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         foreach ($attributes as $key => $attribute) {
             $this->assertSame(

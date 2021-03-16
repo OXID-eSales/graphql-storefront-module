@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -32,7 +31,13 @@ final class BasketRemoveCest extends BaseCest
 
         $this->basketRemoveMutation($I, $basketId);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "basketRemove" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
 
         $this->deleteBasket($I, $basketId);
     }
@@ -43,7 +48,13 @@ final class BasketRemoveCest extends BaseCest
 
         $this->basketRemoveMutation($I, 'this_is_no_saved_basket_id');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: this_is_no_saved_basket_id',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveBasketOfOtherCustomer(AcceptanceTester $I): void
@@ -53,7 +64,13 @@ final class BasketRemoveCest extends BaseCest
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
         $this->basketRemoveMutation($I, $basketId);
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
 
         $this->deleteBasket($I, $basketId);
     }
@@ -65,7 +82,6 @@ final class BasketRemoveCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
         $result = $this->basketRemoveMutation($I, $basketId);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->assertTrue($result['data']['basketRemove']);
 
         $this->deleteBasket($I, $basketId);
@@ -78,7 +94,6 @@ final class BasketRemoveCest extends BaseCest
         $I->login('admin', 'admin');
         $result = $this->basketRemoveMutation($I, $basketId);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->assertTrue($result['data']['basketRemove']);
 
         $this->deleteBasket($I, $basketId);
@@ -94,7 +109,6 @@ final class BasketRemoveCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result =  $I->grabJsonResponseAsArray();
 

@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Voucher;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -48,7 +47,6 @@ final class VoucherMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery($this->addVoucherMutation($basketId, $voucherNr), null, 0, $shopId);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -72,7 +70,6 @@ final class VoucherMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery($this->addVoucherMutation(self::SHOP2_BASKET, self::SHOP1_VOUCHER_NR), null, 0, 2);
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -93,7 +90,6 @@ final class VoucherMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery($this->addVoucherMutation(self::SHOP1_BASKET, self::SHOP2_VOUCHER_NR));
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -116,7 +112,6 @@ final class VoucherMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery($this->removeVoucherMutation(self::SHOP1_BASKET, self::SHOP2_VOUCHER_ID));
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
             'MESSAGE_COUPON_NOT_APPLIED_FOR_SHOP',
@@ -138,7 +133,13 @@ final class VoucherMultiShopCest extends MultishopBaseCest
             2
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            0,
+            count($result['data']['basketRemoveVoucher']['vouchers'])
+        );
     }
 
     /**
@@ -156,7 +157,6 @@ final class VoucherMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery($this->removeVoucherMutation($basketId, $voucherId), null, 0, $shopId);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -201,7 +201,14 @@ final class VoucherMultiShopCest extends MultishopBaseCest
         $I->login(self::USERNAME, self::PASSWORD, 1);
 
         $I->sendGQLQuery($this->addVoucherMutation(self::SHOP1_BASKET, self::SHOP1_VOUCHER_NR));
-        $I->seeResponseCodeIs(HttpCode::OK);
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::SHOP1_VOUCHER_NR,
+            $result['data']['basketAddVoucher']['vouchers'][0]['number']
+        );
     }
 
     protected function dataProviderAddVoucherToBasketPerShop()
@@ -290,7 +297,5 @@ final class VoucherMultiShopCest extends MultishopBaseCest
                 }
             }'
         );
-
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 }

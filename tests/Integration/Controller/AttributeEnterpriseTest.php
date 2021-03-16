@@ -33,9 +33,9 @@ final class AttributeEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertEquals(
-            404,
-            $result['status']
+        $this->assertSame(
+            'Attribute was not found by id: ' . self::ATTRIBUTE_ID,
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -53,11 +53,6 @@ final class AttributeEnterpriseTest extends MultishopTestCase
                 title
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [
@@ -111,11 +106,6 @@ final class AttributeEnterpriseTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'title' => $title,
             ],
@@ -140,10 +130,6 @@ final class AttributeEnterpriseTest extends MultishopTestCase
                 title
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         foreach ($attributes as $key => $attribute) {
             $this->assertSame(

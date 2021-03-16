@@ -51,10 +51,6 @@ final class LinkMultilanguageTest extends TestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $link = $result['body']['data']['link'];
 
@@ -97,10 +93,6 @@ final class LinkMultilanguageTest extends TestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertCount(
             $count,

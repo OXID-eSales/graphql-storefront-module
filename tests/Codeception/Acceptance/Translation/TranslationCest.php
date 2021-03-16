@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Translation;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -51,7 +50,6 @@ final class TranslationCest extends BaseCest
             ],
             $data['language']
         );
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         $expected = [
@@ -89,7 +87,6 @@ final class TranslationCest extends BaseCest
             null,
             $language
         );
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         return $result['data']['translations'];

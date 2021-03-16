@@ -56,11 +56,6 @@ final class PromotionMultilanguageTest extends TestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'    => self::PROMOTION_ID,
                 'title' => $title,
@@ -89,11 +84,6 @@ final class PromotionMultilanguageTest extends TestCase
                 title
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [

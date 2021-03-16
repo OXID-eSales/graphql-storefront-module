@@ -53,12 +53,7 @@ final class ProductMultilanguageTest extends TestCase
             $languageId
         );
 
-        $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
+        $result  = $this->query($query);
         $product = $result['body']['data']['product'];
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_PRODUCT, $product['id']);
@@ -104,10 +99,6 @@ final class ProductMultilanguageTest extends TestCase
         }';
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $actualVariants = $result['body']['data']['product']['variants'][0];
 
@@ -174,11 +165,6 @@ final class ProductMultilanguageTest extends TestCase
                 title
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $titles = [];
 

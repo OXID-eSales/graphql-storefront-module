@@ -24,11 +24,6 @@ final class ActionEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertCount(6, $result['body']['data']['actions']);
 
         $this->assertSame([

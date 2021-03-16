@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Country;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -28,6 +27,8 @@ final class CountryCest extends BaseCest
     private const INACTIVE_COUNTRY  = 'a7c40f633038cd578.22975442';
 
     private const COUNTRY_WITH_STATES  = '8f241f11096877ac0.98748826';
+
+    private const DOES_NOT_EXIST  = 'DOES-NOT-EXIST';
 
     public function testGetSingleActiveCountry(AcceptanceTester $I): void
     {
@@ -49,7 +50,6 @@ final class CountryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result      = $I->grabJsonResponseAsArray();
         $countryData = $result['data']['country'];
@@ -83,8 +83,13 @@ final class CountryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testGetSingleInactiveCountryWithToken(AcceptanceTester $I): void
@@ -98,7 +103,6 @@ final class CountryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -114,13 +118,15 @@ final class CountryCest extends BaseCest
     public function testGetSingleNonExistingCountry(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query {
-            country (id: "DOES-NOT-EXIST") {
+            country (id: "' . self::DOES_NOT_EXIST . '") {
                 id
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertEquals('Country was not found by id: ' . self::DOES_NOT_EXIST, $result['errors']['0']['message']);
     }
 
     public function testGetCountryListWithoutFilter(AcceptanceTester $I): void
@@ -136,7 +142,6 @@ final class CountryCest extends BaseCest
             1
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result    = $I->grabJsonResponseAsArray();
         $countries = $result['data']['countries'];
@@ -170,7 +175,6 @@ final class CountryCest extends BaseCest
             }
         }', [], 0);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -196,7 +200,6 @@ final class CountryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -216,14 +219,13 @@ final class CountryCest extends BaseCest
         $I->sendGQLQuery('query {
             countries(filter: {
                 title: {
-                    contains: "DOES-NOT-EXIST"
+                    contains: "' . self::DOES_NOT_EXIST . '"
                 }
             }) {
                 id
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -241,7 +243,6 @@ final class CountryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -270,7 +271,6 @@ final class CountryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -297,7 +297,6 @@ final class CountryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -343,7 +342,6 @@ final class CountryCest extends BaseCest
             1
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -373,7 +371,6 @@ final class CountryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -399,7 +396,6 @@ final class CountryCest extends BaseCest
             }
         }', [], 0);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -433,7 +429,6 @@ final class CountryCest extends BaseCest
             }
         }', [], 0);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 

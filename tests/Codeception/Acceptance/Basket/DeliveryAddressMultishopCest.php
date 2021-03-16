@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -48,7 +47,6 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
             2
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -72,7 +70,13 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
             2
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Delivery address was not found by id: ' . self::DELIVERY_ID_2,
+            $result['errors'][0]['message']
+        );
 
         $this->basketRemove($I, $basketId, 2);
     }
@@ -90,7 +94,6 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         return $result['data']['basketCreate']['id'];
@@ -107,7 +110,12 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['basketRemove']
+        );
     }
 
     private function basketSetDeliveryAddress(string $basketId, string $deliveryAddressId): string

@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -52,7 +51,13 @@ final class BasketMakePublicCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "basketMakePublic" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testMakePublicBasketNotFound(AcceptanceTester $I): void
@@ -67,7 +72,13 @@ final class BasketMakePublicCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: this_is_no_saved_basket_id',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testMakePublicBasketOfOtherCustomer(AcceptanceTester $I): void
@@ -82,7 +93,13 @@ final class BasketMakePublicCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You are not allowed to access this basket as it belongs to somebody else',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testMakePublicBasketWithToken(AcceptanceTester $I): void
@@ -97,7 +114,6 @@ final class BasketMakePublicCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result      = $I->grabJsonResponseAsArray();
 
@@ -119,7 +135,6 @@ final class BasketMakePublicCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result      = $I->grabJsonResponseAsArray();
 
@@ -136,6 +151,11 @@ final class BasketMakePublicCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['basketRemove']
+        );
     }
 }

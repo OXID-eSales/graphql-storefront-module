@@ -47,11 +47,6 @@ final class BannerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $banner = $result['body']['data']['banner'];
 
         $this->assertArraySubset([
@@ -96,11 +91,6 @@ final class BannerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $banner = $result['body']['data']['banner'];
 
         $this->assertArraySubset([
@@ -131,9 +121,9 @@ final class BannerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            401,
-            $result
+        $this->assertSame(
+            'Unauthorized',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -146,9 +136,9 @@ final class BannerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            404,
-            $result
+        $this->assertSame(
+            'Banner was not found by id: wrong_id',
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -161,9 +151,9 @@ final class BannerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            404,
-            $result
+        $this->assertSame(
+            'Banner was not found by id: ' . self::WRONG_TYPE_ACTION,
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -175,11 +165,6 @@ final class BannerTest extends TokenTestCase
                 active
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertEquals(
             [
@@ -198,11 +183,6 @@ final class BannerTest extends TokenTestCase
                 sorting
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame([
             [
@@ -235,11 +215,6 @@ final class BannerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $this->assertEquals(
             [
                 'id'     => self::INACTIVE_BANNER,
@@ -259,11 +234,6 @@ final class BannerTest extends TokenTestCase
                 sorting
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $this->assertSame([
             [
@@ -360,11 +330,6 @@ final class BannerTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
-
         $bannerProduct = $result['body']['data']['banner']['product'];
         $this->assertSame($expectedProduct, $bannerProduct);
     }
@@ -454,11 +419,6 @@ final class BannerTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $banners = $result['body']['data']['banners'];
 

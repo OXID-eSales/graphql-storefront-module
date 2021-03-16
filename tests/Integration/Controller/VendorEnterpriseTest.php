@@ -33,9 +33,9 @@ final class VendorEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertEquals(
-            404,
-            $result['status']
+        $this->assertSame(
+            'Vendor was not found by id: ' . self::VENDOR_ID,
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -51,10 +51,7 @@ final class VendorEnterpriseTest extends MultishopTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 active vendors
         $this->assertCount(
             0,
@@ -83,11 +80,6 @@ final class VendorEnterpriseTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'       => self::VENDOR_ID,
                 'title'    => 'https://fashioncity.com/de',
@@ -110,10 +102,7 @@ final class VendorEnterpriseTest extends MultishopTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 active vendors
         $this->assertCount(
             1,
@@ -173,11 +162,6 @@ final class VendorEnterpriseTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'    => self::VENDOR_ID,
                 'title' => $title,
@@ -211,11 +195,6 @@ final class VendorEnterpriseTest extends MultishopTestCase
                 title
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [

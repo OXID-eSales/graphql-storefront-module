@@ -35,8 +35,6 @@ final class ContentRelationServiceTest extends TokenTestCase
             }
         }');
 
-        $this->assertResponseStatus(200, $result);
-
         $content = $result['body']['data']['content'];
         $this->assertCount(1, $content['seo']);
         $this->assertRegExp('@https?://.*/Wie-bestellen/@', $content['seo']['url']);
@@ -53,8 +51,6 @@ final class ContentRelationServiceTest extends TokenTestCase
                 }
             }
         ');
-
-        $this->assertResponseStatus(200, $result);
 
         $content = $result['body']['data']['content'];
         $this->assertSame('Kites', $content['category']['title']);
@@ -80,8 +76,6 @@ final class ContentRelationServiceTest extends TokenTestCase
                 }
             }
         }');
-
-        $this->assertResponseStatus(200, $result);
 
         $content = $result['body']['data']['content'];
         $this->assertNull($content['category']);

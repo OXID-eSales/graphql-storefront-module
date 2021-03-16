@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Address;
 
 use Codeception\Example;
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -57,7 +56,6 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
 
         $result = $this->executeMutation($I, $shopId);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->assertNotEmpty($result['data']['customerDeliveryAddressAdd']['id']);
     }
 
@@ -85,7 +83,6 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
             $shopId
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -120,9 +117,11 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
         //subshop user has same username but different oxid
         $I->login(self::DELETE_USERNAME, self::PASSWORD, $shopId);
 
-        $this->deleteCustomerDeliveryAddressMutation($I, $deliveryAddressId, $shopId);
+        $result = $this->deleteCustomerDeliveryAddressMutation($I, $deliveryAddressId, $shopId);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->assertTrue(
+            $result['data']['customerDeliveryAddressDelete']
+        );
     }
 
     /**
@@ -135,9 +134,12 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
 
-        $this->deleteCustomerDeliveryAddressMutation($I, $deliveryAddressId, $shopId);
+        $result = $this->deleteCustomerDeliveryAddressMutation($I, $deliveryAddressId, $shopId);
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->assertSame(
+            'Delivery address was not found by id: ' . $deliveryAddressId,
+            $result['errors'][0]['message']
+        );
     }
 
     public function testDeliveryAddressDeletionFromOtherSubshopForMallUser(AcceptanceTester $I): void
@@ -152,9 +154,11 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
         $I->logout();
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD, 2);
 
-        $this->deleteCustomerDeliveryAddressMutation($I, $addressId, 2);
+        $result = $this->deleteCustomerDeliveryAddressMutation($I, $addressId, 2);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->assertTrue(
+            $result['data']['customerDeliveryAddressDelete']
+        );
     }
 
     protected function dataProviderDeliveryAddressPerShop()

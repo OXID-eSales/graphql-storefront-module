@@ -11,15 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Contact\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\Error;
 use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
-use OxidEsales\GraphQL\Base\Exception\HttpErrorInterface;
 
-final class ContactRequestFieldsValidationError extends Error implements HttpErrorInterface
+final class ContactRequestFieldsValidationError extends Error
 {
-    public function getHttpStatus(): int
-    {
-        return 400;
-    }
-
     public function getCategory(): string
     {
         return ErrorCategories::REQUESTERROR;

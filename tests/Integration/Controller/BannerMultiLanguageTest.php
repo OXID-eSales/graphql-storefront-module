@@ -36,10 +36,6 @@ final class BannerMultiLanguageTest extends TokenTestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $banner = $result['body']['data']['banner'];
         $this->assertSame('Banner 1 en', $banner['title']);
@@ -76,10 +72,6 @@ final class BannerMultiLanguageTest extends TokenTestCase
         );
 
         $result = $this->query($query);
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
 
         $banner = $result['body']['data']['banner'];
         $this->assertSame('Banner 4 en', $banner['title']);

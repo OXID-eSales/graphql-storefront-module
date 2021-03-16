@@ -11,18 +11,12 @@ namespace OxidEsales\GraphQL\Storefront\WishedPrice\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\Error;
 use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
-use OxidEsales\GraphQL\Base\Exception\HttpErrorInterface;
 
-final class NotificationSendFailure extends Error implements HttpErrorInterface
+final class NotificationSendFailure extends Error
 {
     public function getCategory(): string
     {
         return ErrorCategories::REQUESTERROR;
-    }
-
-    public function getHttpStatus(): int
-    {
-        return 500;
     }
 
     public static function create(string $message): self

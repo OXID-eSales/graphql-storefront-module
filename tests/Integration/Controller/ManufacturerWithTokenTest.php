@@ -44,8 +44,6 @@ final class ManufacturerWithTokenTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
-
         $manufacturer = $result['body']['data']['manufacturer'];
 
         $this->assertSame(self::ACTIVE_MANUFACTURER, $manufacturer['id']);
@@ -81,8 +79,6 @@ final class ManufacturerWithTokenTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
-
         $this->assertEquals(
             [
                 'id' => self::INACTIVE_MANUFACTURER,
@@ -99,7 +95,10 @@ final class ManufacturerWithTokenTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(404, $result['status']);
+        $this->assertSame(
+            'Manufacturer was not found by id: DOES-NOT-EXIST',
+            $result['body']['errors'][0]['message']
+        );
     }
 
     public function testGetManufacturerListWithoutFilter(): void
@@ -109,8 +108,6 @@ final class ManufacturerWithTokenTest extends TokenTestCase
                 id
             }
         }');
-
-        $this->assertEquals(200, $result['status']);
 
         // fixtures have total 15 manufacturers, 4 inactive and 11 active
         $this->assertEquals(
@@ -131,7 +128,6 @@ final class ManufacturerWithTokenTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 [
@@ -157,7 +153,6 @@ final class ManufacturerWithTokenTest extends TokenTestCase
             }
         }');
 
-        $this->assertEquals(200, $result['status']);
         $this->assertEquals(
             [
                 [

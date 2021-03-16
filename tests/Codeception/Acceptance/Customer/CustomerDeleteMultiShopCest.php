@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Customer;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -42,16 +41,15 @@ final class CustomerDeleteMultiShopCest extends MultishopBaseCest
             2
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['customerDelete']);
 
-        $this->checkUserInShop($I, 2, self::USERNAME, self::PASSWORD, HttpCode::UNAUTHORIZED);
+        $this->checkUserInShop($I, 2, self::USERNAME, self::PASSWORD, true);
 
         //can still log in to shop 1, because it is another row in database with different oxid
-        $this->checkUserInShop($I, 1, self::USERNAME, self::PASSWORD, HttpCode::OK);
+        $this->checkUserInShop($I, 1, self::USERNAME, self::PASSWORD);
     }
 
     public function testCustomerDeleteMallUserFromBothShops(AcceptanceTester $I): void
@@ -70,18 +68,17 @@ final class CustomerDeleteMultiShopCest extends MultishopBaseCest
             1
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['customerDelete']);
 
-        $this->checkUserInShop($I, 1, self::MALL_USERNAME, self::MALL_PASSWORD, HttpCode::UNAUTHORIZED);
+        $this->checkUserInShop($I, 1, self::MALL_USERNAME, self::MALL_PASSWORD, true);
 
-        $this->checkUserInShop($I, 2, self::MALL_USERNAME, self::MALL_PASSWORD, HttpCode::UNAUTHORIZED);
+        $this->checkUserInShop($I, 2, self::MALL_USERNAME, self::MALL_PASSWORD, true);
     }
 
-    protected function checkUserInShop(AcceptanceTester $I, int $shopId, string $username, string $password, int $expectedCode): void
+    protected function checkUserInShop(AcceptanceTester $I, int $shopId, string $username, string $password, bool $expectError = false): void
     {
         $I->logout();
 
@@ -92,8 +89,16 @@ final class CustomerDeleteMultiShopCest extends MultishopBaseCest
         ];
         $I->sendGQLQuery($query, $variables, 0, $shopId);
 
-        $I->seeResponseCodeIs($expectedCode);
         $I->seeResponseIsJson();
+
+        if ($expectError) {
+            $result = $I->grabJsonResponseAsArray();
+
+            $I->assertSame(
+                'Username/password combination is invalid',
+                $result['errors'][0]['message']
+            );
+        }
 
         $I->logout();
     }

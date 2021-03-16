@@ -10,15 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Payment\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\Error;
-use OxidEsales\GraphQL\Base\Exception\HttpErrorInterface;
 
-final class PaymentValidationFailed extends Error implements HttpErrorInterface
+final class PaymentValidationFailed extends Error
 {
-    public function getHttpStatus(): int
-    {
-        return 400;
-    }
-
     public function getCategory(): string
     {
         return 'validation';

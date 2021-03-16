@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -59,7 +58,6 @@ final class BasketPaymentCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
@@ -134,7 +132,13 @@ final class BasketPaymentCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: ' . $basketId,
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -262,7 +266,6 @@ final class BasketPaymentCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $result = $I->grabJsonResponseAsArray();
 
         return $result['data']['basketCreate']['id'];
@@ -282,7 +285,6 @@ final class BasketPaymentCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
@@ -302,8 +304,13 @@ final class BasketPaymentCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            $basketId,
+            $result['data']['basketAddProduct']['id']
+        );
     }
 
     private function preparePayment(AcceptanceTester $I, array $data): void

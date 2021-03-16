@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Order;
 
 use Codeception\Example;
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\Facts\Facts;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
@@ -78,7 +77,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(1, count($result['data']['customer']['orders']));
@@ -150,7 +148,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $order  = $result['data']['customer']['orders'][0];
@@ -179,7 +176,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(1, count($result['data']['customer']['orders']));
@@ -205,7 +201,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -233,7 +228,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -296,7 +290,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -321,7 +314,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -358,7 +350,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             $pagination
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -396,7 +387,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -430,7 +420,6 @@ final class CustomerOrderHistoryCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 

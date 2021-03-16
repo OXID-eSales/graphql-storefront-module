@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -34,16 +33,22 @@ final class BasketMultishopCest extends MultishopBaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD, 2);
 
-        $this->queryBasket($I, self::PRIVATE_BASKET, 2);
+        $result = $this->queryBasket($I, self::PRIVATE_BASKET, 2);
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->assertSame(
+            'Basket is private.',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testGetPublicBasketFromDifferentShopNoToken(AcceptanceTester $I): void
     {
-        $this->queryBasket($I, self::PUBLIC_BASKET, 2);
+        $result = $this->queryBasket($I, self::PUBLIC_BASKET, 2);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->assertSame(
+            self::PUBLIC_BASKET,
+            $result['data']['basket']['id']
+        );
     }
 
     public function testGetPrivateBasketFromDifferentShopWithTokenForMallUser(AcceptanceTester $I): void
@@ -52,39 +57,47 @@ final class BasketMultishopCest extends MultishopBaseCest
 
         $I->login(self::EXISTING_USERNAME, self::PASSWORD, 2);
 
-        $this->queryBasket($I, self::PRIVATE_BASKET, 2);
+        $result = $this->queryBasket($I, self::PRIVATE_BASKET, 2);
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->assertSame(
+            'Basket is private.',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testGetPrivateBasketFromSubShopWithToken(AcceptanceTester $I): void
     {
         $I->login(self::EXISTING_USERNAME, self::PASSWORD, 2);
 
-        $this->queryBasket($I, self::PRIVATE_BASKET, 2);
+        $result = $this->queryBasket($I, self::PRIVATE_BASKET, 2);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->assertSame(
+            self::PRIVATE_BASKET,
+            $result['data']['basket']['id']
+        );
     }
 
     public function testCreatePrivateBasketFromDifferentShop(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result   = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
         $basketId = $result['data']['basketCreate']['id'];
 
         $I->logout();
         $I->login(self::USERNAME, self::PASSWORD, 2);
 
-        $this->queryBasket($I, $basketId, 2);
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $result = $this->queryBasket($I, $basketId, 2);
+
+        $I->assertSame(
+            'Basket is private.',
+            $result['errors'][0]['message']
+        );
 
         $I->logout();
         $I->login(self::USERNAME, self::PASSWORD);
 
         $this->removeBasket($I, $basketId, 1);
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     public function testCreatePrivateBasketFromDifferentShopForMallUser(AcceptanceTester $I): void
@@ -93,21 +106,21 @@ final class BasketMultishopCest extends MultishopBaseCest
 
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result   = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
         $basketId = $result['data']['basketCreate']['id'];
 
         $I->logout();
         $I->login(self::USERNAME, self::PASSWORD, 2);
 
-        $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false', 2);
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false', 2);
+
+        $I->assertSame(
+            "Basket '" . self::BASKET_NOTICE_LIST . "' already exists!",
+            $result['errors'][0]['message']
+        );
 
         $this->queryBasket($I, $basketId, 2);
-        $I->seeResponseCodeIs(HttpCode::OK);
-
         $this->removeBasket($I, $basketId, 2);
-        $I->seeResponseCodeIs(HttpCode::OK);
     }
 
     public function testBasketCostFromDifferentShop(AcceptanceTester $I): void
@@ -153,7 +166,7 @@ final class BasketMultishopCest extends MultishopBaseCest
             0,
             2
         );
-        $I->seeResponseCodeIs(HttpCode::OK);
+
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 

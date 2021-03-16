@@ -33,9 +33,9 @@ final class LinkEnterpriseTest extends MultishopTestCase
             }
         }');
 
-        $this->assertEquals(
-            404,
-            $result['status']
+        $this->assertSame(
+            'Link was not found by id: ' . self::LINK_ID,
+            $result['body']['errors'][0]['message']
         );
     }
 
@@ -51,10 +51,7 @@ final class LinkEnterpriseTest extends MultishopTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 2 active links
         $this->assertCount(
             0,
@@ -80,11 +77,6 @@ final class LinkEnterpriseTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'          => self::LINK_ID,
                 'description' => '<p>English Description active</p>',
@@ -106,10 +98,7 @@ final class LinkEnterpriseTest extends MultishopTestCase
                 id
             }
         }');
-        $this->assertResponseStatus(
-            200,
-            $result
-        );
+
         // fixtures have 1 active link for shop 2
         $this->assertCount(
             1,
@@ -170,11 +159,6 @@ final class LinkEnterpriseTest extends MultishopTestCase
         }');
 
         $this->assertEquals(
-            200,
-            $result['status']
-        );
-
-        $this->assertEquals(
             [
                 'id'          => self::LINK_ID,
                 'description' => $description,
@@ -208,11 +192,6 @@ final class LinkEnterpriseTest extends MultishopTestCase
                 description
             }
         }');
-
-        $this->assertEquals(
-            200,
-            $result['status']
-        );
 
         $this->assertEquals(
             [

@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Address;
 
 use Codeception\Example;
 use Codeception\Scenario;
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -69,7 +68,13 @@ final class DeliveryAddressCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "customerDeliveryAddressAdd" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -93,7 +98,6 @@ final class DeliveryAddressCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -145,7 +149,13 @@ final class DeliveryAddressCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Delivery address is missing required fields: countryid',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testAddDeliveryAddressForLoggedInUserAllInputSet(AcceptanceTester $I): void
@@ -202,7 +212,6 @@ final class DeliveryAddressCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -241,7 +250,13 @@ final class DeliveryAddressCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "customerDeliveryAddresses" on type "Query".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -261,7 +276,6 @@ final class DeliveryAddressCest extends BaseCest
             }
         }');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -300,7 +314,13 @@ final class DeliveryAddressCest extends BaseCest
     {
         $this->deleteCustomerDeliveryAddressMutation($I, $this->deliveryAddressId);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "customerDeliveryAddressDelete" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -312,7 +332,13 @@ final class DeliveryAddressCest extends BaseCest
 
         $this->deleteCustomerDeliveryAddressMutation($I, $this->deliveryAddressId);
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testDeliveryAddressDeletionWithNonExistingId(AcceptanceTester $I): void
@@ -321,7 +347,13 @@ final class DeliveryAddressCest extends BaseCest
 
         $this->deleteCustomerDeliveryAddressMutation($I, 'non-existing-id');
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Delivery address was not found by id: non-existing-id',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -333,7 +365,12 @@ final class DeliveryAddressCest extends BaseCest
 
         $this->deleteCustomerDeliveryAddressMutation($I, $this->deliveryAddressId);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['customerDeliveryAddressDelete']
+        );
     }
 
     public function testDeliveryAddressDeletionFromAdmin(AcceptanceTester $I): void
@@ -344,7 +381,12 @@ final class DeliveryAddressCest extends BaseCest
 
         $this->deleteCustomerDeliveryAddressMutation($I, $this->deliveryAddressId);
 
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['customerDeliveryAddressDelete']
+        );
     }
 
     protected function providerRequiredFields()
@@ -408,8 +450,13 @@ final class DeliveryAddressCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Unauthorized',
+            $result['errors'][0]['message']
+        );
     }
 
     private function deleteCustomerDeliveryAddressMutation(AcceptanceTester $I, string $deliveryAddressId): array

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Customer;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -26,7 +25,13 @@ final class PasswordCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "customerPasswordChange" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testChangePasswordWithWrongOldPassword(AcceptanceTester $I): void
@@ -39,7 +44,13 @@ final class PasswordCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::FORBIDDEN);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Old password does not match our records',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testChangePassword(AcceptanceTester $I): void
@@ -52,8 +63,12 @@ final class PasswordCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['customerPasswordChange']
+        );
 
         $I->sendGQLQuery('
             mutation {
@@ -61,7 +76,11 @@ final class PasswordCest extends BaseCest
             }
         ');
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertTrue(
+            $result['data']['customerPasswordChange']
+        );
     }
 }

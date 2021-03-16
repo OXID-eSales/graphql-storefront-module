@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance;
 
-use Codeception\Util\HttpCode;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
@@ -49,7 +48,6 @@ final class NoSessionUsageCest extends BaseCest
         );
 
         //graphql only processes skipSession calls but this will be handled in shop .htaccess in rewrite rule
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -78,7 +76,6 @@ final class NoSessionUsageCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -107,7 +104,6 @@ final class NoSessionUsageCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 

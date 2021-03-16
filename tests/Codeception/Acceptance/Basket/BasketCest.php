@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
-use Codeception\Util\HttpCode;
 use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -70,9 +69,8 @@ final class BasketCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         $basket = $result['data']['basket'];
         $I->assertEquals(self::PUBLIC_BASKET, $basket['id']);
@@ -97,9 +95,8 @@ final class BasketCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         $basket = $result['data']['basket'];
 
@@ -125,8 +122,20 @@ final class BasketCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        if ($isLogged) {
+            $I->assertSame(
+                'Basket is private.',
+                $result['errors'][0]['message']
+            );
+        } else {
+            $I->assertSame(
+                'The token is invalid',
+                $result['errors'][0]['message']
+            );
+        }
     }
 
     /**
@@ -139,7 +148,6 @@ final class BasketCest extends BaseCest
         $I->login(self::DIFFERENT_USERNAME, self::PASSWORD);
 
         $result = $this->basketCreateMutation($I, $title);
-        $I->seeResponseCodeIs(HttpCode::OK);
 
         $basket = $result['data']['basketCreate'];
         $I->assertSame('Marc', $basket['owner']['firstName']);
@@ -147,8 +155,10 @@ final class BasketCest extends BaseCest
         $I->assertFalse($basket['public']);
         $I->assertEmpty($basket['items']);
 
-        $this->basketRemoveMutation($I, $basket['id']);
-        $I->seeResponseCodeIs(HttpCode::OK);
+        $result = $this->basketRemoveMutation($I, $basket['id']);
+        $I->assertTrue(
+            $result['data']['basketRemove']
+        );
 
         $I->sendGQLQuery(
             'query{
@@ -158,7 +168,13 @@ final class BasketCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::NOT_FOUND);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Basket was not found by id: ' . $basket['id'],
+            $result['errors'][0]['message']
+        );
     }
 
     public function testCreateExistingBasketMutation(AcceptanceTester $I): void
@@ -166,14 +182,27 @@ final class BasketCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $this->basketCreateMutation($I, self::BASKET_WISH_LIST);
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            "Basket 'wishlist' already exists!",
+            $result['errors'][0]['message']
+        );
     }
 
     public function testCreateBasketMutationWithoutToken(AcceptanceTester $I): void
     {
         $this->basketCreateMutation($I, self::BASKET_WISH_LIST);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Cannot query field "basketCreate" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
@@ -185,7 +214,6 @@ final class BasketCest extends BaseCest
 
         $result = $this->basketCreateMutation($I, self::BASKET_WISH_LIST);
 
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST);
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketCreate', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
     }
@@ -228,7 +256,6 @@ final class BasketCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
@@ -271,7 +298,6 @@ final class BasketCest extends BaseCest
             }'
         );
 
-        $I->seeResponseCodeIs(HttpCode::OK);
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
