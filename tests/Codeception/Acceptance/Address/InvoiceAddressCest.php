@@ -231,7 +231,6 @@ final class InvoiceAddressCest extends BaseCest
             }
         }');
 
-        //happyface.fml
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
