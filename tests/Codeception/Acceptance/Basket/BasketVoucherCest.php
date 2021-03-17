@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use GraphQL\Validator\Rules\FieldsOnCorrectType;
+use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -58,6 +59,12 @@ final class BasketVoucherCest extends BaseCest
 
         [$voucher1, $voucher2] = $result['data']['basket']['vouchers'];
 
+        $this->checkReservationDate($I, $voucher1['reserved']);
+        $this->checkReservationDate($I, $voucher2['reserved']);
+
+        //reservation date is checked sepparately
+        unset($voucher1['reserved'], $voucher2['reserved']);
+
         $expectedSeries1 = [
             'id'           => 'serie2',
             'title'        => 'serie2',
@@ -69,7 +76,6 @@ final class BasketVoucherCest extends BaseCest
         ];
         $expectedVoucher1 = [
             'id'       => 'serie2voucher',
-            'reserved' => '2020-10-01T13:28:34+02:00',
             'voucher'  => 'serie2voucher',
             'discount' => null,
             'series'   => $expectedSeries1,
@@ -86,7 +92,6 @@ final class BasketVoucherCest extends BaseCest
         ];
         $expectedVoucher2 = [
             'id'       => 'serie3voucher',
-            'reserved' => '2020-10-01T13:28:34+02:00',
             'voucher'  => 'serie3voucher',
             'discount' => null,
             'series'   => $expectedSeries2,
@@ -186,5 +191,15 @@ final class BasketVoucherCest extends BaseCest
         $result          = $I->grabJsonResponseAsArray();
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketRemoveVoucher', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+    }
+
+    /**
+     * Reservation date is refreshed on basket operation,
+     * to avoid race condition we only check if the date is correct.
+     */
+    private function checkReservationDate(AcceptanceTester $I, string $actualReservationdate): void
+    {
+        $expectedReservationdate = DateTimeImmutableFactory::fromString('now')->format('Y-m-d');
+        $I->assertContains($expectedReservationdate, $actualReservationdate);
     }
 }
