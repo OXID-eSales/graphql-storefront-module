@@ -161,8 +161,8 @@ REPLACE INTO `oxvoucherseries` (`OXID`, `OXSHOPID`, `OXSERIENR`, `OXDISCOUNT`, `
 REPLACE INTO `oxvouchers` (`OXDATEUSED`, `OXORDERID`, `OXUSERID`, `OXRESERVED`, `OXVOUCHERNR`, `OXVOUCHERSERIEID`, `OXDISCOUNT`, `OXID`, `OXTIMESTAMP`, `OEGQL_BASKETID`) VALUES
 ('2020-08-28', '_149bc776dd339a83d863c4f64693bb6', '_45ad3b5380202966df6ff128e9eecaq', 1, 'voucher1', 'voucherserie1', 21.6, 'usedvoucherid', now(), null),
 (null, null, null, 0, 'voucher2', 'voucherserie1', 0, 'notusedvoucherid', now(), null),
-(null, null, null, 1601551714, 'serie2voucher', 'serie2', 0, 'serie2voucher', now(), '_test_basket_private'),
-(null, null, null, 1601551714, 'serie3voucher', 'serie3', 0, 'serie3voucher', now(), '_test_basket_private'),
+(null, null, null, 1601551714, 'serie2voucher', 'serie2', 0, 'serie2voucher', '2020-10-01 13:28:34', '_test_basket_private'),
+(null, null, null, 1601551714, 'serie3voucher', 'serie3', 0, 'serie3voucher', '2020-10-01 13:28:34', '_test_basket_private'),
 (null, null, null, 0, 'myVoucher', 'personal_voucher', 0, 'personal_voucher_1', now(), null),
 (null, null, null, 0, 'myVoucher', 'personal_voucher', 0, 'personal_voucher_2', now(), null),
 (null, null, null, 0, 'mySeriesVoucher', 'personal_series_voucher', 0, 'personal_series_voucher_1', now(), null),
