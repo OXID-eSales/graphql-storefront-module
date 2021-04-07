@@ -22,6 +22,8 @@ use OxidEsales\GraphQL\Storefront\Address\Service\DeliveryAddress as DeliveryAdd
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerDataType;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketPayments;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforePlaceOrder;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfraService;
@@ -45,6 +47,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRepository;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Voucher as VoucherInfrastructure;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Basket
@@ -97,6 +100,9 @@ final class Basket
     /** @var DeliveryAddressService */
     private $deliveryAddressService;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     public function __construct(
         Repository $repository,
         BasketRepository $basketRepository,
@@ -113,7 +119,8 @@ final class Basket
         DeliveryAddressService $deliveryAddressService,
         VoucherRepository $voucherRepository,
         CountryService $countryService,
-        CustomerService $customerService
+        CustomerService $customerService,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->repository             = $repository;
         $this->basketRepository       = $basketRepository;
@@ -131,6 +138,7 @@ final class Basket
         $this->customerInfrastructure = $customerInfrastructure;
         $this->countryService         = $countryService;
         $this->customerService        = $customerService;
+        $this->eventDispatcher        = $eventDispatcher;
     }
 
     /**
@@ -457,6 +465,13 @@ final class Basket
      */
     public function getBasketPayments(ID $basketId): array
     {
+        $this->eventDispatcher->dispatch(
+            BeforeBasketPayments::NAME,
+            new BeforeBasketPayments(
+                $basketId
+            )
+        );
+
         $basket   = $this->getAuthenticatedCustomerBasket((string) $basketId->val());
         $customer = $this->customerService->customer((string) $basket->getUserId()->val());
         $country  = $this->getBasketDeliveryCountryId($basket);
