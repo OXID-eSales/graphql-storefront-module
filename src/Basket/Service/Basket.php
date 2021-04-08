@@ -23,13 +23,11 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketPayments;
-use OxidEsales\GraphQL\Storefront\Basket\Event\BeforePlaceOrder;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfraService;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Repository as BasketRepository;
-
 use OxidEsales\GraphQL\Storefront\Country\DataType\Country as CountryDataType;
 use OxidEsales\GraphQL\Storefront\Country\Service\Country as CountryService;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
