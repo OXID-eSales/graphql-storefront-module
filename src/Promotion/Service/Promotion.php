@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Promotion\DataType\Promotion as PromotionDataT
 use OxidEsales\GraphQL\Storefront\Promotion\Exception\PromotionNotFound;
 use OxidEsales\GraphQL\Storefront\Promotion\Infrastructure\Promotion as PromotionInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Promotion
 {
@@ -42,16 +43,16 @@ final class Promotion
      * @throws PromotionNotFound
      * @throws InvalidLogin
      */
-    public function promotion(string $id): PromotionDataType
+    public function promotion(ID $id): PromotionDataType
     {
         try {
             /** @var PromotionDataType $promotion */
             $promotion = $this->repository->getById(
-                $id,
+                (string) $id,
                 PromotionDataType::class
             );
         } catch (NotFound $e) {
-            throw PromotionNotFound::byId($id);
+            throw PromotionNotFound::byId((string) $id);
         }
 
         if ($promotion->isActive()) {

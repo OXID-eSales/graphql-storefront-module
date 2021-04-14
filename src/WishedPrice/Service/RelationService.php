@@ -65,7 +65,7 @@ final class RelationService
     public function getProduct(WishedPrice $wishedPrice): Product
     {
         return $this->productService->product(
-            (string) $wishedPrice->getProductId()
+            $wishedPrice->getProductId()
         );
     }
 

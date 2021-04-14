@@ -254,7 +254,7 @@ final class BasketSetPaymentMutationCest extends BaseCest
     {
         $I->sendGQLQuery('
             mutation {
-                basketRemove (id: "' . $this->basketId . '")
+                basketRemove (basketId: "' . $this->basketId . '")
             }
         ');
 

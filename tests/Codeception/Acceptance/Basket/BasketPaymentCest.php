@@ -50,7 +50,7 @@ final class BasketPaymentCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery('query {
-            basket(id: "' . $basketId . '") {
+            basket(basketId: "' . $basketId . '") {
                 id
                 payment {
                     id

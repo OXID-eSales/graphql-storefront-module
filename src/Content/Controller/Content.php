@@ -13,6 +13,7 @@ use OxidEsales\GraphQL\Storefront\Content\DataType\Content as ContentDataType;
 use OxidEsales\GraphQL\Storefront\Content\DataType\ContentFilterList;
 use OxidEsales\GraphQL\Storefront\Content\Service\Content as ContentService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Content
 {
@@ -28,9 +29,9 @@ final class Content
     /**
      * @Query()
      */
-    public function content(string $id): ContentDataType
+    public function content(ID $contentId): ContentDataType
     {
-        return $this->contentService->content($id);
+        return $this->contentService->content($contentId);
     }
 
     /**

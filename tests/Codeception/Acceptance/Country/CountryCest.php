@@ -33,7 +33,7 @@ final class CountryCest extends BaseCest
     public function testGetSingleActiveCountry(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query {
-            country (id: "' . self::ACTIVE_COUNTRY . '") {
+            country (countryId: "' . self::ACTIVE_COUNTRY . '") {
                 id
                 position
                 active
@@ -77,7 +77,7 @@ final class CountryCest extends BaseCest
     public function testGetSingleInactiveCountryWithoutToken(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query {
-            country (id: "' . self::INACTIVE_COUNTRY . '") {
+            country (countryId: "' . self::INACTIVE_COUNTRY . '") {
                 id
                 active
             }
@@ -97,7 +97,7 @@ final class CountryCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery('query {
-            country (id: "' . self::INACTIVE_COUNTRY . '") {
+            country (countryId: "' . self::INACTIVE_COUNTRY . '") {
                 id
                 active
             }
@@ -118,7 +118,7 @@ final class CountryCest extends BaseCest
     public function testGetSingleNonExistingCountry(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query {
-            country (id: "' . self::DOES_NOT_EXIST . '") {
+            country (countryId: "' . self::DOES_NOT_EXIST . '") {
                 id
             }
         }');
@@ -289,7 +289,7 @@ final class CountryCest extends BaseCest
     public function testGetStates(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query {
-            country (id: "' . self::COUNTRY_WITH_STATES . '") {
+            country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
                 states {
                     id
                     title
@@ -329,7 +329,7 @@ final class CountryCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-                country (id: "' . self::COUNTRY_WITH_STATES . '") {
+                country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
                     states(sort: {
                         title: "' . $sort . '"
                     }) {
@@ -388,7 +388,7 @@ final class CountryCest extends BaseCest
     public function testCountryStatesMultilanguage(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query {
-            country (id: "' . self::COUNTRY_WITH_STATES . '") {
+            country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
                 states {
                     id
                     title

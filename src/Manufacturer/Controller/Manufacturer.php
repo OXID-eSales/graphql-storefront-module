@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Manufacturer\Service\Manufacturer as ManufacturerService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Manufacturer
 {
@@ -29,9 +30,9 @@ final class Manufacturer
     /**
      * @Query()
      */
-    public function manufacturer(string $id): ManufacturerDataType
+    public function manufacturer(ID $manufacturerId): ManufacturerDataType
     {
-        return $this->manufacturerService->manufacturer($id);
+        return $this->manufacturerService->manufacturer($manufacturerId);
     }
 
     /**

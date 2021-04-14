@@ -30,7 +30,7 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
 
         $result = $this->query('query {
-            product (id: "' . self::PRODUCT_ID . '") {
+            product (productId: "' . self::PRODUCT_ID . '") {
                 id
             }
         }');
@@ -52,7 +52,7 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $this->addProductToShops([2], self::PRODUCT_ID);
 
         $result = $this->query('query {
-            product (id: "' . self::PRODUCT_ID . '") {
+            product (productId: "' . self::PRODUCT_ID . '") {
                 id,
                 title
             }
@@ -112,7 +112,7 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $this->addProductToShops([2], self::PRODUCT_ID);
 
         $result = $this->query('query {
-            product (id: "' . self::PRODUCT_ID . '") {
+            product (productId: "' . self::PRODUCT_ID . '") {
                 id
                 title
             }
@@ -141,7 +141,7 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $this->addProductToShops([2], self::ACTIVE_PRODUCT_WITH_VARIANTS);
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
                 variantLabels
                 variants {
                     id

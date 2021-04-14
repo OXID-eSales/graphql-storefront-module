@@ -32,6 +32,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 use function strlen;
 
@@ -156,7 +157,7 @@ final class RelationService
 
         try {
             return $this->productService->product(
-                $bundleProductId
+                new ID($bundleProductId)
             );
         } catch (ProductNotFound | InvalidLogin $e) {
         }
@@ -204,7 +205,7 @@ final class RelationService
             $categoryIds = $this->productInfrastructure->getCategories($product);
 
             foreach ($categoryIds as $categoryId) {
-                $categories[] = $this->categoryService->category($categoryId);
+                $categories[] = $this->categoryService->category(new ID($categoryId));
             }
         }
 

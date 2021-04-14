@@ -49,7 +49,7 @@ final class PromotionMultilanguageTest extends TestCase
         $this->setGETRequestParameter('lang', $languageId);
 
         $result = $this->query('query {
-            promotion (id: "' . self::PROMOTION_ID . '") {
+            promotion (promotionId: "' . self::PROMOTION_ID . '") {
                 id
                 title
             }
@@ -79,7 +79,7 @@ final class PromotionMultilanguageTest extends TestCase
         $this->setGETRequestParameter('lang', $languageId);
 
         $result = $this->query('query {
-            promotion (id: "' . self::PROMOTION_ID . '") {
+            promotion (promotionId: "' . self::PROMOTION_ID . '") {
                 id
                 title
             }

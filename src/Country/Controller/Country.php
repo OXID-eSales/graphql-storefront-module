@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Country\DataType\CountryFilterList;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountrySorting;
 use OxidEsales\GraphQL\Storefront\Country\Service\Country as CountryService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Country
 {
@@ -29,9 +30,9 @@ final class Country
     /**
      * @Query()
      */
-    public function country(string $id): CountryDataType
+    public function country(ID $countryId): CountryDataType
     {
-        return $this->countryService->country($id);
+        return $this->countryService->country($countryId);
     }
 
     /**

@@ -44,7 +44,7 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
 
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_IDS['shoes-active'] . '") {
+            category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
                 id
             }
         }');
@@ -66,7 +66,7 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->addCategoryToShops(self::CATEGORY_IDS['shoes-active'], [2]);
 
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_IDS['shoes-active'] . '") {
+            category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
                 id,
                 title
             }
@@ -125,7 +125,7 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
 
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_IDS['shoes-active'] . '") {
+            category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
                 id
                 title
             }
@@ -244,7 +244,7 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->addProductToCategory(self::CATEGORY_PRODUCT_RELATION, [2]);
 
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_IDS['supplies-active'] . '") {
+            category (categoryId: "' . self::CATEGORY_IDS['supplies-active'] . '") {
                 title
                 products {
                     title
@@ -331,7 +331,7 @@ final class CategoryEnterpriseTest extends MultishopTestCase
             ->execute();
 
         $result = $this->query('query {
-          category (id: "' . self::CATEGORY_IDS['test-active'] . '") {
+          category (categoryId: "' . self::CATEGORY_IDS['test-active'] . '") {
             id
             products {
                 id

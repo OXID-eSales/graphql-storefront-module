@@ -27,7 +27,7 @@ final class ContentRelationServiceTest extends TokenTestCase
     public function testGetContentSeoRelation(): void
     {
         $result = $this->query('query {
-            content (id: "' . self::ACTIVE_CONTENT_WITH_SEO . '") {
+            content (contentId: "' . self::ACTIVE_CONTENT_WITH_SEO . '") {
                 id
                 seo {
                     url
@@ -44,7 +44,7 @@ final class ContentRelationServiceTest extends TokenTestCase
     {
         $result = $this->query('
             query{
-                content(id: "' . self::ACTIVE_CONTENT_WITH_CATEGORY . '" ){
+                content(contentId: "' . self::ACTIVE_CONTENT_WITH_CATEGORY . '" ){
                     category {
                         title
                     }
@@ -70,7 +70,7 @@ final class ContentRelationServiceTest extends TokenTestCase
     public function testGetContentCategoryRelationWithoutCategory(string $categoryId): void
     {
         $result = $this->query('query {
-            content (id: "' . $categoryId . '") {
+            content (contentId: "' . $categoryId . '") {
                 category {
                     title
                 }

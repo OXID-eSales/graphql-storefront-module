@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute as AttributeDataT
 use OxidEsales\GraphQL\Storefront\Attribute\DataType\AttributeFilterList;
 use OxidEsales\GraphQL\Storefront\Attribute\Exception\AttributeNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Attribute
 {
@@ -36,16 +37,16 @@ final class Attribute
     /**
      * @throws AttributeNotFound
      */
-    public function attribute(string $id): AttributeDataType
+    public function attribute(ID $id): AttributeDataType
     {
         try {
             /** @var AttributeDataType $attribute */
             $attribute = $this->repository->getById(
-                $id,
+                (string) $id,
                 AttributeDataType::class
             );
         } catch (NotFound $e) {
-            throw AttributeNotFound::byId($id);
+            throw AttributeNotFound::byId((string) $id);
         }
 
         return $attribute;

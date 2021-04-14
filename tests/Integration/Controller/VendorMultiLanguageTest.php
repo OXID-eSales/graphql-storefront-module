@@ -99,7 +99,7 @@ final class VendorMultiLanguageTest extends TestCase
     public function testGetVendorMultiLanguage(string $languageId, string $title, string $productShortDescription): void
     {
         $query = 'query {
-            vendor (id: "' . self::ACTIVE_VENDOR . '") {
+            vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
                 id
                 title
                 products(pagination: {limit: 1}) {

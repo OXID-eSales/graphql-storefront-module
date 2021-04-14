@@ -26,7 +26,7 @@ final class ContentCest extends BaseCest
     public function contentWithTemplate(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query {
-            content (id: "' . self::CONTENT_WITH_TEMPLATE . '") {
+            content (contentId: "' . self::CONTENT_WITH_TEMPLATE . '") {
                 id
                 content
                 rawContent
@@ -54,7 +54,7 @@ final class ContentCest extends BaseCest
         }
 
         $I->sendGQLQuery('query {
-            content (id: "' . self::CONTENT_WITH_VCMS_TEMPLATE . '") {
+            content (contentId: "' . self::CONTENT_WITH_VCMS_TEMPLATE . '") {
                 id
                 content
             }

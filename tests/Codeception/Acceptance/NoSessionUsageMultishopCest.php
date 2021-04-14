@@ -38,7 +38,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $this->sendQueryWithSidWithoutShopIdParameter(
             $I,
             'query{
-                product(id: "' . self::SUBSHOP_PRODUCT_ID . '") {
+                product(productId: "' . self::SUBSHOP_PRODUCT_ID . '") {
                     id
                     title
                 }
@@ -66,7 +66,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $this->sendQueryWithSidWithoutShopIdParameter(
             $I,
             'query{
-                product(id: "' . self::SUBSHOP_PRODUCT_ID . '") {
+                product(productId: "' . self::SUBSHOP_PRODUCT_ID . '") {
                     id
                     title
                 }
@@ -88,7 +88,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'query{
-                product(id: "' . self::SUBSHOP_PRODUCT_ID . '") {
+                product(productId: "' . self::SUBSHOP_PRODUCT_ID . '") {
                     id
                     title
                 }
@@ -114,7 +114,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $this->sendQueryWithSidCookieWithoutShopIdParameter(
             $I,
             'query{
-                product(id: "' . self::SUBSHOP_PRODUCT_ID . '") {
+                product(productId: "' . self::SUBSHOP_PRODUCT_ID . '") {
                     id
                     title
                 }

@@ -31,6 +31,7 @@ use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRepository;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @ExtendType(class=Basket::class)
@@ -119,7 +120,7 @@ final class BasketRelationService
      */
     public function deliveryAddress(Basket $basket): ?DeliveryAddress
     {
-        $addressId = (string) $basket->getEshopModel()->getFieldData('oegql_deladdressid');
+        $addressId = new ID($basket->getEshopModel()->getFieldData('oegql_deladdressid'));
 
         if (empty($addressId)) {
             return null;

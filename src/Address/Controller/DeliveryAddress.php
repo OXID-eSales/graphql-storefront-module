@@ -15,6 +15,7 @@ use OxidEsales\GraphQL\Storefront\Address\Service\DeliveryAddress as DeliveryAdd
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class DeliveryAddress
 {
@@ -44,9 +45,9 @@ final class DeliveryAddress
      * @Mutation()
      * @Logged()
      */
-    public function customerDeliveryAddressDelete(string $id): bool
+    public function customerDeliveryAddressDelete(ID $deliveryAddressId): bool
     {
-        return $this->deliveryAddressService->delete($id);
+        return $this->deliveryAddressService->delete($deliveryAddressId);
     }
 
     /**

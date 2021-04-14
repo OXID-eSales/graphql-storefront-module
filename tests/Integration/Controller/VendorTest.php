@@ -26,7 +26,7 @@ final class VendorTest extends TokenTestCase
     public function testGetSingleActiveVendor(): void
     {
         $result = $this->query('query {
-            vendor (id: "' . self::ACTIVE_VENDOR . '") {
+            vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
                 id
                 active
                 icon
@@ -81,7 +81,7 @@ final class VendorTest extends TokenTestCase
     public function testGetSingleInactiveVendorWithoutToken(): void
     {
         $result = $this->query('query {
-            vendor (id: "' . self::INACTIVE_VENDOR . '") {
+            vendor (vendorId: "' . self::INACTIVE_VENDOR . '") {
                 id
                 active
                 icon
@@ -106,7 +106,7 @@ final class VendorTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            vendor (id: "' . self::INACTIVE_VENDOR . '") {
+            vendor (vendorId: "' . self::INACTIVE_VENDOR . '") {
                 id
             }
         }');
@@ -122,7 +122,7 @@ final class VendorTest extends TokenTestCase
     public function testGetSingleNonExistingVendor(): void
     {
         $result = $this->query('query {
-            vendor (id: "DOES-NOT-EXIST") {
+            vendor (vendorId: "DOES-NOT-EXIST") {
                 id
             }
         }');
@@ -294,7 +294,7 @@ final class VendorTest extends TokenTestCase
     public function testVendorProductsWithOffsetAndLimit(): void
     {
         $result = $this->query('query {
-            vendor (id: "' . self::ACTIVE_VENDOR . '") {
+            vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
                 products(pagination: {limit: 1, offset: 1}) {
                     title
                 }
@@ -353,7 +353,7 @@ final class VendorTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            vendor(id: "' . self::ACTIVE_VENDOR . '") {
+            vendor(vendorId: "' . self::ACTIVE_VENDOR . '") {
                 id
                 products {
                     active
@@ -442,7 +442,7 @@ final class VendorTest extends TokenTestCase
     public function testVendorSortedProductList(): void
     {
         $result = $this->query('query {
-          vendor (id: "' . self::ACTIVE_VENDOR . '") {
+          vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
             id
             products (
                 sort: {

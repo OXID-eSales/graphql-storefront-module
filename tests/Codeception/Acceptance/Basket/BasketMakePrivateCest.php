@@ -46,7 +46,7 @@ final class BasketMakePrivateCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                basketMakePrivate(id: "this_is_no_saved_basket_id"){
+                basketMakePrivate(basketId: "this_is_no_saved_basket_id"){
                     public
                 }
             }'
@@ -67,7 +67,7 @@ final class BasketMakePrivateCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                basketMakePrivate(id: "' . $this->basketId . '"){
+                basketMakePrivate(basketId: "' . $this->basketId . '"){
                     public
                 }
             }'
@@ -88,7 +88,7 @@ final class BasketMakePrivateCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                basketMakePrivate(id: "' . $this->basketId . '"){
+                basketMakePrivate(basketId: "' . $this->basketId . '"){
                     public
                 }
             }'
@@ -127,7 +127,7 @@ final class BasketMakePrivateCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                basketRemove(id: "' . $this->basketId . '")
+                basketRemove(basketId: "' . $this->basketId . '")
             }'
         );
 

@@ -62,7 +62,7 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
     public function testCategoryVisibleForAllAnonymusUserCanSeeIt(): void
     {
         $result = $this->query(
-            'query { category (id: "' . self::CATEGORY_ID . '"){id, title}}'
+            'query { category (categoryId: "' . self::CATEGORY_ID . '"){id, title}}'
         );
 
         $this->assertEquals(
@@ -114,7 +114,7 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
         $this->setCategoryRightsExclusivelyVisibleForGroup();
 
         $result = $this->query(
-            'query { category (id: "' . self::CATEGORY_ID . '"){id, title}}'
+            'query { category (categoryId: "' . self::CATEGORY_ID . '"){id, title}}'
         );
 
         $this->assertSame(
@@ -168,7 +168,7 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
         $this->setAuthToken($result['body']['data']['token']);
 
         $result = $this->query(
-            'query { category (id: "' . self::CATEGORY_ID . '"){id, title}}'
+            'query { category (categoryId: "' . self::CATEGORY_ID . '"){id, title}}'
         );
 
         $this->assertEquals(
@@ -230,7 +230,7 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
         $this->setAuthToken($result['body']['data']['token']);
 
         $result = $this->query(
-            'query { category (id: "' . self::CATEGORY_ID . '"){id, title}}'
+            'query { category (categoryId: "' . self::CATEGORY_ID . '"){id, title}}'
         );
 
         $this->assertSame(

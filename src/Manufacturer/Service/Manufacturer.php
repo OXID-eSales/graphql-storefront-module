@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Manufacturer
 {
@@ -39,16 +40,16 @@ final class Manufacturer
      * @throws ManufacturerNotFound
      * @throws InvalidLogin
      */
-    public function manufacturer(string $id): ManufacturerDataType
+    public function manufacturer(ID $id): ManufacturerDataType
     {
         try {
             /** @var ManufacturerDataType $manufacturer */
             $manufacturer = $this->repository->getById(
-                $id,
+                (string) $id,
                 ManufacturerDataType::class
             );
         } catch (NotFound $e) {
-            throw ManufacturerNotFound::byId($id);
+            throw ManufacturerNotFound::byId((string) $id);
         }
 
         if ($manufacturer->isActive()) {

@@ -131,7 +131,7 @@ final class BasketMultishopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PUBLIC_BASKET . '") {
+                basket(basketId: "' . self::PUBLIC_BASKET . '") {
                     id
                     cost {
                         productNet {
@@ -208,7 +208,7 @@ final class BasketMultishopCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'query {
-                basket(id: "' . $id . '") {
+                basket(basketId: "' . $id . '") {
                     id
                     public
                 }
@@ -245,7 +245,7 @@ final class BasketMultishopCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-                basketRemove(id: "' . $id . '")
+                basketRemove(basketId: "' . $id . '")
             }',
             null,
             0,

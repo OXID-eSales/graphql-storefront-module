@@ -15,6 +15,7 @@ use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Product
 {
@@ -30,9 +31,9 @@ final class Product
     /**
      * @Query()
      */
-    public function product(string $id): ProductDataType
+    public function product(ID $productId): ProductDataType
     {
-        return $this->productService->product($id);
+        return $this->productService->product($productId);
     }
 
     /**

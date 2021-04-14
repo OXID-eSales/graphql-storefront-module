@@ -26,7 +26,7 @@ final class ContentTest extends TokenTestCase
     public function testGetSingleActiveContent(): void
     {
         $result = $this->query('query {
-            content (id: "' . self::ACTIVE_CONTENT . '") {
+            content (contentId: "' . self::ACTIVE_CONTENT . '") {
                 id
                 active
                 title
@@ -72,7 +72,7 @@ final class ContentTest extends TokenTestCase
     public function testGetSingleActiveContentWithVersion(): void
     {
         $result = $this->query('query {
-            content (id: "' . self::ACTIVE_CONTENT_AGB . '") {
+            content (contentId: "' . self::ACTIVE_CONTENT_AGB . '") {
                 id
                 version
             }
@@ -91,7 +91,7 @@ final class ContentTest extends TokenTestCase
     public function testGetSingleInactiveContentWithoutToken(): void
     {
         $result = $this->query('query {
-            content (id: "' . self::INACTIVE_CONTENT . '") {
+            content (contentId: "' . self::INACTIVE_CONTENT . '") {
                 id
                 active
                 title
@@ -120,7 +120,7 @@ final class ContentTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            content (id: "' . self::INACTIVE_CONTENT . '") {
+            content (contentId: "' . self::INACTIVE_CONTENT . '") {
                 id
             }
         }');
@@ -136,7 +136,7 @@ final class ContentTest extends TokenTestCase
     public function testGetSingleNonExistingContent(): void
     {
         $result = $this->query('query {
-            content (id: "DOES-NOT-EXIST") {
+            content (contentId: "DOES-NOT-EXIST") {
                 id
             }
         }');
@@ -264,7 +264,7 @@ final class ContentTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            content(id: "' . self::ACTIVE_CONTENT . '") {
+            content(contentId: "' . self::ACTIVE_CONTENT . '") {
                 id
                 category {
                     active

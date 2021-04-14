@@ -36,7 +36,7 @@ final class CategoryTest extends TokenTestCase
     public function testGetSingleActiveCategory(): void
     {
         $result = $this->query('query {
-            category (id: "' . self::ACTIVE_CATEGORY . '") {
+            category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
                 id
                 position
                 active
@@ -96,7 +96,7 @@ final class CategoryTest extends TokenTestCase
     public function testGetSingleInactiveCategoryWithoutToken(): void
     {
         $result = $this->query('query {
-            category (id: "' . self::INACTIVE_CATEGORY . '") {
+            category (categoryId: "' . self::INACTIVE_CATEGORY . '") {
                 id
                 active
             }
@@ -113,7 +113,7 @@ final class CategoryTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            category (id: "' . self::INACTIVE_CATEGORY . '") {
+            category (categoryId: "' . self::INACTIVE_CATEGORY . '") {
                 id
                 active
             }
@@ -130,7 +130,7 @@ final class CategoryTest extends TokenTestCase
     public function testGetSingleNonExistingCategory(): void
     {
         $result = $this->query('query {
-            category (id: "DOES-NOT-EXIST") {
+            category (categoryId: "DOES-NOT-EXIST") {
                 id
             }
         }');
@@ -144,7 +144,7 @@ final class CategoryTest extends TokenTestCase
     public function testGetCategoryRelations(): void
     {
         $result = $this->query('query {
-            category (id: "' . self::ACTIVE_CATEGORY . '") {
+            category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
                 id
                 parent {
                     id
@@ -178,7 +178,7 @@ final class CategoryTest extends TokenTestCase
     public function testGetChildrenWhenThereAreNoChildren(): void
     {
         $result = $this->query('query{
-            category(id: "' . self::CATEGORY_WITHOUT_CHILDREN . '"){
+            category(categoryId: "' . self::CATEGORY_WITHOUT_CHILDREN . '"){
                 id
                 children{id}
             }
@@ -195,7 +195,7 @@ final class CategoryTest extends TokenTestCase
     public function testGetChildren(): void
     {
         $result = $this->query('query{
-            category(id: "' . self::CATEGORY_WITH_CHILDREN . '"){
+            category(categoryId: "' . self::CATEGORY_WITH_CHILDREN . '"){
                 id
                 children {
                     id
@@ -222,7 +222,7 @@ final class CategoryTest extends TokenTestCase
     public function testGetAllFieldsOfSingleActiveChildCategory(): void
     {
         $result = $this->query('query {
-            category(id: "' . self::CATEGORY_WITH_CHILDREN . '") {
+            category(categoryId: "' . self::CATEGORY_WITH_CHILDREN . '") {
                 children {
                     id
                     position
@@ -367,7 +367,7 @@ final class CategoryTest extends TokenTestCase
         );
 
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_WITH_CHILDREN . '") {
+            category (categoryId: "' . self::CATEGORY_WITH_CHILDREN . '") {
                 id
                 seo{
                     description
@@ -398,7 +398,7 @@ final class CategoryTest extends TokenTestCase
     public function testCategoryProductListWithoutToken(): void
     {
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_WITH_PRODUCTS . '") {
+            category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
                 products {
                     id
@@ -458,7 +458,7 @@ final class CategoryTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_WITH_PRODUCTS . '") {
+            category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
                 products {
                     active
@@ -495,7 +495,7 @@ final class CategoryTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_WITH_PRODUCTS . '") {
+            category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
                 products(
                     pagination: {
@@ -799,7 +799,7 @@ final class CategoryTest extends TokenTestCase
     public function testCategorySortedProductList(): void
     {
         $result = $this->query('query {
-          category (id: "' . self::CATEGORY_WITH_PRODUCTS . '") {
+          category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
             id
             products (
                 sort: {
@@ -850,7 +850,7 @@ final class CategoryTest extends TokenTestCase
             ->execute();
 
         $result = $this->query('query {
-          category (id: "' . $categoryId . '") {
+          category (categoryId: "' . $categoryId . '") {
             id
             products {
                 id

@@ -30,7 +30,7 @@ final class ReviewTest extends TokenTestCase
     public function testGetSingleActiveReviewWithoutToken(): void
     {
         $result = $this->query('query {
-            review(id: "' . self::ACTIVE_REVIEW . '") {
+            review(reviewId: "' . self::ACTIVE_REVIEW . '") {
                 id
                 active
                 text
@@ -69,7 +69,7 @@ final class ReviewTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            review(id: "' . self::ACTIVE_REVIEW . '") {
+            review(reviewId: "' . self::ACTIVE_REVIEW . '") {
                 id
                 active
                 text
@@ -120,7 +120,7 @@ final class ReviewTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            review (id: "' . self::INACTIVE_REVIEW . '") {
+            review (reviewId: "' . self::INACTIVE_REVIEW . '") {
                 id
                 active
             }
@@ -175,7 +175,7 @@ final class ReviewTest extends TokenTestCase
     public function testGetSingleNonExistingReview(): void
     {
         $result = $this->query('query {
-            review (id: "DOES-NOT-EXIST") {
+            review (reviewId: "DOES-NOT-EXIST") {
                 id
             }
         }');
@@ -211,7 +211,7 @@ final class ReviewTest extends TokenTestCase
         $this->prepareToken($username, $password);
 
         $result = $this->query('query {
-            review(id: "' . self::WRONG_USER . '") {
+            review(reviewId: "' . self::WRONG_USER . '") {
                 id
                 reviewer {
                     firstName
@@ -232,7 +232,7 @@ final class ReviewTest extends TokenTestCase
         $this->prepareToken($username, $password);
 
         $result = $this->query('query {
-            review(id: "' . $id . '") {
+            review(reviewId: "' . $id . '") {
                 id
                 product {
                     id
@@ -300,7 +300,7 @@ final class ReviewTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            review(id: "' . self::ACTIVE_REVIEW . '") {
+            review(reviewId: "' . self::ACTIVE_REVIEW . '") {
                 id
                 product {
                     id
