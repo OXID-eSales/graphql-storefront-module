@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group basket
  */
-final class BasketAddProductCest extends BaseCest
+final class BasketAddItemCest extends BaseCest
 {
     // Public basket
     private const PUBLIC_BASKET = '_test_basket_public';
@@ -44,15 +44,15 @@ final class BasketAddProductCest extends BaseCest
         );
     }
 
-    public function testAddProductToBasketNoToken(AcceptanceTester $I): void
+    public function testAddItemToBasketNoToken(AcceptanceTester $I): void
     {
-        $this->basketAddProductMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID);
+        $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "basketAddProduct" on type "Mutation".',
+            'Cannot query field "basketAddItem" on type "Mutation".',
             $result['errors'][0]['message']
         );
     }
@@ -60,21 +60,21 @@ final class BasketAddProductCest extends BaseCest
     /**
      * @group allowed_to_fail_for_anonymous_token
      */
-    public function testAddProductToBasketWithAnonymousUser(AcceptanceTester $I): void
+    public function testAddItemToBasketWithAnonymousUser(AcceptanceTester $I): void
     {
         $I->login();
 
-        $result = $this->basketAddProductMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID);
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID);
 
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddProduct', 'Mutation', [], []);
+        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddItem', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
     }
 
-    public function testAddProductToBasketWrongBasketId(AcceptanceTester $I): void
+    public function testAddItemToBasketWrongBasketId(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $this->basketAddProductMutation($I, 'non_existing_basket_id', self::PRODUCT_ID);
+        $this->basketAddItemMutation($I, 'non_existing_basket_id', self::PRODUCT_ID);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -85,13 +85,13 @@ final class BasketAddProductCest extends BaseCest
         );
     }
 
-    public function testAddProductToBasket(AcceptanceTester $I): void
+    public function testAddItemToBasket(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result = $this->basketAddProductMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 2);
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 2);
 
-        $basketData = $result['data']['basketAddProduct'];
+        $basketData = $result['data']['basketAddItem'];
         $I->assertSame(self::PUBLIC_BASKET, $basketData['id']);
         $I->assertSame([
             [
@@ -108,14 +108,14 @@ final class BasketAddProductCest extends BaseCest
         ], $basketData['items']);
         $I->assertNotNull($basketData['lastUpdateDate']);
 
-        $this->basketAddProductMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 0);
+        $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 0);
     }
 
-    public function testAddNonExistingProductToBasket(AcceptanceTester $I): void
+    public function testAddNonExistingItemToBasket(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $this->basketAddProductMutation($I, self::PUBLIC_BASKET, 'non_existing_product');
+        $this->basketAddItemMutation($I, self::PUBLIC_BASKET, 'non_existing_product');
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -126,10 +126,10 @@ final class BasketAddProductCest extends BaseCest
         );
     }
 
-    public function testAddProductToSomeoneElseBasket(AcceptanceTester $I): void
+    public function testAddItemToSomeoneElseBasket(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
-        $this->basketAddProductMutation($I, self::PRIVATE_BASKET, self::PRODUCT_FOR_PRIVATE_BASKET);
+        $this->basketAddItemMutation($I, self::PRIVATE_BASKET, self::PRODUCT_FOR_PRIVATE_BASKET);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -140,11 +140,11 @@ final class BasketAddProductCest extends BaseCest
         );
     }
 
-    private function basketAddProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
+    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
     {
         $I->sendGQLQuery('
             mutation {
-                basketAddProduct(
+                basketAddItem(
                     basketId: "' . $basketId . '",
                     productId: "' . $productId . '",
                     amount: ' . $amount . '

@@ -189,7 +189,7 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
         // Add a product because basket with no products will have 0 value and skip calculations
         $I->sendGQLQuery('
             mutation {
-                basketAddProduct(
+                basketAddItem(
                     basketId: "' . $this->basketId . '",
                     productId: "' . self::AVAILABLE_PRODUCT_ID . '",
                     amount: 1
@@ -204,7 +204,7 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
 
         $I->assertSame(
             $this->basketId,
-            $result['data']['basketAddProduct']['id']
+            $result['data']['basketAddItem']['id']
         );
     }
 

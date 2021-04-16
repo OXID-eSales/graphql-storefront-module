@@ -462,7 +462,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
     {
         //prepare basket
         $basketId = $this->createBasket($I, $basketName);
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 

@@ -74,7 +74,15 @@ final class BasketDeliveryMethodCest extends BaseCest
         $this->shippingCosts($I, $result['data']['basketDeliveryMethods'], $data['originalCost']['standard'], $data['originalCost']['graphql']);
 
         //Add product to apply free cost rule for standard delivery
-        $this->basketAddProductMutation($I, self::BASKET_ID, self::PRODUCT_ID, $data['productAmount']);
+        $items = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID, $data['productAmount']);
+
+        $basketItemId = null;
+
+        foreach ($items as $item) {
+            if (self::PRODUCT_ID === $item['product']['id']) {
+                $basketItemId = $item['id'];
+            }
+        }
 
         $I->sendGQLQuery(
             $this->basketDeliveryMethodsMutation(self::BASKET_ID)
@@ -86,7 +94,7 @@ final class BasketDeliveryMethodCest extends BaseCest
         $this->shippingCosts($I, $result['data']['basketDeliveryMethods'], $data['changedCost']['standard'], $data['changedCost']['graphql']);
 
         //Reset basket
-        $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID, $data['productAmount']);
+        $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId, $data['productAmount']);
         $I->updateInDatabase('oxdelivery', [
             'OXFIXED'      => 0,
             'OXADDSUMTYPE' => 'abs',
@@ -246,16 +254,23 @@ final class BasketDeliveryMethodCest extends BaseCest
         ';
     }
 
-    private function basketAddProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
+    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
     {
         $I->sendGQLQuery('
             mutation {
-                basketAddProduct(
+                basketAddItem(
                     basketId: "' . $basketId . '",
                     productId: "' . $productId . '",
                     amount: ' . $amount . '
                 ) {
                     id
+                    items {
+                        id
+                        product {
+                            id
+                        }
+                        amount
+                    }
                 }
             }
         ');
@@ -265,17 +280,19 @@ final class BasketDeliveryMethodCest extends BaseCest
 
         $I->assertSame(
             self::BASKET_ID,
-            $result['data']['basketAddProduct']['id']
+            $result['data']['basketAddItem']['id']
         );
+
+        return $result['data']['basketAddItem']['items'];
     }
 
-    private function basketRemoveProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
+    private function basketRemoveItemMutation(AcceptanceTester $I, string $basketId, string $basketItemId, int $amount = 1): void
     {
         $I->sendGQLQuery('
             mutation {
-                basketRemoveProduct(
+                basketRemoveItem(
                     basketId: "' . $basketId . '",
-                    productId: "' . $productId . '",
+                    basketItemId: "' . $basketItemId . '",
                     amount: ' . $amount . '
                 ) {
                     id
@@ -288,7 +305,7 @@ final class BasketDeliveryMethodCest extends BaseCest
 
         $I->assertSame(
             self::BASKET_ID,
-            $result['data']['basketRemoveProduct']['id']
+            $result['data']['basketRemoveItem']['id']
         );
     }
 

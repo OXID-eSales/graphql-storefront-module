@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Use Rights annotation instead of Logged so that an anonymus token user could create/modify basket and place an order.
+- `basketAddProduct` mutation was renamed to `basketAddItem`
+- `basketRemoveProduct` mutation was renamed to `basketRemoveItem` expecting `basketItemId` instead of `productId`
 
 ## [0.1.0] - 2020-12-16
 

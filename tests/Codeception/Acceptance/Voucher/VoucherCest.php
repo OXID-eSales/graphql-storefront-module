@@ -537,7 +537,7 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'basket_voucher_product');
-        $this->basketAddProductMutation($I, $basketId, $productId2);
+        $this->basketAddItemMutation($I, $basketId, $productId2);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $result = $I->grabJsonResponseAsArray();
@@ -546,7 +546,7 @@ final class VoucherCest extends BaseCest
             $result['errors'][0]['message']
         );
 
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeInDatabase('oxvouchers', [
@@ -572,7 +572,18 @@ final class VoucherCest extends BaseCest
             $result['data']['basket']
         );
 
-        $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
+        $basketItemId  = null;
+        $basketItemId2 = null;
+
+        foreach ($items as $item) {
+            if (self::PRODUCT_ID === $item['product']['id']) {
+                $basketItemId = $item['id'];
+            } elseif ($productId2 === $item['product']['id']) {
+                $basketItemId2 = $item['id'];
+            }
+        }
+
+        $this->basketRemoveItemMutation($I, $basketId, $basketItemId);
 
         $I->seeInDatabase('oxvouchers', [
             'oxid'           => 'personal_voucher_1',
@@ -581,7 +592,7 @@ final class VoucherCest extends BaseCest
         ]);
 
         // Reset DB
-        $this->basketRemoveProductMutation($I, $basketId, $productId2);
+        $this->basketRemoveItemMutation($I, $basketId, $basketItemId2);
         $this->basketRemoveMutation($I, $basketId);
     }
 
@@ -602,7 +613,7 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'basket_voucher_category');
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeResponseIsJson();
@@ -612,7 +623,7 @@ final class VoucherCest extends BaseCest
             $result['errors'][0]['message']
         );
 
-        $this->basketAddProductMutation($I, $basketId, $productId);
+        $items = $this->basketAddItemMutation($I, $basketId, $productId);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeInDatabase('oxvouchers', [
@@ -637,7 +648,18 @@ final class VoucherCest extends BaseCest
             $result['data']['basket']
         );
 
-        $this->basketRemoveProductMutation($I, $basketId, $productId);
+        $basketItemId  = null;
+        $basketItemId2 = null;
+
+        foreach ($items as $item) {
+            if (self::PRODUCT_ID === $item['product']['id']) {
+                $basketItemId = $item['id'];
+            } elseif ($productId === $item['product']['id']) {
+                $basketItemId2 = $item['id'];
+            }
+        }
+
+        $this->basketRemoveItemMutation($I, $basketId, $basketItemId2);
 
         $I->seeInDatabase('oxvouchers', [
             'oxid'           => 'personal_voucher_1',
@@ -646,7 +668,7 @@ final class VoucherCest extends BaseCest
         ]);
 
         // Reset DB
-        $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, $basketId, $basketItemId);
         $this->basketRemoveMutation($I, $basketId);
     }
 
@@ -661,7 +683,7 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeResponseIsJson();
@@ -672,7 +694,7 @@ final class VoucherCest extends BaseCest
         );
 
         // Reset DB
-        $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, $basketId, $items[0]['id']);
         $this->basketRemoveMutation($I, $basketId);
         $I->updateInDatabase(
             'oxvoucherseries',
@@ -692,7 +714,7 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeResponseIsJson();
@@ -703,7 +725,7 @@ final class VoucherCest extends BaseCest
         );
 
         // Reset DB
-        $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, $basketId, $items[0]['id']);
         $this->basketRemoveMutation($I, $basketId);
         $I->updateInDatabase(
             'oxvoucherseries',
@@ -718,7 +740,7 @@ final class VoucherCest extends BaseCest
 
         // Add voucher to basket
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         // Update the voucher and make it invalid
@@ -743,7 +765,7 @@ final class VoucherCest extends BaseCest
         ]);
 
         // Reset DB
-        $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, $basketId, $items[0]['id']);
         $this->basketRemoveMutation($I, $basketId);
         $I->updateInDatabase(
             'oxvoucherseries',
@@ -763,7 +785,7 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'basket_with_min_voucher');
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeResponseIsJson();
@@ -773,7 +795,7 @@ final class VoucherCest extends BaseCest
             $result['errors'][0]['message']
         );
 
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeInDatabase('oxvouchers', [
@@ -782,7 +804,7 @@ final class VoucherCest extends BaseCest
             'oegql_basketid' => $basketId,
         ]);
 
-        $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, $basketId, $items[0]['id']);
 
         $I->seeInDatabase('oxvouchers', [
             'oxid'           => 'personal_voucher_1',
@@ -816,7 +838,7 @@ final class VoucherCest extends BaseCest
         $I->login(self::OTHER_USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'voucher_assigned_to_user_group');
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeResponseIsJson();
@@ -827,18 +849,18 @@ final class VoucherCest extends BaseCest
         );
 
         // Reset DB
-        $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, $basketId, $items[0]['id']);
         $this->basketRemoveMutation($I, $basketId);
 
         // Add voucher with user which is into the group
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'voucher_assigned_to_user_group');
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID);
+        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         // Reset DB
-        $this->basketRemoveProductMutation($I, $basketId, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, $basketId, $items[0]['id']);
         $this->basketRemoveMutation($I, $basketId);
     }
 
@@ -873,10 +895,10 @@ final class VoucherCest extends BaseCest
         $I->assertEmpty($result['data']['basket']['vouchers']);
     }
 
-    private function basketRemoveProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
+    private function basketRemoveItemMutation(AcceptanceTester $I, string $basketId, string $basketItemId, int $amount = 1): void
     {
         $I->sendGQLQuery('mutation {
-            basketRemoveProduct(basketId: "' . $basketId . '", productId: "' . $productId . '", amount: ' . $amount . ') {
+            basketRemoveItem(basketId: "' . $basketId . '", basketItemId: "' . $basketItemId . '", amount: ' . $amount . ') {
                 id
             }
         }');
@@ -948,15 +970,24 @@ final class VoucherCest extends BaseCest
         $I->seeResponseIsJson();
     }
 
-    private function basketAddProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
+    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
     {
         $I->sendGQLQuery('mutation {
-            basketAddProduct(basketId: "' . $basketId . '", productId: "' . $productId . '", amount: ' . $amount . ') {
+            basketAddItem(basketId: "' . $basketId . '", productId: "' . $productId . '", amount: ' . $amount . ') {
                 id
+                items {
+                    id
+                    product {
+                        id
+                    }
+                }
             }
         }');
 
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        return $result['data']['basketAddItem']['items'];
     }
 
     private function prepareVoucherInBasket(AcceptanceTester $I): void

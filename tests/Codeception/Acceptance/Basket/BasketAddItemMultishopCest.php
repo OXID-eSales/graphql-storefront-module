@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group basket
  */
-final class BasketAddProductMultishopCest extends MultishopBaseCest
+final class BasketAddItemMultishopCest extends MultishopBaseCest
 {
     private const USERNAME = 'user@oxid-esales.com';
 
@@ -54,9 +54,9 @@ final class BasketAddProductMultishopCest extends MultishopBaseCest
     }
 
     /**
-     * @dataProvider dataProviderAddProductToBasketPerShop
+     * @dataProvider dataProviderAddItemToBasketPerShop
      */
-    public function testAddProductToBasketPerShop(AcceptanceTester $I, Example $data): void
+    public function testAddItemToBasketPerShop(AcceptanceTester $I, Example $data): void
     {
         $shopId    = $data['shopId'];
         $basketId  = $data['basketId'];
@@ -66,7 +66,7 @@ final class BasketAddProductMultishopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                 basketAddProduct(
+                 basketAddItem(
                     basketId: "' . $basketId . '"
                     productId: "' . $productId . '"
                     amount: 2
@@ -105,18 +105,18 @@ final class BasketAddProductMultishopCest extends MultishopBaseCest
                     ],
                 ],
             ],
-            $result['data']['basketAddProduct']
+            $result['data']['basketAddItem']
         );
     }
 
-    public function testAddProductToBasketFromOtherSubshop(AcceptanceTester $I): void
+    public function testAddItemToBasketFromOtherSubshop(AcceptanceTester $I): void
     {
         $I->updateConfigInDatabaseForShops('blMallUsers', true, 'bool', [1, 2]);
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD, 2);
 
         $I->sendGQLQuery(
             'mutation {
-                 basketAddProduct(
+                 basketAddItem(
                     basketId: "' . self:: PRIVATE_BASKET . '"
                     productId: "' . self::SHOP_2_PRODUCT_ID . '"
                     amount: 2
@@ -155,11 +155,11 @@ final class BasketAddProductMultishopCest extends MultishopBaseCest
                     ],
                 ],
             ],
-            $result['data']['basketAddProduct']
+            $result['data']['basketAddItem']
         );
     }
 
-    protected function dataProviderAddProductToBasketPerShop()
+    protected function dataProviderAddItemToBasketPerShop()
     {
         return [
             'shop_1' => [
