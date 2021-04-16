@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
 
-final class ReviewMultilanguageTest extends TestCase
+final class ReviewMultiLanguageTest extends TestCase
 {
     /**
      * @param $languageId

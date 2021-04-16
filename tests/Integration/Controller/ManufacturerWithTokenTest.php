@@ -48,12 +48,12 @@ final class ManufacturerWithTokenTest extends TokenTestCase
 
         $this->assertSame(self::ACTIVE_MANUFACTURER, $manufacturer['id']);
         $this->assertSame(true, $manufacturer['active']);
-        $this->assertRegExp('@https?://.*logo3_ico.png$@', $manufacturer['icon']);
+        $this->assertMatchesRegularExpression('@https?://.*logo3_ico.png$@', $manufacturer['icon']);
         $this->assertSame('Kuyichi', $manufacturer['title']);
         $this->assertSame('Eine stilbewusste Marke', $manufacturer['shortdesc']);
-        $this->assertRegExp('@https?://.*Nach-Hersteller/Kuyichi/$@', $manufacturer['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*Nach-Hersteller/Kuyichi/$@', $manufacturer['seo']['url']);
 
-        $dateTimeType = DateTimeType::getInstance();
+        $dateTimeType = new DateTimeType();
         //Fixture timestamp can have few seconds difference
         $this->assertLessThanOrEqual(
             $dateTimeType->serialize(new DateTimeImmutable('now')),

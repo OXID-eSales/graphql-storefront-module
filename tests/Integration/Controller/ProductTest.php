@@ -225,23 +225,23 @@ final class ProductTest extends TokenTestCase
 
         $imageGallery = $product['imageGallery'];
         $images       = $imageGallery['images'][0];
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/product/1/540_340_75/obrien_decade_ct_boot_2010_1.jpg@',
             $images['image']
         );
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/product/1/87_87_75/obrien_decade_ct_boot_2010_1.jpg@',
             $images['icon']
         );
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/product/1/665_665_75/obrien_decade_ct_boot_2010_1.jpg@',
             $images['zoom']
         );
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/product/1/87_87_75/obrien_decade_ct_boot_2010_1.jpg@',
             $imageGallery['icon']
         );
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/product/1/390_245_75/obrien_decade_ct_boot_2010_1.jpg@',
             $imageGallery['thumb']
         );
@@ -279,7 +279,7 @@ final class ProductTest extends TokenTestCase
         $this->assertSame(19.0, $product['vat']);
         $this->assertSame('2010-12-06T00:00:00+01:00', $product['insert']);
         $this->assertFalse($product['freeShipping']);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/Wakeboarding/Bindungen/Bindung-O-BRIEN-DECADE-CT-2010.html@',
             $product['seo']['url']
         );

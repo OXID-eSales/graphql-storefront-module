@@ -54,7 +54,7 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "basketAddVoucher" on type "Mutation".',
+            'You do not have sufficient rights to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -351,7 +351,7 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "basketRemoveVoucher" on type "Mutation".',
+            'You do not have sufficient rights to access this field',
             $result['errors'][0]['message']
         );
     }

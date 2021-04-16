@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
 
-final class ProductMultilanguageTest extends TestCase
+final class ProductMultiLanguageTest extends TestCase
 {
     private const ACTIVE_MULTILANGUAGE_PRODUCT = '058e613db53d782adfc9f2ccb43c45fe';
 
@@ -58,7 +58,7 @@ final class ProductMultilanguageTest extends TestCase
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_PRODUCT, $product['id']);
         $this->assertEquals($title, $product['title']);
-        $this->assertRegExp('@https?://.*' . $seoUrl . '.*@', $product['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*' . $seoUrl . '.*@', $product['seo']['url']);
     }
 
     public function providerGetProductListWithFilterMultilanguage()

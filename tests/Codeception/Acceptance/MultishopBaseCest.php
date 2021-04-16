@@ -10,8 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance;
 
 use Codeception\Scenario;
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Dao\ShopConfigurationDaoInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
 use OxidEsales\Facts\Facts;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -50,11 +51,9 @@ abstract class MultishopBaseCest extends BaseCest
     private function ensureSubshop(): void
     {
         $container         = ContainerFactory::getInstance()->getContainer();
-        $shopConfiguration = $container->get(ShopConfigurationDaoInterface::class)->get(1);
-        $container->get(ShopConfigurationDaoInterface::class)->save(
-            $shopConfiguration,
-            self::SUBSHOP_ID
-        );
+        $shopConfiguration = $container->get(ShopConfigurationDaoBridgeInterface::class)->get();
+        Registry::getConfig()->setShopId(self::SUBSHOP_ID);
+        $container->get(ShopConfigurationDaoBridgeInterface::class)->save($shopConfiguration);
 
         $this->regenerateDatabaseViews();
         $this->activateModules(self::SUBSHOP_ID);

@@ -464,10 +464,10 @@ final class Basket
     public function getBasketPayments(ID $basketId): array
     {
         $this->eventDispatcher->dispatch(
-            BeforeBasketPayments::NAME,
             new BeforeBasketPayments(
                 $basketId
-            )
+            ),
+            BeforeBasketPayments::NAME,
         );
 
         $basket   = $this->getAuthenticatedCustomerBasket((string) $basketId->val());

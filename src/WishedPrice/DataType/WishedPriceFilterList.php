@@ -45,7 +45,7 @@ final class WishedPriceFilterList extends FilterList
     }
 
     /**
-     * @Factory(name="WishedPriceFilterList")
+     * @Factory(name="WishedPriceFilterList", default=true)
      */
     public static function createWishedPriceFilterList(?StringFilter $userId): self
     {

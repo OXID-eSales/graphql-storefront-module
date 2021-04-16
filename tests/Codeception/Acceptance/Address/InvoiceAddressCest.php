@@ -73,7 +73,7 @@ final class InvoiceAddressCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "customerInvoiceAddress" on type "Query".',
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -284,7 +284,7 @@ final class InvoiceAddressCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "customerInvoiceAddressSet" on type "Mutation".',
+            'The token is invalid',
             $result['errors'][0]['message']
         );
     }
@@ -388,7 +388,7 @@ final class InvoiceAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertContains($expected, $result['errors'][0]['message']);
+        $I->assertStringContainsString($expected, $result['errors'][0]['message']);
     }
 
     protected function customerInvoiceAddressPartialProvider(): array

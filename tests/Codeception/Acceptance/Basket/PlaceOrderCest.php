@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -40,8 +39,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->login(null, null, 0);
         $result  = $this->placeOrder($I, $basketId);
 
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('placeOrder', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+        $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
 
         $this->removeBasket($I, $basketId, self::USERNAME);
     }
@@ -184,7 +182,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //place the order
         $result = $this->placeOrder($I, $basketId);
 
-        $I->assertSame('Cannot query field "placeOrder" on type "Mutation".', $result['errors'][0]['message']);
+        $I->assertSame('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
 
         //remove basket
         $this->removeBasket($I, $basketId, self::USERNAME);

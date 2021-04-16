@@ -75,7 +75,7 @@ final class CategoryTest extends TokenTestCase
         $this->assertEmpty($category['template']);
         $this->assertSame(0.0, $category['priceFrom']);
         $this->assertSame(0.0, $category['priceTo']);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/category/icon/.*/shoes_1_cico.jpg@',
             $category['icon']
         );
@@ -83,7 +83,7 @@ final class CategoryTest extends TokenTestCase
         $this->assertNull($category['vat']);
         $this->assertFalse($category['skipDiscount']);
         $this->assertTrue($category['showSuffix']);
-        $this->assertRegExp('@https?://.*/Bekleidung/Sportswear/Neopren/Schuhe/@', $category['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*/Bekleidung/Sportswear/Neopren/Schuhe/@', $category['seo']['url']);
         $this->assertInstanceOf(
             DateTimeInterface::class,
             new DateTimeImmutable($category['timestamp'])
@@ -263,18 +263,18 @@ final class CategoryTest extends TokenTestCase
         $this->assertEmpty($child['template']);
         $this->assertSame(0.0, $child['priceFrom']);
         $this->assertSame(0.0, $child['priceTo']);
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/category/icon/.*/wakeboarding_boards_1_cico.jpg@',
             $child['icon']
         );
-        $this->assertRegExp(
+        $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/category/promo_icon/.*/cat_promo_wakeboards_pico.jpg@',
             $child['promotionIcon']
         );
         $this->assertNull($child['vat']);
         $this->assertFalse($child['skipDiscount']);
         $this->assertTrue($child['showSuffix']);
-        $this->assertRegExp('@https?://.*/Wakeboarding/Wakeboards/@', $child['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*/Wakeboarding/Wakeboards/@', $child['seo']['url']);
         $this->assertInstanceOf(
             DateTimeInterface::class,
             new DateTimeImmutable($child['timestamp'])
@@ -389,7 +389,7 @@ final class CategoryTest extends TokenTestCase
             'german cat seo keywords',
             $result['body']['data']['category']['seo']['keywords']
         );
-        $this->assertContains(
+        $this->assertStringContainsString(
             '/Wakeboarding/',
             $result['body']['data']['category']['seo']['url']
         );
@@ -445,8 +445,23 @@ final class CategoryTest extends TokenTestCase
             ->get(QueryBuilderFactoryInterface::class);
         $queryBuilder = $queryBuilderFactory->create();
 
-        // set product to inactive
+        // clear all field related to sorting in order to use default sorting
         $queryBuilder
+            ->update('oxcategories')
+            ->set('OXDEFSORT', ':sort')
+            ->set('OXDEFSORTMODE', ':sortMode')
+            ->where('OXID = :OXID')
+            ->setParameters([
+                ':OXID'     => self::CATEGORY_WITH_PRODUCTS,
+                ':sort'     => '',
+                ':sortMode' => 0,
+            ])
+            ->execute();
+
+        $queryBuilderProduct = $queryBuilderFactory->create();
+
+        // set product to inactive
+        $queryBuilderProduct
             ->update('oxarticles')
             ->set('oxactive', 0)
             ->where('OXID = :OXID')
@@ -479,7 +494,7 @@ final class CategoryTest extends TokenTestCase
         );
 
         // set product to active
-        $queryBuilder
+        $queryBuilderProduct
             ->update('oxarticles')
             ->set('oxactive', 1)
             ->where('OXID = :OXID')

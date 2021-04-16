@@ -65,7 +65,7 @@ final class CustomerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "customer" on type "Query".',
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -193,7 +193,7 @@ final class CustomerCest extends BaseCest
             'unsubscribed'     => null,
         ];
 
-        $I->assertContains('T', $result['data']['customer']['newsletterStatus']['updated']);
+        $I->assertStringContainsString('T', $result['data']['customer']['newsletterStatus']['updated']);
         unset($result['data']['customer']['newsletterStatus']['updated']);
 
         $I->assertEquals(
@@ -332,7 +332,7 @@ final class CustomerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "customerBirthdateUpdate" on type "Mutation".',
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }

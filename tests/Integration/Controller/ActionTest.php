@@ -357,18 +357,8 @@ final class ActionTest extends TokenTestCase
      */
     public function testActionsProductList($withToken, $expectedProducts): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         // set product to inactive
-        $queryBuilder
-            ->update('oxarticles')
-            ->set('oxactive', 0)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::PRODUCT_RELATED_TO_ACTIVE_ACTION)
-            ->execute();
+        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 0);
 
         if ($withToken) {
             $this->prepareToken();
@@ -397,6 +387,9 @@ final class ActionTest extends TokenTestCase
             $expectedProducts,
             $result['body']['data']['actions'][0]['products']
         );
+
+        // set the product back  to active
+        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 1);
     }
 
     /**
@@ -407,18 +400,8 @@ final class ActionTest extends TokenTestCase
      */
     public function testActionProductList($withToken, $expectedProducts): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         // set product to inactive
-        $queryBuilder
-            ->update('oxarticles')
-            ->set('oxactive', 0)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::PRODUCT_RELATED_TO_ACTIVE_ACTION)
-            ->execute();
+        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 0);
 
         if ($withToken) {
             $this->prepareToken();
@@ -443,6 +426,9 @@ final class ActionTest extends TokenTestCase
             $expectedProducts,
             $result['body']['data']['action']['products']
         );
+
+        // set the product back  to active
+        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 1);
     }
 
     public function filterActionsByIdProvider(): array
@@ -505,5 +491,20 @@ final class ActionTest extends TokenTestCase
         }');
 
         $this->assertEquals($expected, $result['body']['data']['actions']);
+    }
+
+    private function changeProductActiveStatus($productId, $active): void
+    {
+        $queryBuilderFactory = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(QueryBuilderFactoryInterface::class);
+        $queryBuilder = $queryBuilderFactory->create();
+
+        $queryBuilder
+            ->update('oxarticles')
+            ->set('oxactive', $active)
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', $productId)
+            ->execute();
     }
 }

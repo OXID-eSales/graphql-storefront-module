@@ -72,7 +72,7 @@ final class DeliveryAddressCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "customerDeliveryAddressAdd" on type "Mutation".',
+            'The token is invalid',
             $result['errors'][0]['message']
         );
     }
@@ -254,7 +254,7 @@ final class DeliveryAddressCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "customerDeliveryAddresses" on type "Query".',
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -318,7 +318,7 @@ final class DeliveryAddressCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Cannot query field "customerDeliveryAddressDelete" on type "Mutation".',
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
