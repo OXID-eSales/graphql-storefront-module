@@ -11,9 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class BannerTest extends TokenTestCase
+final class BannerTest extends BaseTestCase
 {
     private const ACTIVE_BANNER_WITH_PRODUCT = 'b5639c6431b26687321f6ce654878fa5';
 
@@ -49,7 +49,7 @@ final class BannerTest extends TokenTestCase
 
         $banner = $result['body']['data']['banner'];
 
-        $this->assertArraySubset([
+        $this->doAssertArraySubset([
             'id'      => self::ACTIVE_BANNER_WITH_PRODUCT,
             'active'  => true,
             'title'   => 'Banner 1',
@@ -93,7 +93,7 @@ final class BannerTest extends TokenTestCase
 
         $banner = $result['body']['data']['banner'];
 
-        $this->assertArraySubset([
+        $this->doAssertArraySubset([
             'id'      => self::ACTIVE_BANNER_WITHOUT_PRODUCT,
             'active'  => true,
             'title'   => 'Banner 4',
