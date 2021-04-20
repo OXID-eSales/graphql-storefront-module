@@ -30,7 +30,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'my_anonymous_cart');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -51,7 +51,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'my_cart_one');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -88,7 +88,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, self::DEFAULT_SAVEDBASKET);
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
         $this->setBasketDeliveryMethod($I, $basketId, self::TEST_SHIPPING);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_TEST);
 
@@ -124,11 +124,11 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare default basket
         $defaultBasketId = $this->createBasket($I, self::DEFAULT_SAVEDBASKET);
-        $this->addProductToBasket($I, $defaultBasketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $defaultBasketId, self::PRODUCT_ID, 2);
 
         //prepare ordering basket
         $basketId = $this->createBasket($I, 'specialBasket');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
         $this->setBasketDeliveryMethod($I, $basketId, self::TEST_SHIPPING);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_TEST);
 
@@ -146,7 +146,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'my_cart_two');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
         $this->setBasketDeliveryAddress($I, $basketId);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
@@ -172,7 +172,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'my_cart_three');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -195,7 +195,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'my_cart_four');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -244,7 +244,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'my_cart_five');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 3);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 3);
         $this->setBasketDeliveryAddress($I, $basketId, self::ALTERNATE_COUNTRY);
 
         //shipping method not supported
@@ -264,7 +264,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with german delivery address
         $basketId = $this->createBasket($I, 'my_cart_six');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 3);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 3);
         $this->setBasketDeliveryAddress($I, $basketId); //Germany
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
@@ -291,7 +291,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'my_cart_seven');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 3);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 3);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -320,7 +320,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'cart_with_discount');
-        $this->addProductToBasket($I, $basketId, self::DISCOUNT_PRODUCT, 1);
+        $this->addItemToBasket($I, $basketId, self::DISCOUNT_PRODUCT, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -360,7 +360,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'my_cart_del_cost_flag');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -398,7 +398,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'cart_with_agb_given');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -428,7 +428,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'cart_without_agb_given');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -455,7 +455,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'cart_with_agb_refused');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -482,7 +482,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'cart_with_null_agb');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -508,7 +508,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'cart_with_agb_not_required_but_given');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -537,7 +537,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'cart_with_agb_not_required_but_refused');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -562,7 +562,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'cart_with_agb_not_required_and_not_given');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -587,7 +587,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket with invoice address
         $basketId = $this->createBasket($I, 'cart_with_null_agb');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -608,7 +608,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'cart_with_files');
-        $this->addProductToBasket($I, $basketId, self::DOWNLOADABLE_FILE, 1);
+        $this->addItemToBasket($I, $basketId, self::DOWNLOADABLE_FILE, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -639,7 +639,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'cart_below_min_price');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -666,7 +666,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'cart_with_not_buyable_product');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 5);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 5);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -694,7 +694,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'no_delivery_method');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
 
         //place the order
         $result = $this->placeOrder($I, $basketId);
@@ -709,7 +709,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'no_payment_method');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
 
         //place the order
@@ -765,7 +765,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'not_yet_ordered');
-        $this->addProductToBasket($I, $basketId, self::PRODUCT_ID, 1);
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 1);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 

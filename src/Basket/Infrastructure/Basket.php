@@ -47,7 +47,7 @@ final class Basket
         $this->sharedBasketInfrastructure = $sharedBasketInfrastructure;
     }
 
-    public function addProduct(BasketDataType $basket, string $productId, float $amount): bool
+    public function addBasketItem(BasketDataType $basket, string $productId, float $amount): bool
     {
         $model = $basket->getEshopModel();
         $model->addItemToBasket($productId, $amount);
@@ -55,23 +55,25 @@ final class Basket
         return true;
     }
 
-    public function removeProduct(BasketDataType $basket, string $productId, float $amount): bool
+    public function removeBasketItem(BasketDataType $basket, string $basketItemId, float $amount): bool
     {
-        $model = $basket->getEshopModel();
+        $model      = $basket->getEshopModel();
+        $basketItem = $this->getBasketItem($basket->getEshopModel(), $basketItemId);
 
-        if (!$this->checkIfProductIsPresentInBasket($basket->getEshopModel(), $productId)) {
-            throw BasketItemNotFound::byId($productId, $model->getId());
+        if (!($basketItem instanceof EshopUserBasketItemModel)) {
+            throw BasketItemNotFound::byId($basketItemId, $model->getId());
         }
 
-        /** @var EshopUserBasketItemModel @basketItem */
-        $basketItem      = $model->getItem($productId, []);
         $amountRemaining = (float) $basketItem->getFieldData('oxamount') - $amount;
 
         if ($amountRemaining <= 0 || $amount == 0) {
             $amountRemaining = 0;
         }
 
-        $model->addItemToBasket($productId, $amountRemaining, null, true);
+        $productId = (string) $basketItem->getFieldData('oxartid');
+        $params    = $basketItem->getFieldData('oxperparams');
+
+        $model->addItemToBasket($productId, $amountRemaining, null, true, $params);
 
         $this->sharedBasketInfrastructure->getCalculatedBasket($basket);
 
@@ -240,20 +242,16 @@ final class Basket
         );
     }
 
-    private function checkIfProductIsPresentInBasket(EshopUserBasketModel $model, string $productId): bool
+    private function getBasketItem(EshopUserBasketModel $model, string $basketItemId): ?EshopUserBasketItemModel
     {
-        $present     = false;
         $basketItems = $model->getItems();
         /** @var EshopUserBasketItemModel $item */
         foreach ($basketItems as $item) {
-            $id      = $item->getFieldData('oxartid');
-            $present = ($id === $productId);
-
-            if ($present) {
-                break;
+            if ($item->getId() === $basketItemId) {
+                return $item;
             }
         }
 
-        return $present;
+        return null;
     }
 }

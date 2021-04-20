@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group basket
  */
-final class BasketRemoveProductCest extends BaseCest
+final class BasketRemoveItemCest extends BaseCest
 {
     private const OTHER_USERNAME = 'otheruser@oxid-esales.com';
 
@@ -29,13 +29,23 @@ final class BasketRemoveProductCest extends BaseCest
 
     private const PRODUCT_ID_2 = '_test_product_for_basket';
 
-    public function testRemoveBasketProductWithoutToken(AcceptanceTester $I): void
+    private const BASKET_ITEM_ID_2 = '_test_basket_item_2';
+
+    public function testRemoveBasketItemWithoutToken(AcceptanceTester $I): void
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
-        $this->basketAddProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+
+        $basketItemId = null;
+
+        foreach ($items as $item) {
+            if (self::PRODUCT_ID === $item['product']['id']) {
+                $basketItemId = $item['id'];
+            }
+        }
 
         $I->logout();
-        $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -49,23 +59,31 @@ final class BasketRemoveProductCest extends BaseCest
     /**
      * @group allowed_to_fail_for_anonymous_token
      */
-    public function testRemoveBasketProductAnonymousUser(AcceptanceTester $I): void
+    public function testRemoveBasketItemAnonymousUser(AcceptanceTester $I): void
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
-        $this->basketAddProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+
+        $basketItemId = null;
+
+        foreach ($items as $item) {
+            if (self::PRODUCT_ID === $item['product']['id']) {
+                $basketItemId = $item['id'];
+            }
+        }
 
         $I->logout();
         $I->login();
-        $result = $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+        $result = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId);
 
         $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
     }
 
-    public function testRemoveBasketProductUsingDifferentUser(AcceptanceTester $I): void
+    public function testRemoveBasketItemUsingDifferentUser(AcceptanceTester $I): void
     {
         $I->login('admin', 'admin');
 
-        $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID_2);
+        $this->basketRemoveItemMutation($I, self::BASKET_ID, self::BASKET_ITEM_ID_2);
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -76,14 +94,22 @@ final class BasketRemoveProductCest extends BaseCest
         );
     }
 
-    public function testRemoveBasketProduct(AcceptanceTester $I): void
+    public function testRemoveBasketItem(AcceptanceTester $I): void
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
-        $this->basketAddProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+        $basketItems = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID);
 
-        $result = $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+        $basketItemId = null;
 
-        $items = $result['data']['basketRemoveProduct']['items'];
+        foreach ($basketItems as $basketItem) {
+            if (self::PRODUCT_ID === $basketItem['product']['id']) {
+                $basketItemId = $basketItem['id'];
+            }
+        }
+
+        $result = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId);
+
+        $items = $result['data']['basketRemoveItem']['items'];
         $I->assertSame(1, count($items));
 
         foreach ($items as $item) {
@@ -94,19 +120,21 @@ final class BasketRemoveProductCest extends BaseCest
     public function testDecreaseBasketProductAmount(AcceptanceTester $I): void
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
-        $result = $this->basketAddProductMutation($I, self::BASKET_ID, self::PRODUCT_ID, 3);
-        $items  = $result['data']['basketAddProduct']['items'];
+        $items = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID, 3);
         $I->assertSame(2, count($items));
+
+        $basketItemId = null;
 
         foreach ($items as $item) {
             if (self::PRODUCT_ID === $item['product']['id']) {
                 $I->assertSame(3, $item['amount']);
+                $basketItemId = $item['id'];
             }
         }
 
-        $result = $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID, 2);
+        $result = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId, 2);
 
-        $items = $result['data']['basketRemoveProduct']['items'];
+        $items = $result['data']['basketRemoveItem']['items'];
         $I->assertSame(2, count($items));
 
         foreach ($items as $item) {
@@ -116,64 +144,61 @@ final class BasketRemoveProductCest extends BaseCest
         }
 
         // clean up database
-        $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId);
     }
 
-    public function testRemoveWrongProductFromBasket(AcceptanceTester $I): void
+    public function testRemoveWrongItemFromBasket(AcceptanceTester $I): void
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
-        $this->basketAddProductMutation($I, self::BASKET_ID, self::PRODUCT_ID_1);
 
-        $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID);
+        $this->basketRemoveItemMutation($I, self::BASKET_ID, '_test_basket_item_1');
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Basket item with id ' . self::PRODUCT_ID . ' not found in your basket ' . self::BASKET_ID,
+            'Basket item with id _test_basket_item_1 not found in your basket ' . self::BASKET_ID,
             $result['errors'][0]['message']
         );
-
-        // clean up database
-        $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID_1);
     }
 
-    public function testRemoveNonExistingProductFromBasket(AcceptanceTester $I): void
+    public function testRemoveNonExistingItemFromBasket(AcceptanceTester $I): void
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
 
-        $this->basketRemoveProductMutation($I, self::BASKET_ID, 'not_a_product');
+        $this->basketRemoveItemMutation($I, self::BASKET_ID, 'not_a_basket_item');
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Basket item with id not_a_product not found in your basket ' . self::BASKET_ID,
+            'Basket item with id not_a_basket_item not found in your basket ' . self::BASKET_ID,
             $result['errors'][0]['message']
         );
     }
 
-    public function testRemoveAllProductsFromBasket(AcceptanceTester $I): void
+    public function testRemoveAllItemsFromBasket(AcceptanceTester $I): void
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
 
-        $result = $this->basketRemoveProductMutation($I, self::BASKET_ID, self::PRODUCT_ID_2);
+        $result = $this->basketRemoveItemMutation($I, self::BASKET_ID, self::BASKET_ITEM_ID_2);
 
-        $items = $result['data']['basketRemoveProduct']['items'];
+        $items = $result['data']['basketRemoveItem']['items'];
         $I->assertEmpty($items);
     }
 
-    private function basketAddProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
+    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
     {
         $I->sendGQLQuery(
             'mutation {
-                basketAddProduct(
+                basketAddItem(
                     basketId: "' . $basketId . '",
                     productId: "' . $productId . '",
                     amount: ' . $amount . '
                 ) {
                     id
                     items {
+                        id
                         product {
                             id
                         }
@@ -185,20 +210,22 @@ final class BasketRemoveProductCest extends BaseCest
         );
 
         $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
 
-        return $I->grabJsonResponseAsArray();
+        return $result['data']['basketAddItem']['items'];
     }
 
-    private function basketRemoveProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 0): array
+    private function basketRemoveItemMutation(AcceptanceTester $I, string $basketId, string $basketItemId, int $amount = 0): array
     {
         $I->sendGQLQuery(
             'mutation {
-                basketRemoveProduct(
+                basketRemoveItem(
                     basketId: "' . $basketId . '",
-                    productId: "' . $productId . '",
+                    basketItemId: "' . $basketItemId . '",
                     amount: ' . $amount . '
                 ) {
                     items(pagination: {limit: 10, offset: 0}) {
+                        id
                         product {
                             id
                             title

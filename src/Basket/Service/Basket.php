@@ -235,22 +235,22 @@ final class Basket
         return $customer;
     }
 
-    public function addProduct(string $basketId, string $productId, float $amount): BasketDataType
+    public function addBasketItem(ID $basketId, ID $productId, float $amount): BasketDataType
     {
-        $basket = $this->getAuthenticatedCustomerBasket($basketId);
+        $basket = $this->getAuthenticatedCustomerBasket((string) $basketId);
 
-        $this->productService->product($productId);
+        $this->productService->product((string) $productId);
 
-        $this->basketInfraService->addProduct($basket, $productId, $amount);
+        $this->basketInfraService->addBasketItem($basket, (string) $productId, $amount);
 
         return $basket;
     }
 
-    public function removeProduct(string $basketId, string $productId, float $amount): BasketDataType
+    public function removeBasketItem(ID $basketId, ID $basketItemId, float $amount): BasketDataType
     {
-        $basket = $this->getAuthenticatedCustomerBasket($basketId);
+        $basket = $this->getAuthenticatedCustomerBasket((string) $basketId);
 
-        $this->basketInfraService->removeProduct($basket, $productId, $amount);
+        $this->basketInfraService->removeBasketItem($basket, (string) $basketItemId, $amount);
 
         return $basket;
     }

@@ -97,7 +97,7 @@ final class RelationServiceCest extends BaseCest
         $I->login(self::EXISTING_USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I, self::BASKET_WISH_LIST);
-        $this->basketAddProductMutation($I, $basketId, self::PRODUCT_ID, 1);
+        $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, 1);
 
         $result = $this->queryBasketRelation($I, self::BASKET_WISH_LIST);
 
@@ -120,9 +120,9 @@ final class RelationServiceCest extends BaseCest
         $wishId   = $this->basketCreate($I, self::BASKET_WISH_LIST);
         $savedId  = $this->basketCreate($I, self::BASKET_SAVED_BASKET);
 
-        $this->basketAddProductMutation($I, $wishId, self::PRODUCT_ID, 1);
-        $this->basketAddProductMutation($I, $noticeId, self::PRODUCT_ID, 1);
-        $this->basketAddProductMutation($I, $savedId, self::PRODUCT_ID, 1);
+        $this->basketAddItemMutation($I, $wishId, self::PRODUCT_ID, 1);
+        $this->basketAddItemMutation($I, $noticeId, self::PRODUCT_ID, 1);
+        $this->basketAddItemMutation($I, $savedId, self::PRODUCT_ID, 1);
 
         $result = $this->queryBasketsRelation($I);
 
@@ -233,11 +233,11 @@ final class RelationServiceCest extends BaseCest
         return $I->grabJsonResponseAsArray();
     }
 
-    private function basketAddProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
+    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
     {
         $I->sendGQLQuery('
             mutation {
-                basketAddProduct(
+                basketAddItem(
                     basketId: "' . $basketId . '",
                     productId: "' . $productId . '",
                     amount: ' . $amount . '
@@ -253,34 +253,6 @@ final class RelationServiceCest extends BaseCest
                 }
             }
         ');
-
-        $I->seeResponseIsJson();
-
-        return $I->grabJsonResponseAsArray();
-    }
-
-    private function basketRemoveProductMutation(AcceptanceTester $I, string $basketTitle, string $productId, int $amount = 0): array
-    {
-        $result = $this->queryBasketRelation($I, $basketTitle);
-
-        $I->sendGQLQuery(
-            'mutation {
-                basketRemoveProduct(
-                    basketId: "' . $result['customer']['basket']['id'] . '",
-                    productId: "' . $productId . '",
-                    amount: ' . $amount . '
-                ) {
-                    items(pagination: {limit: 10, offset: 0}) {
-                        product {
-                            id
-                            title
-                        }
-                        amount
-                    }
-                    id
-                }
-            }'
-        );
 
         $I->seeResponseIsJson();
 

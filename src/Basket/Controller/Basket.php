@@ -49,18 +49,18 @@ final class Basket
      * @Mutation()
      * @Right("ADD_PRODUCT_TO_BASKET")
      */
-    public function basketAddProduct(string $basketId, string $productId, float $amount): BasketDataType
+    public function basketAddItem(ID $basketId, ID $productId, float $amount): BasketDataType
     {
-        return $this->basketService->addProduct($basketId, $productId, $amount);
+        return $this->basketService->addBasketItem($basketId, $productId, $amount);
     }
 
     /**
      * @Mutation()
      * @Right("REMOVE_BASKET_PRODUCT")
      */
-    public function basketRemoveProduct(string $basketId, string $productId, int $amount): BasketDataType
+    public function basketRemoveItem(ID $basketId, ID $basketItemId, int $amount): BasketDataType
     {
-        return $this->basketService->removeProduct($basketId, $productId, $amount);
+        return $this->basketService->removeBasketItem($basketId, $basketItemId, $amount);
     }
 
     /**

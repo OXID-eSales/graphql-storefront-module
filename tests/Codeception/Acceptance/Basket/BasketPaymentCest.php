@@ -202,7 +202,7 @@ final class BasketPaymentCest extends BaseCest
             ],
         ], end($result['data']['basketPayments']));
 
-        $this->basketAddProductMutation($I, self::BASKET_PAYMENT_COST, 'f4f2d8eee51b0fd5eb60a46dff1166d8', 1);
+        $this->basketAddItemMutation($I, self::BASKET_PAYMENT_COST, 'f4f2d8eee51b0fd5eb60a46dff1166d8', 1);
 
         $result = $this->basketPaymentQuery($I, self::BASKET_PAYMENT_COST);
 
@@ -290,11 +290,11 @@ final class BasketPaymentCest extends BaseCest
         return $I->grabJsonResponseAsArray();
     }
 
-    private function basketAddProductMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
+    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
     {
         $I->sendGQLQuery('
             mutation {
-                basketAddProduct(
+                basketAddItem(
                     basketId: "' . $basketId . '",
                     productId: "' . $productId . '",
                     amount: ' . $amount . '
@@ -309,7 +309,7 @@ final class BasketPaymentCest extends BaseCest
 
         $I->assertSame(
             $basketId,
-            $result['data']['basketAddProduct']['id']
+            $result['data']['basketAddItem']['id']
         );
     }
 
