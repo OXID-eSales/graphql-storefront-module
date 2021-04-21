@@ -16,7 +16,7 @@
     "require": {
         "php": "^7.1",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-b-6.x-OXDEV-4506",
+        "oxid-esales/graphql-base": "dev-b-6.x",
         "oxid-esales/oxideshop-doctrine-migration-wrapper": "^v3.1.0"
     },
     "conflict": {
