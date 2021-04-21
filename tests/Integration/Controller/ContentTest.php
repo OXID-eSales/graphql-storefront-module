@@ -11,9 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class ContentTest extends TokenTestCase
+final class ContentTest extends BaseTestCase
 {
     private const ACTIVE_CONTENT = 'e6fc3fe89d5da58da9bfcfba451fd365';
 
@@ -53,8 +53,8 @@ final class ContentTest extends TokenTestCase
         $this->assertEquals($content['category']['id'], '0f4fb00809cec9aa0910aa9c8fe36751');
         $this->assertEquals($content['category']['title'], 'Kites');
         $this->assertRegExp('@https?://.*/GraphQL-content-with-category-DE/$@', $content['seo']['url']);
-        $this->assertContains('Content DE', $content['content']);
-        $this->assertContains('Content DE', $content['rawContent']);
+        $this->doAssertContains('Content DE', $content['content']);
+        $this->doAssertContains('Content DE', $content['rawContent']);
 
         $this->assertEmpty(array_diff(array_keys($content), [
             'id',

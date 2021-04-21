@@ -13,9 +13,9 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class CategoryTest extends TokenTestCase
+final class CategoryTest extends BaseTestCase
 {
     public const SORTING_DESC = 1;
 
@@ -389,7 +389,7 @@ final class CategoryTest extends TokenTestCase
             'german cat seo keywords',
             $result['body']['data']['category']['seo']['keywords']
         );
-        $this->assertContains(
+        $this->doAssertContains(
             '/Wakeboarding/',
             $result['body']['data']['category']['seo']['url']
         );

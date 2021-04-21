@@ -130,7 +130,7 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
             ['ABC'],
             ['notACurrencyNameAtAll'],
             ['null'],
-            [17],
+            ['17'],
         ];
     }
 
