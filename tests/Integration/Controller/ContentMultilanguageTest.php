@@ -25,7 +25,7 @@ final class ContentMultiLanguageTest extends TestCase
         string $seo
     ): void {
         $query = 'query {
-            content (id: "' . self::ACTIVE_CONTENT . '") {
+            content (contentId: "' . self::ACTIVE_CONTENT . '") {
                 id
                 title
                 seo {

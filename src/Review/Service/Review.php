@@ -20,6 +20,7 @@ use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewAlreadyExists;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewNotFound;
 use OxidEsales\GraphQL\Storefront\Review\Infrastructure\Repository as ReviewRepository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Review
 {
@@ -61,13 +62,13 @@ final class Review
      * @throws ReviewNotFound
      * @throws InvalidLogin
      */
-    public function review(string $id): ReviewDataType
+    public function review(ID $id): ReviewDataType
     {
         try {
             /** @var ReviewDataType $review */
-            $review = $this->repository->getById($id, ReviewDataType::class);
+            $review = $this->repository->getById((string) $id, ReviewDataType::class);
         } catch (NotFound $e) {
-            throw ReviewNotFound::byId($id);
+            throw ReviewNotFound::byId((string) $id);
         }
 
         if ($this->reviewActivityService->isActive($review)) {
@@ -87,7 +88,7 @@ final class Review
      *
      * @return true
      */
-    public function delete(string $id): bool
+    public function delete(ID $id): bool
     {
         if (!((bool) $this->legacyService->getConfigParam('blAllowUsersToManageTheirReviews'))) {
             throw new InvalidLogin('Unauthorized - users are not allowed to manage their reviews');

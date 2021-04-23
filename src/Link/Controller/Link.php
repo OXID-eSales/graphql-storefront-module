@@ -13,6 +13,7 @@ use OxidEsales\GraphQL\Storefront\Link\DataType\Link as LinkDataType;
 use OxidEsales\GraphQL\Storefront\Link\DataType\LinkFilterList;
 use OxidEsales\GraphQL\Storefront\Link\Service\Link as LinkService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Link
 {
@@ -28,9 +29,9 @@ final class Link
     /**
      * @Query()
      */
-    public function link(string $id): LinkDataType
+    public function link(ID $linkId): LinkDataType
     {
-        return $this->linkService->link($id);
+        return $this->linkService->link($linkId);
     }
 
     /**

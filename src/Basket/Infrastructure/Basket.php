@@ -31,6 +31,7 @@ use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Price as PriceDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Basket
 {
@@ -48,21 +49,21 @@ final class Basket
         $this->sharedBasketInfrastructure = $sharedBasketInfrastructure;
     }
 
-    public function addBasketItem(BasketDataType $basket, string $productId, float $amount): bool
+    public function addBasketItem(BasketDataType $basket, ID $productId, float $amount): bool
     {
         $model = $basket->getEshopModel();
-        $model->addItemToBasket($productId, $amount);
+        $model->addItemToBasket((string) $productId, $amount);
 
         return true;
     }
 
-    public function removeBasketItem(BasketDataType $basket, string $basketItemId, float $amount): bool
+    public function removeBasketItem(BasketDataType $basket, ID $basketItemId, float $amount): bool
     {
         $model      = $basket->getEshopModel();
-        $basketItem = $this->getBasketItem($basket->getEshopModel(), $basketItemId);
+        $basketItem = $this->getBasketItem($basket->getEshopModel(), (string) $basketItemId);
 
         if (!($basketItem instanceof EshopUserBasketItemModel)) {
-            throw BasketItemNotFound::byId($basketItemId, $model->getId());
+            throw BasketItemNotFound::byId((string) $basketItemId, $model->getId());
         }
 
         $amountRemaining = (float) $basketItem->getFieldData('oxamount') - $amount;

@@ -43,7 +43,7 @@ final class DeliveryAddressRelations
     public function country(DeliveryAddress $deliveryAddress): Country
     {
         return $this->countryService->country(
-            (string) $deliveryAddress->countryId()
+            $deliveryAddress->countryId()
         );
     }
 

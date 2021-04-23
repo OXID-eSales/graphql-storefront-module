@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Product
 {
@@ -39,13 +40,13 @@ final class Product
      * @throws ProductNotFound
      * @throws InvalidLogin
      */
-    public function product(string $id): ProductDataType
+    public function product(ID $id): ProductDataType
     {
         try {
             /** @var ProductDataType $product */
-            $product = $this->repository->getById($id, ProductDataType::class);
+            $product = $this->repository->getById((string) $id, ProductDataType::class);
         } catch (NotFound $e) {
-            throw ProductNotFound::byId($id);
+            throw ProductNotFound::byId((string) $id);
         }
 
         if ($product->isActive()) {

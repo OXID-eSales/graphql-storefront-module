@@ -19,6 +19,7 @@ use OxidEsales\GraphQL\Storefront\Address\DataType\AddressFilterList;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress as DeliveryAddressDataType;
 use OxidEsales\GraphQL\Storefront\Address\Exception\DeliveryAddressNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class DeliveryAddress
 {
@@ -60,7 +61,7 @@ final class DeliveryAddress
      * @throws InvalidLogin
      * @throws DeliveryAddressNotFound
      */
-    public function delete(string $id): bool
+    public function delete(ID $id): bool
     {
         $deliveryAddress = $this->getDeliveryAddress($id);
 
@@ -91,8 +92,10 @@ final class DeliveryAddress
      * @throws InvalidLogin
      * @throws InvalidToken
      */
-    public function getDeliveryAddress(string $id): DeliveryAddressDataType
+    public function getDeliveryAddress(ID $id): DeliveryAddressDataType
     {
+        $id = (string) $id->val();
+
         /** Only logged in users can query delivery addresses */
         if (!$this->authenticationService->isLogged()) {
             throw new InvalidLogin('Unauthenticated');

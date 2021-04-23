@@ -33,7 +33,7 @@ final class NoSessionUsageCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PUBLIC_BASKET . '") {
+                basket(basketId: "' . self::PUBLIC_BASKET . '") {
                     id
                     cost {
                         delivery {
@@ -65,7 +65,7 @@ final class NoSessionUsageCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PUBLIC_BASKET . '") {
+                basket(basketId: "' . self::PUBLIC_BASKET . '") {
                     id
                     cost {
                         delivery {
@@ -93,7 +93,7 @@ final class NoSessionUsageCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PUBLIC_BASKET . '") {
+                basket(basketId: "' . self::PUBLIC_BASKET . '") {
                     id
                     cost {
                         delivery {

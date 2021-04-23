@@ -29,7 +29,7 @@ final class CategoryMultiLanguageTest extends TestCase
     public function testGetCategoryMultiLanguage(string $languageId, string $title): void
     {
         $query = 'query {
-            category (id: "' . self::ACTIVE_CATEGORY . '") {
+            category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
                 id
                 title
             }
@@ -76,7 +76,7 @@ final class CategoryMultiLanguageTest extends TestCase
         );
 
         $result = $this->query('query {
-            category (id: "' . self::CATEGORY_WITH_PRODUCTS . '") {
+            category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
                 products {
                     title
@@ -226,7 +226,7 @@ final class CategoryMultiLanguageTest extends TestCase
             ->execute();
 
         $result = $this->query('query {
-          category (id: "' . $categoryId . '") {
+          category (categoryId: "' . $categoryId . '") {
             id
             products {
                 id

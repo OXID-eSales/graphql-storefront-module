@@ -32,7 +32,7 @@ final class LinkTest extends TokenTestCase
     public function testGetSingleActiveLink(): void
     {
         $result = $this->query('query {
-            link (id: "' . self::ACTIVE_LINK . '") {
+            link (linkId: "' . self::ACTIVE_LINK . '") {
                 id
                 active
                 timestamp
@@ -67,7 +67,7 @@ final class LinkTest extends TokenTestCase
     public function testInactiveLink(): void
     {
         $result = $this->query('query {
-            link (id: "' . self::INACTIVE_LINK . '") {
+            link (linkId: "' . self::INACTIVE_LINK . '") {
                 id
                 active
             }
@@ -84,7 +84,7 @@ final class LinkTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            link (id: "' . self::INACTIVE_LINK . '") {
+            link (linkId: "' . self::INACTIVE_LINK . '") {
                 id
                 active
             }
@@ -102,7 +102,7 @@ final class LinkTest extends TokenTestCase
     public function testGet404ForSingleNonExistingLink(): void
     {
         $result = $this->query('query {
-            link (id: "DOES-NOT-EXIST") {
+            link (linkId: "DOES-NOT-EXIST") {
                 id
                 active
                 timestamp
@@ -215,7 +215,7 @@ final class LinkTest extends TokenTestCase
     public function testGetLinkMultilanguage(string $languageId, string $title): void
     {
         $query = 'query {
-            link (id: "' . self::ACTIVE_LINK . '") {
+            link (linkId: "' . self::ACTIVE_LINK . '") {
                 id
                 description
             }

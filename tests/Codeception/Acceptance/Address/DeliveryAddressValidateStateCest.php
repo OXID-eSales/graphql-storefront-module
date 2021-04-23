@@ -76,7 +76,7 @@ final class DeliveryAddressValidateStateCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                customerDeliveryAddressDelete(id: "' . $result['data']['customerDeliveryAddressAdd']['id'] . '")
+                customerDeliveryAddressDelete(deliveryAddressId: "' . $result['data']['customerDeliveryAddressAdd']['id'] . '")
             }',
             null,
             0

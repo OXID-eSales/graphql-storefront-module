@@ -26,7 +26,7 @@ final class PromotionEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
 
         $result = $this->query('query {
-            promotion (id: "' . self::PROMOTION_SUB_SHOP_ID . '") {
+            promotion (promotionId: "' . self::PROMOTION_SUB_SHOP_ID . '") {
                 id
                 active
                 title

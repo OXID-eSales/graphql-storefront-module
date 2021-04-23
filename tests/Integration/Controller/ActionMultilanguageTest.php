@@ -24,7 +24,7 @@ final class ActionMultiLanguageTest extends TokenTestCase
     public function testGetSingleActiveActionMultilanguage($languageId, $action): void
     {
         $query = 'query {
-            action(id: "' . self::ACTIVE_ACTION_WITH_PRODUCTS . '") {
+            action(actionId: "' . self::ACTIVE_ACTION_WITH_PRODUCTS . '") {
                 title
                 products {
                   title

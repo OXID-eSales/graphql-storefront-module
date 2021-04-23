@@ -293,8 +293,8 @@ abstract class PlaceOrderBaseCest extends BaseCest
         ];
 
         $I->sendGQLQuery(
-            'mutation ($basketId: String!) {
-                basketRemove(id: $basketId)
+            'mutation ($basketId: ID!) {
+                basketRemove(basketId: $basketId)
             }',
             $variables
         );
@@ -336,12 +336,12 @@ abstract class PlaceOrderBaseCest extends BaseCest
         $deliveryAddressId = $this->createDeliveryAddress($I, $countryId);
 
         $variables = [
-            'basketId'          => $basketId,
+            'basketId'          => new ID($basketId),
             'deliveryAddressId' => $deliveryAddressId,
         ];
 
         $mutation = '
-            mutation ($basketId: String!, $deliveryAddressId: String!) {
+            mutation ($basketId: ID!, $deliveryAddressId: ID!) {
                 basketSetDeliveryAddress(basketId: $basketId, deliveryAddressId: $deliveryAddressId) {
                     deliveryAddress {
                         id
@@ -357,12 +357,12 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function addVoucherToBasket(AcceptanceTester $I, string $basketId, string $voucherNumber): void
     {
         $variables = [
-            'basketId'      => $basketId,
+            'basketId'      => new ID($basketId),
             'voucherNumber' => $voucherNumber,
         ];
 
         $mutation = '
-            mutation ($basketId: String!, $voucherNumber: String!){
+            mutation ($basketId: ID!, $voucherNumber: String!){
                 basketAddVoucher(basketId: $basketId, voucherNumber: $voucherNumber){
                     vouchers {
                         number
@@ -378,12 +378,12 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function queryBasketCost(AcceptanceTester $I, string $basketId): array
     {
         $variables = [
-            'basketId'  => $basketId,
+            'basketId'  => new ID($basketId),
         ];
 
         $query = '
-            query ($basketId: String!){
-                basket (id: $basketId) {
+            query ($basketId: ID!){
+                basket (basketId: $basketId) {
                    cost {
                        productGross {
                            sum

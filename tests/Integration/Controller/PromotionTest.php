@@ -30,7 +30,7 @@ final class PromotionTest extends TokenTestCase
     public function testGetSingleActivePromotion(): void
     {
         $result = $this->query('query {
-            promotion (id: "' . self::ACTIVE_PROMOTION . '") {
+            promotion (promotionId: "' . self::ACTIVE_PROMOTION . '") {
                 id
                 active
                 title
@@ -56,7 +56,7 @@ final class PromotionTest extends TokenTestCase
     public function testGet401ForSingleInactivePromotion(): void
     {
         $result = $this->query('query {
-            promotion (id: "' . self::INACTIVE_PROMOTION . '") {
+            promotion (promotionId: "' . self::INACTIVE_PROMOTION . '") {
                 id
                 active
                 title
@@ -75,7 +75,7 @@ final class PromotionTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            promotion (id: "' . self::INACTIVE_PROMOTION . '") {
+            promotion (promotionId: "' . self::INACTIVE_PROMOTION . '") {
                 id
                 active
                 title
@@ -97,7 +97,7 @@ final class PromotionTest extends TokenTestCase
     public function testGet404ForSingleNonExistingPromotion(): void
     {
         $result = $this->query('query {
-            promotion (id: "DOES-NOT-EXIST") {
+            promotion (promotionId: "DOES-NOT-EXIST") {
                 id
                 active
                 title
@@ -167,7 +167,7 @@ final class PromotionTest extends TokenTestCase
     public function testGetPromotionMultilanguage(string $languageId, string $title): void
     {
         $query = 'query {
-            promotion (id: "' . self::ACTIVE_PROMOTION . '") {
+            promotion (promotionId: "' . self::ACTIVE_PROMOTION . '") {
                 id
                 title
             }

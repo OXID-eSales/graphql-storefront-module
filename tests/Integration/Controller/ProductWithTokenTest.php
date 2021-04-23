@@ -29,7 +29,7 @@ final class ProductWithTokenTest extends TokenTestCase
     public function testGetSingleActiveProduct(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 active
                 title
@@ -58,7 +58,7 @@ final class ProductWithTokenTest extends TokenTestCase
     public function testGetInactiveProduct(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::INACTIVE_PRODUCT . '") {
+            product (productId: "' . self::INACTIVE_PRODUCT . '") {
                 id
             }
         }');
@@ -74,7 +74,7 @@ final class ProductWithTokenTest extends TokenTestCase
     public function testGetSingleNonExistingProduct(): void
     {
         $result = $this->query('query {
-            product (id: "DOES-NOT-EXIST") {
+            product (productId: "DOES-NOT-EXIST") {
                 id
             }
         }');

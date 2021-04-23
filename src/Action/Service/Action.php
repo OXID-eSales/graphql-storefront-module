@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Action\DataType\Action as ActionDataType;
 use OxidEsales\GraphQL\Storefront\Action\DataType\ActionFilterList;
 use OxidEsales\GraphQL\Storefront\Action\Exception\ActionNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Action
 {
@@ -37,8 +38,10 @@ final class Action
      * @throws ActionNotFound
      * @throws InvalidLogin
      */
-    public function action(string $id): ActionDataType
+    public function action(ID $id): ActionDataType
     {
+        $id = (string) $id->val();
+
         try {
             /** @var ActionDataType $action */
             $action = $this->repository->getById(

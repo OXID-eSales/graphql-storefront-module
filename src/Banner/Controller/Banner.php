@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner as BannerDataType;
 use OxidEsales\GraphQL\Storefront\Banner\Exception\BannerNotFound;
 use OxidEsales\GraphQL\Storefront\Banner\Service\Banner as BannerService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Banner
 {
@@ -32,9 +33,9 @@ final class Banner
      * @throws BannerNotFound
      * @throws InvalidLogin
      */
-    public function banner(string $id): BannerDataType
+    public function banner(ID $bannerId): BannerDataType
     {
-        return $this->bannerService->banner($id);
+        return $this->bannerService->banner($bannerId);
     }
 
     /**

@@ -33,7 +33,7 @@ final class CountryEnterpriseCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'query{
-                country (id: "' . self::ACTIVE_COUNTRY . '") {
+                country (countryId: "' . self::ACTIVE_COUNTRY . '") {
                     id
                     title
                 }

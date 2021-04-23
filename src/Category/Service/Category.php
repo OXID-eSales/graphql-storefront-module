@@ -19,6 +19,7 @@ use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Category
 {
@@ -39,13 +40,13 @@ final class Category
     /**
      * @throws CategoryNotFound
      */
-    public function category(string $id): CategoryDataType
+    public function category(ID $id): CategoryDataType
     {
         try {
             /** @var CategoryDataType $category */
-            $category = $this->repository->getById($id, CategoryDataType::class);
+            $category = $this->repository->getById((string) $id, CategoryDataType::class);
         } catch (NotFound $e) {
-            throw CategoryNotFound::byId($id);
+            throw CategoryNotFound::byId((string) $id);
         }
 
         if ($category->isActive()) {

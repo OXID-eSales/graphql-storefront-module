@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @ExtendType(class=OrderItem::class)
@@ -38,7 +39,7 @@ final class OrderItemRelations
     {
         try {
             return $this->productService->product(
-                $orderItem->productId()
+                new ID($orderItem->productId())
             );
         } catch (ProductNotFound | InvalidLogin $e) {
             return null;

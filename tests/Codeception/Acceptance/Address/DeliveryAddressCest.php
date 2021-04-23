@@ -463,7 +463,7 @@ final class DeliveryAddressCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-                customerDeliveryAddressDelete(id: "' . $deliveryAddressId . '")
+                customerDeliveryAddressDelete(deliveryAddressId: "' . $deliveryAddressId . '")
             }'
         );
 

@@ -98,7 +98,7 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'mutation{
-                basketRemove(id: "' . $id . '")
+                basketRemove(basketId: "' . $id . '")
             }',
             null,
             0,
@@ -132,7 +132,7 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'query {
-                basket(id: "' . $id . '"){
+                basket(basketId: "' . $id . '"){
                     id
                 }
             }',

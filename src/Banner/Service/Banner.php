@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner as BannerDataType;
 use OxidEsales\GraphQL\Storefront\Banner\Exception\BannerNotFound;
 use OxidEsales\GraphQL\Storefront\Banner\Infrastructure\Banner as BannerInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Banner
 {
@@ -49,13 +50,13 @@ final class Banner
      * @throws BannerNotFound
      * @throws InvalidLogin
      */
-    public function banner(string $id): BannerDataType
+    public function banner(ID $id): BannerDataType
     {
         try {
             /** @var BannerDataType $banner */
-            $banner = $this->repository->getById($id, BannerDataType::class);
+            $banner = $this->repository->getById((string) $id, BannerDataType::class);
         } catch (NotFound $e) {
-            throw BannerNotFound::byId($id);
+            throw BannerNotFound::byId((string) $id);
         }
 
         if ($banner->isActive()) {

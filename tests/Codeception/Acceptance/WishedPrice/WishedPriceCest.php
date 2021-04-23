@@ -60,7 +60,7 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
         $I->sendGQLQuery('query{
-            wishedPrice(id: "' . self::WISHED_PRICE . '") {
+            wishedPrice(wishedPriceId: "' . self::WISHED_PRICE . '") {
                 product {
                     title
                 }
@@ -109,7 +109,7 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
         $I->sendGQLQuery('query{
-            wishedPrice(id: "' . self::WISHED_PRICE_2 . '") {
+            wishedPrice(wishedPriceId: "' . self::WISHED_PRICE_2 . '") {
                 notificationDate
             }
         }');
@@ -125,7 +125,7 @@ final class WishedPriceCest extends BaseCest
     public function testGetWishedPriceWithoutToken(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query{
-            wishedPrice(id: "' . self::WISHED_PRICE . '") {
+            wishedPrice(wishedPriceId: "' . self::WISHED_PRICE . '") {
                 id
             }
         }');
@@ -147,7 +147,7 @@ final class WishedPriceCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery('query{
-            wishedPrice(id: "' . $data['id'] . '") {
+            wishedPrice(wishedPriceId: "' . $data['id'] . '") {
                 id
             }
         }');
@@ -202,7 +202,7 @@ final class WishedPriceCest extends BaseCest
         $I->login(self::ADMIN_USERNAME, self::ADMIN_PASSWORD);
 
         $I->sendGQLQuery('query{
-            wishedPrice(id: "' . $data['id'] . '") {
+            wishedPrice(wishedPriceId: "' . $data['id'] . '") {
                 id
             }
         }');
@@ -240,7 +240,7 @@ final class WishedPriceCest extends BaseCest
     public function testDeleteWishedPriceWithoutToken(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('mutation {
-            wishedPriceDelete(id: "' . self::WISHED_PRICE_TO_BE_DELETED . '")
+            wishedPriceDelete(wishedPriceId: "' . self::WISHED_PRICE_TO_BE_DELETED . '")
         }');
 
         $I->seeResponseIsJson();
@@ -260,7 +260,7 @@ final class WishedPriceCest extends BaseCest
         $I->login($data['username'], $data['password']);
 
         $I->sendGQLQuery('mutation {
-            wishedPriceDelete(id: "' . $data['oxid'] . '")
+            wishedPriceDelete(wishedPriceId: "' . $data['oxid'] . '")
         }');
 
         $I->seeResponseIsJson();
@@ -284,7 +284,7 @@ final class WishedPriceCest extends BaseCest
         $I->login($data['username'], $data['password']);
 
         $I->sendGQLQuery('mutation {
-            wishedPriceDelete(id: "non_existing_wished_price")
+            wishedPriceDelete(wishedPriceId: "non_existing_wished_price")
         }');
 
         $I->seeResponseIsJson();

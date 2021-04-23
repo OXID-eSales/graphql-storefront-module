@@ -43,7 +43,7 @@ final class ManufacturerMultilanguageTest extends TestCase
         string $productDescription
     ): void {
         $query = 'query {
-            manufacturer (id: "' . self::ACTIVE_MULTILANGUAGE_MANUFACTURER . '") {
+            manufacturer (manufacturerId: "' . self::ACTIVE_MULTILANGUAGE_MANUFACTURER . '") {
                 id
                 title
                 seo {

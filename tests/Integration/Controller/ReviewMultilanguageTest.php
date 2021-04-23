@@ -26,7 +26,7 @@ final class ReviewMultilanguageTest extends TestCase
         $this->setGETRequestParameter('lang', '1');
 
         $result = $this->query('query {
-            review(id: "_test_lang_' . $languageId . '_review") {
+            review(reviewId: "_test_lang_' . $languageId . '_review") {
                 id
                 language {
                     id

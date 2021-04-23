@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Category
 {
@@ -29,9 +30,9 @@ final class Category
     /**
      * @Query()
      */
-    public function category(string $id): CategoryDataType
+    public function category(ID $categoryId): CategoryDataType
     {
-        return $this->categoryService->category($id);
+        return $this->categoryService->category($categoryId);
     }
 
     /**

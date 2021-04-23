@@ -31,7 +31,7 @@ final class AttributeTest extends TestCase
     public function testGetSingleAttribute(): void
     {
         $result = $this->query('query {
-            attribute (id: "' . self::ATTRIBUTE_ID . '") {
+            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
         }');
@@ -47,7 +47,7 @@ final class AttributeTest extends TestCase
     public function testGet404ForSingleNonExistingAttribute(): void
     {
         $result = $this->query('query {
-            attribute (id: "DOES-NOT-EXIST") {
+            attribute (attributeId: "DOES-NOT-EXIST") {
                 title
             }
         }');
@@ -78,7 +78,7 @@ final class AttributeTest extends TestCase
     public function testGetAttributeMultilanguage(string $languageId, string $title): void
     {
         $query = 'query {
-            attribute (id: "' . self::ATTRIBUTE_ID . '") {
+            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
         }';

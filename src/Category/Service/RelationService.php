@@ -52,7 +52,7 @@ final class RelationService
     {
         try {
             return $this->categoryService->category(
-                (string) $category->getParentId()
+                $category->getParentId()
             );
         } catch (InvalidLogin | CategoryNotFound $e) {
         }
@@ -67,7 +67,7 @@ final class RelationService
     {
         try {
             return $this->categoryService->category(
-                (string) $category->getRootId()
+                $category->getRootId()
             );
         } catch (InvalidLogin | CategoryNotFound $e) {
         }

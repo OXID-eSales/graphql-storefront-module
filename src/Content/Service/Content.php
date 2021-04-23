@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Content\DataType\Content as ContentDataType;
 use OxidEsales\GraphQL\Storefront\Content\DataType\ContentFilterList;
 use OxidEsales\GraphQL\Storefront\Content\Exception\ContentNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Content
 {
@@ -37,16 +38,16 @@ final class Content
      * @throws ContentNotFound
      * @throws InvalidLogin
      */
-    public function content(string $id): ContentDataType
+    public function content(ID $id): ContentDataType
     {
         try {
             $content = $this->repository->getById(
-                $id,
+                (string) $id,
                 ContentDataType::class,
                 false
             );
         } catch (NotFound $e) {
-            throw ContentNotFound::byId($id);
+            throw ContentNotFound::byId((string) $id);
         }
 
         if ($content->isActive()) {
