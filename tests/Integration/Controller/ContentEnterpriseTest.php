@@ -94,6 +94,8 @@ final class ContentEnterpriseTest extends MultishopTestCase
     }
 
     /**
+     * @group allowed_to_fail_with_b2b
+     *
      * Check if no contents available while they are not related to the shop 2
      */
     public function testGetEmptyContentListOfNotMainShop(): void
@@ -139,6 +141,8 @@ final class ContentEnterpriseTest extends MultishopTestCase
     }
 
     /**
+     * @group allowed_to_fail_with_b2b
+     *
      * Check if only one, related to the shop 2 content is available in list
      */
     public function testGetOneContentInListOfNotMainShop(): void

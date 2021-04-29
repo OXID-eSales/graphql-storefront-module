@@ -150,6 +150,9 @@ final class ContentTest extends BaseTestCase
         );
     }
 
+    /**
+     * @group allowed_to_fail_with_b2b
+     */
     public function testGetContentListWithoutFilter(): void
     {
         $result = $this->query('query {
@@ -164,6 +167,9 @@ final class ContentTest extends BaseTestCase
         );
     }
 
+    /**
+     * @group allowed_to_fail_with_b2b
+     */
     public function testGetContentListWithAdminToken(): void
     {
         $this->prepareToken();
