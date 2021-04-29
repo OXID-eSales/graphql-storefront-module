@@ -140,6 +140,7 @@ final class Basket
     }
 
     /**
+     * @throws BasketAccessForbidden
      * @throws BasketNotFound
      * @throws InvalidToken
      */
@@ -150,7 +151,7 @@ final class Basket
         if ($basket->public() === false &&
             !$basket->belongsToUser($this->authenticationService->getUserId())
         ) {
-            throw new InvalidToken('Basket is private.');
+            throw BasketAccessForbidden::basketIsPrivate();
         }
 
         $this->sharedInfrastructure->getBasket($basket);
