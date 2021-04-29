@@ -120,7 +120,7 @@ final class BasketRelationService
      */
     public function deliveryAddress(Basket $basket): ?DeliveryAddress
     {
-        $addressId = new ID((string)$basket->getEshopModel()->getFieldData('oegql_deladdressid'));
+        $addressId = new ID((string) $basket->getEshopModel()->getFieldData('oegql_deladdressid'));
 
         if (empty($addressId)) {
             return null;
