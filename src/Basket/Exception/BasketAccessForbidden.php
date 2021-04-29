@@ -19,4 +19,9 @@ final class BasketAccessForbidden extends InvalidToken
             'You are not allowed to access this basket as it belongs to somebody else'
         );
     }
+
+    public static function basketIsPrivate(): self
+    {
+        return new self('Basket is private.');
+    }
 }
