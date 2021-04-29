@@ -177,7 +177,7 @@ final class DeliveryAddressCest extends BaseCest
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
-        $I->assertEmpty($result['errors']);
+        $I->assertArrayNotHasKey('errors', $result);
         $basket = $result['data']['basket'];
 
         if ($addressId !== null) {
