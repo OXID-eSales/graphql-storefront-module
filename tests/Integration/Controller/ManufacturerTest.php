@@ -38,7 +38,7 @@ final class ManufacturerTest extends TokenTestCase
     public function testGetSingleActiveManufacturer(): void
     {
         $result = $this->query('query {
-            manufacturer (id: "' . self::ACTIVE_MANUFACTURER . '") {
+            manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
                 id
                 active
                 icon
@@ -78,7 +78,7 @@ final class ManufacturerTest extends TokenTestCase
     public function testGet401ForSingleInactiveManufacturer(): void
     {
         $result = $this->query('query {
-            manufacturer (id: "' . self::INACTIVE_MANUFACTURER . '") {
+            manufacturer (manufacturerId: "' . self::INACTIVE_MANUFACTURER . '") {
                 id
                 active
                 icon
@@ -96,7 +96,7 @@ final class ManufacturerTest extends TokenTestCase
     public function testGet404ForSingleNonExistingManufacturer(): void
     {
         $result = $this->query('query {
-            manufacturer (id: "DOES-NOT-EXIST") {
+            manufacturer (manufacturerId: "DOES-NOT-EXIST") {
                 id
                 active
                 icon
@@ -191,7 +191,7 @@ final class ManufacturerTest extends TokenTestCase
     public function testGetManufacturerWithoutProducts(): void
     {
         $result = $this->query('query {
-            manufacturer (id: "' . self::ACTIVE_MANUFACTURER_WITHOUT_PRODUCTS . '") {
+            manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER_WITHOUT_PRODUCTS . '") {
                 id
                 products
                 {
@@ -209,7 +209,7 @@ final class ManufacturerTest extends TokenTestCase
     public function testGetManuacturerWithProducts(): void
     {
         $result = $this->query('query {
-            manufacturer (id: "' . self::ACTIVE_MANUFACTURER . '") {
+            manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
                 id
                 products(pagination: {limit: 1})
                 {
@@ -268,7 +268,7 @@ final class ManufacturerTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            manufacturer(id: "' . self::ACTIVE_MANUFACTURER . '") {
+            manufacturer(manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
                 id
                 products {
                     active
@@ -333,7 +333,7 @@ final class ManufacturerTest extends TokenTestCase
     public function testGetManufacturerProducts(?int $offset, ?int $limit, ?int $numberOfExpectedProducts): void
     {
         $result = $this->query('query ($offset: Int, $limit: Int) {
-            manufacturer (id: "' . self::ACTIVE_MULTILANGUAGE_MANUFACTURER . '") {
+            manufacturer (manufacturerId: "' . self::ACTIVE_MULTILANGUAGE_MANUFACTURER . '") {
                 id
                 products(pagination: {offset: $offset, limit: $limit})
                 {
@@ -354,7 +354,7 @@ final class ManufacturerTest extends TokenTestCase
     public function testManufacturerSortedProductList(): void
     {
         $result = $this->query('query {
-              manufacturer (id: "' . self::ACTIVE_MANUFACTURER . '") {
+              manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
                 id
                 products (
                     sort: {

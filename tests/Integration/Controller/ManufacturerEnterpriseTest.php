@@ -32,7 +32,7 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
 
         $result = $this->query('query {
-            manufacturer (id: "' . self::MANUFACTURER_ID . '") {
+            manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 id
             }
         }');
@@ -73,7 +73,7 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->addManufacturerToShops([2]);
 
         $result = $this->query('query {
-            manufacturer (id: "' . self::MANUFACTURER_ID . '") {
+            manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 id,
                 title
             }
@@ -154,7 +154,7 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->addManufacturerToShops([2]);
 
         $result = $this->query('query {
-            manufacturer (id: "' . self::MANUFACTURER_ID . '") {
+            manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 id
                 title
             }
@@ -212,7 +212,7 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '1');
 
         $result = $this->query('query {
-            manufacturer (id: "' . self::MANUFACTURER_ID . '") {
+            manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 products
                 {
                   id
@@ -232,7 +232,7 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->addProductToShops([2]);
 
         $result = $this->query('query {
-            manufacturer (id: "' . self::MANUFACTURER_WITH_SINGLE_PRODUCT . '") {
+            manufacturer (manufacturerId: "' . self::MANUFACTURER_WITH_SINGLE_PRODUCT . '") {
                 id
                 products
                 {
@@ -255,7 +255,7 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->addProductToShops([1]);
 
         $result = $this->query('query {
-            manufacturer (id: "' . self::MANUFACTURER_ID . '") {
+            manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 id
                 products
                 {

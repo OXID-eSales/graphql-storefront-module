@@ -933,7 +933,7 @@ final class VoucherCest extends BaseCest
     private function basketQuery(string $basketId)
     {
         return 'query {
-            basket(id: "' . $basketId . '") {
+            basket(basketId: "' . $basketId . '") {
                 id
                 cost {
                     voucher
@@ -964,7 +964,7 @@ final class VoucherCest extends BaseCest
     private function basketRemoveMutation(AcceptanceTester $I, string $basketId): void
     {
         $I->sendGQLQuery('mutation {
-            basketRemove(id: "' . $basketId . '")
+            basketRemove(basketId: "' . $basketId . '")
         }');
 
         $I->seeResponseIsJson();

@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @ExtendType(class=BasketItem::class)
@@ -40,7 +41,7 @@ final class BasketItemRelationService
 
         try {
             return $this->productService->product(
-                (string) $basketItemModel->getFieldData('oxartid')
+                new ID($basketItemModel->getFieldData('oxartid'))
             );
         } catch (ProductNotFound | InvalidLogin $e) {
         }

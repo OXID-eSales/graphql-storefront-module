@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @ExtendType(class=File::class)
@@ -35,7 +36,7 @@ final class FileRelations
     public function getProduct(File $file): Product
     {
         return $this->productService->product(
-            $file->productId()
+            new ID($file->productId())
         );
     }
 }

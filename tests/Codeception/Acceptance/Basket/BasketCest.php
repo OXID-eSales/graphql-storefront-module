@@ -51,7 +51,7 @@ final class BasketCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PUBLIC_BASKET . '") {
+                basket(basketId: "' . self::PUBLIC_BASKET . '") {
                     items {
                         id
                         amount
@@ -88,7 +88,7 @@ final class BasketCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PRIVATE_BASKET . '") {
+                basket(basketId: "' . self::PRIVATE_BASKET . '") {
                     id
                 }
             }'
@@ -115,7 +115,7 @@ final class BasketCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PRIVATE_BASKET . '") {
+                basket(basketId: "' . self::PRIVATE_BASKET . '") {
                     id
                 }
             }'
@@ -161,7 +161,7 @@ final class BasketCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . $basket['id'] . '") {
+                basket(basketId: "' . $basket['id'] . '") {
                     id
                 }
             }'
@@ -222,7 +222,7 @@ final class BasketCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PUBLIC_BASKET . '") {
+                basket(basketId: "' . self::PUBLIC_BASKET . '") {
                     id
                     cost {
                         productNet {
@@ -264,7 +264,7 @@ final class BasketCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . self::PUBLIC_BASKET . '") {
+                basket(basketId: "' . self::PUBLIC_BASKET . '") {
                     id
                     cost {
                         productNet {
@@ -350,7 +350,7 @@ final class BasketCest extends BaseCest
     private function basketRemoveMutation(AcceptanceTester $I, string $basketId): array
     {
         $I->sendGQLQuery('mutation {
-            basketRemove(id: "' . $basketId . '")
+            basketRemove(basketId: "' . $basketId . '")
         }');
 
         $I->seeResponseIsJson();

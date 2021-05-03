@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @ExtendType(class=Content::class)
@@ -58,7 +59,7 @@ final class RelationService
         }
 
         try {
-            return $this->categoryService->category($id);
+            return $this->categoryService->category(new ID($id));
         } catch (NotFound | InvalidLogin $e) {
             return null;
         }

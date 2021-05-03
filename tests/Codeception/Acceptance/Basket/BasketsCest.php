@@ -91,7 +91,7 @@ final class BasketsCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-                baskets(owner: "' . self::USERNAME . '") {
+                baskets(ownerId: "' . self::USERNAME . '") {
                     id
                     cost {
                         productNet {
@@ -166,7 +166,7 @@ final class BasketsCest extends BaseCest
     private function basketsQuery(AcceptanceTester $I, string $owner): array
     {
         $I->sendGQLQuery('query {
-            baskets(owner: "' . $owner . '") {
+            baskets(ownerId: "' . $owner . '") {
                 owner {
                     lastName
                 }
@@ -192,7 +192,7 @@ final class BasketsCest extends BaseCest
     private function basketMakePrivateMutation(AcceptanceTester $I, string $basketId): array
     {
         $I->sendGQLQuery('mutation {
-            basketMakePrivate(id: "' . $basketId . '") {
+            basketMakePrivate(basketId: "' . $basketId . '") {
                 public
             }
         }');
@@ -205,7 +205,7 @@ final class BasketsCest extends BaseCest
     private function basketMakePublicMutation(AcceptanceTester $I, string $basketId): array
     {
         $I->sendGQLQuery('mutation {
-            basketMakePublic(id: "' . $basketId . '") {
+            basketMakePublic(basketId: "' . $basketId . '") {
                 public
             }
         }');

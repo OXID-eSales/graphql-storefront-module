@@ -33,7 +33,7 @@ final class BasketVoucherCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-                basket(id: "' . self::PRIVATE_BASKET . '") {
+                basket(basketId: "' . self::PRIVATE_BASKET . '") {
                     vouchers {
                         id
                         reserved
@@ -106,7 +106,7 @@ final class BasketVoucherCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-                basket(id: "' . self::PRIVATE_WISHLIST . '") {
+                basket(basketId: "' . self::PRIVATE_WISHLIST . '") {
                     vouchers {
                         id
                         reserved

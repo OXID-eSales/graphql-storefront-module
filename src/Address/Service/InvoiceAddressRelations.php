@@ -43,7 +43,7 @@ final class InvoiceAddressRelations
     public function country(InvoiceAddress $invoiceAddress): Country
     {
         return $this->countryService->country(
-            (string) $invoiceAddress->countryId()
+            $invoiceAddress->countryId()
         );
     }
 

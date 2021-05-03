@@ -127,7 +127,7 @@ final class BasketRemoveCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-                basketRemove(id: "' . $basketId . '")
+                basketRemove(basketId: "' . $basketId . '")
             }'
         );
 

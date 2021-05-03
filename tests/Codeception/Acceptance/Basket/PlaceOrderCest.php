@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @group oe_graphql_checkout
@@ -800,11 +801,11 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
     private function basketExists(AcceptanceTester $I, $basketId)
     {
         $variables = [
-            'basketId' => $basketId,
+            'basketId' => new ID($basketId),
         ];
 
-        $query = 'query ($basketId: String!){
-            basket (id: $basketId) {
+        $query = 'query ($basketId: ID!){
+            basket (basketId: $basketId) {
                 id
             }
         }';

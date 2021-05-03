@@ -12,13 +12,13 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 use OxidEsales\Eshop\Application\Model\Article as EshopProduct;
 use OxidEsales\Eshop\Core\Language as EshopLanguage;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Shared\DataType\Seo
  */
-final class SeoTest extends TestCase
+final class SeoTest extends BaseTestCase
 {
     private const PRODUCT_ID = '058de8224773a1d5fd54d523f0c823e0';
 

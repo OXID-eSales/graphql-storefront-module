@@ -11,9 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class BannerTest extends TokenTestCase
+final class BannerTest extends BaseTestCase
 {
     private const ACTIVE_BANNER_WITH_PRODUCT = 'b5639c6431b26687321f6ce654878fa5';
 
@@ -33,7 +33,7 @@ final class BannerTest extends TokenTestCase
     public function testGetSingleActiveBannerWithProduct(): void
     {
         $result = $this->query('query {
-            banner(id: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
+            banner(bannerId: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
                 id
                 active
                 title
@@ -75,7 +75,7 @@ final class BannerTest extends TokenTestCase
     public function testGetSingleActiveBannerWithoutProduct(): void
     {
         $result = $this->query('query {
-            banner(id: "' . self::ACTIVE_BANNER_WITHOUT_PRODUCT . '") {
+            banner(bannerId: "' . self::ACTIVE_BANNER_WITHOUT_PRODUCT . '") {
                 id
                 active
                 title
@@ -111,7 +111,7 @@ final class BannerTest extends TokenTestCase
     public function testInactive(): void
     {
         $result = $this->query('query {
-            banner (id: "' . self::INACTIVE_BANNER . '") {
+            banner (bannerId: "' . self::INACTIVE_BANNER . '") {
                 id
                 active
             }
@@ -126,7 +126,7 @@ final class BannerTest extends TokenTestCase
     public function testNotExisting(): void
     {
         $result = $this->query('query {
-            banner (id: "wrong_id") {
+            banner (bannerId: "wrong_id") {
                 id
                 active
             }
@@ -141,7 +141,7 @@ final class BannerTest extends TokenTestCase
     public function testWrongType(): void
     {
         $result = $this->query('query {
-            banner (id: "' . self::WRONG_TYPE_ACTION . '") {
+            banner (bannerId: "' . self::WRONG_TYPE_ACTION . '") {
                 id
                 active
             }
@@ -156,7 +156,7 @@ final class BannerTest extends TokenTestCase
     public function testInactiveButActiveInterval(): void
     {
         $result = $this->query('query {
-            banner (id: "' . self::INACTIVE_BANNER_WITH_INTERVAL . '") {
+            banner (bannerId: "' . self::INACTIVE_BANNER_WITH_INTERVAL . '") {
                 id
                 active
             }
@@ -205,7 +205,7 @@ final class BannerTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            banner (id: "' . self::INACTIVE_BANNER . '") {
+            banner (bannerId: "' . self::INACTIVE_BANNER . '") {
                 id
                 active
             }
@@ -317,7 +317,7 @@ final class BannerTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            banner(id: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
+            banner(bannerId: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
                 id
                 product{
                   id

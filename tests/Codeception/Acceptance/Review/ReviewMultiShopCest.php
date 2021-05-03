@@ -211,7 +211,7 @@ final class ReviewMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                 reviewDelete(id: "' . $id . '")
+                 reviewDelete(reviewId: "' . $id . '")
             }',
             [],
             0,

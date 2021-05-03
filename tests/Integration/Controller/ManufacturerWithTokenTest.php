@@ -31,7 +31,7 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     public function testGetSingleActiveManufacturer(): void
     {
         $result = $this->query('query {
-            manufacturer (id: "' . self::ACTIVE_MANUFACTURER . '") {
+            manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
                 id
                 active
                 icon
@@ -74,7 +74,7 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     public function testGetSingleInactiveManufacturer(): void
     {
         $result = $this->query('query {
-            manufacturer (id: "' . self::INACTIVE_MANUFACTURER . '") {
+            manufacturer (manufacturerId: "' . self::INACTIVE_MANUFACTURER . '") {
                 id
             }
         }');
@@ -90,7 +90,7 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     public function testGetSingleNonExistingManufacturer(): void
     {
         $result = $this->query('query {
-            manufacturer (id: "DOES-NOT-EXIST") {
+            manufacturer (manufacturerId: "DOES-NOT-EXIST") {
                 id
             }
         }');

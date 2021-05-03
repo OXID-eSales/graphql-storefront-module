@@ -83,7 +83,7 @@ final class PlaceOrder
             BeforePlaceOrder::NAME
         );
 
-        $userBasket = $this->basketService->getAuthenticatedCustomerBasket((string) $basketId->val());
+        $userBasket = $this->basketService->getAuthenticatedCustomerBasket($basketId);
 
         $this->checkTermsAndConditionsConsent($userBasket, $termsAndConditions);
 

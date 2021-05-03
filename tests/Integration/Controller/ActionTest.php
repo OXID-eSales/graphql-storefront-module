@@ -30,7 +30,7 @@ final class ActionTest extends TokenTestCase
     public function testGetSingleActiveActionWithoutProducts(): void
     {
         $result = $this->query('query {
-            action(id: "' . self::ACTIVE_ACTION_WITHOUT_PRODUCTS . '") {
+            action(actionId: "' . self::ACTIVE_ACTION_WITHOUT_PRODUCTS . '") {
                 id
                 active
                 title
@@ -53,7 +53,7 @@ final class ActionTest extends TokenTestCase
     public function testGetSingleActiveActionWithProducts(): void
     {
         $result = $this->query('query {
-            action(id: "' . self::ACTIVE_ACTION_WITH_PRODUCTS . '") {
+            action(actionId: "' . self::ACTIVE_ACTION_WITH_PRODUCTS . '") {
                 id
                 products{
                   id
@@ -84,7 +84,7 @@ final class ActionTest extends TokenTestCase
     public function testGetSingleInactiveAction(): void
     {
         $result = $this->query('query {
-            action (id: "' . self::INACTIVE_ACTION . '") {
+            action (actionId: "' . self::INACTIVE_ACTION . '") {
                 id
                 active
             }
@@ -99,7 +99,7 @@ final class ActionTest extends TokenTestCase
     public function testGetSingleNonExistingAction(): void
     {
         $result = $this->query('query {
-            action (id: "non_existing_id") {
+            action (actionId: "non_existing_id") {
                 id
                 active
             }
@@ -114,7 +114,7 @@ final class ActionTest extends TokenTestCase
     public function testGetSingleWrongTypeAction(): void
     {
         $result = $this->query('query {
-            action (id: "' . self::WRONG_TYPE_ACTION . '") {
+            action (actionId: "' . self::WRONG_TYPE_ACTION . '") {
                 id
                 active
             }
@@ -131,7 +131,7 @@ final class ActionTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            action (id: "' . self::INACTIVE_ACTION . '") {
+            action (actionId: "' . self::INACTIVE_ACTION . '") {
                 id
                 title
                 active
@@ -408,7 +408,7 @@ final class ActionTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            action (id: "' . self::ACTIVE_ACTION_WITH_INACTIVE_PRODUCT . '") {
+            action (actionId: "' . self::ACTIVE_ACTION_WITH_INACTIVE_PRODUCT . '") {
                 id
                 products {
                     id

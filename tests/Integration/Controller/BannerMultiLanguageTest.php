@@ -20,7 +20,7 @@ final class BannerMultiLanguageTest extends TokenTestCase
     public function testGetSingleActiveBannerWithProductMultilanguage(): void
     {
         $query = 'query {
-            banner(id: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
+            banner(bannerId: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
                 title
                 link
                 product{
@@ -56,7 +56,7 @@ final class BannerMultiLanguageTest extends TokenTestCase
     public function testGetSingleActiveBannerWithoutProductMultilanguage(): void
     {
         $query = 'query {
-            banner(id: "' . self::ACTIVE_BANNER_WITHOUT_PRODUCT . '") {
+            banner(bannerId: "' . self::ACTIVE_BANNER_WITHOUT_PRODUCT . '") {
                 title
                 link
                 product{

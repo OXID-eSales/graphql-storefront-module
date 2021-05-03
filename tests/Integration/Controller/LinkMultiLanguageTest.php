@@ -35,7 +35,7 @@ final class LinkMultiLanguageTest extends TestCase
     public function testGetLinkMultilanguage(string $languageId, string $description): void
     {
         $query = 'query {
-            link (id: "' . self::ACTIVE_MULTILANGUAGE_LINK . '") {
+            link (linkId: "' . self::ACTIVE_MULTILANGUAGE_LINK . '") {
                 id
                 active
                 timestamp

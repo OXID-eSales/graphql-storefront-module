@@ -13,6 +13,7 @@ use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute as AttributeDataT
 use OxidEsales\GraphQL\Storefront\Attribute\DataType\AttributeFilterList;
 use OxidEsales\GraphQL\Storefront\Attribute\Service\Attribute as AttributeService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Attribute
 {
@@ -28,9 +29,9 @@ final class Attribute
     /**
      * @Query()
      */
-    public function attribute(string $id): AttributeDataType
+    public function attribute(ID $attributeId): AttributeDataType
     {
-        return $this->attributeService->attribute($id);
+        return $this->attributeService->attribute($attributeId);
     }
 
     /**

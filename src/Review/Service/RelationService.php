@@ -20,6 +20,7 @@ use OxidEsales\GraphQL\Storefront\Review\Service\Reviewer as ReviewerService;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Language;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @ExtendType(class=Review::class)
@@ -66,7 +67,7 @@ final class RelationService
 
         try {
             /** @var Product */
-            return $this->productService->product($review->getObjectId());
+            return $this->productService->product(new ID($review->getObjectId()));
         } catch (ProductNotFound | InvalidLogin $e) {
             return null;
         }

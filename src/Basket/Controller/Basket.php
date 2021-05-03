@@ -40,9 +40,9 @@ final class Basket
     /**
      * @Query()
      */
-    public function basket(string $id): BasketDataType
+    public function basket(ID $basketId): BasketDataType
     {
-        return $this->basketService->basket($id);
+        return $this->basketService->basket($basketId);
     }
 
     /**
@@ -78,27 +78,27 @@ final class Basket
      * @Mutation()
      * @Logged()
      */
-    public function basketRemove(string $id): bool
+    public function basketRemove(ID $basketId): bool
     {
-        return $this->basketService->remove($id);
+        return $this->basketService->remove($basketId);
     }
 
     /**
      * @Mutation()
      * @Logged()
      */
-    public function basketMakePublic(string $id): BasketDataType
+    public function basketMakePublic(ID $basketId): BasketDataType
     {
-        return $this->basketService->makePublic($id);
+        return $this->basketService->makePublic($basketId);
     }
 
     /**
      * @Mutation()
      * @Logged()
      */
-    public function basketMakePrivate(string $id): BasketDataType
+    public function basketMakePrivate(ID $basketId): BasketDataType
     {
-        return $this->basketService->makePrivate($id);
+        return $this->basketService->makePrivate($basketId);
     }
 
     /**
@@ -108,10 +108,10 @@ final class Basket
      *
      * @return BasketDataType[]
      */
-    public function baskets(string $owner): array
+    public function baskets(ID $ownerId): array
     {
         return $this->basketService->publicBasketsByOwnerNameOrEmail(
-            $owner
+            $ownerId
         );
     }
 
@@ -119,7 +119,7 @@ final class Basket
      * @Mutation()
      * @Right("ADD_VOUCHER")
      */
-    public function basketAddVoucher(string $basketId, string $voucherNumber): BasketDataType
+    public function basketAddVoucher(ID $basketId, string $voucherNumber): BasketDataType
     {
         return $this->basketService->addVoucher($basketId, $voucherNumber);
     }
@@ -128,7 +128,7 @@ final class Basket
      * @Mutation()
      * @Right("REMOVE_VOUCHER")
      */
-    public function basketRemoveVoucher(string $basketId, string $voucherId): BasketDataType
+    public function basketRemoveVoucher(ID $basketId, ID $voucherId): BasketDataType
     {
         return $this->basketService->removeVoucher($basketId, $voucherId);
     }
@@ -137,7 +137,7 @@ final class Basket
      * @Mutation()
      * @Logged()
      */
-    public function basketSetDeliveryAddress(string $basketId, string $deliveryAddressId): BasketDataType
+    public function basketSetDeliveryAddress(ID $basketId, ID $deliveryAddressId): BasketDataType
     {
         return $this->basketService->setDeliveryAddress($basketId, $deliveryAddressId);
     }

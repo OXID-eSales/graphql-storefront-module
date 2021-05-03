@@ -46,7 +46,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetAccessoriesRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                 id
                 accessories {
                     id
@@ -82,7 +82,7 @@ final class ProductRelationServiceTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                 id
                 accessories {
                     id
@@ -109,7 +109,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     {
         $result = $this->query('
             query{
-                product(id: "' . $productId . '" ){
+                product(productId: "' . $productId . '" ){
                     attributes {
                         value
                         attribute {
@@ -170,7 +170,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetSelectionListsRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_SELECTION_LISTS . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_SELECTION_LISTS . '") {
                 id
                 selectionLists {
                     title
@@ -221,7 +221,7 @@ final class ProductRelationServiceTest extends TokenTestCase
         $this->getConfig()->setConfigParam('blGBModerate', $configValue);
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 reviews {
                     id
@@ -269,7 +269,7 @@ final class ProductRelationServiceTest extends TokenTestCase
         $this->getConfig()->setConfigParam('blGBModerate', true);
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 reviews {
                     id
@@ -293,7 +293,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetNoReviewsRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                 id
                 reviews {
                     id
@@ -314,7 +314,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetUnitNameAndPriceRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_UNITNAME . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_UNITNAME . '") {
                 id
                 unit {
                     name
@@ -336,7 +336,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetRestockDateRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_RESTOCK_DATE . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_RESTOCK_DATE . '") {
                 id
                 stock {
                     restockDate
@@ -350,7 +350,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetProductVendorRelation(): void
     {
         $result = $this->query('query {
-            product (id: "6b63456b3abeeeccd9b085a76ffba1a3") {
+            product (productId: "6b63456b3abeeeccd9b085a76ffba1a3") {
                 id
                 vendor {
                     id
@@ -367,7 +367,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetCrossSellingRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 crossSelling {
                     id
@@ -393,7 +393,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetNoCrossSellingRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITHOUT_CROSSSELLING . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITHOUT_CROSSSELLING . '") {
                 id
                 crossSelling {
                     id
@@ -410,7 +410,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetProductManufacturerRelation(): void
     {
         $result = $this->query('query {
-            product (id: "6b63456b3abeeeccd9b085a76ffba1a3") {
+            product (productId: "6b63456b3abeeeccd9b085a76ffba1a3") {
                 id
                 manufacturer {
                     id
@@ -427,7 +427,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetProductWithoutManufacturerRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITHOUT_MANUFACTURER . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITHOUT_MANUFACTURER . '") {
                 id
                 manufacturer {
                     id
@@ -445,7 +445,7 @@ final class ProductRelationServiceTest extends TokenTestCase
         $config->setConfigParam('bl_perfLoadAccessoires', false);
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
                 id
                 bundleProduct {
                     id
@@ -473,7 +473,7 @@ final class ProductRelationServiceTest extends TokenTestCase
                      ->execute();
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
                 id
                 bundleProduct {
                     id
@@ -507,7 +507,7 @@ final class ProductRelationServiceTest extends TokenTestCase
                      ->execute();
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
                 id
                 bundleProduct {
                     id
@@ -531,7 +531,7 @@ final class ProductRelationServiceTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_MAIN_BUNDLE_PRODUCT . '") {
+            product (productId: "' . self::ACTIVE_MAIN_BUNDLE_PRODUCT . '") {
                 id
                 bundleProduct {
                     id
@@ -560,7 +560,7 @@ final class ProductRelationServiceTest extends TokenTestCase
                      ->execute();
 
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
                 id
                 bundleProduct {
                     id
@@ -589,7 +589,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetScalePricesRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_SCALE_PRICES . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_SCALE_PRICES . '") {
                 id
                 scalePrices {
                     absoluteScalePrice
@@ -640,7 +640,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     public function testGetProductCategoryRelation(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::ACTIVE_PRODUCT . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 categories {
                     id

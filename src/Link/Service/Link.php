@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Link\DataType\Link as LinkDataType;
 use OxidEsales\GraphQL\Storefront\Link\DataType\LinkFilterList;
 use OxidEsales\GraphQL\Storefront\Link\Exception\LinkNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Link
 {
@@ -37,16 +38,16 @@ final class Link
      * @throws LinkNotFound
      * @throws InvalidLogin
      */
-    public function link(string $id): LinkDataType
+    public function link(ID $id): LinkDataType
     {
         try {
             /** @var LinkDataType $link */
             $link = $this->repository->getById(
-                $id,
+                (string) $id,
                 LinkDataType::class
             );
         } catch (NotFound $e) {
-            throw LinkNotFound::byId($id);
+            throw LinkNotFound::byId((string) $id);
         }
 
         if ($link->isActive()) {

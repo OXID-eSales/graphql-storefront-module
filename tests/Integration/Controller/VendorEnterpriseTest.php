@@ -28,7 +28,7 @@ final class VendorEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
 
         $result = $this->query('query {
-            vendor (id: "' . self::VENDOR_ID . '") {
+            vendor (vendorId: "' . self::VENDOR_ID . '") {
                 id
             }
         }');
@@ -70,7 +70,7 @@ final class VendorEnterpriseTest extends MultishopTestCase
         $this->addVendorToShops([2]);
 
         $result = $this->query('query {
-            vendor (id: "' . self::VENDOR_ID . '") {
+            vendor (vendorId: "' . self::VENDOR_ID . '") {
                 id,
                 title
                 products {
@@ -155,7 +155,7 @@ final class VendorEnterpriseTest extends MultishopTestCase
         $this->addVendorToShops([2]);
 
         $result = $this->query('query {
-            vendor (id: "' . self::VENDOR_ID . '") {
+            vendor (vendorId: "' . self::VENDOR_ID . '") {
                 id
                 title
             }

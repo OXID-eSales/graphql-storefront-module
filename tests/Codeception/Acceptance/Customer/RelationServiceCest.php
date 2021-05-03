@@ -282,7 +282,7 @@ final class RelationServiceCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-                basketRemove(id: "' . $basketId . '")
+                basketRemove(basketId: "' . $basketId . '")
             }'
         );
 

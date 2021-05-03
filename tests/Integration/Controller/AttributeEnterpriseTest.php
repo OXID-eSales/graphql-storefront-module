@@ -28,7 +28,7 @@ final class AttributeEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
 
         $result = $this->query('query {
-            attribute (id: "' . self::ATTRIBUTE_ID . '") {
+            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
         }');
@@ -49,7 +49,7 @@ final class AttributeEnterpriseTest extends MultishopTestCase
         $this->addAttributeToShops([2]);
 
         $result = $this->query('query {
-            attribute (id: "' . self::ATTRIBUTE_ID . '") {
+            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
         }');
@@ -100,7 +100,7 @@ final class AttributeEnterpriseTest extends MultishopTestCase
         $this->addAttributeToShops([2]);
 
         $result = $this->query('query {
-            attribute (id: "' . self::ATTRIBUTE_ID . '") {
+            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
         }');

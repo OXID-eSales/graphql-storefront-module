@@ -415,7 +415,7 @@ final class CustomerCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                basketMakePublic(id: "' . $noticeListId . '")
+                basketMakePublic(basketId: "' . $noticeListId . '")
             }'
         );
 
@@ -438,7 +438,7 @@ final class CustomerCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                basketRemove(id: "' . $noticeListId . '")
+                basketRemove(basketId: "' . $noticeListId . '")
             }'
         );
     }

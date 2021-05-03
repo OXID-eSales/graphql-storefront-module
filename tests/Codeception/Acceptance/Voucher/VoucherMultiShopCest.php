@@ -287,7 +287,7 @@ final class VoucherMultiShopCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'query{
-                basket(id: "' . $basketId . '") {
+                basket(basketId: "' . $basketId . '") {
                     vouchers{
                         voucher
                         id

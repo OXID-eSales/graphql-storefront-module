@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Vendor\DataType\VendorFilterList;
 use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
 use OxidEsales\GraphQL\Storefront\Vendor\Service\Vendor as VendorService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Vendor
 {
@@ -34,9 +35,9 @@ final class Vendor
      * @throws VendorNotFound
      * @throws InvalidLogin
      */
-    public function vendor(string $id): VendorDataType
+    public function vendor(ID $vendorId): VendorDataType
     {
-        return $this->vendorService->vendor($id);
+        return $this->vendorService->vendor($vendorId);
     }
 
     /**

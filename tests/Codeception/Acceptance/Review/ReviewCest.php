@@ -305,7 +305,7 @@ final class ReviewCest extends BaseCest
     public function testDeleteReviewWithoutToken(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('mutation {
-            reviewDelete(id: "' . self::TEST_DATA_REVIEW . '")
+            reviewDelete(reviewId: "' . self::TEST_DATA_REVIEW . '")
         }');
 
         $I->seeResponseIsJson();
@@ -326,7 +326,7 @@ final class ReviewCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery('mutation {
-            reviewDelete(id: "' . $reviewId . '")
+            reviewDelete(reviewId: "' . $reviewId . '")
         }');
 
         $I->seeResponseIsJson();
@@ -343,7 +343,7 @@ final class ReviewCest extends BaseCest
         $I->login('admin', 'admin');
 
         $I->sendGQLQuery('mutation {
-            reviewDelete(id: "something-that-does-not-exist")
+            reviewDelete(reviewId: "something-that-does-not-exist")
         }');
 
         $result = $I->grabJsonResponseAsArray();
@@ -363,7 +363,7 @@ final class ReviewCest extends BaseCest
         $I->updateConfigInDatabase('blAllowUsersToManageTheirReviews', false, 'bool');
 
         $I->sendGQLQuery('mutation {
-            reviewDelete(id: "' . $reviewId . '")
+            reviewDelete(reviewId: "' . $reviewId . '")
         }');
 
         $I->updateConfigInDatabase('blAllowUsersToManageTheirReviews', true, 'bool');
@@ -433,7 +433,7 @@ final class ReviewCest extends BaseCest
         }
 
         $I->sendGQLQuery('mutation {
-             reviewDelete(id: "' . $id . '")
+             reviewDelete(reviewId: "' . $id . '")
         }');
 
         $I->seeResponseIsJson();
@@ -446,7 +446,7 @@ final class ReviewCest extends BaseCest
     private function queryReview(AcceptanceTester $I, string $id): array
     {
         $I->sendGQLQuery('query {
-            review(id: "' . $id . '") {
+            review(reviewId: "' . $id . '") {
                 id
                 text
                 rating
@@ -460,7 +460,7 @@ final class ReviewCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-                product(id: "' . $productId . '") {
+                product(productId: "' . $productId . '") {
                     rating {
                         rating
                         count

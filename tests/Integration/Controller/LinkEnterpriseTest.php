@@ -28,7 +28,7 @@ final class LinkEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
 
         $result = $this->query('query {
-            link (id: "' . self::LINK_ID . '") {
+            link (linkId: "' . self::LINK_ID . '") {
                 id
             }
         }');
@@ -70,7 +70,7 @@ final class LinkEnterpriseTest extends MultishopTestCase
         $this->addLinkToShops([2]);
 
         $result = $this->query('query {
-            link (id: "' . self::LINK_ID . '") {
+            link (linkId: "' . self::LINK_ID . '") {
                 id,
                 description
             }
@@ -152,7 +152,7 @@ final class LinkEnterpriseTest extends MultishopTestCase
         $this->addLinkToShops([$shopId]);
 
         $result = $this->query('query {
-            link (id: "' . self::LINK_ID . '") {
+            link (linkId: "' . self::LINK_ID . '") {
                 id
                 description
             }

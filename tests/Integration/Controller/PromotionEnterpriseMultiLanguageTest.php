@@ -63,7 +63,7 @@ final class PromotionEnterpriseMultiLanguageTest extends MultishopTestCase
         $promotionId = $this->getPromotionIdForShop($shopId);
 
         $result = $this->query('query {
-            promotion (id: "' . $promotionId . '") {
+            promotion (promotionId: "' . $promotionId . '") {
                 id
                 title
             }
@@ -95,7 +95,7 @@ final class PromotionEnterpriseMultiLanguageTest extends MultishopTestCase
         $promotionId = $this->getPromotionIdForShop($shopId);
 
         $result = $this->query('query {
-            promotion (id: "' . $promotionId . '") {
+            promotion (promotionId: "' . $promotionId . '") {
                 id
                 title
             }

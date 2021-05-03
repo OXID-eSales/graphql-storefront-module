@@ -39,7 +39,7 @@ final class ProductMultiLanguageTest extends TestCase
     public function testGetProductMultilanguage(string $languageId, string $title, string $seoUrl): void
     {
         $query = 'query {
-            product (id: "' . self::ACTIVE_MULTILANGUAGE_PRODUCT . '") {
+            product (productId: "' . self::ACTIVE_MULTILANGUAGE_PRODUCT . '") {
                 id
                 title
                 seo {
@@ -89,7 +89,7 @@ final class ProductMultiLanguageTest extends TestCase
         );
 
         $query = 'query {
-            product (id: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
+            product (productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
                 variantLabels
                 variants {
                     id

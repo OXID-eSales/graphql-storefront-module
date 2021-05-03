@@ -46,7 +46,7 @@ final class ProductTest extends TokenTestCase
     public function testGetSingleActiveProduct(): void
     {
         $result = $this->query('query {
-            product(id: "' . self::ACTIVE_PRODUCT . '") {
+            product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 dimensions {
                     length
                     width
@@ -291,7 +291,7 @@ final class ProductTest extends TokenTestCase
     public function testGetSingleInactiveProductWithoutToken(): void
     {
         $result = $this->query('query {
-            product (id: "' . self::INACTIVE_PRODUCT . '") {
+            product (productId: "' . self::INACTIVE_PRODUCT . '") {
                 id
                 active
             }
@@ -308,7 +308,7 @@ final class ProductTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            product (id: "' . self::INACTIVE_PRODUCT . '") {
+            product (productId: "' . self::INACTIVE_PRODUCT . '") {
                 id
                 active
             }
@@ -326,7 +326,7 @@ final class ProductTest extends TokenTestCase
     public function testGetSingleNonExistingProduct(): void
     {
         $result = $this->query('query {
-            product (id: "DOES-NOT-EXIST") {
+            product (productId: "DOES-NOT-EXIST") {
                 id
             }
         }');
@@ -341,7 +341,7 @@ final class ProductTest extends TokenTestCase
     {
         $result = $this->query('
             query{
-                product(id: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '" ){
+                product(productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '" ){
                     variantLabels
                     variants {
                         id
@@ -444,7 +444,7 @@ final class ProductTest extends TokenTestCase
     {
         $result = $this->query('
             query{
-                product(id: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '"){
+                product(productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '"){
                     variants {
                         id
                     }
@@ -987,7 +987,7 @@ final class ProductTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            product(id: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
+            product(productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
                 vendor {
                     id
                     active
@@ -1063,7 +1063,7 @@ final class ProductTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            product(id: "' . self::ACTIVE_PRODUCT . '") {
+            product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 manufacturer {
                     id
                     active
@@ -1144,7 +1144,7 @@ final class ProductTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            product(id: "' . self::ACTIVE_PRODUCT . '") {
+            product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 crossSelling {
                     id
                     active
@@ -1227,7 +1227,7 @@ final class ProductTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            product(id: "' . self::ACTIVE_PRODUCT . '") {
+            product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 categories(onlyMainCategory: true) {
                     id
                     active
@@ -1244,7 +1244,7 @@ final class ProductTest extends TokenTestCase
     public function testGetProductAllCategories(): void
     {
         $result = $this->query('query {
-                product(id: "' . self::ACTIVE_PRODUCT_WITH_MORE_CATEGORIES . '") {
+                product(productId: "' . self::ACTIVE_PRODUCT_WITH_MORE_CATEGORIES . '") {
                     categories(onlyMainCategory: false) {
                         id
                         active
@@ -1599,7 +1599,7 @@ final class ProductTest extends TokenTestCase
     public function testProductExistsInListFilteredByCategory(): void
     {
         $productResult = $this->query('query {
-            product(id: "' . self::ACTIVE_PRODUCT . '") {
+            product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 active
                 title
@@ -1646,7 +1646,7 @@ final class ProductTest extends TokenTestCase
     public function testProductRelationVariants(): void
     {
         $response = $this->query('query {
-            product(id: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '"){
+            product(productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '"){
                 accessories {
                     variants {
                         id

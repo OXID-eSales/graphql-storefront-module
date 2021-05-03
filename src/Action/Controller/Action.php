@@ -13,6 +13,7 @@ use OxidEsales\GraphQL\Storefront\Action\DataType\Action as ActionDataType;
 use OxidEsales\GraphQL\Storefront\Action\DataType\ActionFilterList;
 use OxidEsales\GraphQL\Storefront\Action\Service\Action as ActionService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Action
 {
@@ -28,9 +29,9 @@ final class Action
     /**
      * @Query()
      */
-    public function action(string $id): ActionDataType
+    public function action(ID $actionId): ActionDataType
     {
-        return $this->actionService->action($id);
+        return $this->actionService->action($actionId);
     }
 
     /**

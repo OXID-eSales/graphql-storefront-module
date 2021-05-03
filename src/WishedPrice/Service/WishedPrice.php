@@ -20,6 +20,7 @@ use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice as WishedPric
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPriceFilterList;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Exception\WishedPriceNotFound;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceNotification as WishedPriceNotificationInfrastructure;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class WishedPrice
 {
@@ -58,7 +59,7 @@ final class WishedPrice
      *
      * @return true
      */
-    public function delete(string $id): bool
+    public function delete(ID $id): bool
     {
         $wishedPrice = $this->getWishedPrice($id);
 
@@ -77,7 +78,7 @@ final class WishedPrice
     /**
      * @throws WishedPriceNotFound
      */
-    public function wishedPrice(string $id): WishedPriceDataType
+    public function wishedPrice(ID $id): WishedPriceDataType
     {
         $wishedPrice = $this->getWishedPrice($id);
 
@@ -85,7 +86,7 @@ final class WishedPrice
         $product = $this->wishedPriceRelationService->getProduct($wishedPrice);
 
         if (!$product->wishedPriceEnabled() && !$this->authorizationService->isAllowed('VIEW_WISHED_PRICES')) {
-            throw WishedPriceNotFound::byId($id);
+            throw WishedPriceNotFound::byId((string) $id);
         }
 
         return $wishedPrice;
@@ -120,7 +121,7 @@ final class WishedPrice
      * @throws WishedPriceNotFound
      * @throws InvalidLogin
      */
-    private function getWishedPrice(string $id): WishedPriceDataType
+    private function getWishedPrice(ID $id): WishedPriceDataType
     {
         /** Only logged in users can query wished price */
         if (!$this->authenticationService->isLogged()) {
@@ -130,12 +131,12 @@ final class WishedPrice
         try {
             /** @var WishedPriceDataType $wishedPrice */
             $wishedPrice = $this->repository->getById(
-                $id,
+                (string) $id,
                 WishedPriceDataType::class,
                 false
             );
         } catch (NotFound $e) {
-            throw WishedPriceNotFound::byId($id);
+            throw WishedPriceNotFound::byId((string) $id);
         }
 
         /** If the logged in user is authorized return the wished price */

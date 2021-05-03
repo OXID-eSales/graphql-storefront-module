@@ -11,9 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class ContentTest extends TokenTestCase
+final class ContentTest extends BaseTestCase
 {
     private const ACTIVE_CONTENT = 'e6fc3fe89d5da58da9bfcfba451fd365';
 
@@ -26,7 +26,7 @@ final class ContentTest extends TokenTestCase
     public function testGetSingleActiveContent(): void
     {
         $result = $this->query('query {
-            content (id: "' . self::ACTIVE_CONTENT . '") {
+            content (contentId: "' . self::ACTIVE_CONTENT . '") {
                 id
                 active
                 title
@@ -50,11 +50,11 @@ final class ContentTest extends TokenTestCase
         $this->assertEquals('GraphQL content with category DE', $content['title']);
         $this->assertEquals('CMSFOLDER_CATEGORY', $content['folder']);
         $this->assertEmpty($content['version']);
-        $this->assertEquals('0f4fb00809cec9aa0910aa9c8fe36751', $content['category']['id']);
-        $this->assertEquals('Kites', $content['category']['title']);
-        $this->assertMatchesRegularExpression('@https?://.*/GraphQL-content-with-category-DE/$@', $content['seo']['url']);
-        $this->assertEquals('Content DE', $content['content']);
-        $this->assertEquals('Content DE', $content['rawContent']);
+        $this->assertEquals($content['category']['id'], '0f4fb00809cec9aa0910aa9c8fe36751');
+        $this->assertEquals($content['category']['title'], 'Kites');
+        $this->assertRegExp('@https?://.*/GraphQL-content-with-category-DE/$@', $content['seo']['url']);
+        $this->doAssertContains('Content DE', $content['content']);
+        $this->doAssertContains('Content DE', $content['rawContent']);
 
         $this->assertEmpty(array_diff(array_keys($content), [
             'id',
@@ -72,7 +72,7 @@ final class ContentTest extends TokenTestCase
     public function testGetSingleActiveContentWithVersion(): void
     {
         $result = $this->query('query {
-            content (id: "' . self::ACTIVE_CONTENT_AGB . '") {
+            content (contentId: "' . self::ACTIVE_CONTENT_AGB . '") {
                 id
                 version
             }
@@ -91,7 +91,7 @@ final class ContentTest extends TokenTestCase
     public function testGetSingleInactiveContentWithoutToken(): void
     {
         $result = $this->query('query {
-            content (id: "' . self::INACTIVE_CONTENT . '") {
+            content (contentId: "' . self::INACTIVE_CONTENT . '") {
                 id
                 active
                 title
@@ -120,7 +120,7 @@ final class ContentTest extends TokenTestCase
         $this->prepareToken();
 
         $result = $this->query('query {
-            content (id: "' . self::INACTIVE_CONTENT . '") {
+            content (contentId: "' . self::INACTIVE_CONTENT . '") {
                 id
             }
         }');
@@ -136,7 +136,7 @@ final class ContentTest extends TokenTestCase
     public function testGetSingleNonExistingContent(): void
     {
         $result = $this->query('query {
-            content (id: "DOES-NOT-EXIST") {
+            content (contentId: "DOES-NOT-EXIST") {
                 id
             }
         }');
@@ -254,7 +254,7 @@ final class ContentTest extends TokenTestCase
         }
 
         $result = $this->query('query {
-            content(id: "' . self::ACTIVE_CONTENT . '") {
+            content(contentId: "' . self::ACTIVE_CONTENT . '") {
                 id
                 category {
                     active

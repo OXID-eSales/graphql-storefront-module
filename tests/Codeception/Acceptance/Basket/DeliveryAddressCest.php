@@ -177,6 +177,7 @@ final class DeliveryAddressCest extends BaseCest
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
+        $I->assertArrayNotHasKey('errors', $result);
         $basket = $result['data']['basket'];
 
         if ($addressId !== null) {
@@ -219,7 +220,7 @@ final class DeliveryAddressCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-                basketRemove (id: "' . $basketId . '")
+                basketRemove (basketId: "' . $basketId . '")
             }'
         );
 
@@ -248,7 +249,7 @@ final class DeliveryAddressCest extends BaseCest
     private function basketDeliveryAddress(string $basketId): string
     {
         return 'query {
-            basket(id: "' . $basketId . '") {
+            basket(basketId: "' . $basketId . '") {
                 id
                 deliveryAddress {
                     id

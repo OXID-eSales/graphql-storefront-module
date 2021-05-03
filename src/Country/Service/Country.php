@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\Country\DataType\CountryFilterList;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountrySorting;
 use OxidEsales\GraphQL\Storefront\Country\Exception\CountryNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Country
 {
@@ -39,17 +40,17 @@ final class Country
      * @throws InvalidLogin
      * @throws CountryNotFound
      */
-    public function country(string $id): CountryDataType
+    public function country(ID $id): CountryDataType
     {
         try {
             /** @var CountryDataType $country */
             $country = $this->repository->getById(
-                $id,
+                (string) $id,
                 CountryDataType::class,
                 false
             );
         } catch (NotFound $e) {
-            throw CountryNotFound::byId($id);
+            throw CountryNotFound::byId((string) $id);
         }
 
         if ($country->isActive()) {

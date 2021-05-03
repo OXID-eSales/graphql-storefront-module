@@ -17,6 +17,7 @@ use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Exception\SeriesNotConfigured;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRepository;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Voucher as VoucherInfrastructure;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BasketVoucher
 {
@@ -71,11 +72,11 @@ final class BasketVoucher
     }
 
     public function removeVoucherFromBasket(
-        string $voucherId,
+        ID $voucherId,
         BasketDataType $basket
     ): void {
         /** @var VoucherDataType $voucher */
-        $voucher = $this->voucherRepository->getVoucherById($voucherId);
+        $voucher = $this->voucherRepository->getVoucherById((string) $voucherId);
 
         if (!$this->voucherInfrastructure->isVoucherSerieUsableInCurrentShop($voucher)) {
             throw SeriesNotConfigured::wrongShop();

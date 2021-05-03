@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPrice as WishedPrice
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class WishedPrice
 {
@@ -31,9 +32,9 @@ final class WishedPrice
     /**
      * @Query()
      */
-    public function wishedPrice(string $id): WishedPriceDataType
+    public function wishedPrice(ID $wishedPriceId): WishedPriceDataType
     {
-        return $this->wishedPriceService->wishedPrice($id);
+        return $this->wishedPriceService->wishedPrice($wishedPriceId);
     }
 
     /**
@@ -65,8 +66,8 @@ final class WishedPrice
      * @Mutation()
      * @Logged()
      */
-    public function wishedPriceDelete(string $id): bool
+    public function wishedPriceDelete(ID $wishedPriceId): bool
     {
-        return $this->wishedPriceService->delete($id);
+        return $this->wishedPriceService->delete($wishedPriceId);
     }
 }

@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Promotion\Controller;
 use OxidEsales\GraphQL\Storefront\Promotion\DataType\Promotion as PromotionDataType;
 use OxidEsales\GraphQL\Storefront\Promotion\Service\Promotion as PromotionService;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Promotion
 {
@@ -27,9 +28,9 @@ final class Promotion
     /**
      * @Query()
      */
-    public function promotion(string $id): PromotionDataType
+    public function promotion(ID $promotionId): PromotionDataType
     {
-        return $this->promotionService->promotion($id);
+        return $this->promotionService->promotion($promotionId);
     }
 
     /**

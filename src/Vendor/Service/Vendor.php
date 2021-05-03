@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\Vendor\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\VendorFilterList;
 use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Vendor
 {
@@ -39,15 +40,15 @@ final class Vendor
      * @throws VendorNotFound
      * @throws InvalidLogin
      */
-    public function vendor(string $id): VendorDataType
+    public function vendor(ID $id): VendorDataType
     {
         try {
             $vendor = $this->repository->getById(
-                $id,
+                (string) $id,
                 VendorDataType::class
             );
         } catch (NotFound $e) {
-            throw VendorNotFound::byId($id);
+            throw VendorNotFound::byId((string) $id);
         }
 
         if ($vendor->isActive()) {

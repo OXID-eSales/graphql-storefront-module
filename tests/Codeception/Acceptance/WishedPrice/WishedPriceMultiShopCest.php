@@ -61,7 +61,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'query{
-                wishedPrice(id: "' . $data['wishedPriceId'] . '") {
+                wishedPrice(wishedPriceId: "' . $data['wishedPriceId'] . '") {
                     id
                 }
             }',
@@ -91,7 +91,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'query{
-                wishedPrice(id: "' . $data['wishedPriceId'] . '") {
+                wishedPrice(wishedPriceId: "' . $data['wishedPriceId'] . '") {
                     id
                 }
             }',
@@ -132,7 +132,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'query{
-                wishedPrice(id: "' . self::WISHED_PRICE_SHOP_1 . '") {
+                wishedPrice(wishedPriceId: "' . self::WISHED_PRICE_SHOP_1 . '") {
                     id
                 }
             }',
@@ -159,7 +159,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                wishedPriceDelete(id: "' . self::WISHED_PRICE_TO_BE_DELETED . '")
+                wishedPriceDelete(wishedPriceId: "' . self::WISHED_PRICE_TO_BE_DELETED . '")
             }',
             [],
             $languageId,

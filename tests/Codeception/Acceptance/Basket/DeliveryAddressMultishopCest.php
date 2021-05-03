@@ -103,7 +103,7 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-                basketRemove (id: "' . $basketId . '")
+                basketRemove (basketId: "' . $basketId . '")
             }',
             null,
             0,
