@@ -82,7 +82,7 @@ final class ContentEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
 
         $result = $this->query('query {
-            content (id: "' . self::CONTENT_ID . '") {
+            content (contentId: "' . self::CONTENT_ID . '") {
                 id
             }
         }');
@@ -123,7 +123,7 @@ final class ContentEnterpriseTest extends MultishopTestCase
         $this->addContentToShops([2]);
 
         $result = $this->query('query {
-            content (id: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
+            content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
                 id,
                 title
             }
