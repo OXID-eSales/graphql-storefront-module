@@ -52,7 +52,10 @@ final class ContentTest extends BaseTestCase
         $this->assertEmpty($content['version']);
         $this->assertEquals($content['category']['id'], '0f4fb00809cec9aa0910aa9c8fe36751');
         $this->assertEquals($content['category']['title'], 'Kites');
-        $this->assertRegExp('@https?://.*/GraphQL-content-with-category-DE/$@', $content['seo']['url']);
+        $this->assertMatchesRegularExpression(
+            '@https?://.*/GraphQL-content-with-category-DE/$@',
+            $content['seo']['url']
+        );
         $this->doAssertContains('Content DE', $content['content']);
         $this->doAssertContains('Content DE', $content['rawContent']);
 
