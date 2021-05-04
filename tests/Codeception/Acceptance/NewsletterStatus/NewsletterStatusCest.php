@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\NewsletterStatus;
 
+use Codeception\Scenario;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -31,6 +32,18 @@ final class NewsletterStatusCest extends BaseCest
     private const OTHER_USER_OXPASSALT = 'b186f117054b700a89de929ce90c6aef';
 
     private const SUBSCRIPTION_ID = '_othertestuser';
+
+    public function _before(AcceptanceTester $I, Scenario $scenario): void
+    {
+        parent::_before($I, $scenario);
+
+        $I->deleteFromDatabase(
+            'oxnewssubscribed',
+            [
+                'OXEMAIL'  => self::OTHER_USERNAME,
+            ]
+        );
+    }
 
     public function testNewsletterOptInNoDatabaseEntry(AcceptanceTester $I): void
     {
