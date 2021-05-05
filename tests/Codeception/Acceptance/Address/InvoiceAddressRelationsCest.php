@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group address
+ * @group oe_graphql_storefront
  */
 final class InvoiceAddressRelationsCest extends BaseCest
 {

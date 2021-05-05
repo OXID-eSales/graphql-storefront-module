@@ -13,6 +13,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group graphql_session
+ * @group oe_graphql_storefront
  */
 final class NoSessionUsageCest extends BaseCest
 {

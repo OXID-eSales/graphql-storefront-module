@@ -19,6 +19,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  * @group oe_graphql_checkout
  * @group payment
  * @group basket
+ * @group oe_graphql_storefront
  */
 final class BasketSetPaymentMutationCest extends BaseCest
 {

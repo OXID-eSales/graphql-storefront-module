@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group contact
+ * @group oe_graphql_storefront
  */
 final class ContactCest extends BaseCest
 {
