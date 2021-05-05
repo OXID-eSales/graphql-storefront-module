@@ -18,6 +18,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
  * @group oe_graphql_checkout
  * @group place_order
  * @group basket
+ * @group oe_graphql_storefront
  */
 final class PlaceOrderCest extends PlaceOrderBaseCest
 {

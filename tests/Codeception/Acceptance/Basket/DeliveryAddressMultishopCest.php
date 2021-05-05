@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  * @group oe_graphql_checkout
  * @group address
  * @group basket
+ * @group oe_graphql_storefront
  */
 final class DeliveryAddressMultiShopCest extends MultishopBaseCest
 {
