@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Action\Controller;
 use OxidEsales\GraphQL\Storefront\Action\DataType\Action as ActionDataType;
 use OxidEsales\GraphQL\Storefront\Action\DataType\ActionFilterList;
 use OxidEsales\GraphQL\Storefront\Action\Service\Action as ActionService;
+use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -44,5 +45,14 @@ final class Action
         return $this->actionService->actions(
             $filter ?? new ActionFilterList()
         );
+    }
+
+    /**
+     * @Query()
+     * @Logged()
+     */
+    public function foobar(): string
+    {
+        return 'damn';
     }
 }
