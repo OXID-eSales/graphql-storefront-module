@@ -60,7 +60,7 @@ final class Basket
     public function removeBasketItem(BasketDataType $basket, ID $basketItemId, float $amount): bool
     {
         $model      = $basket->getEshopModel();
-        $basketItem = $this->getBasketItem($basket->getEshopModel(), (string) $basketItemId);
+        $basketItem = $this->getBasketItem($model, (string) $basketItemId);
 
         if (!($basketItem instanceof EshopUserBasketItemModel)) {
             throw BasketItemNotFound::byId((string) $basketItemId, $model->getId());
@@ -73,7 +73,7 @@ final class Basket
         }
 
         $productId = (string) $basketItem->getFieldData('oxartid');
-        $params    = $basketItem->getFieldData('oxperparams');
+        $params    = $basketItem->getPersParams();
 
         $model->addItemToBasket($productId, $amountRemaining, null, true, $params);
 
@@ -244,7 +244,7 @@ final class Basket
         );
     }
 
-    private function getBasketItem(EshopUserBasketModel $model, string $basketItemId): ?EshopUserBasketItemModel
+    public function getBasketItem(EshopUserBasketModel $model, string $basketItemId): ?EshopUserBasketItemModel
     {
         $basketItems = $model->getItems();
         /** @var EshopUserBasketItemModel $item */
