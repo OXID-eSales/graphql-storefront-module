@@ -23,6 +23,7 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketPayments;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfraService;
@@ -251,9 +252,20 @@ final class Basket
 
     public function removeBasketItem(ID $basketId, ID $basketItemId, float $amount): BasketDataType
     {
+        $event = new BeforeRemoveItem(
+            $basketId,
+            $basketItemId,
+            $amount
+        );
+
+        $this->eventDispatcher->dispatch(
+            $event,
+            BeforeRemoveItem::NAME
+        );
+
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
-        $this->basketInfraService->removeBasketItem($basket, $basketItemId, $amount);
+        $this->basketInfraService->removeBasketItem($basket, $basketItemId, $event->getAmount());
 
         return $basket;
     }

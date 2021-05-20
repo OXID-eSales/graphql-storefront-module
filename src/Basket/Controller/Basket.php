@@ -58,7 +58,7 @@ final class Basket
      * @Mutation()
      * @Right("REMOVE_BASKET_PRODUCT")
      */
-    public function basketRemoveItem(ID $basketId, ID $basketItemId, int $amount): BasketDataType
+    public function basketRemoveItem(ID $basketId, ID $basketItemId, float $amount): BasketDataType
     {
         return $this->basketService->removeBasketItem($basketId, $basketItemId, $amount);
     }
