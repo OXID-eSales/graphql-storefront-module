@@ -102,16 +102,16 @@ final class Basket
     }
 
     /**
-     * Argument `owner` will be matched against lastname and / or email
+     * Argument `owner` will be matched exactly against lastname and / or email
      *
      * @Query()
      *
      * @return BasketDataType[]
      */
-    public function baskets(ID $ownerId): array
+    public function baskets(string $owner): array
     {
         return $this->basketService->publicBasketsByOwnerNameOrEmail(
-            $ownerId
+            $owner
         );
     }
 
