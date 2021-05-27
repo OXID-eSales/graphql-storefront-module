@@ -11,8 +11,11 @@ namespace OxidEsales\GraphQL\Storefront\Basket\DataType;
 
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\UserBasket as BasketModel;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BasketAuthorization;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -97,6 +100,21 @@ final class Basket implements DataType
 
     public function belongsToUser(string $userId): bool
     {
+        $eventDispatcher = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(EventDispatcherInterface::class);
+        $event = new BasketAuthorization($this->id(), new Id($userId));
+        $eventDispatcher->dispatch(
+            $event,
+            BasketAuthorization::NAME,
+        );
+
+        $isAuthorized = $event->getAuthorized();
+
+        if (is_bool($isAuthorized)) {
+            return $isAuthorized;
+        }
+
         return (string) $this->getUserId() === $userId;
     }
 
