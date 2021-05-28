@@ -282,10 +282,10 @@ final class Basket
     /**
      * @return BasketDataType[]
      */
-    public function publicBasketsByOwnerNameOrEmail(ID $ownerId): array
+    public function publicBasketsByOwnerNameOrEmail(string $owner): array
     {
         return $this->basketRepository->publicBasketsByOwnerNameOrEmail(
-            (string) $ownerId
+            $owner
         );
     }
 
