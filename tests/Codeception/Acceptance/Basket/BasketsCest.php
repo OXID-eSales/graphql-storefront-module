@@ -92,7 +92,7 @@ final class BasketsCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-                baskets(ownerId: "' . self::USERNAME . '") {
+                baskets(owner: "' . self::USERNAME . '") {
                     id
                     cost {
                         productNet {
@@ -167,7 +167,7 @@ final class BasketsCest extends BaseCest
     private function basketsQuery(AcceptanceTester $I, string $owner): array
     {
         $I->sendGQLQuery('query {
-            baskets(ownerId: "' . $owner . '") {
+            baskets(owner: "' . $owner . '") {
                 owner {
                     lastName
                 }
