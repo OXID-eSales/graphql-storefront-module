@@ -61,7 +61,7 @@ final class BasketsMultishopCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'query {
-                baskets(ownerId: "' . $owner . '") {
+                baskets(owner: "' . $owner . '") {
                     owner {
                         lastName
                     }
