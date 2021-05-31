@@ -15,7 +15,12 @@ use function sprintf;
 
 final class BasketItemNotFound extends NotFound
 {
-    public static function byId(string $basketItemId, string $basketId): self
+    public static function byId(string $basketItemId): self
+    {
+        return new self(sprintf('Basket item was not found by id: %s', $basketItemId));
+    }
+
+    public static function byIdInBasket(string $basketItemId, string $basketId): self
     {
         return new self(sprintf('Basket item with id %s not found in your basket %s', $basketItemId, $basketId));
     }

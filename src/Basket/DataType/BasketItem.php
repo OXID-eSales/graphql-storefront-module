@@ -63,6 +63,11 @@ final class BasketItem implements DataType
         );
     }
 
+    public function basketId(): string
+    {
+        return (string) $this->basketItem->getFieldData('oxbasketid');
+    }
+
     public static function getModelClass(): string
     {
         return EshopBasketItemModel::class;

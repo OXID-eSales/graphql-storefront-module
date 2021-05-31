@@ -62,7 +62,7 @@ final class Basket
         $basketItem = $this->getBasketItem($model, (string) $basketItemId);
 
         if (!($basketItem instanceof EshopUserBasketItemModel)) {
-            throw BasketItemNotFound::byId((string) $basketItemId, $model->getId());
+            throw BasketItemNotFound::byIdInBasket((string) $basketItemId, $model->getId());
         }
 
         $amountRemaining = (float) $basketItem->getFieldData('oxamount') - $amount;
