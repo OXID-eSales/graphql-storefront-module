@@ -15,7 +15,6 @@ use OxidEsales\Eshop\Application\Model\DeliveryList as EshopDeliveryListModel;
 use OxidEsales\Eshop\Application\Model\DeliverySet as EshopDeliverySetModel;
 use OxidEsales\Eshop\Application\Model\DeliverySetList as EshopDeliverySetListModel;
 use OxidEsales\Eshop\Application\Model\Order as OrderModel;
-
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\Eshop\Application\Model\UserBasket as EshopUserBasketModel;
 use OxidEsales\Eshop\Application\Model\UserBasketItem as EshopUserBasketItemModel;
@@ -63,7 +62,7 @@ final class Basket
         $basketItem = $this->getBasketItem($model, (string) $basketItemId);
 
         if (!($basketItem instanceof EshopUserBasketItemModel)) {
-            throw BasketItemNotFound::byId((string) $basketItemId, $model->getId());
+            throw BasketItemNotFound::byIdInBasket((string) $basketItemId, $model->getId());
         }
 
         $amountRemaining = (float) $basketItem->getFieldData('oxamount') - $amount;
