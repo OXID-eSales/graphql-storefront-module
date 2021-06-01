@@ -1,6 +1,6 @@
 # oxid-esales/graphql-storefront
 
-[![Build Status](https://img.shields.io/github/workflow/status/OXID-eSales/graphql-storefront-module/CI?logo=github-actionsstyle=for-the-badge)](https://github.com/OXID-eSales/graphql-storefront-module/actions)
+[![Build Status](https://img.shields.io/github/workflow/status/OXID-eSales/graphql-storefront-module/CI?logo=github-actions&style=for-the-badge)](https://github.com/OXID-eSales/graphql-storefront-module/actions)
 
 [![Stable Version](https://img.shields.io/packagist/v/OXID-eSales/graphql-storefront?style=for-the-badge&logo=composer&label=stable)](https://packagist.org/packages/oxid-esales/graphql-storefront)
 [![Latest Version](https://img.shields.io/packagist/v/OXID-eSales/graphql-storefront?style=for-the-badge&logo=composer&label=latest&include_prereleases&color=orange)](https://packagist.org/packages/oxid-esales/graphql-storefront)
