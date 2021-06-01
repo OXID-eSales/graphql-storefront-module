@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
+use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket;
 use Symfony\Contracts\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -16,24 +17,24 @@ final class BasketAuthorization extends Event
 {
     public const NAME = self::class;
 
-    /** @var ID */
-    private $basketId;
+    /** @var Basket */
+    private $basket;
 
     /** @var ID */
     private $customerId;
 
-    /** @var ?bool */
-    private $authorized;
+    /** @var bool */
+    private $authorized = false;
 
-    public function __construct(ID $basketId, ID $customerId)
+    public function __construct(Basket $basket, ID $customerId)
     {
-        $this->basketId   = $basketId;
+        $this->basket   = $basket;
         $this->customerId = $customerId;
     }
 
-    public function getBasketId(): ID
+    public function getBasket(): Basket
     {
-        return $this->basketId;
+        return $this->basket;
     }
 
     public function getCustomerId(): ID
@@ -41,12 +42,12 @@ final class BasketAuthorization extends Event
         return $this->customerId;
     }
 
-    public function setAuthorized(?bool $authorized = null): void
+    public function setAuthorized(bool $authorized): void
     {
         $this->authorized = $authorized;
     }
 
-    public function getAuthorized(): ?bool
+    public function getAuthorized(): bool
     {
         return $this->authorized;
     }

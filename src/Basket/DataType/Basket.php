@@ -103,19 +103,13 @@ final class Basket implements DataType
         $eventDispatcher = ContainerFactory::getInstance()
             ->getContainer()
             ->get(EventDispatcherInterface::class);
-        $event = new BasketAuthorization($this->id(), new Id($userId));
+        $event = new BasketAuthorization($this, new Id($userId));
         $eventDispatcher->dispatch(
             $event,
             BasketAuthorization::NAME,
         );
 
-        $isAuthorized = $event->getAuthorized();
-
-        if (is_bool($isAuthorized)) {
-            return $isAuthorized;
-        }
-
-        return (string) $this->getUserId() === $userId;
+        return $event->getAuthorized();
     }
 
     /**
