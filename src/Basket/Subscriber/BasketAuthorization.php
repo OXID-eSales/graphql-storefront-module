@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Subscriber;
 use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BasketAuthorization as OriginalEvent;
 
-class BasketAuthorization extends AbstractShopAwareEventSubscriber
+final class BasketAuthorization extends AbstractShopAwareEventSubscriber
 {
     public function handleAuthorization(OriginalEvent $event): OriginalEvent
     {
@@ -29,7 +29,7 @@ class BasketAuthorization extends AbstractShopAwareEventSubscriber
     public static function getSubscribedEvents()
     {
         return [
-            'OxidEsales\GraphQL\Storefront\Basket\Event\BasketAuthorization' => 'handleAuthorization'
+            'OxidEsales\GraphQL\Storefront\Basket\Event\BasketAuthorization' => 'handleAuthorization',
         ];
     }
 }
