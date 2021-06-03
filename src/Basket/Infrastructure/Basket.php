@@ -255,4 +255,19 @@ final class Basket
 
         return null;
     }
+
+    public function getBasketItemByProductId(
+        EshopUserBasketModel $basketModel,
+        string $productId
+    ): ?EshopUserBasketItemModel {
+        $basketItems = $basketModel->getItems();
+        /** @var EshopUserBasketItemModel $item */
+        foreach ($basketItems as $item) {
+            if ($item->getFieldData('oxartid') === $productId) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
 }
