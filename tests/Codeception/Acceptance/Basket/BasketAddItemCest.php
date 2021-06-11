@@ -112,6 +112,42 @@ final class BasketAddItemCest extends BaseCest
         $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 0);
     }
 
+    public function testAddItemToBasketWithQuantityBiggerThenStock(AcceptanceTester $I): void
+    {
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 3
+            ], [
+                'oxid' => self::PRODUCT_ID
+            ]
+        );
+
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 200);
+
+        $basketData = $result['data']['basketAddItem'];
+        $I->assertSame(self::PUBLIC_BASKET, $basketData['id']);
+        $I->assertSame('Availability of this item is limited to 15', $result['errors'][0]['message']);
+        $I->assertSame([
+            [
+                'product' => [
+                    'id' => self::PRODUCT_ID,
+                ],
+                'amount' => 15,
+            ], [
+                'product' => [
+                    'id' => self::PRODUCT,
+                ],
+                'amount' => 1,
+            ],
+        ], $basketData['items']);
+        $I->assertNotNull($basketData['lastUpdateDate']);
+
+        $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 0);
+    }
+
     public function testAddNonExistingItemToBasket(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
