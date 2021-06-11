@@ -147,7 +147,7 @@ final class Customer
         return true;
     }
 
-    private function fetchCustomer(string $id): CustomerDataType
+    public function fetchCustomer(string $id): CustomerDataType
     {
         $ignoreSubShop = (bool) $this->legacyService->getConfigParam('blMallUsers');
 
