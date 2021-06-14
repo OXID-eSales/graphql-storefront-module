@@ -272,7 +272,7 @@ final class Basket
         );
     }
 
-    private function getBasketItem(EshopUserBasketModel $model, string $basketItemId): ?EshopUserBasketItemModel
+    public function getBasketItem(EshopUserBasketModel $model, string $basketItemId): ?EshopUserBasketItemModel
     {
         $basketItems = $model->getItems();
         /** @var EshopUserBasketItemModel $item */
@@ -285,9 +285,11 @@ final class Basket
         return null;
     }
 
-    private function getBasketItemByProductId(EshopUserBasketModel $model, string $productId): ?EshopUserBasketItemModel
-    {
-        $basketItems = $model->getItems();
+    public function getBasketItemByProductId(
+        EshopUserBasketModel $basketModel,
+        string $productId
+    ): ?EshopUserBasketItemModel {
+        $basketItems = $basketModel->getItems();
         /** @var EshopUserBasketItemModel $item */
         foreach ($basketItems as $item) {
             if ($item->getFieldData('oxartid') === $productId) {
