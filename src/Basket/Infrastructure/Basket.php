@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Basket\Infrastructure;
 
-use OxidEsales\Eshop\Application\Model\Article as EshopAricleModel;
 use OxidEsales\Eshop\Application\Model\Address as EshopAddressModel;
+use OxidEsales\Eshop\Application\Model\Article as EshopAricleModel;
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\DeliveryList as EshopDeliveryListModel;
 use OxidEsales\Eshop\Application\Model\DeliverySet as EshopDeliverySetModel;
@@ -55,15 +55,16 @@ final class Basket
     {
         $model = $basket->getEshopModel();
 
-        $item = $this->getBasketItemByProductId($model, (string) $productId);
+        $item            = $this->getBasketItemByProductId($model, (string) $productId);
         $alreadyInBasket = 0;
+
         if ($item) {
             $alreadyInBasket = (int) $item->getFieldData('oxamount');
         }
 
         /** @var EshopAricleModel */
         $product = oxNew(EshopAricleModel::class);
-        $product->load($productId);
+        $product->load((string) $productId);
 
         $onStock = $product->checkForStock($amount, $alreadyInBasket);
 
@@ -296,5 +297,4 @@ final class Basket
 
         return null;
     }
-
 }

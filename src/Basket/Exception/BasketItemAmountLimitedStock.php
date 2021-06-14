@@ -13,7 +13,7 @@ use OxidEsales\GraphQL\Base\Exception\Error;
 
 final class BasketItemAmountLimitedStock extends Error
 {
-    public static function onStockLimitReached() : self
+    public static function onStockLimitReached(): self
     {
         return new self('Stock limit has been reached, article can not be added to basket');
     }

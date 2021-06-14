@@ -119,9 +119,10 @@ final class BasketAddItemCest extends BaseCest
         $I->updateInDatabase(
             'oxarticles',
             [
-                'oxstockflag' => 3
-            ], [
-                'oxid' => self::PRODUCT_ID
+                'oxstockflag' => 3,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
             ]
         );
 
