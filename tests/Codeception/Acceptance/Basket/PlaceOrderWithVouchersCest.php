@@ -77,7 +77,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         );
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithTimedOutVoucherReservation(AcceptanceTester $I): void
@@ -106,7 +106,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrderRemovesVoucher($I, $basketId, $basketCosts);
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithOutdatedVoucherSeries(AcceptanceTester $I): void
@@ -133,7 +133,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrderRemovesVoucher($I, $basketId, $basketCosts);
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithProductVoucherAssignedToProductInBasket(AcceptanceTester $I): void
@@ -159,7 +159,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrder($I, $basketId, $basketCosts, 'my_personal_voucher_1');
 
         //remove basket and voucher relation
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->deleteFromDatabase('oxobject2discount', ['OXID' => 'voucher_assigned_to_product']);
     }
 
@@ -198,7 +198,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrderRemovesVoucher($I, $basketId, $basketCosts, 'product_voucher_1');
 
         //remove basket and discount relation
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->deleteFromDatabase('oxobject2discount', ['OXID' => 'voucher_assigned_to_otherproduct']);
     }
 
@@ -225,7 +225,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrder($I, $basketId, $basketCosts, 'my_personal_voucher_1');
 
         //remove basket and discount relation
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->deleteFromDatabase('oxobject2discount', ['OXID' => 'voucher_assigned_to_category']);
     }
 
@@ -265,7 +265,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrderRemovesVoucher($I, $basketId, $basketCosts, 'category_voucher_1');
 
         //remove basket and discount relation, restore category relation
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->deleteFromDatabase('oxobject2discount', ['OXID' => 'voucher_assigned_to_category']);
 
         $I->updateInDatabase(
@@ -304,7 +304,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrder($I, $basketId, $basketCosts, 'my_personal_voucher_1');
 
         //remove basket and discount relation
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->deleteFromDatabase('oxobject2discount', ['OXID' => 'voucher_assigned_to_usergroup']);
     }
 
@@ -344,7 +344,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrderRemovesVoucher($I, $basketId, $basketCosts, 'user_voucher_1');
 
         //remove basket and discount relation, restore user group relation
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->deleteFromDatabase('oxobject2discount', ['OXID' => 'voucher_assigned_to_usergroup']);
         $I->updateInDatabase(
             'oxobject2group',
@@ -378,7 +378,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrder($I, $basketId, $basketCosts, 'my_personal_voucher_1');
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithVoucherWithMinOrderValueNotReached(AcceptanceTester $I): void
@@ -407,7 +407,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $this->checkPlaceOrderRemovesVoucher($I, $basketId, $basketCosts, 'minvalue_voucher_1');
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithDeletedVoucher(AcceptanceTester $I): void
@@ -441,7 +441,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->assertEmpty($orders['vouchers']);
 
         //remove basket, restore voucher
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->haveInDatabase(
             'oxvouchers',
             [

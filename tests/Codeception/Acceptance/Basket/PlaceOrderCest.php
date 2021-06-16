@@ -40,12 +40,13 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //place the order
         $I->logout();
         $I->login(null, null, 0);
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
 
         $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('placeOrder', 'Mutation', [], []);
         $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
 
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $I->login(self::USERNAME, self::PASSWORD, 0);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderUsingInvoiceAddress(AcceptanceTester $I): void
@@ -78,9 +79,6 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($basketCosts['total'], $orders['cost']['total']);
         $I->assertNotEmpty($orders['invoiceAddress']);
         $I->assertNull($orders['deliveryAddress']);
-
-        //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
     }
 
     public function placeOrderUsingInvoiceAddressAndDefaultSavedBasket(AcceptanceTester $I): void
@@ -115,9 +113,6 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($basketCosts['total'], $orders['cost']['total']);
         $I->assertNotEmpty($orders['invoiceAddress']);
         $I->assertNull($orders['deliveryAddress']);
-
-        //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
     }
 
     public function placeOrderRemovesCorrectBasket(AcceptanceTester $I): void
@@ -164,9 +159,6 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($orderId, $orders['id']);
         $I->assertNotEmpty($orders['invoiceAddress']);
         $I->assertNotEmpty($orders['deliveryAddress']);
-
-        //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
     }
 
     public function placeOrderWithoutToken(AcceptanceTester $I): void
@@ -189,7 +181,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertSame('Cannot query field "placeOrder" on type "Mutation".', $result['errors'][0]['message']);
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $I->login(self::USERNAME, self::PASSWORD);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOtherUsersOrder(AcceptanceTester $I): void
@@ -216,7 +209,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         );
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $I->login(self::USERNAME, self::PASSWORD);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithEmptyBasket(AcceptanceTester $I): void
@@ -238,7 +232,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         );
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function prepareOrderWithNoShippingMethodForCountry(AcceptanceTester $I): void
@@ -258,7 +252,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($expectedErrorMessage, $errorMessage);
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithChangedDeliveryAddress(AcceptanceTester $I): void
@@ -285,7 +279,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         );
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithUnavailablePayment(AcceptanceTester $I): void
@@ -310,7 +304,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         );
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithDiscountedProduct(AcceptanceTester $I): void
@@ -348,9 +342,6 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($basketCosts['discount'], $orders['cost']['discount']);
         $I->assertEquals($basketCosts['voucher'], $orders['cost']['voucher']);
 
-        //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
-
         $I->updateInDatabase('oxdiscount', ['oxactive' => 0]);
         $I->updateInDatabase('oxdiscount', ['oxactive' => 1], ['oxid' => self::DEFAULT_DISCOUNT_ID]);
     }
@@ -385,9 +376,6 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $orders = $this->getOrderFromOrderHistory($I);
         $I->assertEquals($orderId, $orders['id']);
         $I->assertEquals($basketCosts['total'], $orders['cost']['total']);
-
-        //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
     }
 
     /**
@@ -415,8 +403,6 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($orders['id'], $orderId);
         $I->assertEquals($orders['cost']['total'], 41.3);
 
-        //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
         $I->updateConfigInDatabase('blConfirmAGB', false);
     }
 
@@ -443,7 +429,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->updateConfigInDatabase('blConfirmAGB', false);
     }
 
@@ -470,7 +456,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->updateConfigInDatabase('blConfirmAGB', false);
     }
 
@@ -497,7 +483,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->updateConfigInDatabase('blConfirmAGB', false);
     }
 
@@ -525,8 +511,6 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($orders['id'], $orderId);
         $I->assertEquals($orders['cost']['total'], 41.3);
 
-        //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
         $I->updateConfigInDatabase('blConfirmAGB', false);
     }
 
@@ -552,7 +536,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
     }
 
     /**
@@ -659,7 +643,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         );
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->updateConfigInDatabase('iMinOrderPrice', '0', 'str');
     }
 
@@ -686,7 +670,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         );
 
         //remove basket
-        $this->removeBasket($I, $basketId, self::USERNAME);
+        $this->removeBasket($I, $basketId);
         $I->updateInDatabase('oxarticles', ['oxstock' => '15', 'oxstockflag' => '1'], ['oxid' => self::PRODUCT_ID]);
     }
 
@@ -703,6 +687,9 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //place the order
         $result = $this->placeOrder($I, $basketId);
         $I->assertSame('Delivery set must be selected!', $result['errors'][0]['message']);
+
+        //remove basket
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithoutPaymentMethod(AcceptanceTester $I): void
@@ -719,6 +706,9 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //place the order
         $result = $this->placeOrder($I, $basketId);
         $I->assertSame('Payment must be selected!', $result['errors'][0]['message']);
+
+        //remove basket
+        $this->removeBasket($I, $basketId);
     }
 
     public function placeOrderWithNewlyRegisteredCustomer(AcceptanceTester $I): void

@@ -56,6 +56,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
     {
         parent::_before($I, $scenario);
 
+        $I->updateInDatabase('oxarticles', ['oxstock' => '15', 'oxstockflag' => '1'], ['oxid' => self::PRODUCT_ID]);
         $I->updateConfigInDatabase('blPerfNoBasketSaving', false, 'bool');
         $I->updateConfigInDatabase('blCalculateDelCostIfNotLoggedIn', false, 'bool');
         $I->updateConfigInDatabase('iVoucherTimeout', 10800, 'int'); // matches default value
@@ -117,6 +118,8 @@ abstract class PlaceOrderBaseCest extends BaseCest
         ';
 
         $result = $this->getGQLResponse($I, $mutation, $variables);
+
+        $I->assertCount(1, $result['data']['basketAddItem']['items']);
 
         return $result['data']['basketAddItem']['items'];
     }
@@ -284,10 +287,8 @@ abstract class PlaceOrderBaseCest extends BaseCest
         return $this->getGQLResponse($I, $mutation, $variables);
     }
 
-    protected function removeBasket(AcceptanceTester $I, string $basketId, string $username): void
+    protected function removeBasket(AcceptanceTester $I, string $basketId): void
     {
-        $I->login($username, self::PASSWORD);
-
         $variables = [
             'basketId' => new ID($basketId),
         ];
