@@ -17,6 +17,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group address
  * @group oe_graphql_storefront
+ * @group wip
  */
 final class InvoiceAddressCest extends BaseCest
 {
@@ -61,6 +62,9 @@ final class InvoiceAddressCest extends BaseCest
         );
     }
 
+    /**
+     * @group wip
+     */
     public function testInvoiceAddressForNotLoggedInUser(AcceptanceTester $I): void
     {
         $I->sendGQLQuery('query {
