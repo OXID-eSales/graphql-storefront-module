@@ -1,7 +1,6 @@
 # suite config
 actor: AcceptanceTester
 path: Acceptance
-bootstrap: ../../../../source/bootstrap.php
 modules:
   enabled:
     - Asserts
