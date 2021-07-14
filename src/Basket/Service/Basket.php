@@ -22,6 +22,7 @@ use OxidEsales\GraphQL\Storefront\Address\Service\DeliveryAddress as DeliveryAdd
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerDataType;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketDeliveryMethods;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketPayments;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
@@ -464,6 +465,16 @@ final class Basket
      */
     public function getBasketDeliveryMethods(ID $basketId): array
     {
+        $event = new BeforeBasketDeliveryMethods($basketId);
+        $this->eventDispatcher->dispatch(
+            BeforeBasketDeliveryMethods::NAME,
+            $event
+        );
+
+        if ($event->getDeliveryMethods() !== null) {
+            return $event->getDeliveryMethods();
+        }
+
         $basket   = $this->getAuthenticatedCustomerBasket($basketId);
         $customer = $this->customerService->customer((string) $basket->getUserId()->val());
         $country  = $this->getBasketDeliveryCountryId($basket);
@@ -480,12 +491,15 @@ final class Basket
      */
     public function getBasketPayments(ID $basketId): array
     {
+        $event = new BeforeBasketPayments($basketId);
         $this->eventDispatcher->dispatch(
             BeforeBasketPayments::NAME,
-            new BeforeBasketPayments(
-                $basketId
-            )
+            $event
         );
+
+        if ($event->getPayments() !== null) {
+            return $event->getPayments();
+        }
 
         $basket   = $this->getAuthenticatedCustomerBasket($basketId);
         $customer = $this->customerService->customer((string) $basket->getUserId()->val());
