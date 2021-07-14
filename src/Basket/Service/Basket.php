@@ -22,8 +22,8 @@ use OxidEsales\GraphQL\Storefront\Address\Service\DeliveryAddress as DeliveryAdd
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerDataType;
-use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketDeliveryMethods;
 use OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketDeliveryMethods;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketPayments;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
