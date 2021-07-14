@@ -9,19 +9,19 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
-use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
+use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod;
 use Symfony\Contracts\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class BeforeBasketPayments extends Event
+final class BeforeBasketDeliveryMethods extends Event
 {
     public const NAME = self::class;
 
     /** @var ID */
     private $basketId;
 
-    /** @var null|BasketPayment[] */
-    private $payments;
+    /** @var null|BasketDeliveryMethod[] */
+    private $deliveryMethods;
 
     /**
      * BeforePlaceOrder constructor.
@@ -37,15 +37,15 @@ final class BeforeBasketPayments extends Event
     }
 
     /**
-     * @return null|BasketPayment[]
+     * @return null|BasketDeliveryMethod[]
      */
-    public function getPayments(): ?array
+    public function getDeliveryMethods(): ?array
     {
-        return $this->payments;
+        return $this->deliveryMethods;
     }
 
-    public function setPayments(?array $payments = null): void
+    public function setDeliveryMethods(?array $deliveryMethods = null): void
     {
-        $this->payments = $payments;
+        $this->deliveryMethods = $deliveryMethods;
     }
 }
