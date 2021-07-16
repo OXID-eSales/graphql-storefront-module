@@ -23,8 +23,10 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeAddItem;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketDeliveryMethods;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketPayments;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketRemove;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
@@ -198,16 +200,19 @@ final class Basket
      */
     public function remove(ID $id): bool
     {
-        $id = (string) $id;
+        $this->eventDispatcher->dispatch(
+            new BeforeBasketRemove($id),
+            BeforeBasketRemove::NAME
+        );
 
-        $basket = $this->basketRepository->getBasketById($id);
+        $basket = $this->basketRepository->getBasketById($id->val());
 
         //user can remove only his own baskets unless otherwise authorized
         if (
             $this->authorizationService->isAllowed('DELETE_BASKET')
             || $basket->belongsToUser($this->authenticationService->getUserId())
         ) {
-            $vouchers = $this->voucherRepository->getBasketVouchers($id);
+            $vouchers = $this->voucherRepository->getBasketVouchers($id->val());
 
             /** @var VoucherDataType $voucher */
             foreach ($vouchers as $voucher) {
@@ -243,6 +248,11 @@ final class Basket
 
     public function addBasketItem(ID $basketId, ID $productId, float $amount): BasketDataType
     {
+        $this->eventDispatcher->dispatch(
+            new BeforeAddItem($basketId, $productId, $amount),
+            BeforeAddItem::NAME
+        );
+
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
         $this->productService->product($productId);
@@ -259,8 +269,6 @@ final class Basket
 
     public function removeBasketItem(ID $basketId, ID $basketItemId, float $amount): BasketDataType
     {
-        $basket = $this->getAuthenticatedCustomerBasket($basketId);
-
         $event = new BeforeRemoveItem(
             $basketId,
             $basketItemId,
