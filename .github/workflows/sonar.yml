@@ -2,7 +2,7 @@ name: Sonar
 
 on:
     schedule:
-        - cron:  '15 0 * * *'
+        - cron:  '15 0 * * 6'
 
 env:
     DEFAULT_COMPOSER_FLAGS: --no-interaction --no-ansi --no-progress --no-suggest --prefer-dist --no-plugins
