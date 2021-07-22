@@ -11,11 +11,11 @@ namespace OxidEsales\GraphQL\Storefront\Review\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopArticleModel;
 use OxidEsales\Eshop\Application\Model\Rating as EshopRatingModel;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
 use PDO;
-use function getViewName;
 
 final class Repository
 {
@@ -90,8 +90,10 @@ final class Repository
     private function ratingForReview(ReviewDataType $review): EshopRatingModel
     {
         $queryBuilder = $this->queryBuilderFactory->create();
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+
         $queryBuilder->select('ratings.*')
-            ->from(getViewName('oxratings'), 'ratings')
+            ->from($tableViewNameGenerator->getViewName('oxratings'), 'ratings')
             ->where('oxuserid = :userid')
             ->andWhere('oxobjectid = :object')
             ->andWhere('oxrating = :rating')

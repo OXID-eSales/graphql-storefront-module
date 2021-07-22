@@ -53,7 +53,7 @@ class Basket extends Basket_parent
 
     public function getBasketDeliveryCost(): EshopPrice
     {
-        return $this->_calcDeliveryCost();
+        return $this->calcDeliveryCost();
     }
 
     /**

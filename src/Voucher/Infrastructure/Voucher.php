@@ -113,7 +113,7 @@ final class Voucher
         /** @var StorefrontVoucherModel $voucherModel */
         $voucherModel = $voucher->getEshopModel();
 
-        if (!$voucherModel->isProductVoucher()) {
+        if (!$voucherModel->isForProduct()) {
             return;
         }
 
@@ -128,7 +128,7 @@ final class Voucher
         /** @var StorefrontVoucherModel $voucherModel */
         $voucherModel = $voucher->getEshopModel();
 
-        if (!$voucherModel->isCategoryVoucher()) {
+        if (!$voucherModel->isForCategory()) {
             return;
         }
 
@@ -143,7 +143,7 @@ final class Voucher
         /** @var StorefrontVoucherModel $voucherModel */
         $voucherModel = $voucher->getEshopModel();
 
-        $discountModel = $voucherModel->getSerieDiscount();
+        $discountModel = $voucherModel->getDiscountFromSerie();
         $basketModel   = $this->sharedBasketInfrastructure->getBasket($basket);
         $items         = $basketModel->getContents();
 

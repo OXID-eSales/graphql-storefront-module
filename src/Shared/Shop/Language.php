@@ -19,6 +19,6 @@ class Language extends Language_parent
 {
     public function getTranslationKeys(int $languageId): array
     {
-        return $this->_getLanguageFileData(false, $languageId);
+        return $this->getLanguageFileData(false, $languageId);
     }
 }

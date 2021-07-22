@@ -74,7 +74,7 @@ final class TestEshopBasketModel extends EshopBasketModel
     public function saveAsUserBasket(string $title): string
     {
         $this->enableSaveToDataBase();
-        $this->_save();
+        $this->save();
 
         $userBasketModel = $this->getUser()->getBasket('savedbasket');
         $userBasketModel->assign(

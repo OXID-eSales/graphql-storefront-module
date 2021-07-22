@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Infrastructure;
 use Doctrine\DBAL\FetchMode;
 use OxidEsales\Eshop\Application\Model\UserBasket as UserBasketEshopModel;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Base\DataType\IDFilter;
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
@@ -25,7 +26,6 @@ use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
 use PDO;
 use TheCodingMachine\GraphQLite\Types\ID;
-use function getViewName;
 
 final class Repository
 {
@@ -123,11 +123,12 @@ final class Repository
     public function publicBasketsByOwnerNameOrEmail(string $search): array
     {
         $baskets = [];
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder->select('userbaskets.*')
-                     ->from(getViewName('oxuserbaskets'), 'userbaskets')
-                     ->innerJoin('userbaskets', getViewName('oxuser'), 'users', 'users.oxid = userbaskets.oxuserid')
+                     ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
+                     ->innerJoin('userbaskets', $tableViewNameGenerator->getViewName('oxuser'), 'users', 'users.oxid = userbaskets.oxuserid')
                      ->where('userbaskets.oxpublic = 1')
                      ->andWhere("userbaskets.OXTITLE != 'savedbasket'")
                      ->andWhere("userbaskets.OXTITLE != 'noticelist'")
@@ -160,11 +161,12 @@ final class Repository
     private function getCustomerBasketIds(ID $customerId): array
     {
         $queryBuilder = $this->queryBuilderFactory->create();
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         /** @var \Doctrine\DBAL\Driver\Statement $execute */
         $execute =  $queryBuilder
             ->select('oxid')
-            ->from(getViewName('oxuserbaskets'), 'userbaskets')
+            ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
             ->where('oxuserid = :customerId')
             ->setParameter(':customerId', $customerId)
             ->execute();

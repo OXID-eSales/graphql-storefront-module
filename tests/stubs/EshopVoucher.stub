@@ -16,7 +16,7 @@ final class Voucher
     /**
      * @return Discount
      */
-    private function _getSerieDiscount()
+    private function getSerieDiscount()
     {
     }
 }
