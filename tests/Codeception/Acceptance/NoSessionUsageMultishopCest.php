@@ -87,9 +87,6 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
 
     public function testSubshopIdFromSessionCookie(AcceptanceTester $I): void
     {
-        //TODO: Fix this test
-        $I->markTestSkipped('Something changed in the session handling of the shop. Now it really doesnt create session if skipSession param given.');
-
         $I->sendGQLQuery(
             'query{
                 product(productId: "' . self::SUBSHOP_PRODUCT_ID . '") {
@@ -191,7 +188,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
 
     private function sendQueryWithSidCookieWithoutShopIdParameter(AcceptanceTester $I, string $query, string $sid): void
     {
-        $uri = '/graphql?lang=0';
+        $uri = '/widget.php?cl=graphql&lang=0';
 
         $rest = $I->getRest();
         $rest->haveHTTPHeader('Cookie', 'sid_key=oxid;sid=' . $sid);
