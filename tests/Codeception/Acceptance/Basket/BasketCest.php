@@ -301,7 +301,7 @@ final class BasketCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         //We have no user so delivery costs will not be calculated unless blCalculateDelCostIfNotLoggedIn is set
-        $this->assertCost($I, $result['data']['basket']['cost'], 0.0);
+        $this->assertCost($I, $result['data']['basket']['cost'], 3.9);
     }
 
     protected function boolDataProvider(): array
