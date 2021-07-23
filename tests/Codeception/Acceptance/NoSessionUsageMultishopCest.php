@@ -131,6 +131,29 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
             $result['errors'][0]['message']
         );
+
+        //now use the uri which automatically gets the skipSession attached in .htaccess
+        //ShopId is not detected as cookie is ignored, so we end up in shop 1 with missing product
+        $this->sendQueryWithSidCookieWithoutShopIdParameter(
+            $I,
+            'query{
+                product(productId: "' . self::SUBSHOP_PRODUCT_ID . '") {
+                    id
+                    title
+                }
+            }',
+            $sid,
+            '/graphql?lang=0'
+        );
+
+        //We prevent graphql from processing any request with already started session
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'Product was not found by id: ' . self::SUBSHOP_PRODUCT_ID,
+            $result['errors'][0]['message']
+        );
     }
 
     private function getSubShopSessionId(AcceptanceTester $I): string
@@ -186,10 +209,13 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         ]);
     }
 
-    private function sendQueryWithSidCookieWithoutShopIdParameter(AcceptanceTester $I, string $query, string $sid): void
+    private function sendQueryWithSidCookieWithoutShopIdParameter(
+        AcceptanceTester $I,
+        string $query,
+        string $sid,
+        string $uri = '/widget.php?cl=graphql&lang=0'
+    ): void
     {
-        $uri = '/widget.php?cl=graphql&lang=0';
-
         $rest = $I->getRest();
         $rest->haveHTTPHeader('Cookie', 'sid_key=oxid;sid=' . $sid);
         $rest->haveHTTPHeader('Content-Type', 'application/json');
