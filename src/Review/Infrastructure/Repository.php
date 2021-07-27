@@ -89,7 +89,7 @@ final class Repository
      */
     private function ratingForReview(ReviewDataType $review): EshopRatingModel
     {
-        $queryBuilder = $this->queryBuilderFactory->create();
+        $queryBuilder           = $this->queryBuilderFactory->create();
         $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         $queryBuilder->select('ratings.*')

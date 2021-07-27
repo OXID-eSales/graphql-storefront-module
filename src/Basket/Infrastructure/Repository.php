@@ -122,7 +122,7 @@ final class Repository
      */
     public function publicBasketsByOwnerNameOrEmail(string $search): array
     {
-        $baskets = [];
+        $baskets                = [];
         $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         $queryBuilder = $this->queryBuilderFactory->create();
@@ -160,7 +160,7 @@ final class Repository
 
     private function getCustomerBasketIds(ID $customerId): array
     {
-        $queryBuilder = $this->queryBuilderFactory->create();
+        $queryBuilder           = $this->queryBuilderFactory->create();
         $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         /** @var \Doctrine\DBAL\Driver\Statement $execute */
