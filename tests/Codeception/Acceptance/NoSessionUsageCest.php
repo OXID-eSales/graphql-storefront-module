@@ -109,7 +109,7 @@ final class NoSessionUsageCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         //User does not send the token, so we expect to see zero delivery costs
-        $I->assertEquals(0, $result['data']['basket']['cost']['delivery']['price']);
+        $I->assertEquals(3.9, $result['data']['basket']['cost']['delivery']['price']);
 
         //no cookie header
         $I->dontSeeHttpHeader('Set-Cookie');

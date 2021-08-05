@@ -51,7 +51,7 @@ final class Basket
         }
 
         $user = oxNew(EshopUserModel::class);
-        $user->load($basket->getUserId());
+        $user->load((string) $basket->getUserId());
 
         //Set user to basket otherwise delivery cost will not be calculated
         $basketModel->setUser($user);
