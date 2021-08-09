@@ -57,15 +57,24 @@ jobs:
                   docker-compose exec -T --user oxid php php bin/oe-console oe:module:activate oe_graphql_storefront
                   docker-compose exec -T --user oxid php composer require codeception/c3 --dev
                   sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' source/bootstrap.php
-                  docker-compose exec -T --user oxid -e MODULE_IDS=oe_graphql_base,oe_graphql_storefront -e RUN_TESTS_FOR_SHOP=0 -e RUN_TESTS_FOR_MODULES=1 -e ACTIVATE_ALL_MODULES=1 php vendor/bin/runtests-codeception --coverage-xml --group=wip
+                  docker-compose exec -T --user oxid -e MODULE_IDS=oe_graphql_base,oe_graphql_storefront -e RUN_TESTS_FOR_SHOP=0 -e RUN_TESTS_FOR_MODULES=1 -e ACTIVATE_ALL_MODULES=1 php vendor/bin/runtests-codeception --coverage-phpunit --group=wip
 
-            - name: Fix codeception coverage report
+            - name: Unit Tests
               continue-on-error: true
               run: |
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
-                  sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\///' vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/coverage.xml
-                  cp vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/coverage.xml $GITHUB_WORKSPACE/artifact/coverage.xml
-                  ls $GITHUB_WORKSPACE/artifact/
+                  mkdir $GITHUB_WORKSPACE/artifact/phpunit/
+                  docker-compose exec -T --user oxid -e MODULE_IDS=oe_graphql_base,oe_graphql_storefront -e RUN_TESTS_FOR_SHOP=0 -e RUN_TESTS_FOR_MODULES=0 -e ACTIVATE_ALL_MODULES=1 -e ADDITIONAL_TEST_PATHS='/var/www/oxideshop/vendor/oxid-esales/graphql-storefront/tests' php php vendor/bin/runtests --coverage-php=covs/unit.cov AllTestsUnit
+
+            - name: Collect and merge coverage reports
+              continue-on-error: true
+              run: |
+                  cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
+                  mv vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/coverage.serialized covs/codeception.cov
+                  wget https://phar.phpunit.de/phpcov.phar
+                  docker-compose exec -T --user oxid php php phpcov.phar merge --clover covs/coverage.xml covs
+                  sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\///' covs/coverage.xml
+                  cp covs/coverage.xml $GITHUB_WORKSPACE/artifact/
 
             - name: Archive code coverage results
               uses: actions/upload-artifact@v2
