@@ -1,11 +1,8 @@
 name: Sonar
 
 on:
-    schedule:
-        - cron:  '15 0 * * 6'
-
-env:
-    DEFAULT_COMPOSER_FLAGS: --no-interaction --no-ansi --no-progress --no-suggest --prefer-dist --no-plugins
+    push:
+        branches: [ 'sonar-fixup' ]
 
 jobs:
     build:
@@ -27,31 +24,6 @@ jobs:
                   sudo swapon /swapfile
                   sudo swapon --show
 
-            - name: Setup PHP
-              uses: shivammathur/setup-php@v2
-              with:
-                  php-version: ${{ matrix.php }}
-                  coverage: xdebug
-                  extensions: gd, zip
-
-
-            - name: Get composer cache directory
-              id: composer-cache
-              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-            - name: Cache dependencies
-              uses: actions/cache@v2
-              with:
-                  path: ${{ steps.composer-cache.outputs.dir }}
-                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                  restore-keys: ${{ runner.os }}-composer-
-
-            - name: Install dependencies
-              run: composer update $DEFAULT_COMPOSER_FLAGS
-
-            - name: Generated Unified Namespace
-              run: ./vendor/bin/oe-eshop-unified_namespace_generator
-
             - name: Build docker
               run: |
                   cd /home/runner/work/
@@ -60,57 +32,56 @@ jobs:
                   make .env
                   sed "s/PHP_VERSION=.*/PHP_VERSION=${{ matrix.php }}/" -i .env
                   git clone https://github.com/OXID-eSales/oxideshop_ce.git data/oxideshop
-                  cd data/oxideshop
-                  git checkout 93f5fb9ebbf230816f4f2655f2b60817cd8598fb
-                  cd ../..
                   mkdir data/oxideshop/debug
                   make permissions
-                  make data/oxideshop/vendor/
+                  docker-compose run -T --rm --no-deps --user oxid php composer update
                   make data/oxideshop/source/config.inc.php
                   docker-compose up -d php
                   sleep 10
                   mkdir $GITHUB_WORKSPACE/artifact
                   make reset-db
 
-            - name: Prepare shop and run codeception in docker
+            - name: Prepare shop
               continue-on-error: true
               run: |
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
+                  mkdir covs
                   cp -r $GITHUB_WORKSPACE graphql-storefront-module
+                  docker-compose exec -T --user oxid php php vendor/bin/oe-eshop-unified_namespace_generator
                   docker-compose exec -T --user oxid php composer config repositories.grapqhl-storefront path ./graphql-storefront-module/
                   docker-compose exec -T --user oxid php composer require oxid-esales/graphql-storefront:*
-                  docker-compose exec -T --user oxid php composer require codeception/module-rest:*
-                  docker-compose exec -T --user oxid php composer require codeception/module-phpbrowser --dev
                   docker-compose exec -T --user oxid php php bin/oe-console oe:module:install vendor/oxid-esales/graphql-base/
                   docker-compose exec -T --user oxid php php bin/oe-console oe:module:install vendor/oxid-esales/graphql-storefront/
                   docker-compose exec -T --user oxid php php bin/oe-console oe:module:activate oe_graphql_base
                   docker-compose exec -T --user oxid php php bin/oe-console oe:module:activate oe_graphql_storefront
-                  docker-compose exec -T --user oxid php composer require codeception/c3 --dev
-                  sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' source/bootstrap.php
-                  docker-compose exec -T --user oxid -e MODULE_IDS=oe_graphql_base,oe_graphql_storefront -e RUN_TESTS_FOR_SHOP=0 -e RUN_TESTS_FOR_MODULES=1 -e ACTIVATE_ALL_MODULES=1 php vendor/bin/runtests-codeception --coverage-xml
 
-            - name: Fix codeception coverage report
+            - name: Run Codeception tests
               continue-on-error: true
               run: |
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
-                  sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\///' vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/coverage.xml
-                  cp vendor/oxid-esales/graphql-storefront/tests/Codeception/_output/coverage.xml $GITHUB_WORKSPACE/artifact/coverage.xml
-                  ls $GITHUB_WORKSPACE/artifact/
+                  docker-compose exec -T --user oxid php composer require codeception/c3 --dev
+                  docker-compose exec -T --user oxid php composer require codeception/module-rest:*
+                  docker-compose exec -T --user oxid php composer require codeception/module-phpbrowser --dev
+                  sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' source/bootstrap.php
+                  docker-compose exec -T --user oxid -e MODULE_IDS=oe_graphql_base,oe_graphql_storefront -e RUN_TESTS_FOR_SHOP=0 -e RUN_TESTS_FOR_MODULES=0 -e ACTIVATE_ALL_MODULES=1 -e ADDITIONAL_TEST_PATHS='/var/www/oxideshop/vendor/oxid-esales/graphql-storefront/tests' php vendor/bin/runtests-codeception --coverage-phpunit --group=wip
 
-            #            - name: Unit Tests
-            #              continue-on-error: true
-            #              run: |
-            #                  cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
-            #                  mkdir $GITHUB_WORKSPACE/artifact/phpunit/
-            #                  docker-compose exec -T --user oxid -e MODULE_IDS=oe_graphql_base,oe_graphql_storefront -e RUN_TESTS_FOR_SHOP=0 -e RUN_TESTS_FOR_MODULES=0 -e ACTIVATE_ALL_MODULES=1 php php vendor/bin/runtests /var/www/oxideshop/vendor/oxid-esales/graphql_storefront/tests AllTestsUnit  --coverage-xml=/var/www/oxideshop/Coverage/ -d memory_limit=-1
+            - name: Unit Tests
+              continue-on-error: true
+              run: |
+                  cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
+                  mkdir $GITHUB_WORKSPACE/artifact/phpunit/
+                  docker-compose exec -T --user oxid -e MODULE_IDS=oe_graphql_base,oe_graphql_storefront -e RUN_TESTS_FOR_SHOP=0 -e RUN_TESTS_FOR_MODULES=0 -e ACTIVATE_ALL_MODULES=1 -e ADDITIONAL_TEST_PATHS='/var/www/oxideshop/vendor/oxid-esales/graphql-storefront/tests' php php vendor/bin/runtests --coverage-php=covs/unit.cov AllTestsUnit
 
-            #            - name: Fix unit test coverage report
-            #              continue-on-error: true
-            #              run: |
-            #                  cp -R /home/runner/work/docker-eshop-sdk/data/oxideshop/Coverage $GITHUB_WORKSPACE/artifact/
-            #                  ls -alh $GITHUB_WORKSPACE/artifact/
-            #                  ls -alh $GITHUB_WORKSPACE/artifact/Coverage
-            #                  sed -i 's/\/home\/runner\/work\/graphql-storefront-module\/graphql-storefront-module\///' $GITHUB_WORKSPACE/artifact/clover.xml
+            - name: Collect and merge coverage reports
+              continue-on-error: true
+              run: |
+                  cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
+                  ls -alh graphql-storefront-module/tests/Codeception/_output/
+                  cp graphql-storefront-module/tests/Codeception/_output/coverage.serialized covs/codeception.cov
+                  wget https://phar.phpunit.de/phpcov.phar
+                  docker-compose exec -T --user oxid php php phpcov.phar merge --clover covs/coverage.xml covs
+                  sed -i 's/\/var\/www\/oxideshop\/graphql-storefront-module\///' covs/coverage.xml
+                  cp covs/coverage.xml $GITHUB_WORKSPACE/artifact/
 
             - name: Archive code coverage results
               uses: actions/upload-artifact@v2
