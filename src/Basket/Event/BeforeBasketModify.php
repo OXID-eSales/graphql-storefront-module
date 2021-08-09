@@ -15,8 +15,11 @@ use TheCodingMachine\GraphQLite\Types\ID;
 final class BeforeBasketModify extends Event implements BasketModifyInterface
 {
     public const TYPE_NOT_SPECIFIED = 0;
+
     public const TYPE_SET_DELIVERY_ADDRESS = 1;
+
     public const TYPE_SET_DELIVERY_METHOD = 2;
+
     public const TYPE_SET_PAYMENT_METHOD = 3;
 
     /** @var ID */
@@ -30,7 +33,7 @@ final class BeforeBasketModify extends Event implements BasketModifyInterface
         int $type = self::TYPE_NOT_SPECIFIED
     ) {
         $this->basketId = $basketId;
-        $this->type = $type;
+        $this->type     = $type;
     }
 
     public function getBasketId(): ID

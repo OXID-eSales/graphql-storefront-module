@@ -59,8 +59,12 @@ final class Basket
             $basketModel->applyVoucher($voucher->getEshopModel()->getId());
         }
 
-        $basketModel->setPayment($userBasketModel->getFieldData('oegql_paymentid'));
-        $basketModel->setShipping($userBasketModel->getFieldData('oegql_deliverymethodid'));
+        $basketModel->setPayment((string) $basket->getPaymentId());
+        $basketModel->setShipping((string) $basket->getDeliveryMethodId());
+
+        if ($basket->getDeliveryAddressId()->val()) {
+            EshopRegistry::getSession()->setVariable('deladrid', $basket->getDeliveryAddressId()->val());
+        }
 
         //reset in case we hit Basket::calculateBasket() more than once
         EshopRegistry::set(EshopDeliverySetListModel::class, null);

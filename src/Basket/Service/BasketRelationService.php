@@ -31,7 +31,6 @@ use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRepository;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
-use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @ExtendType(class=Basket::class)
@@ -120,9 +119,9 @@ final class BasketRelationService
      */
     public function deliveryAddress(Basket $basket): ?DeliveryAddress
     {
-        $addressId = new ID((string) $basket->getEshopModel()->getFieldData('oegql_deladdressid'));
+        $addressId = $basket->getDeliveryAddressId();
 
-        if (empty($addressId)) {
+        if (empty($addressId->val())) {
             return null;
         }
 
@@ -142,14 +141,14 @@ final class BasketRelationService
      */
     public function payment(Basket $basket): ?Payment
     {
-        $paymentId = (string) $basket->getEshopModel()->getFieldData('oegql_paymentid');
+        $paymentId = $basket->getPaymentId()->val();
 
         if (empty($paymentId)) {
             return null;
         }
 
         try {
-            $payment = $this->paymentService->payment($paymentId);
+            $payment = $this->paymentService->payment((string) $paymentId);
         } catch (PaymentNotFound $e) {
             $payment = null;
         }
@@ -164,7 +163,7 @@ final class BasketRelationService
      */
     public function deliveryMethod(Basket $basket): ?DeliveryMethod
     {
-        $deliveryMethodId = (string) $basket->getEshopModel()->getFieldData('oegql_deliverymethodid');
+        $deliveryMethodId = (string) $basket->getDeliveryMethodId();
 
         if (empty($deliveryMethodId)) {
             return null;

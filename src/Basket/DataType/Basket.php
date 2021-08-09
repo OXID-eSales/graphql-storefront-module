@@ -98,6 +98,27 @@ final class Basket implements DataType
         );
     }
 
+    public function getDeliveryAddressId(): ID
+    {
+        return new ID(
+            (string) $this->basket->getFieldData('oegql_deladdressid')
+        );
+    }
+
+    public function getDeliveryMethodId(): ID
+    {
+        return new ID(
+            (string) $this->basket->getFieldData('oegql_deliverymethodid')
+        );
+    }
+
+    public function getPaymentId(): ID
+    {
+        return new ID(
+            (string) $this->basket->getFieldData('oegql_paymentid')
+        );
+    }
+
     public function belongsToUser(string $userId): bool
     {
         $eventDispatcher = ContainerFactory::getInstance()
