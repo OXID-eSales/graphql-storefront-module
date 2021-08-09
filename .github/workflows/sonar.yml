@@ -58,6 +58,7 @@ jobs:
             - name: Run Codeception tests
               continue-on-error: true
               run: |
+                  cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
                   docker-compose exec -T --user oxid php composer require codeception/c3 --dev
                   docker-compose exec -T --user oxid php composer require codeception/module-rest:*
                   docker-compose exec -T --user oxid php composer require codeception/module-phpbrowser --dev
