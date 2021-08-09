@@ -2,7 +2,7 @@ name: Sonar
 
 on:
     push:
-        branches: [ 'sonar-fixup' ]
+        branches: [ 'master' ]
 
 jobs:
     build:
