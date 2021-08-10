@@ -1,8 +1,8 @@
 name: Sonar
 
 on:
-    push:
-        branches: [ 'master' ]
+    schedule:
+        - cron:  '15 0 * * 6'
 
 jobs:
     build:
