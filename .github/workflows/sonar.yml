@@ -31,7 +31,7 @@ jobs:
                   cd docker-eshop-sdk
                   make .env
                   sed "s/PHP_VERSION=.*/PHP_VERSION=${{ matrix.php }}/" -i .env
-                  git clone https://github.com/OXID-eSales/oxideshop_ce.git data/oxideshop
+                  git clone -b b-7.0 https://github.com/OXID-eSales/oxideshop_ce.git data/oxideshop
                   mkdir data/oxideshop/debug
                   make permissions
                   docker-compose run -T --rm --no-deps --user oxid php composer update
