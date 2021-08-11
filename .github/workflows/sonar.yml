@@ -47,6 +47,7 @@ jobs:
                   cd /home/runner/work/docker-eshop-sdk/data/oxideshop/
                   mkdir covs
                   cp -r $GITHUB_WORKSPACE graphql-storefront-module
+                  sed -i "1s/^/php_flag display_errors off\nphp_value xdebug.max_nesting_level 1000\n\n/" source/.htaccess
                   docker-compose exec -T --user oxid php php vendor/bin/oe-eshop-unified_namespace_generator
                   docker-compose exec -T --user oxid php composer config repositories.grapqhl-storefront path ./graphql-storefront-module/
                   docker-compose exec -T --user oxid php composer require oxid-esales/graphql-storefront:*
