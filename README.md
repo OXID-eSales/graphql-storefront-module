@@ -2,9 +2,12 @@
 
 [![Build Status](https://img.shields.io/github/workflow/status/OXID-eSales/graphql-storefront-module/CI?logo=github-actions&style=for-the-badge)](https://github.com/OXID-eSales/graphql-storefront-module/actions)
 
-[![Stable Version](https://img.shields.io/packagist/v/OXID-eSales/graphql-storefront?style=for-the-badge&logo=composer&label=stable)](https://packagist.org/packages/oxid-esales/graphql-storefront)
-[![Latest Version](https://img.shields.io/packagist/v/OXID-eSales/graphql-storefront?style=for-the-badge&logo=composer&label=latest&include_prereleases&color=orange)](https://packagist.org/packages/oxid-esales/graphql-storefront)
-[![PHP Version](https://img.shields.io/packagist/php-v/oxid-esales/graphql-storefront?style=for-the-badge)](https://github.com/oxid-esales/graphql-storefront-module)
+[![Latest Version](https://img.shields.io/packagist/v/OXID-eSales/graphql-storefront?logo=composer&label=latest&include_prereleases&color=orange)](https://packagist.org/packages/oxid-esales/graphql-storefront)
+[![PHP Version](https://img.shields.io/packagist/php-v/oxid-esales/graphql-storefront)](https://github.com/oxid-esales/graphql-storefront-module)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=OXID-eSales_graphql-storefront-module&metric=alert_status)](https://sonarcloud.io/dashboard?id=OXID-eSales_graphql-storefront-module)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=OXID-eSales_graphql-storefront-module&metric=coverage)](https://sonarcloud.io/dashboard?id=OXID-eSales_graphql-storefront-module)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=OXID-eSales_graphql-storefront-module&metric=sqale_index)](https://sonarcloud.io/dashboard?id=OXID-eSales_graphql-storefront-module)
 
 This module provides [GraphQL](https://www.graphql.org) queries and mutations for the [OXID eShop](https://www.oxid-esales.com/) storefront.
 
