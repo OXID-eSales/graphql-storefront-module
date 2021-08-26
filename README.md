@@ -20,10 +20,10 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v6.5.0` co
 ```bash
 $ composer require oxid-esales/graphql-storefront
 
-$ ./bin/oe-console oe:module:install-configuration ./vendor/oxid-esales/graphql-base
-$ ./bin/oe-console oe:module:install-configuration ./vendor/oxid-esales/graphql-storefront
+$ ./vendor/bin/oe-console oe:module:install-configuration ./vendor/oxid-esales/graphql-base
+$ ./vendor/bin/oe-console oe:module:install-configuration ./vendor/oxid-esales/graphql-storefront
 
-$ vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
+$ ./vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
 ```
 
 If you didn't have the `oxid-esales/graphql-base` module installed, composer will do that for you.
@@ -31,8 +31,8 @@ If you didn't have the `oxid-esales/graphql-base` module installed, composer wil
 After installing the module, you need to activate it, either via OXID eShop admin or CLI.
 
 ```bash
-$ ./bin/oe-console oe:module:activate oe_graphql_base
-$ ./bin/oe-console oe:module:activate oe_graphql_storefront
+$ ./vendor/bin/oe-console oe:module:activate oe_graphql_base
+$ ./vendor/bin/oe-console oe:module:activate oe_graphql_storefront
 ```
 
 ## Branch Compatibility
