@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\Controller;
 
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
+use OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket as PublicBasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
 use OxidEsales\GraphQL\Storefront\Basket\Service\PlaceOrder as PlaceOrderService;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
@@ -103,10 +104,11 @@ final class Basket
 
     /**
      * Argument `owner` will be matched exactly against lastname and / or email
+     * Query for public baskets by owner.
      *
      * @Query()
      *
-     * @return BasketDataType[]
+     * @return PublicBasketDataType[]
      */
     public function baskets(string $owner): array
     {

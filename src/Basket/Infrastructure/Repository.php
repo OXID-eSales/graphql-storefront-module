@@ -20,6 +20,7 @@ use OxidEsales\GraphQL\Base\DataType\StringFilter;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketByTitleAndUserIdFilterList;
+use OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket as PublicBasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
@@ -118,7 +119,7 @@ final class Repository
     }
 
     /**
-     * @return BasketDataType[]
+     * @return PublicBasketDataType[]
      */
     public function publicBasketsByOwnerNameOrEmail(string $search): array
     {
@@ -152,7 +153,7 @@ final class Repository
         foreach ($result as $row) {
             $newModel = clone $model;
             $newModel->assign($row);
-            $baskets[] = new BasketDataType($newModel);
+            $baskets[] = new PublicBasketDataType($newModel);
         }
 
         return $baskets;
