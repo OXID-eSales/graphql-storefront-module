@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - Unreleased
+
+### Added
+- ``OxidEsales\GraphQL\Storefront\Customer\Service::fetchCustomer`` is now public
+- New Events:
+  - ``AfterAddItem``
+  - ``BeforeAddItem``
+  - ``BeforeBasketDeliveryMethods``
+
+### Fixed
+- Fix incompatibilities for eShop 7.0
+- Extracted basket authorization block to be handled with event so can be easier overwritten if needed
+- Updated paths to bin directory in README [PR-5](https://github.com/OXID-eSales/graphql-storefront-module/pull/5)
+
 ## [1.1.0] - Unreleased
 
 ### Added
@@ -47,6 +61,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
+[2.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/b-6.x...master
+[1.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v1.0.0...b-6.x
 [1.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v1.0.0-rc1...v1.0.0
 [1.0.0-rc1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v0.1.0...v1.0.0-rc1
 [0.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/releases/tag/v0.1.0
