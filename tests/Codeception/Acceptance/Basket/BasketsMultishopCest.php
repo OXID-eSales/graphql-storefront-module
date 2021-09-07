@@ -73,7 +73,6 @@ final class BasketsMultishopCest extends MultishopBaseCest
                     }
                     id
                     title
-                    public
                     creationDate
                     lastUpdateDate
                 }
