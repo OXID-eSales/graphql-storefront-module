@@ -62,19 +62,6 @@ final class RelationService
         return $this->getCategoryById($category->getRootId());
     }
 
-    private function getCategoryById(ID $id): ?Category
-    {
-        try {
-            $result = $this->categoryService->category(
-                $id
-            );
-        } catch (InvalidLogin | CategoryNotFound $e) {
-            $result = null;
-        }
-
-        return $result;
-    }
-
     /**
      * @Field()
      *
@@ -124,5 +111,18 @@ final class RelationService
             $pagination,
             $sort ?? $defSort
         );
+    }
+
+    private function getCategoryById(ID $id): ?Category
+    {
+        try {
+            $result = $this->categoryService->category(
+                $id
+            );
+        } catch (InvalidLogin | CategoryNotFound $e) {
+            $result = null;
+        }
+
+        return $result;
     }
 }

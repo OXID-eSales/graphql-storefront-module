@@ -82,7 +82,7 @@ final class Customer
 
         $customer = $this->fetchCustomer($id);
 
-        if ($customer->getEshopModel()->checkIfEmailExists($email) == true) {
+        if ($customer->getEshopModel()->checkIfEmailExists($email)) {
             throw CustomerExists::byEmail($email);
         }
 

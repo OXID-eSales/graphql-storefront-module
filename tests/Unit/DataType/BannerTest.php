@@ -19,7 +19,7 @@ use PHPUnit\Framework\TestCase;
 final class BannerTest extends TestCase
 {
     /**
-     * @dataProvider testActiveDataProvider
+     * @dataProvider activeDataProvider
      *
      * @param mixed $active
      * @param mixed $from
@@ -37,7 +37,7 @@ final class BannerTest extends TestCase
         $this->assertSame($expected, $banner->isActive($now));
     }
 
-    public function testActiveDataProvider()
+    public function activeDataProvider()
     {
         return [
             [
