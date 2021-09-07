@@ -10,19 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Contact\Service;
 
 use OxidEsales\GraphQL\Storefront\Contact\DataType\ContactRequest as ContactRequestDataType;
-use OxidEsales\GraphQL\Storefront\Contact\Infrastructure\Contact as ContactInfrastructure;
 
-final class ContactRequest
+final class ContactRequest extends ContactInfrastructureAwareService
 {
-    /** @var ContactInfrastructure */
-    private $contactInfrastructure;
-
-    public function __construct(
-        ContactInfrastructure $contactInfrastructure
-    ) {
-        $this->contactInfrastructure = $contactInfrastructure;
-    }
-
     public function sendContactRequest(ContactRequestDataType $contactRequest): bool
     {
         return $this->contactInfrastructure->sendRequest($contactRequest);
