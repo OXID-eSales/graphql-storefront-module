@@ -25,6 +25,7 @@ use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @ExtendType(class=Category::class)
@@ -50,14 +51,7 @@ final class RelationService
      */
     public function getParent(Category $category): ?Category
     {
-        try {
-            return $this->categoryService->category(
-                $category->getParentId()
-            );
-        } catch (InvalidLogin | CategoryNotFound $e) {
-        }
-
-        return null;
+        return $this->getCategoryById($category->getParentId());
     }
 
     /**
@@ -65,14 +59,20 @@ final class RelationService
      */
     public function getRoot(Category $category): ?Category
     {
+        return $this->getCategoryById($category->getRootId());
+    }
+
+    private function getCategoryById(ID $id): ?Category
+    {
         try {
-            return $this->categoryService->category(
-                $category->getRootId()
+            $result = $this->categoryService->category(
+                $id
             );
         } catch (InvalidLogin | CategoryNotFound $e) {
+            $result = null;
         }
 
-        return null;
+        return $result;
     }
 
     /**
