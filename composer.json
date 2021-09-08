@@ -14,10 +14,10 @@
         }
     },
     "require": {
-        "php": "^7.1",
+        "php": "^7.3",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-b-6.2.x",
-        "oxid-esales/oxideshop-doctrine-migration-wrapper": "v3.1.1"
+        "oxid-esales/graphql-base": "dev-b-6.3.x",
+        "oxid-esales/oxideshop-doctrine-migration-wrapper": "^v3.2.0"
     },
     "conflict": {
         "oxid-esales/graphql-catalogue": "*",
