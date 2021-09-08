@@ -15,6 +15,12 @@ This module provides [GraphQL](https://www.graphql.org) queries and mutations fo
 
 This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v6.5.0` component, which is part of the `v6.2.0` compilation) up and running.
 
+## Branch compatibility
+
+* master branch is compatible with OXID eShop b-7.0 (which uses `graphql-base` master branch)
+* b-6.3.x branch is compatible with OXID eShop compilation b-6.3.x (which uses `graphql-base` b-6.3.x branch)
+* b-6.2.x branch is compatible with OXID eShop compilation b-6.2.x (which uses `graphql-base` b-6.2.x branch)
+
 ### Install
 
 ```bash
@@ -34,11 +40,6 @@ After installing the module, you need to activate it, either via OXID eShop admi
 $ ./vendor/bin/oe-console oe:module:activate oe_graphql_base
 $ ./vendor/bin/oe-console oe:module:activate oe_graphql_storefront
 ```
-
-## Branch Compatibility
-
-* master branch is compatible with OXID eShop compilation master (which uses `graphql-base` master branch)
-* b-6.x branch is compatible with OXID eShop compilation b-6.x (which uses `graphql-base` b-6.x branch)
 
 ### How to use
 
