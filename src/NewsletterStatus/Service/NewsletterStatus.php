@@ -96,7 +96,7 @@ final class NewsletterStatus
         $customer   = $this->NewsletterStatusRepository->createNewsletterUser($newsletterStatusSubscribe);
         $subscriber = new SubscriberType($customer->getEshopModel());
 
-        return $newsletterStatus = $this->NewsletterStatusRepository->subscribe(
+        return $this->NewsletterStatusRepository->subscribe(
             $subscriber,
             $newsletterStatusSubscribe->userId() ? false : true
         );

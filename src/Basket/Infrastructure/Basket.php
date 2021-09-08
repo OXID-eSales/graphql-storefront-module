@@ -187,7 +187,7 @@ final class Basket
         $result = [];
         /** @var EshopDeliverySetModel $deliverySet */
         foreach ($deliverySetListArray as $setKey => $deliverySet) {
-            [$allMethods, $activeShipSet, $paymentList] = $deliverySetList->getDeliverySetData(
+            [2 => $paymentList] = $deliverySetList->getDeliverySetData(
                 $setKey,
                 $userModel,
                 /** @phpstan-ignore-next-line */

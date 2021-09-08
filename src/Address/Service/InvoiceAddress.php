@@ -41,7 +41,7 @@ final class InvoiceAddress
 
     public function updateInvoiceAddress(InvoiceAddressDataType $invoiceAddress): InvoiceAddressDataType
     {
-        if (!$id = (string) $this->authenticationService->getUserId()) {
+        if (!$this->authenticationService->getUserId()) {
             throw new InvalidLogin('Unauthorized');
         }
 

@@ -10,22 +10,12 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Contact\Service;
 
 use OxidEsales\GraphQL\Storefront\Contact\DataType\ContactRequest;
-use OxidEsales\GraphQL\Storefront\Contact\Infrastructure\Contact as ContactInfrastructure;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
-final class ContactRequestInput
+final class ContactRequestInputFactory extends ContactInfrastructureAwareService
 {
-    /** @var ContactInfrastructure */
-    private $contactInfrastructure;
-
-    public function __construct(
-        ContactInfrastructure $contactInfrastructure
-    ) {
-        $this->contactInfrastructure = $contactInfrastructure;
-    }
-
     /**
-     * @Factory
+     * @Factory(name="ContactRequestInput")
      */
     public function fromUserInput(
         string $email = '',
