@@ -12,10 +12,10 @@ namespace OxidEsales\GraphQL\Storefront\Contact\Service;
 use OxidEsales\GraphQL\Storefront\Contact\DataType\ContactRequest;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
-final class ContactRequestInputFactory extends ContactInfrastructureAwareService
+final class ContactRequestInput extends ContactInfrastructureAwareService
 {
     /**
-     * @Factory(name="ContactRequestInput")
+     * @Factory
      */
     public function fromUserInput(
         string $email = '',
