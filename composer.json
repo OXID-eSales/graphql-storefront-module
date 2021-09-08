@@ -29,7 +29,7 @@
         "friendsofphp/php-cs-fixer": "^2.18.2",
         "php-parallel-lint/php-parallel-lint": "^1.1",
         "phpstan/phpstan": "^0.12.26",
-        "oxid-esales/oxideshop-ce": "^6.5",
+        "oxid-esales/oxideshop-ce": "dev-b-6.3.x",
         "oxid-esales/oxideshop-unified-namespace-generator": "^2.0",
         "qossmic/deptrac-shim": "^0.6.0|^0.9.0",
         "codeception/module-rest": "*",
