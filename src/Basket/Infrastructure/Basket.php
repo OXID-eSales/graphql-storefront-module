@@ -130,7 +130,7 @@ final class Basket
         return $this->repository->saveModel($model);
     }
 
-    public function setDeliveryAddress(BasketDataType $basket, string $deliveryAddressId): bool
+    public function setDeliveryAddress(BasketDataType $basket, ?string $deliveryAddressId = null): bool
     {
         $model = $basket->getEshopModel();
 

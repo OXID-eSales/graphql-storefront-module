@@ -144,7 +144,7 @@ final class Basket
      * @Mutation()
      * @Logged()
      */
-    public function basketSetDeliveryAddress(ID $basketId, ID $deliveryAddressId): BasketDataType
+    public function basketSetDeliveryAddress(ID $basketId, ?ID $deliveryAddressId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_ADDRESS);
         $this->eventDispatcher->dispatch($event);

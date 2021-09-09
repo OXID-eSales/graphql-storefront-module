@@ -369,15 +369,19 @@ final class Basket
      * @throws DeliveryAddressNotFound
      * @throws InvalidToken
      */
-    public function setDeliveryAddress(ID $basketId, ID $deliveryAddressId): BasketDataType
+    public function setDeliveryAddress(ID $basketId, ?ID $deliveryAddressId = null): BasketDataType
     {
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
-        if (!$this->deliveryAddressBelongsToUser($deliveryAddressId)) {
+        if (
+            null !== $deliveryAddressId &&
+            !$this->deliveryAddressBelongsToUser($deliveryAddressId)
+        ) {
             throw DeliveryAddressNotFound::byId((string) $deliveryAddressId);
         }
 
-        $this->basketInfrastructure->setDeliveryAddress($basket, (string) $deliveryAddressId);
+        $deliveryAddressId = $deliveryAddressId ? (string) $deliveryAddressId : null;
+        $this->basketInfrastructure->setDeliveryAddress($basket, $deliveryAddressId);
 
         return $basket;
     }

@@ -19,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  * @group basket
  * @group oe_graphql_storefront
  */
-final class DeliveryAddressCest extends BaseCest
+final class BasketDeliveryAddressCest extends BaseCest
 {
     private const USERNAME = 'standarduser@oxid-esales.com';
 
@@ -161,6 +161,26 @@ final class DeliveryAddressCest extends BaseCest
         $this->basketRemove($I, $basketId);
     }
 
+    public function setNullDeliveryAddressToBasket(AcceptanceTester $I): void
+    {
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        $basketId = $this->basketCreate($I);
+
+        $I->sendGQLQuery(
+            $this->basketSetDeliveryAddress($basketId, null)
+        );
+
+        $I->seeResponseIsJson();
+
+        $result = $I->grabJsonResponseAsArray();
+        $basket = $result['data']['basketSetDeliveryAddress'];
+
+        $I->assertNull($basket['deliveryAddress']);
+
+        $this->basketRemove($I, $basketId);
+    }
+
     /**
      * @dataProvider basketDeliveryAddressProvider
      */
@@ -233,10 +253,16 @@ final class DeliveryAddressCest extends BaseCest
         );
     }
 
-    private function basketSetDeliveryAddress(string $basketId, string $deliveryAddressId): string
+    private function basketSetDeliveryAddress(string $basketId, ?string $deliveryAddressId): string
     {
+        $optionalArguments = '';
+
+        if ($deliveryAddressId !== null) {
+            $optionalArguments = ', deliveryAddressId: "' . $deliveryAddressId . '"';
+        }
+
         return 'mutation {
-            basketSetDeliveryAddress(basketId: "' . $basketId . '", deliveryAddressId: "' . $deliveryAddressId . '") {
+            basketSetDeliveryAddress(basketId: "' . $basketId . '"' . $optionalArguments . ') {
                 owner {
                     firstName
                 }
