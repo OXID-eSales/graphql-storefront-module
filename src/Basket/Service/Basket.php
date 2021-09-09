@@ -25,7 +25,6 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerData
 use OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeAddItem;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketDeliveryMethods;
-use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketModify;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketPayments;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketRemove;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem;
@@ -372,9 +371,6 @@ final class Basket
      */
     public function setDeliveryAddress(ID $basketId, ID $deliveryAddressId): BasketDataType
     {
-        $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_ADDRESS);
-        $this->eventDispatcher->dispatch($event);
-
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
         if (!$this->deliveryAddressBelongsToUser($deliveryAddressId)) {
@@ -392,9 +388,6 @@ final class Basket
      */
     public function setPayment(ID $basketId, ID $paymentId): BasketDataType
     {
-        $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_PAYMENT_METHOD);
-        $this->eventDispatcher->dispatch($event);
-
         if (!$this->isPaymentMethodAvailableForBasket($basketId, $paymentId)) {
             throw UnavailablePayment::byId((string) $paymentId->val());
         }
@@ -407,9 +400,6 @@ final class Basket
      */
     public function setDeliveryMethod(ID $basketId, ID $deliveryMethodId): BasketDataType
     {
-        $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_METHOD);
-        $this->eventDispatcher->dispatch($event);
-
         if (!$this->isDeliveryMethodAvailableForBasket($basketId, $deliveryMethodId)) {
             throw UnavailableDeliveryMethod::byId((string) $deliveryMethodId->val());
         }

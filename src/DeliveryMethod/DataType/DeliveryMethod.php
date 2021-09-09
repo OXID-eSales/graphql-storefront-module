@@ -74,7 +74,7 @@ class DeliveryMethod implements DataType
      */
     public function getPosition(): int
     {
-        return (int) $this->deliverySetModel->getFieldData('oxsort');
+        return (int) $this->deliverySetModel->getFieldData('oxpos');
     }
 
     public static function getModelClass(): string
