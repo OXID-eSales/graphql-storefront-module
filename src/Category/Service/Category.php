@@ -43,10 +43,6 @@ final class Category
      */
     public function category(ID $id): CategoryDataType
     {
-        if (!$this->authorizationService->isAllowed('VIEW_INACTIVE_CATEGORY')) {
-            throw new InvalidLogin('Unauthorized');
-        }
-
         try {
             /** @var CategoryDataType $category */
             $category = $this->repository->getById((string) $id, CategoryDataType::class);
@@ -56,6 +52,10 @@ final class Category
 
         if ($category->isActive()) {
             return $category;
+        }
+
+        if (!$this->authorizationService->isAllowed('VIEW_INACTIVE_CATEGORY')) {
+            throw new InvalidLogin('Unauthorized');
         }
 
         return $category;
