@@ -23,11 +23,13 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v6.5.0` co
 
 ### Install
 
+Switch to the shop root directory (the file `composer.json` and the directories `source/` and `vendor/` are located there).
+
 ```bash
 $ composer require oxid-esales/graphql-storefront
 
-$ ./vendor/bin/oe-console oe:module:install-configuration ./vendor/oxid-esales/graphql-base
-$ ./vendor/bin/oe-console oe:module:install-configuration ./vendor/oxid-esales/graphql-storefront
+$ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-base
+$ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-storefront
 
 $ ./vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
 ```
@@ -37,8 +39,8 @@ If you didn't have the `oxid-esales/graphql-base` module installed, composer wil
 After installing the module, you need to activate it, either via OXID eShop admin or CLI.
 
 ```bash
-$ ./vendor/bin/oe-console oe:module:activate oe_graphql_base
-$ ./vendor/bin/oe-console oe:module:activate oe_graphql_storefront
+$ vendor/bin/oe-console oe:module:activate oe_graphql_base
+$ vendor/bin/oe-console oe:module:activate oe_graphql_storefront
 ```
 
 ### How to use
@@ -59,13 +61,16 @@ $ composer test
 - change the `test_config.yml`
   - add `oe/graphql-base,oe/graphql-storefront` to the `partial_module_paths`
   - set `activate_all_modules` to `true`
-- `composer require codeception/module-rest --dev`
-- `composer require codeception/module-phpbrowser --dev`
-- `composer require codeception/module-db --dev`
+-
+  ```bash
+  $ composer require codeception/module-rest --dev
+  $ composer require codeception/module-phpbrowser --dev
+  $ composer require codeception/module-db --dev
+  ```
 
 ```bash
-$ ./vendor/bin/runtests
-$ ./vendor/bin/runtests-codeception
+$ vendor/bin/runtests
+$ vendor/bin/runtests-codeception
 ```
 
 ## Contributing
