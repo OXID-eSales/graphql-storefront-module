@@ -17,22 +17,22 @@ final class BeforeAddItem extends Event implements BasketModifyInterface
     public const NAME = self::class;
 
     /** @var ID */
-    private $basketItemId;
+    private $basketId;
+
+    /** @var ID */
+    private $productId;
 
     /** @var float */
     private $amount;
 
-    /** @var ID */
-    private $basketId;
-
     public function __construct(
-        ID $basketId,
-        ID $basketItemId,
+        ID    $basketId,
+        ID    $productId,
         float $amount
     ) {
-        $this->basketId     = $basketId;
-        $this->basketItemId = $basketItemId;
-        $this->amount       = $amount;
+        $this->basketId  = $basketId;
+        $this->productId = $productId;
+        $this->amount    = $amount;
     }
 
     public function getBasketId(): ID
@@ -40,9 +40,9 @@ final class BeforeAddItem extends Event implements BasketModifyInterface
         return $this->basketId;
     }
 
-    public function getBasketItemId(): ID
+    public function getProductId(): ID
     {
-        return $this->basketItemId;
+        return $this->productId;
     }
 
     public function getAmount(): float
