@@ -10,6 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
+use OxidEsales\GraphQL\Storefront\Address\Exception\DeliveryAddressNotFound;
+use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
+use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -42,15 +45,8 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
-
-        $I->sendGQLQuery(
-            $this->basketSetDeliveryAddress($basketId, self::DELIVERY_ADDRESS_ID)
-        );
-
-        $I->seeResponseIsJson();
-
-        $result = $I->grabJsonResponseAsArray();
-        $basket = $result['data']['basketSetDeliveryAddress'];
+        $result   = $this->basketSetDeliveryAddress($I, $basketId, self::DELIVERY_ADDRESS_ID);
+        $basket   = $result['data']['basketSetDeliveryAddress'];
 
         $I->assertSame('User', $basket['owner']['firstName']);
         $I->assertSame(self::DELIVERY_ADDRESS_ID, $basket['deliveryAddress']['id']);
@@ -60,25 +56,12 @@ final class BasketDeliveryAddressCest extends BaseCest
 
     public function setDeliveryAddressToBasketWithoutToken(AcceptanceTester $I): void
     {
-        $I->login(self::USERNAME, self::PASSWORD);
-
-        $basketId = $this->basketCreate($I);
-
-        $I->logout();
-
-        $I->sendGQLQuery(
-            $this->basketSetDeliveryAddress($basketId, self::DELIVERY_ADDRESS_ID)
-        );
-
-        $result = $I->grabJsonResponseAsArray();
+        $result = $this->basketSetDeliveryAddress($I, 'some-basket-id', self::DELIVERY_ADDRESS_ID);
 
         $I->assertSame(
             'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
-
-        $I->login(self::USERNAME, self::PASSWORD);
-        $this->basketRemove($I, $basketId);
     }
 
     public function setDeliveryAddressToWrongBasket(AcceptanceTester $I): void
@@ -89,14 +72,11 @@ final class BasketDeliveryAddressCest extends BaseCest
 
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery(
-            $this->basketSetDeliveryAddress($basketId, self::DELIVERY_ADDRESS_ID)
-        );
+        $result = $this->basketSetDeliveryAddress($I, $basketId, self::DELIVERY_ADDRESS_ID);
 
-        $result = $I->grabJsonResponseAsArray();
-
+        $expectedException = BasketAccessForbidden::byAuthenticatedUser();
         $I->assertSame(
-            'You are not allowed to access this basket as it belongs to somebody else',
+            $expectedException->getMessage(),
             $result['errors'][0]['message']
         );
 
@@ -108,13 +88,11 @@ final class BasketDeliveryAddressCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery(
-            $this->basketSetDeliveryAddress('non-existing-basket-id', self::DELIVERY_ADDRESS_ID)
-        );
-        $result = $I->grabJsonResponseAsArray();
+        $result = $this->basketSetDeliveryAddress($I, 'non-existing-basket-id', self::DELIVERY_ADDRESS_ID);
 
+        $expectedException = BasketNotFound::byId('non-existing-basket-id');
         $I->assertSame(
-            'Basket was not found by id: non-existing-basket-id',
+            $expectedException->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -124,16 +102,11 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
+        $result   = $this->basketSetDeliveryAddress($I, $basketId, self::WRONG_DELIVERY_ADDRESS_ID);
 
-        $I->sendGQLQuery(
-            $this->basketSetDeliveryAddress($basketId, self::WRONG_DELIVERY_ADDRESS_ID)
-        );
-
-        $I->seeResponseIsJson();
-
-        $result = $I->grabJsonResponseAsArray();
+        $expectedException = DeliveryAddressNotFound::byId(self::WRONG_DELIVERY_ADDRESS_ID);
         $I->assertSame(
-            'Delivery address was not found by id: ' . self::WRONG_DELIVERY_ADDRESS_ID,
+            $expectedException->getMessage(),
             $result['errors'][0]['message']
         );
 
@@ -145,16 +118,11 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
+        $result   = $this->basketSetDeliveryAddress($I, $basketId, 'non-existing-delivery-id');
 
-        $I->sendGQLQuery(
-            $this->basketSetDeliveryAddress($basketId, 'non-existing-delivery-id')
-        );
-
-        $I->seeResponseIsJson();
-
-        $result = $I->grabJsonResponseAsArray();
+        $expectedException = DeliveryAddressNotFound::byId('non-existing-delivery-id');
         $I->assertSame(
-            'Delivery address was not found by id: non-existing-delivery-id',
+            $expectedException->getMessage(),
             $result['errors'][0]['message']
         );
 
@@ -166,17 +134,41 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
-
-        $I->sendGQLQuery(
-            $this->basketSetDeliveryAddress($basketId, null)
-        );
-
-        $I->seeResponseIsJson();
-
-        $result = $I->grabJsonResponseAsArray();
-        $basket = $result['data']['basketSetDeliveryAddress'];
+        $result   = $this->basketSetDeliveryAddress($I, $basketId, null);
+        $basket   = $result['data']['basketSetDeliveryAddress'];
 
         $I->assertNull($basket['deliveryAddress']);
+
+        $this->basketRemove($I, $basketId);
+    }
+
+    public function setEmptyStringAsDeliveryAddressToBasket(AcceptanceTester $I): void
+    {
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        $basketId = $this->basketCreate($I);
+        $result   = $this->basketSetDeliveryAddress($I, $basketId, '');
+
+        $expectedException = DeliveryAddressNotFound::byId('');
+        $I->assertSame(
+            $expectedException->getMessage(),
+            $result['errors'][0]['message']
+        );
+
+        $this->basketRemove($I, $basketId);
+    }
+
+    public function resetDeliveryAddressToBasket(AcceptanceTester $I): void
+    {
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        $basketId = $this->basketCreate($I);
+        $result   = $this->basketSetDeliveryAddress($I, $basketId, self::DELIVERY_ADDRESS_ID);
+        $basket   = $result['data']['basketSetDeliveryAddress'];
+        $I->assertSame(self::DELIVERY_ADDRESS_ID, $basket['deliveryAddress']['id']);
+
+        $basket = $this->basketSetDeliveryAddress($I, $basketId)['data']['basketSetDeliveryAddress'];
+        $I->assertNull($basket['deliveryAddress']['id']);
 
         $this->basketRemove($I, $basketId);
     }
@@ -253,7 +245,7 @@ final class BasketDeliveryAddressCest extends BaseCest
         );
     }
 
-    private function basketSetDeliveryAddress(string $basketId, ?string $deliveryAddressId): string
+    private function basketSetDeliveryAddress(AcceptanceTester $I, string $basketId, ?string $deliveryAddressId = null): array
     {
         $optionalArguments = '';
 
@@ -261,16 +253,22 @@ final class BasketDeliveryAddressCest extends BaseCest
             $optionalArguments = ', deliveryAddressId: "' . $deliveryAddressId . '"';
         }
 
-        return 'mutation {
-            basketSetDeliveryAddress(basketId: "' . $basketId . '"' . $optionalArguments . ') {
-                owner {
-                    firstName
+        $I->sendGQLQuery(
+            'mutation {
+                basketSetDeliveryAddress(basketId: "' . $basketId . '"' . $optionalArguments . ') {
+                    owner {
+                        firstName
+                    }
+                    deliveryAddress {
+                        id
+                    }
                 }
-                deliveryAddress {
-                    id
-                }
-            }
-        }';
+            }'
+        );
+
+        $I->seeResponseIsJson();
+
+        return $I->grabJsonResponseAsArray();
     }
 
     private function basketDeliveryAddress(string $basketId): string
