@@ -168,7 +168,7 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->assertSame(self::DELIVERY_ADDRESS_ID, $basket['deliveryAddress']['id']);
 
         $basket = $this->basketSetDeliveryAddress($I, $basketId)['data']['basketSetDeliveryAddress'];
-        $I->assertNull($basket['deliveryAddress']['id']);
+        $I->assertNull($basket['deliveryAddress']);
 
         $this->basketRemove($I, $basketId);
     }
