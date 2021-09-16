@@ -12,18 +12,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ``AfterAddItem``
   - ``BeforeAddItem``
   - ``BeforeBasketDeliveryMethods``
+  - ``BeforeBasketModify``
+  - ``BeforeBasketRemove``
 - Classes
   - `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket`
   - `OxidEsales\GraphQL\Storefront\Basket\Service\PublicBasketRelationService`
+- Methods
+  - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getDeliveryAddressId()`
+  - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getDeliveryMethodId()`
+  - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getPaymentId()`
 
 ### Fixed
 - Fix incompatibilities for eShop 7.0
 - Extracted basket authorization block to be handled with event so can be easier overwritten if needed
 - Updated paths to bin directory in README [PR-5](https://github.com/OXID-eSales/graphql-storefront-module/pull/5)
+- `OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\DeliveryMethod::getPosition()` method returns correct field data.
 
 ### Changed
 - Method `OxidEsales\GraphQL\Storefront\Basket\Service\Basket::publicBasketsByOwnerNameOrEmail` now returns an array of `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket`
 - `baskets(owner String)` now returns an array of `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket` in order to not expose address or payment information on a public basket
+- `deliveryAddressId` parameter of `basketSetDeliveryAddress` mutation can be null.
 
 ## [1.1.0] - Unreleased
 
