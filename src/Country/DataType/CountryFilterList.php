@@ -38,7 +38,7 @@ final class CountryFilterList extends FilterList
     }
 
     /**
-     * @Factory(name="CountryFilterList")
+     * @Factory
      */
     public static function createCountryFilterList(
         ?StringFilter $title = null

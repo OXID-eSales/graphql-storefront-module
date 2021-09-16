@@ -15,7 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 final class CountrySorting extends BaseSorting
 {
     /**
-     * @Factory(name="CountrySorting")
+     * @Factory
      *
      * By default the countries will be sorted by their position ('oxorder' column).
      * In case you want to sort them by other field, like title for example,

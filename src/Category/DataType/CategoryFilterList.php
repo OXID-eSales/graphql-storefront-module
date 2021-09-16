@@ -44,7 +44,7 @@ final class CategoryFilterList extends FilterList
     }
 
     /**
-     * @Factory(name="CategoryFilterList")
+     * @Factory
      */
     public static function createCategoryFilterList(
         ?StringFilter $title = null,

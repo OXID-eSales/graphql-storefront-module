@@ -39,7 +39,7 @@ final class BasketInput
     }
 
     /**
-     * @Factory()
+     * @Factory
      */
     public function fromUserInput(string $title, bool $public = false): BasketDataType
     {
