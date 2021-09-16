@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Review\Service\Review as ReviewService;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Review
@@ -38,6 +39,7 @@ final class Review
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function reviewSet(ReviewDataType $review): ReviewDataType
     {
@@ -49,6 +51,7 @@ final class Review
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function reviewDelete(ID $reviewId): bool
     {

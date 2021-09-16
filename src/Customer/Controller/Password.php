@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Customer\Controller;
 use OxidEsales\GraphQL\Storefront\Customer\Service\Password as PasswordService;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 
 final class Password
 {
@@ -27,6 +28,7 @@ final class Password
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function customerPasswordChange(string $old, string $new): bool
     {

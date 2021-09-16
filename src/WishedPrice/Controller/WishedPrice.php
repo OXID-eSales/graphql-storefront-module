@@ -55,6 +55,7 @@ final class WishedPrice
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function wishedPriceSet(WishedPriceDataType $wishedPrice): WishedPriceDataType
     {

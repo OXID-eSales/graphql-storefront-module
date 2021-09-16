@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Address\Service\InvoiceAddress as InvoiceAddre
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 
 final class InvoiceAddress
 {
@@ -29,6 +30,7 @@ final class InvoiceAddress
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function customerInvoiceAddressSet(
         InvoiceAddressDataType $invoiceAddress
@@ -39,6 +41,7 @@ final class InvoiceAddress
     /**
      * @Query()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function customerInvoiceAddress(): InvoiceAddressDataType
     {

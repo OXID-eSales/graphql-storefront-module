@@ -15,6 +15,7 @@ use OxidEsales\GraphQL\Storefront\Address\Service\DeliveryAddress as DeliveryAdd
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class DeliveryAddress
@@ -31,6 +32,7 @@ final class DeliveryAddress
     /**
      * @Query()
      * @Logged()
+     * @HideIfUnauthorized()
      *
      * @return DeliveryAddressDataType[]
      */
@@ -44,6 +46,7 @@ final class DeliveryAddress
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function customerDeliveryAddressDelete(ID $deliveryAddressId): bool
     {
@@ -53,6 +56,7 @@ final class DeliveryAddress
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function customerDeliveryAddressAdd(DeliveryAddressDataType $deliveryAddress): DeliveryAddressDataType
     {

@@ -19,6 +19,7 @@ use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 use TheCodingMachine\GraphQLite\Annotations\Right;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Basket
@@ -77,6 +78,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketRemove(ID $basketId): bool
     {
@@ -86,6 +88,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketMakePublic(ID $basketId): BasketDataType
     {
@@ -95,6 +98,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketMakePrivate(ID $basketId): BasketDataType
     {
@@ -136,6 +140,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketSetDeliveryAddress(ID $basketId, ID $deliveryAddressId): BasketDataType
     {
@@ -145,6 +150,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketSetPayment(ID $basketId, ID $paymentId): BasketDataType
     {
@@ -154,6 +160,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketSetDeliveryMethod(ID $basketId, ID $deliveryMethodId): BasketDataType
     {
@@ -163,6 +170,7 @@ final class Basket
     /**
      * @Query
      * @Logged()
+     * @HideIfUnauthorized()
      *
      * @return BasketDeliveryMethodDataType[]
      */
@@ -176,6 +184,7 @@ final class Basket
      *
      * @Query
      * @Logged()
+     * @HideIfUnauthorized()
      *
      * @return BasketPayment[]
      */
