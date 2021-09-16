@@ -63,8 +63,7 @@ final class WishedPrice
     }
 
     /**
-     * @Mutation()
-     * @Logged()
+     * TODO HR
      *
      * @return true
      */

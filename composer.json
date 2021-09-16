@@ -14,9 +14,9 @@
         }
     },
     "require": {
-        "php": "^7.3",
+        "php": "^7.3 | ^8.0",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-b-6.3.x",
+        "oxid-esales/graphql-base": "dev-b-6.3.x-jwt-4-plus-scratch",
         "oxid-esales/oxideshop-doctrine-migration-wrapper": "^v3.2.0"
     },
     "conflict": {
