@@ -72,7 +72,7 @@ final class DeliveryAddressCest extends BaseCest
 
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "basketSetDeliveryAddress" on type "Mutation".',
             $result['errors'][0]['message']
         );

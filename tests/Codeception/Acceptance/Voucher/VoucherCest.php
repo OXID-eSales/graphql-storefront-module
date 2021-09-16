@@ -54,7 +54,7 @@ final class VoucherCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "basketAddVoucher" on type "Mutation".',
             $result['errors'][0]['message']
         );
@@ -351,7 +351,7 @@ final class VoucherCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "basketRemoveVoucher" on type "Mutation".',
             $result['errors'][0]['message']
         );

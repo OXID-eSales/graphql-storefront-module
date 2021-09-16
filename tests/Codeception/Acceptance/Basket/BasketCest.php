@@ -200,7 +200,7 @@ final class BasketCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "basketCreate" on type "Mutation".',
             $result['errors'][0]['message']
         );

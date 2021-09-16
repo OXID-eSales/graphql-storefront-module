@@ -55,7 +55,7 @@ final class BasketMakePublicCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "basketMakePublic" on type "Mutation".',
             $result['errors'][0]['message']
         );

@@ -73,7 +73,7 @@ final class InvoiceAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "customerInvoiceAddress" on type "Query".',
             $result['errors'][0]['message']
         );
@@ -284,7 +284,7 @@ final class InvoiceAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "customerInvoiceAddressSet" on type "Mutation".',
             $result['errors'][0]['message']
         );

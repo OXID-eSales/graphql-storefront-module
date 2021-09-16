@@ -178,7 +178,10 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //place the order
         $result = $this->placeOrder($I, $basketId);
 
-        $I->assertSame('Cannot query field "placeOrder" on type "Mutation".', $result['errors'][0]['message']);
+        $I->assertStringStartsWith(
+            'Cannot query field "placeOrder" on type "Mutation".',
+            $result['errors'][0]['message']
+        );
 
         //remove basket
         $I->login(self::USERNAME, self::PASSWORD);

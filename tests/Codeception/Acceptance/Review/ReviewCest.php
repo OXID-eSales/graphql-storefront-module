@@ -81,7 +81,7 @@ final class ReviewCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "reviewSet" on type "Mutation".',
             $result['errors'][0]['message']
         );
@@ -312,7 +312,7 @@ final class ReviewCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "reviewDelete" on type "Mutation".',
             $result['errors'][0]['message']
         );

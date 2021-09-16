@@ -35,7 +35,7 @@ final class CustomerDeleteCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertContains(
+        $I->assertStringStartsWith(
             'Cannot query field "customerDelete" on type "Mutation".',
             $result['errors'][0]['message']
         );
