@@ -247,7 +247,7 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
+        $I->assertStringStartsWith(
             'Cannot query field "wishedPriceDelete" on type "Mutation".',
             $result['errors'][0]['message']
         );

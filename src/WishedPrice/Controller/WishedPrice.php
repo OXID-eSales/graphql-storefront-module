@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPrice as WishedPrice
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class WishedPrice
@@ -65,6 +66,7 @@ final class WishedPrice
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function wishedPriceDelete(ID $wishedPriceId): bool
     {
