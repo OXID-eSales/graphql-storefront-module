@@ -63,9 +63,8 @@ final class WishedPrice
     }
 
     /**
-     * TODO HR
-     *
-     * @return true
+     * @Mutation()
+     * @Logged()
      */
     public function wishedPriceDelete(ID $wishedPriceId): bool
     {
