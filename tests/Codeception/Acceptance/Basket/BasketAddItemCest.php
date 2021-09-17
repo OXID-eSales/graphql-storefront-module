@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException as MissingAuthorizationExceptionAlias;
 
 /**
  * @group basket
@@ -53,7 +53,7 @@ final class BasketAddItemCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertStringStartsWith(
-            'Cannot query field "basketAddItem" on type "Mutation".',
+            MissingAuthorizationExceptionAlias::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -67,8 +67,10 @@ final class BasketAddItemCest extends BaseCest
 
         $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID);
 
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddItem', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+        $I->assertEquals(
+            MissingAuthorizationExceptionAlias::forbidden()->getMessage(),
+            $result['errors'][0]['message']
+        );
     }
 
     public function testAddItemToBasketWrongBasketId(AcceptanceTester $I): void

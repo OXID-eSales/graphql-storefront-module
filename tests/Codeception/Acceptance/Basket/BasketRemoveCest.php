@@ -15,7 +15,6 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group basket
  * @group oe_graphql_storefront
- * @group sieg
  */
 final class BasketRemoveCest extends BaseCest
 {
