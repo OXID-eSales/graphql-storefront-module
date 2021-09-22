@@ -47,10 +47,19 @@ final class Basket
 
     /**
      * @Query()
+     * @Logged()
      */
     public function basket(ID $basketId): BasketDataType
     {
         return $this->basketService->basket($basketId);
+    }
+
+    /**
+     * @Query()
+     */
+    public function publicBasket(ID $basketId): PublicBasketDataType
+    {
+        return $this->basketService->publicBasket($basketId);
     }
 
     /**

@@ -34,7 +34,7 @@ final class BasketMultishopCest extends MultishopBaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD, 2);
 
-        $result = $this->queryBasket($I, self::PRIVATE_BASKET, 2);
+        $result = $this->queryPublicBasket($I, self::PRIVATE_BASKET, 2);
 
         $I->assertSame(
             'Basket is private.',
@@ -44,14 +44,15 @@ final class BasketMultishopCest extends MultishopBaseCest
 
     public function testGetPublicBasketFromDifferentShopNoToken(AcceptanceTester $I): void
     {
-        $result = $this->queryBasket($I, self::PUBLIC_BASKET, 2);
+        $result = $this->queryPublicBasket($I, self::PUBLIC_BASKET, 2);
 
         $I->assertSame(
             self::PUBLIC_BASKET,
-            $result['data']['basket']['id']
+            $result['data']['publicBasket']['id']
         );
     }
 
+    // TODO Add case for publicBasket query
     public function testGetPrivateBasketFromDifferentShopWithTokenForMallUser(AcceptanceTester $I): void
     {
         $I->updateConfigInDatabaseForShops('blMallUsers', true, 'bool', [1, 2]);
@@ -61,7 +62,7 @@ final class BasketMultishopCest extends MultishopBaseCest
         $result = $this->queryBasket($I, self::PRIVATE_BASKET, 2);
 
         $I->assertSame(
-            'Basket is private.',
+            'You are not allowed to access this basket as it belongs to somebody else',
             $result['errors'][0]['message']
         );
     }
@@ -91,7 +92,7 @@ final class BasketMultishopCest extends MultishopBaseCest
         $result = $this->queryBasket($I, $basketId, 2);
 
         $I->assertSame(
-            'Basket is private.',
+            'You are not allowed to access this basket as it belongs to somebody else',
             $result['errors'][0]['message']
         );
 
@@ -212,6 +213,24 @@ final class BasketMultishopCest extends MultishopBaseCest
                 basket(basketId: "' . $id . '") {
                     id
                     public
+                }
+            }',
+            null,
+            0,
+            $shopId
+        );
+
+        $I->seeResponseIsJson();
+
+        return $I->grabJsonResponseAsArray();
+    }
+
+    private function queryPublicBasket(AcceptanceTester $I, string $id, int $shopId): array
+    {
+        $I->sendGQLQuery(
+            'query {
+                publicBasket(basketId: "' . $id . '") {
+                    id
                 }
             }',
             null,

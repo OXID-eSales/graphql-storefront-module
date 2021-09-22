@@ -154,15 +154,26 @@ final class Basket
     {
         $basket = $this->basketRepository->getBasketById((string) $id);
 
-        if ($basket->public() === false &&
-            !$basket->belongsToUser($this->authenticationService->getUserId())
-        ) {
-            throw BasketAccessForbidden::basketIsPrivate();
+        if (!$basket->belongsToUser($this->authenticationService->getUserId())) {
+            throw BasketAccessForbidden::byAuthenticatedUser();
         }
 
         $this->sharedInfrastructure->getBasket($basket);
 
         return $basket;
+    }
+
+    public function publicBasket(ID $id): PublicBasketDataType
+    {
+        $basket = $this->basketRepository->getBasketById((string) $id);
+
+        if ($basket->public() === false || $basket->title() === 'noticelist') {
+            throw BasketAccessForbidden::basketIsPrivate();
+        }
+
+        $this->sharedInfrastructure->getBasket($basket);
+
+        return new PublicBasketDataType($basket->getEshopModel());
     }
 
     /**

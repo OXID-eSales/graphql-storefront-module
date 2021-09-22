@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
+use Codeception\Example;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -104,113 +105,52 @@ final class BasketsCest extends BaseCest
 
         $this->assignSpecialPricesGroup($I);
 
-        $I->sendGQLQuery(
-            'query {
-                baskets(owner: "' . self::USERNAME . '") {
-                    id
-                    items {
-                        id
-                        product {
-                            price {
-                                price
-                            }
-                        }
-                    }
-                }
-            }'
-        );
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
+        $result = $this->basketsQuery($I, self::USERNAME);
+        $basket = $result['data']['baskets'][1];
 
-        $I->assertEquals('_test_basket_public', $result['data']['baskets'][1]['id']);
-        $I->assertEquals('_test_basket_item_1', $result['data']['baskets'][1]['items'][0]['id']);
-        $I->assertEquals(10, $result['data']['baskets'][1]['items'][0]['product']['price']['price']);
+        $I->assertEquals('_test_basket_public', $basket['id']);
+        $I->assertEquals('_test_basket_item_1', $basket['items'][0]['id']);
+        $I->assertEquals(10, $basket['items'][0]['product']['price']['price']);
 
         //check what the logged in basket owner will see
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $query = 'query {
-                    basket (basketId: "_test_basket_public") {
-                        items {
-                            product {
-                                id
-                                price {
-                                    price
-                                }
-                            }
-                        }
-                    }
-                }';
-
-        $I->sendGQLQuery($query);
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
+        $result = $this->basketQuery($I, '_test_basket_public');
 
         $I->assertEquals(6.66, $result['data']['basket']['items'][0]['product']['price']['price']);
     }
 
-    public function testPublicBasketsItemPriceForLoggedInSameUser(AcceptanceTester $I): void
+    /**
+     * @dataProvider publicBasketsItemPriceDataProvider
+     */
+    public function testPublicBasketsItemPrice(AcceptanceTester $I, Example $example): void
     {
-        $I->wantToTest('that for my own public baskets my group A prices are displayed');
-
         $this->assignSpecialPricesGroup($I);
 
-        $I->login(self::USERNAME, self::PASSWORD);
+        $I->login($example['username'], self::PASSWORD);
 
-        $I->sendGQLQuery(
-            'query {
-                baskets(owner: "' . self::USERNAME . '") {
-                    id
-                    items {
-                        id
-                        product {
-                            price {
-                                price
-                            }
-                        }
-                    }
-                }
-            }'
-        );
+        $result = $this->basketsQuery($I, self::USERNAME);
+        $basket = $result['data']['baskets'][1];
 
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
-
-        $I->assertEquals('_test_basket_public', $result['data']['baskets'][1]['id']);
-        $I->assertEquals('_test_basket_item_1', $result['data']['baskets'][1]['items'][0]['id']);
-        $I->assertEquals(6.66, $result['data']['baskets'][1]['items'][0]['product']['price']['price']);
+        $I->assertEquals('_test_basket_public', $basket['id']);
+        $I->assertEquals('_test_basket_item_1', $basket['items'][0]['id']);
+        $I->assertEquals($example['price'], $basket['items'][0]['product']['price']['price']);
     }
 
-    public function testPublicBasketsItemPriceForLoggedInOtherUser(AcceptanceTester $I): void
+    protected function publicBasketsItemPriceDataProvider(): array
     {
-        $I->wantToTest('that for a public basket (not my own) my group b prices are displayed');
-
-        $this->assignSpecialPricesGroup($I);
-
-        $I->login(self::OTHER_USERNAME, self::PASSWORD);
-
-        $I->sendGQLQuery(
-            'query {
-                baskets(owner: "' . self::USERNAME . '") {
-                    id
-                    items {
-                        id
-                        product {
-                            price {
-                                price
-                            }
-                        }
-                    }
-                }
-            }'
-        );
-
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
-
-        $I->assertEquals('_test_basket_public', $result['data']['baskets'][1]['id']);
-        $I->assertEquals('_test_basket_item_1', $result['data']['baskets'][1]['items'][0]['id']);
-        $I->assertEquals(8.88, $result['data']['baskets'][1]['items'][0]['product']['price']['price']);
+        return [
+            [
+                'group'    => 'A',
+                'username' => self::USERNAME,
+                'price'    => 6.66,
+            ],
+            [
+                'group'    => 'B',
+                'username' => self::OTHER_USERNAME,
+                'price'    => 8.88,
+            ],
+        ];
     }
 
     private function basketsQuery(AcceptanceTester $I, string $owner): array
@@ -221,8 +161,13 @@ final class BasketsCest extends BaseCest
                     lastName
                 }
                 items(pagination: {limit: 10, offset: 0}) {
+                    id
                     product {
+                        id
                         title
+                        price {
+                            price
+                        }
                     }
                     amount
                 }
@@ -256,6 +201,26 @@ final class BasketsCest extends BaseCest
         $I->sendGQLQuery('mutation {
             basketMakePublic(basketId: "' . $basketId . '") {
                 public
+            }
+        }');
+
+        $I->seeResponseIsJson();
+
+        return $I->grabJsonResponseAsArray();
+    }
+
+    private function basketQuery(AcceptanceTester $I, string $basketId): array
+    {
+        $I->sendGQLQuery('query {
+            basket (basketId: "' . $basketId . '") {
+                items {
+                    product {
+                        id
+                        price {
+                            price
+                        }
+                    }
+                }
             }
         }');
 
