@@ -15,7 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 final class Sorting extends BaseSorting
 {
     /**
-     * @Factory
+     * @Factory(name="ManufacturerSorting", default=true)
      */
     public static function fromUserInput(
         ?string $title = null

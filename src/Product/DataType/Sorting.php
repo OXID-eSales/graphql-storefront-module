@@ -15,7 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 final class Sorting extends BaseSorting
 {
     /**
-     * @Factory
+     * @Factory(name="ProductSorting", default=true)
      *
      * By default the products will be sorted by their position ('oxsort' column).
      * In case you want to sort them by other field, like title for example,

@@ -53,7 +53,7 @@ final class ManufacturerWithTokenTest extends TokenTestCase
         $this->assertSame('Eine stilbewusste Marke', $manufacturer['shortdesc']);
         $this->assertRegExp('@https?://.*Nach-Hersteller/Kuyichi/$@', $manufacturer['seo']['url']);
 
-        $dateTimeType = DateTimeType::getInstance();
+        $dateTimeType = new DateTimeType();
         //Fixture timestamp can have few seconds difference
         $this->assertLessThanOrEqual(
             $dateTimeType->serialize(new DateTimeImmutable('now')),

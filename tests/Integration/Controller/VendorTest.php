@@ -54,7 +54,7 @@ final class VendorTest extends TokenTestCase
         $this->assertEquals('', $vendor['seo']['description']);
         $this->assertEquals('', $vendor['seo']['keywords']);
 
-        $dateTimeType = DateTimeType::getInstance();
+        $dateTimeType = new DateTimeType();
         //Fixture timestamp can have few seconds difference
         $this->assertLessThanOrEqual(
             $dateTimeType->serialize(new DateTimeImmutable('now')),

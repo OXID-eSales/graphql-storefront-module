@@ -41,7 +41,7 @@ final class ProductWithTokenTest extends TokenTestCase
         $this->assertSame(self::ACTIVE_PRODUCT, $product['id']);
         $this->assertSame(true, $product['active']);
 
-        $dateTimeType = DateTimeType::getInstance();
+        $dateTimeType = new DateTimeType();
         //Fixture timestamp can have few seconds difference
         $this->assertLessThanOrEqual(
             $dateTimeType->serialize(new DateTimeImmutable('now')),
