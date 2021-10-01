@@ -11,9 +11,10 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Voucher;
 
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
- * @group voucher
+ * @group voucherfoo
  * @group oe_graphql_storefront
  */
 final class VoucherCest extends BaseCest
@@ -55,7 +56,7 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertStringStartsWith(
-            'Cannot query field "basketAddVoucher" on type "Mutation".',
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -352,7 +353,7 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertStringStartsWith(
-            'Cannot query field "basketRemoveVoucher" on type "Mutation".',
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }

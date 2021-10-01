@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 use Codeception\Example;
 use Codeception\Scenario;
 use GraphQL\Validator\Rules\FieldsOnCorrectType;
+use OxidEsales\GraphQL\Base\Exception\InvalidToken;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
@@ -19,7 +20,6 @@ use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 /**
  * @group basket
  * @group oe_graphql_storefront
- * @group sieg
  */
 final class BasketCest extends BaseCest
 {
@@ -196,9 +196,6 @@ final class BasketCest extends BaseCest
         );
     }
 
-    /**
-     * @group siegx
-     */
     public function testCreateBasketMutationWithoutToken(AcceptanceTester $I): void
     {
         $this->basketCreateMutation($I, self::BASKET_WISH_LIST);
@@ -207,7 +204,7 @@ final class BasketCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertStringStartsWith(
-            'Cannot query field "basketCreate" on type "Mutation".',
+            InvalidToken::invalidToken()->getMessage(),
             $result['errors'][0]['message']
         );
     }

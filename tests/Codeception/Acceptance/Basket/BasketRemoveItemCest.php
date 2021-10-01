@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
  * @group basket
@@ -53,7 +54,7 @@ final class BasketRemoveItemCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertStringStartsWith(
-            'Cannot query field "basketRemoveItem" on type "Mutation".',
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -78,8 +79,9 @@ final class BasketRemoveItemCest extends BaseCest
         $I->login();
         $result = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId);
 
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketRemoveItem', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+        $I->assertEquals(
+            MissingAuthorizationException::forbidden()->getMessage(),
+            $result['errors'][0]['message']);
     }
 
     public function testRemoveBasketItemUsingDifferentUser(AcceptanceTester $I): void

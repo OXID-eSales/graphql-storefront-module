@@ -13,6 +13,7 @@ use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
  * @group basket
@@ -147,7 +148,7 @@ final class BasketVoucherCest extends BaseCest
         ];
 
         $mutation = '
-            mutation ($basketId: String!, $voucherNumber: String!) {
+            mutation ($basketId: ID!, $voucherNumber: String!) {
                 basketAddVoucher(basketId: $basketId, voucherNumber: $voucherNumber) {
                     vouchers {
                         number
@@ -160,8 +161,10 @@ final class BasketVoucherCest extends BaseCest
 
         $I->seeResponseIsJson();
         $result          = $I->grabJsonResponseAsArray();
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketAddVoucher', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+
+        $I->assertEquals(
+            MissingAuthorizationException::forbidden()->getMessage(),
+            $result['errors'][0]['message']);
     }
 
     /**
@@ -173,12 +176,12 @@ final class BasketVoucherCest extends BaseCest
 
         $variables = [
             'basketId'      => self::PRIVATE_BASKET,
-            'voucherNumber' => 'voucher-number',
+            'voucherId' => 'voucher-number',
         ];
 
         $mutation = '
-            mutation ($basketId: String!, $voucherNumber: String!) {
-                basketRemoveVoucher(basketId: $basketId, voucherNumber: $voucherNumber) {
+            mutation ($basketId: ID!, $voucherId: ID!) {
+                basketRemoveVoucher(basketId: $basketId, voucherId: $voucherId) {
                     vouchers {
                         number
                     }
@@ -190,8 +193,10 @@ final class BasketVoucherCest extends BaseCest
 
         $I->seeResponseIsJson();
         $result          = $I->grabJsonResponseAsArray();
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('basketRemoveVoucher', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+
+        $I->assertEquals(
+            MissingAuthorizationException::forbidden()->getMessage(),
+            $result['errors'][0]['message']);
     }
 
     /**

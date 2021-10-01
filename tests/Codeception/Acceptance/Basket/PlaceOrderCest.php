@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Types\ID;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
  * @group oe_graphql_checkout
@@ -42,8 +43,9 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->login(null, null, 0);
         $result = $this->placeOrder($I, $basketId);
 
-        $expectedMessage = FieldsOnCorrectType::undefinedFieldMessage('placeOrder', 'Mutation', [], []);
-        $I->assertEquals($expectedMessage, $result['errors'][0]['message']);
+        $I->assertEquals(
+            MissingAuthorizationException::forbidden()->getMessage(),
+            $result['errors'][0]['message']);
 
         $I->login(self::USERNAME, self::PASSWORD, 0);
         $this->removeBasket($I, $basketId);
@@ -179,7 +181,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $result = $this->placeOrder($I, $basketId);
 
         $I->assertStringStartsWith(
-            'Cannot query field "placeOrder" on type "Mutation".',
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
 

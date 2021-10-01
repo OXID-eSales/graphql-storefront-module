@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 use Codeception\Example;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
  * @group oe_graphql_checkout
