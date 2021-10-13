@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\WishedPrice\DataType;
 
-use OxidEsales\GraphQL\Base\DataType\StringFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 

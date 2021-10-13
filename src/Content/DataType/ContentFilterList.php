@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Content\DataType;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
-use OxidEsales\GraphQL\Base\DataType\StringFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 

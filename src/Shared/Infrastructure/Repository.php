@@ -12,9 +12,9 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 use InvalidArgumentException;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\DataType\FilterInterface;
-use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
-use OxidEsales\GraphQL\Base\DataType\Sorting;
+use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
+use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
+use OxidEsales\GraphQL\Base\DataType\Sorting\Sorting as BaseSorting;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
@@ -74,7 +74,7 @@ final class Repository
         string $type,
         FilterList $filter,
         PaginationFilter $pagination,
-        Sorting $sorting,
+        BaseSorting $sorting,
         bool $disableSubShop = true
     ): array {
         $types = [];

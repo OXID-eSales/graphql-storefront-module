@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Vendor\Service;
 
-use OxidEsales\GraphQL\Base\DataType\IDFilter;
-use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
+use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Sorting;

@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Product\Service;
 
-use OxidEsales\GraphQL\Base\DataType\StringFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductRating;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
