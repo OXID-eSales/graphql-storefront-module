@@ -11,9 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class ActionTest extends TokenTestCase
+final class ActionTest extends BaseTestCase
 {
     private const ACTIVE_ACTION_WITH_PRODUCTS = 'oxtop5';
 
@@ -26,6 +26,13 @@ final class ActionTest extends TokenTestCase
     private const WRONG_TYPE_ACTION = 'b5639c6431b26687321f6ce654878fa5';
 
     private const PRODUCT_RELATED_TO_ACTIVE_ACTION = 'ed6a4182ae58874e4fdaa4775566af6c';
+
+    protected function tearDown(): void
+    {
+        $this->setActiveState(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 'oxarticles', 1);
+
+        parent::tearDown();
+    }
 
     public function testGetSingleActiveActionWithoutProducts(): void
     {
@@ -407,18 +414,8 @@ final class ActionTest extends TokenTestCase
      */
     public function testActionProductList($withToken, $expectedProducts): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         // set product to inactive
-        $queryBuilder
-            ->update('oxarticles')
-            ->set('oxactive', 0)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::PRODUCT_RELATED_TO_ACTIVE_ACTION)
-            ->execute();
+        $this->setActiveState(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 'oxarticles', 0);
 
         if ($withToken) {
             $this->prepareToken();

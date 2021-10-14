@@ -204,7 +204,7 @@ final class BasketCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertStringStartsWith(
-            InvalidToken::invalidToken()->getMessage(),
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }

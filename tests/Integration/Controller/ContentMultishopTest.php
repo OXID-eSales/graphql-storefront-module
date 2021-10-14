@@ -38,6 +38,9 @@ final class ContentMultishopTest extends MultishopTestCase
         $this->addContentToShops([2]);
         $this->setGETRequestParameter('shp', '2');
 
+        static::$container = null;
+        $this->setUp();
+
         $result = $this->query('query {
             content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
                 id
