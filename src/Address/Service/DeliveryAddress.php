@@ -50,7 +50,7 @@ final class DeliveryAddress
         return $this->repository->getByFilter(
             $filterList->withUserFilter(
                 new StringFilter(
-                    $this->authenticationService->getUserId()
+                    (string) $this->authenticationService->getUser()->id()
                 )
             ),
             DeliveryAddressDataType::class
@@ -117,6 +117,6 @@ final class DeliveryAddress
 
     private function isSameUser(DeliveryAddressDataType $deliveryAddress): bool
     {
-        return (string) $deliveryAddress->userId() === (string) $this->authenticationService->getUserId();
+        return (string) $deliveryAddress->userId() === (string) $this->authenticationService->getUser()->id();
     }
 }

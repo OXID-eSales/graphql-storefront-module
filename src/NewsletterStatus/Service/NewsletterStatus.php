@@ -60,7 +60,7 @@ final class NewsletterStatus
         }
 
         return $this->NewsletterSubscriptionRepository->getByUserId(
-            $this->authenticationService->getUserId()
+            (string) $this->authenticationService->getUser()->id()
         );
     }
 
@@ -78,7 +78,7 @@ final class NewsletterStatus
         if ($newsletterStatus) {
             $userId = (string) $newsletterStatus->userId();
         } elseif ($this->authenticationService->isLogged()) {
-            $userId = $this->authenticationService->getUserId();
+            $userId = (string) $this->authenticationService->getUser()->id();
         }
 
         /** If we don't have email from token or as parameter */

@@ -47,14 +47,14 @@ final class BasketInput
             throw BasketExists::byTitle($title);
         }
 
-        return $this->basketFactory->createBasket($this->authentication->getUserId(), $title, $public);
+        return $this->basketFactory->createBasket((string) $this->authentication->getUser()->id(), $title, $public);
     }
 
     private function doesBasketExist(string $title): bool
     {
         return $this->basketRepository->basketExistsByTitleAndUserId(
             $title,
-            new ID($this->authentication->getUserId())
+            $this->authentication->getUser()->id()
         );
     }
 }

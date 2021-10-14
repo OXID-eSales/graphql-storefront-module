@@ -50,8 +50,8 @@ final class WishedPriceInput
         $this->assertPriceValue($price);
 
         return $this->wishedPriceFactory->createWishedPrice(
-            $this->authentication->getUserId(),
-            $this->authentication->getUserName(),
+            (string) $this->authentication->getUser()->id(),
+            $this->authentication->getUser()->email(),
             $productId,
             $currencyName,
             $price

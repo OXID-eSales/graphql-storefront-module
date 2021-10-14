@@ -78,7 +78,7 @@ final class Banner
         $userId = null;
 
         try {
-            $userId = $this->authenticationService->getUserId();
+            $userId = (string) $this->authenticationService->getUser()->id();
         } catch (InvalidToken $e) {
         }
 

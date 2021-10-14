@@ -39,7 +39,7 @@ final class Password
     {
         $customerModel = $this->customerService
                           ->customer(
-                              $this->authenticationService->getUserId()
+                              (string) $this->authenticationService->getUser()->id()
                           )
                           ->getEshopModel();
 

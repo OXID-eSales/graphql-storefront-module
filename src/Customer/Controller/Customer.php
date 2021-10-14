@@ -42,7 +42,7 @@ final class Customer
     public function customer(): CustomerDataType
     {
         return $this->customerService->customer(
-            $this->authenticationService->getUserId()
+            (string) $this->authenticationService->getUser()->id()
         );
     }
 

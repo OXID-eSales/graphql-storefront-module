@@ -54,7 +54,7 @@ final class ReviewInput
         }
 
         return $this->reviewFactory->createProductReview(
-            $this->authentication->getUserId(),
+            (string) $this->authentication->getUser()->id(),
             $productId,
             (string) $text,
             (string) $rating

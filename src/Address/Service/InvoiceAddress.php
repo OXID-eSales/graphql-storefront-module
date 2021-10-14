@@ -34,14 +34,14 @@ final class InvoiceAddress
     public function customerInvoiceAddress(): InvoiceAddressDataType
     {
         return $this->repository->getById(
-            $this->authenticationService->getUserId(),
+            (string) $this->authenticationService->getUser()->id(),
             InvoiceAddressDataType::class
         );
     }
 
     public function updateInvoiceAddress(InvoiceAddressDataType $invoiceAddress): InvoiceAddressDataType
     {
-        if (!$this->authenticationService->getUserId()) {
+        if (!(string) $this->authenticationService->getUser()->id()) {
             throw new InvalidLogin('Unauthorized');
         }
 

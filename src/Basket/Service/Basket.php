@@ -152,7 +152,7 @@ final class Basket
         $basket = $this->basketRepository->getBasketById((string) $id);
 
         if ($basket->public() === false &&
-            !$basket->belongsToUser($this->authenticationService->getUserId())
+            !$basket->belongsToUser((string) $this->authenticationService->getUser()->id())
         ) {
             throw BasketAccessForbidden::basketIsPrivate();
         }
@@ -170,7 +170,7 @@ final class Basket
     public function getAuthenticatedCustomerBasket(ID $id): BasketDataType
     {
         $basket = $this->basketRepository->getBasketById((string) $id);
-        $userId = $this->authenticationService->getUserId();
+        $userId = (string) $this->authenticationService->getUser()->id();
 
         if (!$basket->belongsToUser($userId)) {
             throw BasketAccessForbidden::byAuthenticatedUser();
@@ -205,7 +205,7 @@ final class Basket
         //user can remove only his own baskets unless otherwise authorized
         if (
             $this->authorizationService->isAllowed('DELETE_BASKET')
-            || $basket->belongsToUser($this->authenticationService->getUserId())
+            || $basket->belongsToUser((string) $this->authenticationService->getUser()->id())
         ) {
             $vouchers = $this->voucherRepository->getBasketVouchers($id);
 
@@ -337,7 +337,7 @@ final class Basket
     {
         $basket = $this->basketRepository->getBasketById((string) $basketId);
 
-        if (!$basket->belongsToUser($this->authenticationService->getUserId())) {
+        if (!$basket->belongsToUser((string) $this->authenticationService->getUser()->id())) {
             throw BasketAccessForbidden::byAuthenticatedUser();
         }
 
@@ -350,7 +350,7 @@ final class Basket
     {
         $basket = $this->basketRepository->getBasketById((string) $basketId);
 
-        if (!$basket->belongsToUser($this->authenticationService->getUserId())) {
+        if (!$basket->belongsToUser((string) $this->authenticationService->getUser()->id())) {
             throw BasketAccessForbidden::byAuthenticatedUser();
         }
 

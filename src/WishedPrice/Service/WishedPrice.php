@@ -102,7 +102,7 @@ final class WishedPrice
         return $this->repository->getByFilter(
             $filter->withUserFilter(
                 new StringFilter(
-                    $this->authenticationService->getUserId()
+                    (string) $this->authenticationService->getUser()->id()
                 )
             ),
             WishedPriceDataType::class
@@ -154,6 +154,6 @@ final class WishedPrice
 
     private function isSameUser(WishedPriceDataType $wishedPrice): bool
     {
-        return (string) $wishedPrice->getInquirerId() === (string) $this->authenticationService->getUserId();
+        return (string) $wishedPrice->getInquirerId() === (string) $this->authenticationService->getUser()->id();
     }
 }
