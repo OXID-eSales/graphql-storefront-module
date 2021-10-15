@@ -9,22 +9,22 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\WishedPrice\DataType;
 
-use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class WishedPriceFilterList extends FilterList
 {
-    /** @var ?StringFilter */
+    /** @var ?IDFilter */
     private $userId;
 
-    public function __construct(?StringFilter $userId = null)
+    public function __construct(?IDFilter $userId = null)
     {
         $this->userId = $userId;
         parent::__construct();
     }
 
-    public function withUserFilter(StringFilter $user): self
+    public function withUserFilter(IDFilter $user): self
     {
         $filter         = clone $this;
         $filter->userId = $user;
@@ -34,7 +34,7 @@ final class WishedPriceFilterList extends FilterList
 
     /**
      * @return array{
-     *                oxuserid: ?StringFilter
+     *                oxuserid: ?IDFilter
      *                }
      */
     public function getFilters(): array
@@ -47,7 +47,7 @@ final class WishedPriceFilterList extends FilterList
     /**
      * @Factory
      */
-    public static function createWishedPriceFilterList(?StringFilter $userId): self
+    public static function createWishedPriceFilterList(?IDFilter $userId): self
     {
         return new self($userId);
     }

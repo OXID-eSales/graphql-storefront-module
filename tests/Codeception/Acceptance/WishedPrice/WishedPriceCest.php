@@ -327,9 +327,10 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
+        $I->assertCount(1, $result['data']['wishedPrices']);
         $I->assertSame(
-            'The token is invalid',
-            $result['errors'][0]['message']
+            '_test_wished_price_without_user_',
+            $result['data']['wishedPrices'][0]['id']
         );
     }
 
