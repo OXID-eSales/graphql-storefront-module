@@ -129,17 +129,10 @@ final class BasketCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        if ($isLogged) {
-            $I->assertSame(
-                'Basket is private.',
-                $result['errors'][0]['message']
-            );
-        } else {
-            $I->assertSame(
-                'The token is invalid',
-                $result['errors'][0]['message']
-            );
-        }
+        $I->assertSame(
+            'Basket is private.',
+            $result['errors'][0]['message']
+        );
     }
 
     /**
