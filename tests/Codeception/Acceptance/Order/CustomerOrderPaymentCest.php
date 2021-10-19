@@ -64,10 +64,7 @@ final class CustomerOrderPaymentCest extends BaseCest
             $I->assertSame('direct_debit_order_payment', $orderPayment['id']);
             $I->assertNotEmpty($orderPayment['payment']);
             $I->assertNotEmpty($orderPayment['values']);
-
-            // Updated field is not included in the sql query,
-            // that's why it's value will be null despite the fact that it has a value.
-            $I->assertNull($orderPayment['updated']);
+            $I->assertNotEmpty($orderPayment['updated']);
         }
     }
 
