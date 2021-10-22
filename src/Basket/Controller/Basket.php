@@ -46,6 +46,8 @@ final class Basket
     }
 
     /**
+     * Returns information for any basket the customer owns.
+     *
      * @Query()
      * @Logged()
      */
@@ -55,6 +57,8 @@ final class Basket
     }
 
     /**
+     * Returns information for any basket marked as public.
+     *
      * @Query()
      */
     public function publicBasket(ID $basketId): PublicBasketDataType
