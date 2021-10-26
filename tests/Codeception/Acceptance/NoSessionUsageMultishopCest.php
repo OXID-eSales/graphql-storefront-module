@@ -188,7 +188,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
 
     private function sendQueryWithSidCookieWithoutShopIdParameter(AcceptanceTester $I, string $query, string $sid): void
     {
-        $uri = '/graphql?lang=0';
+        $uri = '/widget.php?cl=graphql&lang=0';
 
         $rest = $I->getRest();
         $rest->haveHTTPHeader('Cookie', 'sid_key=oxid;sid=' . $sid);

@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
@@ -81,7 +80,8 @@ final class BasketRemoveItemCest extends BaseCest
 
         $I->assertEquals(
             MissingAuthorizationException::forbidden()->getMessage(),
-            $result['errors'][0]['message']);
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveBasketItemUsingDifferentUser(AcceptanceTester $I): void

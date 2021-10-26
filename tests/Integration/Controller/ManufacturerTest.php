@@ -286,6 +286,14 @@ final class ManufacturerTest extends TokenTestCase
             $active,
             $productStatus
         );
+
+        // set product back to active
+        $queryBuilder
+            ->update('oxarticles')
+            ->set('oxactive', 1)
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', self::PRODUCT_RELATED_TO_ACTIVE_MANUFACTURER)
+            ->execute();
     }
 
     public function providerGetManufacturerProducts()

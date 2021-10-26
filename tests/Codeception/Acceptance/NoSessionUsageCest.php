@@ -32,28 +32,10 @@ final class NoSessionUsageCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery(
-            'query{
-                basket(basketId: "' . self::PUBLIC_BASKET . '") {
-                    id
-                    cost {
-                        delivery {
-                            price
-                        }
-                    }
-                }
-            }',
-            [],
-            0,
-            1
-        );
+        $result = $this->queryBasket($I, false);
 
-        //graphql only processes skipSession calls but this will be handled in shop .htaccess in rewrite rule
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
-
-        //User is logged in and sends the token, so we expect to see delivery costs
-        $I->assertEquals(3.9, $result['data']['basket']['cost']['delivery']['price']);
+        //User is logged in and sends the token, so we expect to see the basket
+        $I->assertEquals(self::PUBLIC_BASKET, $result['data']['basket']['id']);
 
         //We did not send the skipSession GET parameter but graphql makes sure no cookies are sent in response
         $sid = $I->extractSidFromResponseCookies();
@@ -64,24 +46,10 @@ final class NoSessionUsageCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery(
-            'query{
-                basket(basketId: "' . self::PUBLIC_BASKET . '") {
-                    id
-                    cost {
-                        delivery {
-                            price
-                        }
-                    }
-                }
-            }'
-        );
-
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
+        $result = $this->queryBasket($I);
 
         //User is logged in and sends the token, so we expect to see delivery costs
-        $I->assertEquals(3.9, $result['data']['basket']['cost']['delivery']['price']);
+        $I->assertEquals(self::PUBLIC_BASKET, $result['data']['basket']['id']);
 
         //no cookie header
         $I->dontSeeHttpHeader('Set-Cookie');
@@ -92,26 +60,31 @@ final class NoSessionUsageCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
         $I->logout(); // remove the token header
 
+        $result = $this->queryBasket($I);
+
+        //User does not send the token, so we expect to see zero delivery costs
+        $I->assertEquals('You need to be logged to access this field', $result['errors'][0]['message']);
+
+        //no cookie header
+        $I->dontSeeHttpHeader('Set-Cookie');
+    }
+
+    private function queryBasket(AcceptanceTester $I, bool $skipSession = true): array
+    {
         $I->sendGQLQuery(
             'query{
                 basket(basketId: "' . self::PUBLIC_BASKET . '") {
                     id
-                    cost {
-                        delivery {
-                            price
-                        }
-                    }
                 }
-            }'
+            }',
+            [],
+            0,
+            1,
+            $skipSession ? [] : ['skipSession' => 'false']
         );
 
         $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
 
-        //User does not send the token, so we expect to see zero delivery costs
-        $I->assertEquals(0, $result['data']['basket']['cost']['delivery']['price']);
-
-        //no cookie header
-        $I->dontSeeHttpHeader('Set-Cookie');
+        return $I->grabJsonResponseAsArray();
     }
 }

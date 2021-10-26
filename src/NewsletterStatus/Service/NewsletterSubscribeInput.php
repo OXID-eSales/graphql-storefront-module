@@ -45,7 +45,6 @@ final class NewsletterSubscribeInput
         if (!$email && $this->authenticationService->isLogged()) {
             $email  = $this->authenticationService->getUser()->email();
             $userId = (string) $this->authenticationService->getUser()->id();
-
         } else {
             $this->assertValidEmail((string) $email);
         }

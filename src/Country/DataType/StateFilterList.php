@@ -38,7 +38,7 @@ final class StateFilterList extends FilterList
     }
 
     /**
-     * @Factory
+     * @Factory(name="StateFilterList", default=true)
      */
     public static function createStateFilterList(
         ?IDFilter $country = null

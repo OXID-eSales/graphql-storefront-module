@@ -170,7 +170,6 @@ final class InvoiceAddressCest extends BaseCest
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
-
         $actual = $result['data']['customerInvoiceAddressSet'];
 
         $setFields = [

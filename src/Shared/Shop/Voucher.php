@@ -50,24 +50,24 @@ class Voucher extends Voucher_parent
         }
     }
 
-    public function isProductVoucher(): bool
+    public function isForProduct(): bool
     {
         return $this->_isProductVoucher();
     }
 
-    public function isCategoryVoucher(): bool
+    public function isForCategory(): bool
     {
         return $this->_isCategoryVoucher();
     }
 
-    public function getSerieDiscount(): EshopDiscountModel
+    public function getDiscountFromSerie(): EshopDiscountModel
     {
         return $this->_getSerieDiscount();
     }
 
-    protected function _getBasketItems($oDiscount = null): array
+    protected function getBasketItems($oDiscount = null): array
     {
-        $items = parent::_getBasketItems($oDiscount);
+        $items = parent::getBasketItems($oDiscount);
 
         if (empty($items)) {
             $items = $this->getGraphQLBasketItems($oDiscount);
@@ -85,7 +85,7 @@ class Voucher extends Voucher_parent
     protected function getGraphQLBasketItems($oDiscount = null): array
     {
         if (null === $oDiscount) {
-            $oDiscount = $this->_getSerieDiscount();
+            $oDiscount = $this->_getDiscountFromSerie();
         }
 
         /** Here is the difference with _getSessionBasketItems method */

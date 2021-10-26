@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Base\Service\Authentication;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerExists;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotDeletable;
@@ -36,16 +37,21 @@ final class Customer
     /** @var Legacy */
     private $legacyService;
 
+    /** @var Authorization */
+    private $authorizationService;
+
     public function __construct(
         Repository $repository,
         CustomerRepository $customerRepository,
         Authentication $authenticationService,
-        Legacy $legacyService
+        Legacy $legacyService,
+        Authorization $authorizationService
     ) {
         $this->repository             = $repository;
         $this->customerRepository     = $customerRepository;
         $this->authenticationService  = $authenticationService;
         $this->legacyService          = $legacyService;
+        $this->authorizationService   = $authorizationService;
     }
 
     /**
@@ -54,7 +60,10 @@ final class Customer
      */
     public function customer(string $id): CustomerDataType
     {
-        if ((string) $id !== (string) $this->authenticationService->getUser()->id()) {
+        if (
+            (string) $id !== (string) $this->authenticationService->getUser()->id() &&
+            !$this->authorizationService->isAllowed('VIEW_ALL_CUSTOMERS')
+        ) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -105,27 +114,6 @@ final class Customer
     }
 
     /**
-     * @throws CustomerNotFound
-     */
-    public function basketOwner(string $id): CustomerDataType
-    {
-        $ignoreSubShop = (bool) $this->legacyService->getConfigParam('blMallUsers');
-
-        try {
-            /** @var CustomerDataType $customer */
-            $customer = $this->repository->getById(
-                $id,
-                CustomerDataType::class,
-                $ignoreSubShop
-            );
-        } catch (NotFound $e) {
-            throw CustomerNotFound::byId($id);
-        }
-
-        return $customer;
-    }
-
-    /**
      * @throws CustomerNotDeletable
      */
     public function deleteCustomer(): bool
@@ -159,16 +147,16 @@ final class Customer
         return true;
     }
 
-    private function fetchCustomer(string $id): CustomerDataType
+    public function fetchCustomer(string $id): CustomerDataType
     {
-        $ignoreSubshop = (bool) $this->legacyService->getConfigParam('blMallUsers');
+        $ignoreSubShop = (bool) $this->legacyService->getConfigParam('blMallUsers');
 
         try {
             /** @var CustomerDataType $customer */
             $customer = $this->repository->getById(
                 $id,
                 CustomerDataType::class,
-                $ignoreSubshop
+                $ignoreSubShop
             );
         } catch (NotFound $e) {
             throw CustomerNotFound::byId($id);

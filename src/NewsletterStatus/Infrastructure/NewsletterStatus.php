@@ -93,6 +93,12 @@ final class NewsletterStatus
     {
         $sendOptinMail = $this->legacyService->getConfigParam('blOrderOptInEmail');
 
+        /** @var EshopNewsletterSubscriptionStatusModel $newsletterModel */
+        $newsletterModel = $subscriber->getEshopModel()->getNewsSubscription();
+        $newsletterModel->setOptInStatus(
+            $newsletterModel->getFieldData('oxnewssubscribed__oxdboptin') ? $newsletterModel->getFieldData('oxnewssubscribed__oxdboptin') : 0
+        );
+
         return $subscriber->getEshopModel()->setNewsSubscription($flag, $sendOptinMail);
     }
 }

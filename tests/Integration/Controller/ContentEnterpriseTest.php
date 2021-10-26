@@ -10,33 +10,42 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Application\Model\Content as EshopContent;
-use OxidEsales\GraphQL\Base\Tests\Integration\EnterpriseTestCase;
+use OxidEsales\Eshop\Core\Registry as EshopRegistry;
+use OxidEsales\GraphQL\Base\Tests\Integration\MultishopTestCase;
 
 /**
  * Class ContentEnterpriseTest
  */
-final class ContentEnterpriseTest extends EnterpriseTestCase
+final class ContentEnterpriseTest extends MultishopTestCase
 {
     private const CONTENT_ID = '1074279e67a85f5b1.96907412';
 
     private const CONTENT_ID_FOR_SHOP_2 = '_subshop_2';
 
-    /**
-     * Active content from shop 1 is accessible for shop 1.
-     * We are in shop 1.
-     */
-    public function testGetActiveContentFromSameShopIsOk(): void
+    protected function tearDown(): void
     {
-        $this->setGETRequestParameter('shp', '1');
+        $this->cleanUpTable('oxcontents', 'oxid');
+
+        parent::tearDown();
+    }
+
+    /**
+     * Active content from shop 2 is accessible for shop 2.
+     * We are in shop 2.
+     */
+    public function testGetActiveContentFromSameSubshopIsOk(): void
+    {
+        $this->setGETRequestParameter('shp', '2');
+        $this->addContentToShops([2]);
 
         $result = $this->query('query {
-            content (contentId: "' . self::CONTENT_ID . '") {
+            content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
                 id
             }
         }');
 
         $this->assertSame(
-            self::CONTENT_ID,
+            self::CONTENT_ID_FOR_SHOP_2,
             $result['body']['data']['content']['id']
         );
     }
@@ -45,7 +54,7 @@ final class ContentEnterpriseTest extends EnterpriseTestCase
      * Active content from shop 2 is not accessible for shop 1
      * We are in shop 1.
      */
-    public function testGetActiveContentFromOtherShopWillFail(): void
+    public function testGetActiveContentFromSecondShopWillFail(): void
     {
         //we have no shop 2 in this test but only database entry is needed for content
         $this->addContentToShops([2]);
@@ -65,17 +74,120 @@ final class ContentEnterpriseTest extends EnterpriseTestCase
     }
 
     /**
+     * Active content from shop 1 is not accessible for shop 2
+     * We are in shop 2.
+     */
+    public function testGetActiveContentFromFirstShopWillFail(): void
+    {
+        $this->setGETRequestParameter('shp', '2');
+
+        $result = $this->query('query {
+            content (contentId: "' . self::CONTENT_ID . '") {
+                id
+            }
+        }');
+
+        $this->assertSame(
+            'Content was not found by id: ' . self::CONTENT_ID,
+            $result['body']['errors'][0]['message']
+        );
+    }
+
+    /**
+     * @group allowed_to_fail_with_b2b
+     *
+     * Check if no contents available while they are not related to the shop 2
+     */
+    public function testGetEmptyContentListOfNotMainShop(): void
+    {
+        $this->setGETRequestParameter('shp', '2');
+
+        $result = $this->query('query{
+            contents {
+                id
+            }
+        }');
+
+        $this->assertCount(
+            0,
+            $result['body']['data']['contents']
+        );
+    }
+
+    /**
+     * Check if active content from shop 1 is accessible for
+     * shop 2 if its related to shop 2
+     */
+    public function testGetSingleInShopActiveContentWillWork(): void
+    {
+        $this->setGETRequestParameter('shp', '2');
+        $this->setGETRequestParameter('lang', '0');
+        $this->addContentToShops([2]);
+
+        $result = $this->query('query {
+            content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
+                id,
+                title
+            }
+        }');
+
+        $this->assertEquals(
+            [
+                'id'    => self::CONTENT_ID_FOR_SHOP_2,
+                'title' => 'Wie bestellen?',
+            ],
+            $result['body']['data']['content']
+        );
+    }
+
+    /**
+     * @group allowed_to_fail_with_b2b
+     *
+     * Check if only one, related to the shop 2 content is available in list
+     */
+    public function testGetOneContentInListOfNotMainShop(): void
+    {
+        $this->setGETRequestParameter('shp', '2');
+        $this->addContentToShops([2]);
+
+        $result = $this->query('query{
+            contents {
+                id
+            }
+        }');
+
+        $this->assertCount(
+            1,
+            $result['body']['data']['contents']
+        );
+    }
+
+    /**
      * @return array
      */
     public function providerGetContentMultilanguage()
     {
         return [
+            'shop_2_de' => [
+                'shopId'     => '2',
+                'languageId' => '0',
+                'title'      => 'Wie bestellen?',
+                'id'         => self::CONTENT_ID_FOR_SHOP_2,
+            ],
+            'shop_2_en' => [
+                'shopId'     => '2',
+                'languageId' => '1',
+                'title'      => 'How to order?',
+                'id'         => self::CONTENT_ID_FOR_SHOP_2,
+            ],
             'shop_1_de' => [
+                'shopId'     => '1',
                 'languageId' => '0',
                 'title'      => 'Wie bestellen?',
                 'id'         => self::CONTENT_ID,
             ],
             'shop_1_en' => [
+                'shopId'     => '1',
                 'languageId' => '1',
                 'title'      => 'How to order?',
                 'id'         => self::CONTENT_ID,
@@ -88,13 +200,15 @@ final class ContentEnterpriseTest extends EnterpriseTestCase
      *
      * @dataProvider providerGetContentMultilanguage
      *
+     * @param mixed $shopId
      * @param mixed $languageId
      * @param mixed $title
      * @param mixed $id
      */
-    public function testGetSingleTranslatedContent($languageId, $title, $id): void
+    public function testGetSingleTranslatedSecondShopContent($shopId, $languageId, $title, $id): void
     {
-        $this->setGETRequestParameter('shp', '1');
+        EshopRegistry::getConfig()->setShopId($shopId);
+        $this->setGETRequestParameter('shp', $shopId);
         $this->setGETRequestParameter('lang', $languageId);
         $this->addContentToShops([2]);
 
@@ -119,14 +233,17 @@ final class ContentEnterpriseTest extends EnterpriseTestCase
      *
      * @dataProvider providerGetContentMultilanguage
      *
+     * @param mixed $shopId
      * @param mixed $languageId
      * @param mixed $title
      * @param mixed $id
      */
-    public function testGetListTranslatedContents($languageId, $title, $id): void
+    public function testGetListTranslatedSecondShopContents($shopId, $languageId, $title, $id): void
     {
-        $this->setGETRequestParameter('shp', '1');
+        EshopRegistry::getConfig()->setShopId($shopId);
+        $this->setGETRequestParameter('shp', $shopId);
         $this->setGETRequestParameter('lang', $languageId);
+        $this->addContentToShops([2]);
 
         $result = $this->query('query {
             contents(filter: {

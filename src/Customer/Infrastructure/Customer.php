@@ -48,7 +48,7 @@ final class Customer
             $ordersList = $customerModel->getOrders();
         }
 
-        $orders     = [];
+        $orders = [];
 
         foreach ($ordersList->getArray() as $orderModel) {
             /** @var EshopOrderModel $orderModel */

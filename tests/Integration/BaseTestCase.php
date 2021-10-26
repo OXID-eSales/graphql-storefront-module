@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
 
 abstract class BaseTestCase extends TokenTestCase
 {

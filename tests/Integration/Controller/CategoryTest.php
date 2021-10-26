@@ -445,8 +445,23 @@ final class CategoryTest extends BaseTestCase
             ->get(QueryBuilderFactoryInterface::class);
         $queryBuilder = $queryBuilderFactory->create();
 
-        // set product to inactive
+        // clear all field related to sorting in order to use default sorting
         $queryBuilder
+            ->update('oxcategories')
+            ->set('OXDEFSORT', ':sort')
+            ->set('OXDEFSORTMODE', ':sortMode')
+            ->where('OXID = :OXID')
+            ->setParameters([
+                ':OXID'     => self::CATEGORY_WITH_PRODUCTS,
+                ':sort'     => '',
+                ':sortMode' => 0,
+            ])
+            ->execute();
+
+        $queryBuilderProduct = $queryBuilderFactory->create();
+
+        // set product to inactive
+        $queryBuilderProduct
             ->update('oxarticles')
             ->set('oxactive', 0)
             ->where('OXID = :OXID')
@@ -482,7 +497,7 @@ final class CategoryTest extends BaseTestCase
         );
 
         // set product to active
-        $queryBuilder
+        $queryBuilderProduct
             ->update('oxarticles')
             ->set('oxactive', 1)
             ->where('OXID = :OXID')

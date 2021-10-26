@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Core\Element2ShopRelations;
-use OxidEsales\GraphQL\Base\Tests\Integration\MultishopTestCase;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\GraphQL\Base\Tests\Integration\MultishopTestCase;
 
 /**
  * Class ProductEnterpriseTest

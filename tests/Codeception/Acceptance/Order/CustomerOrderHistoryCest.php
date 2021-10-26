@@ -499,6 +499,7 @@ final class CustomerOrderHistoryCest extends BaseCest
         ];
 
         $facts = new Facts();
+
         if ($facts->getEdition() !== 'EE') {
             $expected['vatID'] = '';
         }

@@ -10,9 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use Codeception\Example;
-use Codeception\Scenario;
-use GraphQL\Validator\Rules\FieldsOnCorrectType;
-use OxidEsales\GraphQL\Base\Exception\InvalidToken;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
@@ -43,6 +40,8 @@ final class BasketCest extends BaseCest
 
     private const BASKET_WISH_LIST = 'wishlist';
 
+    private const PUBLIC_NOTICE_LIST = '_test_noticelist_public';
+
     private const BASKET_NOTICE_LIST = 'noticelist';
 
     private const BASKET_SAVED_BASKET = 'savedbasket';
@@ -56,7 +55,7 @@ final class BasketCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query{
-                basket(basketId: "' . self::PUBLIC_BASKET . '") {
+                publicBasket(basketId: "' . self::PUBLIC_BASKET . '") {
                     items {
                         id
                         amount
@@ -66,7 +65,6 @@ final class BasketCest extends BaseCest
                         }
                     }
                     id
-                    public
                     creationDate
                     lastUpdateDate
                 }
@@ -76,9 +74,8 @@ final class BasketCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $basket = $result['data']['basket'];
+        $basket = $result['data']['publicBasket'];
         $I->assertEquals(self::PUBLIC_BASKET, $basket['id']);
-        $I->assertEquals(true, $basket['public']);
 
         $I->assertEquals(1, count($basket['items']));
         $basketItem = $basket['items'][0];
@@ -87,41 +84,14 @@ final class BasketCest extends BaseCest
         $I->assertEquals(self::PRODUCT, $basketItem['product']['id']);
     }
 
-    public function testGetPrivateBasketAuthorized(AcceptanceTester $I): void
+    public function testPublicNoticelistNotShownInPublicBasketQuery(AcceptanceTester $I): void
     {
-        $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
-
         $I->sendGQLQuery(
             'query{
-                basket(basketId: "' . self::PRIVATE_BASKET . '") {
+                publicBasket(basketId: "' . self::PUBLIC_NOTICE_LIST . '") {
                     id
-                }
-            }'
-        );
-
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
-
-        $basket = $result['data']['basket'];
-
-        $I->assertEquals(self::PRIVATE_BASKET, $basket['id']);
-    }
-
-    /**
-     * @dataProvider boolDataProvider
-     */
-    public function testGetPrivateBasketNotAuthorized(AcceptanceTester $I, Example $data): void
-    {
-        $isLogged = $data[0];
-
-        if ($isLogged) {
-            $I->login(self::USERNAME, self::PASSWORD);
-        }
-
-        $I->sendGQLQuery(
-            'query{
-                basket(basketId: "' . self::PRIVATE_BASKET . '") {
-                    id
+                    creationDate
+                    lastUpdateDate
                 }
             }'
         );
@@ -133,6 +103,30 @@ final class BasketCest extends BaseCest
             'Basket is private.',
             $result['errors'][0]['message']
         );
+    }
+
+    public function testGetPrivateBasketAuthorized(AcceptanceTester $I): void
+    {
+        $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
+
+        $result = $this->queryBasket($I, self::PRIVATE_BASKET);
+        $basket = $result['data']['basket'];
+
+        $I->assertEquals(self::PRIVATE_BASKET, $basket['id']);
+    }
+
+    /**
+     * @dataProvider getPrivateBasketNotAuthorizedDataProvider
+     */
+    public function testGetPrivateBasketNotAuthorized(AcceptanceTester $I, Example $example): void
+    {
+        if ($example['isLogged']) {
+            $I->login(self::USERNAME, self::PASSWORD);
+        }
+
+        $result = $this->queryBasket($I, self::PRIVATE_BASKET);
+
+        $I->assertSame($example['message'], $result['errors'][0]['message']);
     }
 
     /**
@@ -153,20 +147,9 @@ final class BasketCest extends BaseCest
         $I->assertEmpty($basket['items']);
 
         $result = $this->basketRemoveMutation($I, $basket['id']);
-        $I->assertTrue(
-            $result['data']['basketRemove']
-        );
+        $I->assertTrue($result['data']['basketRemove']);
 
-        $I->sendGQLQuery(
-            'query{
-                basket(basketId: "' . $basket['id'] . '") {
-                    id
-                }
-            }'
-        );
-
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
+        $result = $this->queryBasket($I, $basket['id']);
 
         $I->assertSame(
             'Basket was not found by id: ' . $basket['id'],
@@ -261,57 +244,16 @@ final class BasketCest extends BaseCest
         $this->assertCost($I, $result['data']['basket']['cost']);
     }
 
-    public function testBasketCostForPublicBasketAndNotLoggedInUser(AcceptanceTester $I): void
-    {
-        $I->sendGQLQuery(
-            'query{
-                basket(basketId: "' . self::PUBLIC_BASKET . '") {
-                    id
-                    cost {
-                        productNet {
-                            price
-                            vat
-                        }
-                        productGross {
-                            vats {
-                                vatRate
-                                vatPrice
-                            }
-                            sum
-                        }
-                        currency {
-                            name
-                            rate
-                        }
-                        payment {
-                            price
-                        }
-                        discount
-                        voucher
-                        total
-                        delivery {
-                            price
-                        }
-                    }
-                }
-            }'
-        );
-
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
-
-        //We have no user so delivery costs will not be calculated unless blCalculateDelCostIfNotLoggedIn is set
-        $this->assertCost($I, $result['data']['basket']['cost'], 0.0);
-    }
-
-    protected function boolDataProvider(): array
+    protected function getPrivateBasketNotAuthorizedDataProvider(): array
     {
         return [
             [
-                true,
+                'isLogged' => true,
+                'message'  => 'You are not allowed to access this basket as it belongs to somebody else',
             ],
             [
-                false,
+                'isLogged' => false,
+                'message'  => 'You need to be logged to access this field',
             ],
         ];
     }
@@ -391,5 +333,20 @@ final class BasketCest extends BaseCest
         ];
 
         $I->assertEquals($expected, $costs);
+    }
+
+    private function queryBasket(AcceptanceTester $I, string $basketId): array
+    {
+        $I->sendGQLQuery(
+            'query{
+                basket(basketId: "' . $basketId . '") {
+                    id
+                }
+            }'
+        );
+
+        $I->seeResponseIsJson();
+
+        return $I->grabJsonResponseAsArray();
     }
 }

@@ -147,6 +147,9 @@ final class ContentTest extends BaseTestCase
         );
     }
 
+    /**
+     * @group allowed_to_fail_with_b2b
+     */
     public function testGetContentListWithoutFilter(): void
     {
         $result = $this->query('query {
@@ -161,6 +164,9 @@ final class ContentTest extends BaseTestCase
         );
     }
 
+    /**
+     * @group allowed_to_fail_with_b2b
+     */
     public function testGetContentListWithAdminToken(): void
     {
         $this->prepareToken();
@@ -246,18 +252,8 @@ final class ContentTest extends BaseTestCase
      */
     public function testContentCategory($withToken): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
-        // set product to inactive
-        $queryBuilder
-            ->update('oxcategories')
-            ->set('oxactive', 0)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::CATEGORY_RELATED_TO_ACTIVE_CONTENT)
-            ->execute();
+        // set category to inactive
+        $this->changeCategoryActiveStatus(self::CATEGORY_RELATED_TO_ACTIVE_CONTENT, 0);
 
         if ($withToken) {
             $this->prepareToken();
@@ -284,6 +280,9 @@ final class ContentTest extends BaseTestCase
                 $category
             );
         }
+
+        // set category back to active
+        $this->changeCategoryActiveStatus(self::CATEGORY_RELATED_TO_ACTIVE_CONTENT, 1);
     }
 
     /**
@@ -293,18 +292,8 @@ final class ContentTest extends BaseTestCase
      */
     public function testContentsCategory($withToken): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
-        // set product to inactive
-        $queryBuilder
-            ->update('oxcategories')
-            ->set('oxactive', 0)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::CATEGORY_RELATED_TO_ACTIVE_CONTENT)
-            ->execute();
+        // set category to inactive
+        $this->changeCategoryActiveStatus(self::CATEGORY_RELATED_TO_ACTIVE_CONTENT, 0);
 
         if ($withToken) {
             $this->prepareToken();
@@ -337,5 +326,23 @@ final class ContentTest extends BaseTestCase
                 $contentCategory
             );
         }
+
+        // set category back to active
+        $this->changeCategoryActiveStatus(self::CATEGORY_RELATED_TO_ACTIVE_CONTENT, 1);
+    }
+
+    private function changeCategoryActiveStatus($categoryId, $active): void
+    {
+        $queryBuilderFactory = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(QueryBuilderFactoryInterface::class);
+        $queryBuilder = $queryBuilderFactory->create();
+
+        $queryBuilder
+            ->update('oxcategories')
+            ->set('oxactive', $active)
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', $categoryId)
+            ->execute();
     }
 }

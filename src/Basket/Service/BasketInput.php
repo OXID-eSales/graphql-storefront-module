@@ -15,7 +15,6 @@ use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketExists;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\BasketFactory;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Repository as BasketRepository;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
-use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BasketInput
 {

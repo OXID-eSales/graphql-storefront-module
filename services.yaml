@@ -6,7 +6,7 @@ services:
 
   OxidEsales\GraphQL\Storefront\:
     resource: 'src/*'
-    exclude: 'src/**/{DataType,Exception,Shop,Event}'
+    exclude: 'src/**/{DataType,Exception,Shop,Event,Subscriber}'
     public: true
 
   OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper:
@@ -16,3 +16,7 @@ services:
   OxidEsales\GraphQL\Storefront\Shared\Service\PermissionProvider:
       class: OxidEsales\GraphQL\Storefront\Shared\Service\PermissionProvider
       tags: ['graphql_permission_provider']
+
+  OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization:
+      class: OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization
+      tags: [ 'kernel.event_subscriber' ]

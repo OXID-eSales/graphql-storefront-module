@@ -102,8 +102,10 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
 
     /**
      * @dataProvider incorrectCurrencyNames
+     *
+     * @param mixed $name
      */
-    public function testGetCurrencyByNameShouldFail(string $name): void
+    public function testGetCurrencyByNameShouldFail($name): void
     {
         $result = $this->query(sprintf('
             query {

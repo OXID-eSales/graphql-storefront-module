@@ -43,7 +43,7 @@ final class ActionFilterList extends FilterList
     }
 
     /**
-     * @Factory
+     * @Factory(name="ActionFilterList", default=true)
      */
     public static function createActionFilterList(?StringFilter $actionId = null): self
     {

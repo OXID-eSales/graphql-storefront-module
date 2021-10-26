@@ -47,7 +47,7 @@ final class BasketOwnerRelationCest extends BaseCest
         $I->login(self::OTHER_USERNAME, self::PASSWORD);
         $I->sendGQLQuery(
             'query {
-                basket(basketId: "' . $this->basketId . '") {
+                publicBasket(basketId: "' . $this->basketId . '") {
                     id
                     owner {
                         firstName

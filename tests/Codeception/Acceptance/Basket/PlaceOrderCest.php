@@ -9,12 +9,11 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
-use GraphQL\Validator\Rules\FieldsOnCorrectType;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
-use TheCodingMachine\GraphQLite\Types\ID;
 use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @group oe_graphql_checkout
@@ -45,7 +44,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         $I->assertEquals(
             MissingAuthorizationException::forbidden()->getMessage(),
-            $result['errors'][0]['message']);
+            $result['errors'][0]['message']
+        );
 
         $I->login(self::USERNAME, self::PASSWORD, 0);
         $this->removeBasket($I, $basketId);

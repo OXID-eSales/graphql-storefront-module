@@ -13,6 +13,7 @@ use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\DeliveryList as EshopDeliveryListModel;
 use OxidEsales\Eshop\Application\Model\DeliverySetList as EshopDeliverySetListModel;
 use OxidEsales\Eshop\Application\Model\DiscountList as EshopDiscountListModel;
+use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\Eshop\Application\Model\UserBasket as EshopUserBasketModel;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
@@ -49,8 +50,11 @@ final class Basket
             $basketModel->addProductToBasket($savedItem);
         }
 
+        $user = oxNew(EshopUserModel::class);
+        $user->load((string) $basket->getUserId());
+
         //Set user to basket otherwise delivery cost will not be calculated
-        $basketModel->setUser($userBasketModel->getUser());
+        $basketModel->setUser($user);
 
         /** @var VoucherDataType[] $vouchers */
         $vouchers = $this->getVouchers($basket->id());
@@ -59,8 +63,12 @@ final class Basket
             $basketModel->applyVoucher($voucher->getEshopModel()->getId());
         }
 
-        $basketModel->setPayment($userBasketModel->getFieldData('oegql_paymentid'));
-        $basketModel->setShipping($userBasketModel->getFieldData('oegql_deliverymethodid'));
+        $basketModel->setPayment((string) $basket->getPaymentId());
+        $basketModel->setShipping((string) $basket->getDeliveryMethodId());
+
+        if ($basket->getDeliveryAddressId()->val()) {
+            EshopRegistry::getSession()->setVariable('deladrid', $basket->getDeliveryAddressId()->val());
+        }
 
         //reset in case we hit Basket::calculateBasket() more than once
         EshopRegistry::set(EshopDeliverySetListModel::class, null);

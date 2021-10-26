@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Customer;
 
 use Codeception\Example;
+use Codeception\Scenario;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -38,6 +39,18 @@ final class CustomerCest extends BaseCest
 
     private const USERNAME_FOR_EMAIL_CHANGE = 'foremailchangeCE@oxid-esales.com';
 
+    public function _before(AcceptanceTester $I, Scenario $scenario): void
+    {
+        parent::_before($I, $scenario);
+
+        $I->deleteFromDatabase(
+            'oxnewssubscribed',
+            [
+                'OXEMAIL'  => self::EXISTING_USERNAME,
+            ]
+        );
+    }
+
     public function _after(AcceptanceTester $I): void
     {
         $I->logout();
@@ -45,8 +58,7 @@ final class CustomerCest extends BaseCest
         $I->deleteFromDatabase(
             'oxnewssubscribed',
             [
-                'OXID LIKE' => '_%',
-                'OXUSERID'  => self::EXISTING_USERNAME,
+                'OXEMAIL'  => self::EXISTING_USERNAME,
             ]
         );
     }
@@ -112,6 +124,14 @@ final class CustomerCest extends BaseCest
     public function testCustomerNewsletterStatusNoEntryInDatabase(AcceptanceTester $I): void
     {
         $I->login(self::EXISTING_USERNAME, self::OTHER_PASSWORD);
+
+        //Ensure we have no newsletter status in the database
+        $I->deleteFromDatabase(
+            'oxnewssubscribed',
+            [
+                'OXEMAIL'  => self::EXISTING_USERNAME,
+            ]
+        );
 
         $I->sendGQLQuery(
             'query {

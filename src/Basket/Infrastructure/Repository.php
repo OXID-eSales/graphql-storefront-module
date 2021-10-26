@@ -12,20 +12,21 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Infrastructure;
 use Doctrine\DBAL\FetchMode;
 use OxidEsales\Eshop\Application\Model\UserBasket as UserBasketEshopModel;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
+use OxidEsales\Eshop\Core\TableViewNameGenerator;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
-use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
+use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketByTitleAndUserIdFilterList;
+use OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket as PublicBasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
 use PDO;
 use TheCodingMachine\GraphQLite\Types\ID;
-use function getViewName;
 
 final class Repository
 {
@@ -118,16 +119,17 @@ final class Repository
     }
 
     /**
-     * @return BasketDataType[]
+     * @return PublicBasketDataType[]
      */
     public function publicBasketsByOwnerNameOrEmail(string $search): array
     {
-        $baskets = [];
+        $baskets                = [];
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder->select('userbaskets.*')
-                     ->from(getViewName('oxuserbaskets'), 'userbaskets')
-                     ->innerJoin('userbaskets', getViewName('oxuser'), 'users', 'users.oxid = userbaskets.oxuserid')
+        ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
+        ->innerJoin('userbaskets', $tableViewNameGenerator->getViewName('oxuser'), 'users', 'users.oxid = userbaskets.oxuserid')
                      ->where('userbaskets.oxpublic = 1')
                      ->andWhere("userbaskets.OXTITLE != 'savedbasket'")
                      ->andWhere("userbaskets.OXTITLE != 'noticelist'")
@@ -151,7 +153,7 @@ final class Repository
         foreach ($result as $row) {
             $newModel = clone $model;
             $newModel->assign($row);
-            $baskets[] = new BasketDataType($newModel);
+            $baskets[] = new PublicBasketDataType($newModel);
         }
 
         return $baskets;
@@ -159,12 +161,13 @@ final class Repository
 
     private function getCustomerBasketIds(ID $customerId): array
     {
-        $queryBuilder = $this->queryBuilderFactory->create();
+        $queryBuilder           = $this->queryBuilderFactory->create();
+        $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         /** @var \Doctrine\DBAL\Driver\Statement $execute */
         $execute =  $queryBuilder
             ->select('oxid')
-            ->from(getViewName('oxuserbaskets'), 'userbaskets')
+            ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
             ->where('oxuserid = :customerId')
             ->setParameter(':customerId', $customerId)
             ->execute();

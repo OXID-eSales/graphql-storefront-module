@@ -73,7 +73,7 @@ final class DeliveryAddressCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertStringStartsWith(
-            'Cannot query field "customerDeliveryAddressAdd" on type "Mutation".',
+            'Cannot query field "customerDeliveryAddressAdd" on type "Mutation"',
             $result['errors'][0]['message']
         );
     }
@@ -319,7 +319,7 @@ final class DeliveryAddressCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertStringStartsWith(
-            'Cannot query field "customerDeliveryAddressDelete" on type "Mutation".',
+            'Cannot query field "customerDeliveryAddressDelete" on type "Mutation',
             $result['errors'][0]['message']
         );
     }

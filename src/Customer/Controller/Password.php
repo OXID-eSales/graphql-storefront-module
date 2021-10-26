@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Customer\Controller;
 
 use OxidEsales\GraphQL\Storefront\Customer\Service\Password as PasswordService;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
-use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 
 final class Password
 {

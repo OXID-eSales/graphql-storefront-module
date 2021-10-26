@@ -10,16 +10,19 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\Controller;
 
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
+use OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket as PublicBasketDataType;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketModify;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
 use OxidEsales\GraphQL\Storefront\Basket\Service\PlaceOrder as PlaceOrderService;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 use TheCodingMachine\GraphQLite\Annotations\Right;
-use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Basket
@@ -30,20 +33,38 @@ final class Basket
     /** @var PlaceOrderService */
     private $placeOrderService;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     public function __construct(
         BasketService $basketService,
-        PlaceOrderService $placeOrderService
+        PlaceOrderService $placeOrderService,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->basketService     = $basketService;
         $this->placeOrderService = $placeOrderService;
+        $this->eventDispatcher   = $eventDispatcher;
     }
 
     /**
+     * Returns information for any basket the customer owns.
+     *
      * @Query()
+     * @Logged()
      */
     public function basket(ID $basketId): BasketDataType
     {
         return $this->basketService->basket($basketId);
+    }
+
+    /**
+     * Returns information for any basket marked as public.
+     *
+     * @Query()
+     */
+    public function publicBasket(ID $basketId): PublicBasketDataType
+    {
+        return $this->basketService->publicBasket($basketId);
     }
 
     /**
@@ -110,7 +131,7 @@ final class Basket
      *
      * @Query()
      *
-     * @return BasketDataType[]
+     * @return PublicBasketDataType[]
      */
     public function baskets(string $owner): array
     {
@@ -142,8 +163,11 @@ final class Basket
      * @Logged()
      * @HideIfUnauthorized()
      */
-    public function basketSetDeliveryAddress(ID $basketId, ID $deliveryAddressId): BasketDataType
+    public function basketSetDeliveryAddress(ID $basketId, ?ID $deliveryAddressId): BasketDataType
     {
+        $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_ADDRESS);
+        $this->eventDispatcher->dispatch(BeforeBasketModify::NAME, $event->name, $event);
+
         return $this->basketService->setDeliveryAddress($basketId, $deliveryAddressId);
     }
 
@@ -154,6 +178,9 @@ final class Basket
      */
     public function basketSetPayment(ID $basketId, ID $paymentId): BasketDataType
     {
+        $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_PAYMENT_METHOD);
+        $this->eventDispatcher->dispatch(BeforeBasketModify::NAME, $event);
+
         return $this->basketService->setPayment($basketId, $paymentId);
     }
 
@@ -164,6 +191,9 @@ final class Basket
      */
     public function basketSetDeliveryMethod(ID $basketId, ID $deliveryMethodId): BasketDataType
     {
+        $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_METHOD);
+        $this->eventDispatcher->dispatch(BeforeBasketModify::NAME, $event);
+
         return $this->basketService->setDeliveryMethod($basketId, $deliveryMethodId);
     }
 

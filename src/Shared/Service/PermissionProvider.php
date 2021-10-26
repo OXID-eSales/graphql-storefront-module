@@ -22,6 +22,7 @@ final class PermissionProvider implements PermissionProviderInterface
                 'VIEW_INACTIVE_BANNER',
                 'VIEW_INACTIVE_CATEGORY',
                 'VIEW_INACTIVE_CONTENT',
+                'VIEW_ALL_CUSTOMERS',
                 'VIEW_INACTIVE_LINK',
                 'VIEW_INACTIVE_MANUFACTURER',
                 'VIEW_INACTIVE_PRODUCT',

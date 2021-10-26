@@ -227,7 +227,7 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
 
     private function basketSetDelivery(string $deliveryMethodId, ?string $basketId = null): string
     {
-        $basketId = $basketId ?: $this->basketId;
+        $basketId = $basketId ? $basketId : $this->basketId;
 
         return 'mutation {
             basketSetDeliveryMethod(basketId: "' . $basketId . '", deliveryMethodId: "' . $deliveryMethodId . '") {

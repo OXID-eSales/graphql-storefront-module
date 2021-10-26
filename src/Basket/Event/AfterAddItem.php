@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 use Symfony\Component\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class BeforeAddItem extends Event
+final class AfterAddItem extends Event
 {
     public const NAME = self::class;
 
@@ -26,8 +26,8 @@ final class BeforeAddItem extends Event
     private $amount;
 
     public function __construct(
-        ID    $basketId,
-        ID    $productId,
+        ID $basketId,
+        ID $productId,
         float $amount
     ) {
         $this->basketId  = $basketId;
@@ -48,10 +48,5 @@ final class BeforeAddItem extends Event
     public function getAmount(): float
     {
         return $this->amount;
-    }
-
-    public function setAmount(float $amount): void
-    {
-        $this->amount = $amount;
     }
 }

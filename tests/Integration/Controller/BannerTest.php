@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
@@ -26,6 +27,13 @@ final class BannerTest extends BaseTestCase
     private const WRONG_TYPE_ACTION = 'd51545e80843be666a9326783a73e91d';
 
     private const ACTIVE_BANNER_PRODUCT = 'f4fc98f99e3660bd2ecd7450f832c41a';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Registry::getSession()->setUser(null);
+    }
 
     /**
      * If product assigned, link is pointing to product
