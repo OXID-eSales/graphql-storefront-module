@@ -13,6 +13,7 @@ use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\NameValue;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -175,6 +176,23 @@ final class Product implements DataType
                 (string) $this->product->getFieldData('oxvarselect')
             )
         );
+    }
+
+    /**
+     * @Field()
+     *
+     * @return NameValue[]
+     */
+    public function getVariantSelect(): array
+    {
+        $combined = array_combine($this->getVariantLabels(), $this->getVariantValues());
+        $combined = !is_array($combined) ? [] : $combined;
+        $result = [];
+        foreach ($combined as $name => $value) {
+            $result[] = new NameValue($name, $value);
+        }
+
+        return $result;
     }
 
     /**
