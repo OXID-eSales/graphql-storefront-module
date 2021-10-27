@@ -64,4 +64,19 @@ final class Seo
 
         return null;
     }
+
+    /**
+     * @Field()
+     */
+    public function getSlug(): ?string
+    {
+        if (method_exists($this->eshopModel, 'getBaseSeoLink')) {
+            $seoLink = $this->eshopModel->getBaseSeoLink(null);
+            $path = parse_url($seoLink, PHP_URL_PATH);
+            $tmp = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
+            return array_pop($tmp);
+        }
+
+        return null;
+    }
 }
