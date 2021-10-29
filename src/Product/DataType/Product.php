@@ -93,6 +93,10 @@ final class Product implements DataType
      */
     public function getTitle(): string
     {
+        if (method_exists($this->product, 'getRawFieldData')) {
+            return (string) $this->product->getRawFieldData('oxtitle');
+        }
+
         return (string) $this->product->getFieldData('oxtitle');
     }
 
@@ -101,6 +105,9 @@ final class Product implements DataType
      */
     public function getShortDescription(): string
     {
+        if (method_exists($this->product, 'getRawFieldData')) {
+            return (string) $this->product->getRawFieldData('oxshortdesc');
+        }
         return (string) $this->product->getFieldData('oxshortdesc');
     }
 
