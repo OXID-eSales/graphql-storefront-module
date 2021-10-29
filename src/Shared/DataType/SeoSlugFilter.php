@@ -27,12 +27,12 @@ final class SeoSlugFilter implements FilterInterface
     /** @var string */
     private $type = 'static';
 
-    public function __construct(ID $like)
+    public function __construct(string $like)
     {
         $this->like = $like;
     }
 
-    public function like(): ID
+    public function like(): string
     {
         return $this->like;
     }
@@ -77,7 +77,7 @@ final class SeoSlugFilter implements FilterInterface
     /**
      * @Factory(name="SeoSlugFilterInput")
      */
-    public static function fromUserInput(ID $like): self
+    public static function fromUserInput(string $like): self
     {
         return new self($like);
     }
