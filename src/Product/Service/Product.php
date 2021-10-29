@@ -54,7 +54,7 @@ final class Product
                 /** @var ProductDataType $product */
                 $product = $this->repository->getById((string) $id, ProductDataType::class);
             } else {
-                $product = $this->getProductBySeoSlug($slug);
+                $product = $this->getProductBySeoSlug($slug . '.');
             }
         } catch (ProductNotFound $e) {
             throw $e;
