@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ``BeforeAddItem``
   - ``BeforeBasketDeliveryMethods``
   - ``BeforeBasketPayments`` updated with payment methods list so it can be adjusted
+- Extended DataType Seo to also fetch slug and path
+- Filter `OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter`
+- Query product by either id or seo slug
 
 ### Changed
 - `basketAddItem` mutation honours stockflag and calls may give you back an error
