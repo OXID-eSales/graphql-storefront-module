@@ -11,12 +11,15 @@ namespace OxidEsales\GraphQL\Storefront\Product\Service;
 
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\Sorting;
+use OxidEsales\GraphQL\Base\DataType\Pagination;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Sorting as ProductSorting;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -40,11 +43,21 @@ final class Product
      * @throws ProductNotFound
      * @throws InvalidLogin
      */
-    public function product(ID $id): ProductDataType
+    public function product(?ID $id, ?string $slug): ProductDataType
     {
+        if ((!$id && !$slug) || ($id && $slug)) {
+            throw ProductNotFound::byParameter();
+        }
+
         try {
-            /** @var ProductDataType $product */
-            $product = $this->repository->getById((string) $id, ProductDataType::class);
+            if ($id) {
+                /** @var ProductDataType $product */
+                $product = $this->repository->getById((string) $id, ProductDataType::class);
+            } else {
+                $product = $this->getProductBySeoSlug($slug);
+            }
+        } catch (ProductNotFound $e) {
+            throw $e;
         } catch (NotFound $e) {
             throw ProductNotFound::byId((string) $id);
         }
@@ -80,5 +93,36 @@ final class Product
             $pagination ?? new PaginationFilter(),
             $sort
         );
+    }
+
+    /**
+     * @throws ProductNotFound
+     */
+    private function getProductBySeoSlug(string $slug): ProductDataType
+    {
+        $slugFilter = SeoSlugFilter::fromUserInput($slug);
+        $slugFilter->setType('oxarticle');
+
+        $results = $this->repository->getList(
+            ProductDataType::class,
+            new ProductFilterList (
+                null,
+                null,
+                null,
+                null,
+                $slugFilter
+            ),
+            new PaginationFilter(),
+            ProductSorting::fromUserInput()
+        );
+
+        if (empty($results)) {
+            throw ProductNotFound::bySlug($slug);
+        }
+        if (1 < count($results)) {
+            throw ProductNotFound::byAmbiguousBySlug($slug);
+        }
+
+        return $results[0];
     }
 }
