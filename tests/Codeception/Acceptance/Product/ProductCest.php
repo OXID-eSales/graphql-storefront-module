@@ -24,7 +24,9 @@ final class ProductCest extends BaseCest
 
     public function productsBySeoSlug(AcceptanceTester $I): void
     {
-        //this query ensure all seo urls are generated
+        $I->wantToTest('filtering products by parts of seo slug');
+
+        //this query ensures all seo urls are generated
         $I->sendGQLQuery('query {
                 products {
                     title
@@ -58,7 +60,57 @@ final class ProductCest extends BaseCest
         $I->seeResponseIsJson();
         $result  = $I->grabJsonResponseAsArray();
 
-        $I->assertEquals('Bindung-LIQUID-FORCE-INDEX-BOOT-2010.html', $result['data']['products'][0]['seo']['slug']);
-        $I->assertEquals('Bindung-LIQUID-FORCE-TRANSIT-BOOT-2010.html', $result['data']['products'][1]['seo']['slug']);
+        $I->assertEquals('bindung-liquid-force-index-boot-2010', $result['data']['products'][0]['seo']['slug']);
+        $I->assertEquals('bindung-liquid-force-transit-boot-2010', $result['data']['products'][1]['seo']['slug']);
+    }
+
+    public function productVariantSelect(AcceptanceTester $I): void
+    {
+        $I->wantToTest('variant select');
+
+        //this query ensure all seo urls are generated
+        $I->sendGQLQuery('query {
+                products {
+                    title
+                    id
+                    seo {
+                        url
+                    }
+               }
+        }');
+
+        $I->sendGQLQuery('query {
+                products (
+                    filter: {
+                        slug: {
+                            like: "Kuyichi-Jeans-ANNA"
+                        }
+                    }
+                    sort: {
+                       title: "ASC"
+                   }
+                ) {
+                    title
+                    id
+                    seo {
+                        url
+                        slug
+                    }
+                variants {
+                   id
+                   variantSelect {
+                      name
+                      value
+
+                  }
+                }
+              }
+        }');
+
+        $I->seeResponseIsJson();
+        $result  = $I->grabJsonResponseAsArray();
+
+        $I->assertEquals('Größe', $result['data']['products'][0]['variants'][0]['variantSelect'][0]['name']);
+        $I->assertEquals('Farbe', $result['data']['products'][0]['variants'][0]['variantSelect'][1]['name']);
     }
 }
