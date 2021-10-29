@@ -33,7 +33,7 @@ final class CategoryFilterList extends FilterList
         $this->title    = $title;
         $this->parentId = $parentId;
         $this->slug     = $slug;
-        $this->slug->setType('oxcategory');
+        is_null($this->slug)?: $this->slug->setType('oxcategory');
 
         parent::__construct();
     }

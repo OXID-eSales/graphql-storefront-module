@@ -37,14 +37,16 @@ final class SeoTest extends BaseTestCase
                 'description' => 'german seo description',
                 'keywords'    => 'german seo keywords',
                 'url'         => 'Kiteboarding/Kiteboards/Kiteboard-CABRINHA-CALIBER-2011.html',
-                'slug'        => 'Kiteboard-CABRINHA-CALIBER-2011.html'
+                'path'        => '/Kiteboarding/Kiteboards/',
+                'slug'        => 'Kiteboard-CABRINHA-CALIBER-2011'
             ],
             'en_seo_active' => [
                 'languageId'  => '1',
                 'description' => 'english seo description',
                 'keywords'    => 'english seo keywords',
                 'url'         => 'Kiteboarding/Kiteboards/Kiteboard-CABRINHA-CALIBER-2011.html',
-                'slug'        => 'Kiteboard-CABRINHA-CALIBER-2011.html'
+                'path'        => '/en/Kiteboarding/Kiteboards/',
+                'slug'        => 'Kiteboard-CABRINHA-CALIBER-2011'
             ],
         ];
     }
@@ -57,7 +59,7 @@ final class SeoTest extends BaseTestCase
      * @param mixed $keywords
      * @param mixed $url
      */
-    public function testProductSeo($languageId, $description, $keywords, $url, $slug): void
+    public function testProductSeo($languageId, $description, $keywords, $url, $path, $slug): void
     {
         $this->setGETRequestParameter(
             'lang',
@@ -70,7 +72,8 @@ final class SeoTest extends BaseTestCase
 
         $this->assertEquals($description, $seo->getDescription());
         $this->assertEquals($keywords, $seo->getKeywords());
-        $this->assertEquals($slug, $seo->getSlug());
+        $this->assertEquals($path, $seo->getPath());
+        $this->assertEquals(strtolower($slug), $seo->getSlug());
         $this->doAssertContains($url, $seo->getURL());
     }
 }

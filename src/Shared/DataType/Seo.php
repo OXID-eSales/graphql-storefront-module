@@ -68,13 +68,30 @@ final class Seo
     /**
      * @Field()
      */
+    public function getPath(): ?string
+    {
+        if (method_exists($this->eshopModel, 'getBaseSeoLink')) {
+            $seoLink = $this->eshopModel->getBaseSeoLink(null);
+            $fullPath = parse_url($seoLink, PHP_URL_PATH);
+            return substr($fullPath, 0, strrpos($fullPath, DIRECTORY_SEPARATOR, 0) +1);
+        }
+
+        return null;
+    }
+
+    /**
+     * @Field()
+     */
     public function getSlug(): ?string
     {
         if (method_exists($this->eshopModel, 'getBaseSeoLink')) {
             $seoLink = $this->eshopModel->getBaseSeoLink(null);
             $path = parse_url($seoLink, PHP_URL_PATH);
+            //TODO: regexp
             $tmp = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
-            return array_pop($tmp);
+            $rawSlug = array_pop($tmp);
+            $slug = substr($rawSlug, 0, strpos($rawSlug, '.', 0));
+            return strtolower($slug);
         }
 
         return null;

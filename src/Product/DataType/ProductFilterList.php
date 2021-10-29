@@ -53,7 +53,7 @@ final class ProductFilterList extends FilterList
         $this->active       = $active;
         $this->parent       = new IDFilter(new ID(''));
         $this->slug         = $slug;
-        $this->slug->setType('oxarticle');
+        is_null($this->slug)?: $this->slug->setType('oxarticle');
 
         parent::__construct();
     }

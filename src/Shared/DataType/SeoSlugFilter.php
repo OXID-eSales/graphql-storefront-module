@@ -67,7 +67,7 @@ final class SeoSlugFilter implements FilterInterface
                 $builder->expr()->eq("$table.OXID", "$alias.OXOBJECTID")
             )
             ->andWhere($builder->expr()->eq($alias . '.OXTYPE', ":type"))
-            ->andWhere($builder->expr()->like($alias . '.OXSEOURL', ":$field"))
+            ->andWhere($builder->expr()->like('LOWER(' . $alias . '.OXSEOURL)', "LOWER(:$field)"))
             ->andWhere($builder->expr()->eq($alias . '.OXLANG', ":lang"))
             ->setParameter(":type", $this->type())
             ->setParameter(":$field", '%' . $this->like() . '%')
