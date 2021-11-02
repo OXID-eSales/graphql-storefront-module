@@ -166,7 +166,7 @@ final class Basket
     public function basketSetDeliveryAddress(ID $basketId, ?ID $deliveryAddressId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_ADDRESS);
-        $this->eventDispatcher->dispatch(BeforeBasketModify::NAME, $event->name, $event);
+        $this->eventDispatcher->dispatch(BeforeBasketModify::NAME, $event);
 
         return $this->basketService->setDeliveryAddress($basketId, $deliveryAddressId);
     }
