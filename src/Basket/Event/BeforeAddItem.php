@@ -26,8 +26,8 @@ final class BeforeAddItem extends Event
     private $amount;
 
     public function __construct(
-        ID    $basketId,
-        ID    $productId,
+        ID $basketId,
+        ID $productId,
         float $amount
     ) {
         $this->basketId  = $basketId;

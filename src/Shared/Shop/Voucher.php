@@ -85,7 +85,7 @@ class Voucher extends Voucher_parent
     protected function getGraphQLBasketItems($oDiscount = null): array
     {
         if (null === $oDiscount) {
-            $oDiscount = $this->_getDiscountFromSerie();
+            $oDiscount = $this->getDiscountFromSerie();
         }
 
         /** Here is the difference with _getSessionBasketItems method */

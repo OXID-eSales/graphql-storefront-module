@@ -58,7 +58,7 @@ final class CategoryIDFilter implements FilterInterface
     }
 
     /**
-     * @Factory(name="CategoryIDFilterInput", default=true)
+     * @Factory
      */
     public static function fromUserInput(ID $equals): self
     {

@@ -189,6 +189,6 @@ final class BasketVoucherCest extends BaseCest
     private function checkReservationDate(AcceptanceTester $I, string $actualReservationdate): void
     {
         $expectedReservationdate = DateTimeImmutableFactory::fromString('now')->format('Y-m-d');
-        $I->assertContains($expectedReservationdate, $actualReservationdate);
+        $I->assertStringContainsString($expectedReservationdate, $actualReservationdate);
     }
 }

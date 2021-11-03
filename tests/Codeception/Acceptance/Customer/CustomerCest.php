@@ -214,7 +214,7 @@ final class CustomerCest extends BaseCest
             'unsubscribed'     => null,
         ];
 
-        $I->assertContains('T', $result['data']['customer']['newsletterStatus']['updated']);
+        $I->assertStringContainsString('T', $result['data']['customer']['newsletterStatus']['updated']);
         unset($result['data']['customer']['newsletterStatus']['updated']);
 
         $I->assertEquals(

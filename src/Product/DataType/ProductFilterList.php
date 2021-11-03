@@ -71,7 +71,7 @@ final class ProductFilterList extends FilterList
     }
 
     /**
-     * @Factory(name="ProductFilterList", default=true)
+     * @Factory
      */
     public static function createProductFilterList(
         ?StringFilter $title = null,

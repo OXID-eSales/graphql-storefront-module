@@ -15,7 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 final class StateSorting extends BaseSorting
 {
     /**
-     * @Factory(name="StateSorting", default=true)
+     * @Factory
      */
     public static function fromUserInput(
         ?string $title = null

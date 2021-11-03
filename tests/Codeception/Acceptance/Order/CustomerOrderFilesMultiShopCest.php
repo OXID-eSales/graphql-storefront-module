@@ -112,8 +112,8 @@ final class CustomerOrderFilesMultiShopCest extends MultishopBaseCest
             ],
         ];
 
-        $I->assertRegExp('/https?:\/\/.*\..*sorderfileid=' . $expectedFiles[0]['id'] . '/', $customerFiles[0]['url']);
-        $I->assertRegExp('/https?:\/\/.*\..*sorderfileid=' . $expectedFiles[0]['id'] . '/', $orderFiles[0]['url']);
+        $I->assertMatchesRegularExpression('/https?:\/\/.*\..*sorderfileid=' . $expectedFiles[0]['id'] . '/', $customerFiles[0]['url']);
+        $I->assertMatchesRegularExpression('/https?:\/\/.*\..*sorderfileid=' . $expectedFiles[0]['id'] . '/', $orderFiles[0]['url']);
         unset($customerFiles[0]['url'], $orderFiles[0]['url']);
 
         $I->assertEquals($customerFiles, $expectedFiles);

@@ -38,7 +38,7 @@ final class ReviewFilterList extends FilterList
     }
 
     /**
-     * @Factory(name="ProductFilterList", default=true)
+     * @Factory
      */
     public static function createProductFilterList(
         ?IDFilter $user = null

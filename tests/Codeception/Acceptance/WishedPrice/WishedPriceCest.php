@@ -525,7 +525,7 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertContains(
+        $I->assertStringContainsString(
             'Failed to send notification: Invalid address:  (to):',
             $result['errors']['0']['message']
         );

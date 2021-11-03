@@ -388,7 +388,7 @@ final class InvoiceAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertContains($expected, $result['errors'][0]['message']);
+        $I->assertStringContainsString($expected, $result['errors'][0]['message']);
     }
 
     protected function customerInvoiceAddressPartialProvider(): array
