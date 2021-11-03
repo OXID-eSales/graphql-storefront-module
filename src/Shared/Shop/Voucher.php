@@ -65,9 +65,9 @@ class Voucher extends Voucher_parent
         return $this->_getSerieDiscount();
     }
 
-    protected function getBasketItems($oDiscount = null): array
+    protected function _getBasketItems($oDiscount = null): array
     {
-        $items = parent::getBasketItems($oDiscount);
+        $items = parent::_getBasketItems($oDiscount);
 
         if (empty($items)) {
             $items = $this->getGraphQLBasketItems($oDiscount);

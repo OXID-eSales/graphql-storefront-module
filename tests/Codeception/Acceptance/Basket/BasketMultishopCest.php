@@ -62,7 +62,7 @@ final class BasketMultishopCest extends MultishopBaseCest
         $result = $this->queryPublicBasket($I, self::PRIVATE_BASKET, 2);
 
         $I->assertSame(
-            'You are not allowed to access this basket as it belongs to somebody else',
+            'Basket is private.',
             $result['errors'][0]['message']
         );
     }
