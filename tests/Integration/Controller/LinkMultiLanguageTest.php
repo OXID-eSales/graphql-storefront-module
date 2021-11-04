@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
 
-final class LinkMultilanguageTest extends TestCase
+final class LinkMultiLanguageTest extends TestCase
 {
     private const ACTIVE_MULTILANGUAGE_LINK = 'test_active';
 

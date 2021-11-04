@@ -364,6 +364,7 @@ final class ActionTest extends BaseTestCase
      */
     public function testActionsProductList($withToken, $expectedProducts): void
     {
+        // set product to inactive
         $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 0);
 
         if ($withToken) {

@@ -112,7 +112,7 @@ final class OrderFile implements DataType
         $seoEncoder  = EshopRegistry::getSeoEncoder();
         $shopUrl     = EshopRegistry::getConfig()->getShopHomeUrl();
         $downloadUrl = $shopUrl . 'cl=download';
-        $seoUrl      = $seoEncoder->getStaticUrl($downloadUrl) ? $seoEncoder->getStaticUrl($downloadUrl) : $downloadUrl;
+        $seoUrl      = $seoEncoder->getStaticUrl($downloadUrl) ?: $downloadUrl;
 
         //Take care of some extra parameter after seo url
         $filePath = (strpos($seoUrl, '?') !== false ? '&' : '?') . sprintf('sorderfileid=%s', $this->id());

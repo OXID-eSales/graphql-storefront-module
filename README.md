@@ -29,7 +29,7 @@ $ composer require oxid-esales/graphql-storefront
 $ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-base
 $ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-storefront
 
-$ vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
+$ ./vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
 ```
 
 If you didn't have the `oxid-esales/graphql-base` module installed, composer will do that for you.

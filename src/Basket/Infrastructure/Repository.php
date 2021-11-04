@@ -128,8 +128,8 @@ final class Repository
 
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder->select('userbaskets.*')
-        ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
-        ->innerJoin('userbaskets', $tableViewNameGenerator->getViewName('oxuser'), 'users', 'users.oxid = userbaskets.oxuserid')
+                     ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
+                     ->innerJoin('userbaskets', $tableViewNameGenerator->getViewName('oxuser'), 'users', 'users.oxid = userbaskets.oxuserid')
                      ->where('userbaskets.oxpublic = 1')
                      ->andWhere("userbaskets.OXTITLE != 'savedbasket'")
                      ->andWhere("userbaskets.OXTITLE != 'noticelist'")

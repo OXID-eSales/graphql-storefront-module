@@ -269,7 +269,7 @@ final class BasketSetPaymentMutationCest extends BaseCest
 
     private function basketSetPayment(string $paymentId, ?string $basketId = null): string
     {
-        $basketId = $basketId ? $basketId : $this->basketId;
+        $basketId = $basketId ?: $this->basketId;
 
         return 'mutation {
             basketSetPayment(basketId: "' . $basketId . '", paymentId: "' . $paymentId . '") {

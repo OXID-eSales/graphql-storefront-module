@@ -14,7 +14,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
- * @group voucherfoo
+ * @group voucher
  * @group oe_graphql_storefront
  */
 final class VoucherCest extends BaseCest

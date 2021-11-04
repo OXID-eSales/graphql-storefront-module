@@ -91,6 +91,7 @@ final class Repository
     {
         $queryBuilder           = $this->queryBuilderFactory->create();
         $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
+
         $queryBuilder->select('ratings.*')
             ->from($tableViewNameGenerator->getViewName('oxratings'), 'ratings')
             ->where('oxuserid = :userid')

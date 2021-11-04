@@ -9,20 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Support for PHP 8.0
 - ``OxidEsales\GraphQL\Storefront\Customer\Service::fetchCustomer`` is now public
-- New events in Basket domain:
+- New Events:
   - ``AfterAddItem``
   - ``BeforeAddItem``
   - ``BeforeBasketDeliveryMethods``
-  - ``BeforeBasketModify`
+  - ``BeforeBasketModify``
   - ``BeforeBasketRemove``
   - ``BeforeBasketPayments`` updated with payment methods list so it can be adjusted
 - Classes
-    - `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket`
-    - `OxidEsales\GraphQL\Storefront\Basket\Service\PublicBasketRelationService`
+  - `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket`
+  - `OxidEsales\GraphQL\Storefront\Basket\Service\PublicBasketRelationService`
 - Methods
-    - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getDeliveryAddressId()`
-    - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getDeliveryMethodId()`
-    - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getPaymentId()`
+  - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getDeliveryAddressId()`
+  - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getDeliveryMethodId()`
+  - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getPaymentId()`
 
 ### Fixed
 - Extracted basket authorization block to be handled with event so can be easier overwritten if needed

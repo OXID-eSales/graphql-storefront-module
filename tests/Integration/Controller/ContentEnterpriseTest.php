@@ -30,7 +30,7 @@ final class ContentEnterpriseTest extends MultishopTestCase
     }
 
     /**
-     * Active content from shop 2 is accessible for shop 2.
+     * Active content from shop 2 is accessible for shop 2
      * We are in shop 2.
      */
     public function testGetActiveContentFromSameSubshopIsOk(): void

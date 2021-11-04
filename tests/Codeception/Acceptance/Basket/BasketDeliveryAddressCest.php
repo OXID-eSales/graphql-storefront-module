@@ -75,7 +75,6 @@ final class BasketDeliveryAddressCest extends BaseCest
         $result = $this->basketSetDeliveryAddress($I, $basketId, self::DELIVERY_ADDRESS_ID);
 
         $expectedException = BasketAccessForbidden::byAuthenticatedUser();
-
         $I->assertSame(
             $expectedException->getMessage(),
             $result['errors'][0]['message']
@@ -92,7 +91,6 @@ final class BasketDeliveryAddressCest extends BaseCest
         $result = $this->basketSetDeliveryAddress($I, 'non-existing-basket-id', self::DELIVERY_ADDRESS_ID);
 
         $expectedException = BasketNotFound::byId('non-existing-basket-id');
-
         $I->assertSame(
             $expectedException->getMessage(),
             $result['errors'][0]['message']
