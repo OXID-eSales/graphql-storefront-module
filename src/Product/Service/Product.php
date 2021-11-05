@@ -54,7 +54,7 @@ final class Product
                 /** @var ProductDataType $product */
                 $product = $this->repository->getById((string) $id, ProductDataType::class);
             } else {
-                $product = $this->getProductBySeoSlug($slug . '.');
+                $product = $this->getProductBySeoSlug($slug);
             }
         } catch (ProductNotFound $e) {
             throw $e;
@@ -100,7 +100,7 @@ final class Product
      */
     private function getProductBySeoSlug(string $slug): ProductDataType
     {
-        $slugFilter = SeoSlugFilter::fromUserInput($slug);
+        $slugFilter = SeoSlugFilter::fromUserInput($slug . '.');
         $slugFilter->setType('oxarticle');
 
         $results = $this->repository->getList(

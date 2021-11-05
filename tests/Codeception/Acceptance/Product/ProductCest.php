@@ -22,8 +22,6 @@ use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
  */
 final class ProductCest extends BaseCest
 {
-    private const PRODUCT_ID = 'dc5ffdf380e15674b56dd562a7cb6aec';
-
     public function _before(AcceptanceTester $I, Scenario $scenario): void
     {
         parent::_before($I, $scenario);
@@ -156,9 +154,15 @@ final class ProductCest extends BaseCest
     {
         $I->wantToTest('fetching product by slug which is not unique');
 
+        $I->updateInDatabase(
+            'oxseo',
+            ['oxseourl' => 'Bekleidung/Fashion/Fuer-Ihn/Shirts-Co/Kuyichi-Jeans-SUGAR.html'],
+            ['oxseourl' => 'Bekleidung/Fashion/Fuer-Ihn/Shirts-Co/Kuyichi-T-Shirt-TIGER.html']
+        );
+
         $I->sendGQLQuery('query {
                 product (
-                    slug: "Kuyichi-Jeans"
+                    slug: "Kuyichi-Jeans-SUGAR"
                 ) {
                 id
                }
@@ -168,7 +172,7 @@ final class ProductCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            ProductNotFound::byAmbiguousBySlug("Kuyichi-Jeans"),
+            ProductNotFound::byAmbiguousBySlug("Kuyichi-Jeans-SUGAR"),
             $result['errors'][0]['message']
         );
     }
