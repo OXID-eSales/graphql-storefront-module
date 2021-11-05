@@ -90,7 +90,8 @@ final class Seo
             //TODO: regexp
             $tmp = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
             $rawSlug = array_pop($tmp);
-            $slug = substr($rawSlug, 0, strpos($rawSlug, '.', 0));
+            $slug = substr($rawSlug, 0, (int) strpos($rawSlug, '.', 0));
+            $slug = $slug ?: $rawSlug;
             return strtolower($slug);
         }
 
