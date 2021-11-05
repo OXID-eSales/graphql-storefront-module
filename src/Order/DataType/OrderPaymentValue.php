@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use OxidEsales\Eshop\Application\Model\UserPayment as EshopUserPaymentModel;
-use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use stdClass;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -18,7 +18,7 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 /**
  * @Type()
  */
-final class OrderPaymentValue implements ShopModelAwareInterface
+final class OrderPaymentValue implements DataType
 {
     /** @var stdClass */
     private $paymentValue;
@@ -28,7 +28,7 @@ final class OrderPaymentValue implements ShopModelAwareInterface
         $this->paymentValue = $paymentValue;
     }
 
-    public function getEshopModel(): EshopUserPaymentModel
+    public function getEshopModel(): stdClass
     {
         return $this->paymentValue;
     }

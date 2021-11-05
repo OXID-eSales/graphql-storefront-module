@@ -11,8 +11,8 @@ namespace OxidEsales\GraphQL\Storefront\Promotion\DataType;
 
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
