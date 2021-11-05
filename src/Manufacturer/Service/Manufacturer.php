@@ -14,9 +14,11 @@ use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
-use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
-use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting as ManufacturerSorting;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -40,14 +42,21 @@ final class Manufacturer
      * @throws ManufacturerNotFound
      * @throws InvalidLogin
      */
-    public function manufacturer(ID $id): ManufacturerDataType
+    public function manufacturer(?ID $id, ?string $slug): ManufacturerDataType
     {
+        if ((!$id && !$slug) || ($id && $slug)) {
+            throw ManufacturerNotFound::byParameter();
+        }
+
         try {
-            /** @var ManufacturerDataType $manufacturer */
-            $manufacturer = $this->repository->getById(
-                (string) $id,
-                ManufacturerDataType::class
-            );
+            if ($id) {
+                /** @var ManufacturerDataType $manufacturer */
+                $manufacturer = $this->repository->getById((string) $id, ManufacturerDataType::class);
+            } else {
+                $manufacturer = $this->getManufacturerBySeoSlug($slug);
+            }
+        } catch (ManufacturerNotFound $e) {
+            throw $e;
         } catch (NotFound $e) {
             throw ManufacturerNotFound::byId((string) $id);
         }
@@ -82,5 +91,35 @@ final class Manufacturer
             new PaginationFilter(),
             $sort
         );
+    }
+
+    /**
+     * @throws ManufacturerNotFound
+     */
+    private function getManufacturerBySeoSlug(string $slug): ManufacturerDataType
+    {
+        $slugFilter = SeoSlugFilter::fromUserInput(DIRECTORY_SEPARATOR . trim($slug, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+        $slugFilter->setType('oxmanufacturer');
+        $slugFilter->unsetPostfix();
+
+        $results = $this->repository->getList(
+            ManufacturerDataType::class,
+            new ManufacturerFilterList (
+                null,
+                null,
+                $slugFilter
+            ),
+            new PaginationFilter(),
+            ManufacturerSorting::fromUserInput()
+        );
+
+        if (empty($results)) {
+            throw ManufacturerNotFound::bySlug($slug);
+        }
+        if (1 < count($results)) {
+            throw ManufacturerNotFound::byAmbiguousBySlug($slug);
+        }
+
+        return $results[0];
     }
 }

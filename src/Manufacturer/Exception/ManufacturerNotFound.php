@@ -17,4 +17,19 @@ final class ManufacturerNotFound extends NotFound
     {
         return new self(sprintf('Manufacturer was not found by id: %s', $id));
     }
+
+    public static function bySlug(string $slug): self
+    {
+        return new self(sprintf('Manufacturer was not found by slug: %s', $slug));
+    }
+
+    public static function byParameter(): self
+    {
+        return new self(sprintf('Please provide id xor slug to query Manufacturer'));
+    }
+
+    public static function byAmbiguousBySlug(string $slug): self
+    {
+        return new self(sprintf('Ambiguous slug: %s', $slug));
+    }
 }
