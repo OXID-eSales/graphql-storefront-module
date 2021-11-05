@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class OrderProductBruttoSum implements DataType
+final class OrderProductBruttoSum implements ShopModelAwareInterface
 {
     /** @var EshopOrderModel */
     private $order;

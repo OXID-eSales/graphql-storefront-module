@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\UserBasketItem as EshopBasketItemModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class BasketItem implements DataType
+final class BasketItem implements ShopModelAwareInterface
 {
     /** @var EshopBasketItemModel */
     private $basketItem;

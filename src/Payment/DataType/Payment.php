@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Payment\DataType;
 use DateTimeImmutable;
 use OxidEsales\Eshop\Application\Model\Payment as EshopPaymentModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -21,7 +21,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
  * @Type
  * @extendable-dataType
  */
-class Payment implements DataType
+class Payment implements ShopModelAwareInterface
 {
     /** @var EshopPaymentModel */
     private $payment;

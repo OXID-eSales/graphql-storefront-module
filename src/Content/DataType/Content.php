@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Content\DataType;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Content as EshopContentModel;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Content implements DataType
+final class Content implements ShopModelAwareInterface
 {
     public const TYPE_CATEGORY = 2;
 

@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Customer\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Customer implements DataType
+final class Customer implements ShopModelAwareInterface
 {
     /** @var EshopUserModel */
     private $customer;

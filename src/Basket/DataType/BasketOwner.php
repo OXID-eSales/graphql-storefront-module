@@ -10,14 +10,14 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\DataType;
 
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class BasketOwner implements DataType
+final class BasketOwner implements ShopModelAwareInterface
 {
     /** @var EshopUserModel */
     private $owner;

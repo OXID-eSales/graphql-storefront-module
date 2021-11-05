@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\Sorting\Sorting as BaseSorting;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use PDO;
 use RuntimeException;
@@ -37,7 +37,7 @@ final class Repository
      *
      * @param class-string<T> $type
      *
-     * @throws InvalidArgumentException if $type is not instance of DataType
+     * @throws InvalidArgumentException if $type is not instance of ShopModelAwareInterface
      * @throws NotFound                 if BaseModel can not be loaded
      *
      * @return T
@@ -54,7 +54,7 @@ final class Repository
         }
         $type = new $type($model);
 
-        if (!($type instanceof DataType)) {
+        if (!($type instanceof ShopModelAwareInterface)) {
             throw new InvalidArgumentException();
         }
 

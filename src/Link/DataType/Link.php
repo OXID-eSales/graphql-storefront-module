@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Link\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Links as LinkModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Link implements DataType
+final class Link implements ShopModelAwareInterface
 {
     /** @var LinkModel */
     private $link;
@@ -29,6 +29,11 @@ final class Link implements DataType
         LinkModel $link
     ) {
         $this->link = $link;
+    }
+
+    public function getEshopModel(): LinkModel
+    {
+        return $this->link;
     }
 
     /**

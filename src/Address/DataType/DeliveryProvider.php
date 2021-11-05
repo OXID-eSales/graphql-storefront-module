@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Address\DataType;
 
 use OxidEsales\Eshop\Application\Model\DeliverySet as EshopDeliveryProviderModel;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -18,7 +18,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class DeliveryProvider implements DataType
+final class DeliveryProvider implements ShopModelAwareInterface
 {
     /** @var EshopDeliveryProviderModel */
     private $order;

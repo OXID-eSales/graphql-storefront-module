@@ -12,14 +12,14 @@ namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class ProductStock implements DataType
+final class ProductStock implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
     private $product;

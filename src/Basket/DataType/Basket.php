@@ -11,8 +11,8 @@ namespace OxidEsales\GraphQL\Storefront\Basket\DataType;
 
 use OxidEsales\Eshop\Application\Model\UserBasket as BasketModel;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BasketAuthorization;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -21,7 +21,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Basket extends AbstractBasket implements DataType
+final class Basket extends AbstractBasket implements ShopModelAwareInterface
 {
     /** @var BasketModel */
     private $basket;

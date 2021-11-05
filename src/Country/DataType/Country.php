@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Country\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Country as EshopCountryModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Country implements DataType
+final class Country implements ShopModelAwareInterface
 {
     /** @var EshopCountryModel */
     private $country;
@@ -28,6 +28,11 @@ final class Country implements DataType
     public function __construct(EshopCountryModel $country)
     {
         $this->country = $country;
+    }
+
+    public function getEshopModel(): EshopCountryModel
+    {
+        return $this->country;
     }
 
     /**

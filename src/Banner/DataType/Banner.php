@@ -12,8 +12,8 @@ namespace OxidEsales\GraphQL\Storefront\Banner\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -21,7 +21,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Banner implements DataType
+final class Banner implements ShopModelAwareInterface
 {
     public const ACTION_TYPE = '3';
 

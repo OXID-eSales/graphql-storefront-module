@@ -12,8 +12,8 @@ namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 use DateTimeImmutable;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\OrderArticle as EshopOrderArticleModel;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductDimensions;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -22,7 +22,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class OrderItem implements DataType
+final class OrderItem implements ShopModelAwareInterface
 {
     /** @var EshopOrderArticleModel */
     private $orderArticle;

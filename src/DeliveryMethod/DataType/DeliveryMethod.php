@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType;
 
 use OxidEsales\Eshop\Application\Model\DeliverySet as EshopDeliverySetModel;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment as BasketPaymentDataType;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
  * @Type()
  * @extendable-dataType
  */
-class DeliveryMethod implements DataType
+class DeliveryMethod implements ShopModelAwareInterface
 {
     /** @var EshopDeliverySetModel */
     private $deliverySetModel;

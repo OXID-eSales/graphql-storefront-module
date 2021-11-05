@@ -12,9 +12,9 @@ namespace OxidEsales\GraphQL\Storefront\Action\DataType;
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Application\Model\ArticleList;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -22,7 +22,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Action implements DataType
+final class Action implements ShopModelAwareInterface
 {
     public const ACTION_TYPE = [0, 1];
 
@@ -36,6 +36,11 @@ final class Action implements DataType
         if (!in_array($action->getFieldData('oxtype'), self::ACTION_TYPE)) {
             throw NotFound::notFound();
         }
+    }
+
+    public function getEshopModel(): EshopActionsModel
+    {
+        return $this->action;
     }
 
     /**
