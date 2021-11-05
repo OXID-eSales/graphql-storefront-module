@@ -27,6 +27,10 @@ final class SeoSlugFilter implements FilterInterface
     /** @var string */
     private $type = 'static';
 
+    private $prefix = '%';
+
+    private $postfix = '%';
+
     public function __construct(string $like)
     {
         $this->like = $like;
@@ -45,6 +49,16 @@ final class SeoSlugFilter implements FilterInterface
     public function type(): string
     {
         return $this->type;
+    }
+
+    public function unsetPrefix(): void
+    {
+        $this->prefix = '';
+    }
+
+    public function unsetPostfix(): void
+    {
+        $this->postfix = '';
     }
 
     public function addToQuery(QueryBuilder $builder, string $field): void
@@ -70,7 +84,7 @@ final class SeoSlugFilter implements FilterInterface
             ->andWhere($builder->expr()->like('LOWER(' . $alias . '.OXSEOURL)', "LOWER(:$field)"))
             ->andWhere($builder->expr()->eq($alias . '.OXLANG', ":lang"))
             ->setParameter(":type", $this->type())
-            ->setParameter(":$field", '%' . $this->like() . '%')
+            ->setParameter(":$field", $this->prefix . $this->like() . $this->postfix)
             ->setParameter(":lang", $language);
     }
 

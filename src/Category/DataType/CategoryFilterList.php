@@ -40,7 +40,9 @@ final class CategoryFilterList extends FilterList
 
     /**
      * @return array{
-     *                oxtitle: null|StringFilter
+     *                oxtitle: ?StringFilter
+     *                oxparentid: ?IDFilter,
+     *                oxseourl: ?SeoSlugFilter,
      *                }
      */
     public function getFilters(): array
