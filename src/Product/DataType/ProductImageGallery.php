@@ -10,13 +10,14 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class ProductImageGallery
+final class ProductImageGallery implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
     private $productModel;
@@ -24,6 +25,11 @@ final class ProductImageGallery
     public function __construct(EshopProductModel $productModel)
     {
         $this->productModel = $productModel;
+    }
+
+    public function getEshopModel(): EshopProductModel
+    {
+        return $this->productModel;
     }
 
     /**
@@ -61,5 +67,13 @@ final class ProductImageGallery
     public function getThumb(): string
     {
         return $this->productModel->getThumbnailUrl();
+    }
+
+    /**
+     * @return class-string
+     */
+    public static function getModelClass(): string
+    {
+        return EshopProductModel::class;
     }
 }

@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
-use OxidEsales\Eshop\Application\Model\UserPayment as EshopUserPaymentModel;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use stdClass;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -18,7 +16,7 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 /**
  * @Type()
  */
-final class OrderPaymentValue implements DataType
+final class OrderPaymentValue
 {
     /** @var stdClass */
     private $paymentValue;
@@ -26,11 +24,6 @@ final class OrderPaymentValue implements DataType
     public function __construct(stdClass $paymentValue)
     {
         $this->paymentValue = $paymentValue;
-    }
-
-    public function getEshopModel(): stdClass
-    {
-        return $this->paymentValue;
     }
 
     /**
@@ -47,10 +40,5 @@ final class OrderPaymentValue implements DataType
     public function getValue(): string
     {
         return (string) $this->paymentValue->value;
-    }
-
-    public static function getModelClass(): string
-    {
-        return EshopUserPaymentModel::class;
     }
 }

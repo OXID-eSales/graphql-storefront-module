@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -17,7 +18,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class OrderInvoiceAddress
+final class OrderInvoiceAddress implements ShopModelAwareInterface
 {
     /** @var EshopOrderModel */
     private $order;
@@ -25,6 +26,11 @@ final class OrderInvoiceAddress
     public function __construct(EshopOrderModel $order)
     {
         $this->order = $order;
+    }
+
+    public function getEshopModel(): EshopOrderModel
+    {
+        return $this->order;
     }
 
     /**
@@ -143,5 +149,10 @@ final class OrderInvoiceAddress
         return new ID(
             $this->order->getFieldData('oxbillstateid')
         );
+    }
+
+    public static function getModelClass(): string
+    {
+        return EshopOrderModel::class;
     }
 }
