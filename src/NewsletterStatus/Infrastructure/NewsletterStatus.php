@@ -83,6 +83,7 @@ final class NewsletterStatus
                 'oxfname'    => $input->firstName(),
                 'oxlname'    => $input->lastName(),
                 'oxusername' => $input->email(),
+                'oxpassword' => '',
             ]
         );
 

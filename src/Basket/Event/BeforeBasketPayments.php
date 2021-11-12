@@ -13,7 +13,7 @@ use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use Symfony\Component\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class BeforeBasketPayments extends Event
+final class BeforeBasketPayments extends Event implements BasketModifyInterface
 {
     public const NAME = self::class;
 

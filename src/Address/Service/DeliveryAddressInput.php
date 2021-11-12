@@ -32,7 +32,7 @@ final class DeliveryAddressInput
     }
 
     /**
-     * @Factory
+     * @Factory(name="DeliveryAddressInput", default=true)
      */
     public function fromUserInput(
         ?string $salutation = null,

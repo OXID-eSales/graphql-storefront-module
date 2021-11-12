@@ -38,7 +38,7 @@ final class AttributeFilterList extends FilterList
     }
 
     /**
-     * @Factory
+     * @Factory(name="AttributeFilterList", default=true)
      */
     public static function createAttributeFilterList(
         ?StringFilter $title = null

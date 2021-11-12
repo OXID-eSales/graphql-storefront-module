@@ -68,6 +68,6 @@ final class SeoTest extends BaseTestCase
 
         $this->assertEquals($description, $seo->getDescription());
         $this->assertEquals($keywords, $seo->getKeywords());
-        $this->doAssertContains($url, $seo->getURL());
+        $this->assertStringContainsString($url, $seo->getURL());
     }
 }

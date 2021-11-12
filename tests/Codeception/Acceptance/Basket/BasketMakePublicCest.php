@@ -15,6 +15,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group basket
+ * @group basket_make_public
  * @group oe_graphql_storefront
  */
 final class BasketMakePublicCest extends BaseCest

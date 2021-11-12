@@ -389,7 +389,7 @@ final class CategoryTest extends BaseTestCase
             'german cat seo keywords',
             $result['body']['data']['category']['seo']['keywords']
         );
-        $this->doAssertContains(
+        $this->assertStringContainsString(
             '/Wakeboarding/',
             $result['body']['data']['category']['seo']['url']
         );

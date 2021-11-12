@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
 final class ActionTest extends BaseTestCase
@@ -365,7 +363,7 @@ final class ActionTest extends BaseTestCase
     public function testActionsProductList($withToken, $expectedProducts): void
     {
         // set product to inactive
-        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 0);
+        $this->setActiveState(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 'oxarticles', 0);
 
         if ($withToken) {
             $this->prepareToken();
@@ -394,9 +392,6 @@ final class ActionTest extends BaseTestCase
             $expectedProducts,
             $result['body']['data']['actions'][0]['products']
         );
-
-        // set the product back  to active
-        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 1);
     }
 
     /**
@@ -408,7 +403,7 @@ final class ActionTest extends BaseTestCase
     public function testActionProductList($withToken, $expectedProducts): void
     {
         // set product to inactive
-        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 0);
+        $this->setActiveState(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 'oxarticles', 0);
 
         if ($withToken) {
             $this->prepareToken();
@@ -433,9 +428,6 @@ final class ActionTest extends BaseTestCase
             $expectedProducts,
             $result['body']['data']['action']['products']
         );
-
-        // set the product back  to active
-        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 1);
     }
 
     public function filterActionsByIdProvider(): array
@@ -498,20 +490,5 @@ final class ActionTest extends BaseTestCase
         }');
 
         $this->assertEquals($expected, $result['body']['data']['actions']);
-    }
-
-    private function changeProductActiveStatus($productId, $active): void
-    {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
-        $queryBuilder
-            ->update('oxarticles')
-            ->set('oxactive', $active)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', $productId)
-            ->execute();
     }
 }

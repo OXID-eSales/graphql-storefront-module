@@ -128,6 +128,7 @@ final class Basket
 
     /**
      * Argument `owner` will be matched exactly against lastname and / or email
+     * Query for public baskets by owner.
      *
      * @Query()
      *

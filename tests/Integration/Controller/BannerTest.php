@@ -57,16 +57,14 @@ final class BannerTest extends BaseTestCase
 
         $banner = $result['body']['data']['banner'];
 
-        $this->doAssertArraySubset([
-            'id'      => self::ACTIVE_BANNER_WITH_PRODUCT,
-            'active'  => true,
-            'title'   => 'Banner 1',
-            'sorting' => 4,
-            'product' => [
-                'id'    => self::ACTIVE_BANNER_PRODUCT,
-                'title' => 'Neoprenanzug NPX ASSASSIN',
-            ],
-        ], $banner);
+        $this->assertSame(self::ACTIVE_BANNER_WITH_PRODUCT, $banner['id']);
+        $this->assertTrue($banner['active']);
+        $this->assertSame(4, $banner['sorting']);
+        $this->assertSame([
+            'id'    => self::ACTIVE_BANNER_PRODUCT,
+            'title' => 'Neoprenanzug NPX ASSASSIN',
+        ], $banner['product']);
+        $this->assertEquals('Banner 1', $banner['title']);
 
         $this->assertRegExp(
             '@https?://.*/Bekleidung/Sportswear/Neopren/Anzuege/Neoprenanzug-NPX-ASSASSIN.html$@',
@@ -101,13 +99,11 @@ final class BannerTest extends BaseTestCase
 
         $banner = $result['body']['data']['banner'];
 
-        $this->doAssertArraySubset([
-            'id'      => self::ACTIVE_BANNER_WITHOUT_PRODUCT,
-            'active'  => true,
-            'title'   => 'Banner 4',
-            'sorting' => 1,
-            'product' => null,
-        ], $banner);
+        $this->assertSame(self::ACTIVE_BANNER_WITHOUT_PRODUCT, $banner['id']);
+        $this->assertTrue($banner['active']);
+        $this->assertSame(1, $banner['sorting']);
+        $this->assertNull($banner['product']);
+        $this->assertEquals('Banner 4', $banner['title']);
 
         $this->assertRegExp(
             '@https?://.*/Wakeboarding/Wakeboards/.*?$@',

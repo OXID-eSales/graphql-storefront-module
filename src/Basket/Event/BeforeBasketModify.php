@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 use Symfony\Component\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class BeforeBasketModify extends Event
+final class BeforeBasketModify extends Event implements BasketModifyInterface
 {
     public const TYPE_NOT_SPECIFIED = 0;
 
