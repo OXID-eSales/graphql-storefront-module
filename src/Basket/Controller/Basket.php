@@ -50,7 +50,7 @@ final class Basket
      * Returns information for any basket the customer owns.
      *
      * @Query()
-     * @Logged()
+     * @Right("VIEW_BASKET")
      */
     public function basket(ID $basketId): BasketDataType
     {

@@ -63,10 +63,12 @@ REPLACE INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`) V
 ('123ad3b5380202966df6ff128e9eeca1', 2, '123ad3b5380202966df6ff128e9eecaq', 'oxidcustomer'),
 ('123ad3b5380202966df6ff128e9eeca2', 1, '_45ad3b5380202966df6ff128e9eecaq', 'oxidcustomer'),
 ('123ad3b5380202966df6ff128e9eeca3', 1, '309db395b6c85c3881fcb9b437a73ff5', 'oxidcustomer'),
+('fd6671bcea8dffeba71c56bb2e82f312', 2, '309db395b6c85c3881fcb9b437a73dd6', 'oxidcustomer'),
 ('123ad3b5380202966df6ff128e9eeca4', 1, 'anotheruser', 'oxidcustomer'),
 ('123ad3b5380202966df6ff128e9eeca5', 2, 'standarduser2', 'oxidcustomer'),
 ('123ad3b5380202966df6ff128e9eeca6', 1, 'checkoutuser', 'oxidcustomer'),
 ('123ad3b5380202966df6ff128e9eeca7', 1, '9119cc8cd9593c214be93ee558235f3c', 'oxidcustomer');
+
 
 REPLACE INTO `oxaddress` (`OXID`, `OXUSERID`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXCITY`, `OXCOUNTRY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXSAL`, `OXTIMESTAMP`) VALUES
 ('test_delivery_address',	'e7af1c3b786fd02906ccd75698f4e6b9',	'Marc',	'Muster',	'Hauptstr',	'13',	'Freiburg',	'Germany',	'a7c40f631fc920687.20179984', '',	'79098',	'MR',	'2020-07-14 14:12:48'),

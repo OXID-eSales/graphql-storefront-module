@@ -16,6 +16,7 @@ use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
  * @group basket
+ * @group basket_access
  * @group oe_graphql_storefront
  */
 final class BasketCest extends BaseCest
@@ -253,7 +254,7 @@ final class BasketCest extends BaseCest
             ],
             [
                 'isLogged' => false,
-                'message'  => 'You need to be logged to access this field',
+                'message'  => 'You do not have sufficient rights to access this field',
             ],
         ];
     }
