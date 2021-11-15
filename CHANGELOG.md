@@ -35,6 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `deliveryAddressId` parameter of `basketSetDeliveryAddress` mutation can be null.
 - `basketAddItem` mutation honours stockflag and calls may give you back an error
 - Drop support for PHP 7.3
+- DataTypes related to `OxidEsales\Eshop\Core\Model\BaseModel` implement `OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface`
+
+### Removed
+- Interface `OxidEsales\GraphQL\Storefront\Shared\DataType\DataType`
 
 ## [1.0.0] - 2021-05-28
 
