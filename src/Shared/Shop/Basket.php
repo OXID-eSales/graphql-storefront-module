@@ -65,15 +65,15 @@ class Basket extends Basket_parent
         /** @var BasketItem $basketItem */
         $basketItem = oxNew(BasketItem::class);
         $basketItem->init(
-            $userBasketItem->getFieldData('oxartid'),
-            $userBasketItem->getFieldData('oxamount'),
+            $userBasketItem->getRawFieldData('oxartid'),
+            $userBasketItem->getRawFieldData('oxamount'),
             $userBasketItem->getSelList(),
             $userBasketItem->getPersParams()
         );
 
         //Any basket object will do to generate the item key
         $itemKey = $this->getItemKey(
-            $userBasketItem->getFieldData('oxartid'),
+            $userBasketItem->getRawFieldData('oxartid'),
             $userBasketItem->getSelList(),
             $userBasketItem->getPersParams()
         );

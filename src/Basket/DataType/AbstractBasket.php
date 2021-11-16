@@ -50,7 +50,7 @@ abstract class AbstractBasket
      */
     public function title(): string
     {
-        return (string) $this->basket->getFieldData('oxtitle');
+        return (string) $this->basket->getRawFieldData('oxtitle');
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class AbstractBasket
      */
     public function creationDate(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->basket->getFieldData('oxtimestamp'));
+        return DateTimeImmutableFactory::fromString((string) $this->basket->getRawFieldData('oxtimestamp'));
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class AbstractBasket
      */
     public function lastUpdateDate(): ?DateTimeInterface
     {
-        $timeStamp = (int) $this->basket->getFieldData('oxupdate');
+        $timeStamp = (int) $this->basket->getRawFieldData('oxupdate');
 
         if ($timeStamp > 0) {
             return DateTimeImmutableFactory::fromTimeStamp($timeStamp);
@@ -78,7 +78,7 @@ abstract class AbstractBasket
     public function getUserId(): ID
     {
         return new ID(
-            (string) $this->basket->getFieldData('oxuserid')
+            (string) $this->basket->getRawFieldData('oxuserid')
         );
     }
 }

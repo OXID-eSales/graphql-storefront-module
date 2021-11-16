@@ -34,7 +34,7 @@ final class ActivityService
     {
         $reviewModel            = $review->getEshopModel();
         $moderationIsActive     = (bool) $this->legacyService->getConfigParam('blGBModerate');
-        $reviewActiveFieldValue = (bool) $reviewModel->getFieldData('oxactive');
+        $reviewActiveFieldValue = (bool) $reviewModel->getRawFieldData('oxactive');
 
         return  $reviewActiveFieldValue || !$moderationIsActive;
     }

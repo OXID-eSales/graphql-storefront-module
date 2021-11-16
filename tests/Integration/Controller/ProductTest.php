@@ -40,7 +40,7 @@ final class ProductTest extends BaseTestCase
 
     private const ACTIVE_PRODUCT_TITLE = 'DECADE';
 
-    private const ACTIVE_PRODUCT_FULL_TITLE = 'Bindung O&#039;BRIEN DECADE CT 2010';
+    private const ACTIVE_PRODUCT_FULL_TITLE = 'Bindung O\'BRIEN DECADE CT 2010';
 
     private const ACTIVE_PRODUCT_WITH_VARIANTS_TITLE = 'Kuyichi Jeans ANNA';
 
@@ -288,7 +288,7 @@ final class ProductTest extends BaseTestCase
         $this->assertSame([], $product['selectionLists']);
         $this->assertSame([], $product['variants']);
         $this->assertSame('', $product['mpn']);
-        $this->assertSame('Bindung O&#039;BRIEN DECADE CT 2010', $product['title']);
+        $this->assertSame('Bindung O\'BRIEN DECADE CT 2010', $product['title']);
         $this->assertSame('Geringes Gewicht, beste Performance!', $product['shortDescription']);
         $this->assertSame(
             "<p>\r\n<div class=\"product_title_big\">\r\n<h2>O'Brien Decade CT Boot 2010</h2></div>\r\n" .

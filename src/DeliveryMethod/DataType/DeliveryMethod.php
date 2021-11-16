@@ -56,7 +56,7 @@ class DeliveryMethod implements ShopModelAwareInterface
      */
     public function title(): string
     {
-        return (string) $this->deliverySetModel->getFieldData('oxtitle');
+        return (string) $this->deliverySetModel->getRawFieldData('oxtitle');
     }
 
     /**
@@ -74,7 +74,7 @@ class DeliveryMethod implements ShopModelAwareInterface
      */
     public function getPosition(): int
     {
-        return (int) $this->deliverySetModel->getFieldData('oxpos');
+        return (int) $this->deliverySetModel->getRawFieldData('oxpos');
     }
 
     public static function getModelClass(): string

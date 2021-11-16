@@ -38,7 +38,7 @@ final class ProductDeliveryTime implements ShopModelAwareInterface
      */
     public function getMinDeliveryTime(): int
     {
-        return (int) $this->product->getFieldData('oxmindeltime');
+        return (int) $this->product->getRawFieldData('oxmindeltime');
     }
 
     /**
@@ -46,7 +46,7 @@ final class ProductDeliveryTime implements ShopModelAwareInterface
      */
     public function getMaxDeliveryTime(): int
     {
-        return (int) $this->product->getFieldData('oxmaxdeltime');
+        return (int) $this->product->getRawFieldData('oxmaxdeltime');
     }
 
     /**
@@ -60,7 +60,7 @@ final class ProductDeliveryTime implements ShopModelAwareInterface
      */
     public function getDeliveryTimeUnit(): string
     {
-        return (string) $this->product->getFieldData('oxdeltimeunit');
+        return (string) $this->product->getRawFieldData('oxdeltimeunit');
     }
 
     /**

@@ -37,7 +37,7 @@ final class Inquirer implements ShopModelAwareInterface
      */
     public function getFirstName(): string
     {
-        return (string) $this->inquirer->getFieldData('oxfname');
+        return (string) $this->inquirer->getRawFieldData('oxfname');
     }
 
     public static function getModelClass(): string

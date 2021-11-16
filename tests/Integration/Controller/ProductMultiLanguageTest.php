@@ -22,12 +22,12 @@ final class ProductMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'title'      => 'Bindung O&#039;BRIEN DECADE CT 2010',
+                'title'      => 'Bindung O\'BRIEN DECADE CT 2010',
                 'url'        => 'Wakeboarding/Bindungen/',
             ],
             'en' => [
                 'languageId' => '1',
-                'title'      => 'Binding O&#039;BRIEN DECADE CT 2010',
+                'title'      => 'Binding O\'BRIEN DECADE CT 2010',
                 'url'        => 'en/Wakeboarding/Bindings',
             ],
         ];

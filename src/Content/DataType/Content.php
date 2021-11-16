@@ -76,7 +76,7 @@ final class Content implements ShopModelAwareInterface
         $oUtilsView = Registry::getUtilsView();
 
         return $oUtilsView->getRenderedContent(
-            $this->content->getFieldData('oxcontent'),
+            $this->content->getRawFieldData('oxcontent'),
             $oActView->getViewData(),
             $this->content->getId()
         );
@@ -89,7 +89,7 @@ final class Content implements ShopModelAwareInterface
      */
     public function getRawContent(): string
     {
-        return $this->content->getFieldData('oxcontent');
+        return $this->content->getRawFieldData('oxcontent');
     }
 
     /**
@@ -97,7 +97,7 @@ final class Content implements ShopModelAwareInterface
      */
     public function getFolder(): string
     {
-        return $this->content->getFieldData('oxfolder');
+        return $this->content->getRawFieldData('oxfolder');
     }
 
     /**
@@ -105,7 +105,7 @@ final class Content implements ShopModelAwareInterface
      */
     public function getVersion(): string
     {
-        return $this->content->getFieldData('oxtermversion');
+        return $this->content->getRawFieldData('oxtermversion');
     }
 
     /**

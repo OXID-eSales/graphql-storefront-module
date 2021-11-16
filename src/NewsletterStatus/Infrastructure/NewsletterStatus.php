@@ -97,7 +97,7 @@ final class NewsletterStatus
         /** @var EshopNewsletterSubscriptionStatusModel $newsletterModel */
         $newsletterModel = $subscriber->getEshopModel()->getNewsSubscription();
         $newsletterModel->setOptInStatus(
-            $newsletterModel->getFieldData('oxnewssubscribed__oxdboptin') ?: 0
+            $newsletterModel->getRawFieldData('oxnewssubscribed__oxdboptin') ?: 0
         );
 
         return $subscriber->getEshopModel()->setNewsSubscription($flag, $sendOptinMail);

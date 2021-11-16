@@ -38,7 +38,7 @@ final class BasketOwner implements ShopModelAwareInterface
      */
     public function getFirstName(): string
     {
-        return (string) $this->owner->getFieldData('oxfname');
+        return (string) $this->owner->getRawFieldData('oxfname');
     }
 
     /**
@@ -46,7 +46,7 @@ final class BasketOwner implements ShopModelAwareInterface
      */
     public function getLastName(): string
     {
-        return (string) $this->owner->getFieldData('oxlname');
+        return (string) $this->owner->getRawFieldData('oxlname');
     }
 
     /**

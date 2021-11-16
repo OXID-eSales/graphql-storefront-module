@@ -83,7 +83,7 @@ final class CustomerOrderItemsCest extends BaseCest
                 'amount'           => 1.0,
                 'product'          => [
                     'id'    => '058e613db53d782adfc9f2ccb43c45fe',
-                    'title' => 'Bindung O&#039;BRIEN DECADE CT 2010',
+                    'title' => 'Bindung O\'BRIEN DECADE CT 2010',
                 ],
                 'sku'              => '2401',
                 'title'            => 'Bindung O\'BRIEN DECADE CT 2010',

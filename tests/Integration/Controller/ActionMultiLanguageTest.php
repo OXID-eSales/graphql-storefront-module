@@ -64,7 +64,7 @@ final class ActionMultiLanguageTest extends TokenTestCase
             'en' => [
                 'languageId' => '1',
                 'result'     => [
-                    'title'    => 'Week&#039;s Special',
+                    'title'    => 'Week\'s Special',
                     'products' => [
                         [
                             'title' => 'Kuyichi leather belt JEVER',

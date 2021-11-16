@@ -33,7 +33,7 @@ final class Action implements ShopModelAwareInterface
     {
         $this->action = $action;
 
-        if (!in_array($action->getFieldData('oxtype'), self::ACTION_TYPE)) {
+        if (!in_array($action->getRawFieldData('oxtype'), self::ACTION_TYPE)) {
             throw NotFound::notFound();
         }
     }
@@ -56,7 +56,7 @@ final class Action implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->action->getFieldData('oxactive');
+        return (bool) $this->action->getRawFieldData('oxactive');
     }
 
     /**
@@ -64,7 +64,7 @@ final class Action implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->action->getFieldData('oxtitle');
+        return (string) $this->action->getRawFieldData('oxtitle');
     }
 
     /**

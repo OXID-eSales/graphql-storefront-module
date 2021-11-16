@@ -48,7 +48,7 @@ final class Order implements ShopModelAwareInterface
      */
     public function getOrderNumber(): int
     {
-        return (int) ($this->order->getFieldData('oxordernr'));
+        return (int) ($this->order->getRawFieldData('oxordernr'));
     }
 
     /**
@@ -64,7 +64,7 @@ final class Order implements ShopModelAwareInterface
      */
     public function getPaid(): ?DateTimeInterface
     {
-        $paid = (string) $this->order->getFieldData('oxpaid');
+        $paid = (string) $this->order->getRawFieldData('oxpaid');
 
         return DateTimeImmutableFactory::fromString($paid);
     }
@@ -74,7 +74,7 @@ final class Order implements ShopModelAwareInterface
      */
     public function getRemark(): string
     {
-        return (string) ($this->order->getFieldData('oxremark'));
+        return (string) ($this->order->getRawFieldData('oxremark'));
     }
 
     /**
@@ -82,7 +82,7 @@ final class Order implements ShopModelAwareInterface
      */
     public function getCancelled(): bool
     {
-        return (bool) ($this->order->getFieldData('oxstorno'));
+        return (bool) ($this->order->getRawFieldData('oxstorno'));
     }
 
     /**
@@ -90,7 +90,7 @@ final class Order implements ShopModelAwareInterface
      */
     public function getInvoiced(): ?DateTimeInterface
     {
-        $invoiceDate = (string) $this->order->getFieldData('oxbilldate');
+        $invoiceDate = (string) $this->order->getRawFieldData('oxbilldate');
 
         return DateTimeImmutableFactory::fromString($invoiceDate);
     }
@@ -101,7 +101,7 @@ final class Order implements ShopModelAwareInterface
     public function getOrdered(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->order->getFieldData('oxorderdate')
+            (string) $this->order->getRawFieldData('oxorderdate')
         );
     }
 
@@ -111,7 +111,7 @@ final class Order implements ShopModelAwareInterface
     public function getUpdated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->order->getFieldData('oxtimestamp')
+            (string) $this->order->getRawFieldData('oxtimestamp')
         );
     }
 

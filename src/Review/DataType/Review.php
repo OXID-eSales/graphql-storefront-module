@@ -48,7 +48,7 @@ final class Review implements ShopModelAwareInterface
      */
     public function getText(): string
     {
-        return (string) $this->review->getFieldData('oxtext');
+        return (string) $this->review->getRawFieldData('oxtext');
     }
 
     /**
@@ -56,7 +56,7 @@ final class Review implements ShopModelAwareInterface
      */
     public function getRating(): int
     {
-        return (int) $this->review->getFieldData('oxrating');
+        return (int) $this->review->getRawFieldData('oxrating');
     }
 
     /**
@@ -65,23 +65,23 @@ final class Review implements ShopModelAwareInterface
     public function getCreateAt(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->review->getFieldData('oxcreate')
+            (string) $this->review->getRawFieldData('oxcreate')
         );
     }
 
     public function getReviewerId(): string
     {
-        return (string) $this->review->getFieldData('oxuserid');
+        return (string) $this->review->getRawFieldData('oxuserid');
     }
 
     public function isArticleType(): bool
     {
-        return (bool) ((string) $this->review->getFieldData('oxtype') === 'oxarticle');
+        return (bool) ((string) $this->review->getRawFieldData('oxtype') === 'oxarticle');
     }
 
     public function getObjectId(): string
     {
-        return (string) $this->review->getFieldData('oxobjectid');
+        return (string) $this->review->getRawFieldData('oxobjectid');
     }
 
     public static function getModelClass(): string

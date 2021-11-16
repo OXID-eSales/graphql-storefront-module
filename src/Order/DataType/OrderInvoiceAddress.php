@@ -38,7 +38,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function salutation(): string
     {
-        return (string) $this->order->getFieldData('oxbillsal');
+        return (string) $this->order->getRawFieldData('oxbillsal');
     }
 
     /**
@@ -46,7 +46,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function email(): string
     {
-        return (string) $this->order->getFieldData('oxbillemail');
+        return (string) $this->order->getRawFieldData('oxbillemail');
     }
 
     /**
@@ -54,7 +54,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function firstName(): string
     {
-        return (string) $this->order->getFieldData('oxbillfname');
+        return (string) $this->order->getRawFieldData('oxbillfname');
     }
 
     /**
@@ -62,7 +62,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function lastName(): string
     {
-        return (string) $this->order->getFieldData('oxbilllname');
+        return (string) $this->order->getRawFieldData('oxbilllname');
     }
 
     /**
@@ -70,7 +70,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function company(): string
     {
-        return (string) $this->order->getFieldData('oxbillcompany');
+        return (string) $this->order->getRawFieldData('oxbillcompany');
     }
 
     /**
@@ -78,7 +78,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function additionalInfo(): string
     {
-        return (string) $this->order->getFieldData('oxbilladdinfo');
+        return (string) $this->order->getRawFieldData('oxbilladdinfo');
     }
 
     /**
@@ -86,7 +86,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function street(): string
     {
-        return (string) $this->order->getFieldData('oxbillstreet');
+        return (string) $this->order->getRawFieldData('oxbillstreet');
     }
 
     /**
@@ -94,7 +94,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function streetNumber(): string
     {
-        return (string) $this->order->getFieldData('oxbillstreetnr');
+        return (string) $this->order->getRawFieldData('oxbillstreetnr');
     }
 
     /**
@@ -102,7 +102,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function zipCode(): string
     {
-        return (string) $this->order->getFieldData('oxbillzip');
+        return (string) $this->order->getRawFieldData('oxbillzip');
     }
 
     /**
@@ -110,7 +110,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function city(): string
     {
-        return (string) $this->order->getFieldData('oxbillcity');
+        return (string) $this->order->getRawFieldData('oxbillcity');
     }
 
     /**
@@ -118,7 +118,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function vatID(): string
     {
-        return (string) $this->order->getFieldData('oxbillustid');
+        return (string) $this->order->getRawFieldData('oxbillustid');
     }
 
     /**
@@ -126,7 +126,7 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function phone(): string
     {
-        return (string) $this->order->getFieldData('oxbillfon');
+        return (string) $this->order->getRawFieldData('oxbillfon');
     }
 
     /**
@@ -134,20 +134,20 @@ final class OrderInvoiceAddress implements ShopModelAwareInterface
      */
     public function fax(): string
     {
-        return (string) $this->order->getFieldData('oxbillfax');
+        return (string) $this->order->getRawFieldData('oxbillfax');
     }
 
     public function countryId(): ID
     {
         return new ID(
-            $this->order->getFieldData('oxbillcountryid')
+            $this->order->getRawFieldData('oxbillcountryid')
         );
     }
 
     public function stateId(): ID
     {
         return new ID(
-            $this->order->getFieldData('oxbillstateid')
+            $this->order->getRawFieldData('oxbillstateid')
         );
     }
 

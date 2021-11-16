@@ -31,7 +31,7 @@ final class Promotion implements ShopModelAwareInterface
     {
         $this->actionsModel = $actionsModel;
 
-        if ($actionsModel->getFieldData('oxtype') !== self::PROMOTION_ACTION_TYPE) {
+        if ($actionsModel->getRawFieldData('oxtype') !== self::PROMOTION_ACTION_TYPE) {
             throw NotFound::notFound();
         }
     }
@@ -54,7 +54,7 @@ final class Promotion implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->actionsModel->getFieldData('oxactive') && $this->isActiveNow();
+        return (bool) $this->actionsModel->getRawFieldData('oxactive') && $this->isActiveNow();
     }
 
     /**
@@ -62,7 +62,7 @@ final class Promotion implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return $this->actionsModel->getFieldData('oxtitle');
+        return $this->actionsModel->getRawFieldData('oxtitle');
     }
 
     /**
@@ -70,7 +70,7 @@ final class Promotion implements ShopModelAwareInterface
      */
     public function getText(): string
     {
-        return $this->actionsModel->getFieldData('oxlongdesc');
+        return $this->actionsModel->getRawFieldData('oxlongdesc');
     }
 
     private function isActiveNow(): bool
@@ -78,10 +78,10 @@ final class Promotion implements ShopModelAwareInterface
         $activeNow = false;
 
         $from = DateTimeImmutableFactory::fromString(
-            (string) $this->actionsModel->getFieldData('oxactivefrom')
+            (string) $this->actionsModel->getRawFieldData('oxactivefrom')
         );
         $to = DateTimeImmutableFactory::fromString(
-            (string) $this->actionsModel->getFieldData('oxactiveto')
+            (string) $this->actionsModel->getRawFieldData('oxactiveto')
         );
         $now = $now ?? DateTimeImmutableFactory::fromString('now');
 
