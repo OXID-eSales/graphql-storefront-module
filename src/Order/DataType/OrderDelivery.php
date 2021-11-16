@@ -56,7 +56,7 @@ final class OrderDelivery implements DataType
     public function getDispatched(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->order->getFieldData('oxsenddate')
+            (string) $this->order->getRawFieldData('oxsenddate')
         );
     }
 

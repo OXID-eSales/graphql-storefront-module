@@ -38,7 +38,7 @@ final class DeliveryAddress implements DataType
     public function countryId(): ID
     {
         return new ID(
-            $this->address->getFieldData('oxcountryid')
+            $this->address->getRawFieldData('oxcountryid')
         );
     }
 
@@ -57,7 +57,7 @@ final class DeliveryAddress implements DataType
      */
     public function salutation(): string
     {
-        return (string) $this->address->getFieldData('oxsal');
+        return (string) $this->address->getRawFieldData('oxsal');
     }
 
     /**
@@ -65,7 +65,7 @@ final class DeliveryAddress implements DataType
      */
     public function firstName(): string
     {
-        return (string) $this->address->getFieldData('oxfname');
+        return (string) $this->address->getRawFieldData('oxfname');
     }
 
     /**
@@ -73,7 +73,7 @@ final class DeliveryAddress implements DataType
      */
     public function lastName(): string
     {
-        return (string) $this->address->getFieldData('oxlname');
+        return (string) $this->address->getRawFieldData('oxlname');
     }
 
     /**
@@ -81,7 +81,7 @@ final class DeliveryAddress implements DataType
      */
     public function company(): string
     {
-        return (string) $this->address->getFieldData('oxcompany');
+        return (string) $this->address->getRawFieldData('oxcompany');
     }
 
     /**
@@ -89,7 +89,7 @@ final class DeliveryAddress implements DataType
      */
     public function additionalInfo(): string
     {
-        return (string) $this->address->getFieldData('oxaddinfo');
+        return (string) $this->address->getRawFieldData('oxaddinfo');
     }
 
     /**
@@ -97,7 +97,7 @@ final class DeliveryAddress implements DataType
      */
     public function street(): string
     {
-        return (string) $this->address->getFieldData('oxstreet');
+        return (string) $this->address->getRawFieldData('oxstreet');
     }
 
     /**
@@ -105,7 +105,7 @@ final class DeliveryAddress implements DataType
      */
     public function streetNumber(): string
     {
-        return (string) $this->address->getFieldData('oxstreetnr');
+        return (string) $this->address->getRawFieldData('oxstreetnr');
     }
 
     /**
@@ -113,7 +113,7 @@ final class DeliveryAddress implements DataType
      */
     public function zipCode(): string
     {
-        return (string) $this->address->getFieldData('oxzip');
+        return (string) $this->address->getRawFieldData('oxzip');
     }
 
     /**
@@ -121,7 +121,7 @@ final class DeliveryAddress implements DataType
      */
     public function city(): string
     {
-        return (string) $this->address->getFieldData('oxcity');
+        return (string) $this->address->getRawFieldData('oxcity');
     }
 
     /**
@@ -129,7 +129,7 @@ final class DeliveryAddress implements DataType
      */
     public function phone(): string
     {
-        return (string) $this->address->getFieldData('oxfon');
+        return (string) $this->address->getRawFieldData('oxfon');
     }
 
     /**
@@ -137,7 +137,7 @@ final class DeliveryAddress implements DataType
      */
     public function fax(): string
     {
-        return (string) $this->address->getFieldData('oxfax');
+        return (string) $this->address->getRawFieldData('oxfax');
     }
 
     /**
@@ -146,21 +146,21 @@ final class DeliveryAddress implements DataType
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->address->getFieldData('oxtimestamp')
+            (string) $this->address->getRawFieldData('oxtimestamp')
         );
     }
 
     public function userId(): ID
     {
         return new ID(
-            (string) $this->address->getFieldData('oxuserid')
+            (string) $this->address->getRawFieldData('oxuserid')
         );
     }
 
     public function stateId(): ID
     {
         return new ID(
-            $this->address->getFieldData('oxstateid')
+            $this->address->getRawFieldData('oxstateid')
         );
     }
 

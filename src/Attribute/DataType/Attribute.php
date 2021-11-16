@@ -32,7 +32,7 @@ final class Attribute implements DataType
      */
     public function getTitle(): string
     {
-        return (string) $this->attribute->getFieldData('oxtitle');
+        return (string) $this->attribute->getRawFieldData('oxtitle');
     }
 
     public static function getModelClass(): string

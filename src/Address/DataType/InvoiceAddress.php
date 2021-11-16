@@ -40,7 +40,7 @@ final class InvoiceAddress implements DataType
      */
     public function salutation(): string
     {
-        return (string) $this->customer->getFieldData('oxsal');
+        return (string) $this->customer->getRawFieldData('oxsal');
     }
 
     /**
@@ -48,7 +48,7 @@ final class InvoiceAddress implements DataType
      */
     public function firstName(): string
     {
-        return (string) $this->customer->getFieldData('oxfname');
+        return (string) $this->customer->getRawFieldData('oxfname');
     }
 
     /**
@@ -56,7 +56,7 @@ final class InvoiceAddress implements DataType
      */
     public function lastName(): string
     {
-        return (string) $this->customer->getFieldData('oxlname');
+        return (string) $this->customer->getRawFieldData('oxlname');
     }
 
     /**
@@ -64,7 +64,7 @@ final class InvoiceAddress implements DataType
      */
     public function company(): string
     {
-        return (string) $this->customer->getFieldData('oxcompany');
+        return (string) $this->customer->getRawFieldData('oxcompany');
     }
 
     /**
@@ -72,7 +72,7 @@ final class InvoiceAddress implements DataType
      */
     public function additionalInfo(): string
     {
-        return (string) $this->customer->getFieldData('oxaddinfo');
+        return (string) $this->customer->getRawFieldData('oxaddinfo');
     }
 
     /**
@@ -80,7 +80,7 @@ final class InvoiceAddress implements DataType
      */
     public function street(): string
     {
-        return (string) $this->customer->getFieldData('oxstreet');
+        return (string) $this->customer->getRawFieldData('oxstreet');
     }
 
     /**
@@ -88,7 +88,7 @@ final class InvoiceAddress implements DataType
      */
     public function streetNumber(): string
     {
-        return (string) $this->customer->getFieldData('oxstreetnr');
+        return (string) $this->customer->getRawFieldData('oxstreetnr');
     }
 
     /**
@@ -96,7 +96,7 @@ final class InvoiceAddress implements DataType
      */
     public function zipCode(): string
     {
-        return (string) $this->customer->getFieldData('oxzip');
+        return (string) $this->customer->getRawFieldData('oxzip');
     }
 
     /**
@@ -104,7 +104,7 @@ final class InvoiceAddress implements DataType
      */
     public function city(): string
     {
-        return (string) $this->customer->getFieldData('oxcity');
+        return (string) $this->customer->getRawFieldData('oxcity');
     }
 
     /**
@@ -112,7 +112,7 @@ final class InvoiceAddress implements DataType
      */
     public function vatID(): string
     {
-        return (string) $this->customer->getFieldData('oxustid');
+        return (string) $this->customer->getRawFieldData('oxustid');
     }
 
     /**
@@ -120,7 +120,7 @@ final class InvoiceAddress implements DataType
      */
     public function phone(): string
     {
-        return (string) $this->customer->getFieldData('oxprivphone');
+        return (string) $this->customer->getRawFieldData('oxprivphone');
     }
 
     /**
@@ -128,7 +128,7 @@ final class InvoiceAddress implements DataType
      */
     public function mobile(): string
     {
-        return (string) $this->customer->getFieldData('oxmobfone');
+        return (string) $this->customer->getRawFieldData('oxmobfone');
     }
 
     /**
@@ -136,7 +136,7 @@ final class InvoiceAddress implements DataType
      */
     public function fax(): string
     {
-        return (string) $this->customer->getFieldData('oxfax');
+        return (string) $this->customer->getRawFieldData('oxfax');
     }
 
     /**
@@ -145,7 +145,7 @@ final class InvoiceAddress implements DataType
     public function created(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->customer->getFieldData('oxcreate')
+            (string) $this->customer->getRawFieldData('oxcreate')
         );
     }
 
@@ -155,21 +155,21 @@ final class InvoiceAddress implements DataType
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->customer->getFieldData('oxtimestamp')
+            (string) $this->customer->getRawFieldData('oxtimestamp')
         );
     }
 
     public function countryId(): ID
     {
         return new ID(
-            $this->customer->getFieldData('oxcountryid')
+            $this->customer->getRawFieldData('oxcountryid')
         );
     }
 
     public function stateId(): ID
     {
         return new ID(
-            $this->customer->getFieldData('oxstateid')
+            $this->customer->getRawFieldData('oxstateid')
         );
     }
 

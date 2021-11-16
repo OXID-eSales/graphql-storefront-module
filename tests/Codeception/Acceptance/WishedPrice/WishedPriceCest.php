@@ -503,8 +503,8 @@ final class WishedPriceCest extends BaseCest
 
         $I->assertTrue($savedWishedPrice->isLoaded());
 
-        $I->assertEquals($expectedWishedPrice['product']['id'], $savedWishedPrice->getFieldData('OXARTID'));
-        $I->assertEquals($expectedWishedPrice['currency']['name'], $savedWishedPrice->getFieldData('OXCURRENCY'));
+        $I->assertEquals($expectedWishedPrice['product']['id'], $savedWishedPrice->getRawFieldData('OXARTID'));
+        $I->assertEquals($expectedWishedPrice['currency']['name'], $savedWishedPrice->getRawFieldData('OXCURRENCY'));
     }
 
     public function testWishedPriceSetFailsToSendNotification(AcceptanceTester $I): void

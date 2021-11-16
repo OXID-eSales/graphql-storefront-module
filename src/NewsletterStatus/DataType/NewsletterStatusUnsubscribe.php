@@ -39,13 +39,13 @@ final class NewsletterStatusUnsubscribe implements DataType
      */
     public function email(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getFieldData('oxemail');
+        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxemail');
     }
 
     public function userId(): ID
     {
         return new ID(
-            (string) $this->newsletterSubscriptionStatus->getFieldData('oxuserid')
+            (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxuserid')
         );
     }
 

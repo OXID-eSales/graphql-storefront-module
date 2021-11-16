@@ -32,7 +32,7 @@ final class Banner implements DataType
     {
         $this->actionsModel = $actionsModel;
 
-        if ($actionsModel->getFieldData('oxtype') !== self::ACTION_TYPE) {
+        if ($actionsModel->getRawFieldData('oxtype') !== self::ACTION_TYPE) {
             throw NotFound::notFound();
         }
     }
@@ -58,17 +58,17 @@ final class Banner implements DataType
      */
     public function isActive(?DateTimeInterface $now = null): bool
     {
-        $active = (bool) $this->actionsModel->getFieldData('oxactive');
+        $active = (bool) $this->actionsModel->getRawFieldData('oxactive');
 
         if ($active) {
             return true;
         }
 
         $from = DateTimeImmutableFactory::fromString(
-            (string) $this->actionsModel->getFieldData('oxactivefrom')
+            (string) $this->actionsModel->getRawFieldData('oxactivefrom')
         );
         $to = DateTimeImmutableFactory::fromString(
-            (string) $this->actionsModel->getFieldData('oxactiveto')
+            (string) $this->actionsModel->getRawFieldData('oxactiveto')
         );
         $now = $now ?? DateTimeImmutableFactory::fromString('now');
 
@@ -84,7 +84,7 @@ final class Banner implements DataType
      */
     public function getTitle(): string
     {
-        return (string) $this->actionsModel->getFieldData('oxtitle');
+        return (string) $this->actionsModel->getRawFieldData('oxtitle');
     }
 
     /**
@@ -108,7 +108,7 @@ final class Banner implements DataType
      */
     public function getSorting(): int
     {
-        return (int) $this->actionsModel->getFieldData('oxsort');
+        return (int) $this->actionsModel->getRawFieldData('oxsort');
     }
 
     public static function getModelClass(): string

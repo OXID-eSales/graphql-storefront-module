@@ -43,7 +43,7 @@ final class Country implements DataType
      */
     public function getPosition(): int
     {
-        return (int) $this->country->getFieldData('oxorder');
+        return (int) $this->country->getRawFieldData('oxorder');
     }
 
     /**
@@ -51,7 +51,7 @@ final class Country implements DataType
      */
     public function isActive(): bool
     {
-        return (bool) $this->country->getFieldData('oxactive');
+        return (bool) $this->country->getRawFieldData('oxactive');
     }
 
     /**
@@ -59,7 +59,7 @@ final class Country implements DataType
      */
     public function getTitle(): string
     {
-        return (string) $this->country->getFieldData('oxtitle');
+        return (string) $this->country->getRawFieldData('oxtitle');
     }
 
     /**
@@ -67,7 +67,7 @@ final class Country implements DataType
      */
     public function getIsoAlpha2(): string
     {
-        return (string) $this->country->getFieldData('oxisoalpha2');
+        return (string) $this->country->getRawFieldData('oxisoalpha2');
     }
 
     /**
@@ -75,7 +75,7 @@ final class Country implements DataType
      */
     public function getIsoAlpha3(): string
     {
-        return (string) $this->country->getFieldData('oxisoalpha3');
+        return (string) $this->country->getRawFieldData('oxisoalpha3');
     }
 
     /**
@@ -83,7 +83,7 @@ final class Country implements DataType
      */
     public function getIsoNumeric(): string
     {
-        return (string) $this->country->getFieldData('oxunnum3');
+        return (string) $this->country->getRawFieldData('oxunnum3');
     }
 
     /**
@@ -91,7 +91,7 @@ final class Country implements DataType
      */
     public function getShortDescription(): string
     {
-        return $this->country->getFieldData('oxshortdesc');
+        return $this->country->getRawFieldData('oxshortdesc');
     }
 
     /**
@@ -99,7 +99,7 @@ final class Country implements DataType
      */
     public function getDescription(): string
     {
-        return $this->country->getFieldData('oxlongdesc');
+        return $this->country->getRawFieldData('oxlongdesc');
     }
 
     /**
@@ -107,7 +107,7 @@ final class Country implements DataType
      */
     public function getCreationDate(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->country->getFieldData('oxtimestamp'));
+        return DateTimeImmutableFactory::fromString((string) $this->country->getRawFieldData('oxtimestamp'));
     }
 
     public static function getModelClass(): string

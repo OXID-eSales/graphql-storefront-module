@@ -56,7 +56,7 @@ final class NewsletterStatus implements DataType
      */
     public function salutation(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getFieldData('oxsal');
+        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxsal');
     }
 
     /**
@@ -64,7 +64,7 @@ final class NewsletterStatus implements DataType
      */
     public function firstName(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getFieldData('oxfname');
+        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxfname');
     }
 
     /**
@@ -72,7 +72,7 @@ final class NewsletterStatus implements DataType
      */
     public function lastName(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getFieldData('oxlname');
+        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxlname');
     }
 
     /**
@@ -80,7 +80,7 @@ final class NewsletterStatus implements DataType
      */
     public function email(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getFieldData('oxemail');
+        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxemail');
     }
 
     /**
@@ -102,7 +102,7 @@ final class NewsletterStatus implements DataType
      */
     public function failedEmailCount(): int
     {
-        return (int) $this->newsletterSubscriptionStatus->getFieldData('oxemailfailed');
+        return (int) $this->newsletterSubscriptionStatus->getRawFieldData('oxemailfailed');
     }
 
     /**
@@ -111,7 +111,7 @@ final class NewsletterStatus implements DataType
     public function subscribed(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->newsletterSubscriptionStatus->getFieldData('oxsubscribed')
+            (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxsubscribed')
         );
     }
 
@@ -120,7 +120,7 @@ final class NewsletterStatus implements DataType
      */
     public function unsubscribed(): ?DateTimeInterface
     {
-        $dateTime = (string) $this->newsletterSubscriptionStatus->getFieldData('oxunsubscribed');
+        $dateTime = (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxunsubscribed');
 
         return DateTimeImmutableFactory::fromString(
             $dateTime
@@ -133,14 +133,14 @@ final class NewsletterStatus implements DataType
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->newsletterSubscriptionStatus->getFieldData('oxtimestamp')
+            (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxtimestamp')
         );
     }
 
     public function userId(): ID
     {
         return new ID(
-            (string) $this->newsletterSubscriptionStatus->getFieldData('oxuserid')
+            (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxuserid')
         );
     }
 

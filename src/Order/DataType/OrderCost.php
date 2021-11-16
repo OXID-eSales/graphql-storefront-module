@@ -37,7 +37,7 @@ final class OrderCost implements DataType
      */
     public function getTotal(): float
     {
-        return (float) $this->order->getFieldData('oxtotalordersum');
+        return (float) $this->order->getRawFieldData('oxtotalordersum');
     }
 
     /**
@@ -45,7 +45,7 @@ final class OrderCost implements DataType
      */
     public function getVoucher(): float
     {
-        return (float) $this->order->getFieldData('oxvoucherdiscount');
+        return (float) $this->order->getRawFieldData('oxvoucherdiscount');
     }
 
     /**
@@ -53,7 +53,7 @@ final class OrderCost implements DataType
      */
     public function getDiscount(): float
     {
-        return (float) $this->order->getFieldData('oxdiscount');
+        return (float) $this->order->getRawFieldData('oxdiscount');
     }
 
     public static function getModelClass(): string

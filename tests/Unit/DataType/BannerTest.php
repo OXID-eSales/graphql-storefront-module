@@ -85,9 +85,9 @@ final class BannerTest extends TestCase
     ) {
         $model = $this->createPartialMock(
             \OxidEsales\Eshop\Application\Model\Actions::class,
-            ['getFieldData']
+            ['getRawFieldData']
         );
-        $model->method('getFieldData')->willReturnMap([
+        $model->method('getRawFieldData')->willReturnMap([
             ['oxtype', Banner::ACTION_TYPE],
             ['oxactive', $active],
             ['oxactivefrom', $activefrom],

@@ -49,7 +49,7 @@ final class Vendor implements DataType
      */
     public function isActive(): bool
     {
-        return (bool) $this->vendor->getFieldData('oxactive');
+        return (bool) $this->vendor->getRawFieldData('oxactive');
     }
 
     /**
@@ -81,7 +81,7 @@ final class Vendor implements DataType
      */
     public function getTimestamp(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->vendor->getFieldData('oxtimestamp'));
+        return DateTimeImmutableFactory::fromString((string) $this->vendor->getRawFieldData('oxtimestamp'));
     }
 
     /**

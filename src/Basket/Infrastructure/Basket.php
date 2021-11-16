@@ -59,7 +59,7 @@ final class Basket
         $alreadyInBasket = 0;
 
         if ($item) {
-            $alreadyInBasket = (int) $item->getFieldData('oxamount');
+            $alreadyInBasket = (int) $item->getRawFieldData('oxamount');
         }
 
         /** @var EshopAricleModel */
@@ -94,13 +94,13 @@ final class Basket
             throw BasketItemNotFound::byIdInBasket((string) $basketItemId, $model->getId());
         }
 
-        $amountRemaining = (float) $basketItem->getFieldData('oxamount') - $amount;
+        $amountRemaining = (float) $basketItem->getRawFieldData('oxamount') - $amount;
 
         if ($amountRemaining <= 0 || $amount == 0) {
             $amountRemaining = 0;
         }
 
-        $productId = (string) $basketItem->getFieldData('oxartid');
+        $productId = (string) $basketItem->getRawFieldData('oxartid');
         $params    = $basketItem->getPersParams();
 
         $model->addItemToBasket($productId, $amountRemaining, null, true, $params);
@@ -294,7 +294,7 @@ final class Basket
         $basketItems = $basketModel->getItems();
         /** @var EshopUserBasketItemModel $item */
         foreach ($basketItems as $item) {
-            if ($item->getFieldData('oxartid') === $productId) {
+            if ($item->getRawFieldData('oxartid') === $productId) {
                 return $item;
             }
         }

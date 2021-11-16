@@ -19,6 +19,6 @@ class User extends User_parent
 {
     public function setAutomaticUserGroups(): void
     {
-        $this->_setAutoGroups((string) $this->getFieldData('oxcountryid'));
+        $this->_setAutoGroups((string) $this->getRawFieldData('oxcountryid'));
     }
 }

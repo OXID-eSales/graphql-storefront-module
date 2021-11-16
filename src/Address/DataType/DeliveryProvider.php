@@ -46,7 +46,7 @@ final class DeliveryProvider implements DataType
      */
     public function getActive(): bool
     {
-        return (bool) ($this->order->getFieldData('oxactive'));
+        return (bool) ($this->order->getRawFieldData('oxactive'));
     }
 
     /**
@@ -54,7 +54,7 @@ final class DeliveryProvider implements DataType
      */
     public function getTitle(): string
     {
-        return (string) ($this->order->getFieldData('oxtitle'));
+        return (string) ($this->order->getRawFieldData('oxtitle'));
     }
 
     public static function getModelClass(): string
