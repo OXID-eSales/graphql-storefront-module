@@ -61,7 +61,7 @@ final class Customer
     public function customer(string $id): CustomerDataType
     {
         if (
-            (string) $id !== (string) $this->authenticationService->getUserId() &&
+            (string) $id !== (string) $this->authenticationService->getUser()->id() &&
             !$this->authorizationService->isAllowed('VIEW_ALL_CUSTOMERS')
         ) {
             throw new InvalidLogin('Unauthorized');
@@ -77,7 +77,7 @@ final class Customer
 
     public function changeEmail(string $email): CustomerDataType
     {
-        if (!((string) $id = $this->authenticationService->getUserId())) {
+        if (!((string) $id = (string) $this->authenticationService->getUser()->id())) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -102,7 +102,7 @@ final class Customer
 
     public function changeBirthdate(DateTimeInterface $birthdate): CustomerDataType
     {
-        if (!((string) $id = $this->authenticationService->getUserId())) {
+        if (!((string) $id = (string) $this->authenticationService->getUser()->id())) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -118,7 +118,7 @@ final class Customer
      */
     public function deleteCustomer(): bool
     {
-        if (!((string) $id = $this->authenticationService->getUserId())) {
+        if (!((string) $id = (string) $this->authenticationService->getUser()->id())) {
             throw new InvalidLogin('Unauthorized');
         }
 

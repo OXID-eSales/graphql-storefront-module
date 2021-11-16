@@ -475,7 +475,10 @@ final class CategoryTest extends BaseTestCase
         $result = $this->query('query {
             category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
-                products {
+                products (sort: {
+                   position: "",
+                   title: "DESC"
+                }){
                     active
                 }
             }
@@ -487,7 +490,7 @@ final class CategoryTest extends BaseTestCase
         );
 
         //Test product sort
-        $productStatus = $result['body']['data']['category']['products'][0]['active'];
+        $productStatus = $result['body']['data']['category']['products'][10]['active'];
         $this->assertSame(
             $active,
             $productStatus

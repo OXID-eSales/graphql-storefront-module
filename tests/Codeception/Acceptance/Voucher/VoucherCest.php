@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Voucher;
 
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
  * @group voucher
@@ -54,8 +55,8 @@ final class VoucherCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You do not have sufficient rights to access this field',
+        $I->assertStringStartsWith(
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -351,8 +352,8 @@ final class VoucherCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You do not have sufficient rights to access this field',
+        $I->assertStringStartsWith(
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }

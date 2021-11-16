@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Content\Service\RelationService
  */
-final class ContentRelationServiceTest extends TokenTestCase
+final class ContentRelationServiceTest extends BaseTestCase
 {
     private const ACTIVE_CONTENT_WITH_SEO = '1074279e67a85f5b1.96907412';
 
@@ -23,6 +23,8 @@ final class ContentRelationServiceTest extends TokenTestCase
     private const ACTIVE_CONTENT_WITHOUT_CATEGORY_1 = '2e0f674a78622c5796f9bb36f13078e2';
 
     private const ACTIVE_CONTENT_WITHOUT_CATEGORY_2 = 'e3ab0a5f8598f24dbb3a56b30c472844';
+
+    private const ACTIVE_CONTENT_CATEGORY_ID = '0f4fb00809cec9aa0910aa9c8fe36751';
 
     public function testGetContentSeoRelation(): void
     {
@@ -42,6 +44,8 @@ final class ContentRelationServiceTest extends TokenTestCase
 
     public function testGetContentCategoryRelation(): void
     {
+        $this->setActiveState(self::ACTIVE_CONTENT_CATEGORY_ID, 'oxcategories');
+
         $result = $this->query('
             query{
                 content(contentId: "' . self::ACTIVE_CONTENT_WITH_CATEGORY . '" ){

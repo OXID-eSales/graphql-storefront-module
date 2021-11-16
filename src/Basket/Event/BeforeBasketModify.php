@@ -22,6 +22,8 @@ final class BeforeBasketModify extends Event implements BasketModifyInterface
 
     public const TYPE_SET_PAYMENT_METHOD = 3;
 
+    public const NAME = self::class;
+
     /** @var ID */
     private $basketId;
 

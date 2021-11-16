@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
@@ -41,7 +42,10 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->login(null, null, 0);
         $result = $this->placeOrder($I, $basketId);
 
-        $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
+        $I->assertEquals(
+            MissingAuthorizationException::forbidden()->getMessage(),
+            $result['errors'][0]['message']
+        );
 
         $I->login(self::USERNAME, self::PASSWORD, 0);
         $this->removeBasket($I, $basketId);
@@ -176,7 +180,10 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //place the order
         $result = $this->placeOrder($I, $basketId);
 
-        $I->assertSame('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
+        $I->assertStringStartsWith(
+            MissingAuthorizationException::forbidden()->getMessage(),
+            $result['errors'][0]['message']
+        );
 
         //remove basket
         $I->login(self::USERNAME, self::PASSWORD);

@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Category\DataType;
 use Doctrine\DBAL\Query\QueryBuilder;
 use InvalidArgumentException;
 use OxidEsales\Eshop\Application\Model\Object2Category;
-use OxidEsales\GraphQL\Base\DataType\FilterInterface;
+use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 use TheCodingMachine\GraphQLite\Types\ID;
 

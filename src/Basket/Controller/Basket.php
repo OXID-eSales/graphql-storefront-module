@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod a
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
@@ -49,7 +50,7 @@ final class Basket
      * Returns information for any basket the customer owns.
      *
      * @Query()
-     * @Logged()
+     * @Right("VIEW_BASKET")
      */
     public function basket(ID $basketId): BasketDataType
     {
@@ -98,6 +99,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketRemove(ID $basketId): bool
     {
@@ -107,6 +109,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketMakePublic(ID $basketId): BasketDataType
     {
@@ -116,6 +119,7 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketMakePrivate(ID $basketId): BasketDataType
     {
@@ -158,11 +162,12 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketSetDeliveryAddress(ID $basketId, ?ID $deliveryAddressId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_ADDRESS);
-        $this->eventDispatcher->dispatch($event);
+        $this->eventDispatcher->dispatch($event, BeforeBasketModify::NAME);
 
         return $this->basketService->setDeliveryAddress($basketId, $deliveryAddressId);
     }
@@ -170,11 +175,12 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketSetPayment(ID $basketId, ID $paymentId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_PAYMENT_METHOD);
-        $this->eventDispatcher->dispatch($event);
+        $this->eventDispatcher->dispatch($event, BeforeBasketModify::NAME);
 
         return $this->basketService->setPayment($basketId, $paymentId);
     }
@@ -182,11 +188,12 @@ final class Basket
     /**
      * @Mutation()
      * @Logged()
+     * @HideIfUnauthorized()
      */
     public function basketSetDeliveryMethod(ID $basketId, ID $deliveryMethodId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_METHOD);
-        $this->eventDispatcher->dispatch($event);
+        $this->eventDispatcher->dispatch($event, BeforeBasketModify::NAME);
 
         return $this->basketService->setDeliveryMethod($basketId, $deliveryMethodId);
     }
@@ -194,6 +201,7 @@ final class Basket
     /**
      * @Query
      * @Logged()
+     * @HideIfUnauthorized()
      *
      * @return BasketDeliveryMethodDataType[]
      */
@@ -207,6 +215,7 @@ final class Basket
      *
      * @Query
      * @Logged()
+     * @HideIfUnauthorized()
      *
      * @return BasketPayment[]
      */

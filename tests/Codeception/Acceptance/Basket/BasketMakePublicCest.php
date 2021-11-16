@@ -15,6 +15,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group basket
+ * @group basket_make_public
  * @group oe_graphql_storefront
  */
 final class BasketMakePublicCest extends BaseCest
@@ -55,8 +56,8 @@ final class BasketMakePublicCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You need to be logged to access this field',
+        $I->assertStringStartsWith(
+            'Cannot query field "basketMakePublic" on type "Mutation".',
             $result['errors'][0]['message']
         );
     }

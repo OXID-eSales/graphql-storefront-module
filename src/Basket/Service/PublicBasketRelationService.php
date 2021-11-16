@@ -9,8 +9,8 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Basket\Service;
 
-use OxidEsales\GraphQL\Base\DataType\IDFilter;
-use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
+use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketItem;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketItemFilterList;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner;
@@ -54,7 +54,7 @@ final class PublicBasketRelationService
      */
     public function items(
         PublicBasketDataType $basket,
-        ?PaginationFilter $pagination
+        ?Pagination $pagination
     ): array {
         return $this->basketItemService->basketItems(
             new BasketItemFilterList(

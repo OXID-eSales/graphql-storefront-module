@@ -50,7 +50,7 @@ final class DeliveryAddressInput
         ?string $fax = null
     ): DeliveryAddressDataType {
         return $this->deliveryAddressFactory->createValidAddressType(
-            $this->authenticationService->getUserId(),
+            (string) $this->authenticationService->getUser()->id(),
             $salutation,
             $firstName,
             $lastName,

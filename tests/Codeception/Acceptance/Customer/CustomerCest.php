@@ -77,8 +77,8 @@ final class CustomerCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You need to be logged to access this field',
+        $I->assertStringStartsWith(
+            'Cannot query field "customer" on type "Query".',
             $result['errors'][0]['message']
         );
     }
@@ -352,8 +352,8 @@ final class CustomerCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You need to be logged to access this field',
+        $I->assertStringStartsWith(
+            'Cannot query field "customerBirthdateUpdate" on type "Mutation".',
             $result['errors'][0]['message']
         );
     }

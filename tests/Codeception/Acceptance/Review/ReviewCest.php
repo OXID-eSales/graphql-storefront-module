@@ -81,8 +81,8 @@ final class ReviewCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'The token is invalid',
+        $I->assertStringStartsWith(
+            'Cannot query field "reviewSet" on type "Mutation".',
             $result['errors'][0]['message']
         );
     }
@@ -312,8 +312,8 @@ final class ReviewCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You need to be logged to access this field',
+        $I->assertStringStartsWith(
+            'Cannot query field "reviewDelete" on type "Mutation".',
             $result['errors'][0]['message']
         );
     }

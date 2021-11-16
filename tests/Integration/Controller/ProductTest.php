@@ -12,10 +12,10 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 use function version_compare;
 
-final class ProductTest extends TokenTestCase
+final class ProductTest extends BaseTestCase
 {
     private const ACTIVE_PRODUCT = '058e613db53d782adfc9f2ccb43c45fe';
 
@@ -42,6 +42,26 @@ final class ProductTest extends TokenTestCase
     private const ACTIVE_PRODUCT_FULL_TITLE = 'Bindung O&#039;BRIEN DECADE CT 2010';
 
     private const ACTIVE_PRODUCT_WITH_VARIANTS_TITLE = 'Kuyichi Jeans ANNA';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setActiveState(self::ACTIVE_PRODUCT, 'oxarticles');
+    }
+
+    protected function tearDown(): void
+    {
+        $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories');
+        $this->setActiveState(self::VENDOR_OF_ACTIVE_PRODUCT, 'oxvendor');
+        $this->setActiveState(self::ACTIVE_PRODUCT_MANUFACTURER, 'oxmanufacturers');
+        $this->setActiveState(self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT, 'oxarticles');
+        $this->setActiveState(self::ACTIVE_PRODUCT, 'oxarticles');
+        $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories');
+        $this->setActiveState(self::ACTIVE_PRODUCT_MANUFACTURER, 'oxmanufacturers');
+
+        parent::tearDown();
+    }
 
     public function testGetSingleActiveProduct(): void
     {
@@ -816,17 +836,7 @@ final class ProductTest extends TokenTestCase
 
     public function testProductsByCategoryWithToken(): void
     {
-        $queryBuilder = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class)
-            ->create();
-
-        $queryBuilder
-            ->update('oxcategories')
-            ->set('oxactive', 0)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::ACTIVE_PRODUCT_CATEGORY)
-            ->execute();
+        $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories', 0);
 
         $this->prepareToken();
 
@@ -851,13 +861,6 @@ final class ProductTest extends TokenTestCase
             ->getContainer()
             ->get(QueryBuilderFactoryInterface::class)
             ->create();
-
-        $queryBuilder
-            ->update('oxcategories')
-            ->set('oxactive', 1)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::ACTIVE_PRODUCT_CATEGORY)
-            ->execute();
     }
 
     public function productsByCategoryDataProvider()
@@ -969,18 +972,8 @@ final class ProductTest extends TokenTestCase
      */
     public function testGetProductVendor($isVendorActive, $withToken, $expectedVendor): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         $oxactive = $isVendorActive ? 1 : 0;
-        $queryBuilder
-            ->update('oxvendor')
-            ->set('oxactive', $oxactive)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::VENDOR_OF_ACTIVE_PRODUCT)
-            ->execute();
+        $this->setActiveState(self::VENDOR_OF_ACTIVE_PRODUCT, 'oxvendor', $oxactive);
 
         if ($withToken) {
             $this->prepareToken();
@@ -1045,18 +1038,8 @@ final class ProductTest extends TokenTestCase
      */
     public function testGetProductManufacturer($isManufacturerActive, $withToken, $expectedManufacturer): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         $oxactive = $isManufacturerActive ? 1 : 0;
-        $queryBuilder
-            ->update('oxmanufacturers')
-            ->set('oxactive', $oxactive)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::ACTIVE_PRODUCT_MANUFACTURER)
-            ->execute();
+        $this->setActiveState(self::ACTIVE_PRODUCT_MANUFACTURER, 'oxmanufacturers', $oxactive);
 
         if ($withToken) {
             $this->prepareToken();
@@ -1126,18 +1109,8 @@ final class ProductTest extends TokenTestCase
      */
     public function testGetProductCrossSelling($isCSProductActive, $withToken, $expectedCrossSelling): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         $oxactive = $isCSProductActive ? 1 : 0;
-        $queryBuilder
-            ->update('oxarticles')
-            ->set('oxactive', $oxactive)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT)
-            ->execute();
+        $this->setActiveState(self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT, 'oxarticles', $oxactive);
 
         if ($withToken) {
             $this->prepareToken();
@@ -1209,18 +1182,8 @@ final class ProductTest extends TokenTestCase
      */
     public function testGetProductMainCategory($isCategoryActive, $withToken, $expectedCategory): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         $oxactive = $isCategoryActive ? 1 : 0;
-        $queryBuilder
-            ->update('oxcategories')
-            ->set('oxactive', $oxactive)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::ACTIVE_PRODUCT_CATEGORY)
-            ->execute();
+        $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories', $oxactive);
 
         if ($withToken) {
             $this->prepareToken();
@@ -1340,18 +1303,8 @@ final class ProductTest extends TokenTestCase
      */
     public function testFilterProductsByCategory($isCategoryActive, $withToken, $expectedProducts): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         $oxactive = $isCategoryActive ? 1 : 0;
-        $queryBuilder
-            ->update('oxcategories')
-            ->set('oxactive', $oxactive)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::ACTIVE_PRODUCT_CATEGORY)
-            ->execute();
+        $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories', $oxactive);
 
         if ($withToken) {
             $this->prepareToken();
@@ -1448,18 +1401,8 @@ final class ProductTest extends TokenTestCase
      */
     public function testFilterProductsByManufacturer($isManufacturerActive, $withToken, $expectedProducts): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         $oxactive = $isManufacturerActive ? 1 : 0;
-        $queryBuilder
-            ->update('oxmanufacturers')
-            ->set('oxactive', $oxactive)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::ACTIVE_PRODUCT_MANUFACTURER)
-            ->execute();
+        $this->setActiveState(self::ACTIVE_PRODUCT_MANUFACTURER, 'oxmanufacturers', $oxactive);
 
         if ($withToken) {
             $this->prepareToken();
@@ -1556,18 +1499,8 @@ final class ProductTest extends TokenTestCase
      */
     public function testFilterProductsByVendor($isVendorActive, $withToken, $expectedProducts): void
     {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
         $oxactive = $isVendorActive ? 1 : 0;
-        $queryBuilder
-            ->update('oxvendor')
-            ->set('oxactive', $oxactive)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', self::VENDOR_OF_ACTIVE_PRODUCT)
-            ->execute();
+        $this->setActiveState(self::VENDOR_OF_ACTIVE_PRODUCT, 'oxvendor', $oxactive);
 
         if ($withToken) {
             $this->prepareToken();

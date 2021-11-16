@@ -13,7 +13,7 @@ use DateTimeInterface;
 use Exception;
 use OxidEsales\Eshop\Application\Model\Category as CategoryModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -21,7 +21,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Category implements DataType
+final class Category implements ShopModelAwareInterface
 {
     /** @var CategoryModel */
     private $category;

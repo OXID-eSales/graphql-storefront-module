@@ -35,8 +35,8 @@ final class CustomerDeleteCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You need to be logged to access this field',
+        $I->assertStringStartsWith(
+            'Cannot query field "customerDelete" on type "Mutation".',
             $result['errors'][0]['message']
         );
     }

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -17,7 +18,7 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 /**
  * @Type()
  */
-final class ProductUnit
+final class ProductUnit implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
     private $product;
@@ -26,6 +27,11 @@ final class ProductUnit
         EshopProductModel $product
     ) {
         $this->product = $product;
+    }
+
+    public function getEshopModel(): EshopProductModel
+    {
+        return $this->product;
     }
 
     /**
@@ -47,5 +53,13 @@ final class ProductUnit
     public function getName(): string
     {
         return $this->product->getUnitName();
+    }
+
+    /**
+     * @return class-string
+     */
+    public static function getModelClass(): string
+    {
+        return EshopProductModel::class;
     }
 }

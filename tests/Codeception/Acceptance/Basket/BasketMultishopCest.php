@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group basket
+ * @group basket_access
  * @group oe_graphql_storefront
  */
 final class BasketMultishopCest extends MultishopBaseCest
@@ -59,7 +60,7 @@ final class BasketMultishopCest extends MultishopBaseCest
 
         $I->login(self::EXISTING_USERNAME, self::PASSWORD, 2);
 
-        $result = $this->queryBasket($I, self::PRIVATE_BASKET, 2);
+        $result = $this->queryPublicBasket($I, self::PRIVATE_BASKET, 2);
 
         $I->assertSame(
             'You are not allowed to access this basket as it belongs to somebody else',

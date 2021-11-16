@@ -10,14 +10,13 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\DataType;
 
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class BasketProductBruttoSum implements DataType
+final class BasketProductBruttoSum
 {
     /** @var EshopBasketModel */
     private $basket;
@@ -39,10 +38,5 @@ final class BasketProductBruttoSum implements DataType
     public function getSum(): float
     {
         return (float) $this->basket->getBruttoSum();
-    }
-
-    public static function getModelClass(): string
-    {
-        return EshopBasketModel::class;
     }
 }

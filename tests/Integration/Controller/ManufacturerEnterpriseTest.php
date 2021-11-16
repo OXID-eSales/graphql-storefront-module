@@ -216,6 +216,7 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
                 products
                 {
                   id
+                  title
                 }
             }
         }');

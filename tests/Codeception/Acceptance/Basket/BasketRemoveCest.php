@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group basket
+ * @group basket_remove
  * @group oe_graphql_storefront
  */
 final class BasketRemoveCest extends BaseCest
@@ -35,8 +36,8 @@ final class BasketRemoveCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You need to be logged to access this field',
+        $I->assertStringStartsWith(
+            'Cannot query field "basketRemove" on type "Mutation".',
             $result['errors'][0]['message']
         );
 

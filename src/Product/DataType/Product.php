@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -23,7 +23,7 @@ use function explode;
 /**
  * @Type()
  */
-final class Product implements DataType
+final class Product implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
     private $product;

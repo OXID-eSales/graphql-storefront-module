@@ -14,7 +14,7 @@ use OxidEsales\Eshop\Application\Model\OrderFile as OrderFileModel;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\Eshop\Core\SeoEncoder as EshopSeoEncoder;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\DataType;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -22,7 +22,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class OrderFile implements DataType
+final class OrderFile implements ShopModelAwareInterface
 {
     /** @var OrderFileModel */
     private $orderFile;

@@ -10,13 +10,14 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class ProductRating
+final class ProductRating implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
     private $product;
@@ -51,5 +52,13 @@ final class ProductRating
          * @var int
          */
         return (int) $this->product->getArticleRatingCount(false);
+    }
+
+    /**
+     * @return class-string
+     */
+    public static function getModelClass(): string
+    {
+        return EshopProductModel::class;
     }
 }

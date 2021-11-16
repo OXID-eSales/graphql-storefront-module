@@ -247,8 +247,8 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You need to be logged to access this field',
+        $I->assertStringStartsWith(
+            'Cannot query field "wishedPriceDelete" on type "Mutation".',
             $result['errors'][0]['message']
         );
     }
@@ -327,9 +327,10 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
+        $I->assertCount(1, $result['data']['wishedPrices']);
         $I->assertSame(
-            'The token is invalid',
-            $result['errors'][0]['message']
+            '_test_wished_price_without_user_',
+            $result['data']['wishedPrices'][0]['id']
         );
     }
 
@@ -390,8 +391,8 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'The token is invalid',
+        $I->assertStringStartsWith(
+            'Cannot query field "wishedPriceSet" on type "Mutation".',
             $result['errors'][0]['message']
         );
     }

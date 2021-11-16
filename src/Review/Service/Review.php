@@ -98,7 +98,7 @@ final class Review
         //user can delete only its own review, admin can delete any review
         if (
             !$this->authorizationService->isAllowed('DELETE_REVIEW')
-            && $this->authenticationService->getUserId() !== $review->getReviewerId()
+            && (string) $this->authenticationService->getUser()->id() !== $review->getReviewerId()
         ) {
             throw new InvalidLogin('Unauthorized');
         }
@@ -113,7 +113,7 @@ final class Review
      */
     public function save(ReviewDataType $review): bool
     {
-        if ($this->reviewRepository->doesReviewExist($this->authenticationService->getUserId(), $review)) {
+        if ($this->reviewRepository->doesReviewExist((string) $this->authenticationService->getUser()->id(), $review)) {
             throw ReviewAlreadyExists::byObjectId($review->getObjectId());
         }
 

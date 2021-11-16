@@ -10,13 +10,14 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class ProductDeliveryTime
+final class ProductDeliveryTime implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
     private $product;
@@ -25,6 +26,11 @@ final class ProductDeliveryTime
         EshopProductModel $product
     ) {
         $this->product = $product;
+    }
+
+    public function getEshopModel(): EshopProductModel
+    {
+        return $this->product;
     }
 
     /**
@@ -55,5 +61,13 @@ final class ProductDeliveryTime
     public function getDeliveryTimeUnit(): string
     {
         return (string) $this->product->getFieldData('oxdeltimeunit');
+    }
+
+    /**
+     * @return class-string
+     */
+    public static function getModelClass(): string
+    {
+        return EshopProductModel::class;
     }
 }

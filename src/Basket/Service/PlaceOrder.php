@@ -111,7 +111,7 @@ final class PlaceOrder
 
         /** @var CustomerDataType $customer */
         $customer = $this->customerService->customer(
-            $this->authenticationService->getUserId()
+            (string) $this->authenticationService->getUser()->id()
         );
 
         return $this->basketInfrastructure->placeOrder(

@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
  * @group basket
@@ -51,8 +52,8 @@ final class BasketRemoveItemCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'You do not have sufficient rights to access this field',
+        $I->assertStringStartsWith(
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -77,7 +78,10 @@ final class BasketRemoveItemCest extends BaseCest
         $I->login();
         $result = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId);
 
-        $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
+        $I->assertEquals(
+            MissingAuthorizationException::forbidden()->getMessage(),
+            $result['errors'][0]['message']
+        );
     }
 
     public function testRemoveBasketItemUsingDifferentUser(AcceptanceTester $I): void

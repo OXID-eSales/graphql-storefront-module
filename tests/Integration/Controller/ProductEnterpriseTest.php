@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Core\Element2ShopRelations;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Base\Tests\Integration\MultishopTestCase;
 
 /**
@@ -20,6 +22,13 @@ final class ProductEnterpriseTest extends MultishopTestCase
     private const PRODUCT_ID = '058e613db53d782adfc9f2ccb43c45fe';
 
     private const ACTIVE_PRODUCT_WITH_VARIANTS = '531b537118f5f4d7a427cdb825440922';
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->setActiveState(self::PRODUCT_ID, 'oxarticles');
+    }
 
     /**
      * Check if active product from shop 1 is not accessible for
@@ -220,5 +229,21 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $oElement2ShopRelations = oxNew(Element2ShopRelations::class, 'oxarticles');
         $oElement2ShopRelations->setShopIds($shops);
         $oElement2ShopRelations->addToShop($productId);
+    }
+
+    private function setActiveState(string $id, string $table = 'oxarticles', int $active = 1): void
+    {
+        $queryBuilderFactory = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(QueryBuilderFactoryInterface::class);
+        $queryBuilder = $queryBuilderFactory->create();
+
+        // set product to inactive
+        $queryBuilder
+            ->update($table)
+            ->set('oxactive', $active)
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', $id)
+            ->execute();
     }
 }

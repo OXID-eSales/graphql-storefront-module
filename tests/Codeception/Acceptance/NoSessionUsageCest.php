@@ -63,7 +63,7 @@ final class NoSessionUsageCest extends BaseCest
         $result = $this->queryBasket($I);
 
         //User does not send the token, so we expect to see zero delivery costs
-        $I->assertEquals('You need to be logged to access this field', $result['errors'][0]['message']);
+        $I->assertStringStartsWith('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
 
         //no cookie header
         $I->dontSeeHttpHeader('Set-Cookie');

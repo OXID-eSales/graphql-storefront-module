@@ -9,25 +9,25 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration;
 
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
 
 abstract class BaseTestCase extends TokenTestCase
 {
-    protected function doAssertArraySubset($needle, $haystack): void
+    protected function setActiveState(string $id, string $table = 'oxarticles', int $active = 1): void
     {
-        if (method_exists($this, 'assertArraySubsetOxid')) {
-            parent::assertArraySubsetOxid($needle, $haystack);
-        } else {
-            parent::assertArraySubset($needle, $haystack);
-        }
-    }
+        $queryBuilderFactory = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(QueryBuilderFactoryInterface::class);
+        $queryBuilder = $queryBuilderFactory->create();
 
-    protected function doAssertContains($needle, $haystack, $message = ''): void
-    {
-        if (method_exists($this, 'assertStringContainsString')) {
-            parent::assertStringContainsString($needle, $haystack, $message);
-        } else {
-            parent::assertContains($needle, $haystack, $message);
-        }
+        // set product to inactive
+        $queryBuilder
+            ->update($table)
+            ->set('oxactive', $active)
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', $id)
+            ->execute();
     }
 }

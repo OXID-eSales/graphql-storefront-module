@@ -9,11 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class ActionTest extends TokenTestCase
+final class ActionTest extends BaseTestCase
 {
     private const ACTIVE_ACTION_WITH_PRODUCTS = 'oxtop5';
 
@@ -26,6 +24,13 @@ final class ActionTest extends TokenTestCase
     private const WRONG_TYPE_ACTION = 'b5639c6431b26687321f6ce654878fa5';
 
     private const PRODUCT_RELATED_TO_ACTIVE_ACTION = 'ed6a4182ae58874e4fdaa4775566af6c';
+
+    protected function tearDown(): void
+    {
+        $this->setActiveState(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 'oxarticles', 1);
+
+        parent::tearDown();
+    }
 
     public function testGetSingleActiveActionWithoutProducts(): void
     {
@@ -358,7 +363,7 @@ final class ActionTest extends TokenTestCase
     public function testActionsProductList($withToken, $expectedProducts): void
     {
         // set product to inactive
-        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 0);
+        $this->setActiveState(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 'oxarticles', 0);
 
         if ($withToken) {
             $this->prepareToken();
@@ -387,9 +392,6 @@ final class ActionTest extends TokenTestCase
             $expectedProducts,
             $result['body']['data']['actions'][0]['products']
         );
-
-        // set the product back  to active
-        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 1);
     }
 
     /**
@@ -401,7 +403,7 @@ final class ActionTest extends TokenTestCase
     public function testActionProductList($withToken, $expectedProducts): void
     {
         // set product to inactive
-        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 0);
+        $this->setActiveState(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 'oxarticles', 0);
 
         if ($withToken) {
             $this->prepareToken();
@@ -426,9 +428,6 @@ final class ActionTest extends TokenTestCase
             $expectedProducts,
             $result['body']['data']['action']['products']
         );
-
-        // set the product back  to active
-        $this->changeProductActiveStatus(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 1);
     }
 
     public function filterActionsByIdProvider(): array
@@ -491,20 +490,5 @@ final class ActionTest extends TokenTestCase
         }');
 
         $this->assertEquals($expected, $result['body']['data']['actions']);
-    }
-
-    private function changeProductActiveStatus($productId, $active): void
-    {
-        $queryBuilderFactory = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(QueryBuilderFactoryInterface::class);
-        $queryBuilder = $queryBuilderFactory->create();
-
-        $queryBuilder
-            ->update('oxarticles')
-            ->set('oxactive', $active)
-            ->where('OXID = :OXID')
-            ->setParameter(':OXID', $productId)
-            ->execute();
     }
 }

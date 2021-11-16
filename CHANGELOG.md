@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.0.0] - Unreleased
 
 ### Added
+- Support for PHP 8.0
 - ``OxidEsales\GraphQL\Storefront\Customer\Service::fetchCustomer`` is now public
 - New Events:
   - ``AfterAddItem``
@@ -14,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ``BeforeBasketDeliveryMethods``
   - ``BeforeBasketModify``
   - ``BeforeBasketRemove``
+  - ``BeforeBasketPayments`` updated with payment methods list so it can be adjusted
 - Classes
   - `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket`
   - `OxidEsales\GraphQL\Storefront\Basket\Service\PublicBasketRelationService`
@@ -23,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `OxidEsales\GraphQL\Storefront\Basket\DataType\Basket::getPaymentId()`
 
 ### Fixed
-- Fix incompatibilities for eShop 7.0
 - Extracted basket authorization block to be handled with event so can be easier overwritten if needed
 - Updated paths to bin directory in README [PR-5](https://github.com/OXID-eSales/graphql-storefront-module/pull/5)
 - `OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\DeliveryMethod::getPosition()` method returns correct field data.
@@ -32,17 +33,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Method `OxidEsales\GraphQL\Storefront\Basket\Service\Basket::publicBasketsByOwnerNameOrEmail` now returns an array of `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket`
 - `baskets(owner String)` now returns an array of `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket` in order to not expose address or payment information on a public basket
 - `deliveryAddressId` parameter of `basketSetDeliveryAddress` mutation can be null.
-
-## [1.1.0] - Unreleased
-
-### Added
-- New events in Basket domain:
-  - ``BeforeAddItem``
-  - ``BeforeBasketDeliveryMethods``
-  - ``BeforeBasketPayments`` updated with payment methods list so it can be adjusted
-
-### Changed
 - `basketAddItem` mutation honours stockflag and calls may give you back an error
+- Drop support for PHP 7.3
+- DataTypes related to `OxidEsales\Eshop\Core\Model\BaseModel` implement `OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface`
+
+### Removed
+- Interface `OxidEsales\GraphQL\Storefront\Shared\DataType\DataType`
 
 ## [1.0.0] - 2021-05-28
 

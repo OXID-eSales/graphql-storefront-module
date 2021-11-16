@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\WishedPrice\Service;
 
-use OxidEsales\GraphQL\Base\DataType\StringFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\InvalidToken;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
@@ -101,8 +101,8 @@ final class WishedPrice
     {
         return $this->repository->getByFilter(
             $filter->withUserFilter(
-                new StringFilter(
-                    $this->authenticationService->getUserId()
+                new IDFilter(
+                    $this->authenticationService->getUser()->id()
                 )
             ),
             WishedPriceDataType::class
@@ -154,6 +154,6 @@ final class WishedPrice
 
     private function isSameUser(WishedPriceDataType $wishedPrice): bool
     {
-        return (string) $wishedPrice->getInquirerId() === (string) $this->authenticationService->getUserId();
+        return (string) $wishedPrice->getInquirerId() === (string) $this->authenticationService->getUser()->id();
     }
 }

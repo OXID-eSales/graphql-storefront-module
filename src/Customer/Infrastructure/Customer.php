@@ -13,7 +13,7 @@ use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
 use OxidEsales\Eshop\Application\Model\OrderFileList as OrderFileListModel;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\Eshop\Core\Model\ListModel as EshopListModel;
-use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
+use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderFile;

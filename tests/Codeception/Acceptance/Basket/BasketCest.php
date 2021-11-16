@@ -12,9 +12,11 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 use Codeception\Example;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 
 /**
  * @group basket
+ * @group basket_access
  * @group oe_graphql_storefront
  */
 final class BasketCest extends BaseCest
@@ -39,9 +41,9 @@ final class BasketCest extends BaseCest
 
     private const BASKET_WISH_LIST = 'wishlist';
 
-    private const BASKET_NOTICE_LIST = 'noticelist';
-
     private const PUBLIC_NOTICE_LIST = '_test_noticelist_public';
+
+    private const BASKET_NOTICE_LIST = 'noticelist';
 
     private const BASKET_SAVED_BASKET = 'savedbasket';
 
@@ -178,8 +180,8 @@ final class BasketCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertSame(
-            'The token is invalid',
+        $I->assertStringStartsWith(
+            MissingAuthorizationException::forbidden()->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -193,7 +195,10 @@ final class BasketCest extends BaseCest
 
         $result = $this->basketCreateMutation($I, self::BASKET_WISH_LIST);
 
-        $I->assertEquals('You do not have sufficient rights to access this field', $result['errors'][0]['message']);
+        $I->assertEquals(
+            MissingAuthorizationException::forbidden()->getMessage(),
+            $result['errors'][0]['message']
+        );
     }
 
     public function testBasketCost(AcceptanceTester $I): void
@@ -249,7 +254,7 @@ final class BasketCest extends BaseCest
             ],
             [
                 'isLogged' => false,
-                'message'  => 'You need to be logged to access this field',
+                'message'  => 'You do not have sufficient rights to access this field',
             ],
         ];
     }

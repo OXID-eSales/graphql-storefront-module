@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Basket\Service;
 
-use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
+use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketItem as BasketItemDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketItemFilterList;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;

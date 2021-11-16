@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Shared\DataType;
 
-use OxidEsales\GraphQL\Base\DataType\BoolFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\BoolFilter;
 
 abstract class FilterList
 {
