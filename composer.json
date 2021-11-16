@@ -17,7 +17,7 @@
         "php": "^7.4 | ^8.0",
         "doctrine/dbal": "^v2.7",
         "oxid-esales/graphql-base": "dev-master",
-        "oxid-esales/oxideshop-doctrine-migration-wrapper": "^v3.2.0"
+        "oxid-esales/oxideshop-doctrine-migration-wrapper": "^v4.0.0"
     },
     "conflict": {
         "oxid-esales/graphql-catalogue": "*",

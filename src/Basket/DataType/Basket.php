@@ -69,8 +69,8 @@ final class Basket extends AbstractBasket implements ShopModelAwareInterface
             ->get(EventDispatcherInterface::class);
         $event = new BasketAuthorization($this, new Id($userId));
         $eventDispatcher->dispatch(
-            BasketAuthorization::NAME,
             $event,
+            BasketAuthorization::NAME,
         );
 
         return $event->getAuthorized();
