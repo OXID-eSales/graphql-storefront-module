@@ -70,7 +70,7 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $this->assertEquals(
             [
                 'id'    => self::PRODUCT_ID,
-                'title' => 'Bindung O&#039;BRIEN DECADE CT 2010',
+                'title' => 'Bindung O\'BRIEN DECADE CT 2010',
             ],
             $result['body']['data']['product']
         );
@@ -85,22 +85,22 @@ final class ProductEnterpriseTest extends MultishopTestCase
             'shop_1_de' => [
                 'shopId'     => '1',
                 'languageId' => '0',
-                'title'      => 'Bindung O&#039;BRIEN DECADE CT 2010',
+                'title'      => 'Bindung O\'BRIEN DECADE CT 2010',
             ],
             'shop_1_en' => [
                 'shopId'     => '1',
                 'languageId' => '1',
-                'title'      => 'Binding O&#039;BRIEN DECADE CT 2010',
+                'title'      => 'Binding O\'BRIEN DECADE CT 2010',
             ],
             'shop_2_de' => [
                 'shopId'     => '2',
                 'languageId' => '0',
-                'title'      => 'Bindung O&#039;BRIEN DECADE CT 2010',
+                'title'      => 'Bindung O\'BRIEN DECADE CT 2010',
             ],
             'shop_2_en' => [
                 'shopId'     => '2',
                 'languageId' => '1',
-                'title'      => 'Binding O&#039;BRIEN DECADE CT 2010',
+                'title'      => 'Binding O\'BRIEN DECADE CT 2010',
             ],
         ];
     }
