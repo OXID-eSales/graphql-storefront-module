@@ -49,14 +49,14 @@ final class WishedPrice implements ShopModelAwareInterface
     public function getInquirerId(): ID
     {
         return new ID(
-            (string) $this->wishedPrice->getFieldData('oxuserid')
+            (string) $this->wishedPrice->getRawFieldData('oxuserid')
         );
     }
 
     public function getProductId(): ID
     {
         return new ID(
-            (string) $this->wishedPrice->getFieldData('oxartid')
+            (string) $this->wishedPrice->getRawFieldData('oxartid')
         );
     }
 
@@ -65,7 +65,7 @@ final class WishedPrice implements ShopModelAwareInterface
      */
     public function getEmail(): string
     {
-        return $this->wishedPrice->getFieldData('oxemail');
+        return $this->wishedPrice->getRawFieldData('oxemail');
     }
 
     /**
@@ -76,7 +76,7 @@ final class WishedPrice implements ShopModelAwareInterface
      */
     public function getNotificationDate(): ?DateTimeInterface
     {
-        $notificationDate = (string) $this->wishedPrice->getFieldData('oxsended');
+        $notificationDate = (string) $this->wishedPrice->getRawFieldData('oxsended');
 
         return DateTimeImmutableFactory::fromString($notificationDate);
     }
@@ -86,7 +86,7 @@ final class WishedPrice implements ShopModelAwareInterface
      */
     public function getCreationDate(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->wishedPrice->getFieldData('oxinsert'));
+        return DateTimeImmutableFactory::fromString((string) $this->wishedPrice->getRawFieldData('oxinsert'));
     }
 
     /**

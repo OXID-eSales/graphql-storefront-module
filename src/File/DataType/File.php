@@ -42,7 +42,7 @@ final class File implements ShopModelAwareInterface
      */
     public function filename(): string
     {
-        return (string) $this->file->getFieldData('OXFILENAME');
+        return (string) $this->file->getRawFieldData('OXFILENAME');
     }
 
     /**
@@ -50,7 +50,7 @@ final class File implements ShopModelAwareInterface
      */
     public function onlyPaidDownload(): bool
     {
-        return (bool) $this->file->getFieldData('OXPURCHASEDONLY');
+        return (bool) $this->file->getRawFieldData('OXPURCHASEDONLY');
     }
 
     public function getEshopModel(): FileModel
@@ -60,7 +60,7 @@ final class File implements ShopModelAwareInterface
 
     public function productId(): string
     {
-        return (string) $this->file->getFieldData('OXARTID');
+        return (string) $this->file->getRawFieldData('OXARTID');
     }
 
     public static function getModelClass(): string

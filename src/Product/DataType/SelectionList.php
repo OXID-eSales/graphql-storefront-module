@@ -34,7 +34,7 @@ final class SelectionList
      */
     public function getTitle(): string
     {
-        return (string) $this->selectionList->getFieldData('oxtitle');
+        return (string) $this->selectionList->getRawFieldData('oxtitle');
     }
 
     /**

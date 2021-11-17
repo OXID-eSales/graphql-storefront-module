@@ -37,7 +37,7 @@ final class Reviewer implements ShopModelAwareInterface
      */
     public function getFirstName(): string
     {
-        return (string) $this->reviewer->getFieldData('oxfname');
+        return (string) $this->reviewer->getRawFieldData('oxfname');
     }
 
     public static function getModelClass(): string

@@ -48,11 +48,11 @@ final class StateTest extends TestCase
         );
         $this->assertSame(
             $dataType->getTitle(),
-            $model->getFieldData('oxtitle')
+            $model->getRawFieldData('oxtitle')
         );
         $this->assertSame(
             $dataType->getIsoAlpha2(),
-            $model->getFieldData('oxisoalpha2')
+            $model->getRawFieldData('oxisoalpha2')
         );
         $this->assertNotEmpty(
             $dataType->getCreationDate()

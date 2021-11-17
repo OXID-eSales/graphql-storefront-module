@@ -60,7 +60,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function getSku(): ?string
     {
-        return (string) $this->product->getFieldData('oxartnum');
+        return (string) $this->product->getRawFieldData('oxartnum');
     }
 
     /**
@@ -68,7 +68,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function getEan(): string
     {
-        return (string) $this->product->getFieldData('oxean');
+        return (string) $this->product->getRawFieldData('oxean');
     }
 
     /**
@@ -76,7 +76,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function getManufacturerEan(): string
     {
-        return (string) $this->product->getFieldData('oxdistean');
+        return (string) $this->product->getRawFieldData('oxdistean');
     }
 
     /**
@@ -84,7 +84,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function getMpn(): string
     {
-        return (string) $this->product->getFieldData('oxmpn');
+        return (string) $this->product->getRawFieldData('oxmpn');
     }
 
     /**
@@ -92,7 +92,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->product->getFieldData('oxtitle');
+        return (string) $this->product->getRawFieldData('oxtitle');
     }
 
     /**
@@ -100,7 +100,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function getShortDescription(): string
     {
-        return (string) $this->product->getFieldData('oxshortdesc');
+        return (string) $this->product->getRawFieldData('oxshortdesc');
     }
 
     /**
@@ -125,7 +125,7 @@ final class Product implements ShopModelAwareInterface
     public function getInsert(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->product->getFieldData('oxinsert')
+            (string) $this->product->getRawFieldData('oxinsert')
         );
     }
 
@@ -134,7 +134,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function isFreeShipping(): bool
     {
-        return (bool) $this->product->getFieldData('oxfreeshipping');
+        return (bool) $this->product->getRawFieldData('oxfreeshipping');
     }
 
     /**
@@ -143,7 +143,7 @@ final class Product implements ShopModelAwareInterface
     public function getTimestamp(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->product->getFieldData('oxtimestamp')
+            (string) $this->product->getRawFieldData('oxtimestamp')
         );
     }
 
@@ -157,7 +157,7 @@ final class Product implements ShopModelAwareInterface
         return array_filter(
             explode(
                 ' | ',
-                (string) $this->product->getFieldData('oxvarname')
+                (string) $this->product->getRawFieldData('oxvarname')
             )
         );
     }
@@ -172,7 +172,7 @@ final class Product implements ShopModelAwareInterface
         return array_filter(
             explode(
                 ' | ',
-                (string) $this->product->getFieldData('oxvarselect')
+                (string) $this->product->getRawFieldData('oxvarselect')
             )
         );
     }
@@ -182,7 +182,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function wishedPriceEnabled(): bool
     {
-        return !(bool) $this->product->getFieldData('oxblfixedprice');
+        return !(bool) $this->product->getRawFieldData('oxblfixedprice');
     }
 
     /**
@@ -190,12 +190,12 @@ final class Product implements ShopModelAwareInterface
      */
     public function getVarMinPrice(): float
     {
-        return (float) $this->product->getFieldData('oxvarminprice');
+        return (float) $this->product->getRawFieldData('oxvarminprice');
     }
 
     public function getBundleId(): string
     {
-        return (string) $this->product->getFieldData('oxbundleid');
+        return (string) $this->product->getRawFieldData('oxbundleid');
     }
 
     /**

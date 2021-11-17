@@ -44,7 +44,7 @@ class Payment implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->payment->getFieldData('oxactive');
+        return (bool) $this->payment->getRawFieldData('oxactive');
     }
 
     /**
@@ -52,7 +52,7 @@ class Payment implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->payment->getFieldData('oxdesc');
+        return (string) $this->payment->getRawFieldData('oxdesc');
     }
 
     /**
@@ -60,7 +60,7 @@ class Payment implements ShopModelAwareInterface
      */
     public function getDescription(): string
     {
-        return (string) $this->payment->getFieldData('oxlongdesc');
+        return (string) $this->payment->getRawFieldData('oxlongdesc');
     }
 
     /**
@@ -68,7 +68,7 @@ class Payment implements ShopModelAwareInterface
      */
     public function getUpdated(): ?DateTimeImmutable
     {
-        return DateTimeImmutableFactory::fromString($this->payment->getFieldData('oxtimestamp'));
+        return DateTimeImmutableFactory::fromString($this->payment->getRawFieldData('oxtimestamp'));
     }
 
     public function getEshopModel(): EshopPaymentModel

@@ -19,7 +19,7 @@ final class PriceFactory
     {
         /** @var EshopPriceModel $price */
         $price = oxNew(EshopPriceModel::class);
-        $price->setPrice((float) $wishedPrice->getEshopModel()->getFieldData('oxprice'));
+        $price->setPrice((float) $wishedPrice->getEshopModel()->getRawFieldData('oxprice'));
 
         return new Price($price);
     }

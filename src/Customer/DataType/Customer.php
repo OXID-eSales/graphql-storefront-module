@@ -48,7 +48,7 @@ final class Customer implements ShopModelAwareInterface
      */
     public function getFirstName(): string
     {
-        return (string) $this->customer->getFieldData('oxfname');
+        return (string) $this->customer->getRawFieldData('oxfname');
     }
 
     /**
@@ -56,7 +56,7 @@ final class Customer implements ShopModelAwareInterface
      */
     public function getLastName(): string
     {
-        return (string) $this->customer->getFieldData('oxlname');
+        return (string) $this->customer->getRawFieldData('oxlname');
     }
 
     /**
@@ -64,7 +64,7 @@ final class Customer implements ShopModelAwareInterface
      */
     public function getEmail(): string
     {
-        return (string) $this->customer->getFieldData('oxusername');
+        return (string) $this->customer->getRawFieldData('oxusername');
     }
 
     /**
@@ -72,7 +72,7 @@ final class Customer implements ShopModelAwareInterface
      */
     public function getCustomerNumber(): string
     {
-        return (string) $this->customer->getFieldData('oxcustnr');
+        return (string) $this->customer->getRawFieldData('oxcustnr');
     }
 
     /**
@@ -81,7 +81,7 @@ final class Customer implements ShopModelAwareInterface
     public function getBirthdate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->customer->getFieldData('oxbirthdate')
+            (string) $this->customer->getRawFieldData('oxbirthdate')
         );
     }
 
@@ -90,7 +90,7 @@ final class Customer implements ShopModelAwareInterface
      */
     public function getPoints(): int
     {
-        return (int) $this->customer->getFieldData('oxpoints');
+        return (int) $this->customer->getRawFieldData('oxpoints');
     }
 
     /**
@@ -99,7 +99,7 @@ final class Customer implements ShopModelAwareInterface
     public function getRegistered(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->customer->getFieldData('oxregister')
+            (string) $this->customer->getRawFieldData('oxregister')
         );
     }
 
@@ -109,7 +109,7 @@ final class Customer implements ShopModelAwareInterface
     public function getCreated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->customer->getFieldData('oxcreate')
+            (string) $this->customer->getRawFieldData('oxcreate')
         );
     }
 
@@ -119,7 +119,7 @@ final class Customer implements ShopModelAwareInterface
     public function getUpdated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->customer->getFieldData('oxtimestamp')
+            (string) $this->customer->getRawFieldData('oxtimestamp')
         );
     }
 

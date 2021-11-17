@@ -49,14 +49,14 @@ final class Category implements ShopModelAwareInterface
     public function getParentId(): ID
     {
         return new ID(
-            (string) $this->category->getFieldData('oxparentid')
+            (string) $this->category->getRawFieldData('oxparentid')
         );
     }
 
     public function getRootId(): ID
     {
         return new ID(
-            (string) $this->category->getFieldData('oxrootid')
+            (string) $this->category->getRawFieldData('oxrootid')
         );
     }
 
@@ -69,7 +69,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getPosition(): int
     {
-        return (int) $this->category->getFieldData('oxsort');
+        return (int) $this->category->getRawFieldData('oxsort');
     }
 
     /**
@@ -77,17 +77,17 @@ final class Category implements ShopModelAwareInterface
      */
     public function isActive(?DateTimeInterface $now = null): bool
     {
-        $active = (bool) $this->category->getFieldData('oxactive');
+        $active = (bool) $this->category->getRawFieldData('oxactive');
 
         if ($active) {
             return true;
         }
 
         $from = DateTimeImmutableFactory::fromString(
-            (string) $this->category->getFieldData('oxactivefrom')
+            (string) $this->category->getRawFieldData('oxactivefrom')
         );
         $to = DateTimeImmutableFactory::fromString(
-            (string) $this->category->getFieldData('oxactiveto')
+            (string) $this->category->getRawFieldData('oxactiveto')
         );
         $now = $now ?? DateTimeImmutableFactory::fromString('now');
 
@@ -148,7 +148,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getExternalLink(): string
     {
-        return (string) $this->category->getFieldData('oxextlink');
+        return (string) $this->category->getRawFieldData('oxextlink');
     }
 
     /**
@@ -156,7 +156,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getTemplate(): string
     {
-        return (string) $this->category->getFieldData('oxtemplate');
+        return (string) $this->category->getRawFieldData('oxtemplate');
     }
 
     /**
@@ -167,7 +167,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getPriceFrom(): float
     {
-        return (float) $this->category->getFieldData('oxpricefrom');
+        return (float) $this->category->getRawFieldData('oxpricefrom');
     }
 
     /**
@@ -178,7 +178,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getPriceTo(): float
     {
-        return (float) $this->category->getFieldData('oxpriceto');
+        return (float) $this->category->getRawFieldData('oxpriceto');
     }
 
     /**
@@ -202,7 +202,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getVat(): ?float
     {
-        $vat = $this->category->getFieldData('oxvat');
+        $vat = $this->category->getRawFieldData('oxvat');
 
         return null === $vat ? $vat : (float) $vat;
     }
@@ -215,7 +215,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function skipDiscount(): bool
     {
-        return (bool) $this->category->getFieldData('oxskipdiscounts');
+        return (bool) $this->category->getRawFieldData('oxskipdiscounts');
     }
 
     /**
@@ -223,7 +223,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function showSuffix(): bool
     {
-        return (bool) $this->category->getFieldData('oxshowsuffix');
+        return (bool) $this->category->getRawFieldData('oxshowsuffix');
     }
 
     /**
@@ -234,18 +234,18 @@ final class Category implements ShopModelAwareInterface
     public function getTimestamp(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            $this->category->getFieldData('oxtimestamp')
+            $this->category->getRawFieldData('oxtimestamp')
         );
     }
 
     public function getDefSort(): ?string
     {
-        return $this->category->getFieldData('oxdefsort');
+        return $this->category->getRawFieldData('oxdefsort');
     }
 
     public function getDefSortMode(): int
     {
-        return (int) $this->category->getFieldData('oxdefsortmode');
+        return (int) $this->category->getRawFieldData('oxdefsortmode');
     }
 
     /**

@@ -41,7 +41,7 @@ final class BasketItemRelationService
 
         try {
             return $this->productService->product(
-                new ID($basketItemModel->getFieldData('oxartid'))
+                new ID($basketItemModel->getRawFieldData('oxartid'))
             );
         } catch (ProductNotFound | InvalidLogin $e) {
         }

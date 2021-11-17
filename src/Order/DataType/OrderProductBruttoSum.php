@@ -38,7 +38,7 @@ final class OrderProductBruttoSum implements ShopModelAwareInterface
      */
     public function getSum(): float
     {
-        return (float) ($this->order->getFieldData('oxtotalbrutsum'));
+        return (float) ($this->order->getRawFieldData('oxtotalbrutsum'));
     }
 
     public static function getModelClass(): string

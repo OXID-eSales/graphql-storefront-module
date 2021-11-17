@@ -38,27 +38,27 @@ final class Basket extends AbstractBasket implements ShopModelAwareInterface
      */
     public function public(): bool
     {
-        return (bool) $this->basket->getFieldData('oxpublic');
+        return (bool) $this->basket->getRawFieldData('oxpublic');
     }
 
     public function getDeliveryAddressId(): ID
     {
         return new ID(
-            (string) $this->basket->getFieldData('oegql_deladdressid')
+            (string) $this->basket->getRawFieldData('oegql_deladdressid')
         );
     }
 
     public function getDeliveryMethodId(): ID
     {
         return new ID(
-            (string) $this->basket->getFieldData('oegql_deliverymethodid')
+            (string) $this->basket->getRawFieldData('oegql_deliverymethodid')
         );
     }
 
     public function getPaymentId(): ID
     {
         return new ID(
-            (string) $this->basket->getFieldData('oegql_paymentid')
+            (string) $this->basket->getRawFieldData('oegql_paymentid')
         );
     }
 

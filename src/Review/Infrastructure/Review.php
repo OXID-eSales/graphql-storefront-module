@@ -16,7 +16,7 @@ final class Review
 {
     public function getLanguage(ReviewDataType $review): Language
     {
-        $languageId = $review->getEshopModel()->getFieldData('oxlang');
+        $languageId = $review->getEshopModel()->getRawFieldData('oxlang');
 
         return new Language((int) $languageId);
     }

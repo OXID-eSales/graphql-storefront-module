@@ -44,8 +44,8 @@ class Voucher extends Voucher_parent
      */
     public function isInReservationTimeLimit(): void
     {
-        if ((0 < $this->getFieldData('oxreserved')) &&
-            ($this->getFieldData('oxreserved') < (time() - $this->_getVoucherTimeout()))) {
+        if ((0 < $this->getRawFieldData('oxreserved')) &&
+            ($this->getRawFieldData('oxreserved') < (time() - $this->_getVoucherTimeout()))) {
             throw new EshopObjectException('Reservation has timed out');
         }
     }
@@ -112,7 +112,7 @@ class Voucher extends Voucher_parent
     protected function getGraphQLBasket(): EshopBasketModel
     {
         $basketModel = oxNew(EshopBasketModel::class);
-        $basketId    = $this->getFieldData('oegql_basketid');
+        $basketId    = $this->getRawFieldData('oegql_basketid');
 
         if ($basketId) {
             /** @var BasketService $basketService */

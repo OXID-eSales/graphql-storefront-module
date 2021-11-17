@@ -46,7 +46,7 @@ final class ProductAttribute implements ShopModelAwareInterface
      */
     public function getValue(): string
     {
-        return (string) $this->attribute->getFieldData('oxvalue');
+        return (string) $this->attribute->getRawFieldData('oxvalue');
     }
 
     /**

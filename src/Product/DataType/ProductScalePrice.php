@@ -44,7 +44,7 @@ final class ProductScalePrice
      */
     public function getAbsolutePrice(): ?float
     {
-        $price = (float) $this->scalePrice->getFieldData('oxaddabs');
+        $price = (float) $this->scalePrice->getRawFieldData('oxaddabs');
 
         if ($price === 0.0) {
             return null;
@@ -58,7 +58,7 @@ final class ProductScalePrice
      */
     public function getDiscount(): ?float
     {
-        $percentage = (float) $this->scalePrice->getFieldData('oxaddperc');
+        $percentage = (float) $this->scalePrice->getRawFieldData('oxaddperc');
 
         if ($percentage === 0.0) {
             return null;
@@ -72,7 +72,7 @@ final class ProductScalePrice
      */
     public function getAmountFrom(): int
     {
-        return (int) $this->scalePrice->getFieldData('oxamount');
+        return (int) $this->scalePrice->getRawFieldData('oxamount');
     }
 
     /**
@@ -80,6 +80,6 @@ final class ProductScalePrice
      */
     public function getAmountTo(): int
     {
-        return (int) $this->scalePrice->getFieldData('oxamountto');
+        return (int) $this->scalePrice->getRawFieldData('oxamountto');
     }
 }

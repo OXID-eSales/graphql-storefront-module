@@ -20,7 +20,7 @@ final class OrderCost
     {
         /** @var stdClass $currencyObject */
         $currencyObject       = $orderCost->getEshopModel()->getOrderCurrency();
-        $currencyObject->rate = (float) $orderCost->getEshopModel()->getFieldData('oxcurrate');
+        $currencyObject->rate = (float) $orderCost->getEshopModel()->getRawFieldData('oxcurrate');
 
         return $currencyObject;
     }
@@ -37,7 +37,7 @@ final class OrderCost
 
     public function getProductNetSum(OrderCostDataType $orderCost): EshopPriceModel
     {
-        $netSum = (float) $orderCost->getEshopModel()->getFieldData('oxtotalnetsum');
+        $netSum = (float) $orderCost->getEshopModel()->getRawFieldData('oxtotalnetsum');
 
         /** @var EshopPriceModel $price */
         $price  = oxNew(EshopPriceModel::class);

@@ -38,7 +38,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function salutation(): string
     {
-        return (string) $this->order->getFieldData('oxdelsal');
+        return (string) $this->order->getRawFieldData('oxdelsal');
     }
 
     /**
@@ -46,7 +46,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function firstName(): string
     {
-        return (string) $this->order->getFieldData('oxdelfname');
+        return (string) $this->order->getRawFieldData('oxdelfname');
     }
 
     /**
@@ -54,7 +54,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function lastName(): string
     {
-        return (string) $this->order->getFieldData('oxdellname');
+        return (string) $this->order->getRawFieldData('oxdellname');
     }
 
     /**
@@ -62,7 +62,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function company(): string
     {
-        return (string) $this->order->getFieldData('oxdelcompany');
+        return (string) $this->order->getRawFieldData('oxdelcompany');
     }
 
     /**
@@ -70,7 +70,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function additionalInfo(): string
     {
-        return (string) $this->order->getFieldData('oxdeladdinfo');
+        return (string) $this->order->getRawFieldData('oxdeladdinfo');
     }
 
     /**
@@ -78,7 +78,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function street(): string
     {
-        return (string) $this->order->getFieldData('oxdelstreet');
+        return (string) $this->order->getRawFieldData('oxdelstreet');
     }
 
     /**
@@ -86,7 +86,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function streetNumber(): string
     {
-        return (string) $this->order->getFieldData('oxdelstreetnr');
+        return (string) $this->order->getRawFieldData('oxdelstreetnr');
     }
 
     /**
@@ -94,7 +94,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function zipCode(): string
     {
-        return (string) $this->order->getFieldData('oxdelzip');
+        return (string) $this->order->getRawFieldData('oxdelzip');
     }
 
     /**
@@ -102,7 +102,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function city(): string
     {
-        return (string) $this->order->getFieldData('oxdelcity');
+        return (string) $this->order->getRawFieldData('oxdelcity');
     }
 
     /**
@@ -110,7 +110,7 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function phone(): string
     {
-        return (string) $this->order->getFieldData('oxdelfon');
+        return (string) $this->order->getRawFieldData('oxdelfon');
     }
 
     /**
@@ -118,20 +118,20 @@ final class OrderDeliveryAddress implements ShopModelAwareInterface
      */
     public function fax(): string
     {
-        return (string) $this->order->getFieldData('oxdelfax');
+        return (string) $this->order->getRawFieldData('oxdelfax');
     }
 
     public function countryId(): ID
     {
         return new ID(
-            $this->order->getFieldData('oxdelcountryid')
+            $this->order->getRawFieldData('oxdelcountryid')
         );
     }
 
     public function stateId(): ID
     {
         return new ID(
-            $this->order->getFieldData('oxdelstateid')
+            $this->order->getRawFieldData('oxdelstateid')
         );
     }
 
