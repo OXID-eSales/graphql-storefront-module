@@ -205,6 +205,7 @@ final class VendorCest extends BaseCest
     private function prepareTestData(AcceptanceTester $I): void
     {
         $vendor = oxNew(\OxidEsales\Eshop\Application\Model\Vendor::class);
+        $vendor->setId('_testvendor');
         $vendor->assign(
             [
                 'oxid'        => '_testvendor',
@@ -224,6 +225,8 @@ final class VendorCest extends BaseCest
             ]
         );
         $vendor->save();
+
+        $I->seeInDatabase('oxvendor', ['oxid' => '_testvendor']);
 
         //this query ensures all seo urls are generated
         $I->sendGQLQuery('query {
