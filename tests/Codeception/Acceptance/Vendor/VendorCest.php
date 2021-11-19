@@ -35,7 +35,7 @@ final class VendorCest extends BaseCest
                 vendors (
                     filter: {
                         slug: {
-                            like: "true"
+                            like: "brush"
                         }
                     }
                     sort: {
@@ -54,8 +54,8 @@ final class VendorCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertEquals('true-brush', $result['data']['vendors'][0]['seo']['slug']);
-        $I->assertEquals('www-true-fashion-com', $result['data']['vendors'][1]['seo']['slug']);
+        $I->assertEquals('fake-brush', $result['data']['vendors'][0]['seo']['slug']);
+        $I->assertEquals('true-brush', $result['data']['vendors'][1]['seo']['slug']);
     }
 
     public function vendorBySeoSlugInvalidParameterIdAndSlug(AcceptanceTester $I): void
@@ -84,11 +84,11 @@ final class VendorCest extends BaseCest
     {
         $I->wantToTest('fetching vendor by slug which is not unique');
 
-        $I->updateInDatabase('oxseo', ['oxseourl' => 'Nach-was-Anderem/www-true-fashion-com/'], ['oxseourl' => 'Nach-Lieferant/true-brush/']);
+        $I->updateInDatabase('oxseo', ['oxseourl' => 'Nach-was-Anderem/fake-brush/'], ['oxseourl' => 'Nach-Lieferant/true-brush/']);
 
         $I->sendGQLQuery('query {
                 vendor (
-                    slug: "www-true-fashion-com"
+                    slug: "fake-brush"
                 ) {
                 id
                }
@@ -98,7 +98,7 @@ final class VendorCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            VendorNotFound::byAmbiguousBySlug('www-true-fashion-com'),
+            VendorNotFound::byAmbiguousBySlug('fake-brush'),
             $result['errors'][0]['message']
         );
     }
@@ -166,9 +166,9 @@ final class VendorCest extends BaseCest
 
     public function vendorBySeoSlugByLanguage(AcceptanceTester $I): void
     {
-        $I->wantToTest('fetching vendor by slug successfully');
+        $I->wantToTest('fetching vendor by slug by language successfully');
 
-        $searchBy = 'brush-en';
+        $searchBy = 'fake-en';
 
         $I->sendGQLQuery('query {
                 vendor (
@@ -205,12 +205,10 @@ final class VendorCest extends BaseCest
     private function prepareTestData(AcceptanceTester $I): void
     {
         $vendor = oxNew(\OxidEsales\Eshop\Application\Model\Vendor::class);
-        $vendor->setId('_testvendor');
+        $vendor->setId('_testvendor1');
         $vendor->assign(
             [
                 'oxid'        => '_testvendor',
-                'oxmapid'     => 777,
-                'oxshopid'    => 1,
                 'oxactive'    => 1,
                 'oxtitle'     => 'true brush',
                 'oxshortdesc' => 'Original Retro Electronics',
@@ -222,6 +220,26 @@ final class VendorCest extends BaseCest
             [
                 'oxtitle'     => 'brush en',
                 'oxshortdesc' => 'Original Retro Electronics EN',
+            ]
+        );
+        $vendor->save();
+
+        $vendor = oxNew(\OxidEsales\Eshop\Application\Model\Vendor::class);
+        $vendor->setId('_testvendor2');
+        $vendor->assign(
+            [
+                'oxid'        => '_testvendor2',
+                'oxactive'    => 1,
+                'oxtitle'     => 'fake brush',
+                'oxshortdesc' => 'Faked Retro Electronics',
+            ]
+        );
+        $vendor->save();
+        $vendor->loadInLang(1, '_testvendor');
+        $vendor->assign(
+            [
+                'oxtitle'     => 'fake en',
+                'oxshortdesc' => 'Faked Retro Electronics EN',
             ]
         );
         $vendor->save();
@@ -249,6 +267,6 @@ final class VendorCest extends BaseCest
                }
         }', null, 1);
 
-        $I->updateInDatabase('oxseo', ['oxseourl' => 'Nach-Lieferant/true-brush/'], ['oxseourl' => 'Nach-was-Anderem/www-true-fashion-com/']);
+        $I->updateInDatabase('oxseo', ['oxseourl' => 'Nach-Lieferant/true-brush/'], ['oxseourl' => 'Nach-was-Anderem/fake-brush/']);
     }
 }
