@@ -13,8 +13,8 @@ use OxidEsales\GraphQL\Base\DataType\BoolFilter;
 use OxidEsales\GraphQL\Base\DataType\IDFilter;
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryIDFilter;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -53,7 +53,7 @@ final class ProductFilterList extends FilterList
         $this->active       = $active;
         $this->parent       = new IDFilter(new ID(''));
         $this->slug         = $slug;
-        is_null($this->slug)?: $this->slug->setType('oxarticle');
+        null === $this->slug ?: $this->slug->setType('oxarticle');
 
         parent::__construct();
     }
@@ -76,7 +76,7 @@ final class ProductFilterList extends FilterList
             'oxmanufacturerid' => $this->manufacturer,
             'oxvendorid'       => $this->vendor,
             'oxparentid'       => $this->parent,
-            'oxseourl'         => $this->slug
+            'oxseourl'         => $this->slug,
         ];
     }
 

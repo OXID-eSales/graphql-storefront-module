@@ -17,8 +17,8 @@ use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
-use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting as CategorySorting;
+use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -103,10 +103,10 @@ final class Category
 
         $results = $this->repository->getList(
             CategoryDataType::class,
-            new CategoryFilterList (
+            new CategoryFilterList(
                 null,
                 null,
-                 $slugFilter
+                $slugFilter
             ),
             new PaginationFilter(),
             CategorySorting::fromUserInput()
@@ -115,6 +115,7 @@ final class Category
         if (empty($results)) {
             throw CategoryNotFound::bySlug($slug);
         }
+
         if (1 < count($results)) {
             throw CategoryNotFound::byAmbiguousBySlug($slug);
         }

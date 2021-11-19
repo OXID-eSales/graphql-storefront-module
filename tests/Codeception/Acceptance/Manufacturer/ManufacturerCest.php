@@ -10,11 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Manufacturer;
 
 use Codeception\Scenario;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
+use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
-use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
 
 /**
  * @group manufacturer
@@ -78,7 +76,7 @@ final class ManufacturerCest extends BaseCest
         $I->assertEquals('mauirippers', $result['data']['manufacturers'][1]['seo']['slug']);
     }
 
-    public function manufacturerBySeoSlugInvalidParameterIdAndSLug(AcceptanceTester $I): void
+    public function manufacturerBySeoSlugInvalidParameterIdAndSlug(AcceptanceTester $I): void
     {
         $I->wantToTest('fetching manufacturer by slug and id fails');
 
@@ -118,7 +116,7 @@ final class ManufacturerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            ManufacturerNotFound::byAmbiguousBySlug("big-matsol"),
+            ManufacturerNotFound::byAmbiguousBySlug('big-matsol'),
             $result['errors'][0]['message']
         );
     }
@@ -139,7 +137,7 @@ final class ManufacturerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            ManufacturerNotFound::bySlug("this-is---nonexisting----slug"),
+            ManufacturerNotFound::bySlug('this-is---nonexisting----slug'),
             $result['errors'][0]['message']
         );
     }
@@ -148,7 +146,7 @@ final class ManufacturerCest extends BaseCest
     {
         $I->wantToTest('fetching manufacturer by slug successfully');
 
-        $searchBy = "liquid-force";
+        $searchBy = 'liquid-force';
 
         $I->sendGQLQuery('query {
                 manufacturer (
@@ -188,7 +186,7 @@ final class ManufacturerCest extends BaseCest
     {
         $I->wantToTest('fetching manufacturer by slug successfully');
 
-        $searchBy = "liquid-force-kite";
+        $searchBy = 'liquid-force-kite';
 
         $I->sendGQLQuery('query {
                 manufacturer (
@@ -217,7 +215,7 @@ final class ManufacturerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            ManufacturerNotFound::bySlug($searchBy ),
+            ManufacturerNotFound::bySlug($searchBy),
             $result['errors'][0]['message']
         );
     }

@@ -10,11 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Category;
 
 use Codeception\Scenario;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
+use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
-use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
 
 /**
  * @group category
@@ -78,7 +76,7 @@ final class CategoryCest extends BaseCest
         $I->assertEquals('jeans', $result['data']['categories'][1]['seo']['slug']);
     }
 
-    public function categoryBySeoSlugInvalidParameterIdAndSLug(AcceptanceTester $I): void
+    public function categoryBySeoSlugInvalidParameterIdAndSlug(AcceptanceTester $I): void
     {
         $I->wantToTest('fetching category by slug and id fails');
 
@@ -116,7 +114,7 @@ final class CategoryCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            CategoryNotFound::byAmbiguousBySlug("jeans"),
+            CategoryNotFound::byAmbiguousBySlug('jeans'),
             $result['errors'][0]['message']
         );
     }
@@ -137,7 +135,7 @@ final class CategoryCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            CategoryNotFound::bySlug("this-is---nonexisting----slug"),
+            CategoryNotFound::bySlug('this-is---nonexisting----slug'),
             $result['errors'][0]['message']
         );
     }
@@ -146,7 +144,7 @@ final class CategoryCest extends BaseCest
     {
         $I->wantToTest('fetching category by slug successfully');
 
-        $searchBy = "fuer-sie";
+        $searchBy = 'fuer-sie';
 
         $I->sendGQLQuery('query {
                 category (
@@ -186,7 +184,7 @@ final class CategoryCest extends BaseCest
     {
         $I->wantToTest('fetching category by slug successfully');
 
-        $searchBy = "for-her";
+        $searchBy = 'for-her';
 
         $I->sendGQLQuery('query {
                 category (
@@ -215,7 +213,7 @@ final class CategoryCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            CategoryNotFound::bySlug($searchBy ),
+            CategoryNotFound::bySlug($searchBy),
             $result['errors'][0]['message']
         );
     }

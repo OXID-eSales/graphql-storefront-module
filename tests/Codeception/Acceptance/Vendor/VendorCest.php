@@ -10,8 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Vendor;
 
 use Codeception\Scenario;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
@@ -60,7 +58,7 @@ final class VendorCest extends BaseCest
         $I->assertEquals('www-true-fashion-com', $result['data']['vendors'][1]['seo']['slug']);
     }
 
-    public function vendorBySeoSlugInvalidParameterIdAndSLug(AcceptanceTester $I): void
+    public function vendorBySeoSlugInvalidParameterIdAndSlug(AcceptanceTester $I): void
     {
         $I->wantToTest('fetching vendor by slug and id fails');
 
@@ -100,7 +98,7 @@ final class VendorCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            VendorNotFound::byAmbiguousBySlug("www-true-fashion-com"),
+            VendorNotFound::byAmbiguousBySlug('www-true-fashion-com'),
             $result['errors'][0]['message']
         );
     }
@@ -121,7 +119,7 @@ final class VendorCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            VendorNotFound::bySlug("this-is---nonexisting----slug"),
+            VendorNotFound::bySlug('this-is---nonexisting----slug'),
             $result['errors'][0]['message']
         );
     }
@@ -130,7 +128,7 @@ final class VendorCest extends BaseCest
     {
         $I->wantToTest('fetching vendor by slug successfully');
 
-        $searchBy = "true-brush";
+        $searchBy = 'true-brush';
 
         $I->sendGQLQuery('query {
                 vendor (
@@ -170,7 +168,7 @@ final class VendorCest extends BaseCest
     {
         $I->wantToTest('fetching vendor by slug successfully');
 
-        $searchBy = "brush-en";
+        $searchBy = 'brush-en';
 
         $I->sendGQLQuery('query {
                 vendor (
@@ -199,7 +197,7 @@ final class VendorCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            VendorNotFound::bySlug($searchBy ),
+            VendorNotFound::bySlug($searchBy),
             $result['errors'][0]['message']
         );
     }
@@ -209,20 +207,20 @@ final class VendorCest extends BaseCest
         $vendor = oxNew(\OxidEsales\Eshop\Application\Model\Vendor::class);
         $vendor->assign(
             [
-                'oxid' => '_testvendor',
-                'oxmapid' => 777,
-                'oxshopid' => 1,
-                'oxactive' => 1,
-                'oxtitle' => 'true brush',
-                'oxshortdesc' => 'Original Retro Electronics'
+                'oxid'        => '_testvendor',
+                'oxmapid'     => 777,
+                'oxshopid'    => 1,
+                'oxactive'    => 1,
+                'oxtitle'     => 'true brush',
+                'oxshortdesc' => 'Original Retro Electronics',
             ]
         );
         $vendor->save();
         $vendor->loadInLang(1, '_testvendor');
         $vendor->assign(
             [
-                'oxtitle' => 'brush en',
-                'oxshortdesc' => 'Original Retro Electronics EN'
+                'oxtitle'     => 'brush en',
+                'oxshortdesc' => 'Original Retro Electronics EN',
             ]
         );
         $vendor->save();

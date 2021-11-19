@@ -11,13 +11,10 @@ namespace OxidEsales\GraphQL\Storefront\Shared\DataType;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use InvalidArgumentException;
-use OxidEsales\GraphQL\Base\DataType\FilterInterface;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\GraphQL\Base\DataType\FilterInterface;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy as LegacyService;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
-use TheCodingMachine\GraphQLite\Types\ID;
-
-use function strtoupper;
 
 final class SeoSlugFilter implements FilterInterface
 {
@@ -43,7 +40,7 @@ final class SeoSlugFilter implements FilterInterface
 
     public function setType(string $type): void
     {
-       $this->type = $type;
+        $this->type = $type;
     }
 
     public function type(): string
@@ -80,12 +77,19 @@ final class SeoSlugFilter implements FilterInterface
                 $alias,
                 $builder->expr()->eq("$table.OXID", "$alias.OXOBJECTID")
             )
-            ->andWhere($builder->expr()->eq($alias . '.OXTYPE', ":type"))
+            ->andWhere($builder->expr()->eq($alias . '.OXTYPE', ':type'))
             ->andWhere($builder->expr()->like('LOWER(' . $alias . '.OXSEOURL)', "LOWER(:$field)"))
-            ->andWhere($builder->expr()->eq($alias . '.OXLANG', ":lang"))
-            ->setParameter(":type", $this->type())
+            ->andWhere($builder->expr()->eq($alias . '.OXLANG', ':lang'))
+            ->setParameter(':type', $this->type())
             ->setParameter(":$field", $this->prefix . $this->like() . $this->postfix)
-            ->setParameter(":lang", $language);
+            ->setParameter(':lang', $language);
+    }
+
+    private function getLanguageId(): int
+    {
+        $container = ContainerFactory::getInstance()->getContainer();
+
+        return $container->get(LegacyService::class)->getLanguageId();
     }
 
     /**
@@ -94,12 +98,5 @@ final class SeoSlugFilter implements FilterInterface
     public static function fromUserInput(string $like): self
     {
         return new self($like);
-    }
-
-    private function getLanguageId(): int
-    {
-        $container = ContainerFactory::getInstance()->getContainer();
-
-        return $container->get(LegacyService::class)->getLanguageId();
     }
 }

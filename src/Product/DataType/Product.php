@@ -108,6 +108,7 @@ final class Product implements DataType
         if (method_exists($this->product, 'getRawFieldData')) {
             return (string) $this->product->getRawFieldData('oxshortdesc');
         }
+
         return (string) $this->product->getFieldData('oxshortdesc');
     }
 
@@ -194,7 +195,8 @@ final class Product implements DataType
     {
         $combined = array_combine($this->getVariantLabels(), $this->getVariantValues());
         $combined = !is_array($combined) ? [] : $combined;
-        $result = [];
+        $result   = [];
+
         foreach ($combined as $name => $value) {
             $result[] = new NameValue($name, $value);
         }

@@ -11,8 +11,8 @@ namespace OxidEsales\GraphQL\Storefront\Vendor\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\BoolFilter;
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class VendorFilterList extends FilterList
@@ -28,10 +28,10 @@ final class VendorFilterList extends FilterList
         ?BoolFilter $active = null,
         ?SeoSlugFilter $slug = null
     ) {
-        $this->title  = $title;
-        $this->active = $active;
+        $this->title    = $title;
+        $this->active   = $active;
         $this->slug     = $slug;
-        is_null($this->slug)?: $this->slug->setType('oxvendor');
+        null === $this->slug ?: $this->slug->setType('oxvendor');
 
         parent::__construct();
     }
@@ -45,8 +45,8 @@ final class VendorFilterList extends FilterList
     public function getFilters(): array
     {
         return [
-            'oxtitle' => $this->title,
-            'oxseourl'   => $this->slug
+            'oxtitle'    => $this->title,
+            'oxseourl'   => $this->slug,
         ];
     }
 

@@ -13,11 +13,11 @@ use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\VendorFilterList;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -103,7 +103,7 @@ final class Vendor
 
         $results = $this->repository->getList(
             VendorDataType::class,
-            new VendorFilterList (
+            new VendorFilterList(
                 null,
                 null,
                 $slugFilter
@@ -115,6 +115,7 @@ final class Vendor
         if (empty($results)) {
             throw VendorNotFound::bySlug($slug);
         }
+
         if (1 < count($results)) {
             throw VendorNotFound::byAmbiguousBySlug($slug);
         }

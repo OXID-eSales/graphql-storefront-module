@@ -10,11 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Product;
 
 use Codeception\Scenario;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
-use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 
 /**
  * @group product
@@ -128,7 +126,7 @@ final class ProductCest extends BaseCest
         $I->assertEquals('Farbe', $result['data']['products'][0]['variants'][0]['variantSelect'][1]['name']);
     }
 
-    public function productBySeoSlugInvalidParameterIdAndSLug(AcceptanceTester $I): void
+    public function productBySeoSlugInvalidParameterIdAndSlug(AcceptanceTester $I): void
     {
         $I->wantToTest('fetching product by slug and id fails');
 
@@ -172,7 +170,7 @@ final class ProductCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            ProductNotFound::byAmbiguousBySlug("Kuyichi-Jeans-SUGAR"),
+            ProductNotFound::byAmbiguousBySlug('Kuyichi-Jeans-SUGAR'),
             $result['errors'][0]['message']
         );
     }
@@ -193,7 +191,7 @@ final class ProductCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            ProductNotFound::bySlug("this-is---nonexisting----slug"),
+            ProductNotFound::bySlug('this-is---nonexisting----slug'),
             $result['errors'][0]['message']
         );
     }
@@ -202,7 +200,7 @@ final class ProductCest extends BaseCest
     {
         $I->wantToTest('fetching product by slug successfully');
 
-        $searchBy = "Kuyichi-JEANS-anna";
+        $searchBy = 'Kuyichi-JEANS-anna';
 
         $I->sendGQLQuery('query {
                 product (
@@ -242,7 +240,7 @@ final class ProductCest extends BaseCest
     {
         $I->wantToTest('fetching product by slug successfully');
 
-        $searchBy = "Binding-O-BRIEN-DECADE-CT-2010";
+        $searchBy = 'Binding-O-BRIEN-DECADE-CT-2010';
 
         $I->sendGQLQuery('query {
                 product (
@@ -271,7 +269,7 @@ final class ProductCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            ProductNotFound::bySlug($searchBy ),
+            ProductNotFound::bySlug($searchBy),
             $result['errors'][0]['message']
         );
     }

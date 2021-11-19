@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Category\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\StringFilter;
-use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class CategoryFilterList extends FilterList
@@ -33,7 +33,7 @@ final class CategoryFilterList extends FilterList
         $this->title    = $title;
         $this->parentId = $parentId;
         $this->slug     = $slug;
-        is_null($this->slug)?: $this->slug->setType('oxcategory');
+        null === $this->slug ?: $this->slug->setType('oxcategory');
 
         parent::__construct();
     }
@@ -50,7 +50,7 @@ final class CategoryFilterList extends FilterList
         return [
             'oxtitle'    => $this->title,
             'oxparentid' => $this->parentId,
-            'oxseourl'   => $this->slug
+            'oxseourl'   => $this->slug,
         ];
     }
 

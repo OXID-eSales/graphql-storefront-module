@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Product\Service;
 
 use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\Sorting;
-use OxidEsales\GraphQL\Base\DataType\Pagination;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
@@ -105,7 +104,7 @@ final class Product
 
         $results = $this->repository->getList(
             ProductDataType::class,
-            new ProductFilterList (
+            new ProductFilterList(
                 null,
                 null,
                 null,
@@ -119,6 +118,7 @@ final class Product
         if (empty($results)) {
             throw ProductNotFound::bySlug($slug);
         }
+
         if (1 < count($results)) {
             throw ProductNotFound::byAmbiguousBySlug($slug);
         }

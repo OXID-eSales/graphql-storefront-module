@@ -14,10 +14,10 @@ use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
-use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
-use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting as ManufacturerSorting;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting as ManufacturerSorting;
+use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -104,7 +104,7 @@ final class Manufacturer
 
         $results = $this->repository->getList(
             ManufacturerDataType::class,
-            new ManufacturerFilterList (
+            new ManufacturerFilterList(
                 null,
                 null,
                 $slugFilter
@@ -116,6 +116,7 @@ final class Manufacturer
         if (empty($results)) {
             throw ManufacturerNotFound::bySlug($slug);
         }
+
         if (1 < count($results)) {
             throw ManufacturerNotFound::byAmbiguousBySlug($slug);
         }

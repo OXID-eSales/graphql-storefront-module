@@ -71,9 +71,10 @@ final class Seo
     public function getPath(): ?string
     {
         if (method_exists($this->eshopModel, 'getBaseSeoLink')) {
-            $seoLink = $this->eshopModel->getBaseSeoLink(null);
+            $seoLink  = $this->eshopModel->getBaseSeoLink(null);
             $fullPath = parse_url($seoLink, PHP_URL_PATH);
-            return substr($fullPath, 0, strrpos($fullPath, DIRECTORY_SEPARATOR, 0) +1);
+
+            return substr($fullPath, 0, strrpos($fullPath, DIRECTORY_SEPARATOR, 0) + 1);
         }
 
         return null;
@@ -86,12 +87,13 @@ final class Seo
     {
         if (method_exists($this->eshopModel, 'getBaseSeoLink')) {
             $seoLink = $this->eshopModel->getBaseSeoLink(null);
-            $path = parse_url($seoLink, PHP_URL_PATH);
+            $path    = parse_url($seoLink, PHP_URL_PATH);
             //TODO: regexp
-            $tmp = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
+            $tmp     = explode(DIRECTORY_SEPARATOR, rtrim($path, DIRECTORY_SEPARATOR));
             $rawSlug = array_pop($tmp);
-            $slug = substr($rawSlug, 0, (int) strpos($rawSlug, '.', 0));
-            $slug = $slug ?: $rawSlug;
+            $slug    = substr($rawSlug, 0, (int) strpos($rawSlug, '.', 0));
+            $slug    = $slug ?: $rawSlug;
+
             return strtolower($slug);
         }
 
