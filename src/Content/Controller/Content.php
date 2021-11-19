@@ -29,9 +29,9 @@ final class Content
     /**
      * @Query()
      */
-    public function content(ID $contentId): ContentDataType
+    public function content(?ID $contentId, ?string $slug): ContentDataType
     {
-        return $this->contentService->content($contentId);
+        return $this->contentService->content($contentId, $slug);
     }
 
     /**

@@ -26,6 +26,13 @@ final class ContentCest extends BaseCest
 
     private const CONTENT_WITH_VCMS_TEMPLATE  = '9f825347decfdb7008d162700be95dc1';
 
+    public function _after(AcceptanceTester  $I): void
+    {
+        $I->updateInDatabase('oxseo', ['oxseourl' => 'Benutzer-geblockt/'], ['oxseourl' => 'Nach-was-Anderem/Wie-bestellen/']);
+
+        parent::_after($I);
+    }
+
     public function _before(AcceptanceTester $I, Scenario $scenario): void
     {
         parent::_before($I, $scenario);
@@ -205,7 +212,6 @@ final class ContentCest extends BaseCest
         );
     }
 
-    /** @group foo */
     public function contentBySeoSlug(AcceptanceTester $I): void
     {
         $I->wantToTest('fetching contents by slug successfully');
@@ -223,11 +229,11 @@ final class ContentCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertNotEmpty($result['data']['contents']['id']);
-        $contentsId = $result['data']['contents']['id'];
+        $I->assertNotEmpty($result['data']['content']['id']);
+        $contentsId = $result['data']['content']['id'];
 
         $I->sendGQLQuery('query {
-                contents (
+                content (
                    contentId: "' . $contentsId . '"
                 ) {
                  seo {
@@ -242,7 +248,7 @@ final class ContentCest extends BaseCest
         //fetch contents by id and compare the slug
         $I->assertStringContainsString(
             strtolower($searchBy),
-            $result['data']['contents']['seo']['slug']
+            $result['data']['content']['seo']['slug']
         );
     }
 
@@ -250,7 +256,7 @@ final class ContentCest extends BaseCest
     {
         $I->wantToTest('fetching contents by slug successfully');
 
-        $searchBy = 'brush-en';
+        $searchBy = 'how-to-order';
 
         $I->sendGQLQuery('query {
                 content (
@@ -264,11 +270,11 @@ final class ContentCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         //contents found by english slug for lang = 1
-        $I->assertNotEmpty($result['data']['contents']['id']);
+        $I->assertNotEmpty($result['data']['content']['id']);
 
         //query default language
         $I->sendGQLQuery('query {
-                contents (
+                content (
                     slug: "' . $searchBy . '"
                 ) {
                 id
