@@ -31,7 +31,7 @@
         "phpstan/phpstan": "^0.12.26",
         "oxid-esales/oxideshop-ce": "dev-b-7.0.x",
         "oxid-esales/oxideshop-unified-namespace-generator": "^v3.0.0",
-        "qossmic/deptrac-shim": "^0.6.0|^0.9.0",
+        "qossmic/deptrac-shim": "^0.15.0",
         "codeception/module-rest": "*",
         "codeception/module-phpbrowser": "*",
         "codeception/module-db": "*"

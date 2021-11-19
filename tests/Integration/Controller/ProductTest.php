@@ -9,11 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
+use OxidEsales\Eshop\Application\Model\Article as EshopModelArticle;
 use OxidEsales\Eshop\Core\Registry;
-use \OxidEsales\Eshop\Application\Model\Article as EshopModelArticle;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use ReflectionClass;
 use function version_compare;
 
 final class ProductTest extends BaseTestCase
@@ -61,7 +62,7 @@ final class ProductTest extends BaseTestCase
         $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories');
         $this->setActiveState(self::ACTIVE_PRODUCT_MANUFACTURER, 'oxmanufacturers');
 
-        $reflection = new \ReflectionClass(EshopModelArticle::class);
+        $reflection = new ReflectionClass(EshopModelArticle::class);
         $reflection->setStaticPropertyValue('_aCategoryCache', []);
 
         parent::tearDown();
