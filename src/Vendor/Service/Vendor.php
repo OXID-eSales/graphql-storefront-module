@@ -17,6 +17,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\VendorFilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -40,13 +41,21 @@ final class Vendor
      * @throws VendorNotFound
      * @throws InvalidLogin
      */
-    public function vendor(ID $id): VendorDataType
+    public function vendor(?ID $id, ?string $slug): VendorDataType
     {
+        if ((!$id && !$slug) || ($id && $slug)) {
+            throw VendorNotFound::byParameter();
+        }
+
         try {
-            $vendor = $this->repository->getById(
-                (string) $id,
-                VendorDataType::class
-            );
+            if ($id) {
+                /** @var VendorDataType $manufacturer */
+                $vendor = $this->repository->getById((string) $id, VendorDataType::class);
+            } else {
+                $vendor = $this->getVendorBySeoSlug($slug);
+            }
+        } catch (VendorNotFound $e) {
+            throw $e;
         } catch (NotFound $e) {
             throw VendorNotFound::byId((string) $id);
         }
@@ -81,5 +90,35 @@ final class Vendor
             new PaginationFilter(),
             $sort
         );
+    }
+
+    /**
+     * @throws VendorNotFound
+     */
+    private function getVendorBySeoSlug(string $slug): VendorDataType
+    {
+        $slugFilter = SeoSlugFilter::fromUserInput(DIRECTORY_SEPARATOR . trim($slug, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+        $slugFilter->setType('oxvendor');
+        $slugFilter->unsetPostfix();
+
+        $results = $this->repository->getList(
+            VendorDataType::class,
+            new VendorFilterList (
+                null,
+                null,
+                $slugFilter
+            ),
+            new PaginationFilter(),
+            Sorting::fromUserInput()
+        );
+
+        if (empty($results)) {
+            throw VendorNotFound::bySlug($slug);
+        }
+        if (1 < count($results)) {
+            throw VendorNotFound::byAmbiguousBySlug($slug);
+        }
+
+        return $results[0];
     }
 }
