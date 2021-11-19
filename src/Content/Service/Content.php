@@ -50,7 +50,7 @@ final class Content
         try {
             if ($id) {
                 /** @var ContentDataType $content */
-                $content = $this->repository->getById((string) $id, ContentDataType::class);
+                $content = $this->repository->getById((string) $id, ContentDataType::class, false);
             } else {
                 $content = $this->getContentBySeoSlug((string) $slug);
             }
