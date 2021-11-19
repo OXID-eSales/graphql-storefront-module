@@ -24,8 +24,10 @@ final class SeoSlugFilter implements FilterInterface
     /** @var string */
     private $type = 'static';
 
+    /** @var string */
     private $prefix = '%';
 
+    /** @var string */
     private $postfix = '%';
 
     public function __construct(string $like)

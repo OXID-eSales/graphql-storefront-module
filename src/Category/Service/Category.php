@@ -43,7 +43,7 @@ final class Category
      * @throws CategoryNotFound
      * @throws InvalidLogin
      */
-    public function category(?ID $id, ?string $slug): CategoryDataType
+    public function category(?ID $id, ?string $slug = null): CategoryDataType
     {
         if ((!$id && !$slug) || ($id && $slug)) {
             throw CategoryNotFound::byParameter();
@@ -54,7 +54,7 @@ final class Category
                 /** @var CategoryDataType $category */
                 $category = $this->repository->getById((string) $id, CategoryDataType::class);
             } else {
-                $category = $this->getCategoryBySeoSlug($slug);
+                $category = $this->getCategoryBySeoSlug((string) $slug);
             }
         } catch (CategoryNotFound $e) {
             throw $e;

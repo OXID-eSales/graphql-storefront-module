@@ -38,7 +38,7 @@ final class ManufacturerFilterList extends FilterList
 
     /**
      * @return array{
-     *                oxtitle: ?StringFilter
+     *                oxtitle: ?StringFilter,
      *                oxseourl: ?SeoSlugFilter,
      *                }
      */

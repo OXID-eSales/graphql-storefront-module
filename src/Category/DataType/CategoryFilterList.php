@@ -19,6 +19,8 @@ final class CategoryFilterList extends FilterList
     /** @var null|StringFilter */
     protected $title;
 
+    //TODO: use IDFilter
+
     /** @var null|StringFilter */
     protected $parentId;
 
@@ -40,8 +42,8 @@ final class CategoryFilterList extends FilterList
 
     /**
      * @return array{
-     *                oxtitle: ?StringFilter
-     *                oxparentid: ?IDFilter,
+     *                oxtitle: ?StringFilter,
+     *                oxparentid: ?StringFilter,
      *                oxseourl: ?SeoSlugFilter,
      *                }
      */

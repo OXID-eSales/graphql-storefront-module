@@ -42,7 +42,7 @@ final class Product
      * @throws ProductNotFound
      * @throws InvalidLogin
      */
-    public function product(?ID $id, ?string $slug): ProductDataType
+    public function product(?ID $id, ?string $slug = null): ProductDataType
     {
         if ((!$id && !$slug) || ($id && $slug)) {
             throw ProductNotFound::byParameter();
@@ -53,7 +53,7 @@ final class Product
                 /** @var ProductDataType $product */
                 $product = $this->repository->getById((string) $id, ProductDataType::class);
             } else {
-                $product = $this->getProductBySeoSlug($slug);
+                $product = $this->getProductBySeoSlug((string) $slug);
             }
         } catch (ProductNotFound $e) {
             throw $e;

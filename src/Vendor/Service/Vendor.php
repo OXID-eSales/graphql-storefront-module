@@ -49,10 +49,10 @@ final class Vendor
 
         try {
             if ($id) {
-                /** @var VendorDataType $manufacturer */
+                /** @var VendorDataType $vendor */
                 $vendor = $this->repository->getById((string) $id, VendorDataType::class);
             } else {
-                $vendor = $this->getVendorBySeoSlug($slug);
+                $vendor = $this->getVendorBySeoSlug((string) $slug);
             }
         } catch (VendorNotFound $e) {
             throw $e;

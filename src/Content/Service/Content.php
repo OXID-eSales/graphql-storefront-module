@@ -49,10 +49,10 @@ final class Content
 
         try {
             if ($id) {
-                /** @var ContentDataType $manufacturer */
+                /** @var ContentDataType $content */
                 $content = $this->repository->getById((string) $id, ContentDataType::class);
             } else {
-                $content = $this->getContentBySeoSlug($slug);
+                $content = $this->getContentBySeoSlug((string) $slug);
             }
         } catch (ContentNotFound $e) {
             throw $e;

@@ -53,7 +53,7 @@ final class Manufacturer
                 /** @var ManufacturerDataType $manufacturer */
                 $manufacturer = $this->repository->getById((string) $id, ManufacturerDataType::class);
             } else {
-                $manufacturer = $this->getManufacturerBySeoSlug($slug);
+                $manufacturer = $this->getManufacturerBySeoSlug((string) $slug);
             }
         } catch (ManufacturerNotFound $e) {
             throw $e;
