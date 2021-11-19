@@ -31,7 +31,7 @@ final class Product
     /**
      * @Query()
      */
-    public function product(?ID $productId, ?string $slug): ProductDataType
+    public function product(?ID $productId, ?string $slug = null): ProductDataType
     {
         return $this->productService->product($productId, $slug);
     }

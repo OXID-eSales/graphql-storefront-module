@@ -35,7 +35,7 @@ final class Vendor
      * @throws VendorNotFound
      * @throws InvalidLogin
      */
-    public function vendor(?ID $vendorId, ?string $slug): VendorDataType
+    public function vendor(?ID $vendorId, ?string $slug = null): VendorDataType
     {
         return $this->vendorService->vendor($vendorId, $slug);
     }
