@@ -235,7 +235,7 @@ final class VendorCest extends BaseCest
             ]
         );
         $vendor->save();
-        $vendor->loadInLang(1, '_testvendor');
+        $vendor->loadInLang(1, '_testvendor2');
         $vendor->assign(
             [
                 'oxtitle'     => 'fake en',

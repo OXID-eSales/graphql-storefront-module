@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance;
 
 use Codeception\Scenario;
+use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Dao\ShopConfigurationDaoInterface;
 use OxidEsales\Facts\Facts;
@@ -45,6 +46,8 @@ abstract class MultishopBaseCest extends BaseCest
         if ($facts->isEnterprise()) {
             $I->updateConfigInDatabaseForShops('blMallUsers', false, 'bool', [1, 2]);
         }
+
+        EshopRegistry::getConfig()->setShopId(1);
     }
 
     private function ensureSubshop(): void
