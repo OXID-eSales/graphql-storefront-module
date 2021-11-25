@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ``BeforeBasketPayments`` updated with payment methods list so it can be adjusted
 
 ### Changed
-- `basketAddItem` mutation honours stockflag and calls may give you back an error
+- `basketAddItem`, `basketRemoveItem`, `placeOrder` mutations and `basket` query honour stockflag and calls may give you back an error
 
 ## [1.0.0] - 2021-05-28
 

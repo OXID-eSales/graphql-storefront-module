@@ -157,6 +157,8 @@ final class Basket
             throw BasketAccessForbidden::basketIsPrivate();
         }
 
+        $this->basketInfrastructure->checkBasketItems($basket->getEshopModel());
+
         $this->sharedInfrastructure->getBasket($basket);
 
         return $basket;
@@ -374,6 +376,8 @@ final class Basket
         }
 
         $this->basketInfrastructure->setDeliveryAddress($basket, (string) $deliveryAddressId);
+
+        $this->sharedInfrastructure->getBasket($basket);
 
         return $basket;
     }

@@ -159,7 +159,6 @@ final class BasketDeliveryMethodCest extends BaseCest
     }
 
     /**
-     * @group testy
      * @dataProvider dataProviderDeliveryCost
      */
     public function testBasketDeliveryCostByChargeType(AcceptanceTester $I, Example $shipping): void
