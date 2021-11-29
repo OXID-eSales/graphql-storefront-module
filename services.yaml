@@ -20,3 +20,8 @@ services:
   OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization:
       class: OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization
       tags: [ 'kernel.event_subscriber' ]
+
+  OxidEsales\GraphQL\Base\Service\Authorization:
+      class: OxidEsales\GraphQL\Base\Service\Authorization
+      arguments:
+          $permissionProviders: !tagged graphql_permission_provider
