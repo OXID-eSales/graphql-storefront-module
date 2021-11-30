@@ -20,3 +20,6 @@ services:
   OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization:
       class: OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization
       tags: [ 'kernel.event_subscriber' ]
+
+  OxidEsales\GraphQL\Storefront\Shared\Service\Authorization:
+      class: OxidEsales\GraphQL\Storefront\Shared\Service\Authorization

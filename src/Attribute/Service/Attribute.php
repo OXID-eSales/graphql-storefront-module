@@ -11,11 +11,11 @@ namespace OxidEsales\GraphQL\Storefront\Attribute\Service;
 
 use OxidEsales\GraphQL\Base\DataType\Filter\BoolFilter;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute as AttributeDataType;
 use OxidEsales\GraphQL\Storefront\Attribute\DataType\AttributeFilterList;
 use OxidEsales\GraphQL\Storefront\Attribute\Exception\AttributeNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Attribute
