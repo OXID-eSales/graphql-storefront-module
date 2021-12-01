@@ -33,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Method `OxidEsales\GraphQL\Storefront\Basket\Service\Basket::publicBasketsByOwnerNameOrEmail` now returns an array of `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket`
 - `baskets(owner String)` now returns an array of `OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket` in order to not expose address or payment information on a public basket
 - `deliveryAddressId` parameter of `basketSetDeliveryAddress` mutation can be null.
-- `basketAddItem` mutation honours stockflag and calls may give you back an error
+- `basketAddItem`, `basketRemoveItem`, `placeOrder` mutations and `basket` query honour stockflag and calls may give you back an error
 - Drop support for PHP 7.3
 - DataTypes related to `OxidEsales\Eshop\Core\Model\BaseModel` implement `OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface`
 

@@ -122,6 +122,7 @@ final class BasketAddItemCest extends BaseCest
             'oxarticles',
             [
                 'oxstockflag' => 3,
+                'oxstock'     => 15,
             ],
             [
                 'oxid' => self::PRODUCT_ID,
@@ -132,7 +133,9 @@ final class BasketAddItemCest extends BaseCest
 
         $basketData = $result['data']['basketAddItem'];
         $I->assertSame(self::PUBLIC_BASKET, $basketData['id']);
-        $I->assertSame('Availability of this item is limited to 15', $result['errors'][0]['message']);
+        $I->assertSame('Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15', $result['errors'][0]['message']);
+        $I->assertSame('LIMITEDAVAILABILITY', $result['errors'][0]['extensions']['type']);
+
         $I->assertSame([
             [
                 'product' => [
@@ -148,7 +151,141 @@ final class BasketAddItemCest extends BaseCest
         ], $basketData['items']);
         $I->assertNotNull($basketData['lastUpdateDate']);
 
-        $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 0);
+        // reset article
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 1,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+    }
+
+    public function testAddItemToBasketWhenCurrentAmountIsBiggerThanStock(AcceptanceTester $I): void
+    {
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        $result     = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 20);
+        $basketData = $result['data']['basketAddItem'];
+        $I->assertSame([
+            [
+                'product' => [
+                    'id' => self::PRODUCT_ID,
+                ],
+                'amount' => 20,
+            ], [
+                'product' => [
+                    'id' => self::PRODUCT,
+                ],
+                'amount' => 1,
+            ],
+        ], $basketData['items']);
+
+        // update stock flag to "If out of stock, not orderable"
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 3,
+                'oxstock'     => 15,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 1);
+
+        $basketData = $result['data']['basketAddItem'];
+        $I->assertSame(self::PUBLIC_BASKET, $basketData['id']);
+        $I->assertSame('Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15', $result['errors'][0]['message']);
+        $I->assertSame('LIMITEDAVAILABILITY', $result['errors'][0]['extensions']['type']);
+
+        $I->assertSame([
+            [
+                'product' => [
+                    'id' => self::PRODUCT_ID,
+                ],
+                'amount' => 15,
+            ], [
+                'product' => [
+                    'id' => self::PRODUCT,
+                ],
+                'amount' => 1,
+            ],
+        ], $basketData['items']);
+        $I->assertNotNull($basketData['lastUpdateDate']);
+
+        // reset article
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 1,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+    }
+
+    public function testAutomaticallyRemoveOutOfStockItemFromBasketOnAdd(AcceptanceTester $I): void
+    {
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        $result     = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 2);
+        $basketData = $result['data']['basketAddItem'];
+        $I->assertSame([
+            [
+                'product' => [
+                    'id' => self::PRODUCT_ID,
+                ],
+                'amount' => 2,
+            ], [
+                'product' => [
+                    'id' => self::PRODUCT,
+                ],
+                'amount' => 1,
+            ],
+        ], $basketData['items']);
+
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 3,
+                'oxstock'     => 0,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 1);
+
+        $basketData = $result['data']['basketAddItem'];
+        $I->assertSame(self::PUBLIC_BASKET, $basketData['id']);
+        $I->assertSame('Product with id ' . self::PRODUCT_ID . ' is out of stock', $result['errors'][0]['message']);
+        $I->assertSame([
+            [
+                'product' => [
+                    'id' => self::PRODUCT,
+                ],
+                'amount' => 1,
+            ],
+        ], $basketData['items']);
+        $I->assertNotNull($basketData['lastUpdateDate']);
+
+        // reset article
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 1,
+                'oxstock'     => 15,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
     }
 
     public function testAddNonExistingItemToBasket(AcceptanceTester $I): void

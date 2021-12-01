@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Infrastructure;
 use OxidEsales\Eshop\Application\Model\Address as EshopAddressModel;
 use OxidEsales\Eshop\Application\Model\Article as EshopAricleModel;
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
+use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\DeliveryList as EshopDeliveryListModel;
 use OxidEsales\Eshop\Application\Model\DeliverySet as EshopDeliverySetModel;
 use OxidEsales\Eshop\Application\Model\DeliverySetList as EshopDeliverySetListModel;
@@ -19,6 +20,9 @@ use OxidEsales\Eshop\Application\Model\Order as OrderModel;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\Eshop\Application\Model\UserBasket as EshopUserBasketModel;
 use OxidEsales\Eshop\Application\Model\UserBasketItem as EshopUserBasketItemModel;
+use OxidEsales\Eshop\Core\Exception\ArticleInputException;
+use OxidEsales\Eshop\Core\Exception\NoArticleException;
+use OxidEsales\Eshop\Core\Exception\OutOfStockException;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Base\Framework\GraphQLQueryHandler;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
@@ -65,22 +69,38 @@ final class Basket
         /** @var EshopAricleModel */
         $product = oxNew(EshopAricleModel::class);
         $product->load((string) $productId);
-
-        $onStock = $product->checkForStock($amount, $alreadyInBasket);
+        $productStock = $product->getStock();
+        $onStock      = $product->checkForStock($amount, $alreadyInBasket);
+        $blOverride   = false;
 
         if ($onStock === false) {
-            // no amount can be added
-            throw BasketItemAmountLimitedStock::onStockLimitReached();
-        }
+            $blOverride = true;
 
-        if ($onStock !== true) {
-            $amount = $onStock;
+            if ($productStock == 0) {
+                $amount = 0;
+
+                // product cannot be bought
+                GraphQLQueryHandler::addError(
+                    BasketItemAmountLimitedStock::productOutOfStock((string) $productId)
+                );
+            } else {
+                $amount = $productStock;
+
+                // product stock limit is reached
+                GraphQLQueryHandler::addError(
+                    BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $productStock, $item ? $item->getId() : null)
+                );
+            }
+        } elseif ($onStock !== true) {
+            $amount     = $onStock;
+            $blOverride = true;
+
             GraphQLQueryHandler::addError(
-                BasketItemAmountLimitedStock::limitedAvailability($amount + $alreadyInBasket)
+                BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $onStock, $item ? $item->getId() : null)
             );
         }
 
-        $model->addItemToBasket((string) $productId, $amount);
+        $model->addItemToBasket((string) $productId, $amount, null, $blOverride);
 
         return true;
     }
@@ -102,6 +122,26 @@ final class Basket
 
         $productId = (string) $basketItem->getRawFieldData('oxartid');
         $params    = $basketItem->getPersParams();
+
+        /** @var EshopAricleModel */
+        $product = oxNew(EshopAricleModel::class);
+        $product->load($productId);
+        $onStock = $product->checkForStock($amountRemaining);
+
+        if ($onStock === false) {
+            $amountRemaining = 0;
+
+            // product is out of stock
+            GraphQLQueryHandler::addError(
+                BasketItemAmountLimitedStock::productOutOfStock($productId)
+            );
+        } elseif ($onStock !== true) {
+            $amountRemaining = $onStock;
+
+            GraphQLQueryHandler::addError(
+                BasketItemAmountLimitedStock::limitedAvailability($productId, $onStock, $basketItem->getId())
+            );
+        }
 
         $model->addItemToBasket($productId, $amountRemaining, null, true, $params);
 
@@ -300,5 +340,42 @@ final class Basket
         }
 
         return null;
+    }
+
+    public function checkBasketItems(EshopUserBasketModel $userBasketModel): bool
+    {
+        $items = $userBasketModel->getItems(true, false);
+
+        $errors = false;
+
+        foreach ($items as $item) {
+            try {
+                /** @var BasketItem $basketItem */
+                $basketItem = oxNew(BasketItem::class);
+                $basketItem->init(
+                    $item->getFieldData('oxartid'),
+                    $item->getFieldData('oxamount'),
+                    $item->getSelList(),
+                    $item->getPersParams()
+                );
+            } catch (NoArticleException $exception) {
+                $errors = true;
+                GraphQLQueryHandler::addError(
+                    BasketItemAmountLimitedStock::notAvailable($exception->getProductId())
+                );
+            } catch (OutOfStockException $exception) {
+                $errors = true;
+                GraphQLQueryHandler::addError(
+                    BasketItemAmountLimitedStock::limitedAvailability($item->getFieldData('oxartid'), $exception->getRemainingAmount(), $item->getId())
+                );
+            } catch (ArticleInputException $exception) {
+                $errors = true;
+                GraphQLQueryHandler::addError(
+                    BasketItemAmountLimitedStock::productOutOfStock($exception->getProductId())
+                );
+            }
+        }
+
+        return $errors;
     }
 }

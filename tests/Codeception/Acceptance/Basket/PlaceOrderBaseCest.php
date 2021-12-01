@@ -108,6 +108,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
                 ) {
                     id
                     items {
+                        id
                         product {
                             id
                         }

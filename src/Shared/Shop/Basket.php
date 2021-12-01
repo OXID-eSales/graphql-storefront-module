@@ -12,8 +12,11 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Shop;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\UserBasketItem;
 use OxidEsales\Eshop\Application\Model\Voucher;
+use OxidEsales\Eshop\Core\Exception\ArticleInputException;
 use OxidEsales\Eshop\Core\Exception\ObjectException as EshopObjectException;
 use OxidEsales\Eshop\Core\Price as EshopPrice;
+use OxidEsales\EshopCommunity\Core\Exception\NoArticleException;
+use OxidEsales\EshopCommunity\Core\Exception\OutOfStockException;
 
 /**
  * Basket model extended
@@ -64,20 +67,26 @@ class Basket extends Basket_parent
     ): BasketItem {
         /** @var BasketItem $basketItem */
         $basketItem = oxNew(BasketItem::class);
-        $basketItem->init(
-            $userBasketItem->getRawFieldData('oxartid'),
-            $userBasketItem->getRawFieldData('oxamount'),
-            $userBasketItem->getSelList(),
-            $userBasketItem->getPersParams()
-        );
 
-        //Any basket object will do to generate the item key
-        $itemKey = $this->getItemKey(
-            $userBasketItem->getRawFieldData('oxartid'),
-            $userBasketItem->getSelList(),
-            $userBasketItem->getPersParams()
-        );
-        $basketItem->setBasketItemKey($itemKey);
+        try {
+            $basketItem->init(
+                $userBasketItem->getFieldData('oxartid'),
+                $userBasketItem->getFieldData('oxamount'),
+                $userBasketItem->getSelList(),
+                $userBasketItem->getPersParams()
+            );
+
+            //Any basket object will do to generate the item key
+            $itemKey = $this->getItemKey(
+                $userBasketItem->getFieldData('oxartid'),
+                $userBasketItem->getSelList(),
+                $userBasketItem->getPersParams()
+            );
+            $basketItem->setBasketItemKey($itemKey);
+        } catch (NoArticleException $e) {
+        } catch (OutOfStockException $e) {
+        } catch (ArticleInputException $e) {
+        }
 
         return $basketItem;
     }

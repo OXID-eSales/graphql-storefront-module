@@ -192,6 +192,120 @@ final class BasketRemoveItemCest extends BaseCest
         $I->assertEmpty($items);
     }
 
+    public function testRemoveAmountOfItemNotEnoughToMeetTheStock(AcceptanceTester $I): void
+    {
+        $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
+
+        $basketItems  = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID, 20);
+        $basketItemId = null;
+
+        foreach ($basketItems as $item) {
+            if (self::PRODUCT_ID === $item['product']['id']) {
+                $I->assertSame($item['amount'], 20);
+                $basketItemId = $item['id'];
+            }
+        }
+
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 3,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+
+        $result     = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId, 1);
+        $basketData = $result['data']['basketRemoveItem'];
+        $I->assertSame(self::BASKET_ID, $basketData['id']);
+
+        //Check product error message and type
+        unset($result['errors'][0]['extensions']['category']);
+        $I->assertSame([
+            'message'    => 'Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15',
+            'extensions' => [
+                'type'         => 'LIMITEDAVAILABILITY',
+                'productId'    => self::PRODUCT_ID,
+                'basketItemId' => $basketItemId,
+            ],
+        ], $result['errors'][0]);
+
+        foreach ($basketData['items'] as $item) {
+            if (self::PRODUCT_ID === $item['product']['id']) {
+                $I->assertSame($item['amount'], 15);
+                $basketItemId = $item['id'];
+            }
+        }
+
+        // reset basket and article
+        $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId);
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 1,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+    }
+
+    public function testAutomaticallyRemoveOutOfStockItemFromBasketOnRemove(AcceptanceTester $I): void
+    {
+        $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
+
+        $basketItems  = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID, 20);
+        $basketItemId = null;
+
+        foreach ($basketItems as $item) {
+            if (self::PRODUCT_ID === $item['product']['id']) {
+                $I->assertSame($item['amount'], 20);
+                $basketItemId = $item['id'];
+            }
+        }
+
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 3,
+                'oxstock'     => 0,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+
+        $result     = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId, 1);
+        $basketData = $result['data']['basketRemoveItem'];
+        $I->assertSame(self::BASKET_ID, $basketData['id']);
+
+        //Check product error message and type
+        unset($result['errors'][0]['extensions']['category']);
+        $I->assertSame([
+            'message'    => 'Product with id ' . self::PRODUCT_ID . ' is out of stock',
+            'extensions' => [
+                'type' => 'OUTOFSTOCK',
+            ],
+        ], $result['errors'][0]);
+
+        foreach ($basketData['items'] as $item) {
+            $I->assertTrue(self::PRODUCT_ID !== $item['product']['id']);
+        }
+
+        // reset article
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 1,
+                'oxstock'     => 15,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+    }
+
     private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
     {
         $I->sendGQLQuery(
