@@ -12,12 +12,12 @@ namespace OxidEsales\GraphQL\Storefront\Manufacturer\Service;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Manufacturer
