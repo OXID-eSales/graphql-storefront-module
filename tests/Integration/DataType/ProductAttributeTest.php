@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopArticle;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
 use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
@@ -20,6 +19,7 @@ use OxidEsales\GraphQL\Storefront\Product\Infrastructure\Product as ProductInfra
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use OxidEsales\GraphQL\Storefront\Product\Service\RelationService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductAttribute
@@ -94,16 +94,16 @@ final class ProductAttributeTest extends TestCase
         return new RelationService(
             new ProductService(
                 $repo,
-                $this->createMock(Authorization::class)
+                new Authorization()
             ),
             new CategoryService(
                 $repo,
-                $this->createMock(Authorization::class)
+                new Authorization()
             ),
             new ProductInfrastructure(
                 new CategoryService(
                     $repo,
-                    $this->createMock(Authorization::class)
+                    new Authorization()
                 )
             )
         );

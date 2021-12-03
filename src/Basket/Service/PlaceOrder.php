@@ -87,6 +87,12 @@ final class PlaceOrder
 
         $this->checkTermsAndConditionsConsent($userBasket, $termsAndConditions);
 
+        $basketItemsErrors = $this->basketInfrastructure->checkBasketItems($userBasket->getEshopModel());
+
+        if ($basketItemsErrors == true) {
+            throw PlaceOrderException::productsNotOrdarable();
+        }
+
         /** @var ?DeliveryMethodDataType $deliveryMethod */
         $deliveryMethod = $this->basketRelationService->deliveryMethod($userBasket);
 

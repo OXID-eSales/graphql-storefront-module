@@ -11,11 +11,11 @@ namespace OxidEsales\GraphQL\Storefront\Link\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Link\DataType\Link as LinkDataType;
 use OxidEsales\GraphQL\Storefront\Link\DataType\LinkFilterList;
 use OxidEsales\GraphQL\Storefront\Link\Exception\LinkNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Link

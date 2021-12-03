@@ -11,11 +11,11 @@ namespace OxidEsales\GraphQL\Storefront\Action\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Action\DataType\Action as ActionDataType;
 use OxidEsales\GraphQL\Storefront\Action\DataType\ActionFilterList;
 use OxidEsales\GraphQL\Storefront\Action\Exception\ActionNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Action

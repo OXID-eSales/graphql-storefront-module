@@ -14,7 +14,6 @@ use OxidEsales\GraphQL\Base\Exception\InvalidToken;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Base\Service\Authentication;
-use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Address\DataType\AddressFilterList;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress as DeliveryAddressDataType;
 use OxidEsales\GraphQL\Storefront\Address\Exception\DeliveryAddressNotFound;
@@ -48,6 +47,7 @@ use OxidEsales\GraphQL\Storefront\Payment\Exception\UnavailablePayment;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRepository;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Voucher as VoucherInfrastructure;
@@ -157,6 +157,8 @@ final class Basket
         if (!$basket->belongsToUser((string) $this->authenticationService->getUser()->id())) {
             throw BasketAccessForbidden::byAuthenticatedUser();
         }
+
+        $this->basketInfrastructure->checkBasketItems($basket->getEshopModel());
 
         $this->sharedInfrastructure->getBasket($basket);
 
@@ -405,6 +407,8 @@ final class Basket
 
         $deliveryAddressId = $deliveryAddressId ? (string) $deliveryAddressId : null;
         $this->basketInfrastructure->setDeliveryAddress($basket, $deliveryAddressId);
+
+        $this->sharedInfrastructure->getBasket($basket);
 
         return $basket;
     }

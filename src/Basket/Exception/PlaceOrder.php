@@ -33,4 +33,9 @@ final class PlaceOrder extends Error
     {
         return new self(sprintf('Terms of service were not accepted for basket with id: %s', $id));
     }
+
+    public static function productsNotOrdarable(): self
+    {
+        return new self('Some products are not orderable');
+    }
 }

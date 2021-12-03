@@ -652,9 +652,48 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->updateConfigInDatabase('iMinOrderPrice', '0', 'str');
     }
 
-    public function placeOrderOnOutOfStockNotBuyableProduct(AcceptanceTester $I): void
+    public function placeOrderOnProductWithAmountMoreThanLimited(AcceptanceTester $I): void
     {
         $I->wantToTest('placing an order on a product which is out of stock or not buyable');
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        //prepare basket
+        $basketId = $this->createBasket($I, 'cart_with_not_buyable_product');
+        $items    = $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 5);
+        $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
+        $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
+
+        // making product out of stock now
+        $I->updateInDatabase('oxarticles', ['oxstock' => '3', 'oxstockflag' => '3'], ['oxid' => self::PRODUCT_ID]);
+
+        //place the order
+        $result = $this->placeOrder($I, $basketId);
+        $errors = $result['errors'];
+
+        $I->assertCount(2, $errors);
+
+        //Check errors, first should be mutation error
+        $I->assertSame('Some products are not orderable', $errors[0]['message']);
+
+        //Error for product
+        unset($errors[1]['extensions']['category']);
+        $I->assertSame([
+            'message'    => 'Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 3',
+            'extensions' => [
+                'type'         => 'LIMITEDAVAILABILITY',
+                'productId'    => self::PRODUCT_ID,
+                'basketItemId' => $items[0]['id'],
+            ],
+        ], $errors[1]);
+
+        //remove basket
+        $this->removeBasket($I, $basketId);
+        $I->updateInDatabase('oxarticles', ['oxstock' => '15', 'oxstockflag' => '1'], ['oxid' => self::PRODUCT_ID]);
+    }
+
+    public function placeOrderOnOutOfStockProduct(AcceptanceTester $I): void
+    {
+        $I->wantToTest('placing an order on a product which is out of stock');
         $I->login(self::USERNAME, self::PASSWORD);
 
         //prepare basket
@@ -664,19 +703,66 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         // making product out of stock now
-        $I->updateInDatabase('oxarticles', ['oxstock' => '3', 'oxstockflag' => '3'], ['oxid' => self::PRODUCT_ID]);
+        $I->updateInDatabase('oxarticles', ['oxstock' => '0', 'oxstockflag' => '3'], ['oxid' => self::PRODUCT_ID]);
 
         //place the order
         $result = $this->placeOrder($I, $basketId);
+        $errors = $result['errors'];
 
-        $I->assertSame(
-            'ERROR_MESSAGE_OUTOFSTOCK_OUTOFSTOCK',
-            $result['errors'][0]['debugMessage']
-        );
+        $I->assertCount(2, $errors);
+
+        //Check errors, first should be mutation error
+        $I->assertSame('Some products are not orderable', $errors[0]['message']);
+
+        //Error for product
+        unset($errors[1]['extensions']['category']);
+        $I->assertSame([
+            'message'    => 'Product with id ' . self::PRODUCT_ID . ' is out of stock',
+            'extensions' => [
+                'type' => 'OUTOFSTOCK',
+            ],
+        ], $errors[1]);
 
         //remove basket
         $this->removeBasket($I, $basketId);
         $I->updateInDatabase('oxarticles', ['oxstock' => '15', 'oxstockflag' => '1'], ['oxid' => self::PRODUCT_ID]);
+    }
+
+    public function placeOrderOnNotBuyableProduct(AcceptanceTester $I): void
+    {
+        $I->wantToTest('placing an order on a product which is not buyable');
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        //prepare basket
+        $basketId = $this->createBasket($I, 'cart_with_not_buyable_product');
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 5);
+        $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
+        $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
+
+        // making product out of stock now
+        $I->updateInDatabase('oxarticles', ['oxactive' => '0'], ['oxid' => self::PRODUCT_ID]);
+
+        //place the order
+        $result = $this->placeOrder($I, $basketId);
+        $errors = $result['errors'];
+
+        $I->assertCount(2, $errors);
+
+        //Check errors, first should be mutation error
+        $I->assertSame('Some products are not orderable', $errors[0]['message']);
+
+        //Error for product
+        unset($errors[1]['extensions']['category']);
+        $I->assertSame([
+            'message'    => 'Product with id ' . self::PRODUCT_ID . ' is not available',
+            'extensions' => [
+                'type' => 'NOTAVAILABLE',
+            ],
+        ], $errors[1]);
+
+        //remove basket
+        $this->removeBasket($I, $basketId);
+        $I->updateInDatabase('oxarticles', ['oxactive' => '1'], ['oxid' => self::PRODUCT_ID]);
     }
 
     public function placeOrderWithoutDeliveryMethod(AcceptanceTester $I): void
