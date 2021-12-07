@@ -346,6 +346,10 @@ final class Basket
 
         $errors = false;
 
+        //Reseting of session basket is done to ensure correct remaining product amount is returned
+        $sessionBasket = EshopRegistry::getSession()->getBasket();
+        EshopRegistry::getSession()->setBasket(oxNew(EshopBasketModel::class));
+
         foreach ($items as $item) {
             try {
                 /** @var BasketItem $basketItem */
@@ -373,6 +377,9 @@ final class Basket
                 );
             }
         }
+
+        //Restore back session basket
+        EshopRegistry::getSession()->setBasket($sessionBasket);
 
         return $errors;
     }
