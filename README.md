@@ -18,7 +18,8 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v6.5.0` co
 ## Branch compatibility
 
 * master branch is compatible with OXID eShop b-7.0 (which uses `graphql-base` master branch)
-* b-6.4.x branch is compatible with OXID eShop compilation b-6.4.x (which uses `graphql-base` b-6.4.x branch)
+* 2.x versions (b-6.4.x branch) is compatible with OXID eShop compilation b-6.4.x (which uses `graphql-base` 6.x version resp. b-6.4.x branch)
+* 1.x versions are compatible with OXID eShop compilation 6.2.x and 6.3.x (no PHP8 support)
 * b-6.3.x branch is compatible with OXID eShop compilation b-6.3.x (which uses `graphql-base` b-6.3.x branch)
 * b-6.2.x branch is compatible with OXID eShop compilation b-6.2.x (which uses `graphql-base` b-6.2.x branch)
 
@@ -27,7 +28,8 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v6.5.0` co
 Switch to the shop root directory (the file `composer.json` and the directories `source/` and `vendor/` are located there).
 
 ```bash
-$ composer require oxid-esales/graphql-storefront
+# Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 6.x version
+$ composer require oxid-esales/graphql-storefront ^6.0.0
 
 $ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-base
 $ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-storefront
