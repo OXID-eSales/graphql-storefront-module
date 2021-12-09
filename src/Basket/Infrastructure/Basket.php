@@ -26,6 +26,7 @@ use OxidEsales\Eshop\Core\Exception\OutOfStockException;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Base\Framework\GraphQLQueryHandler;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
+use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketRemoveOnPlaceOrder;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketItemAmountLimitedStock;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketItemNotFound;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder as PlaceOrderException;
@@ -37,6 +38,7 @@ use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Price as PriceDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Basket
@@ -47,12 +49,17 @@ final class Basket
     /** @var SharedBasketInfrastructure */
     private $sharedBasketInfrastructure;
 
+    /** @var EventDispatcherInterface */
+    private $eventDispatcher;
+
     public function __construct(
         Repository $repository,
-        SharedBasketInfrastructure $sharedBasketInfrastructure
+        SharedBasketInfrastructure $sharedBasketInfrastructure,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->repository                 = $repository;
         $this->sharedBasketInfrastructure = $sharedBasketInfrastructure;
+        $this->eventDispatcher            = $eventDispatcher;
     }
 
     public function addBasketItem(BasketDataType $basket, ID $productId, float $amount): bool
@@ -290,7 +297,17 @@ final class Basket
 
         //we need to delete the basket after order to prevent ordering it twice
         if ($status === $orderModel::ORDER_STATE_OK || $status === $orderModel::ORDER_STATE_MAILINGERROR) {
-            $userBasketModel->delete();
+            $event = new BeforeBasketRemoveOnPlaceOrder(
+                new ID($userBasketModel->getId())
+            );
+            $this->eventDispatcher->dispatch(
+                BeforeBasketRemoveOnPlaceOrder::NAME,
+                $event
+            );
+
+            if (!$event->getPreserveBasketAfterOrder()) {
+                $userBasketModel->delete();
+            }
         } else {
             throw PlaceOrderException::byBasketId($userBasketModel->getId(), (string) $status);
         }
