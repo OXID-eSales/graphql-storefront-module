@@ -229,6 +229,45 @@ final class BasketAddItemCest extends BaseCest
         );
     }
 
+    /** @group oe_graphql_storefront_basket_limited_stock */
+    public function testAddMoreItemsWithLimitedStock(AcceptanceTester $I): void
+    {
+        $I->wantToTest('adding limited stock product step by step');
+
+        $initialAmount = 3;
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        $basketId   = $this->basketCreateMutation($I);
+        $basketItem = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $initialAmount)['data']['basketAddItem']['items'][0];
+        $I->assertEquals($initialAmount, $basketItem['amount']);
+
+        //there's one more item in stock we can add to basket
+        $I->updateInDatabase(
+            'oxarticles',
+            [
+                'oxstockflag' => 3,
+                'oxstock'     => $initialAmount + 1,
+            ],
+            [
+                'oxid' => self::PRODUCT_ID,
+            ]
+        );
+
+        //query the basket, up to now all is well
+        $result = $this->basketQuery($I, $basketId);
+        $I->assertFalse(isset($result['errors']));
+        $I->assertEquals($initialAmount, $result['data']['basket']['items'][0]['amount']);
+
+        //try to add more of the main items, but only one more can be added
+        $addAmount = 10;
+        $result    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $addAmount);
+        $I->assertStringStartsWith('Not enough items of product with id ' . self::PRODUCT_ID . ' in stock', $result['errors'][0]['message']);
+
+        //check the basket, we now should have $initialAmount + 1
+        $result = $this->basketQuery($I, $basketId);
+        $I->assertEquals($initialAmount + 1, $result['data']['basket']['items'][0]['amount']);
+    }
+
     public function testAutomaticallyRemoveOutOfStockItemFromBasketOnAdd(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
@@ -315,6 +354,57 @@ final class BasketAddItemCest extends BaseCest
             'You are not allowed to access this basket as it belongs to somebody else',
             $result['errors'][0]['message']
         );
+    }
+
+    protected function basketCreateMutation(
+        AcceptanceTester $I,
+        string $title = 'new_test_basket'
+    ): string {
+        $mutation = '
+            mutation ($title: String!) {
+                basketCreate(basket: {title: $title}){
+                    id
+                }
+            }
+        ';
+
+        $variables = [
+            'title' => $title,
+        ];
+
+        $I->sendGQLQuery($mutation, $variables);
+        $I->seeResponseIsJson();
+
+        return $I->grabJsonResponseAsArray()['data']['basketCreate']['id'];
+    }
+
+    protected function basketQuery(
+        AcceptanceTester $I,
+        string $basketId
+    ): array {
+        $query = '
+            query ($basketId: ID!) {
+                basket(basketId: $basketId) {
+                    id
+                    items {
+                        amount
+                        id
+                        product {
+                            id
+                        }
+                    }
+                }
+            }
+        ';
+
+        $variables = [
+            'basketId' => $basketId,
+        ];
+
+        $I->sendGQLQuery($query, $variables);
+        $I->seeResponseIsJson();
+
+        return $I->grabJsonResponseAsArray();
     }
 
     private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
