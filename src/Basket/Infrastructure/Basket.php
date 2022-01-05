@@ -62,8 +62,13 @@ final class Basket
         $this->eventDispatcher            = $eventDispatcher;
     }
 
-    public function addBasketItem(BasketDataType $basket, ID $productId, float $amount): bool
-    {
+    public function addBasketItem(
+        BasketDataType $basket,
+        ID $productId,
+        float $amount,
+        ?array $persParams = null,
+        ?array $select = null
+    ): bool {
         $model = $basket->getEshopModel();
 
         $item            = $this->getBasketItemByProductId($model, (string) $productId);
@@ -108,7 +113,7 @@ final class Basket
             );
         }
 
-        $model->addItemToBasket((string) $productId, $amount, null, $blOverride);
+        $model->addItemToBasket((string) $productId, $amount, $select, $blOverride, $persParams);
 
         return true;
     }
