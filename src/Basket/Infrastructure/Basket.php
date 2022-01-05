@@ -104,7 +104,7 @@ final class Basket
             $blOverride = false;
 
             GraphQLQueryHandler::addError(
-                BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $onStock, $item ? $item->getId() : null)
+                BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $productStock, $item ? $item->getId() : null)
             );
         }
 

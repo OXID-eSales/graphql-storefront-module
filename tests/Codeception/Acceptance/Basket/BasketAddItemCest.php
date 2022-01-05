@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
+use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketItemAmountLimitedStock;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException as MissingAuthorizationExceptionAlias;
@@ -34,6 +35,8 @@ final class BasketAddItemCest extends BaseCest
 
     private const PRODUCT_FOR_PRIVATE_BASKET = '_test_product_for_wish_list';
 
+    private const BASKET_TITLE = 'new_test_basket';
+
     public function _after(AcceptanceTester $I): void
     {
         $I->deleteFromDatabase(
@@ -41,6 +44,13 @@ final class BasketAddItemCest extends BaseCest
             [
                 'OXARTID'    => self::PRODUCT_ID,
                 'OXBASKETID' => self::PUBLIC_BASKET,
+            ]
+        );
+
+        $I->deleteFromDatabase(
+            'oxuserbaskets',
+            [
+                'OXTITLE' => self::BASKET_TITLE,
             ]
         );
     }
@@ -237,8 +247,8 @@ final class BasketAddItemCest extends BaseCest
         $initialAmount = 3;
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $basketId   = $this->basketCreateMutation($I);
-        $basketItem = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $initialAmount)['data']['basketAddItem']['items'][0];
+        $this->basketId = $basketId = $this->basketCreateMutation($I);
+        $basketItem     = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $initialAmount)['data']['basketAddItem']['items'][0];
         $I->assertEquals($initialAmount, $basketItem['amount']);
 
         //there's one more item in stock we can add to basket
@@ -259,9 +269,10 @@ final class BasketAddItemCest extends BaseCest
         $I->assertEquals($initialAmount, $result['data']['basket']['items'][0]['amount']);
 
         //try to add more of the main items, but only one more can be added
-        $addAmount = 10;
-        $result    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $addAmount);
-        $I->assertStringStartsWith('Not enough items of product with id ' . self::PRODUCT_ID . ' in stock', $result['errors'][0]['message']);
+        $addAmount       = 10;
+        $result          = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $addAmount);
+        $expectedMessage = BasketItemAmountLimitedStock::limitedAvailability(self::PRODUCT_ID, $initialAmount + 1);
+        $I->assertStringStartsWith($expectedMessage, $result['errors'][0]['message']);
 
         //check the basket, we now should have $initialAmount + 1
         $result = $this->basketQuery($I, $basketId);
@@ -358,7 +369,7 @@ final class BasketAddItemCest extends BaseCest
 
     protected function basketCreateMutation(
         AcceptanceTester $I,
-        string $title = 'new_test_basket'
+        string $title = self::BASKET_TITLE
     ): string {
         $mutation = '
             mutation ($title: String!) {
