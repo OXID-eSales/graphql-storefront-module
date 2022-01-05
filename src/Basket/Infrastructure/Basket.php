@@ -99,8 +99,9 @@ final class Basket
                 );
             }
         } elseif ($onStock !== true) {
+            //add what is available to what's already in the basket ($onStock is actual stock minus $alreadyInBasket)
             $amount     = $onStock;
-            $blOverride = true;
+            $blOverride = false;
 
             GraphQLQueryHandler::addError(
                 BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $onStock, $item ? $item->getId() : null)
