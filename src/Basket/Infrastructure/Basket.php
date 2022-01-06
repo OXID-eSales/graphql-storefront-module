@@ -67,7 +67,8 @@ final class Basket
         ID $productId,
         float $amount,
         ?array $persParams = null,
-        ?array $select = null
+        ?array $select = null,
+        bool $forceOverride = false
     ): bool {
         $model = $basket->getEshopModel();
 
@@ -85,7 +86,7 @@ final class Basket
         $onStock      = $product->checkForStock($amount, $alreadyInBasket);
         $blOverride   = false;
 
-        if ($onStock === false) {
+        if ($onStock !== true) {
             $blOverride = true;
 
             if ($productStock == 0) {
@@ -103,17 +104,9 @@ final class Basket
                     BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $productStock, $item ? $item->getId() : null)
                 );
             }
-        } elseif ($onStock !== true) {
-            //add what is available to what's already in the basket ($onStock is actual stock minus $alreadyInBasket)
-            $amount     = $onStock;
-            $blOverride = false;
-
-            GraphQLQueryHandler::addError(
-                BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $productStock, $item ? $item->getId() : null)
-            );
         }
 
-        $model->addItemToBasket((string) $productId, $amount, $select, $blOverride, $persParams);
+        $model->addItemToBasket((string) $productId, $amount, $select, $forceOverride ?: $blOverride, $persParams);
 
         return true;
     }
