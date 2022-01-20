@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
-class BasketBaseCest extends BaseCest
+abstract class BasketBaseCest extends BaseCest
 {
     protected function basketCreateMutation(
         AcceptanceTester $I,

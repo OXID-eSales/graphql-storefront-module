@@ -279,7 +279,7 @@ final class BasketAddItemCest extends BasketBaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'test-stock-basket')['id'];
-        $result = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, 2);
+        $result   = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, 2);
 
         $I->assertArrayNotHasKey('errors', $result);
         $I->assertEquals(2, $result['data']['basketAddItem']['items'][0]['amount']);
@@ -307,7 +307,7 @@ final class BasketAddItemCest extends BasketBaseCest
         );
     }
 
-    private function updateStock(AcceptanceTester $I, int $stock, int $flag)
+    private function updateStock(AcceptanceTester $I, int $stock, int $flag): void
     {
         $I->updateInDatabase(
             'oxarticles',
