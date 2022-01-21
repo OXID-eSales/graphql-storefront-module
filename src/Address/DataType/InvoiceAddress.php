@@ -120,7 +120,7 @@ final class InvoiceAddress implements ShopModelAwareInterface
      */
     public function phone(): string
     {
-        return (string) $this->customer->getRawFieldData('oxprivphone');
+        return (string) $this->customer->getRawFieldData('oxprivfon');
     }
 
     /**
@@ -128,7 +128,7 @@ final class InvoiceAddress implements ShopModelAwareInterface
      */
     public function mobile(): string
     {
-        return (string) $this->customer->getRawFieldData('oxmobfone');
+        return (string) $this->customer->getRawFieldData('oxmobfon');
     }
 
     /**
