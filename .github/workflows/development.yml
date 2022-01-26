@@ -20,7 +20,7 @@ jobs:
         with:
           path: |
             ./*
-          key: shopInstallation-${{ github.sha }}
+          key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
 
       - uses: satackey/action-docker-layer-caching@v0.0.11
         with:
@@ -83,6 +83,9 @@ jobs:
           sleep 2
 
   unit_tests:
+    strategy:
+      matrix:
+        php: [ '7.4' ]
     needs: [ install_shop_with_module ]
     runs-on: ubuntu-latest
     steps:
@@ -91,9 +94,15 @@ jobs:
         with:
           path: |
             ./*
-          key: shopInstallation-${{ github.sha }}
+          key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
           restore-keys: |
-            shopInstallation-${{ github.sha }}
+            shopInstallation-${{ matrix.php }}-${{ github.sha }}
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        with:
+          key: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
+          restore-keys: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
+
       - name: Run tests
         run: |
           docker-compose run -T --rm \
@@ -110,9 +119,12 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Tests log
-          path: source/source/unit.cov
+          path: source/unit.cov
 
   codeception_tests:
+    strategy:
+      matrix:
+        php: [ '7.4' ]
     needs: [ install_shop_with_module ]
     runs-on: ubuntu-latest
     steps:
@@ -121,9 +133,14 @@ jobs:
         with:
           path: |
             ./*
-          key: shopInstallation-${{ github.sha }}
+          key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
           restore-keys: |
-            shopInstallation-${{ github.sha }}
+            shopInstallation-${{ matrix.php }}-${{ github.sha }}
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        with:
+          key: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
+          restore-keys: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
 
       - name: Start containers
         run: |
