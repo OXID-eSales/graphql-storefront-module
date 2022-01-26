@@ -33,10 +33,12 @@ jobs:
           sed "s/PHP_VERSION=.*/PHP_VERSION='${{ matrix.php }}'/" -i .env
           sed "s/display_errors =.*/display_errors = false/" -i containers/php-fpm/custom.ini
           sed -i -e "s+/var/www/+/var/www/source/+" containers/httpd/project.conf
+          sed -i "1s+^+xdebug.max_nesting_level=1000\n\n+" containers/php-fpm/custom.ini
 
       - name: Prepare shop configuration
         run: |
           cp source/source/config.inc.php.dist source/source/config.inc.php
+          sed -i "1s+^+SetEnvIf Authorization "\(.*\)" HTTP_AUTHORIZATION=\$1\n\n+" source/source/.htaccess
           sed -i -e 's/<dbHost>/mysql/'\
                  -e 's/<dbUser>/root/'\
                  -e 's/<dbName>/example/'\
@@ -101,3 +103,25 @@ jobs:
             -e RUN_TESTS_FOR_MODULES=0 \
             -e ADDITIONAL_TEST_PATHS='/var/www/vendor/oxid-esales/graphql-storefront/tests' \
             php php vendor/bin/runtests
+
+  codeception_tests:
+    needs: [ install_shop_with_module ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load current installation from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./*
+          key: shopInstallation-${{ github.sha }}
+          restore-keys: |
+            shopInstallation-${{ github.sha }}
+      - name: Run tests
+        run: |
+          docker-compose run -T --rm \
+            -e PARTIAL_MODULE_PATHS=oe/graphql-base,oe/graphql-storefront \
+            -e ACTIVATE_ALL_MODULES=1 \
+            -e RUN_TESTS_FOR_SHOP=0 \
+            -e RUN_TESTS_FOR_MODULES=0 \
+            -e ADDITIONAL_TEST_PATHS='/var/www/vendor/oxid-esales/graphql-storefront/tests' \
+            php php vendor/bin/runtests-codeception --group=temptest
