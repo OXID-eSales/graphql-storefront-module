@@ -108,7 +108,7 @@ jobs:
       - name: Upload log artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Tests log
+          name: TestsLog
           path: source/unit.cov
 
   codeception_tests:
@@ -154,5 +154,46 @@ jobs:
       - name: Upload log artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Tests log
+          name: TestsLog
           path: source/test-module/tests/Codeception/_output/coverage.serialized
+
+  prepare_coverage_results:
+    strategy:
+      matrix:
+        php: [ '7.4' ]
+    needs: [ unit_tests, codeception_tests ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load current installation from cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./*
+          key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
+          restore-keys: |
+            shopInstallation-${{ matrix.php }}-${{ github.sha }}
+
+      - name: Download unit artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: TestsLog
+          path: ./source/covs/
+
+      - name: Collect and merge coverage reports
+        continue-on-error: true
+        run: |
+          ls -alh source/covs/
+          mv source/covs/coverage.serialized source/covs/codeception.cov
+          ls -alh source/covs/
+
+          wget https://phar.phpunit.de/phpcov-7.0.2.phar
+          mv phpcov-7.0.2.phar source/
+
+          docker-compose run -T php php phpcov.phar merge --clover covs/coverage.xml covs
+          sed -i 's+/var/www/test-module/+/+' covs/coverage.xml
+
+      - name: Upload log artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: TestsLogFixed
+          path: covs/coverage.xml
