@@ -187,7 +187,7 @@ jobs:
           ls -alh source/covs/
 
           wget https://phar.phpunit.de/phpcov-7.0.2.phar
-          mv phpcov-7.0.2.phar source/
+          mv phpcov-7.0.2.phar source/phpcov.phar
 
           docker-compose run -T php php phpcov.phar merge --clover covs/coverage.xml covs
           sed -i 's+/var/www/test-module/+/+' covs/coverage.xml
