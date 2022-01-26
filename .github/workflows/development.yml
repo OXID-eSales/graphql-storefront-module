@@ -101,8 +101,15 @@ jobs:
             -e ACTIVATE_ALL_MODULES=1 \
             -e RUN_TESTS_FOR_SHOP=0 \
             -e RUN_TESTS_FOR_MODULES=0 \
+            -e STOREFRONT_COVERAGE=1 \
             -e ADDITIONAL_TEST_PATHS='/var/www/vendor/oxid-esales/graphql-storefront/tests' \
-            php php vendor/bin/runtests
+            php php vendor/bin/runtests --coverage-php=/var/www/unit.cov AllTestsUnit
+
+      - name: Upload log artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Tests log
+          path: source/source/unit.cov
 
   codeception_tests:
     needs: [ install_shop_with_module ]
@@ -136,5 +143,12 @@ jobs:
             -e ACTIVATE_ALL_MODULES=1 \
             -e RUN_TESTS_FOR_SHOP=0 \
             -e RUN_TESTS_FOR_MODULES=0 \
+            -e STOREFRONT_COVERAGE=1 \
             -e ADDITIONAL_TEST_PATHS='/var/www/vendor/oxid-esales/graphql-storefront/tests' \
-            php php vendor/bin/runtests-codeception --group=temptest
+            php php vendor/bin/runtests-codeception --group=temptest --coverage-phpunit
+
+      - name: Upload log artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Tests log
+          path: source/test-module/tests/Codeception/_output/coverage.serialized
