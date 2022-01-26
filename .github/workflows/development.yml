@@ -95,9 +95,9 @@ jobs:
       - name: Run tests
         run: |
           docker-compose run -T --rm \
-            -e PARTIAL_MODULE_PATHS=oe/graphql-base \
+            -e PARTIAL_MODULE_PATHS=oe/graphql-base,oe/graphql-storefront \
             -e ACTIVATE_ALL_MODULES=1 \
             -e RUN_TESTS_FOR_SHOP=0 \
             -e RUN_TESTS_FOR_MODULES=0 \
-            -e ADDITIONAL_TEST_PATHS='/var/www/vendor/oxid-esales/graphql-base/tests' \
+            -e ADDITIONAL_TEST_PATHS='/var/www/vendor/oxid-esales/graphql-storefront/tests' \
             php php vendor/bin/runtests
