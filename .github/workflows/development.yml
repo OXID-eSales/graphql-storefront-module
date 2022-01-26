@@ -22,11 +22,6 @@ jobs:
             ./*
           key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
 
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        with:
-          key: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
-          restore-keys: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
-
       - name: Prepare container configuration
         run: |
           make setup
@@ -98,11 +93,6 @@ jobs:
           restore-keys: |
             shopInstallation-${{ matrix.php }}-${{ github.sha }}
 
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        with:
-          key: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
-          restore-keys: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
-
       - name: Run tests
         run: |
           docker-compose run -T --rm \
@@ -136,11 +126,6 @@ jobs:
           key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
           restore-keys: |
             shopInstallation-${{ matrix.php }}-${{ github.sha }}
-
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        with:
-          key: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
-          restore-keys: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
 
       - name: Start containers
         run: |
