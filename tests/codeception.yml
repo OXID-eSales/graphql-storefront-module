@@ -25,4 +25,4 @@ coverage:
   c3_url: '%SHOP_URL%'
   remote_config: 'vendor/oxid-esales/graphql-storefront/tests/codeception.yml'
   include:
-      - ../src/*
+      - vendor/oxid-esales/graphql-storefront/src/*
