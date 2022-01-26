@@ -24,8 +24,8 @@ jobs:
 
       - uses: satackey/action-docker-layer-caching@v0.0.11
         with:
-          key: docker-layer-caching-GraphQLStorefront-php-{hash}
-          restore-keys: docker-layer-caching-GraphQLStorefront-php-
+          key: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
+          restore-keys: docker-layer-caching-GraphQLStorefront-php-${{ matrix.php }}
 
       - name: Prepare container configuration
         run: |
