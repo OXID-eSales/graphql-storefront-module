@@ -131,7 +131,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker-compose exec -T --rm \
+          docker-compose exec -T \
             -e PARTIAL_MODULE_PATHS=oe/graphql-base,oe/graphql-storefront \
             -e ACTIVATE_ALL_MODULES=1 \
             -e RUN_TESTS_FOR_SHOP=0 \
