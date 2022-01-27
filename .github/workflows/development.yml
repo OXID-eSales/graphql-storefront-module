@@ -202,6 +202,9 @@ jobs:
     needs: [ prepare_coverage_results ]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout current module
+        uses: actions/checkout@v2
+
       - name: Download fixed artifacts
         uses: actions/download-artifact@v2
         with:
