@@ -54,9 +54,6 @@ final class DeliveryAddressCest extends BaseCest
         $I->updateConfigInDatabase('aMustFillFields', $this->mustFillFieldsDefault['value'], 'arr');
     }
 
-    /**
-     * @group temptest1
-     */
     public function testAddDeliveryAddressForNotLoggedInUser(AcceptanceTester $I): void
     {
         $I->sendGQLQuery(
@@ -82,7 +79,6 @@ final class DeliveryAddressCest extends BaseCest
     }
 
     /**
-     * @group temptest2
      * @dataProvider providerRequiredFields
      */
     public function testAddDeliveryAddressForLoggedInUserMissingInput(AcceptanceTester $I, Example $data): void
@@ -118,9 +114,6 @@ final class DeliveryAddressCest extends BaseCest
         $I->assertSame($expected, $result['errors'][0]['message']);
     }
 
-    /**
-     * @group temptest3
-     */
     public function testAddDeliveryAddressForLoggedInUserInvalidCountryId(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
