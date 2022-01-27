@@ -149,7 +149,7 @@ jobs:
             -e STOREFRONT_COVERAGE=1 \
             -e XDEBUG_MODE=coverage \
             -e ADDITIONAL_TEST_PATHS='/var/www/vendor/oxid-esales/graphql-storefront/tests' \
-            php php vendor/bin/runtests-codeception --group=temptest --coverage-phpunit
+            php php vendor/bin/runtests-codeception --coverage-phpunit
 
       - name: Upload log artifact
         uses: actions/upload-artifact@v2
