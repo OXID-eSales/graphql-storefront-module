@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group translation
  * @group oe_graphql_storefront
+ * @group other
  */
 final class TranslationCest extends BaseCest
 {

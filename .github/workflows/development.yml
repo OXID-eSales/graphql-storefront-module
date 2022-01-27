@@ -116,7 +116,12 @@ jobs:
     strategy:
       matrix:
         php: [ '7.4' ]
-        group: [ 'temptest1', 'temptest2', 'temptest3' ]
+        group:
+          - 'address'
+          - 'basket'
+          - 'customer'
+          - 'order'
+          - 'other'
     needs: [ install_shop_with_module ]
     runs-on: ubuntu-latest
     steps:
