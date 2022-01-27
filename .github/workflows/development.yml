@@ -190,10 +190,10 @@ jobs:
           mv phpcov-7.0.2.phar source/phpcov.phar
 
           docker-compose run -T php php phpcov.phar merge --clover covs/coverage.xml covs
-          sed -i 's+/var/www/test-module/+/+' covs/coverage.xml
+          sed -i 's+/var/www/test-module/+/+' source/covs/coverage.xml
 
       - name: Upload log artifact
         uses: actions/upload-artifact@v2
         with:
           name: TestsLogFixed
-          path: covs/coverage.xml
+          path: source/covs/coverage.xml
