@@ -190,7 +190,7 @@ jobs:
           mv phpcov-7.0.2.phar source/phpcov.phar
 
           docker-compose run -T php php phpcov.phar merge --clover covs/coverage.xml covs
-          sed -i 's+/var/www/test-module/+/+' source/covs/coverage.xml
+          sed -i 's+/var/www/test-module/+./+' source/covs/coverage.xml
 
       - name: Upload log artifact
         uses: actions/upload-artifact@v2
@@ -209,7 +209,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: TestsLogFixed
-          path: ./artifact/
+          path: ./
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
@@ -223,6 +223,6 @@ jobs:
             -Dsonar.sources=src
             -Dsonar.tests=tests
             -Dsonar.sourceEncoding=UTF-8
-            -Dsonar.php.coverage.reportPaths=artifact/coverage.xml
+            -Dsonar.php.coverage.reportPaths=coverage.xml
             -Dsonar.cpd.php.minimumTokens=25
-            -Dsonar.cpd.php.minimumLines=7
+            -Dsonar.cpd.php.minimumLines=5

@@ -17,7 +17,6 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group address
  * @group oe_graphql_storefront
- * @group temptest
  */
 final class DeliveryAddressCest extends BaseCest
 {
@@ -55,6 +54,9 @@ final class DeliveryAddressCest extends BaseCest
         $I->updateConfigInDatabase('aMustFillFields', $this->mustFillFieldsDefault['value'], 'arr');
     }
 
+    /**
+     * @group temptest
+     */
     public function testAddDeliveryAddressForNotLoggedInUser(AcceptanceTester $I): void
     {
         $I->sendGQLQuery(
