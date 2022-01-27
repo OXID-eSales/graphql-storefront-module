@@ -54,9 +54,6 @@ final class DeliveryAddressCest extends BaseCest
         $I->updateConfigInDatabase('aMustFillFields', $this->mustFillFieldsDefault['value'], 'arr');
     }
 
-    /**
-     * @group temptest
-     */
     public function testAddDeliveryAddressForNotLoggedInUser(AcceptanceTester $I): void
     {
         $I->sendGQLQuery(

@@ -116,6 +116,7 @@ jobs:
     strategy:
       matrix:
         php: [ '7.4' ]
+        group: [ 'temptest1', 'temptest2', 'temptest3' ]
     needs: [ install_shop_with_module ]
     runs-on: ubuntu-latest
     steps:
@@ -153,11 +154,15 @@ jobs:
             -e ADDITIONAL_TEST_PATHS='/var/www/vendor/oxid-esales/graphql-storefront/tests' \
             php php vendor/bin/runtests-codeception --coverage-phpunit
 
+      - name: Extract and prepare the coverage artifact
+        run: |
+          cp source/test-module/tests/Codeception/_output/coverage.serialized codeception.${{ matrix.group }}.cov
+
       - name: Upload log artifact
         uses: actions/upload-artifact@v2
         with:
           name: TestsLog
-          path: source/test-module/tests/Codeception/_output/coverage.serialized
+          path: codeception.${{ matrix.group }}.cov
 
   prepare_coverage_results:
     strategy:
@@ -184,8 +189,6 @@ jobs:
       - name: Collect and merge coverage reports
         continue-on-error: true
         run: |
-          ls -alh source/covs/
-          mv source/covs/coverage.serialized source/covs/codeception.cov
           ls -alh source/covs/
 
           wget https://phar.phpunit.de/phpcov-7.0.2.phar
