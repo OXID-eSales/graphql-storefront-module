@@ -197,3 +197,29 @@ jobs:
         with:
           name: TestsLogFixed
           path: source/covs/coverage.xml
+
+  sonarcloud:
+    needs: [ prepare_coverage_results ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download fixed artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: TestsLogFixed
+          path: ./artifact/
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=oxid-esales
+            -Dsonar.projectKey=OXID-eSales_graphql-storefront-module
+            -Dsonar.sources=src
+            -Dsonar.tests=tests
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.php.coverage.reportPaths=artifact/coverage.xml
+            -Dsonar.cpd.php.minimumTokens=30
+            -Dsonar.cpd.php.minimumLines=10
