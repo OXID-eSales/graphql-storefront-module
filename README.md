@@ -26,8 +26,8 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v6.8.0` co
 Switch to the shop root directory (the file `composer.json` and the directories `source/` and `vendor/` are located there).
 
 ```bash
-# Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 6.x version
-$ composer require oxid-esales/graphql-storefront ^6.0.0
+# Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 2.x version
+$ composer require oxid-esales/graphql-storefront ^2.0.0
 
 $ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-base
 $ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-storefront
@@ -53,6 +53,7 @@ A good starting point is to check the [How to use section in the GraphQL Base Mo
 ### Linting, syntax check, static analysis and unit tests
 
 ```bash
+$ composer update
 $ composer test
 ```
 
