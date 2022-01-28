@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group country
  * @group oe_graphql_storefront
+ * @group other
  */
 final class CountryCest extends BaseCest
 {
