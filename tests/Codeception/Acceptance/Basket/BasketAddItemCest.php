@@ -230,6 +230,9 @@ final class BasketAddItemCest extends BasketBaseCest
         //check the basket, we now should have $initialAmount + 1
         $basket = $this->basketQuery($I, $basketId);
         $I->assertEquals($initialAmount + 1, $basket['items'][0]['amount']);
+
+        // reset article
+        $this->updateStock($I, 15, 1);
     }
 
     public function testAutomaticallyRemoveOutOfStockItemFromBasketOnAdd(AcceptanceTester $I): void
@@ -283,6 +286,9 @@ final class BasketAddItemCest extends BasketBaseCest
 
         $I->assertArrayNotHasKey('errors', $result);
         $I->assertEquals(2, $result['data']['basketAddItem']['items'][0]['amount']);
+
+        // reset article
+        $this->updateStock($I, 15, 1);
     }
 
     public function testAddNonExistingItemToBasket(AcceptanceTester $I): void
