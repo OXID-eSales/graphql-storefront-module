@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class InvoiceAddress implements ShopModelAwareInterface
+final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
 {
     /** @var EshopUserModel */
     private $customer;
