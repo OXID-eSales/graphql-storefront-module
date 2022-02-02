@@ -37,6 +37,7 @@ final class Repository
             $rating = $this->ratingForReview($review);
             $rating->delete();
         } catch (NotFound $e) {
+            // Just move on if there's no rating
         }
         $review->getEshopModel()->delete();
 

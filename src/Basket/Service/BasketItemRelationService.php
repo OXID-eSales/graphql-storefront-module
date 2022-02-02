@@ -44,8 +44,7 @@ final class BasketItemRelationService
                 new ID($basketItemModel->getRawFieldData('oxartid'))
             );
         } catch (ProductNotFound | InvalidLogin $e) {
+            return null;
         }
-
-        return null;
     }
 }

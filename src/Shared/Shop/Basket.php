@@ -12,11 +12,9 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Shop;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\UserBasketItem;
 use OxidEsales\Eshop\Application\Model\Voucher;
-use OxidEsales\Eshop\Core\Exception\ArticleInputException;
+use OxidEsales\Eshop\Core\Exception\ArticleException;
 use OxidEsales\Eshop\Core\Exception\ObjectException as EshopObjectException;
 use OxidEsales\Eshop\Core\Price as EshopPrice;
-use OxidEsales\EshopCommunity\Core\Exception\NoArticleException;
-use OxidEsales\EshopCommunity\Core\Exception\OutOfStockException;
 
 /**
  * Basket model extended
@@ -83,9 +81,8 @@ class Basket extends Basket_parent
                 $userBasketItem->getPersParams()
             );
             $basketItem->setBasketItemKey($itemKey);
-        } catch (NoArticleException $e) {
-        } catch (OutOfStockException $e) {
-        } catch (ArticleInputException $e) {
+        } catch (ArticleException $e) {
+            // Ignore article exceptions
         }
 
         return $basketItem;

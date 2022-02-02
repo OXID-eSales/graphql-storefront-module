@@ -34,11 +34,7 @@ final class Seo
      */
     public function getDescription(): string
     {
-        return (string) EshopRegistry::getSeoEncoder()
-            ->getMetaData(
-                $this->eshopModel->getId(),
-                'oxdescription'
-            );
+        return $this->getMetaData('oxdescription');
     }
 
     /**
@@ -46,11 +42,7 @@ final class Seo
      */
     public function getKeywords(): string
     {
-        return (string) EshopRegistry::getSeoEncoder()
-            ->getMetaData(
-                $this->eshopModel->getId(),
-                'oxkeywords'
-            );
+        return $this->getMetaData('oxkeywords');
     }
 
     /**
@@ -63,5 +55,14 @@ final class Seo
         }
 
         return null;
+    }
+
+    private function getMetaData(string $metaType): string
+    {
+        return (string) EshopRegistry::getSeoEncoder()
+            ->getMetaData(
+                $this->eshopModel->getId(),
+                $metaType
+            );
     }
 }

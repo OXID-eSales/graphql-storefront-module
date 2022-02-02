@@ -89,7 +89,7 @@ final class PlaceOrder
 
         $basketItemsErrors = $this->basketInfrastructure->checkBasketItems($userBasket->getEshopModel());
 
-        if ($basketItemsErrors == true) {
+        if ($basketItemsErrors) {
             throw PlaceOrderException::productsNotOrdarable();
         }
 

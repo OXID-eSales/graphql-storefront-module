@@ -160,9 +160,8 @@ final class RelationService
                 new ID($bundleProductId)
             );
         } catch (ProductNotFound | InvalidLogin $e) {
+            return null;
         }
-
-        return null;
     }
 
     /**

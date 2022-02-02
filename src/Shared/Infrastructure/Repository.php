@@ -18,8 +18,8 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Base\DataType\Sorting\Sorting as BaseSorting;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\Exception\Repository as RepositoryException;
 use PDO;
-use RuntimeException;
 
 final class Repository
 {
@@ -190,7 +190,7 @@ final class Repository
     public function delete(BaseModel $item): bool
     {
         if (!$item->delete()) {
-            throw new RuntimeException('Failed deleting object');
+            throw RepositoryException::cannotDeleteModel();
         }
 
         return true;
@@ -202,7 +202,7 @@ final class Repository
     public function saveModel(BaseModel $item): bool
     {
         if (!$item->save()) {
-            throw new RuntimeException('Object save failed');
+            throw RepositoryException::cannotSaveModel();
         }
 
         return true;
