@@ -281,7 +281,7 @@ final class BasketAddItemCest extends BasketBaseCest
         $this->updateStock($I, 2, 3);
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $basketId = $this->basketCreateMutation($I, 'test-stock-basket')['id'];
+        $basketId = $this->basketCreateMutation($I, self::BASKET_TITLE)['id'];
         $result   = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, 2);
 
         $I->assertArrayNotHasKey('errors', $result);
