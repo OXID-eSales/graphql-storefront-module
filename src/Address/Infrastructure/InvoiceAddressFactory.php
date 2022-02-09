@@ -57,8 +57,8 @@ final class InvoiceAddressFactory
                 'oxcountryid' => (string) $countryId,
                 'oxstateid'   => (string) $stateId,
                 'oxustid'     => $vatID ?: $customer->getRawFieldData('oxustid'),
-                'oxprivphone' => $phone ?: $customer->getRawFieldData('oxprivphone'),
-                'oxmobfone'   => $mobile ?: $customer->getRawFieldData('oxmobfone'),
+                'oxprivfon' => $phone ?: $customer->getRawFieldData('oxprivfon'),
+                'oxmobfon'   => $mobile ?: $customer->getRawFieldData('oxmobfon'),
                 'oxfax'       => $fax ?: $customer->getRawFieldData('oxfax'),
             ]
         );
