@@ -64,11 +64,15 @@ final class NewsletterStatus
         );
     }
 
-    public function optIn(NewsletterStatusType $newsletterStatus): bool
+    public function optIn(NewsletterStatusType $newsletterStatus): NewsletterStatusType
     {
         $subscriber = $this->subscriberService->subscriber((string) $newsletterStatus->userId());
 
-        return $this->NewsletterStatusRepository->optIn($subscriber, $newsletterStatus);
+        $this->NewsletterStatusRepository->optIn($subscriber, $newsletterStatus);
+
+        return $this->NewsletterSubscriptionRepository->getByUserId(
+            $subscriber->getId()
+        );
     }
 
     public function unsubscribe(?NewsletterStatusUnsubscribeType $newsletterStatus): bool
