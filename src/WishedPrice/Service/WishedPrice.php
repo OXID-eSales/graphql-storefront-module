@@ -109,12 +109,17 @@ final class WishedPrice
         );
     }
 
-    public function save(WishedPriceDataType $wishedPrice): bool
+    public function save(WishedPriceDataType $wishedPrice): WishedPriceDataType
     {
         $modelItem = $wishedPrice->getEshopModel();
         $this->wishedPriceNotificationInfrastructure->sendNotification($wishedPrice);
 
-        return $this->repository->saveModel($modelItem);
+        $this->repository->saveModel($modelItem);
+
+        return $this->repository->getById(
+            $modelItem->getId(),
+            WishedPriceDataType::class
+        );
     }
 
     /**
