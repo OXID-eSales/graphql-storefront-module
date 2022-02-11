@@ -54,9 +54,8 @@ final class RelationService
         try {
             return $this->inquirerService->inquirer((string) $wishedPrice->getInquirerId());
         } catch (InquirerNotFound $e) {
+            return null;
         }
-
-        return null;
     }
 
     /**

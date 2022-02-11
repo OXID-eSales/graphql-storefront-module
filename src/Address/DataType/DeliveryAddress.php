@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class DeliveryAddress implements ShopModelAwareInterface
+final class DeliveryAddress implements AddressInterface, ShopModelAwareInterface
 {
     /** @var EshopAddressModel */
     private $address;

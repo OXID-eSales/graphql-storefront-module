@@ -96,9 +96,8 @@ final class RelationService
         try {
             return $this->newsletterStatusService->newsletterStatus();
         } catch (NewsletterStatusNotFound $e) {
+            return null;
         }
-
-        return null;
     }
 
     /**
