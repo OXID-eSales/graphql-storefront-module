@@ -51,6 +51,6 @@ final class InvoiceAddress
         /** @var User $userModel */
         $userModel->setAutomaticUserGroups();
 
-        return $invoiceAddress;
+        return $this->repository->getById($userModel->getId(), InvoiceAddressDataType::class);
     }
 }

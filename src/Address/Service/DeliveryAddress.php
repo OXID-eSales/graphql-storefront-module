@@ -77,13 +77,15 @@ final class DeliveryAddress
         throw new InvalidLogin('Unauthorized');
     }
 
-    /**
-     * @return true
-     */
-    public function store(DeliveryAddressDataType $address): bool
+    public function store(DeliveryAddressDataType $address): DeliveryAddressDataType
     {
-        return $this->repository->saveModel(
+        $this->repository->saveModel(
             $address->getEshopModel()
+        );
+
+        return $this->repository->getById(
+            $address->getEshopModel()->getId(),
+            DeliveryAddressDataType::class
         );
     }
 

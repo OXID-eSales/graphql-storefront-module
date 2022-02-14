@@ -316,9 +316,14 @@ final class Basket
      * @throws InvalidLogin
      * @throws InvalidToken
      */
-    public function store(BasketDataType $basket): bool
+    public function store(BasketDataType $basket): BasketDataType
     {
-        return $this->repository->saveModel($basket->getEshopModel());
+        $this->repository->saveModel($basket->getEshopModel());
+
+        return $this->repository->getById(
+            $basket->getEshopModel()->getId(),
+            BasketDataType::class
+        );
     }
 
     /**
