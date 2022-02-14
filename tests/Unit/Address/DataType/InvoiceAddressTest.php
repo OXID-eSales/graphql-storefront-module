@@ -64,9 +64,9 @@ final class InvoiceAddressTest extends TestCase
             'oxzip'        => '79098',
             'oxcity'       => 'Freiburg',
             'oxustid'      => '',
-            'oxprivfon'  => '',
-            'oxmobphone'   => '',
-            'oxfax'        => '',
+            'oxprivfon'    => '111111111',
+            'oxmobfon'     => '111-111111-1',
+            'oxfax'        => '111-111-111-1',
         ];
         $model->assign($data);
         $dataType = new InvoiceAddress($model);
@@ -121,7 +121,7 @@ final class InvoiceAddressTest extends TestCase
         );
         $this->assertSame(
             $dataType->mobile(),
-            $data['oxmobphone']
+            $data['oxmobfon']
         );
         $this->assertSame(
             $dataType->fax(),
