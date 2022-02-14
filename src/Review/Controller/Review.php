@@ -43,9 +43,7 @@ final class Review
      */
     public function reviewSet(ReviewDataType $review): ReviewDataType
     {
-        $this->reviewService->save($review);
-
-        return $review;
+        return $this->reviewService->save($review);
     }
 
     /**

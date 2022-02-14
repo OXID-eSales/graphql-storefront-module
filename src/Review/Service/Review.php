@@ -108,10 +108,7 @@ final class Review
         );
     }
 
-    /**
-     * @return true
-     */
-    public function save(ReviewDataType $review): bool
+    public function save(ReviewDataType $review): ReviewDataType
     {
         if ($this->reviewRepository->doesReviewExist((string) $this->authenticationService->getUser()->id(), $review)) {
             throw ReviewAlreadyExists::byObjectId($review->getObjectId());
@@ -121,8 +118,13 @@ final class Review
             $this->reviewRepository->saveRating($review);
         }
 
-        return $this->repository->saveModel(
+        $this->repository->saveModel(
             $review->getEshopModel()
+        );
+
+        return $this->repository->getById(
+            $review->getEshopModel()->getId(),
+            ReviewDataType::class
         );
     }
 

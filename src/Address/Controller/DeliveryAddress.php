@@ -60,8 +60,6 @@ final class DeliveryAddress
      */
     public function customerDeliveryAddressAdd(DeliveryAddressDataType $deliveryAddress): DeliveryAddressDataType
     {
-        $this->deliveryAddressService->store($deliveryAddress);
-
-        return $deliveryAddress;
+        return $this->deliveryAddressService->store($deliveryAddress);
     }
 }

@@ -31,9 +31,7 @@ final class NewsletterStatus
      */
     public function newsletterOptIn(NewsletterStatusType $newsletterStatus): NewsletterStatusType
     {
-        $this->newsletterStatusService->optIn($newsletterStatus);
-
-        return $newsletterStatus;
+        return $this->newsletterStatusService->optIn($newsletterStatus);
     }
 
     /**

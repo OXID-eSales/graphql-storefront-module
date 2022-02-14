@@ -91,9 +91,7 @@ final class Basket
      */
     public function basketCreate(BasketDataType $basket): BasketDataType
     {
-        $this->basketService->store($basket);
-
-        return $basket;
+        return $this->basketService->store($basket);
     }
 
     /**

@@ -59,9 +59,7 @@ final class WishedPrice
      */
     public function wishedPriceSet(WishedPriceDataType $wishedPrice): WishedPriceDataType
     {
-        $this->wishedPriceService->save($wishedPrice);
-
-        return $wishedPrice;
+        return $this->wishedPriceService->save($wishedPrice);
     }
 
     /**
