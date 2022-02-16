@@ -9,13 +9,14 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
+use OxidEsales\GraphQL\Storefront\Basket\DataType\ProductVatsInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class OrderProductVats
+final class OrderProductVats implements ProductVatsInterface
 {
     /** @var float */
     private $vatRate;

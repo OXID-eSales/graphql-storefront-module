@@ -15,7 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 /**
  * @Type()
  */
-final class BasketProductVats
+final class BasketProductVats implements ProductVatsInterface
 {
     /** @var float */
     private $vatRate;
