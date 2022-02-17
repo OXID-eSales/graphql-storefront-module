@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
+use OxidEsales\GraphQL\Storefront\Address\DataType\AddressInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -18,7 +19,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class OrderDeliveryAddress implements ShopModelAwareInterface
+final class OrderDeliveryAddress implements AddressInterface, ShopModelAwareInterface
 {
     /** @var EshopOrderModel */
     private $order;
