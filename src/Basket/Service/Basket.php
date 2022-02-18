@@ -173,8 +173,6 @@ final class Basket
             throw BasketAccessForbidden::basketIsPrivate();
         }
 
-        $this->sharedInfrastructure->getBasket($basket);
-
         return new PublicBasketDataType($basket->getEshopModel());
     }
 
