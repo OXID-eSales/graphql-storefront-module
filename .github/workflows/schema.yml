@@ -1,5 +1,8 @@
 name: Schema
 
+env:
+  PHP: '7.4'
+
 on:
   push:
     branches: [ master ]
@@ -7,13 +10,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php: ['7.4']
 
     steps:
       - name: Clone testing environment
-        run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git .
+        run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git . && git reset --hard v3.0.0
 
       - name: Clone the shop
         run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ce.git --branch master --single-branch source
@@ -22,24 +22,36 @@ jobs:
         run: |
           make setup
           make addbasicservices
-          sed "s/PHP_VERSION=.*/PHP_VERSION='${{ matrix.php }}'/" -i .env
-          sed "s/display_errors =.*/display_errors = false/" -i containers/php-fpm/custom.ini
-          sed -i -e "s+/var/www/+/var/www/source/+" containers/httpd/project.conf
-          sed -i "1s+^+xdebug.max_nesting_level=1000\nxdebug.mode=coverage\n\n+" containers/php-fpm/custom.ini
+          perl -pi\
+            -e "s#PHP_VERSION=.*#PHP_VERSION='${{ env.PHP }}'#g;"\
+            .env
+
+          perl -pi\
+            -e 's#display_errors =.*#display_errors = false#g;'\
+            -e 'print "xdebug.max_nesting_level=1000\nxdebug.mode=coverage\n\n"'\
+            containers/php-fpm/custom.ini
+
+          perl -pi\
+            -e 's#/var/www/#/var/www/source/#g;'\
+            containers/httpd/project.conf
 
       - name: Prepare shop configuration
         run: |
           cp source/source/config.inc.php.dist source/source/config.inc.php
-          sed -i "1s+^+SetEnvIf Authorization "\(.*\)" HTTP_AUTHORIZATION=\$1\n\n+" source/source/.htaccess
-          sed -i -e 's/<dbHost>/mysql/'\
-                 -e 's/<dbUser>/root/'\
-                 -e 's/<dbName>/example/'\
-                 -e 's/<dbPwd>/root/'\
-                 -e 's/<dbPort>/3306/'\
-                 -e 's/<sShopURL>/http:\/\/localhost.local\//'\
-                 -e 's/<sShopDir>/\/var\/www\/source\//'\
-                 -e 's/<sCompileDir>/\/var\/www\/source\/tmp\//'\
-              source/source/config.inc.php
+          perl -pi\
+            -e 'print "SetEnvIf Authorization \"(.*)\" HTTP_AUTHORIZATION=\$1\n\n" if $. == 1'\
+            source/source/.htaccess
+
+          perl -pi\
+            -e 's#<dbHost>#mysql#g;'\
+            -e 's#<dbUser>#root#g;'\
+            -e 's#<dbName>#example#g;'\
+            -e 's#<dbPwd>#root#g;'\
+            -e 's#<dbPort>#3306#g;'\
+            -e 's#<sShopURL>#http://localhost/#g;'\
+            -e 's#<sShopDir>#/var/www/source/#g;'\
+            -e 's#<sCompileDir>#/var/www/source/tmp/#g;'\
+            source/source/config.inc.php
 
       - name: Start containers
         run: |
