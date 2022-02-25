@@ -88,7 +88,7 @@ jobs:
                 php: [ '7.4', '8.0' ]
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout current module
+          - name: Checkout current module
               uses: actions/checkout@v2
               with:
                   path: source/test-module
@@ -101,29 +101,48 @@ jobs:
                   extensions: gd, zip
 
             - name: Install module dependencies
+              id: dependencies
               run: |
-                  cd source/test-module
-                  composer install
+                cd source/test-module
+                composer install
 
             - name: Syntax Test
+              id: syntax
+              if: steps.dependencies.outcome == 'success'
+              continue-on-error: true
               run: |
                 cd source/test-module
                 composer test:syntax
 
             - name: Lint Test
+              id: lint
+              if: steps.dependencies.outcome == 'success'
+              continue-on-error: true
               run: |
                 cd source/test-module
                 composer test:lint
 
             - name: Static Analyzer
+              id: static
+              if: steps.dependencies.outcome == 'success'
+              continue-on-error: true
               run: |
                 cd source/test-module
                 composer test:static
 
-            - name: Deptrac Analyzer
-              run: |
-                cd source/test-module
-                composer test:deptrac
+          - name: Deptrac Analyzer
+            id: deptrac
+            run: |
+              cd source/test-module
+              composer test:deptrac
+
+          - name: Fail if any of styles status is not fine
+            if: |
+              steps.syntax.outcome != 'success' ||
+              steps.lint.outcome != 'success' ||
+              steps.static.outcome != 'success' ||
+              steps.deptrac.outcome != 'success'
+            run: exit 1
 
     unit_tests:
         strategy:
