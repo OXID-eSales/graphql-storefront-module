@@ -102,10 +102,15 @@ jobs:
           restore-keys: |
             shopInstallation-${{ env.PHP }}-${{ github.sha }}
 
+      - name: Start containers
+        run: |
+            make up
+            sleep 2
+
       - name: Run tests
         continue-on-error: true
         run: |
-          docker-compose run -T --rm \
+          docker-compose exec -T \
             -e PARTIAL_MODULE_PATHS=oe/graphql-base,oe/graphql-storefront \
             -e ACTIVATE_ALL_MODULES=1 \
             -e RUN_TESTS_FOR_SHOP=0 \
@@ -140,8 +145,8 @@ jobs:
 
       - name: Start containers
         run: |
-          docker-compose up -d php
-          sleep 2
+            make up
+            sleep 2
 
       - name: Install codeception dependencies
         run: |
