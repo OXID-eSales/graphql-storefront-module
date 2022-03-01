@@ -25,6 +25,8 @@ jobs:
       - name: Prepare container configuration
         run: |
           make setup
+          make addbasicservices
+
           perl -pi\
             -e "s#PHP_VERSION=.*#PHP_VERSION='${{ env.PHP }}'#g;"\
             .env
