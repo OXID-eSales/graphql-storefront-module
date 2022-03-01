@@ -16,8 +16,7 @@
     "require": {
         "php": "^7.4 | ^8.0",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-master",
-        "oxid-esales/oxideshop-doctrine-migration-wrapper": "^v4.0.0"
+        "oxid-esales/graphql-base": "dev-master"
     },
     "conflict": {
         "oxid-esales/graphql-catalogue": "*",
@@ -30,7 +29,6 @@
         "php-parallel-lint/php-parallel-lint": "^1.1",
         "phpstan/phpstan": "^0.12.26",
         "oxid-esales/oxideshop-ce": "dev-b-7.0.x",
-        "oxid-esales/oxideshop-unified-namespace-generator": "^v3.0.0",
         "qossmic/deptrac-shim": "^0.15.0",
         "codeception/module-rest": "*",
         "codeception/module-phpbrowser": "^1.0.2",
