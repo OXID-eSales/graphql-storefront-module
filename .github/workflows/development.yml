@@ -1,6 +1,8 @@
 name: Development
 
-on: [ push, pull_request ]
+on:
+  schedule:
+    - cron:  '15 0 * * 6'
 
 jobs:
     install_shop_with_module:
