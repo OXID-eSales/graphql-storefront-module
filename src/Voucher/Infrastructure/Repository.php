@@ -73,36 +73,12 @@ final class Repository
 
     public function addBasketIdToVoucher(ID $basketId, string $voucherId): void
     {
-        $queryBuilder = $this->queryBuilderFactory->create();
-
-        $queryBuilder
-            ->update('oxvouchers')
-            ->set('oxvouchers.oegql_basketid', ':basketid')
-            ->where('OXID = :OXID')
-            ->setParameters(
-                [
-                    'basketid' => (string) $basketId,
-                    'OXID'     => $voucherId,
-                ]
-            )
-            ->execute();
+        $this->updateVoucherBasketId($voucherId, (string) $basketId);
     }
 
     public function removeBasketIdFromVoucher(string $voucherId): void
     {
-        $queryBuilder = $this->queryBuilderFactory->create();
-
-        $queryBuilder
-            ->update('oxvouchers')
-            ->set('oxvouchers.oegql_basketid', ':basketid')
-            ->where('OXID = :OXID')
-            ->setParameters(
-                [
-                    'basketid' => '',
-                    'OXID'     => $voucherId,
-                ]
-            )
-            ->execute();
+        $this->updateVoucherBasketId($voucherId);
     }
 
     /**
@@ -122,5 +98,22 @@ final class Repository
             new PaginationFilter(),
             new Sorting()
         );
+    }
+
+    private function updateVoucherBasketId(string $voucherId, ?string $basketId = null): void
+    {
+        $queryBuilder = $this->queryBuilderFactory->create();
+
+        $queryBuilder
+            ->update('oxvouchers')
+            ->set('oxvouchers.oegql_basketid', ':basketid')
+            ->where('OXID = :OXID')
+            ->setParameters(
+                [
+                    'basketid' => $basketId,
+                    'OXID'     => $voucherId,
+                ]
+            )
+            ->execute();
     }
 }

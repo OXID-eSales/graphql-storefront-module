@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Storefront\Basket\DataType;
+namespace OxidEsales\GraphQL\Storefront\Shared\DataType;
 
 interface ProductVatsInterface
 {
