@@ -152,11 +152,7 @@ final class Basket
      */
     public function basket(ID $id): BasketDataType
     {
-        $basket = $this->basketRepository->getBasketById((string) $id);
-
-        if (!$basket->belongsToUser((string) $this->authenticationService->getUser()->id())) {
-            throw BasketAccessForbidden::byAuthenticatedUser();
-        }
+        $basket = $this->getAuthenticatedCustomerBasket($id);
 
         $this->basketInfrastructure->checkBasketItems($basket->getEshopModel());
 
@@ -367,11 +363,7 @@ final class Basket
 
     public function addVoucher(ID $basketId, string $voucherNumber): BasketDataType
     {
-        $basket = $this->basketRepository->getBasketById((string) $basketId);
-
-        if (!$basket->belongsToUser((string) $this->authenticationService->getUser()->id())) {
-            throw BasketAccessForbidden::byAuthenticatedUser();
-        }
+        $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
         $this->basketVoucherService->addVoucherToBasket($voucherNumber, $basket);
 
@@ -380,11 +372,7 @@ final class Basket
 
     public function removeVoucher(ID $basketId, ID $voucherId): BasketDataType
     {
-        $basket = $this->basketRepository->getBasketById((string) $basketId);
-
-        if (!$basket->belongsToUser((string) $this->authenticationService->getUser()->id())) {
-            throw BasketAccessForbidden::byAuthenticatedUser();
-        }
+        $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
         $this->basketVoucherService->removeVoucherFromBasket($voucherId, $basket);
 

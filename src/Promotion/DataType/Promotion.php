@@ -10,9 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Promotion\DataType;
 
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
-use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ActiveStatus;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -22,6 +22,8 @@ use TheCodingMachine\GraphQLite\Types\ID;
  */
 final class Promotion implements ShopModelAwareInterface
 {
+    use ActiveStatus;
+
     public const PROMOTION_ACTION_TYPE = '2';
 
     /** @var EshopActionsModel */
@@ -75,21 +77,7 @@ final class Promotion implements ShopModelAwareInterface
 
     private function isActiveNow(): bool
     {
-        $activeNow = false;
-
-        $from = DateTimeImmutableFactory::fromString(
-            (string) $this->actionsModel->getRawFieldData('oxactivefrom')
-        );
-        $to = DateTimeImmutableFactory::fromString(
-            (string) $this->actionsModel->getRawFieldData('oxactiveto')
-        );
-        $now = $now ?? DateTimeImmutableFactory::fromString('now');
-
-        if ($from <= $now && $to >= $now) {
-            $activeNow = true;
-        }
-
-        return $activeNow;
+        return $this->active();
     }
 
     /**

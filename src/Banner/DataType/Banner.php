@@ -11,9 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Banner\DataType;
 
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Actions as EshopActionsModel;
-use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ActiveStatus;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -23,6 +23,8 @@ use TheCodingMachine\GraphQLite\Types\ID;
  */
 final class Banner implements ShopModelAwareInterface
 {
+    use ActiveStatus;
+
     public const ACTION_TYPE = '3';
 
     /** @var EshopActionsModel */
@@ -58,25 +60,7 @@ final class Banner implements ShopModelAwareInterface
      */
     public function isActive(?DateTimeInterface $now = null): bool
     {
-        $active = (bool) $this->actionsModel->getRawFieldData('oxactive');
-
-        if ($active) {
-            return true;
-        }
-
-        $from = DateTimeImmutableFactory::fromString(
-            (string) $this->actionsModel->getRawFieldData('oxactivefrom')
-        );
-        $to = DateTimeImmutableFactory::fromString(
-            (string) $this->actionsModel->getRawFieldData('oxactiveto')
-        );
-        $now = $now ?? DateTimeImmutableFactory::fromString('now');
-
-        if ($from <= $now && $to >= $now) {
-            return true;
-        }
-
-        return false;
+        return $this->active($now);
     }
 
     /**

@@ -14,6 +14,7 @@ use Exception;
 use OxidEsales\Eshop\Application\Model\Category as CategoryModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ActiveStatus;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -23,6 +24,8 @@ use TheCodingMachine\GraphQLite\Types\ID;
  */
 final class Category implements ShopModelAwareInterface
 {
+    use ActiveStatus;
+
     /** @var CategoryModel */
     private $category;
 
@@ -77,25 +80,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function isActive(?DateTimeInterface $now = null): bool
     {
-        $active = (bool) $this->category->getRawFieldData('oxactive');
-
-        if ($active) {
-            return true;
-        }
-
-        $from = DateTimeImmutableFactory::fromString(
-            (string) $this->category->getRawFieldData('oxactivefrom')
-        );
-        $to = DateTimeImmutableFactory::fromString(
-            (string) $this->category->getRawFieldData('oxactiveto')
-        );
-        $now = $now ?? DateTimeImmutableFactory::fromString('now');
-
-        if ($from <= $now && $to >= $now) {
-            return true;
-        }
-
-        return false;
+        return $this->active($now);
     }
 
     /**
