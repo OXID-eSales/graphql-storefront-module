@@ -209,7 +209,6 @@ final class Basket
     public function remove(ID $id): bool
     {
         $this->eventDispatcher->dispatch(
-            BeforeBasketRemove::NAME,
             new BeforeBasketRemove($id),
         );
 
@@ -257,7 +256,6 @@ final class Basket
     public function addBasketItem(ID $basketId, ID $productId, float $amount): BasketDataType
     {
         $this->eventDispatcher->dispatch(
-            BeforeAddItem::NAME,
             new BeforeAddItem($basketId, $productId, $amount),
         );
 
@@ -272,14 +270,12 @@ final class Basket
         );
 
         $this->eventDispatcher->dispatch(
-            BeforeAddItem::NAME,
             $event,
         );
 
         $this->basketInfraService->addBasketItem($basket, $productId, $amount);
 
         $this->eventDispatcher->dispatch(
-            AfterAddItem::NAME,
             new AfterAddItem($basketId, $productId, $amount),
         );
 
@@ -297,7 +293,6 @@ final class Basket
         );
 
         $this->eventDispatcher->dispatch(
-            BeforeRemoveItem::NAME,
             $event,
         );
 
@@ -505,7 +500,6 @@ final class Basket
     {
         $event = new BeforeBasketDeliveryMethods($basketId);
         $this->eventDispatcher->dispatch(
-            BeforeBasketDeliveryMethods::NAME,
             $event,
         );
 
@@ -531,7 +525,6 @@ final class Basket
     {
         $event = new BeforeBasketPayments($basketId);
         $this->eventDispatcher->dispatch(
-            BeforeBasketPayments::NAME,
             $event,
         );
 
