@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
+use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -39,7 +40,7 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
         $result = $this->removeBasket($I, self::PRIVATE_BASKET, 2);
 
         $I->assertSame(
-            'Unauthorized',
+            BasketAccessForbidden::byAuthenticatedUser()->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -66,7 +67,7 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
         $result = $this->removeBasket($I, $basketId, 2);
 
         $I->assertSame(
-            'Unauthorized',
+            BasketAccessForbidden::byAuthenticatedUser()->getMessage(),
             $result['errors'][0]['message']
         );
 
