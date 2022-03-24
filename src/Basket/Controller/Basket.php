@@ -165,7 +165,7 @@ final class Basket
     public function basketSetDeliveryAddress(ID $basketId, ?ID $deliveryAddressId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_ADDRESS);
-        $this->eventDispatcher->dispatch($event, BeforeBasketModify::NAME);
+        $this->eventDispatcher->dispatch($event);
 
         return $this->basketService->setDeliveryAddress($basketId, $deliveryAddressId);
     }
@@ -178,7 +178,7 @@ final class Basket
     public function basketSetPayment(ID $basketId, ID $paymentId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_PAYMENT_METHOD);
-        $this->eventDispatcher->dispatch($event, BeforeBasketModify::NAME);
+        $this->eventDispatcher->dispatch($event);
 
         return $this->basketService->setPayment($basketId, $paymentId);
     }
@@ -191,7 +191,7 @@ final class Basket
     public function basketSetDeliveryMethod(ID $basketId, ID $deliveryMethodId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_METHOD);
-        $this->eventDispatcher->dispatch($event, BeforeBasketModify::NAME);
+        $this->eventDispatcher->dispatch($event);
 
         return $this->basketService->setDeliveryMethod($basketId, $deliveryMethodId);
     }

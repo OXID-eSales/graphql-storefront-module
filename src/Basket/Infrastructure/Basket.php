@@ -300,8 +300,7 @@ final class Basket
                 new ID($userBasketModel->getId())
             );
             $this->eventDispatcher->dispatch(
-                $event,
-                BeforeBasketRemoveOnPlaceOrder::NAME
+                $event
             );
 
             if (!$event->getPreserveBasketAfterOrder()) {
