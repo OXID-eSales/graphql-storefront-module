@@ -23,6 +23,7 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketOwner as BasketOwnerDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket as PublicBasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem;
+use OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeAddItem;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketDeliveryMethods;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketPayments;
@@ -302,6 +303,11 @@ final class Basket
         );
 
         $this->basketInfraService->removeBasketItem($basket, $basketItemId, $event->getAmount());
+
+        $this->eventDispatcher->dispatch(
+            new AfterRemoveItem($basketId, $basketItemId, $amount),
+            AfterRemoveItem::NAME
+        );
 
         return $basket;
     }
