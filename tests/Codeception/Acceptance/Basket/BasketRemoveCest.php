@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Basket;
 
+use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -70,7 +71,7 @@ final class BasketRemoveCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Unauthorized',
+            BasketAccessForbidden::byAuthenticatedUser()->getMessage(),
             $result['errors'][0]['message']
         );
 

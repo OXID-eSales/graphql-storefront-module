@@ -229,7 +229,7 @@ final class Basket
             return $this->repository->delete($basket->getEshopModel());
         }
 
-        throw new InvalidLogin('Unauthorized');
+        throw BasketAccessForbidden::byAuthenticatedUser();
     }
 
     /**
