@@ -34,7 +34,7 @@ final class Banner implements ShopModelAwareInterface
     {
         $this->actionsModel = $actionsModel;
 
-        if ($actionsModel->getRawFieldData('oxtype') !== self::ACTION_TYPE) {
+        if ((string) $actionsModel->getRawFieldData('oxtype') !== self::ACTION_TYPE) {
             throw NotFound::notFound();
         }
     }
