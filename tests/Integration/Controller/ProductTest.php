@@ -687,7 +687,7 @@ final class ProductTest extends BaseTestCase
                 return $item2 <=> $item1;
             });
         } else {
-            $mode ? $method($expected, $mode) : $method(array_values($expected), SORT_DESC, array_keys($expected), SORT_ASC, $expected);
+            $mode ? $method($expected, $mode) : $method(array_values($expected), SORT_DESC, $expected);
         }
 
         $this->assertSame($expected, $orderedProducts);
@@ -704,7 +704,7 @@ final class ProductTest extends BaseTestCase
             }
         }');
 
-        $this->assertEquals($expectedProducts, $result['body']['data']['products']);
+        $this->assertArraySameNonAssociative($expectedProducts, $result['body']['data']['products']);
     }
 
     /**
