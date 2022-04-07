@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\Address as EshopAddressModel;
-use OxidEsales\Eshop\Application\Model\Article as EshopAricleModel;
+use OxidEsales\Eshop\Application\Model\Article as EshopArticleModel;
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\BasketItem;
 use OxidEsales\Eshop\Application\Model\DeliveryList as EshopDeliveryListModel;
@@ -62,8 +62,14 @@ final class Basket
         $this->eventDispatcher            = $eventDispatcher;
     }
 
-    public function addBasketItem(BasketDataType $basket, ID $productId, float $amount): bool
-    {
+    public function addBasketItem(
+        BasketDataType $basket,
+        ID $productId,
+        float $amount,
+        ?array $persParams = null,
+        ?array $select = null,
+        bool $forceOverride = false
+    ): bool {
         $model = $basket->getEshopModel();
 
         $item            = $this->getBasketItemByProductId($model, (string) $productId);
@@ -73,14 +79,14 @@ final class Basket
             $alreadyInBasket = (int) $item->getRawFieldData('oxamount');
         }
 
-        /** @var EshopAricleModel */
-        $product = oxNew(EshopAricleModel::class);
+        /** @var EshopArticleModel */
+        $product = oxNew(EshopArticleModel::class);
         $product->load((string) $productId);
         $productStock = $product->getStock();
         $onStock      = $product->checkForStock($amount, $alreadyInBasket);
         $blOverride   = false;
 
-        if ($onStock === false) {
+        if ($onStock !== true) {
             $blOverride = true;
 
             if ($productStock == 0) {
@@ -98,16 +104,9 @@ final class Basket
                     BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $productStock, $item ? $item->getId() : null)
                 );
             }
-        } elseif ($onStock !== true) {
-            $amount     = $onStock;
-            $blOverride = true;
-
-            GraphQLQueryHandler::addError(
-                BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $onStock, $item ? $item->getId() : null)
-            );
         }
 
-        $model->addItemToBasket((string) $productId, $amount, null, $blOverride);
+        $model->addItemToBasket((string) $productId, $amount, $select, $forceOverride ?: $blOverride, $persParams);
 
         return true;
     }
@@ -130,8 +129,8 @@ final class Basket
         $productId = (string) $basketItem->getRawFieldData('oxartid');
         $params    = $basketItem->getPersParams();
 
-        /** @var EshopAricleModel */
-        $product = oxNew(EshopAricleModel::class);
+        /** @var EshopArticleModel */
+        $product = oxNew(EshopArticleModel::class);
         $product->load($productId);
         $onStock = $product->checkForStock($amountRemaining);
 

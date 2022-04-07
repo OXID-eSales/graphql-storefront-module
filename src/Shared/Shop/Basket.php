@@ -66,6 +66,9 @@ class Basket extends Basket_parent
         /** @var BasketItem $basketItem */
         $basketItem = oxNew(BasketItem::class);
 
+        $stockCheckMode = $this->getStockCheckMode();
+        $basketItem->setStockCheckStatus(false);
+
         try {
             $basketItem->init(
                 $userBasketItem->getFieldData('oxartid'),
@@ -84,6 +87,8 @@ class Basket extends Basket_parent
         } catch (ArticleException $e) {
             // Ignore article exceptions
         }
+
+        $basketItem->setStockCheckStatus($stockCheckMode);
 
         return $basketItem;
     }

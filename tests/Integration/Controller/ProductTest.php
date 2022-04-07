@@ -9,10 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
+use OxidEsales\Eshop\Application\Model\Article as EshopModelArticle;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use ReflectionClass;
 use function version_compare;
 
 final class ProductTest extends BaseTestCase
@@ -47,7 +49,7 @@ final class ProductTest extends BaseTestCase
     {
         parent::setUp();
 
-        $this->setActiveState(self::ACTIVE_PRODUCT, 'oxarticles');
+        $this->setActiveState(self::ACTIVE_PRODUCT);
     }
 
     protected function tearDown(): void
@@ -55,10 +57,13 @@ final class ProductTest extends BaseTestCase
         $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories');
         $this->setActiveState(self::VENDOR_OF_ACTIVE_PRODUCT, 'oxvendor');
         $this->setActiveState(self::ACTIVE_PRODUCT_MANUFACTURER, 'oxmanufacturers');
-        $this->setActiveState(self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT, 'oxarticles');
-        $this->setActiveState(self::ACTIVE_PRODUCT, 'oxarticles');
+        $this->setActiveState(self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT);
+        $this->setActiveState(self::ACTIVE_PRODUCT);
         $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories');
         $this->setActiveState(self::ACTIVE_PRODUCT_MANUFACTURER, 'oxmanufacturers');
+
+        $reflection = new ReflectionClass(EshopModelArticle::class);
+        $reflection->setStaticPropertyValue('_aCategoryCache', []);
 
         parent::tearDown();
     }
@@ -1140,12 +1145,12 @@ final class ProductTest extends BaseTestCase
     {
         return [
             [
-                'isCategoryActive' => false,
+                'isCategoryActive' => 0,
                 'withToken'        => false,
                 'expectedCategory' => null,
             ],
             [
-                'isCategoryActive' => false,
+                'isCategoryActive' => 0,
                 'withToken'        => true,
                 'expectedCategory' => null,
                 // TODO: Using a valid token, this list should also contain inactive categories
@@ -1155,7 +1160,7 @@ final class ProductTest extends BaseTestCase
                 //],
             ],
             [
-                'isCategoryActive' => true,
+                'isCategoryActive' => 1,
                 'withToken'        => false,
                 'expectedCategory' => [
                     'id'     => self::ACTIVE_PRODUCT_CATEGORY,
@@ -1163,7 +1168,7 @@ final class ProductTest extends BaseTestCase
                 ],
             ],
             [
-                'isCategoryActive' => true,
+                'isCategoryActive' => 1,
                 'withToken'        => true,
                 'expectedCategory' => [
                     'id'     => self::ACTIVE_PRODUCT_CATEGORY,
@@ -1175,15 +1180,10 @@ final class ProductTest extends BaseTestCase
 
     /**
      * @dataProvider productMainCategoryWithTokenProvider
-     *
-     * @param mixed $isCategoryActive
-     * @param mixed $withToken
-     * @param mixed $expectedCategory
      */
-    public function testGetProductMainCategory($isCategoryActive, $withToken, $expectedCategory): void
+    public function testGetProductMainCategory(int $isCategoryActive, bool $withToken, ?array $expectedCategory): void
     {
-        $oxactive = $isCategoryActive ? 1 : 0;
-        $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories', $oxactive);
+        $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories', $isCategoryActive);
 
         if ($withToken) {
             $this->prepareToken();
