@@ -257,7 +257,8 @@ final class Basket
 
     public function placeOrder(
         CustomerDataType $customer,
-        BasketDataType $userBasket
+        BasketDataType $userBasket,
+        ?string $remark = null
     ): OrderDataType {
 
         /** @var EshopUserModel $userModel */
@@ -287,6 +288,13 @@ final class Basket
         /** @var EshopBasketModel $basketModel */
         $basketModel = $this->sharedBasketInfrastructure->getCalculatedBasket($userBasket);
         EshopRegistry::getSession()->setBasket($basketModel);
+
+        if ($remark) {
+            EshopRegistry::getSession()->setVariable(
+                'ordrem',
+                EshopRegistry::getConfig()->checkParamSpecialChars($remark)
+            );
+        }
 
         /** @var OrderModel $orderModel */
         $orderModel = oxNew(OrderModel::class);
