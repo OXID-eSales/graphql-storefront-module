@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Category\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class CategoryFilterList extends FilterList
@@ -18,21 +19,32 @@ final class CategoryFilterList extends FilterList
     /** @var null|StringFilter */
     protected $title;
 
+    //TODO: use IDFilter
+
     /** @var null|StringFilter */
     protected $parentId;
 
+    /** @var ?SeoSlugFilter */
+    private $slug;
+
     public function __construct(
         ?StringFilter $title = null,
-        ?StringFilter $parentId = null
+        ?StringFilter $parentId = null,
+        ?SeoSlugFilter $slug = null
     ) {
         $this->title    = $title;
         $this->parentId = $parentId;
+        $this->slug     = $slug;
+        null === $this->slug ?: $this->slug->setType('oxcategory');
+
         parent::__construct();
     }
 
     /**
      * @return array{
-     *                oxtitle: null|StringFilter
+     *                oxtitle: ?StringFilter,
+     *                oxparentid: ?StringFilter,
+     *                oxseourl: ?SeoSlugFilter,
      *                }
      */
     public function getFilters(): array
@@ -40,6 +52,7 @@ final class CategoryFilterList extends FilterList
         return [
             'oxtitle'    => $this->title,
             'oxparentid' => $this->parentId,
+            'oxseourl'   => $this->slug,
         ];
     }
 
@@ -48,11 +61,13 @@ final class CategoryFilterList extends FilterList
      */
     public static function createCategoryFilterList(
         ?StringFilter $title = null,
-        ?StringFilter $parentId = null
+        ?StringFilter $parentId = null,
+        ?SeoSlugFilter $slug = null
     ): self {
         return new self(
             $title,
-            $parentId
+            $parentId,
+            $slug
         );
     }
 }

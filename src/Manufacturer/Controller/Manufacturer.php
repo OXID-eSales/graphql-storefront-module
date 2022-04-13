@@ -30,9 +30,9 @@ final class Manufacturer
     /**
      * @Query()
      */
-    public function manufacturer(ID $manufacturerId): ManufacturerDataType
+    public function manufacturer(?ID $manufacturerId, ?string $slug = null): ManufacturerDataType
     {
-        return $this->manufacturerService->manufacturer($manufacturerId);
+        return $this->manufacturerService->manufacturer($manufacturerId, $slug);
     }
 
     /**

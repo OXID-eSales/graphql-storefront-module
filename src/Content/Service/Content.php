@@ -9,11 +9,14 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Content\Service;
 
+use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Content\DataType\Content as ContentDataType;
 use OxidEsales\GraphQL\Storefront\Content\DataType\ContentFilterList;
+use OxidEsales\GraphQL\Storefront\Content\DataType\Sorting as ContentSorting;
 use OxidEsales\GraphQL\Storefront\Content\Exception\ContentNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -38,14 +41,21 @@ final class Content
      * @throws ContentNotFound
      * @throws InvalidLogin
      */
-    public function content(ID $id): ContentDataType
+    public function content(?ID $id, ?string $slug): ContentDataType
     {
+        if ((!$id && !$slug) || ($id && $slug)) {
+            throw ContentNotFound::byParameter();
+        }
+
         try {
-            $content = $this->repository->getById(
-                (string) $id,
-                ContentDataType::class,
-                false
-            );
+            if ($id) {
+                /** @var ContentDataType $content */
+                $content = $this->repository->getById((string) $id, ContentDataType::class, false);
+            } else {
+                $content = $this->getContentBySeoSlug((string) $slug);
+            }
+        } catch (ContentNotFound $e) {
+            throw $e;
         } catch (NotFound $e) {
             throw ContentNotFound::byId((string) $id);
         }
@@ -76,5 +86,35 @@ final class Content
             $filter,
             ContentDataType::class
         );
+    }
+
+    /**
+     * @throws ContentNotFound
+     */
+    private function getContentBySeoSlug(string $slug): ContentDataType
+    {
+        $slugFilter = SeoSlugFilter::fromUserInput(trim($slug, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+        $slugFilter->setType('oxcontent');
+        $slugFilter->unsetPostfix();
+
+        $results = $this->repository->getList(
+            ContentDataType::class,
+            new ContentFilterList(
+                null,
+                $slugFilter
+            ),
+            new PaginationFilter(),
+            new ContentSorting()
+        );
+
+        if (empty($results)) {
+            throw ContentNotFound::bySlug($slug);
+        }
+
+        if (1 < count($results)) {
+            throw ContentNotFound::byAmbiguousBySlug($slug);
+        }
+
+        return $results[0];
     }
 }

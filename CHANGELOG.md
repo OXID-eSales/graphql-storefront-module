@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 New Event ``OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem``
+- Extended DataType Seo to also fetch slug and path
+- Filter `OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter`
+- Query product by either id or seo slug
 
 ## [2.0.1] - 2022-01-03
 

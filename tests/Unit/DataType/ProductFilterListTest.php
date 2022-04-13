@@ -29,6 +29,7 @@ final class ProductFilterListTest extends TestCase
                 'oxmanufacturerid' => null,
                 'oxvendorid'       => null,
                 'oxparentid'       => new IDFilter(new ID('')),
+                'oxseourl'         => null,
             ],
             $filter->getFilters()
         );

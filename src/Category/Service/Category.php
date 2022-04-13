@@ -16,7 +16,9 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting as CategorySorting;
 use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -41,11 +43,21 @@ final class Category
      * @throws CategoryNotFound
      * @throws InvalidLogin
      */
-    public function category(ID $id): CategoryDataType
+    public function category(?ID $id, ?string $slug = null): CategoryDataType
     {
+        if ((!$id && !$slug) || ($id && $slug)) {
+            throw CategoryNotFound::byParameter();
+        }
+
         try {
-            /** @var CategoryDataType $category */
-            $category = $this->repository->getById((string) $id, CategoryDataType::class);
+            if ($id) {
+                /** @var CategoryDataType $category */
+                $category = $this->repository->getById((string) $id, CategoryDataType::class);
+            } else {
+                $category = $this->getCategoryBySeoSlug((string) $slug);
+            }
+        } catch (CategoryNotFound $e) {
+            throw $e;
         } catch (NotFound $e) {
             throw CategoryNotFound::byId((string) $id);
         }
@@ -78,5 +90,36 @@ final class Category
             new PaginationFilter(),
             $sort
         );
+    }
+
+    /**
+     * @throws CategoryNotFound
+     */
+    private function getCategoryBySeoSlug(string $slug): CategoryDataType
+    {
+        $slugFilter = SeoSlugFilter::fromUserInput(DIRECTORY_SEPARATOR . trim($slug, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
+        $slugFilter->setType('oxcategory');
+        $slugFilter->unsetPostfix();
+
+        $results = $this->repository->getList(
+            CategoryDataType::class,
+            new CategoryFilterList(
+                null,
+                null,
+                $slugFilter
+            ),
+            new PaginationFilter(),
+            CategorySorting::fromUserInput()
+        );
+
+        if (empty($results)) {
+            throw CategoryNotFound::bySlug($slug);
+        }
+
+        if (1 < count($results)) {
+            throw CategoryNotFound::byAmbiguousBySlug($slug);
+        }
+
+        return $results[0];
     }
 }

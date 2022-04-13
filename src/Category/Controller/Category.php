@@ -30,9 +30,9 @@ final class Category
     /**
      * @Query()
      */
-    public function category(ID $categoryId): CategoryDataType
+    public function category(?ID $categoryId, ?string $slug = null): CategoryDataType
     {
-        return $this->categoryService->category($categoryId);
+        return $this->categoryService->category($categoryId, $slug);
     }
 
     /**

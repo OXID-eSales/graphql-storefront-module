@@ -46,6 +46,8 @@ abstract class MultishopBaseCest extends BaseCest
         if ($facts->isEnterprise()) {
             $I->updateConfigInDatabaseForShops('blMallUsers', false, 'bool', [1, 2]);
         }
+
+        Registry::getConfig()->setShopId(1);
     }
 
     private function ensureSubshop(): void

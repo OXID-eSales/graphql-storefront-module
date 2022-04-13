@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
 use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryIDFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
+use OxidEsales\GraphQL\Storefront\Shared\DataType\SeoSlugFilter;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -34,11 +35,15 @@ final class ProductFilterList extends FilterList
     /** @var ?IDFilter */
     private $parent;
 
+    /** @var ?SeoSlugFilter */
+    private $slug;
+
     public function __construct(
         ?StringFilter $title = null,
         ?CategoryIDFilter $category = null,
         ?IDFilter $manufacturer = null,
         ?IDFilter $vendor = null,
+        ?SeoSlugFilter $slug = null,
         ?BoolFilter $active = null
     ) {
         $this->title        = $title;
@@ -47,6 +52,9 @@ final class ProductFilterList extends FilterList
         $this->vendor       = $vendor;
         $this->active       = $active;
         $this->parent       = new IDFilter(new ID(''));
+        $this->slug         = $slug;
+        null === $this->slug ?: $this->slug->setType('oxarticle');
+
         parent::__construct();
     }
 
@@ -56,7 +64,8 @@ final class ProductFilterList extends FilterList
      *                oxcatnid : ?CategoryIDFilter,
      *                oxmanufacturerid: ?IDFilter,
      *                oxvendorid: ?IDFilter,
-     *                oxparentid: ?IDFilter
+     *                oxparentid: ?IDFilter,
+     *                oxseourl: ?SeoSlugFilter,
      *                }
      */
     public function getFilters(): array
@@ -67,6 +76,7 @@ final class ProductFilterList extends FilterList
             'oxmanufacturerid' => $this->manufacturer,
             'oxvendorid'       => $this->vendor,
             'oxparentid'       => $this->parent,
+            'oxseourl'         => $this->slug,
         ];
     }
 
@@ -77,8 +87,9 @@ final class ProductFilterList extends FilterList
         ?StringFilter $title = null,
         ?CategoryIDFilter $category = null,
         ?IDFilter $manufacturer = null,
-        ?IDFilter $vendor = null
+        ?IDFilter $vendor = null,
+        ?SeoSlugFilter $slug = null
     ): self {
-        return new self($title, $category, $manufacturer, $vendor);
+        return new self($title, $category, $manufacturer, $vendor, $slug);
     }
 }
