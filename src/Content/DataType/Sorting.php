@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Content\DataType;
 
-use OxidEsales\GraphQL\Base\DataType\Sorting as BaseSorting;
+use OxidEsales\GraphQL\Base\DataType\Sorting\Sorting as BaseSorting;
 
 final class Sorting extends BaseSorting
 {

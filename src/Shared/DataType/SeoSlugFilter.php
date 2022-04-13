@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Shared\DataType;
 use Doctrine\DBAL\Query\QueryBuilder;
 use InvalidArgumentException;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\GraphQL\Base\DataType\FilterInterface;
+use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy as LegacyService;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
@@ -95,7 +95,7 @@ final class SeoSlugFilter implements FilterInterface
     }
 
     /**
-     * @Factory(name="SeoSlugFilterInput")
+     * @Factory(name="SeoSlugFilterInput", default=true)
      */
     public static function fromUserInput(string $like): self
     {

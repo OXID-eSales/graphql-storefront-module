@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Content\Service;
 
-use OxidEsales\GraphQL\Base\DataType\PaginationFilter;
+use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Content\DataType\Content as ContentDataType;
@@ -103,7 +103,7 @@ final class Content
                 null,
                 $slugFilter
             ),
-            new PaginationFilter(),
+            new Pagination(),
             new ContentSorting()
         );
 

@@ -85,7 +85,7 @@ final class SeoTest extends BaseTestCase
         $this->assertEquals($keywords, $seo->getKeywords());
         $this->assertEquals($path, $seo->getPath());
         $this->assertEquals(strtolower($slug), $seo->getSlug());
-        $this->doAssertContains($url, $seo->getURL());
+        $this->assertStringContainsString($url, $seo->getURL());
     }
 
     public function providerCategorySeo()
