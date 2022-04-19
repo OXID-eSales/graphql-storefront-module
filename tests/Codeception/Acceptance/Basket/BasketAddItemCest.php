@@ -13,6 +13,7 @@ use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketAccessForbidden;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketItemAmountLimitedStock;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotOrderable;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException as MissingAuthorizationExceptionAlias;
 
@@ -30,6 +31,8 @@ final class BasketAddItemCest extends BasketBaseCest
     private const PASSWORD = 'useruser';
 
     private const PRODUCT = '_test_product_for_basket';
+
+    private const PRODUCT_WITH_VARIANT = '_test_product_with_variant';
 
     private const PRODUCT_ID = 'dc5ffdf380e15674b56dd562a7cb6aec';
 
@@ -309,6 +312,20 @@ final class BasketAddItemCest extends BasketBaseCest
 
         $I->assertSame(
             BasketAccessForbidden::byAuthenticatedUser()->getMessage(),
+            $result['errors'][0]['message']
+        );
+    }
+
+    /**
+     * @group oe_graphql_storefront_test
+     */
+    public function testCanNotAddItemWithVariants(AcceptanceTester $I): void
+    {
+        $I->login(self::USERNAME, self::PASSWORD);
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_WITH_VARIANT);
+
+        $I->assertSame(
+            ProductNotOrderable::hasVariants(self::PRODUCT_WITH_VARIANT)->getMessage(),
             $result['errors'][0]['message']
         );
     }

@@ -35,6 +35,7 @@ use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotOrderable;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Price as PriceDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
@@ -85,6 +86,10 @@ final class Basket
         $productStock = $product->getStock();
         $onStock      = $product->checkForStock($amount, $alreadyInBasket);
         $blOverride   = false;
+
+        if ($product->getVariantsCount() > 0) {
+            throw ProductNotOrderable::hasVariants((string) $productId);
+        }
 
         if ($onStock !== true) {
             $blOverride = true;
