@@ -211,7 +211,7 @@ final class Basket
     {
         $this->eventDispatcher->dispatch(
             new BeforeBasketRemove($id),
-            BeforeBasketRemove::NAME
+            BeforeBasketRemove::class
         );
 
         $basket = $this->basketRepository->getBasketById((string) $id);
@@ -259,7 +259,7 @@ final class Basket
     {
         $this->eventDispatcher->dispatch(
             new BeforeAddItem($basketId, $productId, $amount),
-            BeforeAddItem::NAME
+            BeforeAddItem::class
         );
 
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
@@ -274,14 +274,14 @@ final class Basket
 
         $this->eventDispatcher->dispatch(
             $event,
-            BeforeAddItem::NAME
+            BeforeAddItem::class
         );
 
         $this->basketInfraService->addBasketItem($basket, $productId, $amount);
 
         $this->eventDispatcher->dispatch(
             new AfterAddItem($basketId, $productId, $amount),
-            AfterAddItem::NAME
+            AfterAddItem::class
         );
 
         return $basket;
@@ -299,14 +299,14 @@ final class Basket
 
         $this->eventDispatcher->dispatch(
             $event,
-            BeforeRemoveItem::NAME
+            BeforeRemoveItem::class
         );
 
         $this->basketInfraService->removeBasketItem($basket, $basketItemId, $event->getAmount());
 
         $this->eventDispatcher->dispatch(
             new AfterRemoveItem($basketId, $basketItemId, $amount),
-            AfterRemoveItem::NAME
+            AfterRemoveItem::class
         );
 
         return $basket;
@@ -512,7 +512,7 @@ final class Basket
         $event = new BeforeBasketDeliveryMethods($basketId);
         $this->eventDispatcher->dispatch(
             $event,
-            BeforeBasketDeliveryMethods::NAME
+            BeforeBasketDeliveryMethods::class
         );
 
         if ($event->getDeliveryMethods() !== null) {
@@ -538,7 +538,7 @@ final class Basket
         $event = new BeforeBasketPayments($basketId);
         $this->eventDispatcher->dispatch(
             $event,
-            BeforeBasketPayments::NAME
+            BeforeBasketPayments::class
         );
 
         if ($event->getPayments() !== null) {

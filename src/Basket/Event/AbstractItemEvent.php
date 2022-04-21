@@ -14,8 +14,6 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 abstract class AbstractItemEvent extends Event
 {
-    public const NAME = self::class;
-
     /** @var ID */
     protected $basketId;
 

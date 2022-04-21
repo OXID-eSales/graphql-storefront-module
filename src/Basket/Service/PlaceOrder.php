@@ -80,7 +80,7 @@ final class PlaceOrder
             new BeforePlaceOrder(
                 $basketId
             ),
-            BeforePlaceOrder::NAME
+            BeforePlaceOrder::class
         );
 
         $userBasket = $this->basketService->getAuthenticatedCustomerBasket($basketId);

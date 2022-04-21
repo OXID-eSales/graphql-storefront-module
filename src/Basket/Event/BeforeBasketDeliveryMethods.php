@@ -15,8 +15,6 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BeforeBasketDeliveryMethods extends Event implements BasketModifyInterface
 {
-    public const NAME = self::class;
-
     /** @var ID */
     private $basketId;
 

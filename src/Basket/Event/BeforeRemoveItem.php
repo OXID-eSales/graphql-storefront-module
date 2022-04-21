@@ -11,8 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
 final class BeforeRemoveItem extends AbstractItemEvent implements BasketModifyInterface
 {
-    public const NAME = self::class;
-
     public function setAmount(float $amount): void
     {
         $this->amount = $amount;

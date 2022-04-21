@@ -11,5 +11,4 @@ namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
 final class AfterRemoveItem extends AbstractItemEvent implements BasketModifyInterface
 {
-    public const NAME = self::class;
 }

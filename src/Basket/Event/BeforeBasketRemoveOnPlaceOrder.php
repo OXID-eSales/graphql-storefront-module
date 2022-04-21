@@ -14,8 +14,6 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BeforeBasketRemoveOnPlaceOrder extends Event
 {
-    public const NAME = self::class;
-
     /** @var ID */
     private $basketId;
 
