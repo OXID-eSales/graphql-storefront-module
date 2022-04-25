@@ -4,9 +4,8 @@ env:
   PHP: '7.4'
 
 on:
-  push:
-    branches:
-      - 'b-6.5.x-fix-sonarcloud-issues-OXDEV-5196'
+  schedule:
+    - cron: '15 0 * * 6'
 
 jobs:
   install_shop_with_module:
