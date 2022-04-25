@@ -9,9 +9,28 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
+use TheCodingMachine\GraphQLite\Types\ID;
+
 final class BeforeAddItem extends AbstractItemEvent implements BasketModifyInterface
 {
     public const NAME = self::class;
+
+    /** @var ID */
+    protected $productId;
+
+    public function __construct(
+        ID $basketId,
+        ID $productId,
+        float $amount
+    ) {
+        $this->productId = $productId;
+        parent::__construct($basketId, $amount);
+    }
+
+    public function getProductId(): ID
+    {
+        return $this->productId;
+    }
 
     public function setAmount(float $amount): void
     {

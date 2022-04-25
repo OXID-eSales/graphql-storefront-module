@@ -19,30 +19,20 @@ abstract class AbstractItemEvent extends Event
     /** @var ID */
     protected $basketId;
 
-    /** @var ID */
-    protected $basketItemId;
-
     /** @var float */
     protected $amount;
 
     public function __construct(
         ID $basketId,
-        ID $basketItemId,
         float $amount
     ) {
         $this->basketId     = $basketId;
-        $this->basketItemId = $basketItemId;
         $this->amount       = $amount;
     }
 
     public function getBasketId(): ID
     {
         return $this->basketId;
-    }
-
-    public function getBasketItemId(): ID
-    {
-        return $this->basketItemId;
     }
 
     public function getAmount(): float
