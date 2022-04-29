@@ -19,7 +19,8 @@ final class AddressMissingFields extends Error
         string $addressName,
         array $missingFields
     ) {
-        $message = sprintf('%s address is missing required fields: %s',
+        $message = sprintf(
+            '%s address is missing required fields: %s',
             ucfirst($addressName),
             implode(', ', $missingFields)
         );
