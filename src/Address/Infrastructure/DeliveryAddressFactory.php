@@ -16,7 +16,7 @@ use OxidEsales\Eshop\Application\Model\RequiredFieldsValidator;
 use OxidEsales\Eshop\Application\Model\State as EshopStateModel;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress as DeliveryAddressDataType;
-use OxidEsales\GraphQL\Storefront\Address\Exception\DeliveryAddressMissingFields;
+use OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class DeliveryAddressFactory
@@ -97,7 +97,7 @@ final class DeliveryAddressFactory
                 $validator->getInvalidFields()
             );
 
-            throw DeliveryAddressMissingFields::byFields($invalidFields);
+            throw new AddressMissingFields('delivery', $invalidFields);
         }
 
         return new DeliveryAddressDataType(

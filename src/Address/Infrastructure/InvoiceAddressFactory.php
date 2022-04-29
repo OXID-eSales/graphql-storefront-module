@@ -16,7 +16,7 @@ use OxidEsales\Eshop\Application\Model\State as EshopStateModel;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress as InvoiceAddressDataType;
-use OxidEsales\GraphQL\Storefront\Address\Exception\InvoiceAddressMissingFields;
+use OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -105,7 +105,7 @@ final class InvoiceAddressFactory
                 $validator->getInvalidFields()
             );
 
-            throw InvoiceAddressMissingFields::byFields($invalidFields);
+            throw new AddressMissingFields('invoice', $invalidFields);
         }
 
         return new InvoiceAddressDataType($customer);
