@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Customer\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
+use OxidEsales\EshopCommunity\Core\Email;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
@@ -41,6 +42,8 @@ final class Repository
         if (!$user->load($user->getId())) {
             throw CustomerNotFound::byId($user->getId());
         }
+
+        oxNew(Email::class)->sendRegisterEmail($user);
 
         return new CustomerDataType($user);
     }
