@@ -9,8 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Address\DataType;
 
+use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress;
+use OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields;
+use OxidEsales\GraphQL\Storefront\Address\Infrastructure\InvoiceAddressFactory;
+use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer;
 use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\TestCase;
 
@@ -126,6 +130,28 @@ final class InvoiceAddressTest extends TestCase
         $this->assertSame(
             $dataType->fax(),
             $data['oxfax']
+        );
+    }
+
+    public function testCreateInvoiceAddressWithMissingFields(): void
+    {
+        $invoiceAddressFactory = new InvoiceAddressFactory();
+
+        $user     = oxNew(User::class);
+        $customer = new Customer($user);
+
+        $this->expectException(AddressMissingFields::class);
+        $invoiceAddressFactory->createValidInvoiceAddressType(
+            $customer,
+            'Mr',
+            'test',
+            'name',
+        );
+
+        $exceptionMessage = $this->getExpectedExceptionMessage();
+        $this->assertEquals(
+            'Invoice address is missing required fields: street, streetnr, zip, city, countryid',
+            $exceptionMessage
         );
     }
 }

@@ -11,6 +11,10 @@ namespace OxidEsales\GraphQL\Storefront\Address\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\Error;
 
+/**
+ * @deprecated 3.0.0
+ * @see AddressMissingFields
+ */
 final class InvoiceAddressMissingFields extends Error
 {
     public function getCategory(): string
@@ -21,10 +25,8 @@ final class InvoiceAddressMissingFields extends Error
     /**
      * @param string[] $missingFields
      */
-    public static function byFields(array $missingFields): self
+    public static function byFields(array $missingFields): AddressMissingFields
     {
-        return new self(
-            'Invoice address is missing required fields: ' . implode(', ', $missingFields)
-        );
+        return new AddressMissingFields('invoice', $missingFields);
     }
 }
