@@ -316,17 +316,27 @@ final class BasketAddItemCest extends BasketBaseCest
         );
     }
 
-    /**
-     * @group oe_graphql_storefront_test
-     */
-    public function testCanNotAddItemWithVariants(AcceptanceTester $I): void
+    public function testCanNotAddNotBuyableParentToBasket(AcceptanceTester $I): void
     {
+        $I->updateConfigInDatabase('blVariantParentBuyable', false);
         $I->login(self::USERNAME, self::PASSWORD);
         $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_WITH_VARIANT);
 
         $I->assertSame(
             ProductNotOrderable::hasVariants(self::PRODUCT_WITH_VARIANT)->getMessage(),
             $result['errors'][0]['message']
+        );
+    }
+
+    public function testCanAddBuyableParentToBasket(AcceptanceTester $I): void
+    {
+        $I->updateConfigInDatabase('blVariantParentBuyable', true);
+        $I->login(self::USERNAME, self::PASSWORD);
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_WITH_VARIANT);
+
+        $I->assertSame(
+            self::PRODUCT_WITH_VARIANT,
+            $result['data']['basketAddItem']['items'][0]['product']['id']
         );
     }
 

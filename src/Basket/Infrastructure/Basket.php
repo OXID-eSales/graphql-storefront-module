@@ -87,7 +87,7 @@ final class Basket
         $onStock      = $product->checkForStock($amount, $alreadyInBasket);
         $blOverride   = false;
 
-        if ($product->getVariantsCount() > 0) {
+        if (!$product->isBuyable()) {
             throw ProductNotOrderable::hasVariants((string) $productId);
         }
 
