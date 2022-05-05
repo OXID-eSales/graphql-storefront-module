@@ -87,10 +87,6 @@ final class Basket
         $onStock      = $product->checkForStock($amount, $alreadyInBasket);
         $blOverride   = false;
 
-        if (!$product->isBuyable()) {
-            throw ProductNotOrderable::hasVariants((string) $productId);
-        }
-
         if ($onStock !== true) {
             $blOverride = true;
 
@@ -109,6 +105,12 @@ final class Basket
                     BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $productStock, $item ? $item->getId() : null)
                 );
             }
+        }
+
+        if (!$product->isBuyable()) {
+            GraphQLQueryHandler::addError(
+                new ProductNotOrderable((string) $productId)
+            );
         }
 
         $model->addItemToBasket((string) $productId, $amount, $select, $forceOverride ?: $blOverride, $persParams);

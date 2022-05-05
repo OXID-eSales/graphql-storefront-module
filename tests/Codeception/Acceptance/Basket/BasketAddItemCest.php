@@ -53,6 +53,14 @@ final class BasketAddItemCest extends BasketBaseCest
         );
 
         $I->deleteFromDatabase(
+            'oxuserbasketitems',
+            [
+                'OXARTID'    => self::PRODUCT_WITH_VARIANT,
+                'OXBASKETID' => self::PUBLIC_BASKET,
+            ]
+        );
+
+        $I->deleteFromDatabase(
             'oxuserbaskets',
             [
                 'OXTITLE' => self::BASKET_TITLE,
@@ -322,8 +330,9 @@ final class BasketAddItemCest extends BasketBaseCest
         $I->login(self::USERNAME, self::PASSWORD);
         $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_WITH_VARIANT);
 
+        $error = new ProductNotOrderable(self::PRODUCT_WITH_VARIANT);
         $I->assertSame(
-            ProductNotOrderable::hasVariants(self::PRODUCT_WITH_VARIANT)->getMessage(),
+            $error->getMessage(),
             $result['errors'][0]['message']
         );
     }
