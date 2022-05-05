@@ -20,6 +20,7 @@ use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException as Mis
 /**
  * @group basket
  * @group oe_graphql_storefront
+ * @group oe_graphql_storefront_basket_add_item
  */
 final class BasketAddItemCest extends BasketBaseCest
 {
@@ -48,14 +49,6 @@ final class BasketAddItemCest extends BasketBaseCest
             'oxuserbasketitems',
             [
                 'OXARTID'    => self::PRODUCT_ID,
-                'OXBASKETID' => self::PUBLIC_BASKET,
-            ]
-        );
-
-        $I->deleteFromDatabase(
-            'oxuserbasketitems',
-            [
-                'OXARTID'    => self::PRODUCT_WITH_VARIANT,
                 'OXBASKETID' => self::PUBLIC_BASKET,
             ]
         );
@@ -328,6 +321,7 @@ final class BasketAddItemCest extends BasketBaseCest
     {
         $I->updateConfigInDatabase('blVariantParentBuyable', false);
         $I->login(self::USERNAME, self::PASSWORD);
+
         $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_WITH_VARIANT);
 
         $error = new ProductNotOrderable(self::PRODUCT_WITH_VARIANT);
@@ -335,6 +329,8 @@ final class BasketAddItemCest extends BasketBaseCest
             $error->getMessage(),
             $result['errors'][0]['message']
         );
+
+        $I->assertStringNotContainsString(self::PRODUCT_WITH_VARIANT, serialize($result['data']['basketAddItem']['items']));
     }
 
     public function testCanAddBuyableParentToBasket(AcceptanceTester $I): void
