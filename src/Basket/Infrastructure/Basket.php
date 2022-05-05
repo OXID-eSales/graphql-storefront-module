@@ -108,6 +108,8 @@ final class Basket
         }
 
         if (!$product->isBuyable()) {
+            $amount = 0;
+
             GraphQLQueryHandler::addError(
                 new ProductNotOrderable((string) $productId)
             );
