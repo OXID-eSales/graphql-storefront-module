@@ -15,8 +15,8 @@ use function sprintf;
 
 final class ProductNotOrderable extends Error
 {
-    public static function hasVariants(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Product with id %s can not be ordered, because it has variants', $id));
+        parent::__construct(sprintf('Product with id %s can not be ordered', $id));
     }
 }
