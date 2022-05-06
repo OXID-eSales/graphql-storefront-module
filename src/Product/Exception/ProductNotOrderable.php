@@ -15,7 +15,7 @@ use function sprintf;
 
 final class ProductNotOrderable extends Error
 {
-    public function __construct($id)
+    public function __construct(string $id)
     {
         parent::__construct(sprintf('Product with id %s can not be ordered', $id));
     }

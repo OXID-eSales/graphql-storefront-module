@@ -54,6 +54,14 @@ final class BasketAddItemCest extends BasketBaseCest
         );
 
         $I->deleteFromDatabase(
+            'oxuserbasketitems',
+            [
+                'OXARTID'    => self::PRODUCT_WITH_VARIANT,
+                'OXBASKETID' => self::PUBLIC_BASKET,
+            ]
+        );
+
+        $I->deleteFromDatabase(
             'oxuserbaskets',
             [
                 'OXTITLE' => self::BASKET_TITLE,
