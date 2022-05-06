@@ -43,7 +43,8 @@ final class Repository
             throw CustomerNotFound::byId($user->getId());
         }
 
-        oxNew(Email::class)->sendRegisterEmail($user);
+        //Todo: Parameter if private sales is active or not, will be implemented in OXDEV-5273
+        $user->sendRegistrationEmail(false);
 
         return new CustomerDataType($user);
     }
