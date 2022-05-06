@@ -67,6 +67,8 @@ final class BasketAddItemCest extends BasketBaseCest
                 'OXTITLE' => self::BASKET_TITLE,
             ]
         );
+
+        $I->updateConfigInDatabase('blVariantParentBuyable', false);
     }
 
     public function testAddItemToBasketNoToken(AcceptanceTester $I): void
