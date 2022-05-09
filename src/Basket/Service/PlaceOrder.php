@@ -74,8 +74,11 @@ final class PlaceOrder
      * @throws UnavailablePayment
      * @throws PlaceOrderException
      */
-    public function placeOrder(ID $basketId, ?bool $termsAndConditions = null): OrderDataType
-    {
+    public function placeOrder(
+        ID $basketId,
+        ?bool $termsAndConditions = null,
+        ?string $remark = null
+    ): OrderDataType {
         $this->eventDispatcher->dispatch(
             new BeforePlaceOrder(
                 $basketId
@@ -121,7 +124,8 @@ final class PlaceOrder
 
         return $this->basketInfrastructure->placeOrder(
             $customer,
-            $userBasket
+            $userBasket,
+            $remark
         );
     }
 
