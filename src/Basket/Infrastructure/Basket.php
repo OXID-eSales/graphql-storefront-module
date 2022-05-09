@@ -297,16 +297,16 @@ final class Basket
         $basketModel = $this->sharedBasketInfrastructure->getCalculatedBasket($userBasket);
         EshopRegistry::getSession()->setBasket($basketModel);
 
-        if ($remark) {
-            EshopRegistry::getSession()->setVariable(
-                'ordrem',
-                EshopRegistry::getConfig()->checkParamSpecialChars($remark)
-            );
-        }
-
         /** @var OrderModel $orderModel */
         $orderModel = oxNew(OrderModel::class);
-        $status     = $orderModel->finalizeOrder($basketModel, $userModel);
+
+        if ($remark) {
+            $orderModel->assign([
+                'oxremark' => EshopRegistry::getRequest()->checkParamSpecialChars($remark)
+            ]);
+        }
+
+        $status = $orderModel->finalizeOrder($basketModel, $userModel);
 
         // performing special actions after user finishes order (assignment to special user groups)
         $userModel->onOrderExecute($basketModel, $status);
