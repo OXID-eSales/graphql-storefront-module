@@ -226,8 +226,11 @@ final class Basket
      * @Mutation()
      * @Right("PLACE_ORDER")
      */
-    public function placeOrder(ID $basketId, ?bool $confirmTermsAndConditions = null): OrderDataType
-    {
-        return $this->placeOrderService->placeOrder($basketId, $confirmTermsAndConditions);
+    public function placeOrder(
+        ID $basketId,
+        ?bool $confirmTermsAndConditions = null,
+        ?string $remark = null
+    ): OrderDataType {
+        return $this->placeOrderService->placeOrder($basketId, $confirmTermsAndConditions, $remark);
     }
 }
