@@ -14,13 +14,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - Unreleased
 
 ### Added
-New Event ``OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem``
-New Exception ``OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields``
+- New Event ``OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem``
+- New Exception ``OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields``
+- Not mandatory ``remark`` parameter added for ``placeOrder`` mutation [PR-9](https://github.com/OXID-eSales/graphql-storefront-module/pull/9)
 
 ## [2.0.1] - 2022-01-03
 
 ### Added
-New event``BeforeBasketRemoveOnPlaceOrder``
+- New event``BeforeBasketRemoveOnPlaceOrder``
 
 ## [2.0.0] - 2021-12-08
 

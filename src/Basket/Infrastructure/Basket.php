@@ -265,7 +265,8 @@ final class Basket
 
     public function placeOrder(
         CustomerDataType $customer,
-        BasketDataType $userBasket
+        BasketDataType $userBasket,
+        ?string $remark = null
     ): OrderDataType {
 
         /** @var EshopUserModel $userModel */
@@ -298,7 +299,14 @@ final class Basket
 
         /** @var OrderModel $orderModel */
         $orderModel = oxNew(OrderModel::class);
-        $status     = $orderModel->finalizeOrder($basketModel, $userModel);
+
+        if ($remark) {
+            $orderModel->assign([
+                'oxremark' => EshopRegistry::getRequest()->checkParamSpecialChars($remark),
+            ]);
+        }
+
+        $status = $orderModel->finalizeOrder($basketModel, $userModel);
 
         // performing special actions after user finishes order (assignment to special user groups)
         $userModel->onOrderExecute($basketModel, $status);

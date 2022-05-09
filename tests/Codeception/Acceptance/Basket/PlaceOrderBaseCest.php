@@ -234,6 +234,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
                         ordered
                         paid
                         updated
+                        remark
                         cost {
                             total
                             voucher
@@ -265,19 +266,25 @@ abstract class PlaceOrderBaseCest extends BaseCest
         return $result['data']['customer']['orders'][0];
     }
 
-    protected function placeOrder(AcceptanceTester $I, string $basketId, ?bool $termsAndConditions = null): array
-    {
+    protected function placeOrder(
+        AcceptanceTester $I,
+        string $basketId,
+        ?bool $termsAndConditions = null,
+        ?string $remark = null
+    ): array {
         //now actually place the order
         $variables = [
             'basketId'                  => new ID($basketId),
             'confirmTermsAndConditions' => $termsAndConditions,
+            'remark'                    => $remark,
         ];
 
         $mutation = '
-            mutation ($basketId: ID!, $confirmTermsAndConditions: Boolean) {
+            mutation ($basketId: ID!, $confirmTermsAndConditions: Boolean, $remark: String) {
                 placeOrder(
                     basketId: $basketId
                     confirmTermsAndConditions: $confirmTermsAndConditions
+                    remark: $remark
                 ) {
                     id
                     orderNumber
