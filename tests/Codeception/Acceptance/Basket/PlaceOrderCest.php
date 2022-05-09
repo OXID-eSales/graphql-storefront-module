@@ -23,6 +23,28 @@ use TheCodingMachine\GraphQLite\Types\ID;
  */
 final class PlaceOrderCest extends PlaceOrderBaseCest
 {
+    public function placeOrderWithRemark(AcceptanceTester $I): void
+    {
+        $I->wantToTest('Placing an order with remark');
+        $I->login(self::USERNAME, self::PASSWORD, 0);
+
+        //prepare basket
+        $basketId = $this->createBasket($I, 'my_cart_one');
+        $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 2);
+        $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
+        $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
+
+        //place the order
+        $remark = "some remark";
+        $result  = $this->placeOrder($I, $basketId, null, $remark);
+        $orderId = $result['data']['placeOrder']['id'];
+
+        //check order history
+        $orders = $this->getOrderFromOrderHistory($I);
+        $I->assertEquals($orderId, $orders['id']);
+        $I->assertEquals($remark, $orders['remark']);
+    }
+
     /**
      * @group allowed_to_fail_for_anonymous_token
      */
