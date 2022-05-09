@@ -35,7 +35,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $remark = "some remark";
+        $remark  = 'some remark';
         $result  = $this->placeOrder($I, $basketId, null, $remark);
         $orderId = $result['data']['placeOrder']['id'];
 

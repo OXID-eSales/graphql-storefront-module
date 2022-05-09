@@ -302,7 +302,7 @@ final class Basket
 
         if ($remark) {
             $orderModel->assign([
-                'oxremark' => EshopRegistry::getRequest()->checkParamSpecialChars($remark)
+                'oxremark' => EshopRegistry::getRequest()->checkParamSpecialChars($remark),
             ]);
         }
 

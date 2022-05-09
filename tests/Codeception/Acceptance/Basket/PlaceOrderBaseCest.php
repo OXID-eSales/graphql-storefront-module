@@ -271,13 +271,12 @@ abstract class PlaceOrderBaseCest extends BaseCest
         string $basketId,
         ?bool $termsAndConditions = null,
         ?string $remark = null
-    ): array
-    {
+    ): array {
         //now actually place the order
         $variables = [
-            'basketId' => new ID($basketId),
+            'basketId'                  => new ID($basketId),
             'confirmTermsAndConditions' => $termsAndConditions,
-            'remark' => $remark
+            'remark'                    => $remark,
         ];
 
         $mutation = '
