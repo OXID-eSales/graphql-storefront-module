@@ -110,7 +110,7 @@ final class NewsletterStatusSubscribeMultiShopCest extends MultishopBaseCest
      */
     public function testNewsletterSubscribeForMallUserFromOtherSubshop(AcceptanceTester $I, Example $data): void
     {
-        $flag           = $data['flag'];
+        $flag = $data['flag'];
         $expectSameUser = $data['sameuser'];
 
         $I->updateConfigInDatabaseForShops('blMallUsers', $flag, 'bool', [1, 2]);
@@ -151,10 +151,10 @@ final class NewsletterStatusSubscribeMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'   => 1,
+                'shopId' => 1,
             ],
             'shop_2' => [
-                'shopId'   => 2,
+                'shopId' => 2,
             ],
         ];
     }
@@ -163,11 +163,11 @@ final class NewsletterStatusSubscribeMultiShopCest extends MultishopBaseCest
     {
         return [
             'malluser' => [
-                'flag'     => true,
+                'flag' => true,
                 'sameuser' => true,
             ],
             'no_malluser' => [
-                'flag'     => false,
+                'flag' => false,
                 'sameuser' => false,
             ],
         ];
@@ -187,8 +187,8 @@ final class NewsletterStatusSubscribeMultiShopCest extends MultishopBaseCest
         $I->haveInDatabase(
             'oxnewssubscribed',
             [
-                'OXID'           => $oxid,
-                'oxsubscribed'   => '2020-04-01 15:15:15',
+                'OXID' => $oxid,
+                'oxsubscribed' => '2020-04-01 15:15:15',
                 'oxunsubscribed' => '1980-01-01 00:00:00',
             ]
         );
@@ -196,10 +196,10 @@ final class NewsletterStatusSubscribeMultiShopCest extends MultishopBaseCest
         $I->updateInDatabase(
             'oxnewssubscribed',
             [
-                'oxuserid'     => self::DIFFERENT_USER_OXID,
-                'oxemail'      => self::DIFFERENT_USERNAME,
-                'oxdboptin'    => $optin,
-                'oxshopid'     => $shopid,
+                'oxuserid' => self::DIFFERENT_USER_OXID,
+                'oxemail' => self::DIFFERENT_USERNAME,
+                'oxdboptin' => $optin,
+                'oxshopid' => $shopid,
                 'oxsubscribed' => '2020-04-01 15:15:15',
             ],
             [

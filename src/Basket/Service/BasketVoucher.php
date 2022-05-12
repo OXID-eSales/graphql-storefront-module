@@ -43,11 +43,11 @@ final class BasketVoucher
         Authentication $authentication,
         SharedInfrastructure $sharedInfrastructure
     ) {
-        $this->repository            = $repository;
-        $this->voucherRepository     = $voucherRepository;
+        $this->repository = $repository;
+        $this->voucherRepository = $voucherRepository;
         $this->voucherInfrastructure = $voucherInfrastructure;
-        $this->authentication        = $authentication;
-        $this->sharedInfrastructure  = $sharedInfrastructure;
+        $this->authentication = $authentication;
+        $this->sharedInfrastructure = $sharedInfrastructure;
     }
 
     public function addVoucherToBasket(
@@ -76,7 +76,7 @@ final class BasketVoucher
         BasketDataType $basket
     ): void {
         /** @var VoucherDataType $voucher */
-        $voucher = $this->voucherRepository->getVoucherById((string) $voucherId);
+        $voucher = $this->voucherRepository->getVoucherById((string)$voucherId);
 
         if (!$this->voucherInfrastructure->isVoucherSerieUsableInCurrentShop($voucher)) {
             throw SeriesNotConfigured::wrongShop();

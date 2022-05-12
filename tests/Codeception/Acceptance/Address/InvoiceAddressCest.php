@@ -45,15 +45,15 @@ final class InvoiceAddressCest extends BaseCest
         $I->updateInDatabase(
             'oxuser',
             [
-                'OXSAL'       => 'MR',
-                'OXFNAME'     => 'Marc',
-                'OXLNAME'     => 'Muster',
-                'OXSTREET'    => 'Hauptstr.',
-                'OXSTREETNR'  => '13',
-                'OXZIP'       => '79098',
-                'OXCITY'      => 'Freiburg',
+                'OXSAL' => 'MR',
+                'OXFNAME' => 'Marc',
+                'OXLNAME' => 'Muster',
+                'OXSTREET' => 'Hauptstr.',
+                'OXSTREETNR' => '13',
+                'OXZIP' => '79098',
+                'OXCITY' => 'Freiburg',
                 'OXCOUNTRYID' => 'a7c40f631fc920687.20179984',
-                'OXSTATEID'   => '',
+                'OXSTATEID' => '',
             ],
             [
                 'OXID' => self::USER_OXID,
@@ -63,12 +63,14 @@ final class InvoiceAddressCest extends BaseCest
 
     public function testInvoiceAddressForNotLoggedInUser(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             customerInvoiceAddress {
                 firstName
                 lastName
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -83,7 +85,8 @@ final class InvoiceAddressCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             customerInvoiceAddress {
                 salutation
                 firstName
@@ -99,26 +102,27 @@ final class InvoiceAddressCest extends BaseCest
                 mobile
                 fax
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
             [
-                'salutation'     => 'MR',
-                'firstName'      => 'Marc',
-                'lastName'       => 'Muster',
-                'company'        => '',
+                'salutation' => 'MR',
+                'firstName' => 'Marc',
+                'lastName' => 'Muster',
+                'company' => '',
                 'additionalInfo' => '',
-                'street'         => 'Hauptstr.',
-                'streetNumber'   => '13',
-                'zipCode'        => '79098',
-                'city'           => 'Freiburg',
-                'vatID'          => '',
-                'phone'          => '',
-                'mobile'         => '',
-                'fax'            => '',
+                'street' => 'Hauptstr.',
+                'streetNumber' => '13',
+                'zipCode' => '79098',
+                'city' => 'Freiburg',
+                'vatID' => '',
+                'phone' => '',
+                'mobile' => '',
+                'fax' => '',
             ],
             $result['data']['customerInvoiceAddress']
         );
@@ -194,12 +198,13 @@ final class InvoiceAddressCest extends BaseCest
      */
     public function testCustomerInvoiceAddressSetValidationFail(AcceptanceTester $I, Example $data): void
     {
-        $invoiceData    = $data['invoiceData'];
-        $expectedError  = $data['expectedError'];
+        $invoiceData = $data['invoiceData'];
+        $expectedError = $data['expectedError'];
 
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             customerInvoiceAddressSet (
                 invoiceAddress: {
                     salutation: "' . $invoiceData['salutation'] . '"
@@ -229,7 +234,8 @@ final class InvoiceAddressCest extends BaseCest
                 mobile
                 fax
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -246,7 +252,7 @@ final class InvoiceAddressCest extends BaseCest
     public function testCustomerInvoiceAddressSetNotLoggedIn(AcceptanceTester $I, Example $data): void
     {
         $invoiceData = $data['inputFields'];
-        $queryPart   = '';
+        $queryPart = '';
 
         foreach ($invoiceData as $key => $value) {
             $queryPart .= $key . ': "' . $value . '",' . PHP_EOL;
@@ -304,11 +310,12 @@ final class InvoiceAddressCest extends BaseCest
             $queryPart .= $key . ': "' . $value . '",' . PHP_EOL;
         }
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             customerInvoiceAddressSet (
                 invoiceAddress: {' .
-                               $queryPart
-                               . '}
+            $queryPart
+            . '}
             ){
                 salutation
                 firstName
@@ -330,7 +337,8 @@ final class InvoiceAddressCest extends BaseCest
                 mobile
                 fax
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -379,8 +387,8 @@ final class InvoiceAddressCest extends BaseCest
         $expected = [];
 
         foreach ($data['fields'] as $field) {
-            $tmp             = explode('__', $field);
-            $name            = ltrim($tmp[1], 'ox');
+            $tmp = explode('__', $field);
+            $name = ltrim($tmp[1], 'ox');
             $expected[$name] = $name;
         }
         $expected = rtrim(implode(', ', $expected), ', ');
@@ -396,44 +404,44 @@ final class InvoiceAddressCest extends BaseCest
         return [
             'set1' => [
                 'invoiceData' => [
-                    'salutation'     => 'Mrs.',
-                    'firstName'      => 'First',
-                    'lastName'       => 'Last',
-                    'company'        => 'Invoice Company',
+                    'salutation' => 'Mrs.',
+                    'firstName' => 'First',
+                    'lastName' => 'Last',
+                    'company' => 'Invoice Company',
                     'additionalInfo' => 'Invoice address additional info',
-                    'street'         => 'Invoice street',
-                    'streetNumber'   => '123',
-                    'zipCode'        => '3210',
-                    'city'           => 'Invoice city',
-                    'country'        => [
-                        'id'    => 'a7c40f631fc920687.20179984',
+                    'street' => 'Invoice street',
+                    'streetNumber' => '123',
+                    'zipCode' => '3210',
+                    'city' => 'Invoice city',
+                    'country' => [
+                        'id' => 'a7c40f631fc920687.20179984',
                         'title' => 'Deutschland',
                     ],
-                    'vatID'  => '0987654321',
-                    'phone'  => '',
+                    'vatID' => '0987654321',
+                    'phone' => '',
                     'mobile' => '',
-                    'fax'    => '12345678900',
+                    'fax' => '12345678900',
                 ],
             ],
             'set2' => [
                 'invoiceData' => [
-                    'salutation'     => 'Mr.',
-                    'firstName'      => 'Invoice First',
-                    'lastName'       => 'Invoice Last',
-                    'company'        => 'Invoice Company',
+                    'salutation' => 'Mr.',
+                    'firstName' => 'Invoice First',
+                    'lastName' => 'Invoice Last',
+                    'company' => 'Invoice Company',
                     'additionalInfo' => 'Invoice address additional info',
-                    'street'         => 'Another invoice street',
-                    'streetNumber'   => '123',
-                    'zipCode'        => '3210',
-                    'city'           => 'Another invoice city',
-                    'country'        => [
-                        'id'    => 'a7c40f6321c6f6109.43859248',
+                    'street' => 'Another invoice street',
+                    'streetNumber' => '123',
+                    'zipCode' => '3210',
+                    'city' => 'Another invoice city',
+                    'country' => [
+                        'id' => 'a7c40f6321c6f6109.43859248',
                         'title' => 'Schweiz',
                     ],
-                    'vatID'  => '0987654321',
-                    'phone'  => '',
+                    'vatID' => '0987654321',
+                    'phone' => '',
                     'mobile' => '',
-                    'fax'    => '12345678900',
+                    'fax' => '12345678900',
                 ],
             ],
         ];
@@ -444,61 +452,61 @@ final class InvoiceAddressCest extends BaseCest
         return [
             'set1' => [
                 'invoiceData' => [
-                    'salutation'     => '',
-                    'firstName'      => '',
-                    'lastName'       => '',
-                    'company'        => '',
+                    'salutation' => '',
+                    'firstName' => '',
+                    'lastName' => '',
+                    'company' => '',
                     'additionalInfo' => '',
-                    'street'         => '',
-                    'streetNumber'   => '',
-                    'zipCode'        => '',
-                    'city'           => '',
-                    'country'        => [
-                        'id'    => '',
+                    'street' => '',
+                    'streetNumber' => '',
+                    'zipCode' => '',
+                    'city' => '',
+                    'country' => [
+                        'id' => '',
                         'title' => '',
                     ],
-                    'vatID'  => '',
-                    'phone'  => '',
+                    'vatID' => '',
+                    'phone' => '',
                     'mobile' => '',
-                    'fax'    => '',
+                    'fax' => '',
                 ],
                 'expectedError' => 'Invoice address is missing required fields: fname, lname, street, streetnr, zip, city, countryid',
             ],
             'set2' => [
                 'invoiceData' => [
-                    'salutation'     => 'Mrs.',
-                    'firstName'      => 'First',
-                    'lastName'       => 'Last',
-                    'company'        => '',
+                    'salutation' => 'Mrs.',
+                    'firstName' => 'First',
+                    'lastName' => 'Last',
+                    'company' => '',
                     'additionalInfo' => '',
-                    'street'         => 'Another invoice street',
-                    'streetNumber'   => '123',
-                    'zipCode'        => '3210',
-                    'city'           => 'Another invoice city',
-                    'country'        => [
-                        'id'    => '8f241f1109621faf8.40135556', // invalid country
+                    'street' => 'Another invoice street',
+                    'streetNumber' => '123',
+                    'zipCode' => '3210',
+                    'city' => 'Another invoice city',
+                    'country' => [
+                        'id' => '8f241f1109621faf8.40135556', // invalid country
                         'title' => 'Philippinen',
                     ],
-                    'vatID'  => '',
-                    'phone'  => '',
+                    'vatID' => '',
+                    'phone' => '',
                     'mobile' => '',
-                    'fax'    => '',
+                    'fax' => '',
                 ],
                 'expectedError' => 'Unauthorized',
             ],
             'set3' => [
                 'invoiceData' => [
-                    'salutation'     => 'Mrs.',
-                    'firstName'      => null,
-                    'lastName'       => null,
-                    'street'         => null,
-                    'streetNumber'   => null,
-                    'zipCode'        => null,
-                    'company'        => '',
+                    'salutation' => 'Mrs.',
+                    'firstName' => null,
+                    'lastName' => null,
+                    'street' => null,
+                    'streetNumber' => null,
+                    'zipCode' => null,
+                    'company' => '',
                     'additionalInfo' => '',
-                    'city'           => 'Another invoice city',
-                    'country'        => [
-                        'id'    => '8f241f1109621faf8.40135556', // invalid country
+                    'city' => 'Another invoice city',
+                    'country' => [
+                        'id' => '8f241f1109621faf8.40135556', // invalid country
                         'title' => 'Philippinen',
                     ],
                 ],
@@ -512,55 +520,55 @@ final class InvoiceAddressCest extends BaseCest
         return [
             'set1' => [
                 'inputFields' => [
-                    'salutation'     => 'Mrs.',
-                    'firstName'      => 'First',
-                    'lastName'       => 'Last',
-                    'company'        => '',
+                    'salutation' => 'Mrs.',
+                    'firstName' => 'First',
+                    'lastName' => 'Last',
+                    'company' => '',
                     'additionalInfo' => '',
-                    'street'         => 'Invoice street',
-                    'streetNumber'   => '123',
-                    'zipCode'        => '3210',
-                    'city'           => 'Invoice city',
-                    'countryId'      => 'a7c40f6321c6f6109.43859248',
-                    'vatID'          => '',
-                    'phone'          => '',
-                    'mobile'         => '',
-                    'fax'            => '',
+                    'street' => 'Invoice street',
+                    'streetNumber' => '123',
+                    'zipCode' => '3210',
+                    'city' => 'Invoice city',
+                    'countryId' => 'a7c40f6321c6f6109.43859248',
+                    'vatID' => '',
+                    'phone' => '',
+                    'mobile' => '',
+                    'fax' => '',
                 ],
             ],
             'set2' => [
                 'inputFields' => [
-                    'salutation'     => 'Mr.',
-                    'firstName'      => 'Invoice First',
-                    'lastName'       => 'Invoice Last',
-                    'company'        => 'Invoice Company',
+                    'salutation' => 'Mr.',
+                    'firstName' => 'Invoice First',
+                    'lastName' => 'Invoice Last',
+                    'company' => 'Invoice Company',
                     'additionalInfo' => 'Invoice address additional info',
-                    'street'         => 'Another invoice street',
-                    'streetNumber'   => '123',
-                    'zipCode'        => '3210',
-                    'city'           => 'Another invoice city',
-                    'countryId'      => 'a7c40f631fc920687.20179984',
-                    'vatID'          => '0987654321',
-                    'phone'          => '1234567890',
-                    'mobile'         => '01234567890',
-                    'fax'            => '12345678900',
+                    'street' => 'Another invoice street',
+                    'streetNumber' => '123',
+                    'zipCode' => '3210',
+                    'city' => 'Another invoice city',
+                    'countryId' => 'a7c40f631fc920687.20179984',
+                    'vatID' => '0987654321',
+                    'phone' => '1234567890',
+                    'mobile' => '01234567890',
+                    'fax' => '12345678900',
                 ],
             ],
             'set3' => [
                 'inputFields' => [
-                    'salutation'     => 'MS',
-                    'firstName'      => 'Dorothy',
-                    'lastName'       => 'Marlowe',
-                    'company'        => 'Invoice Company',
+                    'salutation' => 'MS',
+                    'firstName' => 'Dorothy',
+                    'lastName' => 'Marlowe',
+                    'company' => 'Invoice Company',
                     'additionalInfo' => 'private delivery',
-                    'street'         => 'Moonlight Drive',
-                    'streetNumber'   => '41',
-                    'zipCode'        => '08401',
-                    'city'           => 'Atlantic City',
-                    'countryId'      => '8f241f11096877ac0.98748826',
-                    'stateId'        => 'NJ',
-                    'phone'          => '1234',
-                    'fax'            => '4321',
+                    'street' => 'Moonlight Drive',
+                    'streetNumber' => '41',
+                    'zipCode' => '08401',
+                    'city' => 'Atlantic City',
+                    'countryId' => '8f241f11096877ac0.98748826',
+                    'stateId' => 'NJ',
+                    'phone' => '1234',
+                    'fax' => '4321',
                 ],
             ],
         ];

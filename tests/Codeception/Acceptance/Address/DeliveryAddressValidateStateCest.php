@@ -31,20 +31,20 @@ final class DeliveryAddressValidateStateCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $inputFields =  [
-            'salutation'     => 'MR',
-            'firstName'      => 'Marc',
-            'lastName'       => 'Muster',
-            'company'        => 'No GmbH',
+        $inputFields = [
+            'salutation' => 'MR',
+            'firstName' => 'Marc',
+            'lastName' => 'Muster',
+            'company' => 'No GmbH',
             'additionalInfo' => 'private delivery',
-            'street'         => 'Bertoldstrasse',
-            'streetNumber'   => '48',
-            'zipCode'        => '79098',
-            'city'           => 'Freiburg',
-            'countryId'      => 'a7c40f631fc920687.20179984',
-            'stateId'        => 'NY',
-            'phone'          => '1234',
-            'fax'            => '4321',
+            'street' => 'Bertoldstrasse',
+            'streetNumber' => '48',
+            'zipCode' => '79098',
+            'city' => 'Freiburg',
+            'countryId' => 'a7c40f631fc920687.20179984',
+            'stateId' => 'NY',
+            'phone' => '1234',
+            'fax' => '4321',
         ];
 
         $queryPart = '';

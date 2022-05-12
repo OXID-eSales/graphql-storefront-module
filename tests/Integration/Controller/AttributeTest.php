@@ -30,11 +30,13 @@ final class AttributeTest extends TestCase
 
     public function testGetSingleAttribute(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
-        }');
+        }'
+        );
 
         $attribute = $result['body']['data']['attribute'];
 
@@ -46,11 +48,13 @@ final class AttributeTest extends TestCase
 
     public function testGet404ForSingleNonExistingAttribute(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attribute (attributeId: "DOES-NOT-EXIST") {
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Attribute was not found by id: DOES-NOT-EXIST',
@@ -63,11 +67,11 @@ final class AttributeTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'title'      => 'Lieferumfang',
+                'title' => 'Lieferumfang',
             ],
             'en' => [
                 'languageId' => '1',
-                'title'      => 'Included in delivery',
+                'title' => 'Included in delivery',
             ],
         ];
     }
@@ -100,11 +104,13 @@ final class AttributeTest extends TestCase
 
     public function testAttributeList(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attributes {
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             12,
@@ -114,7 +120,8 @@ final class AttributeTest extends TestCase
 
     public function testAttributeListWithFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attributes(filter: {
                 title: {
                     beginsWith: "a"
@@ -122,7 +129,8 @@ final class AttributeTest extends TestCase
             }) {
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             1,
@@ -134,17 +142,19 @@ final class AttributeTest extends TestCase
      * @dataProvider providerGetAttributesMultilanguage
      *
      * @param string $languageId
-     * @param array  $attributes
+     * @param array $attributes
      */
     public function testAttributeListMultilanguage($languageId, $attributes): void
     {
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attributes {
                 title
             }
-        }');
+        }'
+        );
 
         foreach ($attributes as $key => $attribute) {
             $this->assertSame(

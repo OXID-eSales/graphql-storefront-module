@@ -40,19 +40,19 @@ abstract class AbstractItemEventTest extends TestCase
             $event->getBasketId(),
             $this->isInstanceOf(ID::class)
         );
-        $this->assertSame(self::BASKET_ID, (string) $event->getBasketId());
+        $this->assertSame(self::BASKET_ID, (string)$event->getBasketId());
 
         $this->assertThat(
             $event->getProductId(),
             $this->isInstanceOf(ID::class)
         );
-        $this->assertSame(self::PRODUCT_ID, (string) $event->getProductId());
+        $this->assertSame(self::PRODUCT_ID, (string)$event->getProductId());
 
         $this->assertThat(
             $event->getAmount(),
             $this->isType(IsType::TYPE_FLOAT)
         );
-        $this->assertSame((float) self::AMMOUNT, $event->getAmount());
+        $this->assertSame((float)self::AMMOUNT, $event->getAmount());
     }
 
     public function testAfterRemoveItem(): void
@@ -63,19 +63,19 @@ abstract class AbstractItemEventTest extends TestCase
             $event->getBasketId(),
             $this->isInstanceOf(ID::class)
         );
-        $this->assertSame(self::BASKET_ID, (string) $event->getBasketId());
+        $this->assertSame(self::BASKET_ID, (string)$event->getBasketId());
 
         $this->assertThat(
             $event->getBasketItemId(),
             $this->isInstanceOf(ID::class)
         );
-        $this->assertSame(self::BASKET_ITEM_ID, (string) $event->getBasketItemId());
+        $this->assertSame(self::BASKET_ITEM_ID, (string)$event->getBasketItemId());
 
         $this->assertThat(
             $event->getAmount(),
             $this->isType(IsType::TYPE_FLOAT)
         );
-        $this->assertSame((float) self::AMMOUNT, $event->getAmount());
+        $this->assertSame((float)self::AMMOUNT, $event->getAmount());
     }
 
     protected function prepareAddEvent(): AfterAddItem
@@ -83,7 +83,7 @@ abstract class AbstractItemEventTest extends TestCase
         return new AfterAddItem(
             new ID(self::BASKET_ID),
             new ID(self::PRODUCT_ID),
-            (float) self::AMMOUNT
+            (float)self::AMMOUNT
         );
     }
 
@@ -92,7 +92,7 @@ abstract class AbstractItemEventTest extends TestCase
         return new AfterRemoveItem(
             new ID(self::BASKET_ID),
             new ID(self::BASKET_ITEM_ID),
-            (float) self::AMMOUNT
+            (float)self::AMMOUNT
         );
     }
 }

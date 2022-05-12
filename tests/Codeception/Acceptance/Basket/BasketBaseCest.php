@@ -91,9 +91,9 @@ abstract class BasketBaseCest extends BaseCest
         ';
 
         $variables = [
-            'basketId'  => $basketId,
+            'basketId' => $basketId,
             'productId' => $productId,
-            'amount'    => $amount,
+            'amount' => $amount,
         ];
 
         $I->sendGQLQuery($mutation, $variables);
@@ -121,9 +121,9 @@ abstract class BasketBaseCest extends BaseCest
         ';
 
         $variables = [
-            'basketId'     => $basketId,
+            'basketId' => $basketId,
             'basketItemId' => $basketItemId,
-            'amount'       => $amount,
+            'amount' => $amount,
         ];
 
         $I->sendGQLQuery($mutation, $variables);

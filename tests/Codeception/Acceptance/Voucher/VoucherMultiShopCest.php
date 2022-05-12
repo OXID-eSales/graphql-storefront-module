@@ -41,8 +41,8 @@ final class VoucherMultiShopCest extends MultishopBaseCest
      */
     public function testAddVoucherToBasketPerShop(AcceptanceTester $I, Example $data): void
     {
-        $shopId    = $data['shopId'];
-        $basketId  = $data['basketId'];
+        $shopId = $data['shopId'];
+        $basketId = $data['basketId'];
         $voucherNr = $data['voucherNr'];
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
@@ -54,7 +54,7 @@ final class VoucherMultiShopCest extends MultishopBaseCest
 
         $I->assertSame(
             [
-                'id'       => $basketId,
+                'id' => $basketId,
                 'vouchers' => [
                     [
                         'number' => $voucherNr,
@@ -149,8 +149,8 @@ final class VoucherMultiShopCest extends MultishopBaseCest
      */
     public function testRemoveVoucherFromBasketPerShop(AcceptanceTester $I, Example $data): void
     {
-        $shopId    = $data['shopId'];
-        $basketId  = $data['basketId'];
+        $shopId = $data['shopId'];
+        $basketId = $data['basketId'];
         $voucherId = $data['voucherId'];
 
         $this->prepareVoucherInBasket($I, $basketId, $voucherId);
@@ -164,7 +164,7 @@ final class VoucherMultiShopCest extends MultishopBaseCest
 
         $I->assertSame(
             [
-                'id'       => $basketId,
+                'id' => $basketId,
                 'vouchers' => [],
             ],
             $result['data']['basketRemoveVoucher']
@@ -187,8 +187,8 @@ final class VoucherMultiShopCest extends MultishopBaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => self::SHOP2_VOUCHER_ID,
-                'oxreserved'     => 0,
+                'oxid' => self::SHOP2_VOUCHER_ID,
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
@@ -217,13 +217,13 @@ final class VoucherMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'    => 1,
-                'basketId'  => self::SHOP1_BASKET,
+                'shopId' => 1,
+                'basketId' => self::SHOP1_BASKET,
                 'voucherNr' => self::SHOP1_VOUCHER_NR,
             ],
             'shop_2' => [
-                'shopId'    => 2,
-                'basketId'  => self::SHOP2_BASKET,
+                'shopId' => 2,
+                'basketId' => self::SHOP2_BASKET,
                 'voucherNr' => self::SHOP2_VOUCHER_NR,
             ],
         ];
@@ -233,13 +233,13 @@ final class VoucherMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'    => 1,
-                'basketId'  => self::SHOP1_BASKET,
+                'shopId' => 1,
+                'basketId' => self::SHOP1_BASKET,
                 'voucherId' => self::SHOP1_VOUCHER_ID,
             ],
             'shop_2' => [
-                'shopId'    => 2,
-                'basketId'  => self::SHOP2_BASKET,
+                'shopId' => 2,
+                'basketId' => self::SHOP2_BASKET,
                 'voucherId' => self::SHOP2_VOUCHER_ID,
             ],
         ];
@@ -278,7 +278,7 @@ final class VoucherMultiShopCest extends MultishopBaseCest
     private function prepareVoucherInBasket(AcceptanceTester $I, string $basketId, string $voucherId): void
     {
         $I->updateInDatabase('oxvouchers', [
-            'OXRESERVED'     => $basketId ? time() : 0,
+            'OXRESERVED' => $basketId ? time() : 0,
             'OEGQL_BASKETID' => $basketId,
         ], [
             'OXID' => $voucherId,

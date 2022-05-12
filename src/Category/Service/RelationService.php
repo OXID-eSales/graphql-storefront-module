@@ -42,7 +42,7 @@ final class RelationService
         ProductService $productService,
         CategoryService $categoryService
     ) {
-        $this->productService  = $productService;
+        $this->productService = $productService;
         $this->categoryService = $categoryService;
     }
 
@@ -72,7 +72,7 @@ final class RelationService
         return $this->categoryService->categories(
             new CategoryFilterList(
                 null,
-                new StringFilter((string) $category->getId())
+                new StringFilter((string)$category->getId())
             ),
             Sorting::fromUserInput()
         );

@@ -29,7 +29,8 @@ final class ReviewTest extends TokenTestCase
 
     public function testGetSingleActiveReviewWithoutToken(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             review(reviewId: "' . self::ACTIVE_REVIEW . '") {
                 id
                 active
@@ -44,21 +45,22 @@ final class ReviewTest extends TokenTestCase
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $review = $result['body']['data']['review'];
 
         $this->assertSame([
-            'id'            => self::ACTIVE_REVIEW,
-            'active'        => true,
-            'text'          => 'Fantastic kite with great performance!',
-            'rating'        => 5,
-            'createAt'      => '2011-03-25T16:51:05+01:00',
-            'reviewer'      => [
+            'id' => self::ACTIVE_REVIEW,
+            'active' => true,
+            'text' => 'Fantastic kite with great performance!',
+            'rating' => 5,
+            'createAt' => '2011-03-25T16:51:05+01:00',
+            'reviewer' => [
                 'firstName' => 'Marc',
             ],
-            'product'       => [
-                'id'    => self::REVIEW_PRODUCT,
+            'product' => [
+                'id' => self::REVIEW_PRODUCT,
                 'title' => 'Kite NBK EVO 2010',
             ],
         ], $review);
@@ -68,7 +70,8 @@ final class ReviewTest extends TokenTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             review(reviewId: "' . self::ACTIVE_REVIEW . '") {
                 id
                 active
@@ -83,21 +86,22 @@ final class ReviewTest extends TokenTestCase
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $review = $result['body']['data']['review'];
 
         $this->assertSame([
-            'id'            => self::ACTIVE_REVIEW,
-            'active'        => true,
-            'text'          => 'Fantastic kite with great performance!',
-            'rating'        => 5,
-            'createAt'      => '2011-03-25T16:51:05+01:00',
-            'reviewer'      => [
+            'id' => self::ACTIVE_REVIEW,
+            'active' => true,
+            'text' => 'Fantastic kite with great performance!',
+            'rating' => 5,
+            'createAt' => '2011-03-25T16:51:05+01:00',
+            'reviewer' => [
                 'firstName' => 'Marc',
             ],
             'product' => [
-                'id'    => self::REVIEW_PRODUCT,
+                'id' => self::REVIEW_PRODUCT,
                 'title' => 'Kite NBK EVO 2010',
             ],
         ], $review);
@@ -119,12 +123,14 @@ final class ReviewTest extends TokenTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             review (reviewId: "' . self::INACTIVE_REVIEW . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         if ($expectError === true) {
             $this->assertSame(
@@ -134,7 +140,7 @@ final class ReviewTest extends TokenTestCase
         } else {
             $this->assertEquals(
                 [
-                    'id'     => self::INACTIVE_REVIEW,
+                    'id' => self::INACTIVE_REVIEW,
                     'active' => $active,
                 ],
                 $result['body']['data']['review']
@@ -146,27 +152,27 @@ final class ReviewTest extends TokenTestCase
     {
         return [
             [
-                'moderation'     => true,
-                'withToken'      => false,
-                'expectError'    => true,
+                'moderation' => true,
+                'withToken' => false,
+                'expectError' => true,
                 'expectedActive' => false,
             ],
             [
-                'moderation'     => false,
-                'withToken'      => false,
-                'expectError'    => false,
+                'moderation' => false,
+                'withToken' => false,
+                'expectError' => false,
                 'expectedActive' => true,
             ],
             [
-                'moderation'     => true,
-                'withToken'      => true,
-                'expectError'    => false,
+                'moderation' => true,
+                'withToken' => true,
+                'expectError' => false,
                 'expectedActive' => false,
             ],
             [
-                'moderation'     => false,
-                'withToken'      => true,
-                'expectError'    => false,
+                'moderation' => false,
+                'withToken' => true,
+                'expectError' => false,
                 'expectedActive' => true,
             ],
         ];
@@ -174,11 +180,13 @@ final class ReviewTest extends TokenTestCase
 
     public function testGetSingleNonExistingReview(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             review (reviewId: "DOES-NOT-EXIST") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Review was not found by id: DOES-NOT-EXIST',
@@ -193,7 +201,7 @@ final class ReviewTest extends TokenTestCase
                 'username' => 'admin',
                 'password' => 'admin',
             ],
-            'user'  => [
+            'user' => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
             ],
@@ -210,14 +218,16 @@ final class ReviewTest extends TokenTestCase
     {
         $this->prepareToken($username, $password);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             review(reviewId: "' . self::WRONG_USER . '") {
                 id
                 reviewer {
                     firstName
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertNull(
             $result['body']['data']['review']['reviewer']
@@ -231,19 +241,21 @@ final class ReviewTest extends TokenTestCase
     {
         $this->prepareToken($username, $password);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             review(reviewId: "' . $id . '") {
                 id
                 product {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $review = $result['body']['data']['review'];
 
         $this->assertSame([
-            'id'      => $id,
+            'id' => $id,
             'product' => null,
         ], $review);
     }
@@ -254,22 +266,22 @@ final class ReviewTest extends TokenTestCase
             'admin_wrong_product' => [
                 'username' => 'admin',
                 'password' => 'admin',
-                'oxid'     => self::WRONG_PRODUCT,
+                'oxid' => self::WRONG_PRODUCT,
             ],
-            'user_wrong_product'  => [
+            'user_wrong_product' => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
-                'oxid'     => self::WRONG_PRODUCT,
+                'oxid' => self::WRONG_PRODUCT,
             ],
             'admin_wrong_type' => [
                 'username' => 'admin',
                 'password' => 'admin',
-                'oxid'     => self::WRONG_OBJECT_TYPE,
+                'oxid' => self::WRONG_OBJECT_TYPE,
             ],
-            'user_wrong_type'  => [
+            'user_wrong_type' => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
-                'oxid'     => self::WRONG_OBJECT_TYPE,
+                'oxid' => self::WRONG_OBJECT_TYPE,
             ],
         ];
     }
@@ -299,7 +311,8 @@ final class ReviewTest extends TokenTestCase
             $this->prepareToken($token['username'], $token['password']);
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             review(reviewId: "' . self::ACTIVE_REVIEW . '") {
                 id
                 product {
@@ -307,10 +320,11 @@ final class ReviewTest extends TokenTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame([
-            'id'      => self::ACTIVE_REVIEW,
+            'id' => self::ACTIVE_REVIEW,
             'product' => $product,
         ], $result['body']['data']['review']);
     }
@@ -319,23 +333,23 @@ final class ReviewTest extends TokenTestCase
     {
         return [
             [
-                'token'           => null,
+                'token' => null,
                 'expectedProduct' => null,
             ],
             [
-                'token'           => [
+                'token' => [
                     'username' => 'user@oxid-esales.com',
                     'password' => 'useruser',
                 ],
                 'expectedProduct' => null,
             ],
             [
-                'token'           => [
+                'token' => [
                     'username' => 'admin',
                     'password' => 'admin',
                 ],
                 'expectedProduct' => [
-                    'id'     => self::REVIEW_PRODUCT,
+                    'id' => self::REVIEW_PRODUCT,
                     'active' => false,
                 ],
             ],

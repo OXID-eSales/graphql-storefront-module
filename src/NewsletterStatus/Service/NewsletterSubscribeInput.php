@@ -28,7 +28,7 @@ final class NewsletterSubscribeInput
         Legacy $legacyService
     ) {
         $this->authenticationService = $authenticationService;
-        $this->legacyService         = $legacyService;
+        $this->legacyService = $legacyService;
     }
 
     /**
@@ -43,17 +43,17 @@ final class NewsletterSubscribeInput
         $userId = null;
 
         if (!$email && $this->authenticationService->isLogged()) {
-            $email  = $this->authenticationService->getUser()->email();
-            $userId = (string) $this->authenticationService->getUser()->id();
+            $email = $this->authenticationService->getUser()->email();
+            $userId = (string)$this->authenticationService->getUser()->id();
         } else {
-            $this->assertValidEmail((string) $email);
+            $this->assertValidEmail((string)$email);
         }
 
         return new NewsletterStatusSubscribeType(
-            (string) $firstName,
-            (string) $lastName,
-            (string) $salutation,
-            (string) $email,
+            (string)$firstName,
+            (string)$lastName,
+            (string)$salutation,
+            (string)$email,
             $userId
         );
     }

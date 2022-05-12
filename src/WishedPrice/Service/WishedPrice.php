@@ -46,10 +46,10 @@ final class WishedPrice
         RelationService $wishedPriceRelationService,
         WishedPriceNotificationInfrastructure $wishedPriceNotificationInfrastructure
     ) {
-        $this->repository                            = $repository;
-        $this->authenticationService                 = $authenticationService;
-        $this->authorizationService                  = $authorizationService;
-        $this->wishedPriceRelationService            = $wishedPriceRelationService;
+        $this->repository = $repository;
+        $this->authenticationService = $authenticationService;
+        $this->authorizationService = $authorizationService;
+        $this->wishedPriceRelationService = $wishedPriceRelationService;
         $this->wishedPriceNotificationInfrastructure = $wishedPriceNotificationInfrastructure;
     }
 
@@ -86,16 +86,16 @@ final class WishedPrice
         $product = $this->wishedPriceRelationService->getProduct($wishedPrice);
 
         if (!$product->wishedPriceEnabled() && !$this->authorizationService->isAllowed('VIEW_WISHED_PRICES')) {
-            throw WishedPriceNotFound::byId((string) $id);
+            throw WishedPriceNotFound::byId((string)$id);
         }
 
         return $wishedPrice;
     }
 
     /**
+     * @return WishedPriceDataType[]
      * @throws InvalidToken
      *
-     * @return WishedPriceDataType[]
      */
     public function wishedPrices(WishedPriceFilterList $filter): array
     {
@@ -136,12 +136,12 @@ final class WishedPrice
         try {
             /** @var WishedPriceDataType $wishedPrice */
             $wishedPrice = $this->repository->getById(
-                (string) $id,
+                (string)$id,
                 WishedPriceDataType::class,
                 false
             );
         } catch (NotFound $e) {
-            throw WishedPriceNotFound::byId((string) $id);
+            throw WishedPriceNotFound::byId((string)$id);
         }
 
         /** If the logged in user is authorized return the wished price */
@@ -159,6 +159,6 @@ final class WishedPrice
 
     private function isSameUser(WishedPriceDataType $wishedPrice): bool
     {
-        return (string) $wishedPrice->getInquirerId() === (string) $this->authenticationService->getUser()->id();
+        return (string)$wishedPrice->getInquirerId() === (string)$this->authenticationService->getUser()->id();
     }
 }

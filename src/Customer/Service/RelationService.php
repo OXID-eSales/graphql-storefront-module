@@ -62,12 +62,12 @@ final class RelationService
         BasketService $basketService,
         CustomerInfrastructure $customerInfrastructure
     ) {
-        $this->reviewService            = $reviewService;
-        $this->newsletterStatusService  = $newsletterStatusService;
-        $this->customerRepository       = $customerRepository;
-        $this->invoiceAddressService    = $invoiceAddressService;
-        $this->basketService            = $basketService;
-        $this->customerInfrastructure   = $customerInfrastructure;
+        $this->reviewService = $reviewService;
+        $this->newsletterStatusService = $newsletterStatusService;
+        $this->customerRepository = $customerRepository;
+        $this->invoiceAddressService = $invoiceAddressService;
+        $this->basketService = $basketService;
+        $this->customerInfrastructure = $customerInfrastructure;
     }
 
     /**
@@ -81,7 +81,7 @@ final class RelationService
             new ReviewFilterList(
                 new IDFilter(
                     new ID(
-                        (string) $customer->getId()
+                        (string)$customer->getId()
                     )
                 )
             )

@@ -36,8 +36,8 @@ final class WishedPriceInput
         Repository $repository,
         WishedPriceFactory $wishedPriceFactory
     ) {
-        $this->authentication     = $authentication;
-        $this->repository         = $repository;
+        $this->authentication = $authentication;
+        $this->repository = $repository;
         $this->wishedPriceFactory = $wishedPriceFactory;
     }
 
@@ -50,7 +50,7 @@ final class WishedPriceInput
         $this->assertPriceValue($price);
 
         return $this->wishedPriceFactory->createWishedPrice(
-            (string) $this->authentication->getUser()->id(),
+            (string)$this->authentication->getUser()->id(),
             $this->authentication->getUser()->email(),
             $productId,
             $currencyName,
@@ -59,13 +59,13 @@ final class WishedPriceInput
     }
 
     /**
+     * @return true
      * @throws ProductNotFound
      *
-     * @return true
      */
     private function assertProductWishedPriceIsPossible(ID $productId): bool
     {
-        $id = (string) $productId->val();
+        $id = (string)$productId->val();
 
         try {
             /** @var ProductDataType $product */
@@ -83,9 +83,9 @@ final class WishedPriceInput
     }
 
     /**
+     * @return true
      * @throws WishedPriceOutOfBounds
      *
-     * @return true
      */
     private function assertPriceValue(float $price): bool
     {

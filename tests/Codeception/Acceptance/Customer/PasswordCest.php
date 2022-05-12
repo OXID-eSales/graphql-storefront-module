@@ -20,11 +20,13 @@ final class PasswordCest extends BaseCest
 {
     public function testChangePasswordWithoutToken(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('
+        $I->sendGQLQuery(
+            '
             mutation {
                 customerPasswordChange(old: "foobar", new: "foobaz")
             }
-        ');
+        '
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -39,11 +41,13 @@ final class PasswordCest extends BaseCest
     {
         $I->login('admin', 'admin');
 
-        $I->sendGQLQuery('
+        $I->sendGQLQuery(
+            '
             mutation {
                 customerPasswordChange(old: "foobar", new: "foobaz")
             }
-        ');
+        '
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -58,11 +62,13 @@ final class PasswordCest extends BaseCest
     {
         $I->login('admin', 'admin');
 
-        $I->sendGQLQuery('
+        $I->sendGQLQuery(
+            '
             mutation {
                 customerPasswordChange(old: "admin", new: "foobar")
             }
-        ');
+        '
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -71,11 +77,13 @@ final class PasswordCest extends BaseCest
             $result['data']['customerPasswordChange']
         );
 
-        $I->sendGQLQuery('
+        $I->sendGQLQuery(
+            '
             mutation {
                 customerPasswordChange(old: "foobar", new: "admin")
             }
-        ');
+        '
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();

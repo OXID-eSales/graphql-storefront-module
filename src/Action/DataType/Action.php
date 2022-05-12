@@ -56,7 +56,7 @@ final class Action implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->action->getRawFieldData('oxactive');
+        return (bool)$this->action->getRawFieldData('oxactive');
     }
 
     /**
@@ -64,7 +64,7 @@ final class Action implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->action->getRawFieldData('oxtitle');
+        return (string)$this->action->getRawFieldData('oxtitle');
     }
 
     /**

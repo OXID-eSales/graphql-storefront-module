@@ -25,7 +25,7 @@ final class CategoryFilterList extends FilterList
         ?StringFilter $title = null,
         ?StringFilter $parentId = null
     ) {
-        $this->title    = $title;
+        $this->title = $title;
         $this->parentId = $parentId;
         parent::__construct();
     }
@@ -38,7 +38,7 @@ final class CategoryFilterList extends FilterList
     public function getFilters(): array
     {
         return [
-            'oxtitle'    => $this->title,
+            'oxtitle' => $this->title,
             'oxparentid' => $this->parentId,
         ];
     }

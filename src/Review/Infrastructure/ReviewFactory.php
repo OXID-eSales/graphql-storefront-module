@@ -23,11 +23,11 @@ final class ReviewFactory
         /** @var EshopReviewModel */
         $model = oxNew(EshopReviewModel::class);
         $model->assign([
-            'OXTYPE'     => 'oxarticle',
+            'OXTYPE' => 'oxarticle',
             'OXOBJECTID' => $productId,
-            'OXRATING'   => $rating,
-            'OXUSERID'   => $userId,
-            'OXTEXT'     => $text,
+            'OXRATING' => $rating,
+            'OXUSERID' => $userId,
+            'OXTEXT' => $text,
         ]);
 
         return new ReviewDataType($model);

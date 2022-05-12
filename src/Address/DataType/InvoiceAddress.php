@@ -40,7 +40,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function salutation(): string
     {
-        return (string) $this->customer->getRawFieldData('oxsal');
+        return (string)$this->customer->getRawFieldData('oxsal');
     }
 
     /**
@@ -48,7 +48,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function firstName(): string
     {
-        return (string) $this->customer->getRawFieldData('oxfname');
+        return (string)$this->customer->getRawFieldData('oxfname');
     }
 
     /**
@@ -56,7 +56,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function lastName(): string
     {
-        return (string) $this->customer->getRawFieldData('oxlname');
+        return (string)$this->customer->getRawFieldData('oxlname');
     }
 
     /**
@@ -64,7 +64,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function company(): string
     {
-        return (string) $this->customer->getRawFieldData('oxcompany');
+        return (string)$this->customer->getRawFieldData('oxcompany');
     }
 
     /**
@@ -72,7 +72,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function additionalInfo(): string
     {
-        return (string) $this->customer->getRawFieldData('oxaddinfo');
+        return (string)$this->customer->getRawFieldData('oxaddinfo');
     }
 
     /**
@@ -80,7 +80,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function street(): string
     {
-        return (string) $this->customer->getRawFieldData('oxstreet');
+        return (string)$this->customer->getRawFieldData('oxstreet');
     }
 
     /**
@@ -88,7 +88,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function streetNumber(): string
     {
-        return (string) $this->customer->getRawFieldData('oxstreetnr');
+        return (string)$this->customer->getRawFieldData('oxstreetnr');
     }
 
     /**
@@ -96,7 +96,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function zipCode(): string
     {
-        return (string) $this->customer->getRawFieldData('oxzip');
+        return (string)$this->customer->getRawFieldData('oxzip');
     }
 
     /**
@@ -104,7 +104,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function city(): string
     {
-        return (string) $this->customer->getRawFieldData('oxcity');
+        return (string)$this->customer->getRawFieldData('oxcity');
     }
 
     /**
@@ -112,7 +112,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function vatID(): string
     {
-        return (string) $this->customer->getRawFieldData('oxustid');
+        return (string)$this->customer->getRawFieldData('oxustid');
     }
 
     /**
@@ -120,7 +120,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function phone(): string
     {
-        return (string) $this->customer->getRawFieldData('oxprivfon');
+        return (string)$this->customer->getRawFieldData('oxprivfon');
     }
 
     /**
@@ -128,7 +128,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function mobile(): string
     {
-        return (string) $this->customer->getRawFieldData('oxmobfon');
+        return (string)$this->customer->getRawFieldData('oxmobfon');
     }
 
     /**
@@ -136,7 +136,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function fax(): string
     {
-        return (string) $this->customer->getRawFieldData('oxfax');
+        return (string)$this->customer->getRawFieldData('oxfax');
     }
 
     /**
@@ -145,7 +145,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
     public function created(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->customer->getRawFieldData('oxcreate')
+            (string)$this->customer->getRawFieldData('oxcreate')
         );
     }
 
@@ -155,7 +155,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->customer->getRawFieldData('oxtimestamp')
+            (string)$this->customer->getRawFieldData('oxtimestamp')
         );
     }
 

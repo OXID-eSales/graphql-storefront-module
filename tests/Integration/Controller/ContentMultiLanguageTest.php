@@ -55,16 +55,16 @@ final class ContentMultiLanguageTest extends TestCase
     {
         return [
             'de' => [
-                'languageId'    => '0',
-                'title'         => 'GraphQL content with category DE',
+                'languageId' => '0',
+                'title' => 'GraphQL content with category DE',
                 'categoryTitle' => 'Kites',
-                'seo'           => 'GraphQL-content-with-category-DE',
+                'seo' => 'GraphQL-content-with-category-DE',
             ],
             'en' => [
-                'languageId'    => '1',
-                'title'         => 'GraphQL content with category EN',
+                'languageId' => '1',
+                'title' => 'GraphQL content with category EN',
                 'categoryTitle' => 'Kites',
-                'seo'           => 'GraphQL-content-with-category-EN',
+                'seo' => 'GraphQL-content-with-category-EN',
             ],
         ];
     }

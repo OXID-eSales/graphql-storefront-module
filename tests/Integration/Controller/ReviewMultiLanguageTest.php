@@ -25,7 +25,8 @@ final class ReviewMultiLanguageTest extends TestCase
         $this->setGETRequestParameter('shp', '2');
         $this->setGETRequestParameter('lang', '1');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             review(reviewId: "_test_lang_' . $languageId . '_review") {
                 id
                 language {
@@ -34,7 +35,8 @@ final class ReviewMultiLanguageTest extends TestCase
                     language
                 }
             }
-        }');
+        }'
+        );
 
         $review = $result['body']['data']['review'];
 
@@ -45,18 +47,18 @@ final class ReviewMultiLanguageTest extends TestCase
     {
         return [
             [
-                'languageId'       => 0,
+                'languageId' => 0,
                 'expectedLanguage' => [
-                    'id'       => '0',
-                    'code'     => 'de',
+                    'id' => '0',
+                    'code' => 'de',
                     'language' => 'Deutsch',
                 ],
             ],
             [
-                'languageId'       => 1,
+                'languageId' => 1,
                 'expectedLanguage' => [
-                    'id'       => '1',
-                    'code'     => 'en',
+                    'id' => '1',
+                    'code' => 'en',
                     'language' => 'English',
                 ],
             ],

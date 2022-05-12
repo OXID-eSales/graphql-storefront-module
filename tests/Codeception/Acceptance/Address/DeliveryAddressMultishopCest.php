@@ -65,7 +65,7 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
      */
     public function testGetDeliveryAddressesForLoggedInUser(AcceptanceTester $I, Example $data): void
     {
-        $shopId   = $data['shopId'];
+        $shopId = $data['shopId'];
         $expected = $data['expected'];
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
@@ -97,11 +97,11 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
     {
         return [
             'set1' => [
-                'shopId'    => 1,
+                'shopId' => 1,
                 'addressId' => self::DELETE_DELIVERY_ADDRESS_SHOP_1,
             ],
             'set2' => [
-                'shopId'    => 2,
+                'shopId' => 2,
                 'addressId' => self::DELETE_DELIVERY_ADDRESS_SHOP_2,
             ],
         ];
@@ -112,7 +112,7 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
      */
     public function testDeliveryAddressDeletionPerShop(AcceptanceTester $I, Example $data): void
     {
-        $shopId            = $data['shopId'];
+        $shopId = $data['shopId'];
         $deliveryAddressId = $data['addressId'];
 
         //subshop user has same username but different oxid
@@ -130,7 +130,7 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
      */
     public function testDeliveryAddressDeletionFromShop1ToShop2(AcceptanceTester $I, Example $data): void
     {
-        $shopId            = $data['shopId'];
+        $shopId = $data['shopId'];
         $deliveryAddressId = $data['addressId'];
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
@@ -149,7 +149,7 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
 
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD, 1);
 
-        $result    = $this->executeMutation($I, 1);
+        $result = $this->executeMutation($I, 1);
         $addressId = $result['data']['customerDeliveryAddressAdd']['id'];
 
         $I->logout();
@@ -166,10 +166,10 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'   => 1,
+                'shopId' => 1,
             ],
             'shop_2' => [
-                'shopId'   => 2,
+                'shopId' => 2,
             ],
         ];
     }
@@ -178,29 +178,29 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'   => 1,
+                'shopId' => 1,
                 'expected' => [
                     [
-                        'id'           => self::DELIVERY_ADDRESS_SHOP_1,
-                        'firstName'    => 'Marc',
-                        'street'       => 'Hauptstr',
+                        'id' => self::DELIVERY_ADDRESS_SHOP_1,
+                        'firstName' => 'Marc',
+                        'street' => 'Hauptstr',
                         'streetNumber' => '13',
                     ],
                     [
-                        'id'           => 'test_delivery_address_2',
-                        'firstName'    => 'Marc',
-                        'street'       => 'Hauptstr2',
+                        'id' => 'test_delivery_address_2',
+                        'firstName' => 'Marc',
+                        'street' => 'Hauptstr2',
                         'streetNumber' => '132',
                     ],
                 ],
             ],
             'shop_2' => [
-                'shopId'   => 2,
+                'shopId' => 2,
                 'expected' => [
                     [
-                        'id'           => self::DELIVERY_ADDRESS_SHOP_2,
-                        'firstName'    => 'Marc2',
-                        'street'       => 'Hauptstr2',
+                        'id' => self::DELIVERY_ADDRESS_SHOP_2,
+                        'firstName' => 'Marc2',
+                        'street' => 'Hauptstr2',
                         'streetNumber' => '2',
                     ],
                 ],
@@ -212,30 +212,31 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
     {
         return [
             'set1' => [
-                'shopId'    => 1,
+                'shopId' => 1,
                 'addressId' => self::DELETE_DELIVERY_ADDRESS_SHOP_2,
             ],
             'set2' => [
-                'shopId'    => 2,
-                'addressId' => self::DELETE_DELIVERY_ADDRESS_SHOP_1, ],
+                'shopId' => 2,
+                'addressId' => self::DELETE_DELIVERY_ADDRESS_SHOP_1,
+            ],
         ];
     }
 
     private function executeMutation(AcceptanceTester $I, int $shopId): array
     {
-        $inputFields =  [
-            'salutation'     => 'MR',
-            'firstName'      => 'Marc',
-            'lastName'       => 'Muster',
-            'company'        => 'No GmbH',
+        $inputFields = [
+            'salutation' => 'MR',
+            'firstName' => 'Marc',
+            'lastName' => 'Muster',
+            'company' => 'No GmbH',
             'additionalInfo' => 'private delivery',
-            'street'         => 'Bertoldstrasse',
-            'streetNumber'   => '48',
-            'zipCode'        => '79098',
-            'city'           => 'Freiburg',
-            'countryId'      => 'a7c40f631fc920687.20179984',
-            'phone'          => '1234',
-            'fax'            => '4321',
+            'street' => 'Bertoldstrasse',
+            'streetNumber' => '48',
+            'zipCode' => '79098',
+            'city' => 'Freiburg',
+            'countryId' => 'a7c40f631fc920687.20179984',
+            'phone' => '1234',
+            'fax' => '4321',
         ];
         $queryPart = '';
 
@@ -276,8 +277,11 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
         return $I->grabJsonResponseAsArray();
     }
 
-    private function deleteCustomerDeliveryAddressMutation(AcceptanceTester $I, string $deliveryAddressId, int $shopId): array
-    {
+    private function deleteCustomerDeliveryAddressMutation(
+        AcceptanceTester $I,
+        string $deliveryAddressId,
+        int $shopId
+    ): array {
         $I->sendGQLQuery(
             'mutation {
                 customerDeliveryAddressDelete(deliveryAddressId: "' . $deliveryAddressId . '")

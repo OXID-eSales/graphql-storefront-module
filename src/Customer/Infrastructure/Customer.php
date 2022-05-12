@@ -26,14 +26,14 @@ final class Customer
     public function getOrders(CustomerDataType $customer, ?PaginationFilter $pagination = null): array
     {
         $limit = false;
-        $page  = 0;
+        $page = 0;
 
         if ($pagination) {
-            $limit = 0 < (int) $pagination->limit() ? (int) $pagination->limit() : $limit;
+            $limit = 0 < (int)$pagination->limit() ? (int)$pagination->limit() : $limit;
 
             if ($limit) {
-                $offset = (int) $pagination->offset();
-                $page   = (int) $offset / $limit;
+                $offset = (int)$pagination->offset();
+                $page = (int)$offset / $limit;
             }
         }
 
@@ -62,7 +62,7 @@ final class Customer
     {
         /** @var OrderFileListModel $orderFileList */
         $orderFileList = oxNew(OrderFileListModel::class);
-        $orderFileList->loadUserFiles((string) $customer->getId());
+        $orderFileList->loadUserFiles((string)$customer->getId());
         $result = [];
 
         if ($orderFiles = $orderFileList->getArray()) {
@@ -80,6 +80,6 @@ final class Customer
         $userModel = oxNew(EshopUserModel::class);
         $userModel->load($userId);
 
-        return (string) $userModel->getActiveCountry();
+        return (string)$userModel->getActiveCountry();
     }
 }

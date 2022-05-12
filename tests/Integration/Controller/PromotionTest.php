@@ -15,7 +15,7 @@ final class PromotionTest extends TokenTestCase
 {
     private const ACTIVE_PROMOTION = 'test_active_promotion_1';
 
-    private const INACTIVE_PROMOTION  = 'test_inactive_promotion_1';
+    private const INACTIVE_PROMOTION = 'test_inactive_promotion_1';
 
     protected function setUp(): void
     {
@@ -29,14 +29,16 @@ final class PromotionTest extends TokenTestCase
 
     public function testGetSingleActivePromotion(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "' . self::ACTIVE_PROMOTION . '") {
                 id
                 active
                 title
                 text
             }
-        }');
+        }'
+        );
 
         $promotion = $result['body']['data']['promotion'];
 
@@ -45,24 +47,28 @@ final class PromotionTest extends TokenTestCase
         $this->assertSame('Current Promotion 1 EN', $promotion['title']);
         $this->assertSame('Long description 1 EN', $promotion['text']);
 
-        $this->assertEmpty(array_diff(array_keys($promotion), [
-            'id',
-            'active',
-            'title',
-            'text',
-        ]));
+        $this->assertEmpty(
+            array_diff(array_keys($promotion), [
+                'id',
+                'active',
+                'title',
+                'text',
+            ])
+        );
     }
 
     public function testGet401ForSingleInactivePromotion(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "' . self::INACTIVE_PROMOTION . '") {
                 id
                 active
                 title
                 text
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Unauthorized',
@@ -74,21 +80,23 @@ final class PromotionTest extends TokenTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "' . self::INACTIVE_PROMOTION . '") {
                 id
                 active
                 title
                 text
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'     => self::INACTIVE_PROMOTION,
+                'id' => self::INACTIVE_PROMOTION,
                 'active' => false,
-                'title'  => 'Upcoming promotion EN',
-                'text'   => 'Long description 3 EN',
+                'title' => 'Upcoming promotion EN',
+                'text' => 'Long description 3 EN',
             ],
             $result['body']['data']['promotion']
         );
@@ -96,14 +104,16 @@ final class PromotionTest extends TokenTestCase
 
     public function testGet404ForSingleNonExistingPromotion(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "DOES-NOT-EXIST") {
                 id
                 active
                 title
                 text
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Promotion was not found by id: DOES-NOT-EXIST',
@@ -113,14 +123,16 @@ final class PromotionTest extends TokenTestCase
 
     public function testGetPromotionListWithoutFilter(): void
     {
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             promotions {
                 id
                 active
                 title
                 text
             }
-        }');
+        }'
+        );
 
         // fixtures have 2 active promotions
         $this->assertEquals(
@@ -133,11 +145,13 @@ final class PromotionTest extends TokenTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             promotions {
                 id
             }
-        }');
+        }'
+        );
 
         // TODO: Fixtures have 2 active and 4 inactive promotions
         //       These should be visible when using a valid token, for a total of 6
@@ -151,12 +165,12 @@ final class PromotionTest extends TokenTestCase
     {
         return [
             'de' => [
-                'languageId'  => '0',
-                'title'       => 'Current Promotion 1 DE',
+                'languageId' => '0',
+                'title' => 'Current Promotion 1 DE',
             ],
             'en' => [
-                'languageId'  => '1',
-                'title'       => 'Current Promotion 1 EN',
+                'languageId' => '1',
+                'title' => 'Current Promotion 1 EN',
             ],
         ];
     }
@@ -182,7 +196,7 @@ final class PromotionTest extends TokenTestCase
 
         $this->assertEquals(
             [
-                'id'    => self::ACTIVE_PROMOTION,
+                'id' => self::ACTIVE_PROMOTION,
                 'title' => $title,
             ],
             $result['body']['data']['promotion']

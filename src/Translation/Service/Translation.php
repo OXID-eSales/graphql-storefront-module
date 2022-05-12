@@ -27,7 +27,7 @@ final class Translation
         LegacyInfrastructure $legacyInfrastructure
     ) {
         $this->translationInfrastructure = $translationInfrastructure;
-        $this->legacyInfrastructure      = $legacyInfrastructure;
+        $this->legacyInfrastructure = $legacyInfrastructure;
     }
 
     /**
@@ -35,7 +35,7 @@ final class Translation
      */
     public function getTranslations(): array
     {
-        $languageId       = $this->legacyInfrastructure->getLanguageId();
+        $languageId = $this->legacyInfrastructure->getLanguageId();
         $translationsList = $this->translationInfrastructure->getTranslations($languageId);
 
         $result = [];
@@ -53,7 +53,7 @@ final class Translation
 
     public function getTranslation(string $key): TranslationDataType
     {
-        $languageId   = $this->legacyInfrastructure->getLanguageId();
+        $languageId = $this->legacyInfrastructure->getLanguageId();
         $translations = $this->translationInfrastructure->getTranslations($languageId);
 
         if (!isset($translations[$key])) {

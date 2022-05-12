@@ -31,11 +31,13 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Manufacturer was not found by id: ' . self::MANUFACTURER_ID,
@@ -50,11 +52,13 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             manufacturers {
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 11 active manufacturers
         $this->assertCount(
@@ -72,16 +76,18 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
         $this->addManufacturerToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::MANUFACTURER_ID,
+                'id' => self::MANUFACTURER_ID,
                 'title' => 'Liquid Force',
             ],
             $result['body']['data']['manufacturer']
@@ -96,11 +102,13 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
         $this->addManufacturerToShops([2]);
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             manufacturers {
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 11 active manufacturers
         $this->assertCount(
@@ -116,24 +124,24 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'Liquid Force',
+                'title' => 'Liquid Force',
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'Liquid Force Kite',
+                'title' => 'Liquid Force Kite',
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'title'      => 'Liquid Force',
+                'title' => 'Liquid Force',
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'title'      => 'Liquid Force Kite',
+                'title' => 'Liquid Force Kite',
             ],
         ];
     }
@@ -153,16 +161,18 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addManufacturerToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::MANUFACTURER_ID,
+                'id' => self::MANUFACTURER_ID,
                 'title' => $title,
             ],
             $result['body']['data']['manufacturer']
@@ -184,7 +194,8 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addManufacturerToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturers(filter: {
                 title: {
                     equals: "' . $title . '"
@@ -193,11 +204,12 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::MANUFACTURER_ID,
+                'id' => self::MANUFACTURER_ID,
                 'title' => $title,
             ],
             $result['body']['data']['manufacturers'][0]
@@ -211,7 +223,8 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '1');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 products
                 {
@@ -219,7 +232,8 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
                   title
                 }
             }
-        }');
+        }'
+        );
 
         //fixtures have 7 active products assigned to manufacturer in shop 1
         $this->assertEquals(7, count($result['body']['data']['manufacturer']['products']));
@@ -232,7 +246,8 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->addManufacturerToShops([2], self::MANUFACTURER_WITH_SINGLE_PRODUCT);
         $this->addProductToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "' . self::MANUFACTURER_WITH_SINGLE_PRODUCT . '") {
                 id
                 products
@@ -240,7 +255,8 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
                   id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             self::PRODUCT_RELATED_TO_MANUFACTURER,
@@ -255,7 +271,8 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
         $this->addManufacturerToShops([2], self::MANUFACTURER_ID);
         $this->addProductToShops([1]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
                 id
                 products
@@ -263,14 +280,15 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
                   id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(0, count($result['body']['data']['manufacturer']['products']));
     }
 
     private function addManufacturerToShops($shops, $manufacturer = null): void
     {
-        $manufacturerId         = $manufacturer == null ? self::MANUFACTURER_ID : $manufacturer;
+        $manufacturerId = $manufacturer == null ? self::MANUFACTURER_ID : $manufacturer;
         $oElement2ShopRelations = oxNew(Element2ShopRelations::class, 'oxmanufacturers');
         $oElement2ShopRelations->setShopIds($shops);
         $oElement2ShopRelations->addToShop($manufacturerId);

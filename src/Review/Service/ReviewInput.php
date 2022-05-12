@@ -37,8 +37,8 @@ final class ReviewInput
         ReviewFactory $reviewFactory
     ) {
         $this->authentication = $authentication;
-        $this->repository     = $repository;
-        $this->reviewFactory  = $reviewFactory;
+        $this->repository = $repository;
+        $this->reviewFactory = $reviewFactory;
     }
 
     /**
@@ -54,17 +54,17 @@ final class ReviewInput
         }
 
         return $this->reviewFactory->createProductReview(
-            (string) $this->authentication->getUser()->id(),
+            (string)$this->authentication->getUser()->id(),
             $productId,
-            (string) $text,
-            (string) $rating
+            (string)$text,
+            (string)$rating
         );
     }
 
     /**
+     * @return true
      * @throws RatingOutOfBounds
      *
-     * @return true
      */
     private function assertRatingValue(?int $rating): bool
     {
@@ -76,9 +76,9 @@ final class ReviewInput
     }
 
     /**
+     * @return true
      * @throws ProductNotFound
      *
-     * @return true
      */
     private function assertProductIdValue(string $productId): bool
     {

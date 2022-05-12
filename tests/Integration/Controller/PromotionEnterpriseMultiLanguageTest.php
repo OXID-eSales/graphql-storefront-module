@@ -24,24 +24,24 @@ final class PromotionEnterpriseMultiLanguageTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'Current Promotion 1 DE',
+                'title' => 'Current Promotion 1 DE',
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'Current Promotion 1 EN',
+                'title' => 'Current Promotion 1 EN',
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'title'      => 'Current sub shop Promotion 1 DE',
+                'title' => 'Current sub shop Promotion 1 DE',
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'title'      => 'Current sub shop Promotion 1 EN',
+                'title' => 'Current sub shop Promotion 1 EN',
             ],
         ];
     }
@@ -62,16 +62,18 @@ final class PromotionEnterpriseMultiLanguageTest extends MultishopTestCase
 
         $promotionId = $this->getPromotionIdForShop($shopId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "' . $promotionId . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => $promotionId,
+                'id' => $promotionId,
                 'title' => $title,
             ],
             $result['body']['data']['promotion']
@@ -94,16 +96,18 @@ final class PromotionEnterpriseMultiLanguageTest extends MultishopTestCase
 
         $promotionId = $this->getPromotionIdForShop($shopId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "' . $promotionId . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => $promotionId,
+                'id' => $promotionId,
                 'title' => $title,
             ],
             $result['body']['data']['promotion']

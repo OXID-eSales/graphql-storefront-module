@@ -51,7 +51,7 @@ final class Content implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->content->isActive();
+        return (bool)$this->content->isActive();
     }
 
     /**

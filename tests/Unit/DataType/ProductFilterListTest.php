@@ -24,11 +24,11 @@ final class ProductFilterListTest extends TestCase
         $filter = new ProductFilterList();
         $this->assertEquals(
             [
-                'oxtitle'          => null,
-                'oxcatnid'         => null,
+                'oxtitle' => null,
+                'oxcatnid' => null,
                 'oxmanufacturerid' => null,
-                'oxvendorid'       => null,
-                'oxparentid'       => new IDFilter(new ID('')),
+                'oxvendorid' => null,
+                'oxparentid' => new IDFilter(new ID('')),
             ],
             $filter->getFilters()
         );

@@ -18,6 +18,6 @@ final class Review
     {
         $languageId = $review->getEshopModel()->getRawFieldData('oxlang');
 
-        return new Language((int) $languageId);
+        return new Language((int)$languageId);
     }
 }

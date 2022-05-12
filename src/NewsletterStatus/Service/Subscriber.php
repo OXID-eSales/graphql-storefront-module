@@ -27,7 +27,7 @@ final class Subscriber
         Repository $repository,
         Legacy $legacyService
     ) {
-        $this->repository    = $repository;
+        $this->repository = $repository;
         $this->legacyService = $legacyService;
     }
 
@@ -36,7 +36,7 @@ final class Subscriber
      */
     public function subscriber(string $id): SubscriberDataType
     {
-        $ignoreSubshop = (bool) $this->legacyService->getConfigParam('blMallUsers');
+        $ignoreSubshop = (bool)$this->legacyService->getConfigParam('blMallUsers');
 
         try {
             /** @var SubscriberDataType $subscriber */

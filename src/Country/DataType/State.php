@@ -48,7 +48,7 @@ final class State implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->state->getRawFieldData('oxtitle');
+        return (string)$this->state->getRawFieldData('oxtitle');
     }
 
     /**
@@ -56,7 +56,7 @@ final class State implements ShopModelAwareInterface
      */
     public function getIsoAlpha2(): string
     {
-        return (string) $this->state->getRawFieldData('oxisoalpha2');
+        return (string)$this->state->getRawFieldData('oxisoalpha2');
     }
 
     /**
@@ -64,7 +64,7 @@ final class State implements ShopModelAwareInterface
      */
     public function getCreationDate(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->state->getRawFieldData('oxtimestamp'));
+        return DateTimeImmutableFactory::fromString((string)$this->state->getRawFieldData('oxtimestamp'));
     }
 
     public static function getModelClass(): string

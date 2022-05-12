@@ -17,15 +17,16 @@ final class ContentTest extends BaseTestCase
 {
     private const ACTIVE_CONTENT = 'e6fc3fe89d5da58da9bfcfba451fd365';
 
-    private const INACTIVE_CONTENT  = '67c5bcf75ee346bd9566bce6c8'; // credits
+    private const INACTIVE_CONTENT = '67c5bcf75ee346bd9566bce6c8'; // credits
 
     private const ACTIVE_CONTENT_AGB = '2eb4676806a3d2e87.06076523'; //agb
 
-    private const CATEGORY_RELATED_TO_ACTIVE_CONTENT  = '0f4fb00809cec9aa0910aa9c8fe36751';
+    private const CATEGORY_RELATED_TO_ACTIVE_CONTENT = '0f4fb00809cec9aa0910aa9c8fe36751';
 
     public function testGetSingleActiveContent(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::ACTIVE_CONTENT . '") {
                 id
                 active
@@ -42,7 +43,8 @@ final class ContentTest extends BaseTestCase
                   title
                 }
             }
-        }');
+        }'
+        );
 
         $content = $result['body']['data']['content'];
         $this->assertSame(self::ACTIVE_CONTENT, $content['id']);
@@ -59,41 +61,48 @@ final class ContentTest extends BaseTestCase
         $this->assertStringContainsString('Content DE', $content['content']);
         $this->assertStringContainsString('Content DE', $content['rawContent']);
 
-        $this->assertEmpty(array_diff(array_keys($content), [
-            'id',
-            'active',
-            'title',
-            'content',
-            'rawContent',
-            'folder',
-            'version',
-            'seo',
-            'category',
-        ]));
+        $this->assertEmpty(
+            array_diff(array_keys($content), [
+                'id',
+                'active',
+                'title',
+                'content',
+                'rawContent',
+                'folder',
+                'version',
+                'seo',
+                'category',
+            ])
+        );
     }
 
     public function testGetSingleActiveContentWithVersion(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::ACTIVE_CONTENT_AGB . '") {
                 id
                 version
             }
-        }');
+        }'
+        );
 
         $content = $result['body']['data']['content'];
         $this->assertSame(self::ACTIVE_CONTENT_AGB, $content['id']);
         $this->assertEquals(1, $content['version']);
 
-        $this->assertEmpty(array_diff(array_keys($content), [
-            'id',
-            'version',
-        ]));
+        $this->assertEmpty(
+            array_diff(array_keys($content), [
+                'id',
+                'version',
+            ])
+        );
     }
 
     public function testGetSingleInactiveContentWithoutToken(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::INACTIVE_CONTENT . '") {
                 id
                 active
@@ -110,7 +119,8 @@ final class ContentTest extends BaseTestCase
                   title
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Unauthorized',
@@ -122,11 +132,13 @@ final class ContentTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::INACTIVE_CONTENT . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -138,11 +150,13 @@ final class ContentTest extends BaseTestCase
 
     public function testGetSingleNonExistingContent(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "DOES-NOT-EXIST") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Content was not found by id: DOES-NOT-EXIST',
@@ -155,11 +169,13 @@ final class ContentTest extends BaseTestCase
      */
     public function testGetContentListWithoutFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             contents {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             49,
@@ -174,11 +190,13 @@ final class ContentTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             contents {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             50,
@@ -188,7 +206,8 @@ final class ContentTest extends BaseTestCase
 
     public function testGetContentListWithExactFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             contents (filter: {
                 folder: {
                     equals: "CMSFOLDER_EMAILS"
@@ -196,7 +215,8 @@ final class ContentTest extends BaseTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             25,
@@ -206,7 +226,8 @@ final class ContentTest extends BaseTestCase
 
     public function testGetContentListWithPartialFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             contents (filter: {
                 folder: {
                     contains: "FOLDER"
@@ -214,7 +235,8 @@ final class ContentTest extends BaseTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             43,
@@ -224,7 +246,8 @@ final class ContentTest extends BaseTestCase
 
     public function testGetEmptyContentListWithFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             contents (filter: {
                 folder: {
                     contains: "DOES-NOT-EXIST"
@@ -232,7 +255,8 @@ final class ContentTest extends BaseTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             0,
@@ -262,14 +286,16 @@ final class ContentTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content(contentId: "' . self::ACTIVE_CONTENT . '") {
                 id
                 category {
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $category = $result['body']['data']['content']['category'];
 
@@ -302,7 +328,8 @@ final class ContentTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             contents (filter: {
                 folder: {
                     equals: "CMSFOLDER_CATEGORY"
@@ -314,7 +341,8 @@ final class ContentTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $contentCategory = $result['body']['data']['contents'][0]['category'];
 
@@ -323,7 +351,7 @@ final class ContentTest extends BaseTestCase
         } else {
             $this->assertSame(
                 [
-                    'id'     => self::CATEGORY_RELATED_TO_ACTIVE_CONTENT,
+                    'id' => self::CATEGORY_RELATED_TO_ACTIVE_CONTENT,
                     'active' => false,
                 ],
                 $contentCategory

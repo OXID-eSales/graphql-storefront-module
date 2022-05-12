@@ -40,7 +40,7 @@ final class Repository
         SharedRepository $sharedRepository,
         QueryBuilderFactoryInterface $queryBuilderFactory
     ) {
-        $this->sharedRepository    = $sharedRepository;
+        $this->sharedRepository = $sharedRepository;
         $this->queryBuilderFactory = $queryBuilderFactory;
     }
 
@@ -58,7 +58,7 @@ final class Repository
             new Sorting()
         );
 
-        return (bool) count($fromDb);
+        return (bool)count($fromDb);
     }
 
     /**
@@ -89,7 +89,7 @@ final class Repository
 
         if (!$model->getId()) {
             throw BasketNotFound::byOwnerAndTitle(
-                (string) $customer->getId(),
+                (string)$customer->getId(),
                 $title
             );
         }
@@ -98,13 +98,13 @@ final class Repository
     }
 
     /**
+     * @return BasketDataType[]
      * @throws BasketNotFound
      *
-     * @return BasketDataType[]
      */
     public function customerBaskets(CustomerDataType $customer): array
     {
-        $baskets   = [];
+        $baskets = [];
         $basketIds = $this->getCustomerBasketIds($customer->getId());
 
         foreach ($basketIds as $basketId) {
@@ -123,24 +123,29 @@ final class Repository
      */
     public function publicBasketsByOwnerNameOrEmail(string $search): array
     {
-        $baskets                = [];
+        $baskets = [];
         $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder->select('userbaskets.*')
-                     ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
-                     ->innerJoin('userbaskets', $tableViewNameGenerator->getViewName('oxuser'), 'users', 'users.oxid = userbaskets.oxuserid')
-                     ->where('userbaskets.oxpublic = 1')
-                     ->andWhere("userbaskets.OXTITLE != 'savedbasket'")
-                     ->andWhere("userbaskets.OXTITLE != 'noticelist'")
-                     ->andWhere('(users.oxusername = :search OR users.oxlname = :search)')
-                     ->setParameters([
-                         ':search' => $search,
-                     ]);
+            ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
+            ->innerJoin(
+                'userbaskets',
+                $tableViewNameGenerator->getViewName('oxuser'),
+                'users',
+                'users.oxid = userbaskets.oxuserid'
+            )
+            ->where('userbaskets.oxpublic = 1')
+            ->andWhere("userbaskets.OXTITLE != 'savedbasket'")
+            ->andWhere("userbaskets.OXTITLE != 'noticelist'")
+            ->andWhere('(users.oxusername = :search OR users.oxlname = :search)')
+            ->setParameters([
+                ':search' => $search,
+            ]);
 
         if (!EshopRegistry::getConfig()->getConfigParam('blMallUsers')) {
             $queryBuilder->andWhere('(users.oxshopid = :shopId)')
-                         ->setParameter(':shopId', EshopRegistry::getConfig()->getShopId());
+                ->setParameter(':shopId', EshopRegistry::getConfig()->getShopId());
         }
 
         $queryBuilder->getConnection()->setFetchMode(PDO::FETCH_ASSOC);
@@ -161,11 +166,11 @@ final class Repository
 
     private function getCustomerBasketIds(ID $customerId): array
     {
-        $queryBuilder           = $this->queryBuilderFactory->create();
+        $queryBuilder = $this->queryBuilderFactory->create();
         $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
         /** @var \Doctrine\DBAL\Driver\Statement $execute */
-        $execute =  $queryBuilder
+        $execute = $queryBuilder
             ->select('oxid')
             ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')
             ->where('oxuserid = :customerId')

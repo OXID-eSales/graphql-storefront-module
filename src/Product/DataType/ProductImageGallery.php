@@ -40,7 +40,7 @@ final class ProductImageGallery implements ShopModelAwareInterface
     public function getImages(): array
     {
         $gallery = $this->productModel->getPictureGallery();
-        $images  = [];
+        $images = [];
 
         foreach ($gallery['Pics'] as $key => $imageUrl) {
             $images[$key] = new ProductImage(

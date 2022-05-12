@@ -27,21 +27,21 @@ final class InvoiceAddress
         Repository $repository,
         Authentication $authenticationService
     ) {
-        $this->repository            = $repository;
+        $this->repository = $repository;
         $this->authenticationService = $authenticationService;
     }
 
     public function customerInvoiceAddress(): InvoiceAddressDataType
     {
         return $this->repository->getById(
-            (string) $this->authenticationService->getUser()->id(),
+            (string)$this->authenticationService->getUser()->id(),
             InvoiceAddressDataType::class
         );
     }
 
     public function updateInvoiceAddress(InvoiceAddressDataType $invoiceAddress): InvoiceAddressDataType
     {
-        if (!(string) $this->authenticationService->getUser()->id()) {
+        if (!(string)$this->authenticationService->getUser()->id()) {
             throw new InvalidLogin('Unauthorized');
         }
 

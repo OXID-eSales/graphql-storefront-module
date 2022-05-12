@@ -37,7 +37,7 @@ final class Sorting extends BaseSorting
         ?string $title = null
     ): self {
         return new self([
-            'oxsort'  => $position,
+            'oxsort' => $position,
             'oxtitle' => $title,
         ]);
     }

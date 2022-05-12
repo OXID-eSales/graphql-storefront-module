@@ -141,21 +141,22 @@ final class BasketsCest extends BaseCest
     {
         return [
             [
-                'group'    => 'A',
+                'group' => 'A',
                 'username' => self::USERNAME,
-                'price'    => 6.66,
+                'price' => 6.66,
             ],
             [
-                'group'    => 'B',
+                'group' => 'B',
                 'username' => self::OTHER_USERNAME,
-                'price'    => 8.88,
+                'price' => 8.88,
             ],
         ];
     }
 
     private function basketsQuery(AcceptanceTester $I, string $owner): array
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             baskets(owner: "' . $owner . '") {
                 owner {
                     lastName
@@ -176,7 +177,8 @@ final class BasketsCest extends BaseCest
                 creationDate
                 lastUpdateDate
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -185,11 +187,13 @@ final class BasketsCest extends BaseCest
 
     private function basketMakePrivateMutation(AcceptanceTester $I, string $basketId): array
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketMakePrivate(basketId: "' . $basketId . '") {
                 public
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -198,11 +202,13 @@ final class BasketsCest extends BaseCest
 
     private function basketMakePublicMutation(AcceptanceTester $I, string $basketId): array
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketMakePublic(basketId: "' . $basketId . '") {
                 public
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -211,7 +217,8 @@ final class BasketsCest extends BaseCest
 
     private function basketQuery(AcceptanceTester $I, string $basketId): array
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             basket (basketId: "' . $basketId . '") {
                 items {
                     product {
@@ -222,7 +229,8 @@ final class BasketsCest extends BaseCest
                     }
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -234,7 +242,7 @@ final class BasketsCest extends BaseCest
         $I->haveInDatabase(
             'oxobject2group',
             [
-                'OXID'       => '_testrelationA',
+                'OXID' => '_testrelationA',
                 'OXOBJECTID' => self::CUSTOMER_ID,
                 'OXGROUPSID' => 'oxidpricea',
             ]
@@ -243,7 +251,7 @@ final class BasketsCest extends BaseCest
         $I->haveInDatabase(
             'oxobject2group',
             [
-                'OXID'       => '_testrelationB',
+                'OXID' => '_testrelationB',
                 'OXOBJECTID' => self::OTHER_CUSTOMER_ID,
                 'OXGROUPSID' => 'oxidpriceb',
             ]

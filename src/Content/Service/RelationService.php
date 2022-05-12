@@ -35,7 +35,7 @@ final class RelationService
         Repository $repository,
         CategoryService $categoryService
     ) {
-        $this->repository      = $repository;
+        $this->repository = $repository;
         $this->categoryService = $categoryService;
     }
 
@@ -52,7 +52,7 @@ final class RelationService
      */
     public function getCategory(Content $content): ?CategoryDataType
     {
-        $id = (string) $content->getEshopModel()->getCategoryId();
+        $id = (string)$content->getEshopModel()->getCategoryId();
 
         if (!$id || $content->getEshopModel()->getType() !== Content::TYPE_CATEGORY) {
             return null;

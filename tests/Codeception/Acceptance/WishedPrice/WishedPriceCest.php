@@ -61,7 +61,8 @@ final class WishedPriceCest extends BaseCest
     public function testGetWishedPrice(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
-        $I->sendGQLQuery('query{
+        $I->sendGQLQuery(
+            'query{
             wishedPrice(wishedPriceId: "' . self::WISHED_PRICE . '") {
                 product {
                     title
@@ -80,11 +81,12 @@ final class WishedPriceCest extends BaseCest
                     firstName
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
         $wishedPrice = $result['data']['wishedPrice'];
 
         $I->assertEquals($wishedPrice['product']['title'], 'Kuyichi Ledergürtel JEVER');
@@ -95,30 +97,34 @@ final class WishedPriceCest extends BaseCest
         $I->assertEquals($wishedPrice['inquirer']['firstName'], self::FIRSTNAME);
         $I->assertNull($wishedPrice['notificationDate']);
 
-        $I->assertEmpty(array_diff(array_keys($wishedPrice), [
-            'product',
-            'price',
-            'currency',
-            'id',
-            'email',
-            'notificationDate',
-            'creationDate',
-            'inquirer',
-        ]));
+        $I->assertEmpty(
+            array_diff(array_keys($wishedPrice), [
+                'product',
+                'price',
+                'currency',
+                'id',
+                'email',
+                'notificationDate',
+                'creationDate',
+                'inquirer',
+            ])
+        );
     }
 
     public function testGetWishedPriceNotificationDate(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
-        $I->sendGQLQuery('query{
+        $I->sendGQLQuery(
+            'query{
             wishedPrice(wishedPriceId: "' . self::WISHED_PRICE_2 . '") {
                 notificationDate
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
         $wishedPrice = $result['data']['wishedPrice'];
 
         $I->assertNotNull($wishedPrice['notificationDate']);
@@ -126,11 +132,13 @@ final class WishedPriceCest extends BaseCest
 
     public function testGetWishedPriceWithoutToken(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query{
+        $I->sendGQLQuery(
+            'query{
             wishedPrice(wishedPriceId: "' . self::WISHED_PRICE . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -148,14 +156,16 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('query{
+        $I->sendGQLQuery(
+            'query{
             wishedPrice(wishedPriceId: "' . $data['id'] . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
-        $result        = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
         $error_message = $result['errors'][0]['message'];
 
         if (isset($data['unauthorized'])) {
@@ -171,26 +181,26 @@ final class WishedPriceCest extends BaseCest
     {
         return [
             [
-                'id'           => self::WISHED_PRICE_WITHOUT_USER,
+                'id' => self::WISHED_PRICE_WITHOUT_USER,
                 'unauthorized' => true,
             ],
             [
-                'id'           => self::WISHED_PRICE_ASSIGNED_TO_OTHER_USER,
+                'id' => self::WISHED_PRICE_ASSIGNED_TO_OTHER_USER,
                 'unauthorized' => true,
             ],
             [
-                'id'           => self::WISHED_PRICE_WITH_INACTIVE_PRODUCT,
+                'id' => self::WISHED_PRICE_WITH_INACTIVE_PRODUCT,
                 'unauthorized' => true,
             ],
             [
-                'id'     => self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
+                'id' => self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
             ],
             [
-                'id'         => self::WISHED_PRICE_WITH_NON_EXISTING_PRODUCT,
+                'id' => self::WISHED_PRICE_WITH_NON_EXISTING_PRODUCT,
                 'product_id' => 'does_not_exist',
             ],
             [
-                'id'           => self::WISHED_PRICE_WITH_NON_EXISTING_USER,
+                'id' => self::WISHED_PRICE_WITH_NON_EXISTING_USER,
                 'unauthorized' => true,
             ],
         ];
@@ -203,11 +213,13 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login(self::ADMIN_USERNAME, self::ADMIN_PASSWORD);
 
-        $I->sendGQLQuery('query{
+        $I->sendGQLQuery(
+            'query{
             wishedPrice(wishedPriceId: "' . $data['id'] . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -241,9 +253,11 @@ final class WishedPriceCest extends BaseCest
 
     public function testDeleteWishedPriceWithoutToken(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             wishedPriceDelete(wishedPriceId: "' . self::WISHED_PRICE_TO_BE_DELETED . '")
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -261,9 +275,11 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login($data['username'], $data['password']);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             wishedPriceDelete(wishedPriceId: "' . $data['oxid'] . '")
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -285,9 +301,11 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login($data['username'], $data['password']);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             wishedPriceDelete(wishedPriceId: "non_existing_wished_price")
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -301,17 +319,17 @@ final class WishedPriceCest extends BaseCest
             'admin' => [
                 'username' => 'admin',
                 'password' => 'admin',
-                'oxid'     => self::WISHED_PRICE_TO_BE_DELETED . '1_',
+                'oxid' => self::WISHED_PRICE_TO_BE_DELETED . '1_',
             ],
             'user' => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
-                'oxid'     => self::WISHED_PRICE_TO_BE_DELETED . '2_',
+                'oxid' => self::WISHED_PRICE_TO_BE_DELETED . '2_',
             ],
             'otheruser' => [
                 'username' => 'otheruser@oxid-esales.com',
                 'password' => 'useruser',
-                'oxid'     => self::WISHED_PRICE_TO_BE_DELETED . '3_',
+                'oxid' => self::WISHED_PRICE_TO_BE_DELETED . '3_',
                 'expected' => 'error',
             ],
         ];
@@ -319,11 +337,13 @@ final class WishedPriceCest extends BaseCest
 
     public function testWishedPrices401WithoutToken(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             wishedPrices {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -342,11 +362,13 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login($data['username'], $data['password']);
 
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             wishedPrices {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -364,19 +386,20 @@ final class WishedPriceCest extends BaseCest
             'admin' => [
                 'username' => 'admin',
                 'password' => 'admin',
-                'count'    => 0,
+                'count' => 0,
             ],
             'user' => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
-                'count'    => 7,
+                'count' => 7,
             ],
         ];
     }
 
     public function testWishedPriceSetWithoutAuthorization(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             wishedPriceSet(wishedPrice: {
                 productId: "' . self::PRODUCT_ID . '",
                 currencyName: "EUR",
@@ -387,7 +410,8 @@ final class WishedPriceCest extends BaseCest
                 notificationDate
                 creationDate
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -405,7 +429,8 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             wishedPriceSet(wishedPrice: { productId: "' . $data['productId'] . '", currencyName: "' .
             $data['currency'] . '", price: ' . $data['price'] . '}) {
                 id
@@ -413,7 +438,8 @@ final class WishedPriceCest extends BaseCest
                 notificationDate
                 creationDate
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -426,33 +452,33 @@ final class WishedPriceCest extends BaseCest
         return [
             'not_existing_product' => [
                 'productId' => 'DOES-NOT-EXIST',
-                'currency'  => 'EUR',
-                'price'     => '15.0',
-                'message'   => 'Product was not found by id: DOES-NOT-EXIST',
+                'currency' => 'EUR',
+                'price' => '15.0',
+                'message' => 'Product was not found by id: DOES-NOT-EXIST',
             ],
             'not_existing_currency' => [
                 'productId' => self::PRODUCT_ID,
-                'currency'  => 'ABC',
-                'price'     => '15.0',
-                'message'   => 'Currency "ABC" was not found',
+                'currency' => 'ABC',
+                'price' => '15.0',
+                'message' => 'Currency "ABC" was not found',
             ],
             'wished_price_disabled' => [
                 'productId' => self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
-                'currency'  => 'EUR',
-                'price'     => '15.0',
-                'message'   => 'Product was not found by id: ' . self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
+                'currency' => 'EUR',
+                'price' => '15.0',
+                'message' => 'Product was not found by id: ' . self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
             ],
             'invalid_price' => [
                 'productId' => self::PRODUCT_ID,
-                'currency'  => 'EUR',
-                'price'     => 'this_is_not_a_vald_price',
-                'message'   => 'Field "wishedPriceSet" argument "wishedPrice" requires type Float!, found this_is_not_a_vald_price.',
+                'currency' => 'EUR',
+                'price' => 'this_is_not_a_vald_price',
+                'message' => 'Field "wishedPriceSet" argument "wishedPrice" requires type Float!, found this_is_not_a_vald_price.',
             ],
             'negative_price' => [
                 'productId' => self::PRODUCT_ID,
-                'currency'  => 'EUR',
-                'price'     => -123,
-                'message'   => 'Wished price must be positive, was: -123',
+                'currency' => 'EUR',
+                'price' => -123,
+                'message' => 'Wished price must be positive, was: -123',
             ],
         ];
     }
@@ -461,7 +487,8 @@ final class WishedPriceCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             wishedPriceSet(wishedPrice: {
                 productId: "' . self::PRODUCT_ID . '",
                 currencyName: "EUR",
@@ -479,20 +506,21 @@ final class WishedPriceCest extends BaseCest
                     name
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
         $result = $I->grabJsonResponseAsArray();
 
-        $wishedPrice   = $result['data']['wishedPriceSet'];
+        $wishedPrice = $result['data']['wishedPriceSet'];
         $wishedPriceId = $wishedPrice['id'];
         unset($wishedPrice['id']);
 
         $expectedWishedPrice = [
             'inquirer' => ['firstName' => self::FIRSTNAME],
-            'email'    => self::USERNAME,
-            'product'  => ['id' => self::PRODUCT_ID],
+            'email' => self::USERNAME,
+            'product' => ['id' => self::PRODUCT_ID],
             'currency' => ['name' => 'EUR'],
         ];
 
@@ -513,7 +541,8 @@ final class WishedPriceCest extends BaseCest
         $this->setShopOrderMail($I, '');
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             wishedPriceSet(wishedPrice: {
                 productId: "' . self::PRODUCT_ID . '",
                 currencyName: "EUR",
@@ -521,7 +550,8 @@ final class WishedPriceCest extends BaseCest
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();

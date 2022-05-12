@@ -110,28 +110,28 @@ final class ValidCurrenciesConfig extends Config // phpcs:ignore
 {
     public function getCurrencyObject($name)
     {
-        $cur           = new stdClass();
-        $cur->id       = 0;
-        $cur->name     = $name;
-        $cur->rate     = '1.0';
-        $cur->dec      = ',';
+        $cur = new stdClass();
+        $cur->id = 0;
+        $cur->name = $name;
+        $cur->rate = '1.0';
+        $cur->dec = ',';
         $cur->thousand = '.';
-        $cur->sign     = '€';
-        $cur->decimal  = '2';
+        $cur->sign = '€';
+        $cur->decimal = '2';
 
         return $cur;
     }
 
     public function getActShopCurrencyObject()
     {
-        $cur           = new stdClass();
-        $cur->id       = 0;
-        $cur->name     = 'EUR';
-        $cur->rate     = '1.0';
-        $cur->dec      = ',';
+        $cur = new stdClass();
+        $cur->id = 0;
+        $cur->name = 'EUR';
+        $cur->rate = '1.0';
+        $cur->dec = ',';
         $cur->thousand = '.';
-        $cur->sign     = '€';
-        $cur->decimal  = '2';
+        $cur->sign = '€';
+        $cur->decimal = '2';
 
         return $cur;
     }

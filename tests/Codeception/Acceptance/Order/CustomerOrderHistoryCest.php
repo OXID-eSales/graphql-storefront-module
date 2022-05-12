@@ -151,7 +151,7 @@ final class CustomerOrderHistoryCest extends BaseCest
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
-        $order  = $result['data']['customer']['orders'][0];
+        $order = $result['data']['customer']['orders'][0];
 
         $this->assertInvoiceAddress($I, $order['invoiceAddress']);
         $this->assertDeliveryAddress($I, $order['deliveryAddress']);
@@ -212,7 +212,8 @@ final class CustomerOrderHistoryCest extends BaseCest
     {
         $I->login(self::DIFFERENT_USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             customer {
                 id
                 orders(
@@ -227,7 +228,8 @@ final class CustomerOrderHistoryCest extends BaseCest
                     }
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -330,10 +332,10 @@ final class CustomerOrderHistoryCest extends BaseCest
         AcceptanceTester $I,
         Example $data
     ): void {
-        $pagination   = $data['pagination'];
-        $expected     = $data['expected'];
+        $pagination = $data['pagination'];
+        $expected = $data['expected'];
         $firstOrderNr = $data['first_ordernr'];
-        $lastOrderNr  = $data['last_ordernr'];
+        $lastOrderNr = $data['last_ordernr'];
 
         $I->login(self::DIFFERENT_USERNAME, self::PASSWORD);
 
@@ -440,40 +442,40 @@ final class CustomerOrderHistoryCest extends BaseCest
     {
         return [
             'set1' => [
-                'pagination'    => [
-                    'limit'  => 1,
+                'pagination' => [
+                    'limit' => 1,
                     'offset' => 0,
                 ],
-                'expected'      => 1,
+                'expected' => 1,
                 'first_ordernr' => '113',
-                'last_ordernr'  => '113',
+                'last_ordernr' => '113',
             ],
             'set2' => [
-                'pagination'    => [
-                    'limit'  => 10,
+                'pagination' => [
+                    'limit' => 10,
                     'offset' => 0,
                 ],
-                'expected'      => 10,
+                'expected' => 10,
                 'first_ordernr' => '113',
-                'last_ordernr'  => '104',
+                'last_ordernr' => '104',
             ],
             'set3' => [
-                'pagination'    => [
-                    'limit'  => 1,
+                'pagination' => [
+                    'limit' => 1,
                     'offset' => 10,
                 ],
-                'expected'      => 1,
+                'expected' => 1,
                 'first_ordernr' => '103',
-                'last_ordernr'  => '103',
+                'last_ordernr' => '103',
             ],
             'set4' => [
-                'pagination'    => [
-                    'limit'  => 1,
+                'pagination' => [
+                    'limit' => 1,
                     'offset' => 100,
                 ],
-                'expected'      => 0,
+                'expected' => 0,
                 'first_ordernr' => '',
-                'last_ordernr'  => '',
+                'last_ordernr' => '',
             ],
         ];
     }
@@ -481,21 +483,21 @@ final class CustomerOrderHistoryCest extends BaseCest
     private function assertInvoiceAddress(AcceptanceTester $I, array $address): void
     {
         $expected = [
-            'email'          => 'billuser@oxid-esales.com',
-            'salutation'     => 'MR',
-            'firstName'      => 'Marc',
-            'lastName'       => 'Muster',
-            'company'        => 'bill company',
+            'email' => 'billuser@oxid-esales.com',
+            'salutation' => 'MR',
+            'firstName' => 'Marc',
+            'lastName' => 'Muster',
+            'company' => 'bill company',
             'additionalInfo' => 'additional bill info',
-            'street'         => 'Hauptstr.',
-            'streetNumber'   => '13',
-            'zipCode'        => '79098',
-            'city'           => 'Freiburg',
-            'vatID'          => 'bill vat id',
-            'phone'          => '1234',
-            'fax'            => '4567',
-            'country'        => ['id' => 'a7c40f631fc920687.20179984'],
-            'state'          => null,
+            'street' => 'Hauptstr.',
+            'streetNumber' => '13',
+            'zipCode' => '79098',
+            'city' => 'Freiburg',
+            'vatID' => 'bill vat id',
+            'phone' => '1234',
+            'fax' => '4567',
+            'country' => ['id' => 'a7c40f631fc920687.20179984'],
+            'state' => null,
         ];
 
         $facts = new Facts();
@@ -512,19 +514,19 @@ final class CustomerOrderHistoryCest extends BaseCest
     private function assertDeliveryAddress(AcceptanceTester $I, array $address): void
     {
         $expected = [
-            'salutation'     => 'MRS',
-            'firstName'      => 'Marcia',
-            'lastName'       => 'Pattern',
-            'company'        => 'del company',
+            'salutation' => 'MRS',
+            'firstName' => 'Marcia',
+            'lastName' => 'Pattern',
+            'company' => 'del company',
             'additionalInfo' => 'del addinfo',
-            'street'         => 'Nebenstraße',
-            'streetNumber'   => '123',
-            'zipCode'        => '79106',
-            'city'           => 'Freiburg',
-            'phone'          => '04012345678',
-            'fax'            => '04012345679',
-            'country'        => ['id' => 'a7c40f631fc920687.20179984'],
-            'state'          => null,
+            'street' => 'Nebenstraße',
+            'streetNumber' => '123',
+            'zipCode' => '79106',
+            'city' => 'Freiburg',
+            'phone' => '04012345678',
+            'fax' => '04012345679',
+            'country' => ['id' => 'a7c40f631fc920687.20179984'],
+            'state' => null,
         ];
 
         foreach ($expected as $key => $value) {
@@ -535,41 +537,41 @@ final class CustomerOrderHistoryCest extends BaseCest
     private function assertCost(AcceptanceTester $I, array $costs): void
     {
         $expected = [
-            'total'        => 220.78,
-            'discount'     => 123.4,
-            'voucher'      => 0.0,
-            'productNet'   => [
+            'total' => 220.78,
+            'discount' => 123.4,
+            'voucher' => 0.0,
+            'productNet' => [
                 'price' => 178.3,
-                'vat'   => 0.0,
+                'vat' => 0.0,
             ],
             'productGross' => [
-                'sum'  => 209.38,
+                'sum' => 209.38,
                 'vats' => [
                     [
-                        'vatRate'  => 10.0,
+                        'vatRate' => 10.0,
                         'vatPrice' => 2.72,
                     ],
                     [
-                        'vatRate'  => 19.0,
+                        'vatRate' => 19.0,
                         'vatPrice' => 27.38,
                     ],
                 ],
             ],
-            'delivery'     => [
-                'price'    => 3.9,
-                'vat'      => 19.0,
+            'delivery' => [
+                'price' => 3.9,
+                'vat' => 19.0,
                 'currency' => [
                     'name' => 'EUR',
                 ],
             ],
-            'payment'      => [
-                'price'    => 7.5,
-                'vat'      => 19.0,
+            'payment' => [
+                'price' => 7.5,
+                'vat' => 19.0,
                 'currency' => [
                     'name' => 'EUR',
                 ],
             ],
-            'currency'     => [
+            'currency' => [
                 'name' => 'EUR',
             ],
         ];
@@ -581,12 +583,12 @@ final class CustomerOrderHistoryCest extends BaseCest
     {
         $expected = [
             'trackingNumber' => 'tracking_code',
-            'trackingURL'    => self::PARCEL_SERVICE_LINK,
-            'dispatched'     => '2020-09-02T12:12:12+02:00',
-            'provider'       => [
-                'id'     => 'oxidstandard',
+            'trackingURL' => self::PARCEL_SERVICE_LINK,
+            'dispatched' => '2020-09-02T12:12:12+02:00',
+            'provider' => [
+                'id' => 'oxidstandard',
                 'active' => true,
-                'title'  => 'Standard',
+                'title' => 'Standard',
             ],
         ];
 

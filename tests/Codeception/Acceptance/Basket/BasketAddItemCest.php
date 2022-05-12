@@ -48,7 +48,7 @@ final class BasketAddItemCest extends BasketBaseCest
         $I->deleteFromDatabase(
             'oxuserbasketitems',
             [
-                'OXARTID'    => self::PRODUCT_ID,
+                'OXARTID' => self::PRODUCT_ID,
                 'OXBASKETID' => self::PUBLIC_BASKET,
             ]
         );
@@ -56,7 +56,7 @@ final class BasketAddItemCest extends BasketBaseCest
         $I->deleteFromDatabase(
             'oxuserbasketitems',
             [
-                'OXARTID'    => self::PRODUCT_WITH_VARIANT,
+                'OXARTID' => self::PRODUCT_WITH_VARIANT,
                 'OXBASKETID' => self::PUBLIC_BASKET,
             ]
         );
@@ -122,7 +122,8 @@ final class BasketAddItemCest extends BasketBaseCest
                     'id' => self::PRODUCT_ID,
                 ],
                 'amount' => 2,
-            ], [
+            ],
+            [
                 'product' => [
                     'id' => self::PRODUCT,
                 ],
@@ -144,7 +145,10 @@ final class BasketAddItemCest extends BasketBaseCest
 
         $basketData = $result['data']['basketAddItem'];
         $I->assertSame(self::PUBLIC_BASKET, $basketData['id']);
-        $I->assertSame('Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15', $result['errors'][0]['message']);
+        $I->assertSame(
+            'Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15',
+            $result['errors'][0]['message']
+        );
         $I->assertSame('LIMITEDAVAILABILITY', $result['errors'][0]['extensions']['type']);
 
         $I->assertSame([
@@ -153,7 +157,8 @@ final class BasketAddItemCest extends BasketBaseCest
                     'id' => self::PRODUCT_ID,
                 ],
                 'amount' => 15,
-            ], [
+            ],
+            [
                 'product' => [
                     'id' => self::PRODUCT,
                 ],
@@ -170,7 +175,7 @@ final class BasketAddItemCest extends BasketBaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result     = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 20);
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 20);
         $basketData = $result['data']['basketAddItem'];
         $I->assertSame([
             [
@@ -178,7 +183,8 @@ final class BasketAddItemCest extends BasketBaseCest
                     'id' => self::PRODUCT_ID,
                 ],
                 'amount' => 20,
-            ], [
+            ],
+            [
                 'product' => [
                     'id' => self::PRODUCT,
                 ],
@@ -193,7 +199,10 @@ final class BasketAddItemCest extends BasketBaseCest
 
         $basketData = $result['data']['basketAddItem'];
         $I->assertSame(self::PUBLIC_BASKET, $basketData['id']);
-        $I->assertSame('Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15', $result['errors'][0]['message']);
+        $I->assertSame(
+            'Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15',
+            $result['errors'][0]['message']
+        );
         $I->assertSame('LIMITEDAVAILABILITY', $result['errors'][0]['extensions']['type']);
 
         $I->assertSame([
@@ -202,7 +211,8 @@ final class BasketAddItemCest extends BasketBaseCest
                     'id' => self::PRODUCT_ID,
                 ],
                 'amount' => 15,
-            ], [
+            ],
+            [
                 'product' => [
                     'id' => self::PRODUCT,
                 ],
@@ -223,8 +233,13 @@ final class BasketAddItemCest extends BasketBaseCest
         $initialAmount = 3;
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $basketId   = $this->basketCreateMutation($I, self::BASKET_TITLE)['id'];
-        $basketItem = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $initialAmount)['data']['basketAddItem']['items'][0];
+        $basketId = $this->basketCreateMutation($I, self::BASKET_TITLE)['id'];
+        $basketItem = $this->basketAddItemMutation(
+            $I,
+            $basketId,
+            self::PRODUCT_ID,
+            $initialAmount
+        )['data']['basketAddItem']['items'][0];
         $I->assertEquals($initialAmount, $basketItem['amount']);
 
         //there's one more item in stock we can add to basket
@@ -236,8 +251,8 @@ final class BasketAddItemCest extends BasketBaseCest
         $I->assertEquals($initialAmount, $basket['items'][0]['amount']);
 
         //try to add more of the main items, but only one more can be added
-        $addAmount       = 10;
-        $result          = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $addAmount);
+        $addAmount = 10;
+        $result = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $addAmount);
         $expectedMessage = BasketItemAmountLimitedStock::limitedAvailability(self::PRODUCT_ID, $initialAmount + 1);
         $I->assertStringStartsWith($expectedMessage, $result['errors'][0]['message']);
 
@@ -253,7 +268,7 @@ final class BasketAddItemCest extends BasketBaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result     = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 2);
+        $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, self::PRODUCT_ID, 2);
         $basketData = $result['data']['basketAddItem'];
         $I->assertSame([
             [
@@ -261,7 +276,8 @@ final class BasketAddItemCest extends BasketBaseCest
                     'id' => self::PRODUCT_ID,
                 ],
                 'amount' => 2,
-            ], [
+            ],
+            [
                 'product' => [
                     'id' => self::PRODUCT,
                 ],
@@ -296,7 +312,7 @@ final class BasketAddItemCest extends BasketBaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, self::BASKET_TITLE)['id'];
-        $result   = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, 2);
+        $result = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, 2);
 
         $I->assertArrayNotHasKey('errors', $result);
         $I->assertEquals(2, $result['data']['basketAddItem']['items'][0]['amount']);
@@ -340,7 +356,10 @@ final class BasketAddItemCest extends BasketBaseCest
             $result['errors'][0]['message']
         );
 
-        $I->assertStringNotContainsString(self::PRODUCT_WITH_VARIANT, serialize($result['data']['basketAddItem']['items']));
+        $I->assertStringNotContainsString(
+            self::PRODUCT_WITH_VARIANT,
+            serialize($result['data']['basketAddItem']['items'])
+        );
     }
 
     public function testCanAddBuyableParentToBasket(AcceptanceTester $I): void
@@ -361,7 +380,7 @@ final class BasketAddItemCest extends BasketBaseCest
             'oxarticles',
             [
                 'oxstockflag' => $flag,
-                'oxstock'     => $stock,
+                'oxstock' => $stock,
             ],
             [
                 'oxid' => self::PRODUCT_ID,

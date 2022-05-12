@@ -48,7 +48,7 @@ final class Country implements ShopModelAwareInterface
      */
     public function getPosition(): int
     {
-        return (int) $this->country->getRawFieldData('oxorder');
+        return (int)$this->country->getRawFieldData('oxorder');
     }
 
     /**
@@ -56,7 +56,7 @@ final class Country implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->country->getRawFieldData('oxactive');
+        return (bool)$this->country->getRawFieldData('oxactive');
     }
 
     /**
@@ -64,7 +64,7 @@ final class Country implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->country->getRawFieldData('oxtitle');
+        return (string)$this->country->getRawFieldData('oxtitle');
     }
 
     /**
@@ -72,7 +72,7 @@ final class Country implements ShopModelAwareInterface
      */
     public function getIsoAlpha2(): string
     {
-        return (string) $this->country->getRawFieldData('oxisoalpha2');
+        return (string)$this->country->getRawFieldData('oxisoalpha2');
     }
 
     /**
@@ -80,7 +80,7 @@ final class Country implements ShopModelAwareInterface
      */
     public function getIsoAlpha3(): string
     {
-        return (string) $this->country->getRawFieldData('oxisoalpha3');
+        return (string)$this->country->getRawFieldData('oxisoalpha3');
     }
 
     /**
@@ -88,7 +88,7 @@ final class Country implements ShopModelAwareInterface
      */
     public function getIsoNumeric(): string
     {
-        return (string) $this->country->getRawFieldData('oxunnum3');
+        return (string)$this->country->getRawFieldData('oxunnum3');
     }
 
     /**
@@ -112,7 +112,7 @@ final class Country implements ShopModelAwareInterface
      */
     public function getCreationDate(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->country->getRawFieldData('oxtimestamp'));
+        return DateTimeImmutableFactory::fromString((string)$this->country->getRawFieldData('oxtimestamp'));
     }
 
     public static function getModelClass(): string

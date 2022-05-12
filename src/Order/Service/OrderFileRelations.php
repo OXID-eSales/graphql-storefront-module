@@ -36,7 +36,7 @@ final class OrderFileRelations
     public function file(OrderFile $orderFile): ?FileDataType
     {
         try {
-            return $this->fileService->file((string) $orderFile->fileId());
+            return $this->fileService->file((string)$orderFile->fileId());
         } catch (FileNotFound $e) {
             return null;
         }

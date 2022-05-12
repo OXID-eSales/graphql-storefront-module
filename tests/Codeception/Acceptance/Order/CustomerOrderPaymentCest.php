@@ -278,8 +278,8 @@ final class CustomerOrderPaymentCest extends BaseCest
     {
         $I->updateInDatabase(
             'oxpayments',
-            ['oxactive' => (int) $active],
-            ['oxid'     => self::PAYMENT_ID]
+            ['oxactive' => (int)$active],
+            ['oxid' => self::PAYMENT_ID]
         );
     }
 

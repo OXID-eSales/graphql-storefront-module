@@ -26,8 +26,8 @@ abstract class AbstractItemEvent extends Event
         ID $basketId,
         float $amount
     ) {
-        $this->basketId     = $basketId;
-        $this->amount       = $amount;
+        $this->basketId = $basketId;
+        $this->amount = $amount;
     }
 
     public function getBasketId(): ID

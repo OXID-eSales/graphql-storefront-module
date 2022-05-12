@@ -141,10 +141,10 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $I->getRest()->sendPOST(
             $uri,
             [
-                'shp'     => 2,
-                'lang'    => 0,
-                'cl'      => 'start',
-                'fnc'     => 'login',
+                'shp' => 2,
+                'lang' => 0,
+                'cl' => 'start',
+                'fnc' => 'login',
                 'lgn_usr' => self::USERNAME,
                 'lgn_pwd' => self::PASSWORD,
             ]
@@ -183,7 +183,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $rest->deleteHeader('Cookie');
         $rest->haveHTTPHeader('Content-Type', 'application/json');
         $rest->sendPOST($uri, [
-            'query'     => $query,
+            'query' => $query,
         ]);
     }
 
@@ -195,7 +195,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $rest->haveHTTPHeader('Cookie', 'sid_key=oxid;sid=' . $sid);
         $rest->haveHTTPHeader('Content-Type', 'application/json');
         $rest->sendPOST($uri, [
-            'query'     => $query,
+            'query' => $query,
         ]);
     }
 }

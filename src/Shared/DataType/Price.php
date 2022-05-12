@@ -27,7 +27,7 @@ final class Price
 
     public function __construct(PriceModel $price, ?stdClass $currency = null)
     {
-        $this->price    = $price;
+        $this->price = $price;
         $this->currency = $currency;
     }
 

@@ -196,7 +196,7 @@ final class BasketRemoveItemCest extends BaseCest
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
 
-        $basketItems  = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID, 20);
+        $basketItems = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID, 20);
         $basketItemId = null;
 
         foreach ($basketItems as $item) {
@@ -216,17 +216,17 @@ final class BasketRemoveItemCest extends BaseCest
             ]
         );
 
-        $result     = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId, 1);
+        $result = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId, 1);
         $basketData = $result['data']['basketRemoveItem'];
         $I->assertSame(self::BASKET_ID, $basketData['id']);
 
         //Check product error message and type
         unset($result['errors'][0]['extensions']['category']);
         $I->assertSame([
-            'message'    => 'Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15',
+            'message' => 'Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 15',
             'extensions' => [
-                'type'         => 'LIMITEDAVAILABILITY',
-                'productId'    => self::PRODUCT_ID,
+                'type' => 'LIMITEDAVAILABILITY',
+                'productId' => self::PRODUCT_ID,
                 'basketItemId' => $basketItemId,
             ],
         ], $result['errors'][0]);
@@ -255,7 +255,7 @@ final class BasketRemoveItemCest extends BaseCest
     {
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD);
 
-        $basketItems  = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID, 20);
+        $basketItems = $this->basketAddItemMutation($I, self::BASKET_ID, self::PRODUCT_ID, 20);
         $basketItemId = null;
 
         foreach ($basketItems as $item) {
@@ -269,21 +269,21 @@ final class BasketRemoveItemCest extends BaseCest
             'oxarticles',
             [
                 'oxstockflag' => 3,
-                'oxstock'     => 0,
+                'oxstock' => 0,
             ],
             [
                 'oxid' => self::PRODUCT_ID,
             ]
         );
 
-        $result     = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId, 1);
+        $result = $this->basketRemoveItemMutation($I, self::BASKET_ID, $basketItemId, 1);
         $basketData = $result['data']['basketRemoveItem'];
         $I->assertSame(self::BASKET_ID, $basketData['id']);
 
         //Check product error message and type
         unset($result['errors'][0]['extensions']['category']);
         $I->assertSame([
-            'message'    => 'Product with id ' . self::PRODUCT_ID . ' is out of stock',
+            'message' => 'Product with id ' . self::PRODUCT_ID . ' is out of stock',
             'extensions' => [
                 'type' => 'OUTOFSTOCK',
             ],
@@ -298,7 +298,7 @@ final class BasketRemoveItemCest extends BaseCest
             'oxarticles',
             [
                 'oxstockflag' => 1,
-                'oxstock'     => 15,
+                'oxstock' => 15,
             ],
             [
                 'oxid' => self::PRODUCT_ID,
@@ -306,8 +306,12 @@ final class BasketRemoveItemCest extends BaseCest
         );
     }
 
-    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
-    {
+    private function basketAddItemMutation(
+        AcceptanceTester $I,
+        string $basketId,
+        string $productId,
+        int $amount = 1
+    ): array {
         $I->sendGQLQuery(
             'mutation {
                 basketAddItem(
@@ -334,8 +338,12 @@ final class BasketRemoveItemCest extends BaseCest
         return $result['data']['basketAddItem']['items'];
     }
 
-    private function basketRemoveItemMutation(AcceptanceTester $I, string $basketId, string $basketItemId, int $amount = 0): array
-    {
+    private function basketRemoveItemMutation(
+        AcceptanceTester $I,
+        string $basketId,
+        string $basketItemId,
+        int $amount = 0
+    ): array {
         $I->sendGQLQuery(
             'mutation {
                 basketRemoveItem(

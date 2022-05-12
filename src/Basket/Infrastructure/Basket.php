@@ -58,9 +58,9 @@ final class Basket
         SharedBasketInfrastructure $sharedBasketInfrastructure,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->repository                 = $repository;
+        $this->repository = $repository;
         $this->sharedBasketInfrastructure = $sharedBasketInfrastructure;
-        $this->eventDispatcher            = $eventDispatcher;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function addBasketItem(
@@ -73,19 +73,19 @@ final class Basket
     ): bool {
         $model = $basket->getEshopModel();
 
-        $item            = $this->getBasketItemByProductId($model, (string) $productId);
+        $item = $this->getBasketItemByProductId($model, (string)$productId);
         $alreadyInBasket = 0;
 
         if ($item) {
-            $alreadyInBasket = (int) $item->getRawFieldData('oxamount');
+            $alreadyInBasket = (int)$item->getRawFieldData('oxamount');
         }
 
         /** @var EshopArticleModel */
         $product = oxNew(EshopArticleModel::class);
-        $product->load((string) $productId);
+        $product->load((string)$productId);
         $productStock = $product->getStock();
-        $onStock      = $product->checkForStock($amount, $alreadyInBasket);
-        $blOverride   = false;
+        $onStock = $product->checkForStock($amount, $alreadyInBasket);
+        $blOverride = false;
 
         if ($onStock !== true) {
             $blOverride = true;
@@ -95,14 +95,18 @@ final class Basket
 
                 // product cannot be bought
                 GraphQLQueryHandler::addError(
-                    BasketItemAmountLimitedStock::productOutOfStock((string) $productId)
+                    BasketItemAmountLimitedStock::productOutOfStock((string)$productId)
                 );
             } else {
                 $amount = $productStock;
 
                 // product stock limit is reached
                 GraphQLQueryHandler::addError(
-                    BasketItemAmountLimitedStock::limitedAvailability((string) $productId, $productStock, $item ? $item->getId() : null)
+                    BasketItemAmountLimitedStock::limitedAvailability(
+                        (string)$productId,
+                        $productStock,
+                        $item ? $item->getId() : null
+                    )
                 );
             }
         }
@@ -111,32 +115,32 @@ final class Basket
             $amount = 0;
 
             GraphQLQueryHandler::addError(
-                new ProductNotOrderable((string) $productId)
+                new ProductNotOrderable((string)$productId)
             );
         }
 
-        $model->addItemToBasket((string) $productId, $amount, $select, $forceOverride ?: $blOverride, $persParams);
+        $model->addItemToBasket((string)$productId, $amount, $select, $forceOverride ?: $blOverride, $persParams);
 
         return true;
     }
 
     public function removeBasketItem(BasketDataType $basket, ID $basketItemId, float $amount): bool
     {
-        $model      = $basket->getEshopModel();
-        $basketItem = $this->getBasketItem($model, (string) $basketItemId);
+        $model = $basket->getEshopModel();
+        $basketItem = $this->getBasketItem($model, (string)$basketItemId);
 
         if (!($basketItem instanceof EshopUserBasketItemModel)) {
-            throw BasketItemNotFound::byIdInBasket((string) $basketItemId, $model->getId());
+            throw BasketItemNotFound::byIdInBasket((string)$basketItemId, $model->getId());
         }
 
-        $amountRemaining = (float) $basketItem->getRawFieldData('oxamount') - $amount;
+        $amountRemaining = (float)$basketItem->getRawFieldData('oxamount') - $amount;
 
         if ($amountRemaining <= 0 || $amount == 0) {
             $amountRemaining = 0;
         }
 
-        $productId = (string) $basketItem->getRawFieldData('oxartid');
-        $params    = $basketItem->getPersParams();
+        $productId = (string)$basketItem->getRawFieldData('oxartid');
+        $params = $basketItem->getPersParams();
 
         /** @var EshopArticleModel */
         $product = oxNew(EshopArticleModel::class);
@@ -217,7 +221,7 @@ final class Basket
 
         $model->assign([
             'OEGQL_DELIVERYMETHODID' => $deliveryMethodId,
-            'OEGQL_PAYMENTID'        => '',
+            'OEGQL_PAYMENTID' => '',
         ]);
 
         return $this->repository->saveModel($model);
@@ -231,13 +235,13 @@ final class Basket
         BasketDataType $userBasket,
         CountryDataType $country
     ): array {
-        $userModel   = $customer->getEshopModel();
+        $userModel = $customer->getEshopModel();
         $basketModel = $this->sharedBasketInfrastructure->getCalculatedBasket($userBasket);
 
         //Initialize available delivery set list for user and country
         /** @var EshopDeliverySetListModel $deliverySetList */
-        $deliverySetList      = oxNew(EshopDeliverySetListModel::class);
-        $deliverySetListArray = $deliverySetList->getDeliverySetList($userModel, (string) $country->getId());
+        $deliverySetList = oxNew(EshopDeliverySetListModel::class);
+        $deliverySetListArray = $deliverySetList->getDeliverySetList($userModel, (string)$country->getId());
 
         $result = [];
         /** @var EshopDeliverySetModel $deliverySet */
@@ -256,7 +260,11 @@ final class Basket
             }
 
             if (!empty($deliveryMethodPayments)) {
-                $result[$setKey] = new BasketDeliveryMethodDataType($deliverySet, $basketModel, $deliveryMethodPayments);
+                $result[$setKey] = new BasketDeliveryMethodDataType(
+                    $deliverySet,
+                    $basketModel,
+                    $deliveryMethodPayments
+                );
             }
         }
 
@@ -268,7 +276,6 @@ final class Basket
         BasketDataType $userBasket,
         ?string $remark = null
     ): OrderDataType {
-
         /** @var EshopUserModel $userModel */
         $userModel = $customer->getEshopModel();
 
@@ -276,19 +283,19 @@ final class Basket
         $userBasketModel = $userBasket->getEshopModel();
 
         if ($userBasketModel->getItemCount() === 0) {
-            throw PlaceOrderException::emptyBasket((string) $userBasket->id());
+            throw PlaceOrderException::emptyBasket((string)$userBasket->id());
         }
 
         $_POST['sDeliveryAddressMD5'] = $userModel->getEncodedDeliveryAddress();
 
         //set delivery address to basket if any is given
-        $deliveryAddressId = (string) $userBasket->getDeliveryAddressId()->val();
+        $deliveryAddressId = (string)$userBasket->getDeliveryAddressId()->val();
 
         if (!empty($deliveryAddressId)) {
             $userModel->setSelectedAddressId($deliveryAddressId);
             $_POST['deladrid'] = $userModel->getSelectedAddressId();
             /** @var EshopAddressModel $deliveryAddress */
-            $deliveryAddress    = oxNew(EshopAddressModel::class);
+            $deliveryAddress = oxNew(EshopAddressModel::class);
             $deliveryAddress->load($userModel->getSelectedAddressId());
             $_POST['sDeliveryAddressMD5'] .= $deliveryAddress->getEncodedDeliveryAddress();
         }
@@ -324,7 +331,7 @@ final class Basket
                 $userBasketModel->delete();
             }
         } else {
-            throw PlaceOrderException::byBasketId($userBasketModel->getId(), (string) $status);
+            throw PlaceOrderException::byBasketId($userBasketModel->getId(), (string)$status);
         }
 
         //return order data type
@@ -402,7 +409,11 @@ final class Basket
             } catch (OutOfStockException $exception) {
                 $errors = true;
                 GraphQLQueryHandler::addError(
-                    BasketItemAmountLimitedStock::limitedAvailability($item->getFieldData('oxartid'), $exception->getRemainingAmount(), $item->getId())
+                    BasketItemAmountLimitedStock::limitedAvailability(
+                        $item->getFieldData('oxartid'),
+                        $exception->getRemainingAmount(),
+                        $item->getId()
+                    )
                 );
             } catch (ArticleInputException $exception) {
                 $errors = true;

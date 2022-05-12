@@ -37,9 +37,9 @@ final class Voucher
         SharedBasketInfrastructure $sharedBasketInfrastructure,
         EshopDatabaseTransactionService $transactionService
     ) {
-        $this->repository                 = $repository;
+        $this->repository = $repository;
         $this->sharedBasketInfrastructure = $sharedBasketInfrastructure;
-        $this->transactionService         = $transactionService;
+        $this->transactionService = $transactionService;
     }
 
     public function addVoucher(
@@ -51,8 +51,8 @@ final class Voucher
         try {
             $basketModel = $this->sharedBasketInfrastructure->getCalculatedBasket($basket);
 
-            $activeVouchers = $this->repository->getBasketVouchers((string) $basket->id());
-            $voucherModel   = $voucher->getEshopModel();
+            $activeVouchers = $this->repository->getBasketVouchers((string)$basket->id());
+            $voucherModel = $voucher->getEshopModel();
             $voucherModel->getVoucherByNr(
                 $voucher->voucher(),
                 $this->getActiveVouchersIds(($activeVouchers)),
@@ -79,8 +79,8 @@ final class Voucher
         VoucherDataType $voucherDataType,
         BasketDataType $userBasket
     ): void {
-        $voucherId      = (string) $voucherDataType->id();
-        $activeVouchers = $this->repository->getBasketVouchers((string) $userBasket->id());
+        $voucherId = (string)$voucherDataType->id();
+        $activeVouchers = $this->repository->getBasketVouchers((string)$userBasket->id());
 
         if (in_array($voucherId, $this->getActiveVouchersIds($activeVouchers))) {
             $voucherModel = $voucherDataType->getEshopModel();
@@ -88,7 +88,7 @@ final class Voucher
             $voucherModel->unMarkAsReserved();
             $this->repository->removeBasketIdFromVoucher($voucherId);
         } else {
-            throw VoucherNotApplied::byId($voucherId, (string) $userBasket->id());
+            throw VoucherNotApplied::byId($voucherId, (string)$userBasket->id());
         }
     }
 
@@ -144,15 +144,16 @@ final class Voucher
         $voucherModel = $voucher->getEshopModel();
 
         $discountModel = $voucherModel->getDiscountFromSerie();
-        $basketModel   = $this->sharedBasketInfrastructure->getBasket($basket);
-        $items         = $basketModel->getContents();
+        $basketModel = $this->sharedBasketInfrastructure->getBasket($basket);
+        $items = $basketModel->getContents();
 
         $productIsInBasket = false;
 
         foreach ($items as $item) {
             $product = $item->getArticle();
 
-            if (!$item->isDiscountArticle() &&
+            if (
+                !$item->isDiscountArticle() &&
                 $product &&
                 !$product->skipDiscounts() &&
                 $discountModel->isForBasketItem($product)
@@ -174,7 +175,7 @@ final class Voucher
 
         foreach ($activeVouchers as $activeVoucher) {
             if ($activeVoucher instanceof VoucherDataType) {
-                $ids[] = (string) $activeVoucher->id();
+                $ids[] = (string)$activeVoucher->id();
             }
         }
 
@@ -201,7 +202,7 @@ final class Voucher
 
         foreach ($activeVouchers as $activeVoucher) {
             if ($activeVoucher instanceof VoucherDataType) {
-                $vouchersNr[(string) $activeVoucher->id()] = (string) $activeVoucher->number();
+                $vouchersNr[(string)$activeVoucher->id()] = (string)$activeVoucher->number();
             }
         }
 

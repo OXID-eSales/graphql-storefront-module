@@ -45,11 +45,11 @@ final class NewsletterStatus
         Repository $repository,
         SubscriberService $subscriberService
     ) {
-        $this->NewsletterSubscriptionRepository     = $NewsletterSubscriptionRepository;
-        $this->NewsletterStatusRepository           = $NewsletterStatusRepository;
-        $this->authenticationService                = $authenticationService;
-        $this->repository                           = $repository;
-        $this->subscriberService                    = $subscriberService;
+        $this->NewsletterSubscriptionRepository = $NewsletterSubscriptionRepository;
+        $this->NewsletterStatusRepository = $NewsletterStatusRepository;
+        $this->authenticationService = $authenticationService;
+        $this->repository = $repository;
+        $this->subscriberService = $subscriberService;
     }
 
     public function newsletterStatus(): NewsletterStatusType
@@ -60,13 +60,13 @@ final class NewsletterStatus
         }
 
         return $this->NewsletterSubscriptionRepository->getByUserId(
-            (string) $this->authenticationService->getUser()->id()
+            (string)$this->authenticationService->getUser()->id()
         );
     }
 
     public function optIn(NewsletterStatusType $newsletterStatus): NewsletterStatusType
     {
-        $subscriber = $this->subscriberService->subscriber((string) $newsletterStatus->userId());
+        $subscriber = $this->subscriberService->subscriber((string)$newsletterStatus->userId());
 
         $this->NewsletterStatusRepository->optIn($subscriber, $newsletterStatus);
 
@@ -80,9 +80,9 @@ final class NewsletterStatus
         $userId = null;
 
         if ($newsletterStatus) {
-            $userId = (string) $newsletterStatus->userId();
+            $userId = (string)$newsletterStatus->userId();
         } elseif ($this->authenticationService->isLogged()) {
-            $userId = (string) $this->authenticationService->getUser()->id();
+            $userId = (string)$this->authenticationService->getUser()->id();
         }
 
         /** If we don't have email from token or as parameter */
@@ -97,7 +97,7 @@ final class NewsletterStatus
 
     public function subscribe(NewsletterStatusSubscribeType $newsletterStatusSubscribe): NewsletterStatusType
     {
-        $customer   = $this->NewsletterStatusRepository->createNewsletterUser($newsletterStatusSubscribe);
+        $customer = $this->NewsletterStatusRepository->createNewsletterUser($newsletterStatusSubscribe);
         $subscriber = new SubscriberType($customer->getEshopModel());
 
         return $this->NewsletterStatusRepository->subscribe(

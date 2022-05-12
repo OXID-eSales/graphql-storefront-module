@@ -50,9 +50,9 @@ final class Repository
      */
     public function addresses(CustomerDataType $customer): array
     {
-        $addresses   = [];
+        $addresses = [];
         $addressList = $customer->getEshopModel()
-                                ->getUserAddresses();
+            ->getUserAddresses();
 
         foreach ($addressList as $address) {
             $addresses[] = new DeliveryAddress($address);
@@ -66,6 +66,6 @@ final class Repository
         /** @var EshopUserModel $customerModel */
         $customerModel = oxNew(CustomerDataType::getModelClass());
 
-        return (bool) $customerModel->checkIfEmailExists($email);
+        return (bool)$customerModel->checkIfEmailExists($email);
     }
 }

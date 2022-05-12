@@ -79,11 +79,16 @@ final class CustomerDeleteMultiShopCest extends MultishopBaseCest
         $this->checkUserInShop($I, 2, self::MALL_USERNAME, self::MALL_PASSWORD, true);
     }
 
-    protected function checkUserInShop(AcceptanceTester $I, int $shopId, string $username, string $password, bool $expectError = false): void
-    {
+    protected function checkUserInShop(
+        AcceptanceTester $I,
+        int $shopId,
+        string $username,
+        string $password,
+        bool $expectError = false
+    ): void {
         $I->logout();
 
-        $query     = 'query ($username: String!, $password: String!) { token (username: $username, password: $password) }';
+        $query = 'query ($username: String!, $password: String!) { token (username: $username, password: $password) }';
         $variables = [
             'username' => $username,
             'password' => $password,

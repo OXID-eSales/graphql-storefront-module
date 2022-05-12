@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Review\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\OutOfBounds;
+
 use function sprintf;
 
 final class RatingOutOfBounds extends OutOfBounds

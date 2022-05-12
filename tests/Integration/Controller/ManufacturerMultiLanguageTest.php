@@ -19,15 +19,15 @@ final class ManufacturerMultiLanguageTest extends TestCase
     {
         return [
             'de' => [
-                'languageId'         => '0',
-                'title'              => 'Liquid Force',
-                'url'                => 'Nach-Hersteller/Liquid-Force/',
+                'languageId' => '0',
+                'title' => 'Liquid Force',
+                'url' => 'Nach-Hersteller/Liquid-Force/',
                 'productDescription' => 'Bewährte Qualität in neuem Design',
             ],
             'en' => [
-                'languageId'         => '1',
-                'title'              => 'Liquid Force Kite',
-                'url'                => 'en/By-manufacturer/Liquid-Force-Kite/',
+                'languageId' => '1',
+                'title' => 'Liquid Force Kite',
+                'url' => 'en/By-manufacturer/Liquid-Force-Kite/',
                 'productDescription' => 'Proven quality in a new design',
             ],
         ];
@@ -61,7 +61,7 @@ final class ManufacturerMultiLanguageTest extends TestCase
             $languageId
         );
 
-        $result       = $this->query($query);
+        $result = $this->query($query);
         $manufacturer = $result['body']['data']['manufacturer'];
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_MANUFACTURER, $manufacturer['id']);
@@ -75,11 +75,11 @@ final class ManufacturerMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'count'      => 0,
+                'count' => 0,
             ],
             'en' => [
                 'languageId' => '1',
-                'count'      => 1,
+                'count' => 1,
             ],
         ];
     }
@@ -125,13 +125,14 @@ final class ManufacturerMultiLanguageTest extends TestCase
     }
 
     /**
-     *  @dataProvider providerGetManufacturersMultilanguage
+     * @dataProvider providerGetManufacturersMultilanguage
      */
     public function testSortedManufacturersList(string $languageId): void
     {
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturers(
                 sort: {
                     title: "ASC"
@@ -140,7 +141,8 @@ final class ManufacturerMultiLanguageTest extends TestCase
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $sortedManufacturers = [];
 

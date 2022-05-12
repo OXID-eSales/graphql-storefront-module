@@ -17,7 +17,7 @@ final class LinkTest extends TokenTestCase
 {
     private const ACTIVE_LINK = 'test_active';
 
-    private const INACTIVE_LINK  = 'test_inactive';
+    private const INACTIVE_LINK = 'test_inactive';
 
     protected function setUp(): void
     {
@@ -31,7 +31,8 @@ final class LinkTest extends TokenTestCase
 
     public function testGetSingleActiveLink(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             link (linkId: "' . self::ACTIVE_LINK . '") {
                 id
                 active
@@ -40,7 +41,8 @@ final class LinkTest extends TokenTestCase
                 url
                 creationDate
             }
-        }');
+        }'
+        );
 
         $link = $result['body']['data']['link'];
 
@@ -54,24 +56,28 @@ final class LinkTest extends TokenTestCase
         $this->assertSame('http://www.oxid-esales.com', $link['url']);
         $this->assertSame('2012-06-04T07:04:54+02:00', $link['creationDate']);
 
-        $this->assertEmpty(array_diff(array_keys($link), [
-            'id',
-            'active',
-            'timestamp',
-            'description',
-            'url',
-            'creationDate',
-        ]));
+        $this->assertEmpty(
+            array_diff(array_keys($link), [
+                'id',
+                'active',
+                'timestamp',
+                'description',
+                'url',
+                'creationDate',
+            ])
+        );
     }
 
     public function testInactiveLink(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             link (linkId: "' . self::INACTIVE_LINK . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Unauthorized',
@@ -83,16 +89,18 @@ final class LinkTest extends TokenTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             link (linkId: "' . self::INACTIVE_LINK . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'     => 'test_inactive',
+                'id' => 'test_inactive',
                 'active' => false,
             ],
             $result['body']['data']['link']
@@ -101,7 +109,8 @@ final class LinkTest extends TokenTestCase
 
     public function testGet404ForSingleNonExistingLink(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             link (linkId: "DOES-NOT-EXIST") {
                 id
                 active
@@ -110,7 +119,8 @@ final class LinkTest extends TokenTestCase
                 url
                 creationDate
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Link was not found by id: DOES-NOT-EXIST',
@@ -120,7 +130,8 @@ final class LinkTest extends TokenTestCase
 
     public function testGetLinkListWithoutFilter(): void
     {
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             links {
                 id
                 active
@@ -129,7 +140,8 @@ final class LinkTest extends TokenTestCase
                 url
                 creationDate
             }
-        }');
+        }'
+        );
 
         // fixtures have 2 active links
         $this->assertEquals(
@@ -140,7 +152,8 @@ final class LinkTest extends TokenTestCase
 
     public function testGetLinkListWithFilter(): void
     {
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             links(filter: {
                 description: {
                     contains: "a"
@@ -148,7 +161,8 @@ final class LinkTest extends TokenTestCase
             }){
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 2 active links with lowercase a
         $this->assertEquals(
@@ -159,7 +173,8 @@ final class LinkTest extends TokenTestCase
 
     public function testGetEmptyLinkListWithFilter(): void
     {
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             links(filter: {
                 description: {
                     beginsWith: "inactive"
@@ -167,7 +182,8 @@ final class LinkTest extends TokenTestCase
             }){
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 2 inactive links starting with inactive
         $this->assertEquals(
@@ -178,7 +194,8 @@ final class LinkTest extends TokenTestCase
 
     public function testGetEmptyLinkListWithExactMatchFilter(): void
     {
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             links(filter: {
                 description: {
                     equals: "DOES-NOT-EXIST"
@@ -186,7 +203,8 @@ final class LinkTest extends TokenTestCase
             }){
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 0 links with description matching DOES-NOT-EXIST
         $this->assertEquals(
@@ -199,11 +217,11 @@ final class LinkTest extends TokenTestCase
     {
         return [
             'de' => [
-                'languageId'  => '0',
+                'languageId' => '0',
                 'description' => '<p>Deutsche Beschreibung aktiv</p>',
             ],
             'en' => [
-                'languageId'  => '1',
+                'languageId' => '1',
                 'description' => '<p>English Description active</p>',
             ],
         ];
@@ -230,7 +248,7 @@ final class LinkTest extends TokenTestCase
 
         $this->assertEquals(
             [
-                'id'          => self::ACTIVE_LINK,
+                'id' => self::ACTIVE_LINK,
                 'description' => $title,
             ],
             $result['body']['data']['link']
@@ -242,11 +260,11 @@ final class LinkTest extends TokenTestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'count'      => 0,
+                'count' => 0,
             ],
             'en' => [
                 'languageId' => '1',
-                'count'      => 1,
+                'count' => 1,
             ],
         ];
     }
@@ -283,33 +301,35 @@ final class LinkTest extends TokenTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             links {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
                 [
-                    'id'     => 'ce342e8acb69f1748.25672556',
+                    'id' => 'ce342e8acb69f1748.25672556',
                     'active' => false,
                 ],
                 [
-                    'id'     => 'test_active',
+                    'id' => 'test_active',
                     'active' => true,
                 ],
                 [
-                    'id'     => 'test_active_2',
+                    'id' => 'test_active_2',
                     'active' => true,
                 ],
                 [
-                    'id'     => 'test_inactive',
+                    'id' => 'test_inactive',
                     'active' => false,
                 ],
                 [
-                    'id'     => 'test_inactive_2',
+                    'id' => 'test_inactive_2',
                     'active' => false,
                 ],
             ],

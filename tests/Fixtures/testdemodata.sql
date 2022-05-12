@@ -1,6 +1,8 @@
-SET @@session.sql_mode = '';
+SET
+@@session.sql_mode = '';
 
-REPLACE INTO `oxpricealarm` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXEMAIL`, `OXARTID`, `OXPRICE`, `OXCURRENCY`, `OXLANG`, `OXINSERT`, `OXSENDED`, `OXTIMESTAMP`) VALUES
+REPLACE
+INTO `oxpricealarm` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXEMAIL`, `OXARTID`, `OXPRICE`, `OXCURRENCY`, `OXLANG`, `OXINSERT`, `OXSENDED`, `OXTIMESTAMP`) VALUES
 ('_test_wished_price_without_user_',	1,	'',	'test-email@test.com',	'dc5ffdf380e15674b56dd562a7cb6aec',	10,	'EUR',	1,	'2020-05-26 00:00:00',	'0000-00-00 00:00:00',	'2020-05-26 10:30:18'),
 ('_test_wished_price_1_',	1,	'e7af1c3b786fd02906ccd75698f4e6b9',	'user@oxid-esales.com',	'dc5ffdf380e15674b56dd562a7cb6aec',	10,	'EUR',	1,	'2020-05-26 00:00:00',	'0000-00-00 00:00:00',	'2020-05-26 10:31:33'),
 ('_test_wished_price_2_',	1,	'245ad3b5380202966df6ff128e9eecaq',	'redaktion@redaktion.net',	'dc5ffdf380e15674b56dd562a7cb6aec',	10,	'EUR',	1,	'2020-05-26 00:00:00',	'0000-00-00 00:00:00',	'2020-05-26 11:48:20'),
@@ -15,7 +17,8 @@ REPLACE INTO `oxpricealarm` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXEMAIL`, `OXARTID
 ('_test_wished_price_delete_3_',	1,	'e7af1c3b786fd02906ccd75698f4e6b9',	'user@oxid-esales.com',	'dc5ffdf380e15674b56dd562a7cb6aec',	10,	'EUR',	1,	'2020-05-26 00:00:00',	'2020-05-31 10:31:33',	'2020-05-26 10:31:33');
 
 
-REPLACE INTO `oxarticles` (`OXID`, `OXSHOPID`, `OXPARENTID`, `OXACTIVE`, `OXHIDDEN`, `OXACTIVEFROM`, `OXACTIVETO`, `OXARTNUM`, `OXEAN`, `OXDISTEAN`, `OXMPN`, `OXTITLE`, `OXSHORTDESC`, `OXPRICE`, `OXBLFIXEDPRICE`, `OXPRICEA`, `OXPRICEB`, `OXPRICEC`, `OXBPRICE`, `OXTPRICE`, `OXUNITNAME`, `OXUNITQUANTITY`, `OXEXTURL`, `OXURLDESC`, `OXURLIMG`, `OXVAT`, `OXTHUMB`, `OXICON`, `OXPIC1`, `OXPIC2`, `OXPIC3`, `OXPIC4`, `OXPIC5`, `OXPIC6`, `OXPIC7`, `OXPIC8`, `OXPIC9`, `OXPIC10`, `OXPIC11`, `OXPIC12`, `OXWEIGHT`, `OXSTOCK`, `OXSTOCKFLAG`, `OXSTOCKTEXT`, `OXNOSTOCKTEXT`, `OXDELIVERY`, `OXINSERT`, `OXTIMESTAMP`, `OXLENGTH`, `OXWIDTH`, `OXHEIGHT`, `OXFILE`, `OXSEARCHKEYS`, `OXTEMPLATE`, `OXQUESTIONEMAIL`, `OXISSEARCH`, `OXISCONFIGURABLE`, `OXVARNAME`, `OXVARSTOCK`, `OXVARCOUNT`, `OXVARSELECT`, `OXVARMINPRICE`, `OXVARMAXPRICE`, `OXVARNAME_1`, `OXVARSELECT_1`, `OXVARNAME_2`, `OXVARSELECT_2`, `OXVARNAME_3`, `OXVARSELECT_3`, `OXTITLE_1`, `OXSHORTDESC_1`, `OXURLDESC_1`, `OXSEARCHKEYS_1`, `OXTITLE_2`, `OXSHORTDESC_2`, `OXURLDESC_2`, `OXSEARCHKEYS_2`, `OXTITLE_3`, `OXSHORTDESC_3`, `OXURLDESC_3`, `OXSEARCHKEYS_3`, `OXBUNDLEID`, `OXFOLDER`, `OXSUBCLASS`, `OXSTOCKTEXT_1`, `OXSTOCKTEXT_2`, `OXSTOCKTEXT_3`, `OXNOSTOCKTEXT_1`, `OXNOSTOCKTEXT_2`, `OXNOSTOCKTEXT_3`, `OXSORT`, `OXSOLDAMOUNT`, `OXNONMATERIAL`, `OXFREESHIPPING`, `OXREMINDACTIVE`, `OXREMINDAMOUNT`, `OXAMITEMID`, `OXAMTASKID`, `OXVENDORID`, `OXMANUFACTURERID`, `OXSKIPDISCOUNTS`, `OXRATING`, `OXRATINGCNT`, `OXMINDELTIME`, `OXMAXDELTIME`, `OXDELTIMEUNIT`, `OXUPDATEPRICE`, `OXUPDATEPRICEA`, `OXUPDATEPRICEB`, `OXUPDATEPRICEC`, `OXUPDATEPRICETIME`, `OXISDOWNLOADABLE`) VALUES
+REPLACE
+INTO `oxarticles` (`OXID`, `OXSHOPID`, `OXPARENTID`, `OXACTIVE`, `OXHIDDEN`, `OXACTIVEFROM`, `OXACTIVETO`, `OXARTNUM`, `OXEAN`, `OXDISTEAN`, `OXMPN`, `OXTITLE`, `OXSHORTDESC`, `OXPRICE`, `OXBLFIXEDPRICE`, `OXPRICEA`, `OXPRICEB`, `OXPRICEC`, `OXBPRICE`, `OXTPRICE`, `OXUNITNAME`, `OXUNITQUANTITY`, `OXEXTURL`, `OXURLDESC`, `OXURLIMG`, `OXVAT`, `OXTHUMB`, `OXICON`, `OXPIC1`, `OXPIC2`, `OXPIC3`, `OXPIC4`, `OXPIC5`, `OXPIC6`, `OXPIC7`, `OXPIC8`, `OXPIC9`, `OXPIC10`, `OXPIC11`, `OXPIC12`, `OXWEIGHT`, `OXSTOCK`, `OXSTOCKFLAG`, `OXSTOCKTEXT`, `OXNOSTOCKTEXT`, `OXDELIVERY`, `OXINSERT`, `OXTIMESTAMP`, `OXLENGTH`, `OXWIDTH`, `OXHEIGHT`, `OXFILE`, `OXSEARCHKEYS`, `OXTEMPLATE`, `OXQUESTIONEMAIL`, `OXISSEARCH`, `OXISCONFIGURABLE`, `OXVARNAME`, `OXVARSTOCK`, `OXVARCOUNT`, `OXVARSELECT`, `OXVARMINPRICE`, `OXVARMAXPRICE`, `OXVARNAME_1`, `OXVARSELECT_1`, `OXVARNAME_2`, `OXVARSELECT_2`, `OXVARNAME_3`, `OXVARSELECT_3`, `OXTITLE_1`, `OXSHORTDESC_1`, `OXURLDESC_1`, `OXSEARCHKEYS_1`, `OXTITLE_2`, `OXSHORTDESC_2`, `OXURLDESC_2`, `OXSEARCHKEYS_2`, `OXTITLE_3`, `OXSHORTDESC_3`, `OXURLDESC_3`, `OXSEARCHKEYS_3`, `OXBUNDLEID`, `OXFOLDER`, `OXSUBCLASS`, `OXSTOCKTEXT_1`, `OXSTOCKTEXT_2`, `OXSTOCKTEXT_3`, `OXNOSTOCKTEXT_1`, `OXNOSTOCKTEXT_2`, `OXNOSTOCKTEXT_3`, `OXSORT`, `OXSOLDAMOUNT`, `OXNONMATERIAL`, `OXFREESHIPPING`, `OXREMINDACTIVE`, `OXREMINDAMOUNT`, `OXAMITEMID`, `OXAMTASKID`, `OXVENDORID`, `OXMANUFACTURERID`, `OXSKIPDISCOUNTS`, `OXRATING`, `OXRATINGCNT`, `OXMINDELTIME`, `OXMAXDELTIME`, `OXDELTIMEUNIT`, `OXUPDATEPRICE`, `OXUPDATEPRICEA`, `OXUPDATEPRICEB`, `OXUPDATEPRICEC`, `OXUPDATEPRICETIME`, `OXISDOWNLOADABLE`) VALUES
 ('_test_product_wished_price_3_',	1,	'',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	'333',	'',	'',	'',	'Product 3',	'',	10,	1,	0,	0,	0,	0,	0,	'',	0,	'',	'',	'',	NULL,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	1,	'',	'',	'0000-00-00',	'2020-05-25',	'2020-05-25 09:25:26',	0,	0,	0,	'',	'',	'',	'',	1,	0,	'',	0,	0,	'',	10,	10,	'',	'',	'',	'',	'',	'',	'Product 1',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'oxarticle',	'',	'',	'',	'',	'',	'',	0,	0,	0,	0,	0,	0,	'',	'0',	'',	'',	0,	0,	0,	0,	0,	'',	0,	0,	0,	0,	'0000-00-00 00:00:00',	0),
 ('_test_product_wished_price_4_',	1,	'',	0,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	'444',	'',	'',	'',	'Product 4',	'',	10,	0,	0,	0,	0,	0,	0,	'',	0,	'',	'',	'',	NULL,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	1,	'',	'',	'0000-00-00',	'2020-05-25',	'2020-05-25 09:25:26',	0,	0,	0,	'',	'',	'',	'',	1,	0,	'',	0,	0,	'',	10,	10,	'',	'',	'',	'',	'',	'',	'Product 1',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'oxarticle',	'',	'',	'',	'',	'',	'',	0,	0,	0,	0,	0,	0,	'',	'0',	'',	'',	0,	0,	0,	0,	0,	'',	0,	0,	0,	0,	'0000-00-00 00:00:00',	0),
 ('_test_product_for_rating_5_',	1,	'',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	'555',	'',	'',	'',	'Product 5',	'',	10,	0,	0,	0,	0,	0,	0,	'',	0,	'',	'',	'',	NULL,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	1,	'',	'',	'0000-00-00',	'2020-05-25',	'2020-05-25 09:25:26',	0,	0,	0,	'',	'',	'',	'',	1,	0,	'',	0,	0,	'',	10,	10,	'',	'',	'',	'',	'',	'',	'Product 1',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'oxarticle',	'',	'',	'',	'',	'',	'',	0,	0,	0,	0,	0,	0,	'',	'0',	'',	'',	0,	0,	0,	0,	0,	'',	0,	0,	0,	0,	'0000-00-00 00:00:00',	0),
@@ -26,7 +29,8 @@ REPLACE INTO `oxarticles` (`OXID`, `OXSHOPID`, `OXPARENTID`, `OXACTIVE`, `OXHIDD
 ('_test_product_with_variant',	1,	'',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	'1402',	'',	'',	'',	'Parentproduct 631',	'',	159,	0,	0,	0,	0,	0,	0,	'',	0,	'',	'',	'',	NULL,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	1,	'',	'',	'0000-00-00',	'2020-05-25',	'2020-05-25 09:25:26',	0,	0,	0,	'',	'',	'',	'',	1,	0,	'',	0,	1,	'',	10,	10,	'',	'',	'',	'',	'',	'',	'Parentproduct 631',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'oxarticle',	'',	'',	'',	'',	'',	'',	0,	0,	0,	0,	0,	0,	'',	'',	'',	'',	0,	0,	0,	0,	0,	'',	0,	0,	0,	0,	'0000-00-00 00:00:00',	0),
 ('_test_variant_for_product',	1,	'_test_product_with_variant',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	'1414',	'',	'',	'',	'Variant 1',	'',	10,	0,	0,	0,	0,	0,	0,	'',	0,	'',	'',	'',	NULL,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	1,	'',	'',	'0000-00-00',	'2020-05-25',	'2022-04-14 13:07:46',	0,	0,	0,	'',	'',	'',	'',	1,	0,	'',	0,	0,	'Größe',	0,	0,	'',	'',	'',	'',	'',	'',	'Variant 1',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'oxarticle',	'',	'',	'',	'',	'',	'',	0,	0,	0,	0,	0,	0,	'',	'0',	'',	'',	0,	0,	0,	0,	0,	'',	0,	0,	0,	0,	'0000-00-00 00:00:00',	0);
 
-REPLACE INTO `oxuser` (`OXID`, `OXACTIVE`, `OXRIGHTS`, `OXSHOPID`, `OXUSERNAME`, `OXPASSWORD`, `OXPASSSALT`, `OXCUSTNR`, `OXUSTID`, `OXCOMPANY`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXADDINFO`, `OXCITY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXFON`, `OXFAX`, `OXSAL`, `OXBONI`, `OXCREATE`, `OXREGISTER`, `OXPRIVFON`, `OXMOBFON`, `OXBIRTHDATE`, `OXURL`, `OXUPDATEKEY`, `OXUPDATEEXP`, `OXPOINTS`) VALUES
+REPLACE
+INTO `oxuser` (`OXID`, `OXACTIVE`, `OXRIGHTS`, `OXSHOPID`, `OXUSERNAME`, `OXPASSWORD`, `OXPASSSALT`, `OXCUSTNR`, `OXUSTID`, `OXCOMPANY`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXADDINFO`, `OXCITY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXFON`, `OXFAX`, `OXSAL`, `OXBONI`, `OXCREATE`, `OXREGISTER`, `OXPRIVFON`, `OXMOBFON`, `OXBIRTHDATE`, `OXURL`, `OXUPDATEKEY`, `OXUPDATEEXP`, `OXPOINTS`) VALUES
 ('oxdefaultadmin', 1, 'malladmin', 1, 'admin', 'e3a8a383819630e42d9ef90be2347ea70364b5efbb11dfc59adbf98487e196fffe4ef4b76174a7be3f2338581e507baa61c852b7d52f4378e21bd2de8c1efa5e', '61646D696E61646D696E61646D696E', 1, '', 'Your Company Name', 'John', 'Doe', 'Maple Street', '2425', '', 'Any City', 'a7c40f631fc920687.20179984', '', '9041', '217-8918712', '217-8918713', 'MR', 1000, '2003-01-01 00:00:00', '2003-01-01 00:00:00', '', '', '0000-00-00', '', '', 0, 0),
 ('245ad3b5380202966df6ff128e9eecaq', 1, 'user', 1, 'otheruser@oxid-esales.com',  '$2y$10$b186f117054b700a89de9uXDzfahkizUucitfPov3C2cwF5eit2M2', 'b186f117054b700a89de929ce90c6aef', 8, '', '', 'Marc', 'Muster', 'Hauptstr.', '13', '', 'Freiburg', 'a7c40f631fc920687.20179984', '', '79098', '', '', 'MR', 1000, '2011-02-01 08:41:25', '2011-02-01 08:41:25', '', '', '0000-00-00', '', '', 0, 0),
 ('e7af1c3b786fd02906ccd75698f4e6b9', 1, 'user', 1, 'user@oxid-esales.com', '$2y$10$b186f117054b700a89de9uXDzfahkizUucitfPov3C2cwF5eit2M2', 'b186f117054b700a89de929ce90c6aef', 2, '', '', 'Marc', 'Muster', 'Hauptstr.', '13', '', 'Freiburg', 'a7c40f631fc920687.20179984', '', '79098', '', '', 'MR', 1000, '2011-02-01 08:41:25', '2011-02-01 08:41:25', '', '', '1984-12-21', '', '', 0, 0),
@@ -40,22 +44,34 @@ REPLACE INTO `oxuser` (`OXID`, `OXACTIVE`, `OXRIGHTS`, `OXSHOPID`, `OXUSERNAME`,
 ('309db395b6c85c3881fcb9b437a73cc8', 1, 'user', 1, 'tobedeleted@oxid-esales.com',  '$2y$10$b186f117054b700a89de9uXDzfahkizUucitfPov3C2cwF5eit2M2', 'b186f117054b700a89de929ce90c6aef'    , 8, '', '', 'Marc', 'Muster', 'Hauptstr.', '13', '', 'Freiburg', 'a7c40f631fc920687.20179984', '', '79098', '', '', 'MR', 1000, '2011-02-01 08:41:25', '2011-02-01 08:41:25', '', '', '0000-00-00', '', '', 0, 0),
 ('245ad3b5380202966df6ff12dodo9caq', 1, 'user', 1, 'dodo@oxid-esales.com',  '$2y$10$b186f117054b700a89de9uXDzfahkizUucitfPov3C2cwF5eit2M2', 'b186f117054b700a89de929ce90c6aef'    , 8, '', '', 'Marc', 'Muster', 'Hauptstr.', '13', '', 'Freiburg', 'a7c40f631fc920687.20179984', '', '79098', '', '', 'MR', 1000, '2011-02-01 08:41:25', '2011-02-01 08:41:25', '', '', '0000-00-00', '', '', 0, 0);
 
-REPLACE INTO `oxratings` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXTYPE`, `OXOBJECTID`, `OXRATING`) VALUES
+REPLACE
+INTO `oxratings` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXTYPE`, `OXOBJECTID`, `OXRATING`) VALUES
 ('test_user_rating', 1, '245ad3b5380202966df6ff128e9eecaq', 'oxarticle', '_test_product_for_rating_avg', 3),
 ('test_rating_1_', 1, 'e7af1c3b786fd02906ccd75698f4e6b9', 'oxarticle', '_test_product_for_rating_avg', 1);
 
-UPDATE `oxarticles` SET `OXRATING` = '2', `OXRATINGCNT` = '2' WHERE oxid = '_test_product_for_rating_avg';
+UPDATE `oxarticles`
+SET `OXRATING`    = '2',
+    `OXRATINGCNT` = '2'
+WHERE oxid = '_test_product_for_rating_avg';
 
-UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = '1', `OXSUBSCRIBED` = '2020-04-01 11:11:11', `OXUNSUBSCRIBED` = '0000-00-00 00:00:00' WHERE `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
+UPDATE `oxnewssubscribed`
+SET `OXDBOPTIN`      = '1',
+    `OXSUBSCRIBED`   = '2020-04-01 11:11:11',
+    `OXUNSUBSCRIBED` = '0000-00-00 00:00:00'
+WHERE `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
 
-UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = 1 where `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
+UPDATE `oxnewssubscribed`
+SET `OXDBOPTIN` = 1
+where `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
 
-REPLACE INTO `oxaddress` (`OXID`, `OXUSERID`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXCITY`, `OXCOUNTRY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXSAL`, `OXTIMESTAMP`) VALUES
+REPLACE
+INTO `oxaddress` (`OXID`, `OXUSERID`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXCITY`, `OXCOUNTRY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXSAL`, `OXTIMESTAMP`) VALUES
 ('test_delivery_address',	'e7af1c3b786fd02906ccd75698f4e6b9',	'Marc',	'Muster',	'Hauptstr',	'13',	'Freiburg',	'Germany',	'a7c40f631fc920687.20179984', '',	'79098',	'MR',	'2020-07-14 14:12:48'),
 ('test_delivery_address_2',	'e7af1c3b786fd02906ccd75698f4e6b9',	'Marc',	'Muster',	'Hauptstr2',	'132',	'Freiburg',	'Austria',	'a7c40f6320aeb2ec2.72885259', '',	'79098',	'MR',	'2020-07-14 14:44:06'),
 ('test_delivery_address_us', '9119cc8cd9593c214be93ee558235f3c', 'Eleanor', 'Rodriguez', 'Cook Hill Road', '4631', 'Apalachin', 'United States', '8f241f11096877ac0.98748826', 'AZ', '13732', 'MR',	'2020-07-14 14:44:06');
 
-REPLACE INTO `oxuserbaskets` (`OXID`, `OXUSERID`, `OXTITLE`, `OXPUBLIC`) VALUES
+REPLACE
+INTO `oxuserbaskets` (`OXID`, `OXUSERID`, `OXTITLE`, `OXPUBLIC`) VALUES
 ('_test_wish_list_public', 'e7af1c3b786fd02906ccd75698f4e6b9', 'wishlist', true),
 ('test_make_wishlist_private',	'e7af1c3b786fd02906ccd75698f4e6b9',	'wishlist',	true),
 ('_test_basket_public', 'e7af1c3b786fd02906ccd75698f4e6b9', 'buy_these', true),
@@ -68,20 +84,32 @@ REPLACE INTO `oxuserbaskets` (`OXID`, `OXUSERID`, `OXTITLE`, `OXPUBLIC`) VALUES
 ('_test_voucher_public', 'e7af1c3b786fd02906ccd75698f4e6b9', 'test_voucher', true);
 
 
-REPLACE INTO `oxuserbasketitems` (`OXID`, `OXBASKETID`, `OXARTID`, `OXAMOUNT`, `OXSELLIST`, `OXPERSPARAM`) VALUES
+REPLACE
+INTO `oxuserbasketitems` (`OXID`, `OXBASKETID`, `OXARTID`, `OXAMOUNT`, `OXSELLIST`, `OXPERSPARAM`) VALUES
 ('_test_wish_list_item_1', '_test_wish_list_public', '_test_product_for_wish_list', 1, 'N;', ''),
 ('_test_wish_list_item_2', '_test_wish_list_private', '_test_product_for_wish_list', 1, 'N;', ''),
 ('_test_basket_item_1', '_test_basket_public', '_test_product_for_basket', 1, 'N;', ''),
 ('_test_basket_item_2', '_test_basket_private', '_test_product_for_basket', 1, 'N;', ''),
 ('_test_voucherbasket_item_1', '_test_voucher_public', '_test_product_for_basket', 1, 'N;', '');
 
-UPDATE `oxcountry` SET `oxorder` = 1 where `OXID` = 'a7c40f631fc920687.20179984';
-UPDATE `oxcountry` SET `oxorder` = 2 where `OXID` = '8f241f11096877ac0.98748826';
-UPDATE `oxcountry` SET `oxorder` = 3 where `OXID` = 'a7c40f6321c6f6109.43859248';
-UPDATE `oxcountry` SET `oxorder` = 4 where `OXID` = 'a7c40f6320aeb2ec2.72885259';
-UPDATE `oxcountry` SET `oxorder` = 5 where `OXID` = 'a7c40f632a0804ab5.18804076';
+UPDATE `oxcountry`
+SET `oxorder` = 1
+where `OXID` = 'a7c40f631fc920687.20179984';
+UPDATE `oxcountry`
+SET `oxorder` = 2
+where `OXID` = '8f241f11096877ac0.98748826';
+UPDATE `oxcountry`
+SET `oxorder` = 3
+where `OXID` = 'a7c40f6321c6f6109.43859248';
+UPDATE `oxcountry`
+SET `oxorder` = 4
+where `OXID` = 'a7c40f6320aeb2ec2.72885259';
+UPDATE `oxcountry`
+SET `oxorder` = 5
+where `OXID` = 'a7c40f632a0804ab5.18804076';
 
-REPLACE INTO `oxorder` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXORDERDATE`, `OXORDERNR`, `OXBILLCOMPANY`, `OXBILLEMAIL`, `OXBILLFNAME`,
+REPLACE
+INTO `oxorder` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXORDERDATE`, `OXORDERNR`, `OXBILLCOMPANY`, `OXBILLEMAIL`, `OXBILLFNAME`,
  `OXBILLLNAME`, `OXBILLSTREET`, `OXBILLSTREETNR`, `OXBILLADDINFO`, `OXBILLCITY`,
   `OXBILLCOUNTRYID`, `OXBILLSTATEID`, `OXBILLZIP`, `OXBILLFON`, `OXBILLFAX`, `OXBILLSAL`, `OXDELCOMPANY`, `OXDELFNAME`,
   `OXDELLNAME`, `OXDELSTREET`, `OXDELSTREETNR`, `OXDELADDINFO`, `OXDELCITY`, `OXDELCOUNTRYID`, `OXDELSTATEID`, `OXDELZIP`,
@@ -114,7 +142,8 @@ REPLACE INTO `oxorder` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXORDERDATE`, `OXORDERN
 ('_order_with_non_existing_product',1,'245ad3b5380202966df6ff128e9eecaq','2019-08-14 11:41:41',113,'bill company','billuser@oxid-esales.com','Marc','Muster','Hauptstr.','13','additional bill info','Freiburg','a7c40f631fc920687.20179984','BW','79098','1234','4567','MR','','','','','','','','','','','','','','5b4b2226735704859055607e98a257e7','oxidcashondel',25.13,29.9,46.75,19,4.77,0,0,3.9,19,7.5,19,2.95,18.951612903226,2.5,19,'81b40cf076351c229.14252649','asdfasdf',0,0,'7662','2020-08-23','tick','2020-08-24 11:11:12','',0,'EUR',1,'ORDERFOLDER_NEW','','','','0000-00-00 00:00:00',0,'','OK',1,662,'oxidstandard','2020-08-14 09:41:41',0),
 ('_order_with_deleted_product',1,'245ad3b5380202966df6ff128e9eecaq','2019-08-14 11:41:41',113,'bill company','billuser@oxid-esales.com','Marc','Muster','Hauptstr.','13','additional bill info','Freiburg','a7c40f631fc920687.20179984','BW','79098','1234','4567','MR','','','','','','','','','','','','','','5b4b2226735704859055607e98a257e7','oxidcashondel',25.13,29.9,46.75,19,4.77,0,0,3.9,19,7.5,19,2.95,18.951612903226,2.5,19,'81b40cf076351c229.14252649','asdfasdf',0,0,'7662','2020-08-23','tick','2020-08-24 11:11:12','',0,'EUR',1,'ORDERFOLDER_NEW','','','','0000-00-00 00:00:00',0,'','OK',1,662,'oxidstandard','2020-08-14 09:41:41',0);
 
-REPLACE INTO `oxorderarticles` (`OXID`, `OXORDERID`, `OXAMOUNT`, `OXARTID`, `OXARTNUM`, `OXTITLE`, `OXSHORTDESC`, `OXSELVARIANT`, `OXNETPRICE`, `OXBRUTPRICE`, `OXVATPRICE`, `OXVAT`, `OXPERSPARAM`, `OXPRICE`, `OXBPRICE`, `OXNPRICE`, `OXWRAPID`, `OXEXTURL`, `OXURLDESC`, `OXURLIMG`, `OXTHUMB`, `OXPIC1`, `OXPIC2`, `OXPIC3`, `OXPIC4`, `OXPIC5`, `OXWEIGHT`, `OXSTOCK`, `OXDELIVERY`, `OXINSERT`, `OXTIMESTAMP`, `OXLENGTH`, `OXWIDTH`, `OXHEIGHT`, `OXFILE`, `OXSEARCHKEYS`, `OXTEMPLATE`, `OXQUESTIONEMAIL`, `OXISSEARCH`, `OXFOLDER`, `OXSUBCLASS`, `OXSTORNO`, `OXORDERSHOPID`, `OXISBUNDLE`) VALUES
+REPLACE
+INTO `oxorderarticles` (`OXID`, `OXORDERID`, `OXAMOUNT`, `OXARTID`, `OXARTNUM`, `OXTITLE`, `OXSHORTDESC`, `OXSELVARIANT`, `OXNETPRICE`, `OXBRUTPRICE`, `OXVATPRICE`, `OXVAT`, `OXPERSPARAM`, `OXPRICE`, `OXBPRICE`, `OXNPRICE`, `OXWRAPID`, `OXEXTURL`, `OXURLDESC`, `OXURLIMG`, `OXTHUMB`, `OXPIC1`, `OXPIC2`, `OXPIC3`, `OXPIC4`, `OXPIC5`, `OXWEIGHT`, `OXSTOCK`, `OXDELIVERY`, `OXINSERT`, `OXTIMESTAMP`, `OXLENGTH`, `OXWIDTH`, `OXHEIGHT`, `OXFILE`, `OXSEARCHKEYS`, `OXTEMPLATE`, `OXQUESTIONEMAIL`, `OXISSEARCH`, `OXFOLDER`, `OXSUBCLASS`, `OXSTORNO`, `OXORDERSHOPID`, `OXISBUNDLE`) VALUES
 ('1d48d8339e49f906700b520ceb4c79aa','7f0b6ef39c4e76c04a0f75232489bb65',1,'05848170643ab0deb9914566391c0c63','1402','Harness MADTRIXX','New freestyle harness with a lean cut outline','',133.61,159,25.39,19,'',159,159,133.61,'','','','','','ion_madtrixx_kite_waist_2011_1.jpg','','','','',0,15,'0000-00-00','2010-12-06','2020-08-28 09:04:14',0,0,0,'','harness, hip harness, madtrixx','','',1,'','oxarticle',0,1,0),
 ('6c220c5d926c5092035234285f3c8fc3','7f0b6ef39c4e76c04a0f75232489bb65',1,'058c7b525aad619d8b343c0ffada0247','400-03','Sticky Tape DACRON KITEFIX','ideal for small repairs of the kite','black',7.01,7.99,0.98,14,'',7.99,7.99,7.01,'','','','','','kitefix_self-adhesive_dacron_1.jpg','','','','',0,5,'0000-00-00','2010-12-06','2020-08-28 09:04:14',0,0,0,'','sticky tape, kite, repair, kitefix','','',0,'','oxarticle',0,1,0),
 ('b4b9f8dd0be567d6fcfc59d9b7bb266b','7f0b6ef39c4e76c04a0f75232489bb65',1,'dc5ffdf380e15674b56dd562a7cb6aec','3503','Kuyichi leather belt JEVER','Leather belt, unisex','',27.18,29.9,2.72,10,'',29.9,29.9,27.18,'','','','','','p1170221_1.jpg','p1170222_1.jpg','','','',0,15,'0000-00-00','2010-12-10','2020-08-28 09:04:14',0,0,0,'','kuyichi, leather, leather belt, unisex, used','','',1,'','oxarticle',0,1,0),
@@ -124,7 +153,8 @@ REPLACE INTO `oxorderarticles` (`OXID`, `OXORDERID`, `OXAMOUNT`, `OXARTID`, `OXA
 ('c5b7fd8dff99f066c168cd720212075a','8c726d3f42ff1a6ea2828d5f309de881',1,'oiaa81b5e002fc2f73b9398c361c0b97','10101','Online shops with OXID eShop','','',0,0,0,10,'',0,0,0,'','','','','','oxid_book_cover_1.jpg','','','','',0,600,'0000-00-00','2012-04-25','2020-09-10 09:13:36',0,0,0,'','','','',1,'','',0,1,0),
 ('4ad5c368c9c7715ac800adb27e079ebe','7f0b6ef39c4e76c04a0f75232489bb65',1,'oiaa81b5e002fc2f73b9398c361c0b97','10101','Online shops with OXID eShop','','',0,0,0,10,'',0,0,0,'','','','','','oxid_book_cover_1.jpg','','','','',0,600,'0000-00-00','2012-04-25','2020-09-10 09:13:36',0,0,0,'','','','',1,'','',0,1,0);
 
-REPLACE INTO `oxvoucherseries` (`OXID`, `OXSERIENR`, `OXDISCOUNT`, `OXDISCOUNTTYPE`, `OXBEGINDATE`, `OXENDDATE`, `OXSERIEDESCRIPTION`, `OXALLOWOTHERSERIES`) VALUES
+REPLACE
+INTO `oxvoucherseries` (`OXID`, `OXSERIENR`, `OXDISCOUNT`, `OXDISCOUNTTYPE`, `OXBEGINDATE`, `OXENDDATE`, `OXSERIEDESCRIPTION`, `OXALLOWOTHERSERIES`) VALUES
 ('voucherserie1', 'voucherserie1', 21.6, 'absolute', '2000-01-01', '2050-12-31', '', 1),
 ('serie2', 'serie2', 2.0, 'absolute', '2000-01-01', '2050-12-31', 'serie2 description', 1),
 ('serie3', 'serie3', 3.0, 'absolute', '2000-01-01', '2050-12-31', 'serie3 description', 1),
@@ -133,7 +163,8 @@ REPLACE INTO `oxvoucherseries` (`OXID`, `OXSERIENR`, `OXDISCOUNT`, `OXDISCOUNTTY
 ('series_voucher', 'seriesVoucher', 8.0, 'absolute', '2000-01-01', '2050-12-31', 'series voucher', 0),
 ('used_voucher', 'used_voucher', 3.0, 'absolute', '2000-01-01', '2050-12-31', 'used voucher', 0);
 
-REPLACE INTO `oxvouchers` (`OXDATEUSED`, `OXORDERID`, `OXUSERID`, `OXRESERVED`, `OXVOUCHERNR`, `OXVOUCHERSERIEID`, `OXDISCOUNT`, `OXID`, `OXTIMESTAMP`, `OEGQL_BASKETID`) VALUES
+REPLACE
+INTO `oxvouchers` (`OXDATEUSED`, `OXORDERID`, `OXUSERID`, `OXRESERVED`, `OXVOUCHERNR`, `OXVOUCHERSERIEID`, `OXDISCOUNT`, `OXID`, `OXTIMESTAMP`, `OEGQL_BASKETID`) VALUES
 ('2020-08-28', '_149bc776dd339a83d863c4f64693bb6', '_45ad3b5380202966df6ff128e9eecaq', 1, 'voucher1', 'voucherserie1', 21.6, 'usedvoucherid', now(), null),
 (null, null, null, 0, 'voucher2', 'voucherserie1', 0, 'notusedvoucherid', now(), null),
 (null, null, null, 1601551714, 'serie2voucher', 'serie2', 0, 'serie2voucher', now(), '_test_basket_private'),
@@ -145,21 +176,27 @@ REPLACE INTO `oxvouchers` (`OXDATEUSED`, `OXORDERID`, `OXUSERID`, `OXRESERVED`, 
 (null, null, null, 0, 'seriesVoucher', 'series_voucher', 0, 'series_voucher_1', now(), null),
 ('2020-10-10', '_test_order', 'e7af1c3b786fd02906ccd75698f4e6b9', 0, 'used_voucher', 'used_voucher', 0, 'used_voucher', now(), '');
 
-REPLACE INTO `oxuserpayments` (`OXID`, `OXUSERID`, `OXPAYMENTSID`, `OXVALUE`, `OXTIMESTAMP`) VALUES
+REPLACE
+INTO `oxuserpayments` (`OXID`, `OXUSERID`, `OXPAYMENTSID`, `OXVALUE`, `OXTIMESTAMP`) VALUES
 ('direct_debit_order_payment',  'e7af1c3b786fd02906ccd75698f4e6b9', 'oxiddebitnote', ENCODE('lsbankname__Pro Credit Bank@@lsblz__PRCBBGSF456@@lsktonr__DE89 3704 0044 0532 0130 00@@lsktoinhaber__Marc Muster@@', 'sd45DF09_sdlk09239DD'), '2020-09-10 08:15:00');
 
-REPLACE INTO `oxorderfiles` (`OXID`, `OXORDERID`, `OXFILENAME`, `OXFILEID`, `OXSHOPID`, `OXORDERARTICLEID`, `OXFIRSTDOWNLOAD`, `OXLASTDOWNLOAD`, `OXDOWNLOADCOUNT`, `OXMAXDOWNLOADCOUNT`, `OXDOWNLOADEXPIRATIONTIME`, `OXLINKEXPIRATIONTIME`, `OXRESETCOUNT`, `OXVALIDUNTIL`, `OXTIMESTAMP`) VALUES
+REPLACE
+INTO `oxorderfiles` (`OXID`, `OXORDERID`, `OXFILENAME`, `OXFILEID`, `OXSHOPID`, `OXORDERARTICLEID`, `OXFIRSTDOWNLOAD`, `OXLASTDOWNLOAD`, `OXDOWNLOADCOUNT`, `OXMAXDOWNLOADCOUNT`, `OXDOWNLOADEXPIRATIONTIME`, `OXLINKEXPIRATIONTIME`, `OXRESETCOUNT`, `OXVALIDUNTIL`, `OXTIMESTAMP`) VALUES
 ('729aafa296783575ddfd8e9527355b3b',	'8c726d3f42ff1a6ea2828d5f309de881',	'ch03.pdf',	'oiaad7812ae7127283b8fd6d309ea5d5',	1,	'c5b7fd8dff99f066c168cd720212075a',	'2020-09-10 09:14:15',	'2020-09-10 09:14:15',	1,	0,	24,	168,	0,	'2020-09-11 09:14:15',	'2020-09-10 09:14:15'),
 ('886deb7e49bb2e51b4fb939f6ed7655c',	'7f0b6ef39c4e76c04a0f75232489bb65',	'ch03.pdf',	'non_existing_file',	1,	'c5b7fd8dff99f066c168cd720212075a',	'2020-09-10 09:14:15',	'2020-09-10 09:14:15',	1,	0,	24,	168,	0,	'2020-09-11 09:14:15',	'2020-09-10 09:14:15');
 
-UPDATE `oxuserbaskets` SET `OEGQL_PAYMENTID` = 'oxidcashondel' WHERE `OXID` = '_test_basket_public';
+UPDATE `oxuserbaskets`
+SET `OEGQL_PAYMENTID` = 'oxidcashondel'
+WHERE `OXID` = '_test_basket_public';
 
-REPLACE INTO `oxuser` (`OXID`, `OXACTIVE`, `OXRIGHTS`, `OXSHOPID`, `OXUSERNAME`, `OXPASSWORD`, `OXPASSSALT`, `OXCUSTNR`, `OXUSTID`, `OXCOMPANY`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXADDINFO`, `OXCITY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXFON`, `OXFAX`, `OXSAL`, `OXBONI`, `OXCREATE`, `OXREGISTER`, `OXPRIVFON`, `OXMOBFON`, `OXBIRTHDATE`, `OXURL`, `OXUPDATEKEY`, `OXUPDATEEXP`, `OXPOINTS`) VALUES
+REPLACE
+INTO `oxuser` (`OXID`, `OXACTIVE`, `OXRIGHTS`, `OXSHOPID`, `OXUSERNAME`, `OXPASSWORD`, `OXPASSSALT`, `OXCUSTNR`, `OXUSTID`, `OXCOMPANY`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXADDINFO`, `OXCITY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXFON`, `OXFAX`, `OXSAL`, `OXBONI`, `OXCREATE`, `OXREGISTER`, `OXPRIVFON`, `OXMOBFON`, `OXBIRTHDATE`, `OXURL`, `OXUPDATEKEY`, `OXUPDATEEXP`, `OXPOINTS`) VALUES
 ('standarduser', 1, 'user', 1, 'standarduser@oxid-esales.com',  '$2y$10$b186f117054b700a89de9uXDzfahkizUucitfPov3C2cwF5eit2M2', 'b186f117054b700a89de929ce90c6aef', 8, '', '', 'User', 'User', 'Street', '13', '', 'City', 'a7c40f631fc920687.20179984', '', '79098', '', '', 'MR', 1000, '2011-02-01 08:41:25', '2011-02-01 08:41:25', '', '', '0000-00-00', '', '', 0, 0),
 ('anotheruser', 1, 'user', 1, 'anotheruser@oxid-esales.com',  '$2y$10$b186f117054b700a89de9uXDzfahkizUucitfPov3C2cwF5eit2M2', 'b186f117054b700a89de929ce90c6aef', 18, '', '', 'Marc', 'Muster', 'Hauptstr.', '13', '', 'Freiburg', 'a7c40f631fc920687.20179984', '', '79098', '', '', 'MR', 1000, '2011-02-01 08:41:25', '2011-02-01 08:41:25', '', '', '0000-00-00', '', '', 0, 0),
 ('checkoutuser', 1, 'user', 1, 'checkoutuser@oxid-esales.com',  '$2y$10$b186f117054b700a89de9uXDzfahkizUucitfPov3C2cwF5eit2M2', 'b186f117054b700a89de929ce90c6aef', 88, '', '', 'Marc', 'Muster', 'Hauptstr.', '13', '', 'Freiburg', 'a7c40f631fc920687.20179984', '', '79098', '', '', 'MR', 1000, '2011-02-01 08:41:25', '2011-02-01 08:41:25', '', '', '0000-00-00', '', '', 0, 0);
 
-REPLACE INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`) VALUES
+REPLACE
+INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`) VALUES
 ('test_admin', 1, 'oxdefaultadmin', 'oxidadmin'),
 ('test_unsubscribe', 1, 'e7af1c3b786fd02906ccd75698f4e6b9', 'oxidnewsletter'),
 ('g7a7197c7cf8e878e8ff2c18645788ab', 1, 'standarduser', 'oxidnewcustomer'),
@@ -173,7 +210,8 @@ REPLACE INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`) V
 ('123ad3b5380202966df6ff128e9eecb4', 1, 'checkoutuser', 'oxidcustomer'),
 ('123ad3b5380202966df6ff128e9eecb5', 1, '9119cc8cd9593c214be93ee558235f3c', 'oxidcustomer');
 
-REPLACE INTO `oxuserbaskets` (`OXID`, `OXUSERID`, `OXTITLE`, `OXPUBLIC`, `OEGQL_PAYMENTID`, `OEGQL_DELIVERYMETHODID`, `OEGQL_DELADDRESSID`) VALUES
+REPLACE
+INTO `oxuserbaskets` (`OXID`, `OXUSERID`, `OXTITLE`, `OXPUBLIC`, `OEGQL_PAYMENTID`, `OEGQL_DELIVERYMETHODID`, `OEGQL_DELADDRESSID`) VALUES
 ('basket_user', 'standarduser', 'savedbasket', true, null, null, null),
 ('basket_otheruser', 'anotheruser', 'savedbasket', true, null, null, null),
 ('basket_user_address_payment', 'standarduser', 'basketPayment', true, 'oxiddebitnote', 'oxidstandard', 'address_user'),
@@ -182,40 +220,49 @@ REPLACE INTO `oxuserbaskets` (`OXID`, `OXUSERID`, `OXTITLE`, `OXPUBLIC`, `OEGQL_
 ('basket_payment_cost', 'standarduser', 'basketPaymentCost', true, 'oxidgraphql', '_deliveryset', 'address_user'),
 ('basket_shipping', 'standarduser', 'basketShippingMethod', true, 'oxiddebitnote', 'oxidstandard', 'address_user');
 
-REPLACE INTO `oxuserbasketitems` (`OXID`, `OXBASKETID`, `OXARTID`, `OXAMOUNT`, `OXSELLIST`, `OXPERSPARAM`) VALUES
+REPLACE
+INTO `oxuserbasketitems` (`OXID`, `OXBASKETID`, `OXARTID`, `OXAMOUNT`, `OXSELLIST`, `OXPERSPARAM`) VALUES
 ('_test_basket_payment_item_1', 'basket_payment', 'dc5ffdf380e15674b56dd562a7cb6aec', 1, 'N;', ''),
 ('_test_basket_payment_cost_item_1', 'basket_payment_cost', 'f4f2d8eee51b0fd5eb60a46dff1166d8', 2, 'N;', ''),
 ('_test_basket_shipping_item_1', 'basket_shipping', 'dc5ffdf380e15674b56dd562a7cb6aec', 1, 'N;', ''),
 ('_test_basket_shipping_item_2', 'basket_shipping', 'f4f73033cf5045525644042325355732', 2, 'N;', '');
 
-REPLACE INTO `oxpayments` (`OXID`, `OXACTIVE`, `OXDESC`, `OXADDSUM`, `OXADDSUMTYPE`, `OXADDSUMRULES`, `OXFROMBONI`, `OXFROMAMOUNT`, `OXTOAMOUNT`, `OXVALDESC`, `OXCHECKED`, `OXDESC_1`, `OXVALDESC_1`, `OXDESC_2`, `OXVALDESC_2`, `OXDESC_3`, `OXVALDESC_3`, `OXLONGDESC`, `OXLONGDESC_1`, `OXLONGDESC_2`, `OXLONGDESC_3`, `OXSORT`) VALUES
+REPLACE
+INTO `oxpayments` (`OXID`, `OXACTIVE`, `OXDESC`, `OXADDSUM`, `OXADDSUMTYPE`, `OXADDSUMRULES`, `OXFROMBONI`, `OXFROMAMOUNT`, `OXTOAMOUNT`, `OXVALDESC`, `OXCHECKED`, `OXDESC_1`, `OXVALDESC_1`, `OXDESC_2`, `OXVALDESC_2`, `OXDESC_3`, `OXVALDESC_3`, `OXLONGDESC`, `OXLONGDESC_1`, `OXLONGDESC_2`, `OXLONGDESC_3`, `OXSORT`) VALUES
 ('oxidgraphql', 1, 'GraphQL', 7.77, 'abs', 0, 0, 0, 1000000, '', 1, 'GraphQL (coconuts)', '', '', '', '', '', '', '', '', '', 700);
 
-REPLACE INTO `oxdeliveryset` (`OXID`, `OXSHOPID`, `OXACTIVE`, `OXACTIVEFROM`, `OXACTIVETO`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXPOS`) VALUES
+REPLACE
+INTO `oxdeliveryset` (`OXID`, `OXSHOPID`, `OXACTIVE`, `OXACTIVEFROM`, `OXACTIVETO`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXPOS`) VALUES
 ('_deliveryset', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'graphql set', 'graphql set', '', '', 50),
 ('_unavailabledeliveryset', 1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'unavailable graphql set', 'unavailable graphql set', '', '', 60);
 
-REPLACE INTO `oxobject2payment` (`OXID`, `OXPAYMENTID`, `OXOBJECTID`, `OXTYPE`) VALUES
+REPLACE
+INTO `oxobject2payment` (`OXID`, `OXPAYMENTID`, `OXOBJECTID`, `OXTYPE`) VALUES
 ('_paymentrelation1', 'oxidgraphql', 'a7c40f631fc920687.20179984', 'oxcountry'),
 ('_paymentrelation2', 'oxidgraphql', '_deliveryset', 'oxdelset');
 
-REPLACE INTO `oxobject2delivery` (`OXID`, `OXDELIVERYID`, `OXOBJECTID`, `OXTYPE`) VALUES
+REPLACE
+INTO `oxobject2delivery` (`OXID`, `OXDELIVERYID`, `OXOBJECTID`, `OXTYPE`) VALUES
 ('_deliveryrelation1', '_deliveryset', 'a7c40f631fc920687.20179984', 'oxdelset'),
 ('_deliveryrelation2', '_graphqldel', 'a7c40f631fc920687.20179984', 'oxcountry');
 
-REPLACE INTO `oxdelivery` (`OXID`, `OXSHOPID`, `OXACTIVE`, `OXACTIVEFROM`, `OXACTIVETO`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`,
+REPLACE
+INTO `oxdelivery` (`OXID`, `OXSHOPID`, `OXACTIVE`, `OXACTIVEFROM`, `OXACTIVETO`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`,
 `OXADDSUMTYPE`, `OXADDSUM`, `OXDELTYPE`, `OXPARAM`, `OXPARAMEND`, `OXFIXED`, `OXSORT`, `OXFINALIZE`, `OXTIMESTAMP`) VALUES
 ('_graphqldel',1,1,'0000-00-00 00:00:00','0000-00-00 00:00:00','Versandkosten für GraphQL: 6,66 Euro','Shipping costs for GraphQL: 6.66 Euro','','','abs',6.66,'p',0,99999,0,2000,1,'2020-07-16 14:21:45'),
 ('_unavailablegraphqldel',1,1,'0000-00-00 00:00:00','0000-00-00 00:00:00','Versandkosten für UA GraphQL: 6,66 Euro','Shipping costs for UA GraphQL: 6.66 Euro','','','abs',6.66,'p',0,99999,0,2000,1,'2020-07-16 14:21:45');
 
-REPLACE INTO `oxdel2delset` (`OXID`, `OXDELID`, `OXDELSETID`) VALUES
+REPLACE
+INTO `oxdel2delset` (`OXID`, `OXDELID`, `OXDELSETID`) VALUES
 ('_setrelation1', '_graphqldel', '_deliveryset');
 
-REPLACE INTO `oxaddress` (`OXID`, `OXUSERID`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXCITY`, `OXCOUNTRY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXSAL`, `OXTIMESTAMP`) VALUES
+REPLACE
+INTO `oxaddress` (`OXID`, `OXUSERID`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXCITY`, `OXCOUNTRY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXSAL`, `OXTIMESTAMP`) VALUES
 ('address_user', 'standarduser', 'User Del', 'User Del', 'Street Del', '13', 'City Del', 'Germany', 'a7c40f631fc920687.20179984', '', '79098', 'MR', '2020-07-14 14:12:48'),
 ('address_otheruser', 'anotheruser', 'Marc', 'Muster', 'Hauptstr', '13', 'Freiburg', 'Germany', 'a7c40f631fc920687.20179984', '', '79098', 'MR', '2020-07-14 14:12:48');
 
-REPLACE INTO `oxvoucherseries` (`OXID`, `OXSERIENR`, `OXDISCOUNT`, `OXDISCOUNTTYPE`, `OXBEGINDATE`, `OXENDDATE`, `OXSERIEDESCRIPTION`, `OXALLOWOTHERSERIES`) VALUES
+REPLACE
+INTO `oxvoucherseries` (`OXID`, `OXSERIENR`, `OXDISCOUNT`, `OXDISCOUNTTYPE`, `OXBEGINDATE`, `OXENDDATE`, `OXSERIEDESCRIPTION`, `OXALLOWOTHERSERIES`) VALUES
 ('basket_payment_cost_voucher', 'basket_payment_cost_voucher', 10.0, 'absolute', '2000-01-01', '2050-12-31', 'basket payment cost voucher', 0),
 ('voucherserie1x', 'voucherserie1', 5, 'absolute', '2000-01-01', '2050-12-31', '', 1),
 ('my_personal_voucher', 'myPersonalVoucher', 5.0, 'absolute', '2000-01-01', '2050-12-31', 'personal voucher', 0),
@@ -225,7 +272,8 @@ REPLACE INTO `oxvoucherseries` (`OXID`, `OXSERIENR`, `OXDISCOUNT`, `OXDISCOUNTTY
 ('user_voucher', 'userVoucher', 5.0, 'absolute', '2000-01-01', '2050-12-31', 'user voucher', 0),
 ('minvalue_voucher', 'minvalueVoucher', 5.0, 'absolute', '2000-01-01', '2050-12-31', 'min value voucher', 0);
 
-REPLACE INTO `oxvouchers` (`OXDATEUSED`, `OXORDERID`, `OXUSERID`, `OXRESERVED`, `OXVOUCHERNR`, `OXVOUCHERSERIEID`, `OXDISCOUNT`, `OXID`, `OXTIMESTAMP`, `OEGQL_BASKETID`) VALUES
+REPLACE
+INTO `oxvouchers` (`OXDATEUSED`, `OXORDERID`, `OXUSERID`, `OXRESERVED`, `OXVOUCHERNR`, `OXVOUCHERSERIEID`, `OXDISCOUNT`, `OXID`, `OXTIMESTAMP`, `OEGQL_BASKETID`) VALUES
 (null, '', '', 0, 'voucher1x', 'voucherserie1x', 5, 'voucher1xid', now(), ''),
 (null, '', '', 0, 'myPersonalVoucher', 'my_personal_voucher', 0, 'my_personal_voucher_1', now(), null),
 (null, '', '', 0, 'myDeleteVoucher', 'my_delete_voucher', 0, 'my_delete_voucher_1', now(), null),
@@ -235,6 +283,16 @@ REPLACE INTO `oxvouchers` (`OXDATEUSED`, `OXORDERID`, `OXUSERID`, `OXRESERVED`, 
 (null, '', '', 0, 'minvalueVoucher', 'minvalue_voucher', 0, 'minvalue_voucher_1', now(), null),
 ('2020-10-10',	'',	'',	0,	'basket_payment_cost_voucher',	'basket_payment_cost_voucher',	10.00,	'basket_payment_cost_voucher_1',	'2020-11-16 11:26:01',	'basket_payment_cost');
 
-INSERT INTO `oxcontents` (`OXID`, `OXLOADID`, `OXSHOPID`, `OXSNIPPET`, `OXTYPE`, `OXACTIVE`, `OXACTIVE_1`, `OXPOSITION`, `OXTITLE`, `OXCONTENT`, `OXTITLE_1`, `OXCONTENT_1`, `OXACTIVE_2`, `OXTITLE_2`, `OXCONTENT_2`, `OXACTIVE_3`, `OXTITLE_3`, `OXCONTENT_3`, `OXCATID`, `OXFOLDER`, `OXTERMVERSION`, `OXTIMESTAMP`) VALUES
-('4d4106027b63b623b2c4ee1ea6838d7f', 'graphqlcontenttemplate', 1, 1, 0, 1, 1, '', 'GraphQL content with template DE', 'GraphQL [{if true }]rendered [{/if}]content DE',	'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32'),
-('9f825347decfdb7008d162700be95dc1', 'graphqlcontentvcms', 1, 1, 0, 1, 1, '', 'GraphQL content with VCMS template DE', '[{veparse}][row][col size="12" offset="0" class=""][text]GraphQL VCMS [{if true }]rendered [{/if}]content DE[/text][/col][/row][{/veparse}]', 'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32');
+INSERT INTO `oxcontents` (`OXID`, `OXLOADID`, `OXSHOPID`, `OXSNIPPET`, `OXTYPE`, `OXACTIVE`, `OXACTIVE_1`, `OXPOSITION`,
+                          `OXTITLE`, `OXCONTENT`, `OXTITLE_1`, `OXCONTENT_1`, `OXACTIVE_2`, `OXTITLE_2`, `OXCONTENT_2`,
+                          `OXACTIVE_3`, `OXTITLE_3`, `OXCONTENT_3`, `OXCATID`, `OXFOLDER`, `OXTERMVERSION`,
+                          `OXTIMESTAMP`)
+VALUES ('4d4106027b63b623b2c4ee1ea6838d7f', 'graphqlcontenttemplate', 1, 1, 0, 1, 1, '',
+        'GraphQL content with template DE', 'GraphQL [{if true }]rendered [{/if}]content DE',
+        'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '',
+        '2020-05-20 11:08:32'),
+       ('9f825347decfdb7008d162700be95dc1', 'graphqlcontentvcms', 1, 1, 0, 1, 1, '',
+        'GraphQL content with VCMS template DE',
+        '[{veparse}][row][col size="12" offset="0" class=""][text]GraphQL VCMS [{if true }]rendered [{/if}]content DE[/text][/col][/row][{/veparse}]',
+        'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '',
+        '2020-05-20 11:08:32');

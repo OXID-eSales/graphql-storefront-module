@@ -24,7 +24,7 @@ final class TranslationCest extends BaseCest
     {
         $I->wantToTest('Translations query is not the same for different language');
 
-        $firstLanguage  = $this->getTranslations($I, 0);
+        $firstLanguage = $this->getTranslations($I, 0);
         $secondLanguage = $this->getTranslations($I, 1);
 
         $I->assertTrue(count($firstLanguage) > 500);
@@ -55,7 +55,7 @@ final class TranslationCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $expected = [
-            'key'   => $data['key'],
+            'key' => $data['key'],
             'value' => $data['value'],
         ];
         $I->assertEquals($expected, $result['data']['translation']);
@@ -66,13 +66,13 @@ final class TranslationCest extends BaseCest
         return [
             [
                 'language' => 1,
-                'key'      => 'ACCOUNT_INFORMATION',
-                'value'    => 'Account information',
+                'key' => 'ACCOUNT_INFORMATION',
+                'value' => 'Account information',
             ],
             [
                 'language' => 0,
-                'key'      => 'ACCOUNT_INFORMATION',
-                'value'    => 'Kontoinformationen',
+                'key' => 'ACCOUNT_INFORMATION',
+                'value' => 'Kontoinformationen',
             ],
         ];
     }

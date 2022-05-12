@@ -78,18 +78,18 @@ final class InvoiceAddressMultiShopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame([
-            'salutation'     => 'MRS',
-            'firstName'      => 'Jane',
-            'lastName'       => 'Doe',
-            'company'        => 'No GmbH',
+            'salutation' => 'MRS',
+            'firstName' => 'Jane',
+            'lastName' => 'Doe',
+            'company' => 'No GmbH',
             'additionalInfo' => 'Invoice address',
-            'street'         => 'SomeStreet',
-            'streetNumber'   => '999',
-            'zipCode'        => '10000',
-            'city'           => 'Any City',
-            'phone'          => '123456',
-            'mobile'         => '12345678',
-            'fax'            => '555',
+            'street' => 'SomeStreet',
+            'streetNumber' => '999',
+            'zipCode' => '10000',
+            'city' => 'Any City',
+            'phone' => '123456',
+            'mobile' => '12345678',
+            'fax' => '555',
         ], $result['data']['customerInvoiceAddressSet']);
     }
 
@@ -131,7 +131,7 @@ final class InvoiceAddressMultiShopCest extends MultishopBaseCest
         $I->assertSame(
             [
                 'firstName' => 'Janice',
-                'lastName'  => 'Dodo',
+                'lastName' => 'Dodo',
             ],
             $result['data']['customerInvoiceAddressSet']
         );

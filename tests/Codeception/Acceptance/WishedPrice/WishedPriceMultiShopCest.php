@@ -57,7 +57,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
     public function testUserWishedPricePerShop(AcceptanceTester $I, Example $data): void
     {
         $languageId = 0;
-        $shopId     = $data['shopId'];
+        $shopId = $data['shopId'];
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
 
@@ -87,7 +87,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
     public function testAdminWishedPricePerShop(AcceptanceTester $I, Example $data): void
     {
         $languageId = 0;
-        $shopId     = $data['shopId'];
+        $shopId = $data['shopId'];
 
         $I->login('admin', 'admin', $shopId);
 
@@ -115,11 +115,11 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
     {
         return [
             [
-                'shopId'        => 1,
+                'shopId' => 1,
                 'wishedPriceId' => self::WISHED_PRICE_SHOP_1,
             ],
             [
-                'shopId'        => 2,
+                'shopId' => 2,
                 'wishedPriceId' => self::WISHED_PRICE_SHOP_2,
             ],
         ];
@@ -128,7 +128,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
     public function testGetUserWishedPriceFromShop1ToShop2(AcceptanceTester $I): void
     {
         $languageId = 0;
-        $shopId     = 2;
+        $shopId = 2;
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
 
@@ -155,7 +155,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
     public function testDeleteShop1WishedPriceFromShop2(AcceptanceTester $I): void
     {
         $languageId = 0;
-        $shopId     = 2;
+        $shopId = 2;
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
 
@@ -182,7 +182,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
      */
     public function testWishedPriceSetPerShop(AcceptanceTester $I, Example $data): void
     {
-        $shopId     = $data['shopId'];
+        $shopId = $data['shopId'];
         $languageId = 0;
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
@@ -218,11 +218,11 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
     {
         return [
             [
-                'shopId'    => 1,
+                'shopId' => 1,
                 'productId' => self::PRODUCT_ID_SHOP_1,
             ],
             [
-                'shopId'    => 2,
+                'shopId' => 2,
                 'productId' => self::PRODUCT_ID_SHOP_2,
             ],
         ];
@@ -230,7 +230,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
 
     public function testWishedPriceProductExistsInOtherShopOnly(AcceptanceTester $I): void
     {
-        $shopId     = 2;
+        $shopId = 2;
         $languageId = 0;
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);

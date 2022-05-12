@@ -20,7 +20,7 @@ final class BasketFactory
         $model = oxNew(BasketModel::class);
         $model->assign([
             'OXUSERID' => $userId,
-            'OXTITLE'  => $title,
+            'OXTITLE' => $title,
             'OXPUBLIC' => $public,
         ]);
 

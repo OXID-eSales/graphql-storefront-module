@@ -50,7 +50,7 @@ abstract class MultishopBaseCest extends BaseCest
 
     private function ensureSubshop(): void
     {
-        $container         = ContainerFactory::getInstance()->getContainer();
+        $container = ContainerFactory::getInstance()->getContainer();
         $shopConfiguration = $container->get(ShopConfigurationDaoBridgeInterface::class)->get();
         Registry::getConfig()->setShopId(self::SUBSHOP_ID);
         $container->get(ShopConfigurationDaoBridgeInterface::class)->save($shopConfiguration);

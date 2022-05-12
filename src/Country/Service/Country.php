@@ -32,8 +32,8 @@ final class Country
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository            = $repository;
-        $this->authorizationService  = $authorizationService;
+        $this->repository = $repository;
+        $this->authorizationService = $authorizationService;
     }
 
     /**
@@ -45,12 +45,12 @@ final class Country
         try {
             /** @var CountryDataType $country */
             $country = $this->repository->getById(
-                (string) $id,
+                (string)$id,
                 CountryDataType::class,
                 false
             );
         } catch (NotFound $e) {
-            throw CountryNotFound::byId((string) $id);
+            throw CountryNotFound::byId((string)$id);
         }
 
         if ($country->isActive()) {

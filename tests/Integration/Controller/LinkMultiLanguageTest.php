@@ -19,11 +19,11 @@ final class LinkMultiLanguageTest extends TestCase
     {
         return [
             'de' => [
-                'languageId'  => '0',
+                'languageId' => '0',
                 'description' => '<p>Deutsche Beschreibung aktiv</p>',
             ],
             'en' => [
-                'languageId'  => '1',
+                'languageId' => '1',
                 'description' => '<p>English Description active</p>',
             ],
         ];
@@ -63,11 +63,11 @@ final class LinkMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'count'      => 0,
+                'count' => 0,
             ],
             'en' => [
                 'languageId' => '1',
-                'count'      => 1,
+                'count' => 1,
             ],
         ];
     }

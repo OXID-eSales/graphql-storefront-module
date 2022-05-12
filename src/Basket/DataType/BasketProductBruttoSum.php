@@ -37,6 +37,6 @@ final class BasketProductBruttoSum
      */
     public function getSum(): float
     {
-        return (float) $this->basket->getBruttoSum();
+        return (float)$this->basket->getBruttoSum();
     }
 }

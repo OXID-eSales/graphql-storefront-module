@@ -28,14 +28,16 @@ final class ContentRelationServiceTest extends BaseTestCase
 
     public function testGetContentSeoRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::ACTIVE_CONTENT_WITH_SEO . '") {
                 id
                 seo {
                     url
                 }
             }
-        }');
+        }'
+        );
 
         $content = $result['body']['data']['content'];
         $this->assertCount(1, $content['seo']);
@@ -46,7 +48,8 @@ final class ContentRelationServiceTest extends BaseTestCase
     {
         $this->setActiveState(self::ACTIVE_CONTENT_CATEGORY_ID, 'oxcategories');
 
-        $result = $this->query('
+        $result = $this->query(
+            '
             query{
                 content(contentId: "' . self::ACTIVE_CONTENT_WITH_CATEGORY . '" ){
                     category {
@@ -54,7 +57,8 @@ final class ContentRelationServiceTest extends BaseTestCase
                     }
                 }
             }
-        ');
+        '
+        );
 
         $content = $result['body']['data']['content'];
         $this->assertSame('Kites', $content['category']['title']);
@@ -73,13 +77,15 @@ final class ContentRelationServiceTest extends BaseTestCase
      */
     public function testGetContentCategoryRelationWithoutCategory(string $categoryId): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . $categoryId . '") {
                 category {
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $content = $result['body']['data']['content'];
         $this->assertNull($content['category']);

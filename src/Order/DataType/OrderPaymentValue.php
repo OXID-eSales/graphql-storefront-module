@@ -31,7 +31,7 @@ final class OrderPaymentValue
      */
     public function getKey(): string
     {
-        return (string) $this->paymentValue->name;
+        return (string)$this->paymentValue->name;
     }
 
     /**
@@ -39,6 +39,6 @@ final class OrderPaymentValue
      */
     public function getValue(): string
     {
-        return (string) $this->paymentValue->value;
+        return (string)$this->paymentValue->value;
     }
 }

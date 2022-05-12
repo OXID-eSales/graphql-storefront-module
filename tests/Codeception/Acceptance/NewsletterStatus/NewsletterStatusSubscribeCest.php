@@ -52,12 +52,14 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
     public function testNewsletterSubscribeMissingInputData(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterSubscribe (newsletterStatus: {})
             {
                status
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -73,12 +75,14 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $this->prepareTestData($I, 0);
         $I->login(self::OTHER_USERNAME, self::OTHER_USER_PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterSubscribe (newsletterStatus: {})
             {
                status
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -92,13 +96,15 @@ final class NewsletterStatusSubscribeCest extends BaseCest
     {
         $this->prepareTestData($I, 0);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterSubscribe(newsletterStatus: {
               email: "' . self::OTHER_USERNAME . '"
             }) {
                 status
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -112,13 +118,15 @@ final class NewsletterStatusSubscribeCest extends BaseCest
     {
         $this->prepareTestData($I, 1);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterSubscribe(newsletterStatus: {
               email: "' . self::OTHER_USERNAME . '"
             }) {
                 status
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -133,12 +141,14 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $this->prepareTestData($I, 1);
         $I->login(self::OTHER_USERNAME, self::OTHER_USER_PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterSubscribe (newsletterStatus: {})
             {
                 status
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -154,7 +164,8 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $I->updateConfigInDatabase('blOrderOptInEmail', $data['require_optin'], 'bool');
         $input = $data['input'];
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterSubscribe(newsletterStatus: {
               salutation: "' . $input['salutation'] . '"
               firstName: "' . $input['firstName'] . '"
@@ -167,7 +178,8 @@ final class NewsletterStatusSubscribeCest extends BaseCest
                 email
                 status
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -182,30 +194,30 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             'max_data' => [
                 'input' => [
                     'salutation' => 'mrs',
-                    'firstName'  => 'Newgirl',
-                    'lastName'   => 'Intown',
-                    'email'      => $newUserMail,
-                    'status'     => 'MISSING_DOUBLE_OPTIN',
+                    'firstName' => 'Newgirl',
+                    'lastName' => 'Intown',
+                    'email' => $newUserMail,
+                    'status' => 'MISSING_DOUBLE_OPTIN',
                 ],
                 'require_optin' => true,
             ],
             'min_data' => [
                 'input' => [
                     'salutation' => '',
-                    'firstName'  => '',
-                    'lastName'   => '',
-                    'email'      => '2' . $newUserMail,
-                    'status'     => 'MISSING_DOUBLE_OPTIN',
+                    'firstName' => '',
+                    'lastName' => '',
+                    'email' => '2' . $newUserMail,
+                    'status' => 'MISSING_DOUBLE_OPTIN',
                 ],
                 'require_optin' => true,
             ],
             'no_optin_required' => [
                 'input' => [
                     'salutation' => '',
-                    'firstName'  => '',
-                    'lastName'   => '',
-                    'email'      => '3' . $newUserMail,
-                    'status'     => 'SUBSCRIBED',
+                    'firstName' => '',
+                    'lastName' => '',
+                    'email' => '3' . $newUserMail,
+                    'status' => 'SUBSCRIBED',
                 ],
                 'require_optin' => false,
             ],
@@ -244,27 +256,27 @@ final class NewsletterStatusSubscribeCest extends BaseCest
             'empty_email' => [
                 'data' => [
                     'salutation' => 'mrs',
-                    'firstName'  => 'NewGirl',
-                    'lastName'   => 'InTown',
-                    'email'      => '',
+                    'firstName' => 'NewGirl',
+                    'lastName' => 'InTown',
+                    'email' => '',
                 ],
                 'expected' => "This e-mail address '' is invalid!",
             ],
             'invalid_email' => [
                 'data' => [
                     'salutation' => 'mrs',
-                    'firstName'  => 'NewGirl',
-                    'lastName'   => 'InTown',
-                    'email'      => 'admin',
+                    'firstName' => 'NewGirl',
+                    'lastName' => 'InTown',
+                    'email' => 'admin',
                 ],
                 'expected' => "This e-mail address 'admin' is invalid!",
             ],
             'crazy_input' => [
                 'data' => [
                     'salutation' => 'mrs',
-                    'firstName'  => 'NewGirl',
-                    'lastName'   => 'InTown',
-                    'email'      => $strangeEmail,
+                    'firstName' => 'NewGirl',
+                    'lastName' => 'InTown',
+                    'email' => $strangeEmail,
                 ],
                 'expected' => "This e-mail address '{$strangeEmail}' is invalid!",
             ],
@@ -275,7 +287,8 @@ final class NewsletterStatusSubscribeCest extends BaseCest
     {
         $this->prepareTestData($I, 0);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterSubscribe(newsletterStatus: {
               salutation: "mrs"
               firstName: "Newgirl"
@@ -288,16 +301,17 @@ final class NewsletterStatusSubscribeCest extends BaseCest
                 email
                 status
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
         $expected = [
             'salutation' => '',
-            'firstName'  => 'Marc',
-            'lastName'   => 'Muster',
-            'email'      => self::OTHER_USERNAME,
-            'status'     => 'MISSING_DOUBLE_OPTIN',
+            'firstName' => 'Marc',
+            'lastName' => 'Muster',
+            'email' => self::OTHER_USERNAME,
+            'status' => 'MISSING_DOUBLE_OPTIN',
         ];
         $I->assertEquals($expected, $result['data']['newsletterSubscribe']);
         $this->assertSubscriptionStatus($I, 'MISSING_DOUBLE_OPTIN');
@@ -310,7 +324,8 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $this->prepareTestData($I, 0);
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterSubscribe(newsletterStatus: {
               salutation: "mrs"
               firstName: "Newgirl"
@@ -323,16 +338,17 @@ final class NewsletterStatusSubscribeCest extends BaseCest
                 email
                 status
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
         $expected = [
             'salutation' => '',
-            'firstName'  => 'Marc',
-            'lastName'   => 'Muster',
-            'email'      => self::OTHER_USERNAME,
-            'status'     => 'MISSING_DOUBLE_OPTIN',
+            'firstName' => 'Marc',
+            'lastName' => 'Muster',
+            'email' => self::OTHER_USERNAME,
+            'status' => 'MISSING_DOUBLE_OPTIN',
         ];
         $I->assertEquals($expected, $result['data']['newsletterSubscribe']);
         $this->assertSubscriptionStatus($I, 'MISSING_DOUBLE_OPTIN');
@@ -345,8 +361,8 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $I->haveInDatabase(
             'oxnewssubscribed',
             [
-                'OXID'           => self::SUBSCRIPTION_ID,
-                'OXSUBSCRIBED'   => '2020-04-01 14:14:14',
+                'OXID' => self::SUBSCRIPTION_ID,
+                'OXSUBSCRIBED' => '2020-04-01 14:14:14',
                 'OXUNSUBSCRIBED' => '1980-01-01 00:00:00',
             ]
         );
@@ -354,11 +370,11 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $I->updateInDatabase(
             'oxnewssubscribed',
             [
-                'OXUSERID'     => self::OTHER_USER_OXID,
-                'OXDBOPTIN'    => $optin,
-                'OXEMAIL'      => self::OTHER_USERNAME,
-                'OXFNAME'      => 'Marc',
-                'OXLNAME'      => 'Muster',
+                'OXUSERID' => self::OTHER_USER_OXID,
+                'OXDBOPTIN' => $optin,
+                'OXEMAIL' => self::OTHER_USERNAME,
+                'OXFNAME' => 'Marc',
+                'OXLNAME' => 'Muster',
                 'OXSUBSCRIBED' => '2020-04-01 14:14:14',
             ],
             [
@@ -367,18 +383,23 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         );
     }
 
-    private function assertSubscriptionStatus(AcceptanceTester $I, string $status, string $email = self::OTHER_USERNAME): void
-    {
+    private function assertSubscriptionStatus(
+        AcceptanceTester $I,
+        string $status,
+        string $email = self::OTHER_USERNAME
+    ): void {
         $I->login($email, self::PASSWORD);
 
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             customer {
                 id
                 newsletterStatus {
                     status
                 }
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -390,7 +411,7 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $I->seeInDatabase(
             'oxnewssubscribed',
             [
-                'OXEMAIL'       => $email,
+                'OXEMAIL' => $email,
                 'OXEMAILFAILED' => 0,
             ]
         );

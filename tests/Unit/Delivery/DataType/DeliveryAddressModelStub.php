@@ -20,9 +20,9 @@ final class DeliveryAddressModelStub extends EshopAddressModel
     }
 
     /**
+     * @param mixed $data
      * @var array
      *
-     * @param mixed $data
      */
     public function assign($data): void
     {

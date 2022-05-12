@@ -46,7 +46,7 @@ final class CustomerCest extends BaseCest
         $I->deleteFromDatabase(
             'oxnewssubscribed',
             [
-                'OXEMAIL'  => self::EXISTING_USERNAME,
+                'OXEMAIL' => self::EXISTING_USERNAME,
             ]
         );
     }
@@ -58,7 +58,7 @@ final class CustomerCest extends BaseCest
         $I->deleteFromDatabase(
             'oxnewssubscribed',
             [
-                'OXEMAIL'  => self::EXISTING_USERNAME,
+                'OXEMAIL' => self::EXISTING_USERNAME,
             ]
         );
     }
@@ -129,7 +129,7 @@ final class CustomerCest extends BaseCest
         $I->deleteFromDatabase(
             'oxnewssubscribed',
             [
-                'OXEMAIL'  => self::EXISTING_USERNAME,
+                'OXEMAIL' => self::EXISTING_USERNAME,
             ]
         );
 
@@ -204,14 +204,14 @@ final class CustomerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $expected = [
-            'salutation'       => 'MR',
-            'firstName'        => 'Marc',
-            'lastName'         => 'Muster',
-            'email'            => self::USERNAME,
-            'status'           => 'SUBSCRIBED',
+            'salutation' => 'MR',
+            'firstName' => 'Marc',
+            'lastName' => 'Muster',
+            'email' => self::USERNAME,
+            'status' => 'SUBSCRIBED',
             'failedEmailCount' => 0,
-            'subscribed'       => '2020-04-01T11:11:11+02:00',
-            'unsubscribed'     => null,
+            'subscribed' => '2020-04-01T11:11:11+02:00',
+            'unsubscribed' => null,
         ];
 
         $I->assertStringContainsString('T', $result['data']['customer']['newsletterStatus']['updated']);
@@ -228,8 +228,8 @@ final class CustomerCest extends BaseCest
      */
     public function testSuccessfulCustomerRegister(AcceptanceTester $I, Example $data): void
     {
-        $email     = $data['email'];
-        $password  = $data['password'];
+        $email = $data['email'];
+        $password = $data['password'];
         $birthdate = $data['birthdate'];
 
         $I->sendGQLQuery(
@@ -280,9 +280,9 @@ final class CustomerCest extends BaseCest
      */
     public function testFailedCustomerRegistration(AcceptanceTester $I, Example $data): void
     {
-        $email    = $data['email'];
+        $email = $data['email'];
         $password = $data['password'];
-        $message  = $data['message'];
+        $message = $data['message'];
 
         $I->sendGQLQuery(
             'mutation {
@@ -309,8 +309,8 @@ final class CustomerCest extends BaseCest
      */
     public function testCustomerEmailUpdate(AcceptanceTester $I, Example $data): void
     {
-        $email          = $data['email'];
-        $expectedError  = $data['expectedError'];
+        $email = $data['email'];
+        $expectedError = $data['expectedError'];
 
         $I->login(self::USERNAME_FOR_EMAIL_CHANGE, 'useruser');
 
@@ -376,7 +376,7 @@ final class CustomerCest extends BaseCest
 
         $I->assertEquals(
             [
-                'email'     => self::USERNAME,
+                'email' => self::USERNAME,
                 'birthdate' => '1986-12-25T00:00:00+01:00',
             ],
             $result['data']['customerBirthdateUpdate']
@@ -468,18 +468,18 @@ final class CustomerCest extends BaseCest
     {
         return [
             [
-                'email'     => 'testUser1@oxid-esales.com',
-                'password'  => 'useruser',
+                'email' => 'testUser1@oxid-esales.com',
+                'password' => 'useruser',
                 'birthdate' => null,
             ],
             [
-                'email'     => 'testUser2@oxid-esales.com',
-                'password'  => 'useruser',
+                'email' => 'testUser2@oxid-esales.com',
+                'password' => 'useruser',
                 'birthdate' => null,
             ],
             [
-                'email'     => 'testUser3@oxid-esales.com',
-                'password'  => 'useruser',
+                'email' => 'testUser3@oxid-esales.com',
+                'password' => 'useruser',
                 'birthdate' => '1986-12-25',
             ],
         ];
@@ -489,24 +489,24 @@ final class CustomerCest extends BaseCest
     {
         return [
             [
-                'email'    => 'testUser1',
+                'email' => 'testUser1',
                 'password' => 'useruser',
-                'message'  => "This e-mail address 'testUser1' is invalid!",
+                'message' => "This e-mail address 'testUser1' is invalid!",
             ],
             [
-                'email'    => 'user@oxid-esales.com',
+                'email' => 'user@oxid-esales.com',
                 'password' => 'useruser',
-                'message'  => "This e-mail address 'user@oxid-esales.com' already exists!",
+                'message' => "This e-mail address 'user@oxid-esales.com' already exists!",
             ],
             [
-                'email'    => 'testUser3@oxid-esales.com',
+                'email' => 'testUser3@oxid-esales.com',
                 'password' => '',
-                'message'  => 'Password does not match length requirements',
+                'message' => 'Password does not match length requirements',
             ],
             [
-                'email'    => '',
+                'email' => '',
                 'password' => 'useruser',
-                'message'  => 'The e-mail address must not be empty!',
+                'message' => 'The e-mail address must not be empty!',
             ],
         ];
     }
@@ -515,20 +515,20 @@ final class CustomerCest extends BaseCest
     {
         return [
             [
-                'email'          => 'user@oxid-esales.com',
-                'expectedError'  => "This e-mail address 'user@oxid-esales.com' already exists!",
+                'email' => 'user@oxid-esales.com',
+                'expectedError' => "This e-mail address 'user@oxid-esales.com' already exists!",
             ],
             [
-                'email'          => '',
-                'expectedError'  => 'The e-mail address must not be empty!',
+                'email' => '',
+                'expectedError' => 'The e-mail address must not be empty!',
             ],
             [
-                'email'          => 'someuser',
-                'expectedError'  => "This e-mail address 'someuser' is invalid!",
+                'email' => 'someuser',
+                'expectedError' => "This e-mail address 'someuser' is invalid!",
             ],
             [
-                'email'          => 'newCustUser@oxid-esales.com',
-                'expectedError'  => null,
+                'email' => 'newCustUser@oxid-esales.com',
+                'expectedError' => null,
             ],
         ];
     }
@@ -538,8 +538,8 @@ final class CustomerCest extends BaseCest
         $I->haveInDatabase(
             'oxnewssubscribed',
             [
-                'OXID'           => self::SUBSCRIPTION_ID,
-                'OXSUBSCRIBED'   => '2020-04-01 12:12:12',
+                'OXID' => self::SUBSCRIPTION_ID,
+                'OXSUBSCRIBED' => '2020-04-01 12:12:12',
                 'OXUNSUBSCRIBED' => '1980-01-01 00:00:00',
             ]
         );
@@ -547,11 +547,11 @@ final class CustomerCest extends BaseCest
         $I->updateInDatabase(
             'oxnewssubscribed',
             [
-                'OXUSERID'     => self::EXISTING_USER_ID,
-                'OXDBOPTIN'    => 6,
-                'OXEMAIL'      => self::EXISTING_USERNAME,
-                'OXFNAME'      => 'Marc',
-                'OXLNAME'      => 'Muster',
+                'OXUSERID' => self::EXISTING_USER_ID,
+                'OXDBOPTIN' => 6,
+                'OXEMAIL' => self::EXISTING_USERNAME,
+                'OXFNAME' => 'Marc',
+                'OXLNAME' => 'Muster',
                 'OXSUBSCRIBED' => '2020-04-01 12:12:12',
             ],
             [

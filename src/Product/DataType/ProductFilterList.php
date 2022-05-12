@@ -41,12 +41,12 @@ final class ProductFilterList extends FilterList
         ?IDFilter $vendor = null,
         ?BoolFilter $active = null
     ) {
-        $this->title        = $title;
-        $this->category     = $category;
+        $this->title = $title;
+        $this->category = $category;
         $this->manufacturer = $manufacturer;
-        $this->vendor       = $vendor;
-        $this->active       = $active;
-        $this->parent       = new IDFilter(new ID(''));
+        $this->vendor = $vendor;
+        $this->active = $active;
+        $this->parent = new IDFilter(new ID(''));
         parent::__construct();
     }
 
@@ -62,11 +62,11 @@ final class ProductFilterList extends FilterList
     public function getFilters(): array
     {
         return [
-            'oxtitle'          => $this->title,
-            'oxcatnid'         => $this->category,
+            'oxtitle' => $this->title,
+            'oxcatnid' => $this->category,
             'oxmanufacturerid' => $this->manufacturer,
-            'oxvendorid'       => $this->vendor,
-            'oxparentid'       => $this->parent,
+            'oxvendorid' => $this->vendor,
+            'oxparentid' => $this->parent,
         ];
     }
 

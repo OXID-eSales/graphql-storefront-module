@@ -84,8 +84,8 @@ final class VoucherCest extends BaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_voucher_1',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_voucher_1',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
@@ -167,16 +167,16 @@ final class VoucherCest extends BaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_series_voucher_1',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_series_voucher_1',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_series_voucher_2',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_series_voucher_2',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
@@ -214,16 +214,16 @@ final class VoucherCest extends BaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_series_voucher_1',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_series_voucher_1',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_series_voucher_2',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_series_voucher_2',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
@@ -262,16 +262,16 @@ final class VoucherCest extends BaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_series_voucher_1',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_series_voucher_1',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_series_voucher_2',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_series_voucher_2',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
@@ -307,16 +307,16 @@ final class VoucherCest extends BaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_series_voucher_1',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_series_voucher_1',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'personal_series_voucher_2',
-                'oxreserved'     => 0,
+                'oxid' => 'personal_series_voucher_2',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );
@@ -425,9 +425,9 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame($result['data']['basket'], [
-            'id'   => self::BASKET_PUBLIC,
+            'id' => self::BASKET_PUBLIC,
             'cost' => [
-                'voucher'  => 0,
+                'voucher' => 0,
                 'discount' => 0,
             ],
             'vouchers' => [],
@@ -442,9 +442,9 @@ final class VoucherCest extends BaseCest
         $discountResult = $I->grabJsonResponseAsArray();
 
         $I->assertSame($discountResult['data']['basket'], [
-            'id'   => self::BASKET_PUBLIC,
+            'id' => self::BASKET_PUBLIC,
             'cost' => [
-                'voucher'  => 5,
+                'voucher' => 5,
                 'discount' => 5,
             ],
             'vouchers' => [
@@ -468,9 +468,9 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
         $I->assertSame(
             [
-                'id'       => self::BASKET,
-                'cost'     => [
-                    'voucher'  => 0,
+                'id' => self::BASKET,
+                'cost' => [
+                    'voucher' => 0,
                     'discount' => 0,
                 ],
                 'vouchers' => [],
@@ -510,16 +510,16 @@ final class VoucherCest extends BaseCest
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeInDatabase('oxvouchers', [
-            'oxid'           => 'personal_voucher_1',
-            'oxreserved >'   => 0,
+            'oxid' => 'personal_voucher_1',
+            'oxreserved >' => 0,
             'oegql_basketid' => $basketId,
         ]);
 
         $this->basketRemoveMutation($I, $basketId);
 
         $I->seeInDatabase('oxvouchers', [
-            'oxid'           => 'personal_voucher_1',
-            'oxreserved'     => 0,
+            'oxid' => 'personal_voucher_1',
+            'oxreserved' => 0,
             'oegql_basketid' => '',
         ]);
     }
@@ -530,10 +530,10 @@ final class VoucherCest extends BaseCest
         $I->haveInDatabase(
             'oxobject2discount',
             [
-                'OXID'         => 'voucher_assigned_to_product',
+                'OXID' => 'voucher_assigned_to_product',
                 'OXDISCOUNTID' => 'personal_voucher',
-                'OXOBJECTID'   => self::PRODUCT_ID,
-                'OXTYPE'       => 'oxarticles',
+                'OXOBJECTID' => self::PRODUCT_ID,
+                'OXTYPE' => 'oxarticles',
             ]
         );
 
@@ -553,8 +553,8 @@ final class VoucherCest extends BaseCest
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeInDatabase('oxvouchers', [
-            'oxid'           => 'personal_voucher_1',
-            'oxreserved >'   => 0,
+            'oxid' => 'personal_voucher_1',
+            'oxreserved >' => 0,
             'oegql_basketid' => $basketId,
         ]);
 
@@ -563,9 +563,9 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
         $I->assertSame(
             [
-                'id'       => $basketId,
-                'cost'     => [
-                    'voucher'  => 5,
+                'id' => $basketId,
+                'cost' => [
+                    'voucher' => 5,
                     'discount' => 5,
                 ],
                 'vouchers' => [
@@ -575,7 +575,7 @@ final class VoucherCest extends BaseCest
             $result['data']['basket']
         );
 
-        $basketItemId  = null;
+        $basketItemId = null;
         $basketItemId2 = null;
 
         foreach ($items as $item) {
@@ -589,8 +589,8 @@ final class VoucherCest extends BaseCest
         $this->basketRemoveItemMutation($I, $basketId, $basketItemId);
 
         $I->seeInDatabase('oxvouchers', [
-            'oxid'           => 'personal_voucher_1',
-            'oxreserved'     => 0,
+            'oxid' => 'personal_voucher_1',
+            'oxreserved' => 0,
             'oegql_basketid' => '',
         ]);
 
@@ -602,14 +602,14 @@ final class VoucherCest extends BaseCest
     public function testVoucherAssignedToSpecificCategory(AcceptanceTester $I): void
     {
         $categoryId = '0f4fb00809cec9aa0910aa9c8fe36751'; // Kites
-        $productId  = 'b56369b1fc9d7b97f9c5fc343b349ece'; // Product from Kites category
+        $productId = 'b56369b1fc9d7b97f9c5fc343b349ece'; // Product from Kites category
         $I->haveInDatabase(
             'oxobject2discount',
             [
-                'OXID'         => 'voucher_assigned_to_category',
+                'OXID' => 'voucher_assigned_to_category',
                 'OXDISCOUNTID' => 'personal_voucher',
-                'OXOBJECTID'   => $categoryId,
-                'OXTYPE'       => 'oxcategories',
+                'OXOBJECTID' => $categoryId,
+                'OXTYPE' => 'oxcategories',
             ]
         );
 
@@ -630,8 +630,8 @@ final class VoucherCest extends BaseCest
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeInDatabase('oxvouchers', [
-            'oxid'           => 'personal_voucher_1',
-            'oxreserved >'   => 0,
+            'oxid' => 'personal_voucher_1',
+            'oxreserved >' => 0,
             'oegql_basketid' => $basketId,
         ]);
 
@@ -639,9 +639,9 @@ final class VoucherCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
         $I->assertSame(
             [
-                'id'       => $basketId,
-                'cost'     => [
-                    'voucher'  => 5,
+                'id' => $basketId,
+                'cost' => [
+                    'voucher' => 5,
                     'discount' => 5,
                 ],
                 'vouchers' => [
@@ -651,7 +651,7 @@ final class VoucherCest extends BaseCest
             $result['data']['basket']
         );
 
-        $basketItemId  = null;
+        $basketItemId = null;
         $basketItemId2 = null;
 
         foreach ($items as $item) {
@@ -665,8 +665,8 @@ final class VoucherCest extends BaseCest
         $this->basketRemoveItemMutation($I, $basketId, $basketItemId2);
 
         $I->seeInDatabase('oxvouchers', [
-            'oxid'           => 'personal_voucher_1',
-            'oxreserved'     => 0,
+            'oxid' => 'personal_voucher_1',
+            'oxreserved' => 0,
             'oegql_basketid' => '',
         ]);
 
@@ -680,13 +680,13 @@ final class VoucherCest extends BaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxenddate' => date('Y-m-d H:i:s', strtotime('-1 day'))],
-            ['oxid'      => 'personal_voucher']
+            ['oxid' => 'personal_voucher']
         );
 
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
-        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeResponseIsJson();
@@ -702,7 +702,7 @@ final class VoucherCest extends BaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxenddate' => '2050-12-31 00:00:00'],
-            ['oxid'      => 'personal_voucher']
+            ['oxid' => 'personal_voucher']
         );
     }
 
@@ -711,13 +711,13 @@ final class VoucherCest extends BaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxbegindate' => date('Y-m-d H:i:s', strtotime('+1 day'))],
-            ['oxid'        => 'personal_voucher']
+            ['oxid' => 'personal_voucher']
         );
 
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
-        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeResponseIsJson();
@@ -733,7 +733,7 @@ final class VoucherCest extends BaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxbegindate' => '2000-01-01 00:00:00'],
-            ['oxid'        => 'personal_voucher']
+            ['oxid' => 'personal_voucher']
         );
     }
 
@@ -743,14 +743,14 @@ final class VoucherCest extends BaseCest
 
         // Add voucher to basket
         $basketId = $this->basketCreateMutation($I, 'outdated_voucher');
-        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         // Update the voucher and make it invalid
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxenddate' => date('Y-m-d H:i:s', strtotime('-1 day'))],
-            ['oxid'      => 'personal_voucher']
+            ['oxid' => 'personal_voucher']
         );
 
         // Get basket data
@@ -759,9 +759,9 @@ final class VoucherCest extends BaseCest
 
         // Check voucher data
         $I->assertSame($result['data']['basket'], [
-            'id'   => $basketId,
+            'id' => $basketId,
             'cost' => [
-                'voucher'  => 0,
+                'voucher' => 0,
                 'discount' => 0,
             ],
             'vouchers' => [],
@@ -773,7 +773,7 @@ final class VoucherCest extends BaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxenddate' => '2050-12-31 00:00:00'],
-            ['oxid'      => 'personal_voucher']
+            ['oxid' => 'personal_voucher']
         );
     }
 
@@ -782,7 +782,7 @@ final class VoucherCest extends BaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxminimumvalue' => 50.00],
-            ['oxid'           => 'personal_voucher']
+            ['oxid' => 'personal_voucher']
         );
 
         $I->login(self::USERNAME, self::PASSWORD);
@@ -802,16 +802,16 @@ final class VoucherCest extends BaseCest
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeInDatabase('oxvouchers', [
-            'oxid'           => 'personal_voucher_1',
-            'oxreserved >'   => 0,
+            'oxid' => 'personal_voucher_1',
+            'oxreserved >' => 0,
             'oegql_basketid' => $basketId,
         ]);
 
         $this->basketRemoveItemMutation($I, $basketId, $items[0]['id']);
 
         $I->seeInDatabase('oxvouchers', [
-            'oxid'           => 'personal_voucher_1',
-            'oxreserved'     => 0,
+            'oxid' => 'personal_voucher_1',
+            'oxreserved' => 0,
             'oegql_basketid' => '',
         ]);
 
@@ -820,7 +820,7 @@ final class VoucherCest extends BaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxminimumvalue' => 0.00],
-            ['oxid'           => 'personal_voucher']
+            ['oxid' => 'personal_voucher']
         );
     }
 
@@ -830,8 +830,8 @@ final class VoucherCest extends BaseCest
         $I->haveInDatabase(
             'oxobject2group',
             [
-                'OXID'       => 'voucher_assigned_to_user_group',
-                'OXSHOPID'   => 1,
+                'OXID' => 'voucher_assigned_to_user_group',
+                'OXSHOPID' => 1,
                 'OXOBJECTID' => 'personal_voucher',
                 'OXGROUPSID' => 'oxidcustomer',
             ]
@@ -841,7 +841,7 @@ final class VoucherCest extends BaseCest
         $I->login(self::OTHER_USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'voucher_assigned_to_user_group');
-        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         $I->seeResponseIsJson();
@@ -859,7 +859,7 @@ final class VoucherCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreateMutation($I, 'voucher_assigned_to_user_group');
-        $items    = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
+        $items = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID);
         $I->sendGQLQuery($this->addVoucherMutation($basketId, self::VOUCHER));
 
         // Reset DB
@@ -884,7 +884,7 @@ final class VoucherCest extends BaseCest
         $I->updateInDatabase(
             'oxvouchers',
             [
-                'oxreserved'     => time() - 10900,
+                'oxreserved' => time() - 10900,
             ],
             [
                 'oegql_basketid' => self::BASKET,
@@ -898,13 +898,19 @@ final class VoucherCest extends BaseCest
         $I->assertEmpty($result['data']['basket']['vouchers']);
     }
 
-    private function basketRemoveItemMutation(AcceptanceTester $I, string $basketId, string $basketItemId, int $amount = 1): void
-    {
-        $I->sendGQLQuery('mutation {
+    private function basketRemoveItemMutation(
+        AcceptanceTester $I,
+        string $basketId,
+        string $basketItemId,
+        int $amount = 1
+    ): void {
+        $I->sendGQLQuery(
+            'mutation {
             basketRemoveItem(basketId: "' . $basketId . '", basketItemId: "' . $basketItemId . '", amount: ' . $amount . ') {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
     }
@@ -951,11 +957,13 @@ final class VoucherCest extends BaseCest
 
     private function basketCreateMutation(AcceptanceTester $I, string $title): string
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketCreate(basket: {title: "' . $title . '", public: false}) {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -966,16 +974,23 @@ final class VoucherCest extends BaseCest
 
     private function basketRemoveMutation(AcceptanceTester $I, string $basketId): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketRemove(basketId: "' . $basketId . '")
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
     }
 
-    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
-    {
-        $I->sendGQLQuery('mutation {
+    private function basketAddItemMutation(
+        AcceptanceTester $I,
+        string $basketId,
+        string $productId,
+        int $amount = 1
+    ): array {
+        $I->sendGQLQuery(
+            'mutation {
             basketAddItem(basketId: "' . $basketId . '", productId: "' . $productId . '", amount: ' . $amount . ') {
                 id
                 items {
@@ -985,7 +1000,8 @@ final class VoucherCest extends BaseCest
                     }
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -1002,7 +1018,7 @@ final class VoucherCest extends BaseCest
     private function prepareSeriesVouchers(AcceptanceTester $I, string $voucherId): void
     {
         $I->updateInDatabase('oxvoucherseries', [
-            'OXALLOWSAMESERIES'  => 1,
+            'OXALLOWSAMESERIES' => 1,
             'OXALLOWOTHERSERIES' => 1,
         ], [
             'OXID' => $voucherId,
@@ -1012,7 +1028,7 @@ final class VoucherCest extends BaseCest
     private function prepareVoucher(AcceptanceTester $I, string $basketId, string $voucherId): void
     {
         $I->updateInDatabase('oxvouchers', [
-            'OXRESERVED'     => $basketId ? time() : 0,
+            'OXRESERVED' => $basketId ? time() : 0,
             'OEGQL_BASKETID' => $basketId,
         ], [
             'OXID' => $voucherId,
