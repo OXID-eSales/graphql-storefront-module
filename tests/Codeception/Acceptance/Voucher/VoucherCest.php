@@ -906,7 +906,11 @@ final class VoucherCest extends BaseCest
     ): void {
         $I->sendGQLQuery(
             'mutation {
-            basketRemoveItem(basketId: "' . $basketId . '", basketItemId: "' . $basketItemId . '", amount: ' . $amount . ') {
+            basketRemoveItem(
+                basketId: "' . $basketId . '",
+                basketItemId: "' . $basketItemId . '",
+                amount: ' . $amount . '
+            ) {
                 id
             }
         }'

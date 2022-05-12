@@ -19,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice as WishedPriceDataType;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPriceFilterList;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Exception\WishedPriceNotFound;
-use OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceNotification as WishedPriceNotificationInfrastructure;
+use OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceNotification as WishedPriceNotificationInfrastructure; // phpcs:ignore
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class WishedPrice

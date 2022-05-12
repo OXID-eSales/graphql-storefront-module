@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 
 /**
  * Copyright © OXID eSales AG. All rights reserved.

@@ -10,8 +10,8 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Controller;
 
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as NewsletterStatusType;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusSubscribe as NewsletterStatusSubscribeType;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe as NewsletterStatusUnsubscribeType;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusSubscribe;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\NewsletterStatus as NewsletterStatusService;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 
@@ -42,7 +42,7 @@ final class NewsletterStatus
      * @Mutation()
      */
     public function newsletterUnsubscribe(
-        ?NewsletterStatusUnsubscribeType $newsletterStatus
+        ?NewsletterStatusUnsubscribe $newsletterStatus
     ): bool {
         return $this->newsletterStatusService->unsubscribe($newsletterStatus);
     }
@@ -64,7 +64,7 @@ final class NewsletterStatus
      * @Mutation()
      */
     public function newsletterSubscribe(
-        NewsletterStatusSubscribeType $newsletterStatus
+        NewsletterStatusSubscribe $newsletterStatus
     ): NewsletterStatusType {
         return $this->newsletterStatusService->subscribe($newsletterStatus);
     }

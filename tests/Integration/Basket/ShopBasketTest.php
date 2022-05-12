@@ -69,7 +69,7 @@ final class ShopBasketTest extends TestCase
     }
 }
 
-final class TestEshopBasketModel extends EshopBasketModel
+final class TestEshopBasketModel extends EshopBasketModel // phpcs:ignore
 {
     public function saveAsUserBasket(string $title): string
     {

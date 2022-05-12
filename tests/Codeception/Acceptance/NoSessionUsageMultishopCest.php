@@ -53,7 +53,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. '
+            . 'For more information about the problem, check Troubleshooting section in documentation.',
             $result['errors'][0]['message']
         );
     }
@@ -81,7 +82,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. '
+            . 'For more information about the problem, check Troubleshooting section in documentation.',
             $result['errors'][0]['message']
         );
     }
@@ -129,7 +131,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. '
+            . 'For more information about the problem, check Troubleshooting section in documentation.',
             $result['errors'][0]['message']
         );
     }

@@ -450,7 +450,9 @@ final class Basket
             $country
         );
 
-        $paymentMethods = isset($deliveries[$deliveryMethodId]) ? $deliveries[$deliveryMethodId]->getPaymentTypes() : [];
+        $paymentMethods = isset($deliveries[$deliveryMethodId])
+            ? $deliveries[$deliveryMethodId]->getPaymentTypes()
+            : [];
 
         return array_key_exists((string)$paymentId->val(), $paymentMethods);
     }

@@ -238,7 +238,10 @@ final class BasketSetPaymentMutationCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-                basketSetDeliveryMethod(basketId: "' . $this->basketId . '", deliveryMethodId: "' . $deliveryMethodId . '") {
+                basketSetDeliveryMethod(
+                    basketId: "' . $this->basketId . '",
+                    deliveryMethodId: "' . $deliveryMethodId . '"
+                ) {
                     id
                 }
             }'

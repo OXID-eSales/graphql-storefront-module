@@ -99,8 +99,10 @@ final class RelationService
         $defSort = new ProductSorting([]);
 
         if ($category->getDefSort()) {
-            $defSortMode = $category->getDefSortMode() !== 0 ? ProductSorting::SORTING_DESC : ProductSorting::SORTING_ASC;
-            $defSort     = new ProductSorting([$category->getDefSort() => $defSortMode]);
+            $defSortMode = $category->getDefSortMode() !== 0
+                ? ProductSorting::SORTING_DESC
+                : ProductSorting::SORTING_ASC;
+            $defSort = new ProductSorting([$category->getDefSort() => $defSortMode]);
         }
 
         return $this->productService->products(

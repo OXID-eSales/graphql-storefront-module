@@ -470,7 +470,8 @@ final class InvoiceAddressCest extends BaseCest
                     'mobile' => '',
                     'fax' => '',
                 ],
-                'expectedError' => 'Invoice address is missing required fields: fname, lname, street, streetnr, zip, city, countryid',
+                'expectedError' =>
+                    'Invoice address is missing required fields: fname, lname, street, streetnr, zip, city, countryid',
             ],
             'set2' => [
                 'invoiceData' => [

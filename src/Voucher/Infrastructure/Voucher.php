@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Voucher\Infrastructure;
 use Exception;
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Core\Exception\ObjectException as EshopObjectException;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\TransactionServiceInterface as EshopDatabaseTransactionService;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\TransactionServiceInterface as EshopTransactionService;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Shop\Voucher as StorefrontVoucherModel;
@@ -29,13 +29,13 @@ final class Voucher
     /** @var SharedBasketInfrastructure */
     private $sharedBasketInfrastructure;
 
-    /** @var EshopDatabaseTransactionService */
+    /** @var EshopTransactionService */
     private $transactionService;
 
     public function __construct(
         Repository $repository,
         SharedBasketInfrastructure $sharedBasketInfrastructure,
-        EshopDatabaseTransactionService $transactionService
+        EshopTransactionService $transactionService
     ) {
         $this->repository = $repository;
         $this->sharedBasketInfrastructure = $sharedBasketInfrastructure;

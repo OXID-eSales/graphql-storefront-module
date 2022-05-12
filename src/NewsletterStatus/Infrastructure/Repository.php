@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\NewsSubscribed as EshopNewsletterSubscriptionStatusModel;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as NewsletterStatusType;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe as NewsletterStatusUnsubscribeType;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusNotFound;
 
 final class Repository
@@ -37,9 +37,9 @@ final class Repository
         return new NewsletterStatusType($this->getEhopModelByEmail($email));
     }
 
-    public function getUnsubscribeByEmail(string $email): NewsletterStatusUnsubscribeType
+    public function getUnsubscribeByEmail(string $email): NewsletterStatusUnsubscribe
     {
-        return new NewsletterStatusUnsubscribeType($this->getEhopModelByEmail($email));
+        return new NewsletterStatusUnsubscribe($this->getEhopModelByEmail($email));
     }
 
     /**

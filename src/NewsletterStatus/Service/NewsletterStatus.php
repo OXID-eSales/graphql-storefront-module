@@ -12,8 +12,8 @@ namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Service;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as NewsletterStatusType;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusSubscribe as NewsletterStatusSubscribeType;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe as NewsletterStatusUnsubscribeType;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusSubscribe;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as SubscriberType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\SubscriberNotFound;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\NewsletterStatus as NewsletterStatusRepository;
@@ -75,7 +75,7 @@ final class NewsletterStatus
         );
     }
 
-    public function unsubscribe(?NewsletterStatusUnsubscribeType $newsletterStatus): bool
+    public function unsubscribe(?NewsletterStatusUnsubscribe $newsletterStatus): bool
     {
         $userId = null;
 
@@ -95,7 +95,7 @@ final class NewsletterStatus
         return $this->NewsletterStatusRepository->unsubscribe($subscriber);
     }
 
-    public function subscribe(NewsletterStatusSubscribeType $newsletterStatusSubscribe): NewsletterStatusType
+    public function subscribe(NewsletterStatusSubscribe $newsletterStatusSubscribe): NewsletterStatusType
     {
         $customer = $this->NewsletterStatusRepository->createNewsletterUser($newsletterStatusSubscribe);
         $subscriber = new SubscriberType($customer->getEshopModel());

@@ -96,7 +96,12 @@ class Voucher extends Voucher_parent
         $iCount = 0;
 
         foreach ($oBasket->getContents() as $oBasketItem) {
-            if (!$oBasketItem->isDiscountArticle() && ($oArticle = $oBasketItem->getArticle()) && !$oArticle->skipDiscounts() && $oDiscount->isForBasketItem($oArticle)) {
+            if (
+                !$oBasketItem->isDiscountArticle()
+                && ($oArticle = $oBasketItem->getArticle())
+                && !$oArticle->skipDiscounts()
+                && $oDiscount->isForBasketItem($oArticle)
+            ) {
                 $aItems[$iCount] = [
                     'oxid' => $oArticle->getId(),
                     'price' => $oArticle->getBasketPrice(

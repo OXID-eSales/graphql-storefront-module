@@ -74,7 +74,9 @@ final class Voucher implements ShopModelAwareInterface
      */
     public function discount(): ?float
     {
-        return $this->getEshopModel()->getRawFieldData('OXORDERID') ? (float) $this->getEshopModel()->getRawFieldData('OXDISCOUNT') : null;
+        return $this->getEshopModel()->getRawFieldData('OXORDERID')
+            ? (float)$this->getEshopModel()->getRawFieldData('OXDISCOUNT')
+            : null;
     }
 
     /**

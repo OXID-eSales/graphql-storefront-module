@@ -466,13 +466,15 @@ final class WishedPriceCest extends BaseCest
                 'productId' => self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
                 'currency' => 'EUR',
                 'price' => '15.0',
-                'message' => 'Product was not found by id: ' . self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
+                'message' => 'Product was not found by id: '
+                    . self::WISHED_PRICE_WITH_DISABLED_WISHED_PRICE_FOR_PRODUCT,
             ],
             'invalid_price' => [
                 'productId' => self::PRODUCT_ID,
                 'currency' => 'EUR',
                 'price' => 'this_is_not_a_vald_price',
-                'message' => 'Field "wishedPriceSet" argument "wishedPrice" requires type Float!, found this_is_not_a_vald_price.',
+                'message' => 'Field "wishedPriceSet" argument "wishedPrice" requires type Float!, '
+                    . 'found this_is_not_a_vald_price.',
             ],
             'negative_price' => [
                 'productId' => self::PRODUCT_ID,
