@@ -15,8 +15,3 @@ trim_trailing_whitespace = true
 # Tab indentation (no size specified)
 [Makefile]
 indent_style = tab
-
-# 2 space for git workflow
-[.github/workflows/*]
-indent_style = space
-indent_size = 2
