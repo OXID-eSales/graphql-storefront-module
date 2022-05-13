@@ -46,7 +46,7 @@ final class BannerMultiLanguageTest extends TokenTestCase
 
         $this->assertSame(
             [
-                'id'    => 'f4fc98f99e3660bd2ecd7450f832c41a',
+                'id' => 'f4fc98f99e3660bd2ecd7450f832c41a',
                 'title' => 'Wetsuit NPX ASSASSIN',
             ],
             $banner['product']

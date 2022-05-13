@@ -29,8 +29,8 @@ final class ProductImage
     public function __construct(string $image, string $icon, string $zoom)
     {
         $this->image = $image;
-        $this->icon  = $icon;
-        $this->zoom  = $zoom;
+        $this->icon = $icon;
+        $this->zoom = $zoom;
     }
 
     /**

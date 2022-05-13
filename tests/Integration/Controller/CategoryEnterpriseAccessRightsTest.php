@@ -67,7 +67,7 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
 
         $this->assertEquals(
             [
-                'id'    => self::CATEGORY_ID,
+                'id' => self::CATEGORY_ID,
                 'title' => 'Bekleidung',
             ],
             $result['body']['data']['category']
@@ -96,7 +96,7 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
 
         $this->assertEquals(
             [
-                'id'    => self::CATEGORY_ID,
+                'id' => self::CATEGORY_ID,
                 'title' => 'Bekleidung',
             ],
             $result['body']['data']['categories']['0']
@@ -173,7 +173,7 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
 
         $this->assertEquals(
             [
-                'id'    => self::CATEGORY_ID,
+                'id' => self::CATEGORY_ID,
                 'title' => 'Bekleidung',
             ],
             $result['body']['data']['category']
@@ -194,7 +194,8 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
         $result = $this->query('query { token (username: "user@oxid-esales.com", password: "useruser") }');
         $this->setAuthToken($result['body']['data']['token']);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories(filter: {
                 title: {
                     equals: "Bekleidung"
@@ -203,11 +204,12 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::CATEGORY_ID,
+                'id' => self::CATEGORY_ID,
                 'title' => 'Bekleidung',
             ],
             $result['body']['data']['categories']['0']
@@ -246,7 +248,7 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
         $userGroup->assign(
             [
                 'oxactice' => '1',
-                'oxtitle'  => 'test group',
+                'oxtitle' => 'test group',
             ]
         );
         $userGroup->save();
@@ -281,8 +283,8 @@ final class CategoryEnterpriseAccessRightsTest extends EnterpriseTestCase
             [
                 'oxobjectid' => $objectId,
                 'oxgroupidx' => 131072,
-                'oxoffset'   => 0,
-                'oxaction'   => 1,
+                'oxoffset' => 0,
+                'oxaction' => 1,
             ]
         );
         $objectRights->save();

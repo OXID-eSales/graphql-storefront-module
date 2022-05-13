@@ -22,7 +22,7 @@ final class BasketItemAmountLimitedStock extends Error
     public static function limitedAvailability(string $productId, float $amount, ?string $basketItemId = null): self
     {
         $extensions = [
-            'type'      => 'LIMITEDAVAILABILITY',
+            'type' => 'LIMITEDAVAILABILITY',
             'productId' => $productId,
         ];
 
@@ -30,7 +30,10 @@ final class BasketItemAmountLimitedStock extends Error
             $extensions['basketItemId'] = $basketItemId;
         }
 
-        return new self(sprintf('Not enough items of product with id %s in stock! Available: %d', $productId, $amount), $extensions);
+        return new self(
+            sprintf('Not enough items of product with id %s in stock! Available: %d', $productId, $amount),
+            $extensions
+        );
     }
 
     public static function notAvailable(string $productId): self

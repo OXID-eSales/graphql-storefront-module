@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Shared\DataType;
 
-use OxidEsales\Eshop\Core\Contract\IUrl  as EshopContractUrl;
+use OxidEsales\Eshop\Core\Contract\IUrl as EshopContractUrl;
 use OxidEsales\Eshop\Core\Model\BaseModel as EshopModel;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use TheCodingMachine\GraphQLite\Annotations\Field;
@@ -59,7 +59,7 @@ final class Seo
 
     private function getMetaData(string $metaType): string
     {
-        return (string) EshopRegistry::getSeoEncoder()
+        return (string)EshopRegistry::getSeoEncoder()
             ->getMetaData(
                 $this->eshopModel->getId(),
                 $metaType

@@ -50,7 +50,7 @@ final class OrderItem implements ShopModelAwareInterface
      */
     public function amount(): float
     {
-        return (float) $this->orderArticle->getRawFieldData('OXAMOUNT');
+        return (float)$this->orderArticle->getRawFieldData('OXAMOUNT');
     }
 
     /**
@@ -58,7 +58,7 @@ final class OrderItem implements ShopModelAwareInterface
      */
     public function sku(): string
     {
-        return (string) $this->orderArticle->getRawFieldData('OXARTNUM');
+        return (string)$this->orderArticle->getRawFieldData('OXARTNUM');
     }
 
     /**
@@ -66,7 +66,7 @@ final class OrderItem implements ShopModelAwareInterface
      */
     public function title(): string
     {
-        return (string) $this->orderArticle->getRawFieldData('OXTITLE');
+        return (string)$this->orderArticle->getRawFieldData('OXTITLE');
     }
 
     /**
@@ -74,7 +74,7 @@ final class OrderItem implements ShopModelAwareInterface
      */
     public function shortDescription(): string
     {
-        return (string) $this->orderArticle->getRawFieldData('OXSHORTDESC');
+        return (string)$this->orderArticle->getRawFieldData('OXSHORTDESC');
     }
 
     /**
@@ -113,7 +113,7 @@ final class OrderItem implements ShopModelAwareInterface
     public function getInsert(): DateTimeInterface
     {
         return new DateTimeImmutable(
-            (string) $this->orderArticle->getRawFieldData('OXINSERT')
+            (string)$this->orderArticle->getRawFieldData('OXINSERT')
         );
     }
 
@@ -123,7 +123,7 @@ final class OrderItem implements ShopModelAwareInterface
     public function getTimestamp(): DateTimeInterface
     {
         return new DateTimeImmutable(
-            (string) $this->orderArticle->getRawFieldData('OXTIMESTAMP')
+            (string)$this->orderArticle->getRawFieldData('OXTIMESTAMP')
         );
     }
 
@@ -132,7 +132,7 @@ final class OrderItem implements ShopModelAwareInterface
      */
     public function isCancelled(): bool
     {
-        return (bool) $this->orderArticle->getRawFieldData('OXSTORNO');
+        return (bool)$this->orderArticle->getRawFieldData('OXSTORNO');
     }
 
     /**
@@ -140,12 +140,12 @@ final class OrderItem implements ShopModelAwareInterface
      */
     public function isBundle(): bool
     {
-        return (bool) $this->orderArticle->getRawFieldData('OXISBUNDLE');
+        return (bool)$this->orderArticle->getRawFieldData('OXISBUNDLE');
     }
 
     public function productId(): string
     {
-        return (string) $this->orderArticle->getRawFieldData('OXARTID');
+        return (string)$this->orderArticle->getRawFieldData('OXARTID');
     }
 
     public static function getModelClass(): string

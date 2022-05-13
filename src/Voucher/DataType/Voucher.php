@@ -56,7 +56,7 @@ final class Voucher implements ShopModelAwareInterface
      */
     public function number(): string
     {
-        return (string) $this->getEshopModel()->getRawFieldData('OXVOUCHERNR');
+        return (string)$this->getEshopModel()->getRawFieldData('OXVOUCHERNR');
     }
 
     /**
@@ -65,7 +65,7 @@ final class Voucher implements ShopModelAwareInterface
     public function reserved(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromTimeStamp(
-            (int) $this->getEshopModel()->getRawFieldData('OXRESERVED')
+            (int)$this->getEshopModel()->getRawFieldData('OXRESERVED')
         );
     }
 
@@ -74,7 +74,9 @@ final class Voucher implements ShopModelAwareInterface
      */
     public function discount(): ?float
     {
-        return $this->getEshopModel()->getRawFieldData('OXORDERID') ? (float) $this->getEshopModel()->getRawFieldData('OXDISCOUNT') : null;
+        return $this->getEshopModel()->getRawFieldData('OXORDERID')
+            ? (float)$this->getEshopModel()->getRawFieldData('OXDISCOUNT')
+            : null;
     }
 
     /**
@@ -83,7 +85,7 @@ final class Voucher implements ShopModelAwareInterface
     public function redeemedAt(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->getEshopModel()->getRawFieldData('OXDATEUSED')
+            (string)$this->getEshopModel()->getRawFieldData('OXDATEUSED')
         );
     }
 

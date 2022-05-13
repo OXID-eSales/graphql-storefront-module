@@ -250,11 +250,11 @@ final class BasketCest extends BaseCest
         return [
             [
                 'isLogged' => true,
-                'message'  => 'You are not allowed to access this basket as it belongs to somebody else',
+                'message' => 'You are not allowed to access this basket as it belongs to somebody else',
             ],
             [
                 'isLogged' => false,
-                'message'  => 'You do not have sufficient rights to access this field',
+                'message' => 'You do not have sufficient rights to access this field',
             ],
         ];
     }
@@ -271,7 +271,8 @@ final class BasketCest extends BaseCest
 
     private function basketCreateMutation(AcceptanceTester $I, string $title): array
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketCreate(basket: {title: "' . $title . '"}) {
                 owner {
                     firstName
@@ -284,7 +285,8 @@ final class BasketCest extends BaseCest
                 id
                 public
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -293,9 +295,11 @@ final class BasketCest extends BaseCest
 
     private function basketRemoveMutation(AcceptanceTester $I, string $basketId): array
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketRemove(basketId: "' . $basketId . '")
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -305,30 +309,30 @@ final class BasketCest extends BaseCest
     private function assertCost(AcceptanceTester $I, array $costs, float $expectedDeliveryPrice = 3.9): void
     {
         $expected = [
-            'productNet'   => [
+            'productNet' => [
                 'price' => 8.4,
-                'vat'   => 0,
+                'vat' => 0,
             ],
             'productGross' => [
                 'vats' => [
                     [
-                        'vatRate'  => 19,
+                        'vatRate' => 19,
                         'vatPrice' => 1.6,
                     ],
                 ],
-                'sum'  => 10,
+                'sum' => 10,
             ],
-            'currency'     => [
+            'currency' => [
                 'name' => 'EUR',
                 'rate' => 1,
             ],
-            'payment'      => [
+            'payment' => [
                 'price' => 7.5,
             ],
-            'discount'     => 0,
-            'voucher'      => 0,
-            'total'        => 17.5 + $expectedDeliveryPrice,
-            'delivery'     => [
+            'discount' => 0,
+            'voucher' => 0,
+            'total' => 17.5 + $expectedDeliveryPrice,
+            'delivery' => [
                 'price' => $expectedDeliveryPrice,
             ],
         ];

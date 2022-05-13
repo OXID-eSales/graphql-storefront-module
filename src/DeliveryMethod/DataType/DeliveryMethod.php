@@ -32,8 +32,8 @@ class DeliveryMethod implements ShopModelAwareInterface
         EshopDeliverySetModel $deliverySetModel,
         array $basketPaymentTypes = []
     ) {
-        $this->deliverySetModel       = $deliverySetModel;
-        $this->basketPaymentTypes     = $basketPaymentTypes;
+        $this->deliverySetModel = $deliverySetModel;
+        $this->basketPaymentTypes = $basketPaymentTypes;
     }
 
     public function getEshopModel(): EshopDeliverySetModel
@@ -56,7 +56,7 @@ class DeliveryMethod implements ShopModelAwareInterface
      */
     public function title(): string
     {
-        return (string) $this->deliverySetModel->getRawFieldData('oxtitle');
+        return (string)$this->deliverySetModel->getRawFieldData('oxtitle');
     }
 
     /**
@@ -74,7 +74,7 @@ class DeliveryMethod implements ShopModelAwareInterface
      */
     public function getPosition(): int
     {
-        return (int) $this->deliverySetModel->getRawFieldData('oxpos');
+        return (int)$this->deliverySetModel->getRawFieldData('oxpos');
     }
 
     public static function getModelClass(): string

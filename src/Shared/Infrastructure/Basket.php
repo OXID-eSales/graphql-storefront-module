@@ -60,8 +60,8 @@ final class Basket
             $basketModel->applyVoucher($voucher->getEshopModel()->getId());
         }
 
-        $basketModel->setPayment((string) $basket->getPaymentId());
-        $basketModel->setShipping((string) $basket->getDeliveryMethodId());
+        $basketModel->setPayment((string)$basket->getPaymentId());
+        $basketModel->setShipping((string)$basket->getDeliveryMethodId());
 
         if ($basket->getDeliveryAddressId()->val()) {
             EshopRegistry::getSession()->setVariable('deladrid', $basket->getDeliveryAddressId()->val());

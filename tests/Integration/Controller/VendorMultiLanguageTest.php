@@ -39,7 +39,7 @@ final class VendorMultiLanguageTest extends TestCase
 
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result  = $this->query($query);
+        $result = $this->query($query);
         $vendors = $result['body']['data']['vendors'];
 
         $this->assertCount(
@@ -48,7 +48,7 @@ final class VendorMultiLanguageTest extends TestCase
         );
 
         $expectedVendor = $expectedVendors[0];
-        $vendor         = $vendors[0];
+        $vendor = $vendors[0];
 
         $this->assertNotFalse(
             parse_url($vendor['seo']['url'])
@@ -70,23 +70,23 @@ final class VendorMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'contains'   => 'de',
-                'count'      => 1,
-                'result'     => [
+                'contains' => 'de',
+                'count' => 1,
+                'result' => [
                     [
                         'title' => 'https://fashioncity.com/de',
-                        'url'   => '/Nach-Lieferant/https-fashioncity-com-de/',
+                        'url' => '/Nach-Lieferant/https-fashioncity-com-de/',
                     ],
                 ],
             ],
             'en' => [
                 'languageId' => '1',
-                'contains'   => 'en',
-                'count'      => 1,
-                'result'     => [
+                'contains' => 'en',
+                'count' => 1,
+                'result' => [
                     [
                         'title' => 'https://fashioncity.com/en',
-                        'url'   => '/en/By-distributor/https-fashioncity-com-en/',
+                        'url' => '/en/By-distributor/https-fashioncity-com-en/',
                     ],
                 ],
             ],
@@ -117,8 +117,8 @@ final class VendorMultiLanguageTest extends TestCase
 
         $this->assertEquals(
             [
-                'id'       => self::ACTIVE_VENDOR,
-                'title'    => $title,
+                'id' => self::ACTIVE_VENDOR,
+                'title' => $title,
                 'products' => [
                     ['shortDescription' => $productShortDescription],
                 ],
@@ -131,13 +131,13 @@ final class VendorMultiLanguageTest extends TestCase
     {
         return [
             'de' => [
-                'languageId'              => '0',
-                'title'                   => 'www.true-fashion.com',
+                'languageId' => '0',
+                'title' => 'www.true-fashion.com',
                 'productShortDescription' => 'Lässige Damenjeans von Kuyichi',
             ],
             'en' => [
-                'languageId'              => '1',
-                'title'                   => 'www.true-fashion.com',
+                'languageId' => '1',
+                'title' => 'www.true-fashion.com',
                 'productShortDescription' => 'Cool lady jeans by Kuyichi',
             ],
         ];
@@ -156,13 +156,14 @@ final class VendorMultiLanguageTest extends TestCase
     }
 
     /**
-     *  @dataProvider providerGetVendorListMultilanguage
+     * @dataProvider providerGetVendorListMultilanguage
      */
     public function testSortedVendorList(string $languageId): void
     {
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendors(
                 sort: {
                     title: "ASC"
@@ -170,10 +171,11 @@ final class VendorMultiLanguageTest extends TestCase
             ) {
                 title
             }
-        }');
+        }'
+        );
 
         $sortedVendors = $result['body']['data']['vendors'];
-        $expected      = $sortedVendors;
+        $expected = $sortedVendors;
 
         asort($expected, SORT_STRING | SORT_FLAG_CASE);
 

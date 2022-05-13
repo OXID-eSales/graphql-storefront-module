@@ -13,7 +13,6 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BeforeAddItem extends AbstractItemEvent implements BasketModifyInterface
 {
-
     /** @var ID */
     protected $productId;
 
@@ -30,6 +29,7 @@ final class BeforeAddItem extends AbstractItemEvent implements BasketModifyInter
     {
         return $this->productId;
     }
+
     public function setAmount(float $amount): void
     {
         $this->amount = $amount;

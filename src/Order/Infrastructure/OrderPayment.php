@@ -16,7 +16,7 @@ final class OrderPayment
 {
     public function getPaymentValues(OrderPaymentDataType $orderPayment): array
     {
-        $values  = [];
+        $values = [];
         $payment = $orderPayment->getEshopModel();
 
         foreach ($payment->getDynValues() as $paymentValue) {

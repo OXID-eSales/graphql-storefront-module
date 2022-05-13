@@ -44,8 +44,10 @@ class Voucher extends Voucher_parent
      */
     public function isInReservationTimeLimit(): void
     {
-        if ((0 < $this->getRawFieldData('oxreserved')) &&
-            ($this->getRawFieldData('oxreserved') < (time() - $this->getVoucherTimeout()))) {
+        if (
+            (0 < $this->getRawFieldData('oxreserved')) &&
+            ($this->getRawFieldData('oxreserved') < (time() - $this->getVoucherTimeout()))
+        ) {
             throw new EshopObjectException('Reservation has timed out');
         }
     }
@@ -90,16 +92,31 @@ class Voucher extends Voucher_parent
 
         /** Here is the difference with _getSessionBasketItems method */
         $oBasket = $this->getGraphQLBasket();
-        $aItems  = [];
-        $iCount  = 0;
+        $aItems = [];
+        $iCount = 0;
 
         foreach ($oBasket->getContents() as $oBasketItem) {
-            if (!$oBasketItem->isDiscountArticle() && ($oArticle = $oBasketItem->getArticle()) && !$oArticle->skipDiscounts() && $oDiscount->isForBasketItem($oArticle)) {
+            if (
+                !$oBasketItem->isDiscountArticle()
+                && ($oArticle = $oBasketItem->getArticle())
+                && !$oArticle->skipDiscounts()
+                && $oDiscount->isForBasketItem($oArticle)
+            ) {
                 $aItems[$iCount] = [
-                    'oxid'     => $oArticle->getId(),
-                    'price'    => $oArticle->getBasketPrice($oBasketItem->getAmount(), $oBasketItem->getSelList(), $oBasket)->getPrice(),
-                    'discount' => $oDiscount->getAbsValue($oArticle->getBasketPrice($oBasketItem->getAmount(), $oBasketItem->getSelList(), $oBasket)->getPrice()),
-                    'amount'   => $oBasketItem->getAmount(),
+                    'oxid' => $oArticle->getId(),
+                    'price' => $oArticle->getBasketPrice(
+                        $oBasketItem->getAmount(),
+                        $oBasketItem->getSelList(),
+                        $oBasket
+                    )->getPrice(),
+                    'discount' => $oDiscount->getAbsValue(
+                        $oArticle->getBasketPrice(
+                            $oBasketItem->getAmount(),
+                            $oBasketItem->getSelList(),
+                            $oBasket
+                        )->getPrice()
+                    ),
+                    'amount' => $oBasketItem->getAmount(),
                 ];
 
                 $iCount++;
@@ -112,16 +129,16 @@ class Voucher extends Voucher_parent
     protected function getGraphQLBasket(): EshopBasketModel
     {
         $basketModel = oxNew(EshopBasketModel::class);
-        $basketId    = $this->getRawFieldData('oegql_basketid');
+        $basketId = $this->getRawFieldData('oegql_basketid');
 
         if ($basketId) {
             /** @var BasketService $basketService */
             $basketService = $this->getContainer()->get(BasketService::class);
-            $basket        = $basketService->basket(new ID($basketId));
+            $basket = $basketService->basket(new ID($basketId));
 
             /** @var SharedBasketInfrastructure $sharedBasketInfrastructure */
             $sharedBasketInfrastructure = $this->getContainer()->get(SharedBasketInfrastructure::class);
-            $basketModel                = $sharedBasketInfrastructure->getBasket($basket);
+            $basketModel = $sharedBasketInfrastructure->getBasket($basket);
         }
 
         return $basketModel;

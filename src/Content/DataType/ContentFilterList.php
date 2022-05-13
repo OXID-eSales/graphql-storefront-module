@@ -27,8 +27,8 @@ final class ContentFilterList extends FilterList
         ?StringFilter $folder = null
     ) {
         $this->folder = $folder;
-        $container    = ContainerFactory::getInstance()->getContainer();
-        $this->shopid = new StringFilter((string) $container->get(ContextInterface::class)->getCurrentShopId());
+        $container = ContainerFactory::getInstance()->getContainer();
+        $this->shopid = new StringFilter((string)$container->get(ContextInterface::class)->getCurrentShopId());
         parent::__construct();
     }
 

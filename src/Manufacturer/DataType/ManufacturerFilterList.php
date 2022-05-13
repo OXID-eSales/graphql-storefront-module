@@ -23,7 +23,7 @@ final class ManufacturerFilterList extends FilterList
         ?StringFilter $title = null,
         ?BoolFilter $active = null
     ) {
-        $this->title  = $title;
+        $this->title = $title;
         $this->active = $active;
         parent::__construct();
     }

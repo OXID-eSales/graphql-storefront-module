@@ -40,7 +40,8 @@ final class BannerTest extends BaseTestCase
      */
     public function testGetSingleActiveBannerWithProduct(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banner(bannerId: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
                 id
                 active
@@ -53,7 +54,8 @@ final class BannerTest extends BaseTestCase
                   title
                 }
             }
-        }');
+        }'
+        );
 
         $banner = $result['body']['data']['banner'];
 
@@ -61,7 +63,7 @@ final class BannerTest extends BaseTestCase
         $this->assertTrue($banner['active']);
         $this->assertSame(4, $banner['sorting']);
         $this->assertSame([
-            'id'    => self::ACTIVE_BANNER_PRODUCT,
+            'id' => self::ACTIVE_BANNER_PRODUCT,
             'title' => 'Neoprenanzug NPX ASSASSIN',
         ], $banner['product']);
         $this->assertEquals('Banner 1', $banner['title']);
@@ -82,7 +84,8 @@ final class BannerTest extends BaseTestCase
      */
     public function testGetSingleActiveBannerWithoutProduct(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banner(bannerId: "' . self::ACTIVE_BANNER_WITHOUT_PRODUCT . '") {
                 id
                 active
@@ -95,7 +98,8 @@ final class BannerTest extends BaseTestCase
                   title
                 }
             }
-        }');
+        }'
+        );
 
         $banner = $result['body']['data']['banner'];
 
@@ -118,12 +122,14 @@ final class BannerTest extends BaseTestCase
 
     public function testInactive(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banner (bannerId: "' . self::INACTIVE_BANNER . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Unauthorized',
@@ -133,12 +139,14 @@ final class BannerTest extends BaseTestCase
 
     public function testNotExisting(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banner (bannerId: "wrong_id") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Banner was not found by id: wrong_id',
@@ -148,12 +156,14 @@ final class BannerTest extends BaseTestCase
 
     public function testWrongType(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banner (bannerId: "' . self::WRONG_TYPE_ACTION . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Banner was not found by id: ' . self::WRONG_TYPE_ACTION,
@@ -163,16 +173,18 @@ final class BannerTest extends BaseTestCase
 
     public function testInactiveButActiveInterval(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banner (bannerId: "' . self::INACTIVE_BANNER_WITH_INTERVAL . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'     => self::INACTIVE_BANNER_WITH_INTERVAL,
+                'id' => self::INACTIVE_BANNER_WITH_INTERVAL,
                 'active' => true,
             ],
             $result['body']['data']['banner']
@@ -181,28 +193,30 @@ final class BannerTest extends BaseTestCase
 
     public function testGetBannersList(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banners {
                 id,
                 sorting
             }
-        }');
+        }'
+        );
 
         $this->assertSame([
             [
-                'id'      => 'cb34f86f56162d0c95890b5985693710',
+                'id' => 'cb34f86f56162d0c95890b5985693710',
                 'sorting' => 1,
             ],
             [
-                'id'      => 'b56efaf6c93664b6dca5b1cee1f87057',
+                'id' => 'b56efaf6c93664b6dca5b1cee1f87057',
                 'sorting' => 2,
             ],
             [
-                'id'      => 'b5639c6431b26687321f6ce654878fa5',
+                'id' => 'b5639c6431b26687321f6ce654878fa5',
                 'sorting' => 4,
             ],
             [
-                'id'      => '_test_active_interval',
+                'id' => '_test_active_interval',
                 'sorting' => 5,
             ],
         ], $result['body']['data']['banners']);
@@ -212,16 +226,18 @@ final class BannerTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banner (bannerId: "' . self::INACTIVE_BANNER . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'     => self::INACTIVE_BANNER,
+                'id' => self::INACTIVE_BANNER,
                 'active' => false,
             ],
             $result['body']['data']['banner']
@@ -232,32 +248,34 @@ final class BannerTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banners {
                 id,
                 sorting
             }
-        }');
+        }'
+        );
 
         $this->assertSame([
             [
-                'id'      => 'cb34f86f56162d0c95890b5985693710',
+                'id' => 'cb34f86f56162d0c95890b5985693710',
                 'sorting' => 1,
             ],
             [
-                'id'      => 'b56efaf6c93664b6dca5b1cee1f87057',
+                'id' => 'b56efaf6c93664b6dca5b1cee1f87057',
                 'sorting' => 2,
             ],
             [
-                'id'      => 'b5639c6431b26687321f6ce654878fa5',
+                'id' => 'b5639c6431b26687321f6ce654878fa5',
                 'sorting' => 4,
             ],
             [
-                'id'      => '_test_active_interval',
+                'id' => '_test_active_interval',
                 'sorting' => 5,
             ],
             [
-                'id'      => '_test_group_banner',
+                'id' => '_test_group_banner',
                 'sorting' => 6,
             ],
         ], $result['body']['data']['banners']);
@@ -268,30 +286,30 @@ final class BannerTest extends BaseTestCase
         return [
             [
                 'isProductActive' => false,
-                'withToken'       => false,
+                'withToken' => false,
                 'expectedProduct' => null,
             ],
             [
                 'isProductActive' => false,
-                'withToken'       => true,
+                'withToken' => true,
                 'expectedProduct' => [
-                    'id'     => self::ACTIVE_BANNER_PRODUCT,
+                    'id' => self::ACTIVE_BANNER_PRODUCT,
                     'active' => false,
                 ],
             ],
             [
                 'isProductActive' => true,
-                'withToken'       => false,
+                'withToken' => false,
                 'expectedProduct' => [
-                    'id'     => self::ACTIVE_BANNER_PRODUCT,
+                    'id' => self::ACTIVE_BANNER_PRODUCT,
                     'active' => true,
                 ],
             ],
             [
                 'isProductActive' => true,
-                'withToken'       => true,
+                'withToken' => true,
                 'expectedProduct' => [
-                    'id'     => self::ACTIVE_BANNER_PRODUCT,
+                    'id' => self::ACTIVE_BANNER_PRODUCT,
                     'active' => true,
                 ],
             ],
@@ -324,7 +342,8 @@ final class BannerTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banner(bannerId: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
                 id
                 product{
@@ -332,7 +351,8 @@ final class BannerTest extends BaseTestCase
                   active
                 }
             }
-        }');
+        }'
+        );
 
         $bannerProduct = $result['body']['data']['banner']['product'];
         $this->assertSame($expectedProduct, $bannerProduct);
@@ -343,17 +363,17 @@ final class BannerTest extends BaseTestCase
         return [
             [
                 'isProductActive' => false,
-                'withToken'       => false,
+                'withToken' => false,
                 'expectedBanners' => [],
             ],
             [
                 'isProductActive' => false,
-                'withToken'       => true,
+                'withToken' => true,
                 'expectedBanners' => [
                     [
-                        'id'      => self::ACTIVE_BANNER_WITH_PRODUCT,
+                        'id' => self::ACTIVE_BANNER_WITH_PRODUCT,
                         'product' => [
-                            'id'     => self::ACTIVE_BANNER_PRODUCT,
+                            'id' => self::ACTIVE_BANNER_PRODUCT,
                             'active' => false,
                         ],
                     ],
@@ -361,12 +381,12 @@ final class BannerTest extends BaseTestCase
             ],
             [
                 'isProductActive' => true,
-                'withToken'       => false,
+                'withToken' => false,
                 'expectedBanners' => [
                     [
-                        'id'      => self::ACTIVE_BANNER_WITH_PRODUCT,
+                        'id' => self::ACTIVE_BANNER_WITH_PRODUCT,
                         'product' => [
-                            'id'     => self::ACTIVE_BANNER_PRODUCT,
+                            'id' => self::ACTIVE_BANNER_PRODUCT,
                             'active' => true,
                         ],
                     ],
@@ -374,12 +394,12 @@ final class BannerTest extends BaseTestCase
             ],
             [
                 'isProductActive' => true,
-                'withToken'       => true,
+                'withToken' => true,
                 'expectedBanners' => [
                     [
-                        'id'      => self::ACTIVE_BANNER_WITH_PRODUCT,
+                        'id' => self::ACTIVE_BANNER_WITH_PRODUCT,
                         'product' => [
-                            'id'     => self::ACTIVE_BANNER_PRODUCT,
+                            'id' => self::ACTIVE_BANNER_PRODUCT,
                             'active' => true,
                         ],
                     ],
@@ -414,7 +434,8 @@ final class BannerTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banners {
                 id
                 product {
@@ -422,7 +443,8 @@ final class BannerTest extends BaseTestCase
                   active
                 }
             }
-        }');
+        }'
+        );
 
         $banners = $result['body']['data']['banners'];
 

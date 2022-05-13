@@ -175,20 +175,23 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('
+        $I->sendGQLQuery(
+            '
             mutation {
                 basketCreate(basket: {title: "' . self::BASKET_TITLE . '"}) {
                     id
                 }
             }
-        ');
+        '
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
         $this->basketId = $result['data']['basketCreate']['id'];
 
         // Add a product because basket with no products will have 0 value and skip calculations
-        $I->sendGQLQuery('
+        $I->sendGQLQuery(
+            '
             mutation {
                 basketAddItem(
                     basketId: "' . $this->basketId . '",
@@ -198,7 +201,8 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
                     id
                 }
             }
-        ');
+        '
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -211,11 +215,13 @@ final class BasketSetDeliveryMethodMutationCest extends BaseCest
 
     private function basketRemove($I): void
     {
-        $I->sendGQLQuery('
+        $I->sendGQLQuery(
+            '
             mutation {
                 basketRemove (basketId: "' . $this->basketId . '")
             }
-        ');
+        '
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();

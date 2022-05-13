@@ -22,7 +22,7 @@ final class WishedPriceNotification
 
         $result = $email->sendPriceAlarmNotification(
             [
-                'aid'   => $wishedPrice->getProductId()->val(),
+                'aid' => $wishedPrice->getProductId()->val(),
                 'email' => $wishedPrice->getEmail(),
             ],
             $wishedPrice->getEshopModel()

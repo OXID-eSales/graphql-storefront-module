@@ -118,8 +118,8 @@ final class RelationServiceCest extends BaseCest
         $I->login(self::EXISTING_USERNAME, self::PASSWORD);
 
         $noticeId = $this->basketCreate($I, self::BASKET_NOTICE_LIST);
-        $wishId   = $this->basketCreate($I, self::BASKET_WISH_LIST);
-        $savedId  = $this->basketCreate($I, self::BASKET_SAVED_BASKET);
+        $wishId = $this->basketCreate($I, self::BASKET_WISH_LIST);
+        $savedId = $this->basketCreate($I, self::BASKET_SAVED_BASKET);
 
         $this->basketAddItemMutation($I, $wishId, self::PRODUCT_ID, 1);
         $this->basketAddItemMutation($I, $noticeId, self::PRODUCT_ID, 1);
@@ -145,20 +145,22 @@ final class RelationServiceCest extends BaseCest
 
     private function queryInvoiceAddressRelation(AcceptanceTester $I): array
     {
-        $I->sendGQLQuery('query {
-            customer {
-                id
-                email
-                customerNumber
-                firstName
-                lastName
-                invoiceAddress {
-                    salutation
+        $I->sendGQLQuery(
+            'query {
+                customer {
+                    id
+                    email
+                    customerNumber
                     firstName
                     lastName
+                    invoiceAddress {
+                        salutation
+                        firstName
+                        lastName
+                    }
                 }
-            }
-        }');
+            }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -167,20 +169,22 @@ final class RelationServiceCest extends BaseCest
 
     private function queryDeliveryAddressesRelation(AcceptanceTester $I): array
     {
-        $I->sendGQLQuery('query {
-            customer {
-                id
-                email
-                customerNumber
-                firstName
-                lastName
-                deliveryAddresses {
-                    salutation
+        $I->sendGQLQuery(
+            'query {
+                customer {
+                    id
+                    email
+                    customerNumber
                     firstName
                     lastName
+                    deliveryAddresses {
+                        salutation
+                        firstName
+                        lastName
+                    }
                 }
-            }
-        }');
+            }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -215,28 +219,35 @@ final class RelationServiceCest extends BaseCest
 
     private function queryBasketsRelation(AcceptanceTester $I): array
     {
-        $I->sendGQLQuery('query {
-            customer {
-                email
-                baskets {
-                    public
-                    items(pagination: {limit: 10, offset: 0}) {
-                        product {
-                            title
+        $I->sendGQLQuery(
+            'query {
+                customer {
+                    email
+                    baskets {
+                        public
+                        items(pagination: {limit: 10, offset: 0}) {
+                            product {
+                                title
+                            }
                         }
                     }
                 }
-            }
-        }');
+            }'
+        );
 
         $I->seeResponseIsJson();
 
         return $I->grabJsonResponseAsArray();
     }
 
-    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): array
-    {
-        $I->sendGQLQuery('
+    private function basketAddItemMutation(
+        AcceptanceTester $I,
+        string $basketId,
+        string $productId,
+        int $amount = 1
+    ): array {
+        $I->sendGQLQuery(
+            '
             mutation {
                 basketAddItem(
                     basketId: "' . $basketId . '",
@@ -253,7 +264,8 @@ final class RelationServiceCest extends BaseCest
                     lastUpdateDate
                 }
             }
-        ');
+        '
+        );
 
         $I->seeResponseIsJson();
 

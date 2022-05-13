@@ -22,8 +22,8 @@ final class StateTest extends TestCase
     public function testState(): void
     {
         $model = new StateModelStub();
-        $data  = [
-            'oxtitle'     => 'state title',
+        $data = [
+            'oxtitle' => 'state title',
             'oxisoalpha2' => 'state isoalpha2',
             'oxtimestamp' => '2020-10-10',
         ];

@@ -35,8 +35,8 @@ final class PublicBasketRelationService
         BasketItemService $basketItemService,
         BasketService $basketService
     ) {
-        $this->basketItemService      = $basketItemService;
-        $this->basketService          = $basketService;
+        $this->basketItemService = $basketItemService;
+        $this->basketService = $basketService;
     }
 
     /**
@@ -44,7 +44,7 @@ final class PublicBasketRelationService
      */
     public function owner(PublicBasketDataType $basket): BasketOwner
     {
-        return $this->basketService->basketOwner((string) $basket->getUserId());
+        return $this->basketService->basketOwner((string)$basket->getUserId());
     }
 
     /**

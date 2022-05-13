@@ -60,13 +60,13 @@ final class PlaceOrder
         BasketService $basketService,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->authenticationService  = $authenticationService;
-        $this->legacyService          = $legacyService;
-        $this->customerService        = $customerService;
-        $this->basketRelationService  = $basketRelationService;
-        $this->basketInfrastructure   = $basketInfrastructure;
-        $this->basketService          = $basketService;
-        $this->eventDispatcher        = $eventDispatcher;
+        $this->authenticationService = $authenticationService;
+        $this->legacyService = $legacyService;
+        $this->customerService = $customerService;
+        $this->basketRelationService = $basketRelationService;
+        $this->basketInfrastructure = $basketInfrastructure;
+        $this->basketService = $basketService;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -104,7 +104,7 @@ final class PlaceOrder
         }
 
         if (!$this->basketService->isDeliveryMethodAvailableForBasket($userBasket->id(), $deliveryMethod->id())) {
-            throw UnavailableDeliveryMethod::byId((string) $deliveryMethod->id()->val());
+            throw UnavailableDeliveryMethod::byId((string)$deliveryMethod->id()->val());
         }
 
         /** @var ?PaymentDataType $payment */
@@ -115,12 +115,12 @@ final class PlaceOrder
         }
 
         if (!$this->basketService->isPaymentMethodAvailableForBasket($userBasket->id(), $payment->getId())) {
-            throw UnavailablePayment::byId((string) $payment->getId()->val());
+            throw UnavailablePayment::byId((string)$payment->getId()->val());
         }
 
         /** @var CustomerDataType $customer */
         $customer = $this->customerService->customer(
-            (string) $this->authenticationService->getUser()->id()
+            (string)$this->authenticationService->getUser()->id()
         );
 
         return $this->basketInfrastructure->placeOrder(
@@ -135,7 +135,7 @@ final class PlaceOrder
         $confirmTermsAndConditions = $this->legacyService->getConfigParam('blConfirmAGB');
 
         if (($confirmTermsAndConditions && !$termsAndConditions) || $termsAndConditions === false) {
-            throw PlaceOrderException::notAcceptedTOS((string) $basket->id()->val());
+            throw PlaceOrderException::notAcceptedTOS((string)$basket->id()->val());
         }
     }
 }

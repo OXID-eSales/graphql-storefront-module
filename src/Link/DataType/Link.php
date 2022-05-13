@@ -49,7 +49,7 @@ final class Link implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->link->getRawFieldData('oxactive');
+        return (bool)$this->link->getRawFieldData('oxactive');
     }
 
     /**
@@ -57,7 +57,7 @@ final class Link implements ShopModelAwareInterface
      */
     public function getTimestamp(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->link->getRawFieldData('oxtimestamp'));
+        return DateTimeImmutableFactory::fromString((string)$this->link->getRawFieldData('oxtimestamp'));
     }
 
     /**
@@ -81,7 +81,7 @@ final class Link implements ShopModelAwareInterface
      */
     public function getCreationDate(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->link->getRawFieldData('oxinsert'));
+        return DateTimeImmutableFactory::fromString((string)$this->link->getRawFieldData('oxinsert'));
     }
 
     /**

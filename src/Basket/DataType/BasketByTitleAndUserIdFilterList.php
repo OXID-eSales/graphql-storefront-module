@@ -26,7 +26,7 @@ final class BasketByTitleAndUserIdFilterList extends FilterList
         ?IDFilter $user = null
     ) {
         $this->basket = $basket;
-        $this->user   = $user;
+        $this->user = $user;
         parent::__construct();
     }
 
@@ -39,7 +39,7 @@ final class BasketByTitleAndUserIdFilterList extends FilterList
     public function getFilters(): array
     {
         return [
-            'oxtitle'  => $this->basket,
+            'oxtitle' => $this->basket,
             'oxuserid' => $this->user,
         ];
     }

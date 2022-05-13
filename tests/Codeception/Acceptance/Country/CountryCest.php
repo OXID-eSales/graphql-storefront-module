@@ -26,15 +26,16 @@ final class CountryCest extends BaseCest
 
     private const ACTIVE_COUNTRY = 'a7c40f631fc920687.20179984';
 
-    private const INACTIVE_COUNTRY  = 'a7c40f633038cd578.22975442';
+    private const INACTIVE_COUNTRY = 'a7c40f633038cd578.22975442';
 
-    private const COUNTRY_WITH_STATES  = '8f241f11096877ac0.98748826';
+    private const COUNTRY_WITH_STATES = '8f241f11096877ac0.98748826';
 
-    private const DOES_NOT_EXIST  = 'DOES-NOT-EXIST';
+    private const DOES_NOT_EXIST = 'DOES-NOT-EXIST';
 
     public function testGetSingleActiveCountry(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             country (countryId: "' . self::ACTIVE_COUNTRY . '") {
                 id
                 position
@@ -50,10 +51,11 @@ final class CountryCest extends BaseCest
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
         $countryData = $result['data']['country'];
 
         $I->assertSame('T', substr($countryData['creationDate'], 10, 1));
@@ -61,16 +63,16 @@ final class CountryCest extends BaseCest
 
         $I->assertEquals(
             [
-                'id'               => self::ACTIVE_COUNTRY,
-                'active'           => true,
-                'title'            => 'Deutschland',
-                'states'           => [],
-                'position'         => 1,
-                'isoAlpha2'        => 'DE',
-                'isoAlpha3'        => 'DEU',
-                'isoNumeric'       => '276',
+                'id' => self::ACTIVE_COUNTRY,
+                'active' => true,
+                'title' => 'Deutschland',
+                'states' => [],
+                'position' => 1,
+                'isoAlpha2' => 'DE',
+                'isoAlpha3' => 'DEU',
+                'isoNumeric' => '276',
                 'shortDescription' => 'EU1',
-                'description'      => '',
+                'description' => '',
             ],
             $countryData
         );
@@ -78,12 +80,14 @@ final class CountryCest extends BaseCest
 
     public function testGetSingleInactiveCountryWithoutToken(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             country (countryId: "' . self::INACTIVE_COUNTRY . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -98,19 +102,21 @@ final class CountryCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             country (countryId: "' . self::INACTIVE_COUNTRY . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
             [
-                'id'     => self::INACTIVE_COUNTRY,
+                'id' => self::INACTIVE_COUNTRY,
                 'active' => false,
             ],
             $result['data']['country']
@@ -119,11 +125,13 @@ final class CountryCest extends BaseCest
 
     public function testGetSingleNonExistingCountry(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             country (countryId: "' . self::DOES_NOT_EXIST . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -145,7 +153,7 @@ final class CountryCest extends BaseCest
         );
 
         $I->seeResponseIsJson();
-        $result    = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
         $countries = $result['data']['countries'];
 
         $I->assertCount(5, $countries);
@@ -153,10 +161,10 @@ final class CountryCest extends BaseCest
         // Test default sorting for countries
         $I->assertEquals(
             [
-                ['title' => 'Germany',        'position' => 1],
-                ['title' => 'United States',  'position' => 2],
-                ['title' => 'Switzerland',    'position' => 3],
-                ['title' => 'Austria',        'position' => 4],
+                ['title' => 'Germany', 'position' => 1],
+                ['title' => 'United States', 'position' => 2],
+                ['title' => 'Switzerland', 'position' => 3],
+                ['title' => 'Austria', 'position' => 4],
                 ['title' => 'United Kingdom', 'position' => 5],
             ],
             $countries
@@ -165,7 +173,8 @@ final class CountryCest extends BaseCest
 
     public function testGetCountryListWithPartialFilter(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries(filter: {
                 title: {
                     contains: "sch"
@@ -175,7 +184,10 @@ final class CountryCest extends BaseCest
                 title
                 position
             }
-        }', [], 0);
+        }',
+            [],
+            0
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -183,7 +195,7 @@ final class CountryCest extends BaseCest
         $I->assertEquals(
             [
                 ['id' => 'a7c40f631fc920687.20179984', 'title' => 'Deutschland', 'position' => 1],
-                ['id' => 'a7c40f6321c6f6109.43859248', 'title' => 'Schweiz',     'position' => 3],
+                ['id' => 'a7c40f6321c6f6109.43859248', 'title' => 'Schweiz', 'position' => 3],
             ],
             $result['data']['countries']
         );
@@ -191,7 +203,8 @@ final class CountryCest extends BaseCest
 
     public function testGetCountryListWithExactFilter(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries(filter: {
                 title: {
                     equals: "Deutschland"
@@ -200,7 +213,8 @@ final class CountryCest extends BaseCest
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -208,7 +222,7 @@ final class CountryCest extends BaseCest
         $I->assertSame(
             [
                 [
-                    'id'    => self::ACTIVE_COUNTRY,
+                    'id' => self::ACTIVE_COUNTRY,
                     'title' => 'Deutschland',
                 ],
             ],
@@ -218,7 +232,8 @@ final class CountryCest extends BaseCest
 
     public function testGetEmptyCountryListWithFilter(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries(filter: {
                 title: {
                     contains: "' . self::DOES_NOT_EXIST . '"
@@ -226,7 +241,8 @@ final class CountryCest extends BaseCest
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -239,11 +255,13 @@ final class CountryCest extends BaseCest
 
     public function testGetCountryListWithReversePositionSorting(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries(sort: {position: "DESC"}) {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -262,7 +280,8 @@ final class CountryCest extends BaseCest
 
     public function testGetCountryListWithTitleSorting(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries(
                 sort: {
                     position: ""
@@ -271,7 +290,8 @@ final class CountryCest extends BaseCest
             ) {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -290,14 +310,16 @@ final class CountryCest extends BaseCest
 
     public function testGetStates(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
                 states {
                     id
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -306,16 +328,16 @@ final class CountryCest extends BaseCest
 
         $I->assertContains(
             [
-                'id'     => 'KY',
-                'title'  => 'Kentucky',
+                'id' => 'KY',
+                'title' => 'Kentucky',
             ],
             $states
         );
 
         $I->assertContains(
             [
-                'id'     => 'PA',
-                'title'  => 'Pennsylvania',
+                'id' => 'PA',
+                'title' => 'Pennsylvania',
             ],
             $states
         );
@@ -326,7 +348,7 @@ final class CountryCest extends BaseCest
      */
     public function testGetStatesListWithTitleSorting(AcceptanceTester $I, Example $data): void
     {
-        $sort   = $data['sortquery'];
+        $sort = $data['sortquery'];
         $method = $data['method'];
 
         $I->sendGQLQuery(
@@ -365,13 +387,15 @@ final class CountryCest extends BaseCest
 
     public function testGetCountriesStates(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries {
                 states {
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -389,14 +413,18 @@ final class CountryCest extends BaseCest
 
     public function testCountryStatesMultilanguage(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
                 states {
                     id
                     title
                 }
             }
-        }', [], 0);
+        }',
+            [],
+            0
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -405,16 +433,16 @@ final class CountryCest extends BaseCest
 
         $I->assertContains(
             [
-                'id'     => 'AS',
-                'title'  => 'Amerikanisch-Samoa',
+                'id' => 'AS',
+                'title' => 'Amerikanisch-Samoa',
             ],
             $states
         );
 
         $I->assertContains(
             [
-                'id'     => 'VI',
-                'title'  => 'Jungferninseln',
+                'id' => 'VI',
+                'title' => 'Jungferninseln',
             ],
             $states
         );
@@ -422,14 +450,18 @@ final class CountryCest extends BaseCest
 
     public function testGetCountriesStatesMultilanguage(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries {
                 states {
                     id
                     title
                 }
             }
-        }', [], 0);
+        }',
+            [],
+            0
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -441,7 +473,7 @@ final class CountryCest extends BaseCest
 
         $I->assertContains(
             [
-                'id'    => 'MP',
+                'id' => 'MP',
                 'title' => 'Nördlichen Marianen',
             ],
             $result['data']['countries'][1]['states']
@@ -451,13 +483,13 @@ final class CountryCest extends BaseCest
     private function dataProviderSortedStates()
     {
         return [
-            'title_asc'  => [
+            'title_asc' => [
                 'sortquery' => 'ASC',
-                'method'    => 'asort',
+                'method' => 'asort',
             ],
             'title_desc' => [
                 'sortquery' => 'DESC',
-                'method'    => 'arsort',
+                'method' => 'arsort',
             ],
         ];
     }

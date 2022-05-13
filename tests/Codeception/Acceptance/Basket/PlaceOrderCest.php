@@ -35,8 +35,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $remark  = 'some remark';
-        $result  = $this->placeOrder($I, $basketId, null, $remark);
+        $remark = 'some remark';
+        $result = $this->placeOrder($I, $basketId, null, $remark);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -94,7 +94,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals(71.2, $basketCosts['total']);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -128,7 +128,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals(74.23, $basketCosts['total']);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -175,7 +175,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -273,8 +273,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketDeliveryAddress($I, $basketId, self::ALTERNATE_COUNTRY);
 
         //shipping method not supported
-        $errorMessage         = $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
-        $expectedError        = UnavailableDeliveryMethod::byId(self::SHIPPING_STANDARD);
+        $errorMessage = $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
+        $expectedError = UnavailableDeliveryMethod::byId(self::SHIPPING_STANDARD);
         $expectedErrorMessage = $expectedError->getMessage();
         $I->assertEquals($expectedErrorMessage, $errorMessage);
 
@@ -359,7 +359,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals(438.6, $basketCosts['total']);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -396,7 +396,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals(71.2, $basketCosts['total']);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -422,7 +422,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId, true);
+        $result = $this->placeOrder($I, $basketId, true);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -450,8 +450,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result               = $this->placeOrder($I, $basketId);
-        $actualErrorMessage   = (string) $result['errors'][0]['message'];
+        $result = $this->placeOrder($I, $basketId);
+        $actualErrorMessage = (string)$result['errors'][0]['message'];
         $expectedErrorMessage = PlaceOrder::notAcceptedTOS($basketId)->getMessage();
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
 
@@ -477,8 +477,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result               = $this->placeOrder($I, $basketId, false);
-        $actualErrorMessage   = (string) $result['errors'][0]['message'];
+        $result = $this->placeOrder($I, $basketId, false);
+        $actualErrorMessage = (string)$result['errors'][0]['message'];
         $expectedErrorMessage = PlaceOrder::notAcceptedTOS($basketId)->getMessage();
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
 
@@ -504,8 +504,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result               = $this->placeOrder($I, $basketId, null);
-        $actualErrorMessage   = (string) $result['errors'][0]['message'];
+        $result = $this->placeOrder($I, $basketId, null);
+        $actualErrorMessage = (string)$result['errors'][0]['message'];
         $expectedErrorMessage = PlaceOrder::notAcceptedTOS($basketId)->getMessage();
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
 
@@ -530,7 +530,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId, true);
+        $result = $this->placeOrder($I, $basketId, true);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -557,8 +557,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result               = $this->placeOrder($I, $basketId, false);
-        $actualErrorMessage   = (string) $result['errors'][0]['message'];
+        $result = $this->placeOrder($I, $basketId, false);
+        $actualErrorMessage = (string)$result['errors'][0]['message'];
         $expectedErrorMessage = PlaceOrder::notAcceptedTOS($basketId)->getMessage();
         $I->assertEquals($expectedErrorMessage, $actualErrorMessage);
 
@@ -582,7 +582,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -607,7 +607,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId, null);
+        $result = $this->placeOrder($I, $basketId, null);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -638,7 +638,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->assertEquals(7.5, $basketCosts['total']);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -681,7 +681,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
 
         //prepare basket
         $basketId = $this->createBasket($I, 'cart_with_not_buyable_product');
-        $items    = $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 5);
+        $items = $this->addItemToBasket($I, $basketId, self::PRODUCT_ID, 5);
         $this->setBasketDeliveryMethod($I, $basketId, self::SHIPPING_STANDARD);
         $this->setBasketPaymentMethod($I, $basketId, self::PAYMENT_STANDARD);
 
@@ -700,10 +700,10 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //Error for product
         unset($errors[1]['extensions']['category']);
         $I->assertSame([
-            'message'    => 'Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 3',
+            'message' => 'Not enough items of product with id ' . self::PRODUCT_ID . ' in stock! Available: 3',
             'extensions' => [
-                'type'         => 'LIMITEDAVAILABILITY',
-                'productId'    => self::PRODUCT_ID,
+                'type' => 'LIMITEDAVAILABILITY',
+                'productId' => self::PRODUCT_ID,
                 'basketItemId' => $items[0]['id'],
             ],
         ], $errors[1]);
@@ -739,7 +739,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //Error for product
         unset($errors[1]['extensions']['category']);
         $I->assertSame([
-            'message'    => 'Product with id ' . self::PRODUCT_ID . ' is out of stock',
+            'message' => 'Product with id ' . self::PRODUCT_ID . ' is out of stock',
             'extensions' => [
                 'type' => 'OUTOFSTOCK',
             ],
@@ -776,7 +776,7 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         //Error for product
         unset($errors[1]['extensions']['category']);
         $I->assertSame([
-            'message'    => 'Product with id ' . self::PRODUCT_ID . ' is not available',
+            'message' => 'Product with id ' . self::PRODUCT_ID . ' is not available',
             'extensions' => [
                 'type' => 'NOTAVAILABLE',
             ],
@@ -829,8 +829,8 @@ final class PlaceOrderCest extends PlaceOrderBaseCest
         $I->wantToTest('register new customer, place order, check user group assignment after each step');
 
         //register customer
-        $username     = 'newcheckoutuser@oxid-esales.com';
-        $password     = self::PASSWORD;
+        $username = 'newcheckoutuser@oxid-esales.com';
+        $password = self::PASSWORD;
         $customerData = $this->registerCustomer($I, $username, $password);
 
         $I->seeInDatabase(

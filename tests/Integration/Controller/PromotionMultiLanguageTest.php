@@ -22,14 +22,14 @@ final class PromotionMultiLanguageTest extends TestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'Current Promotion 1 DE',
+                'title' => 'Current Promotion 1 DE',
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'Current Promotion 1 EN',
+                'title' => 'Current Promotion 1 EN',
             ],
         ];
     }
@@ -48,16 +48,18 @@ final class PromotionMultiLanguageTest extends TestCase
         $this->setGETRequestParameter('shp', $shopId);
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "' . self::PROMOTION_ID . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::PROMOTION_ID,
+                'id' => self::PROMOTION_ID,
                 'title' => $title,
             ],
             $result['body']['data']['promotion']
@@ -78,16 +80,18 @@ final class PromotionMultiLanguageTest extends TestCase
         $this->setGETRequestParameter('shp', $shopId);
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "' . self::PROMOTION_ID . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::PROMOTION_ID,
+                'id' => self::PROMOTION_ID,
                 'title' => $title,
             ],
             $result['body']['data']['promotion']

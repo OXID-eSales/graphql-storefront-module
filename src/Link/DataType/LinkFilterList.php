@@ -24,7 +24,7 @@ final class LinkFilterList extends FilterList
         ?BoolFilter $active = null
     ) {
         $this->description = $description;
-        $this->active      = $active;
+        $this->active = $active;
         parent::__construct();
     }
 

@@ -36,7 +36,7 @@ final class BasketCost
      */
     public function getVoucher(): float
     {
-        return (float) $this->basket->getVoucherDiscount()->getPrice();
+        return (float)$this->basket->getVoucherDiscount()->getPrice();
     }
 
     /**
@@ -44,7 +44,7 @@ final class BasketCost
      */
     public function getDiscount(): float
     {
-        return (float) $this->basket->getTotalDiscountSum();
+        return (float)$this->basket->getTotalDiscountSum();
     }
 
     /**
@@ -52,6 +52,6 @@ final class BasketCost
      */
     public function getTotal(): float
     {
-        return (float) $this->basket->getPrice()->getBruttoPrice();
+        return (float)$this->basket->getPrice()->getBruttoPrice();
     }
 }

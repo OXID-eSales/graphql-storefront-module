@@ -26,7 +26,7 @@ final class WishedPriceFilterList extends FilterList
 
     public function withUserFilter(IDFilter $user): self
     {
-        $filter         = clone $this;
+        $filter = clone $this;
         $filter->userId = $user;
 
         return $filter;

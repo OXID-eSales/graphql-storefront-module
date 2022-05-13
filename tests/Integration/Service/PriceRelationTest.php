@@ -26,7 +26,7 @@ final class PriceRelationTest extends TestCase
     {
         $priceRelation = new PriceRelationService(new CurrencyRepository(EshopRegistry::getConfig()));
 
-        $price         = oxNew(EshopPriceModel::class);
+        $price = oxNew(EshopPriceModel::class);
         $priceDataType = new PriceDataType($price);
 
         $currency = $priceRelation->getCurrency($priceDataType);
@@ -38,10 +38,10 @@ final class PriceRelationTest extends TestCase
     {
         $priceRelation = new PriceRelationService(new CurrencyRepository(EshopRegistry::getConfig()));
 
-        $currencyObject       = new stdClass();
+        $currencyObject = new stdClass();
         $currencyObject->name = 'XYZ';
 
-        $price         = oxNew(EshopPriceModel::class);
+        $price = oxNew(EshopPriceModel::class);
         $priceDataType = new PriceDataType($price, $currencyObject);
 
         $currency = $priceRelation->getCurrency($priceDataType);

@@ -25,7 +25,7 @@ final class InvoiceAddressTest extends TestCase
 {
     public function testEmptyInvoiceAddress(): void
     {
-        $model    = new InvoiceAddressModelStub();
+        $model = new InvoiceAddressModelStub();
         $dataType = new InvoiceAddress($model);
 
         $this->assertInstanceOf(
@@ -56,21 +56,21 @@ final class InvoiceAddressTest extends TestCase
 
     public function testEnrichedInvoiceAddress(): void
     {
-        $model    = new InvoiceAddressModelStub();
-        $data     = [
-            'oxsal'        => 'MR',
-            'oxfname'      => 'Marc',
-            'oxlname'      => 'Muster',
-            'oxcompany'    => 'None GmbH',
-            'oxaddinfo'    => 'private delivery',
-            'oxstreet'     => 'Haupstr.',
-            'oxstreetnr'   => '13',
-            'oxzip'        => '79098',
-            'oxcity'       => 'Freiburg',
-            'oxustid'      => '',
-            'oxprivfon'    => '111111111',
-            'oxmobfon'     => '111-111111-1',
-            'oxfax'        => '111-111-111-1',
+        $model = new InvoiceAddressModelStub();
+        $data = [
+            'oxsal' => 'MR',
+            'oxfname' => 'Marc',
+            'oxlname' => 'Muster',
+            'oxcompany' => 'None GmbH',
+            'oxaddinfo' => 'private delivery',
+            'oxstreet' => 'Haupstr.',
+            'oxstreetnr' => '13',
+            'oxzip' => '79098',
+            'oxcity' => 'Freiburg',
+            'oxustid' => '',
+            'oxprivfon' => '111111111',
+            'oxmobfon' => '111-111111-1',
+            'oxfax' => '111-111-111-1',
         ];
         $model->assign($data);
         $dataType = new InvoiceAddress($model);

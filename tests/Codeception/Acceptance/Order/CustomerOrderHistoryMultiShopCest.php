@@ -36,7 +36,7 @@ final class CustomerOrderHistoryMultiShopCest extends MultishopBaseCest
      */
     public function testCustomerOrdersCountPerShop(AcceptanceTester $I, Example $data): void
     {
-        $shopId              = $data['shopId'];
+        $shopId = $data['shopId'];
         $expectedOrdersCount = $data['expectedOrdersCount'];
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
@@ -65,11 +65,11 @@ final class CustomerOrderHistoryMultiShopCest extends MultishopBaseCest
     {
         return [
             [
-                'shopId'              => 1,
+                'shopId' => 1,
                 'expectedOrdersCount' => 3,
             ],
             [
-                'shopId'              => 2,
+                'shopId' => 2,
                 'expectedOrdersCount' => 1,
             ],
         ];

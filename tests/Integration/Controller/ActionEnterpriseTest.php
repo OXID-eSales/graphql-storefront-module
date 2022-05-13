@@ -17,38 +17,40 @@ final class ActionEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             actions {
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertCount(6, $result['body']['data']['actions']);
 
         $this->assertSame([
             [
-                'id'    => 'oxbargain',
+                'id' => 'oxbargain',
                 'title' => 'Angebot der Woche',
             ],
             [
-                'id'    => 'oxcatoffer',
+                'id' => 'oxcatoffer',
                 'title' => 'Kategorien-Topangebot',
             ],
             [
-                'id'    => 'oxnewest',
+                'id' => 'oxnewest',
                 'title' => 'Frisch eingetroffen',
             ],
             [
-                'id'    => 'oxnewsletter',
+                'id' => 'oxnewsletter',
                 'title' => 'Newsletter',
             ],
             [
-                'id'    => 'oxtop5',
+                'id' => 'oxtop5',
                 'title' => 'Topseller',
             ],
             [
-                'id'    => 'oxtopstart',
+                'id' => 'oxtopstart',
                 'title' => 'Topangebot Startseite',
             ],
         ], $result['body']['data']['actions']);

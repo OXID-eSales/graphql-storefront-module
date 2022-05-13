@@ -59,7 +59,7 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result   = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
+        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
         $basketId = $result['data']['basketCreate']['id'];
 
         $I->logout();
@@ -82,7 +82,7 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
 
         $I->login(self::OTHER_USERNAME, self::OTHER_PASSWORD, 2);
 
-        $result   = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false', 2);
+        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false', 2);
         $basketId = $result['data']['basketCreate']['id'];
 
         $result = $this->removeBasket($I, $basketId, 2);

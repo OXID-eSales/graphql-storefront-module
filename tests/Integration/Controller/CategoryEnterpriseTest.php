@@ -21,14 +21,14 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 {
     public const SORTING_DESC = 1;
 
-    public const SORTING_ASC  = 0;
+    public const SORTING_ASC = 0;
 
     private const CATEGORY_IDS = [
-        'shoes-active'    => 'd86fdf0d67bf76dc427aabd2e53e0a97',
-        'jeans-active'    => 'd863b76c6bb90a970a5577adf890e8cd',
-        'jeans-inactive'  => 'd8665fef35f4d528e92c3d664f4a00c0',
+        'shoes-active' => 'd86fdf0d67bf76dc427aabd2e53e0a97',
+        'jeans-active' => 'd863b76c6bb90a970a5577adf890e8cd',
+        'jeans-inactive' => 'd8665fef35f4d528e92c3d664f4a00c0',
         'supplies-active' => 'fc7e7bd8403448f00a363f60f44da8f2',
-        'test-active'     => 'e7d257920a5369cd8d7db52485491d54',
+        'test-active' => 'e7d257920a5369cd8d7db52485491d54',
     ];
 
     private const PRODUCT_ID = 'd86236918e1533cccb679208628eda32';
@@ -43,11 +43,13 @@ final class CategoryEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Category was not found by id: ' . self::CATEGORY_IDS['shoes-active'],
@@ -65,16 +67,18 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', '0');
         $this->addCategoryToShops(self::CATEGORY_IDS['shoes-active'], [2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::CATEGORY_IDS['shoes-active'],
+                'id' => self::CATEGORY_IDS['shoes-active'],
                 'title' => 'Schuhe',
             ],
             $result['body']['data']['category']
@@ -88,24 +92,24 @@ final class CategoryEnterpriseTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'Schuhe',
+                'title' => 'Schuhe',
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'Shoes',
+                'title' => 'Shoes',
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'title'      => 'Schuhe',
+                'title' => 'Schuhe',
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'title'      => 'Shoes',
+                'title' => 'Shoes',
             ],
         ];
     }
@@ -124,16 +128,18 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', $shopId);
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::CATEGORY_IDS['shoes-active'],
+                'id' => self::CATEGORY_IDS['shoes-active'],
                 'title' => $title,
             ],
             $result['body']['data']['category']
@@ -147,11 +153,13 @@ final class CategoryEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             categories {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             1,
@@ -173,7 +181,8 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', $shopId);
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories(filter: {
                 title: {
                     equals: "' . $title . '"
@@ -182,11 +191,12 @@ final class CategoryEnterpriseTest extends MultishopTestCase
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::CATEGORY_IDS['shoes-active'],
+                'id' => self::CATEGORY_IDS['shoes-active'],
                 'title' => $title,
             ],
             $result['body']['data']['categories'][0]
@@ -197,7 +207,8 @@ final class CategoryEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories (filter: {
                 title: {
                     equals: "Jeans"
@@ -205,7 +216,8 @@ final class CategoryEnterpriseTest extends MultishopTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEmpty($result['body']['data']['categories']);
     }
@@ -218,11 +230,13 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->addCategoryToShops(self::CATEGORY_IDS['jeans-inactive'], [2]);
         $this->addCategoryToShops(self::CATEGORY_IDS['supplies-active'], [2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -243,14 +257,16 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->addProductToShops(self::PRODUCT_ID, [2]);
         $this->addProductToCategory(self::CATEGORY_PRODUCT_RELATION, [2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_IDS['supplies-active'] . '") {
                 title
                 products {
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -274,14 +290,16 @@ final class CategoryEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
         $this->setGETRequestParameter('lang', '0');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories {
                 title
                 products {
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             3,
@@ -306,8 +324,11 @@ final class CategoryEnterpriseTest extends MultishopTestCase
     /**
      * @dataProvider dataProviderCategoryProductListFastSorting
      */
-    public function testSubShopCategoryProductListFastSorting(string $sorting, int $sortMode, array $expectedProducts): void
-    {
+    public function testSubShopCategoryProductListFastSorting(
+        string $sorting,
+        int $sortMode,
+        array $expectedProducts
+    ): void {
         $this->addCategoryToShops(self::CATEGORY_IDS['test-active'], [2]);
 
         $this->setGETRequestParameter('shp', '2');
@@ -324,20 +345,22 @@ final class CategoryEnterpriseTest extends MultishopTestCase
             ->set('OXDEFSORTMODE', ':sortMode')
             ->where('OXID = :OXID')
             ->setParameters([
-                ':OXID'          => self::CATEGORY_IDS['test-active'],
-                ':sort'          => $sorting,
-                ':sortMode'      => $sortMode,
+                ':OXID' => self::CATEGORY_IDS['test-active'],
+                ':sort' => $sorting,
+                ':sortMode' => $sortMode,
             ])
             ->execute();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
           category (categoryId: "' . self::CATEGORY_IDS['test-active'] . '") {
             id
             products {
                 id
             }
           }
-        }');
+        }'
+        );
 
         $products = $result['body']['data']['category']['products'];
 
@@ -364,7 +387,7 @@ final class CategoryEnterpriseTest extends MultishopTestCase
                     ['id' => 'd861ad687c60820255dbf8f88516f24d'],
                 ],
             ],
-            'title_asc'  => [
+            'title_asc' => [
                 'oxtitle',
                 self::SORTING_ASC,
                 [

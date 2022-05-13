@@ -24,7 +24,7 @@ class ProductVat implements ProductVatsInterface
 
     public function __construct(float $vatRate, float $vatPrice)
     {
-        $this->vatRate  = $vatRate;
+        $this->vatRate = $vatRate;
         $this->vatPrice = $vatPrice;
     }
 
@@ -33,7 +33,7 @@ class ProductVat implements ProductVatsInterface
      */
     public function getVatRate(): float
     {
-        return (float) ($this->vatRate);
+        return (float)($this->vatRate);
     }
 
     /**
@@ -41,6 +41,6 @@ class ProductVat implements ProductVatsInterface
      */
     public function getVatPrice(): float
     {
-        return (float) ($this->vatPrice);
+        return (float)($this->vatPrice);
     }
 }

@@ -87,28 +87,28 @@ final class CustomerOrderFilesMultiShopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $customerFiles = $result['data']['customer']['files'];
-        $orderFiles    = $result['data']['customer']['orders'][0]['files'];
+        $orderFiles = $result['data']['customer']['orders'][0]['files'];
 
         $expectedFiles = [
             [
-                'file'             => [
-                    'product'          => [
-                        'id'     => '_test_product_for_basket',
+                'file' => [
+                    'product' => [
+                        'id' => '_test_product_for_basket',
                         'active' => true,
-                        'title'  => 'Product 621',
+                        'title' => 'Product 621',
                     ],
-                    'id'               => '48d949cb0af6076f841aea5cb5b703ed',
-                    'filename'         => 'ch99.pdf',
+                    'id' => '48d949cb0af6076f841aea5cb5b703ed',
+                    'filename' => 'ch99.pdf',
                     'onlyPaidDownload' => true,
                 ],
-                'id'               => '729aafa296783575ddfd8e9527355b9b',
-                'filename'         => 'ch99.pdf',
-                'firstDownload'    => '2020-09-10T09:14:15+02:00',
-                'latestDownload'   => '2020-09-10T09:14:15+02:00',
-                'downloadCount'    => 1,
+                'id' => '729aafa296783575ddfd8e9527355b9b',
+                'filename' => 'ch99.pdf',
+                'firstDownload' => '2020-09-10T09:14:15+02:00',
+                'latestDownload' => '2020-09-10T09:14:15+02:00',
+                'downloadCount' => 1,
                 'maxDownloadCount' => 0,
-                'validUntil'       => '2020-09-11T09:14:15+02:00',
-                'valid'            => false,
+                'validUntil' => '2020-09-11T09:14:15+02:00',
+                'valid' => false,
             ],
         ];
 

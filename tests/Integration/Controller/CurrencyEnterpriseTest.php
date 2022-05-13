@@ -21,7 +21,8 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('
+        $result = $this->query(
+            '
             query {
                 currency {
                     id
@@ -30,7 +31,8 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
                     sign
                 }
             }
-        ');
+        '
+        );
 
         $configCurrency = Registry::getConfig()->getActShopCurrencyObject();
         $resultCurrency = $result['body']['data']['currency'];
@@ -44,7 +46,7 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
             $resultCurrency['name']
         );
         $this->assertSame(
-            (float) $configCurrency->rate,
+            (float)$configCurrency->rate,
             $resultCurrency['rate']
         );
         $this->assertSame(
@@ -58,7 +60,9 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
      */
     public function testGetCurrencyByName(string $name): void
     {
-        $result = $this->query(sprintf('
+        $result = $this->query(
+            sprintf(
+                '
             query {
                 currency (name: "%s") {
                     id
@@ -67,7 +71,10 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
                     sign
                 }
             }
-        ', $name));
+        ',
+                $name
+            )
+        );
 
         $configCurrency = Registry::getConfig()->getCurrencyObject($name);
         $resultCurrency = $result['body']['data']['currency'];
@@ -81,7 +88,7 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
             $resultCurrency['name']
         );
         $this->assertSame(
-            (float) $configCurrency->rate,
+            (float)$configCurrency->rate,
             $resultCurrency['rate']
         );
         $this->assertSame(
@@ -107,7 +114,9 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
      */
     public function testGetCurrencyByNameShouldFail($name): void
     {
-        $result = $this->query(sprintf('
+        $result = $this->query(
+            sprintf(
+                '
             query {
                 currency (name: "%s") {
                     id
@@ -116,7 +125,10 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
                     sign
                 }
             }
-        ', $name));
+        ',
+                $name
+            )
+        );
 
         $this->assertSame(
             'Currency "' . $name . '" was not found',
@@ -140,7 +152,8 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('
+        $result = $this->query(
+            '
             query {
                 currencies{
                     id
@@ -149,7 +162,8 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
                     sign
                 }
             }
-        ');
+        '
+        );
 
         $configCurrencies = Registry::getConfig()->getCurrencyArray();
         $resultCurrencies = $result['body']['data']['currencies'];
@@ -164,7 +178,7 @@ final class CurrencyEnterpriseTest extends MultishopTestCase
                 $resultCurrencies[$key]['name']
             );
             $this->assertSame(
-                (float) $expectedCurrency->rate,
+                (float)$expectedCurrency->rate,
                 $resultCurrencies[$key]['rate']
             );
             $this->assertSame(

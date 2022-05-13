@@ -35,7 +35,8 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetSingleActiveCategory(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
                 id
                 position
@@ -59,7 +60,8 @@ final class CategoryTest extends BaseTestCase
                     url
                 }
             }
-        }');
+        }'
+        );
 
         $category = $result['body']['data']['category'];
 
@@ -83,7 +85,10 @@ final class CategoryTest extends BaseTestCase
         $this->assertNull($category['vat']);
         $this->assertFalse($category['skipDiscount']);
         $this->assertTrue($category['showSuffix']);
-        $this->assertMatchesRegularExpression('@https?://.*/Bekleidung/Sportswear/Neopren/Schuhe/@', $category['seo']['url']);
+        $this->assertMatchesRegularExpression(
+            '@https?://.*/Bekleidung/Sportswear/Neopren/Schuhe/@',
+            $category['seo']['url']
+        );
         $this->assertInstanceOf(
             DateTimeInterface::class,
             new DateTimeImmutable($category['timestamp'])
@@ -95,12 +100,14 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetSingleInactiveCategoryWithoutToken(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::INACTIVE_CATEGORY . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Unauthorized',
@@ -112,15 +119,17 @@ final class CategoryTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::INACTIVE_CATEGORY . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
         $this->assertEquals(
             [
-                'id'     => self::INACTIVE_CATEGORY,
+                'id' => self::INACTIVE_CATEGORY,
                 'active' => false,
             ],
             $result['body']['data']['category']
@@ -129,11 +138,13 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetSingleNonExistingCategory(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "DOES-NOT-EXIST") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Category was not found by id: DOES-NOT-EXIST',
@@ -143,7 +154,8 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetCategoryRelations(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
                 id
                 parent {
@@ -156,7 +168,8 @@ final class CategoryTest extends BaseTestCase
                     }
                 }
             }
-        }');
+        }'
+        );
 
         $category = $result['body']['data']['category'];
 
@@ -177,12 +190,14 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetChildrenWhenThereAreNoChildren(): void
     {
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             category(categoryId: "' . self::CATEGORY_WITHOUT_CHILDREN . '"){
                 id
                 children{id}
             }
-        }');
+        }'
+        );
 
         $children = $result['body']['data']['category']['children'];
 
@@ -194,14 +209,16 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetChildren(): void
     {
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             category(categoryId: "' . self::CATEGORY_WITH_CHILDREN . '"){
                 id
                 children {
                     id
                 }
             }
-         }');
+         }'
+        );
 
         $children = $result['body']['data']['category']['children'];
 
@@ -221,7 +238,8 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetAllFieldsOfSingleActiveChildCategory(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category(categoryId: "' . self::CATEGORY_WITH_CHILDREN . '") {
                 children {
                     id
@@ -247,7 +265,8 @@ final class CategoryTest extends BaseTestCase
                     }
                 }
             }
-        }');
+        }'
+        );
 
         $child = $result['body']['data']['category']['children'][0];
 
@@ -283,12 +302,14 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetCategoryListWithoutFilterAndSorting(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories {
                 id
                 position
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             24,
@@ -298,7 +319,8 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetCategoryListWithPartialFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories(filter: {
                 title: {
                     contains: "l"
@@ -306,7 +328,8 @@ final class CategoryTest extends BaseTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -319,7 +342,8 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetCategoryListWithExactFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories(filter: {
                 title: {
                     equals: "Jeans"
@@ -328,12 +352,13 @@ final class CategoryTest extends BaseTestCase
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             [
                 [
-                    'id'    => 'd863b76c6bb90a970a5577adf890e8cd',
+                    'id' => 'd863b76c6bb90a970a5577adf890e8cd',
                     'title' => 'Jeans',
                 ],
             ],
@@ -343,7 +368,8 @@ final class CategoryTest extends BaseTestCase
 
     public function testGetEmptyCategoryListWithFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories(filter: {
                 title: {
                     contains: "DOES-NOT-EXIST"
@@ -351,7 +377,8 @@ final class CategoryTest extends BaseTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             0,
@@ -366,7 +393,8 @@ final class CategoryTest extends BaseTestCase
             '0'
         );
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_WITH_CHILDREN . '") {
                 id
                 seo{
@@ -375,7 +403,8 @@ final class CategoryTest extends BaseTestCase
                     url
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             self::CATEGORY_WITH_CHILDREN,
@@ -397,7 +426,8 @@ final class CategoryTest extends BaseTestCase
 
     public function testCategoryProductListWithoutToken(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
                 products {
@@ -405,7 +435,8 @@ final class CategoryTest extends BaseTestCase
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $products = $result['body']['data']['category']['products'];
 
@@ -419,14 +450,14 @@ final class CategoryTest extends BaseTestCase
     {
         return [
             [
-                'withToken'             => false,
+                'withToken' => false,
                 'expectedProductsCount' => 11,
-                'active'                => true,
+                'active' => true,
             ],
             [
-                'withToken'             => true,
+                'withToken' => true,
                 'expectedProductsCount' => 12,
-                'active'                => false,
+                'active' => false,
             ],
         ];
     }
@@ -452,8 +483,8 @@ final class CategoryTest extends BaseTestCase
             ->set('OXDEFSORTMODE', ':sortMode')
             ->where('OXID = :OXID')
             ->setParameters([
-                ':OXID'     => self::CATEGORY_WITH_PRODUCTS,
-                ':sort'     => '',
+                ':OXID' => self::CATEGORY_WITH_PRODUCTS,
+                ':sort' => '',
                 ':sortMode' => 0,
             ])
             ->execute();
@@ -472,7 +503,8 @@ final class CategoryTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
                 products (sort: {
@@ -482,7 +514,8 @@ final class CategoryTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             $productCount,
@@ -512,7 +545,8 @@ final class CategoryTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
                 products(
@@ -529,7 +563,8 @@ final class CategoryTest extends BaseTestCase
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             $expectedProducts,
@@ -548,11 +583,11 @@ final class CategoryTest extends BaseTestCase
                 2,
                 [
                     [
-                        'id'    => 'f4fe052346b4ec271011e25c052682c5',
+                        'id' => 'f4fe052346b4ec271011e25c052682c5',
                         'title' => 'Kite CORE GT',
                     ],
                     [
-                        'id'    => 'b56369b1fc9d7b97f9c5fc343b349ece',
+                        'id' => 'b56369b1fc9d7b97f9c5fc343b349ece',
                         'title' => 'Kite CORE GTS',
                     ],
                 ],
@@ -562,15 +597,15 @@ final class CategoryTest extends BaseTestCase
                 3,
                 [
                     [
-                        'id'    => 'f4f0cb3606e231c3fdb34fcaee2d6d04',
+                        'id' => 'f4f0cb3606e231c3fdb34fcaee2d6d04',
                         'title' => 'Kite LIQUID FORCE ENVY',
                     ],
                     [
-                        'id'    => 'fad21eb148918c8f4d9f0077fedff1ba',
+                        'id' => 'fad21eb148918c8f4d9f0077fedff1ba',
                         'title' => 'Kite LIQUID FORCE HAVOC',
                     ],
                     [
-                        'id'    => 'b56c560872da93602ff88c7267eb4774',
+                        'id' => 'b56c560872da93602ff88c7267eb4774',
                         'title' => 'Kite NAISH PARK 2011',
                     ],
                 ],
@@ -580,19 +615,19 @@ final class CategoryTest extends BaseTestCase
                 20,
                 [
                     [
-                        'id'    => 'b56764137ca959da9541bb28c1987d6c',
+                        'id' => 'b56764137ca959da9541bb28c1987d6c',
                         'title' => 'Kite NBK REBEL 2010',
                     ],
                     [
-                        'id'    => 'dc5480c47d8cd5a9eab9da5db9159cc6',
+                        'id' => 'dc5480c47d8cd5a9eab9da5db9159cc6',
                         'title' => 'Kite RRD PASSION 2009',
                     ],
                     [
-                        'id'    => 'dc57391739360d306c8dfcb3a4295e19',
+                        'id' => 'dc57391739360d306c8dfcb3a4295e19',
                         'title' => 'Kite RRD PASSION 2010',
                     ],
                     [
-                        'id'    => 'fadc492a5807c56eb80b0507accd756b',
+                        'id' => 'fadc492a5807c56eb80b0507accd756b',
                         'title' => 'Kite SPLEENE SP-X 2010',
                     ],
                 ],
@@ -604,49 +639,49 @@ final class CategoryTest extends BaseTestCase
     {
         return [
             [
-                'isParentActive'     => false,
-                'withToken'          => false,
+                'isParentActive' => false,
+                'withToken' => false,
                 'expectedCategories' => [
                     [
-                        'id'     => '0f40c6a077b68c21f164767c4a903fd2',
+                        'id' => '0f40c6a077b68c21f164767c4a903fd2',
                         'parent' => null,
                     ],
                 ],
             ],
             [
-                'isParentActive'     => false,
-                'withToken'          => true,
+                'isParentActive' => false,
+                'withToken' => true,
                 'expectedCategories' => [
                     [
-                        'id'     => '0f40c6a077b68c21f164767c4a903fd2',
+                        'id' => '0f40c6a077b68c21f164767c4a903fd2',
                         'parent' => [
-                            'id'     => self::CATEGORY_WITH_CHILDREN,
+                            'id' => self::CATEGORY_WITH_CHILDREN,
                             'active' => false,
                         ],
                     ],
                 ],
             ],
             [
-                'isParentActive'     => true,
-                'withToken'          => false,
+                'isParentActive' => true,
+                'withToken' => false,
                 'expectedCategories' => [
                     [
-                        'id'     => '0f40c6a077b68c21f164767c4a903fd2',
+                        'id' => '0f40c6a077b68c21f164767c4a903fd2',
                         'parent' => [
-                            'id'     => self::CATEGORY_WITH_CHILDREN,
+                            'id' => self::CATEGORY_WITH_CHILDREN,
                             'active' => true,
                         ],
                     ],
                 ],
             ],
             [
-                'isParentActive'     => true,
-                'withToken'          => true,
+                'isParentActive' => true,
+                'withToken' => true,
                 'expectedCategories' => [
                     [
-                        'id'     => '0f40c6a077b68c21f164767c4a903fd2',
+                        'id' => '0f40c6a077b68c21f164767c4a903fd2',
                         'parent' => [
-                            'id'     => self::CATEGORY_WITH_CHILDREN,
+                            'id' => self::CATEGORY_WITH_CHILDREN,
                             'active' => true,
                         ],
                     ],
@@ -681,7 +716,8 @@ final class CategoryTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories(
                 filter: {
                     parentId: {
@@ -698,7 +734,8 @@ final class CategoryTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $actualCategories = $result['body']['data']['categories'];
 
@@ -708,15 +745,15 @@ final class CategoryTest extends BaseTestCase
     public function providerSortedCategoriesList()
     {
         return [
-            'oxsort_asc'  => [
+            'oxsort_asc' => [
                 'sortquery' => '
                       sort: {
                         position: "ASC"
                     }
                 ',
-                'method'    => 'asort',
-                'mode'      => SORT_NUMERIC,
-                'field'     => 'position',
+                'method' => 'asort',
+                'mode' => SORT_NUMERIC,
+                'field' => 'position',
             ],
             'oxsort_desc' => [
                 'sortquery' => '
@@ -724,31 +761,31 @@ final class CategoryTest extends BaseTestCase
                         position: "DESC"
                     }
                 ',
-                'method'    => 'arsort',
-                'mode'      => SORT_NUMERIC,
-                'field'     => 'position',
+                'method' => 'arsort',
+                'mode' => SORT_NUMERIC,
+                'field' => 'position',
             ],
-            'title_asc'   => [
+            'title_asc' => [
                 'sortquery' => '
                     sort: {
                         position: ""
                         title: "ASC"
                     }
                 ',
-                'method'    => 'asort',
-                'mode'      => SORT_STRING,
-                'field'     => 'title',
+                'method' => 'asort',
+                'mode' => SORT_STRING,
+                'field' => 'title',
             ],
-            'title_desc'  => [
+            'title_desc' => [
                 'sortquery' => '
                     sort: {
                         position: ""
                         title: "DESC"
                     }
                 ',
-                'method'    => 'arsort',
-                'mode'      => SORT_STRING,
-                'field'     => 'title',
+                'method' => 'arsort',
+                'mode' => SORT_STRING,
+                'field' => 'title',
             ],
         ];
     }
@@ -762,7 +799,8 @@ final class CategoryTest extends BaseTestCase
         int $mode,
         string $field
     ): void {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories( ' .
             $sortQuery .
             ') {
@@ -770,7 +808,8 @@ final class CategoryTest extends BaseTestCase
                 title
                 position
             }
-        }');
+        }'
+        );
 
         $titles = [];
 
@@ -785,7 +824,8 @@ final class CategoryTest extends BaseTestCase
 
     public function testMultiSortedCategoriesList(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories(
                 sort: {
                     position: "DESC"
@@ -796,9 +836,11 @@ final class CategoryTest extends BaseTestCase
                 title
                 position
             }
-        }');
+        }'
+        );
 
-        $otherResult = $this->query('query {
+        $otherResult = $this->query(
+            'query {
             categories(
                 sort: {
                     position: "ASC"
@@ -809,14 +851,16 @@ final class CategoryTest extends BaseTestCase
                 title
                 position
             }
-        }');
+        }'
+        );
 
         $this->assertNotSame($result, $otherResult);
     }
 
     public function testCategorySortedProductList(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
           category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
             id
             products (
@@ -829,7 +873,8 @@ final class CategoryTest extends BaseTestCase
                 title
             }
           }
-        }');
+        }'
+        );
 
         $titles = [];
 
@@ -861,20 +906,22 @@ final class CategoryTest extends BaseTestCase
             ->set('OXDEFSORTMODE', ':sortMode')
             ->where('OXID = :OXID')
             ->setParameters([
-                ':OXID'     => $categoryId,
-                ':sort'     => $sorting,
+                ':OXID' => $categoryId,
+                ':sort' => $sorting,
                 ':sortMode' => $sortMode,
             ])
             ->execute();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
           category (categoryId: "' . $categoryId . '") {
             id
             products {
                 id
             }
           }
-        }');
+        }'
+        );
 
         $products = $result['body']['data']['category']['products'];
 
@@ -903,7 +950,7 @@ final class CategoryTest extends BaseTestCase
                     ['id' => 'f4fe754e1692b9f79f2a7b1a01bb8dee'],
                 ],
             ],
-            'price_asc'            => [
+            'price_asc' => [
                 'oxprice',
                 self::SORTING_ASC,
                 [
@@ -913,7 +960,7 @@ final class CategoryTest extends BaseTestCase
                     ['id' => 'adc920f4cbfa739803058c663a4a00b9'],
                 ],
             ],
-            'title_desc'           => [
+            'title_desc' => [
                 'oxtitle',
                 self::SORTING_DESC,
                 [

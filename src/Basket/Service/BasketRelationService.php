@@ -64,11 +64,11 @@ final class BasketRelationService
         DeliveryMethodService $deliveryMethodService
     ) {
         $this->deliveryAddressService = $deliveryAddressService;
-        $this->paymentService         = $paymentService;
-        $this->deliveryMethodService  = $deliveryMethodService;
-        $this->basketItemService      = $basketItemService;
-        $this->basketService          = $basketService;
-        $this->voucherRepository      = $voucherRepository;
+        $this->paymentService = $paymentService;
+        $this->deliveryMethodService = $deliveryMethodService;
+        $this->basketItemService = $basketItemService;
+        $this->basketService = $basketService;
+        $this->voucherRepository = $voucherRepository;
     }
 
     /**
@@ -76,7 +76,7 @@ final class BasketRelationService
      */
     public function owner(Basket $basket): BasketOwner
     {
-        return $this->basketService->basketOwner((string) $basket->getUserId());
+        return $this->basketService->basketOwner((string)$basket->getUserId());
     }
 
     /**
@@ -111,7 +111,7 @@ final class BasketRelationService
      */
     public function vouchers(Basket $basket): array
     {
-        return $this->voucherRepository->getBasketVouchers((string) $basket->id());
+        return $this->voucherRepository->getBasketVouchers((string)$basket->id());
     }
 
     /**
@@ -148,7 +148,7 @@ final class BasketRelationService
         }
 
         try {
-            $payment = $this->paymentService->payment((string) $paymentId);
+            $payment = $this->paymentService->payment((string)$paymentId);
         } catch (PaymentNotFound $e) {
             $payment = null;
         }
@@ -163,7 +163,7 @@ final class BasketRelationService
      */
     public function deliveryMethod(Basket $basket): ?DeliveryMethod
     {
-        $deliveryMethodId = (string) $basket->getDeliveryMethodId();
+        $deliveryMethodId = (string)$basket->getDeliveryMethodId();
 
         if (empty($deliveryMethodId)) {
             return null;

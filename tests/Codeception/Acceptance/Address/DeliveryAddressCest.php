@@ -105,8 +105,8 @@ final class DeliveryAddressCest extends BaseCest
         $expected = [];
 
         foreach ($data['fields'] as $field) {
-            $tmp             = explode('__', $field);
-            $name            = ltrim($tmp[1], 'ox');
+            $tmp = explode('__', $field);
+            $name = ltrim($tmp[1], 'ox');
             $expected[$name] = $name;
         }
         $expected = $prefix . rtrim(implode(', ', $expected), ', ');
@@ -118,19 +118,19 @@ final class DeliveryAddressCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $inputFields =  [
-            'salutation'     => 'MR',
-            'firstName'      => 'Marc',
-            'lastName'       => 'Muster',
-            'company'        => 'No GmbH',
+        $inputFields = [
+            'salutation' => 'MR',
+            'firstName' => 'Marc',
+            'lastName' => 'Muster',
+            'company' => 'No GmbH',
             'additionalInfo' => 'private delivery',
-            'street'         => 'Bertoldstrasse',
-            'streetNumber'   => '48',
-            'zipCode'        => '79098',
-            'city'           => 'Freiburg',
-            'countryId'      => 'lalaland',
-            'phone'          => '1234',
-            'fax'            => '4321',
+            'street' => 'Bertoldstrasse',
+            'streetNumber' => '48',
+            'zipCode' => '79098',
+            'city' => 'Freiburg',
+            'countryId' => 'lalaland',
+            'phone' => '1234',
+            'fax' => '4321',
         ];
 
         $queryPart = '';
@@ -163,20 +163,20 @@ final class DeliveryAddressCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $inputFields =  [
-            'salutation'     => 'MR',
-            'firstName'      => 'Marc',
-            'lastName'       => 'Muster',
-            'company'        => 'No GmbH',
+        $inputFields = [
+            'salutation' => 'MR',
+            'firstName' => 'Marc',
+            'lastName' => 'Muster',
+            'company' => 'No GmbH',
             'additionalInfo' => 'private delivery',
-            'street'         => 'Bertoldstrasse',
-            'streetNumber'   => '48',
-            'zipCode'        => '79098',
-            'city'           => 'Freiburg',
-            'countryId'      => '8f241f11096877ac0.98748826',
-            'stateId'        => 'NY',
-            'phone'          => '1234',
-            'fax'            => '4321',
+            'street' => 'Bertoldstrasse',
+            'streetNumber' => '48',
+            'zipCode' => '79098',
+            'city' => 'Freiburg',
+            'countryId' => '8f241f11096877ac0.98748826',
+            'stateId' => 'NY',
+            'phone' => '1234',
+            'fax' => '4321',
         ];
 
         $queryPart = '';
@@ -188,8 +188,8 @@ final class DeliveryAddressCest extends BaseCest
         $I->sendGQLQuery(
             'mutation {
                 customerDeliveryAddressAdd(deliveryAddress: {' .
-                $queryPart .
-                '})
+            $queryPart .
+            '})
                 {
                     id
                     salutation
@@ -245,11 +245,13 @@ final class DeliveryAddressCest extends BaseCest
 
     public function testGetDeliveryAddressesForNotLoggedInUser(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             customerDeliveryAddresses {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -267,7 +269,8 @@ final class DeliveryAddressCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             customerDeliveryAddresses {
                 id
                 firstName
@@ -275,7 +278,8 @@ final class DeliveryAddressCest extends BaseCest
                 street
                 streetNumber
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -283,24 +287,24 @@ final class DeliveryAddressCest extends BaseCest
         $I->assertSame(
             [
                 [
-                    'id'           => $this->deliveryAddressId,
-                    'firstName'    => 'Marc',
-                    'lastName'     => 'Muster',
-                    'street'       => 'Bertoldstrasse',
+                    'id' => $this->deliveryAddressId,
+                    'firstName' => 'Marc',
+                    'lastName' => 'Muster',
+                    'street' => 'Bertoldstrasse',
                     'streetNumber' => '48',
                 ],
                 [
-                    'id'           => self::DEFAULT_DELIVERY_ADDRESS_ID,
-                    'firstName'    => 'Marc',
-                    'lastName'     => 'Muster',
-                    'street'       => 'Hauptstr',
+                    'id' => self::DEFAULT_DELIVERY_ADDRESS_ID,
+                    'firstName' => 'Marc',
+                    'lastName' => 'Muster',
+                    'street' => 'Hauptstr',
                     'streetNumber' => '13',
                 ],
                 [
-                    'id'           => self::OTHER_DELIVERY_ADDRESS_ID,
-                    'firstName'    => 'Marc',
-                    'lastName'     => 'Muster',
-                    'street'       => 'Hauptstr2',
+                    'id' => self::OTHER_DELIVERY_ADDRESS_ID,
+                    'firstName' => 'Marc',
+                    'lastName' => 'Muster',
+                    'street' => 'Hauptstr2',
                     'streetNumber' => '132',
                 ],
             ],
@@ -419,19 +423,19 @@ final class DeliveryAddressCest extends BaseCest
         //'Shop is not validating the input so we mark test as incomplete until further notice.';
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $inputFields =  [
-            'salutation'     => 'dual',
-            'firstName'      => str_pad('?ö', 1000, '@'),
-            'lastName'       => 'öäöääöä',
-            'company'        => '1234',
+        $inputFields = [
+            'salutation' => 'dual',
+            'firstName' => str_pad('?ö', 1000, '@'),
+            'lastName' => 'öäöääöä',
+            'company' => '1234',
             'additionalInfo' => str_pad('x', 1000, 'y'),
-            'street'         => str_pad('x', 1000, 'z'),
-            'streetNumber'   => 'is no numbeer',
-            'zipCode'        => 'is no zip',
-            'city'           => 'Freiburg is nice',
-            'countryId'      => 'lalaland',
-            'phone'          => 'fon',
-            'fax'            => 'fax',
+            'street' => str_pad('x', 1000, 'z'),
+            'streetNumber' => 'is no numbeer',
+            'zipCode' => 'is no zip',
+            'city' => 'Freiburg is nice',
+            'countryId' => 'lalaland',
+            'phone' => 'fon',
+            'fax' => 'fax',
         ];
 
         $queryPart = '';

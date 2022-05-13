@@ -41,9 +41,9 @@ final class RelationService
         ProductService $productService,
         PriceFactory $priceFactory
     ) {
-        $this->inquirerService    = $inquirerService;
-        $this->productService     = $productService;
-        $this->priceFactory       = $priceFactory;
+        $this->inquirerService = $inquirerService;
+        $this->productService = $productService;
+        $this->priceFactory = $priceFactory;
     }
 
     /**
@@ -52,7 +52,7 @@ final class RelationService
     public function getInquirer(WishedPrice $wishedPrice): ?InquirerDataType
     {
         try {
-            return $this->inquirerService->inquirer((string) $wishedPrice->getInquirerId());
+            return $this->inquirerService->inquirer((string)$wishedPrice->getInquirerId());
         } catch (InquirerNotFound $e) {
             return null;
         }

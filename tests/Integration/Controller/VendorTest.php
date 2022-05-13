@@ -19,13 +19,14 @@ final class VendorTest extends TokenTestCase
 {
     private const ACTIVE_VENDOR = 'a57c56e3ba710eafb2225e98f058d989';
 
-    private const INACTIVE_VENDOR  = '05833e961f65616e55a2208c2ed7c6b8';
+    private const INACTIVE_VENDOR = '05833e961f65616e55a2208c2ed7c6b8';
 
-    private const PRODUCT_RELATED_TO_ACTIVE_VENDOR  = '531b537118f5f4d7a427cdb825440922';
+    private const PRODUCT_RELATED_TO_ACTIVE_VENDOR = '531b537118f5f4d7a427cdb825440922';
 
     public function testGetSingleActiveVendor(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
                 id
                 active
@@ -42,7 +43,8 @@ final class VendorTest extends TokenTestCase
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $vendor = $result['body']['data']['vendor'];
         $this->assertSame(self::ACTIVE_VENDOR, $vendor['id']);
@@ -50,7 +52,10 @@ final class VendorTest extends TokenTestCase
         $this->assertNull($vendor['icon']);
         $this->assertEquals('www.true-fashion.com', $vendor['title']);
         $this->assertSame('Ethical style outlet', $vendor['shortdesc']);
-        $this->assertMatchesRegularExpression('@https?://.*/Nach-Lieferant/www-true-fashion-com/$@', $vendor['seo']['url']);
+        $this->assertMatchesRegularExpression(
+            '@https?://.*/Nach-Lieferant/www-true-fashion-com/$@',
+            $vendor['seo']['url']
+        );
         $this->assertEquals('', $vendor['seo']['description']);
         $this->assertEquals('', $vendor['seo']['keywords']);
 
@@ -66,21 +71,24 @@ final class VendorTest extends TokenTestCase
             $vendor['products']
         );
 
-        $this->assertEmpty(array_diff(array_keys($vendor), [
-            'id',
-            'active',
-            'icon',
-            'title',
-            'shortdesc',
-            'timestamp',
-            'seo',
-            'products',
-        ]));
+        $this->assertEmpty(
+            array_diff(array_keys($vendor), [
+                'id',
+                'active',
+                'icon',
+                'title',
+                'shortdesc',
+                'timestamp',
+                'seo',
+                'products',
+            ])
+        );
     }
 
     public function testGetSingleInactiveVendorWithoutToken(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor (vendorId: "' . self::INACTIVE_VENDOR . '") {
                 id
                 active
@@ -93,7 +101,8 @@ final class VendorTest extends TokenTestCase
                   url
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Unauthorized',
@@ -105,11 +114,13 @@ final class VendorTest extends TokenTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor (vendorId: "' . self::INACTIVE_VENDOR . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -121,11 +132,13 @@ final class VendorTest extends TokenTestCase
 
     public function testGetSingleNonExistingVendor(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor (vendorId: "DOES-NOT-EXIST") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Vendor was not found by id: DOES-NOT-EXIST',
@@ -135,11 +148,13 @@ final class VendorTest extends TokenTestCase
 
     public function testGetVendorListWithoutFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendors {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             2,
@@ -148,10 +163,10 @@ final class VendorTest extends TokenTestCase
         $this->assertSame(
             [
                 [
-                    'id'        => 'a57c56e3ba710eafb2225e98f058d989',
+                    'id' => 'a57c56e3ba710eafb2225e98f058d989',
                 ],
                 [
-                    'id'        => 'fe07958b49de225bd1dbc7594fb9a6b0',
+                    'id' => 'fe07958b49de225bd1dbc7594fb9a6b0',
                 ],
             ],
             $result['body']['data']['vendors']
@@ -162,11 +177,13 @@ final class VendorTest extends TokenTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendors {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -186,7 +203,8 @@ final class VendorTest extends TokenTestCase
 
     public function testGetVendorListWithExactFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendors (filter: {
                 title: {
                     equals: "www.true-fashion.com"
@@ -194,7 +212,8 @@ final class VendorTest extends TokenTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -208,7 +227,8 @@ final class VendorTest extends TokenTestCase
 
     public function testGetVendorListWithPartialFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendors (filter: {
                 title: {
                     contains: "city"
@@ -216,7 +236,8 @@ final class VendorTest extends TokenTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -230,7 +251,8 @@ final class VendorTest extends TokenTestCase
 
     public function testGetEmptyVendorListWithFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendors (filter: {
                 title: {
                     contains: "DOES-NOT-EXIST"
@@ -238,7 +260,8 @@ final class VendorTest extends TokenTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             0,
@@ -248,14 +271,14 @@ final class VendorTest extends TokenTestCase
 
     public function dataProviderSortedVendorList()
     {
-        return  [
+        return [
             'title_asc' => [
                 'sortquery' => '
                     sort: {
                         title: "ASC"
                     }
                 ',
-                'method'    => 'asort',
+                'method' => 'asort',
             ],
             'title_desc' => [
                 'sortquery' => '
@@ -263,7 +286,7 @@ final class VendorTest extends TokenTestCase
                         title: "DESC"
                     }
                 ',
-                'method'    => 'arsort',
+                'method' => 'arsort',
             ],
         ];
     }
@@ -275,16 +298,18 @@ final class VendorTest extends TokenTestCase
         string $sortQuery,
         string $method
     ): void {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendors(
                 ' . $sortQuery . '
             ) {
                 title
             }
-        }');
+        }'
+        );
 
         $sortedVendors = $result['body']['data']['vendors'];
-        $expected      = $sortedVendors;
+        $expected = $sortedVendors;
 
         $method($expected, SORT_STRING | SORT_FLAG_CASE);
 
@@ -293,13 +318,15 @@ final class VendorTest extends TokenTestCase
 
     public function testVendorProductsWithOffsetAndLimit(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
                 products(pagination: {limit: 1, offset: 1}) {
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $products = $result['body']['data']['vendor']['products'];
 
@@ -315,13 +342,14 @@ final class VendorTest extends TokenTestCase
     {
         return [
             [
-                'withToken'             => false,
+                'withToken' => false,
                 'expectedProductsCount' => 12,
-                'active'                => true,
-            ], [
-                'withToken'             => true,
+                'active' => true,
+            ],
+            [
+                'withToken' => true,
                 'expectedProductsCount' => 13,
-                'active'                => false,
+                'active' => false,
             ],
         ];
     }
@@ -352,14 +380,16 @@ final class VendorTest extends TokenTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor(vendorId: "' . self::ACTIVE_VENDOR . '") {
                 id
                 products {
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             $productCount,
@@ -377,13 +407,14 @@ final class VendorTest extends TokenTestCase
     {
         return [
             [
-                'withToken'             => false,
+                'withToken' => false,
                 'expectedProductsCount' => 12,
-                'active'                => true,
-            ], [
-                'withToken'             => true,
+                'active' => true,
+            ],
+            [
+                'withToken' => true,
                 'expectedProductsCount' => 13,
-                'active'                => false,
+                'active' => false,
             ],
         ];
     }
@@ -414,7 +445,8 @@ final class VendorTest extends TokenTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
           vendors(filter: {
             title: {
               contains: "fashion"
@@ -425,7 +457,8 @@ final class VendorTest extends TokenTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             $productCount,
@@ -441,7 +474,8 @@ final class VendorTest extends TokenTestCase
 
     public function testVendorSortedProductList(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
           vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
             id
             products (
@@ -454,7 +488,8 @@ final class VendorTest extends TokenTestCase
                 title
             }
           }
-        }');
+        }'
+        );
 
         $titles = [];
 

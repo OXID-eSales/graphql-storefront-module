@@ -33,7 +33,7 @@ final class OrderPaymentRelations
         PaymentService $paymentService,
         OrderPaymentInfrastructure $orderPaymentInfrastructure
     ) {
-        $this->paymentService             = $paymentService;
+        $this->paymentService = $paymentService;
         $this->orderPaymentInfrastructure = $orderPaymentInfrastructure;
     }
 

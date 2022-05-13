@@ -39,7 +39,7 @@ final class OrderDelivery implements ShopModelAwareInterface
      */
     public function getTrackingNumber(): string
     {
-        return (string) $this->order->getTrackCode();
+        return (string)$this->order->getTrackCode();
     }
 
     /**
@@ -47,7 +47,7 @@ final class OrderDelivery implements ShopModelAwareInterface
      */
     public function getTrackingURL(): string
     {
-        return (string) $this->order->getShipmentTrackingUrl();
+        return (string)$this->order->getShipmentTrackingUrl();
     }
 
     /**
@@ -56,7 +56,7 @@ final class OrderDelivery implements ShopModelAwareInterface
     public function getDispatched(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->order->getRawFieldData('oxsenddate')
+            (string)$this->order->getRawFieldData('oxsenddate')
         );
     }
 

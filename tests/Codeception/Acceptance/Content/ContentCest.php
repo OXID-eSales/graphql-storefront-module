@@ -21,29 +21,31 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  */
 final class ContentCest extends BaseCest
 {
-    private const CONTENT_WITH_TEMPLATE  = '4d4106027b63b623b2c4ee1ea6838d7f';
+    private const CONTENT_WITH_TEMPLATE = '4d4106027b63b623b2c4ee1ea6838d7f';
 
-    private const CONTENT_WITH_VCMS_TEMPLATE  = '9f825347decfdb7008d162700be95dc1';
+    private const CONTENT_WITH_VCMS_TEMPLATE = '9f825347decfdb7008d162700be95dc1';
 
     public function contentWithTemplate(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             content (contentId: "' . self::CONTENT_WITH_TEMPLATE . '") {
                 id
                 content
                 rawContent
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
-        $result  = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
         $content = $result['data']['content'];
 
         $I->assertEquals(
             [
-                'id'            => self::CONTENT_WITH_TEMPLATE,
-                'content'       => 'GraphQL rendered content DE',
-                'rawContent'    => 'GraphQL [{if true }]rendered [{/if}]content DE',
+                'id' => self::CONTENT_WITH_TEMPLATE,
+                'content' => 'GraphQL rendered content DE',
+                'rawContent' => 'GraphQL [{if true }]rendered [{/if}]content DE',
             ],
             $content
         );
@@ -55,30 +57,32 @@ final class ContentCest extends BaseCest
             $I->markTestSkipped('VCMS module is not active');
         }
 
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             content (contentId: "' . self::CONTENT_WITH_VCMS_TEMPLATE . '") {
                 id
                 content
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
-        $result  = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
         $content = $result['data']['content'];
 
         $expectedRenderedContent =
             '<div class="container-fluid dd-ve-container clearfix">' .
-                '<div class="row">' .
-                    '<div class="col-sm-12">' .
-                        '<div class="dd-shortcode-text">GraphQL VCMS rendered content DE</div>' .
-                    '</div>' .
-                '</div>' .
+            '<div class="row">' .
+            '<div class="col-sm-12">' .
+            '<div class="dd-shortcode-text">GraphQL VCMS rendered content DE</div>' .
+            '</div>' .
+            '</div>' .
             '</div>';
 
         $I->assertEquals(
             [
-                'id'            => self::CONTENT_WITH_VCMS_TEMPLATE,
-                'content'       => $expectedRenderedContent,
+                'id' => self::CONTENT_WITH_VCMS_TEMPLATE,
+                'content' => $expectedRenderedContent,
             ],
             $content
         );
@@ -90,6 +94,6 @@ final class ContentCest extends BaseCest
             ->getContainer()
             ->get(ModuleActivationBridgeInterface::class);
 
-        return (bool) $moduleActivation->isActive('ddoevisualcms', 1);
+        return (bool)$moduleActivation->isActive('ddoevisualcms', 1);
     }
 }

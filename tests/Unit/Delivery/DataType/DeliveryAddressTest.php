@@ -21,7 +21,7 @@ final class DeliveryAddressTest extends TestCase
 {
     public function testEmptyDeliveryAddress(): void
     {
-        $model    = new DeliveryAddressModelStub();
+        $model = new DeliveryAddressModelStub();
         $dataType = new DeliveryAddress($model);
 
         $this->assertInstanceOf(
@@ -49,19 +49,19 @@ final class DeliveryAddressTest extends TestCase
 
     public function testEnrichedDeliveryAddress(): void
     {
-        $model    = new DeliveryAddressModelStub();
-        $data     = [
-            'oxsal'        => 'MR',
-            'oxfname'      => 'Marc',
-            'oxlname'      => 'Muster',
-            'oxcompany'    => 'None GmbH',
-            'oxaddinfo'    => 'private delivery',
-            'oxstreet'     => 'Haupstr.',
-            'oxstreetnr'   => '13',
-            'oxzip'        => '79098',
-            'oxcity'       => 'Freiburg',
-            'oxfon'        => '',
-            'oxfax'        => '',
+        $model = new DeliveryAddressModelStub();
+        $data = [
+            'oxsal' => 'MR',
+            'oxfname' => 'Marc',
+            'oxlname' => 'Muster',
+            'oxcompany' => 'None GmbH',
+            'oxaddinfo' => 'private delivery',
+            'oxstreet' => 'Haupstr.',
+            'oxstreetnr' => '13',
+            'oxzip' => '79098',
+            'oxcity' => 'Freiburg',
+            'oxfon' => '',
+            'oxfax' => '',
         ];
         $model->assign($data);
         $dataType = new DeliveryAddress($model);

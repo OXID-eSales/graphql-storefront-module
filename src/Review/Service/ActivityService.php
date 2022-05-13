@@ -32,10 +32,10 @@ final class ActivityService
      */
     public function isActive(Review $review): bool
     {
-        $reviewModel            = $review->getEshopModel();
-        $moderationIsActive     = (bool) $this->legacyService->getConfigParam('blGBModerate');
-        $reviewActiveFieldValue = (bool) $reviewModel->getRawFieldData('oxactive');
+        $reviewModel = $review->getEshopModel();
+        $moderationIsActive = (bool)$this->legacyService->getConfigParam('blGBModerate');
+        $reviewActiveFieldValue = (bool)$reviewModel->getRawFieldData('oxactive');
 
-        return  $reviewActiveFieldValue || !$moderationIsActive;
+        return $reviewActiveFieldValue || !$moderationIsActive;
     }
 }

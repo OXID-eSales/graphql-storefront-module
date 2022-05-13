@@ -34,8 +34,8 @@ final class Promotion
         Authorization $authorizationService,
         PromotionInfrastructure $promotionInfrastructure
     ) {
-        $this->repository              = $repository;
-        $this->authorizationService    = $authorizationService;
+        $this->repository = $repository;
+        $this->authorizationService = $authorizationService;
         $this->promotionInfrastructure = $promotionInfrastructure;
     }
 
@@ -48,11 +48,11 @@ final class Promotion
         try {
             /** @var PromotionDataType $promotion */
             $promotion = $this->repository->getById(
-                (string) $id,
+                (string)$id,
                 PromotionDataType::class
             );
         } catch (NotFound $e) {
-            throw PromotionNotFound::byId((string) $id);
+            throw PromotionNotFound::byId((string)$id);
         }
 
         if ($promotion->isActive()) {

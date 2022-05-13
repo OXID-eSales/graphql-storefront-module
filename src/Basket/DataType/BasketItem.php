@@ -50,7 +50,7 @@ final class BasketItem implements ShopModelAwareInterface
      */
     public function amount(): int
     {
-        return (int) $this->basketItem->getRawFieldData('oxamount');
+        return (int)$this->basketItem->getRawFieldData('oxamount');
     }
 
     /**
@@ -59,13 +59,13 @@ final class BasketItem implements ShopModelAwareInterface
     public function lastUpdateDate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->basketItem->getRawFieldData('oxtimestamp')
+            (string)$this->basketItem->getRawFieldData('oxtimestamp')
         );
     }
 
     public function basketId(): string
     {
-        return (string) $this->basketItem->getRawFieldData('oxbasketid');
+        return (string)$this->basketItem->getRawFieldData('oxbasketid');
     }
 
     public static function getModelClass(): string

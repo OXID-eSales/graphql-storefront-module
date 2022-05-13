@@ -34,7 +34,7 @@ final class InvoiceAddressInput
     ) {
         $this->invoiceAddressFactory = $invoiceAddressFactory;
         $this->authenticationService = $authenticationService;
-        $this->customerService       = $customerService;
+        $this->customerService = $customerService;
     }
 
     /**
@@ -58,7 +58,7 @@ final class InvoiceAddressInput
         ?string $fax = null
     ): InvoiceAddress {
         $customer = $this->customerService
-            ->customer((string) $this->authenticationService->getUser()->id());
+            ->customer((string)$this->authenticationService->getUser()->id());
 
         return $this->invoiceAddressFactory->createValidInvoiceAddressType(
             $customer,

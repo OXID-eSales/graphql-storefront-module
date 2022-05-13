@@ -34,7 +34,7 @@ final class Subscriber implements ShopModelAwareInterface
 
     public function getId(): string
     {
-        return (string) $this->subscriber->getRawFieldData('oxid');
+        return (string)$this->subscriber->getRawFieldData('oxid');
     }
 
     /**
@@ -42,12 +42,12 @@ final class Subscriber implements ShopModelAwareInterface
      */
     public function getUserName(): string
     {
-        return (string) $this->subscriber->getRawFieldData('oxusername');
+        return (string)$this->subscriber->getRawFieldData('oxusername');
     }
 
     public function getConfirmationCode(): string
     {
-        return (string) md5($this->getUserName() . $this->subscriber->getRawFieldData('oxpasssalt'));
+        return (string)md5($this->getUserName() . $this->subscriber->getRawFieldData('oxpasssalt'));
     }
 
     public static function getModelClass(): string

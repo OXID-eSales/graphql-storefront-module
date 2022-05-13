@@ -42,14 +42,14 @@ final class BasketAddItemMultishopCest extends MultishopBaseCest
         $I->deleteFromDatabase(
             'oxuserbasketitems',
             [
-                'OXARTID'    => self::SHOP_1_PRODUCT_ID,
+                'OXARTID' => self::SHOP_1_PRODUCT_ID,
             ]
         );
 
         $I->deleteFromDatabase(
             'oxuserbasketitems',
             [
-                'OXARTID'    => self::SHOP_2_PRODUCT_ID,
+                'OXARTID' => self::SHOP_2_PRODUCT_ID,
             ]
         );
     }
@@ -59,8 +59,8 @@ final class BasketAddItemMultishopCest extends MultishopBaseCest
      */
     public function testAddItemToBasketPerShop(AcceptanceTester $I, Example $data): void
     {
-        $shopId    = $data['shopId'];
-        $basketId  = $data['basketId'];
+        $shopId = $data['shopId'];
+        $basketId = $data['basketId'];
         $productId = $data['productId'];
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
@@ -91,14 +91,15 @@ final class BasketAddItemMultishopCest extends MultishopBaseCest
 
         $I->assertSame(
             [
-                'id'    => $basketId,
+                'id' => $basketId,
                 'items' => [
                     [
                         'product' => [
                             'id' => $productId,
                         ],
                         'amount' => 2,
-                    ], [
+                    ],
+                    [
                         'product' => [
                             'id' => '_test_product_for_basket',
                         ],
@@ -141,14 +142,15 @@ final class BasketAddItemMultishopCest extends MultishopBaseCest
 
         $I->assertSame(
             [
-                'id'    => self:: PRIVATE_BASKET,
+                'id' => self:: PRIVATE_BASKET,
                 'items' => [
                     [
                         'product' => [
                             'id' => self::SHOP_2_PRODUCT_ID,
                         ],
                         'amount' => 2,
-                    ], [
+                    ],
+                    [
                         'product' => [
                             'id' => '_test_product_for_basket',
                         ],
@@ -164,13 +166,13 @@ final class BasketAddItemMultishopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'    => 1,
-                'basketId'  => self::PUBLIC_BASKET,
+                'shopId' => 1,
+                'basketId' => self::PUBLIC_BASKET,
                 'productId' => self::SHOP_1_PRODUCT_ID,
             ],
             'shop_2' => [
-                'shopId'    => 2,
-                'basketId'  => '_test_shop2_basket_public',
+                'shopId' => 2,
+                'basketId' => '_test_shop2_basket_public',
                 'productId' => self::SHOP_2_PRODUCT_ID,
             ],
         ];

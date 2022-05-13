@@ -29,7 +29,7 @@ class Basket extends Basket_parent
      */
     public function addProductToBasket(UserBasketItem $basketItem): void
     {
-        $item                                              = $this->convertUserBasketItemToBasketItem($basketItem);
+        $item = $this->convertUserBasketItemToBasketItem($basketItem);
         $this->_aBasketContents[$item->getBasketItemKey()] = $item;
     }
 

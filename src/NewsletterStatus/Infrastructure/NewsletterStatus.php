@@ -36,8 +36,8 @@ final class NewsletterStatus
         LegacyService $legacyService,
         NewsletterStatusRepository $newsletterStatusRepository
     ) {
-        $this->customerRepository         = $customerRepository;
-        $this->legacyService              = $legacyService;
+        $this->customerRepository = $customerRepository;
+        $this->legacyService = $legacyService;
         $this->newsletterStatusRepository = $newsletterStatusRepository;
     }
 
@@ -77,11 +77,11 @@ final class NewsletterStatus
 
         $user->assign(
             [
-                'oxactive'   => 1,
-                'oxrights'   => 'user',
-                'oxsal'      => $input->salutation(),
-                'oxfname'    => $input->firstName(),
-                'oxlname'    => $input->lastName(),
+                'oxactive' => 1,
+                'oxrights' => 'user',
+                'oxsal' => $input->salutation(),
+                'oxfname' => $input->firstName(),
+                'oxlname' => $input->lastName(),
                 'oxusername' => $input->email(),
                 'oxpassword' => '',
             ]

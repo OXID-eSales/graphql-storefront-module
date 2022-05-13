@@ -26,7 +26,7 @@ final class BasketAuthorization extends Event
 
     public function __construct(Basket $basket, ID $customerId)
     {
-        $this->basket     = $basket;
+        $this->basket = $basket;
         $this->customerId = $customerId;
     }
 

@@ -68,7 +68,7 @@ final class Banner implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->actionsModel->getRawFieldData('oxtitle');
+        return (string)$this->actionsModel->getRawFieldData('oxtitle');
     }
 
     /**
@@ -76,7 +76,7 @@ final class Banner implements ShopModelAwareInterface
      */
     public function getPicture(): string
     {
-        return (string) $this->actionsModel->getBannerPictureUrl();
+        return (string)$this->actionsModel->getBannerPictureUrl();
     }
 
     /**
@@ -84,7 +84,7 @@ final class Banner implements ShopModelAwareInterface
      */
     public function getLink(): string
     {
-        return (string) $this->actionsModel->getBannerLink();
+        return (string)$this->actionsModel->getBannerLink();
     }
 
     /**
@@ -92,7 +92,7 @@ final class Banner implements ShopModelAwareInterface
      */
     public function getSorting(): int
     {
-        return (int) $this->actionsModel->getRawFieldData('oxsort');
+        return (int)$this->actionsModel->getRawFieldData('oxsort');
     }
 
     public static function getModelClass(): string

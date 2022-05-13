@@ -30,7 +30,7 @@ final class Customer
         CustomerService $customerService,
         Authentication $authenticationService
     ) {
-        $this->customerService       = $customerService;
+        $this->customerService = $customerService;
         $this->authenticationService = $authenticationService;
     }
 
@@ -42,7 +42,7 @@ final class Customer
     public function customer(): CustomerDataType
     {
         return $this->customerService->customer(
-            (string) $this->authenticationService->getUser()->id()
+            (string)$this->authenticationService->getUser()->id()
         );
     }
 

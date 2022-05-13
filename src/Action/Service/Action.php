@@ -30,7 +30,7 @@ final class Action
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->authorizationService = $authorizationService;
     }
 
@@ -40,7 +40,7 @@ final class Action
      */
     public function action(ID $id): ActionDataType
     {
-        $id = (string) $id->val();
+        $id = (string)$id->val();
 
         try {
             /** @var ActionDataType $action */

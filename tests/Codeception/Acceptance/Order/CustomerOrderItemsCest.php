@@ -73,63 +73,64 @@ final class CustomerOrderItemsCest extends BaseCest
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
-        $items  = $result['data']['customer']['orders'][0]['items'];
+        $items = $result['data']['customer']['orders'][0]['items'];
 
         $I->assertCount(6, $items);
 
         $expectedItems = [
             [
-                'id'               => '7d0e255c591fb5062669fd039bcf9f29',
-                'amount'           => 1.0,
-                'product'          => [
-                    'id'    => '058e613db53d782adfc9f2ccb43c45fe',
+                'id' => '7d0e255c591fb5062669fd039bcf9f29',
+                'amount' => 1.0,
+                'product' => [
+                    'id' => '058e613db53d782adfc9f2ccb43c45fe',
                     'title' => 'Bindung O\'BRIEN DECADE CT 2010',
                 ],
-                'sku'              => '2401',
-                'title'            => 'Bindung O\'BRIEN DECADE CT 2010',
+                'sku' => '2401',
+                'title' => 'Bindung O\'BRIEN DECADE CT 2010',
                 'shortDescription' => 'Geringes Gewicht, beste Performance!',
-                'price'            => [
+                'price' => [
                     'price' => 359.0,
-                    'vat'   => 19.0,
+                    'vat' => 19.0,
                 ],
-                'itemPrice'        => [
+                'itemPrice' => [
                     'price' => 359.0,
                 ],
-                'dimensions'       => [
+                'dimensions' => [
                     'length' => 0.0,
-                    'width'  => 0.0,
+                    'width' => 0.0,
                     'height' => 0.0,
                     'weight' => 0.0,
                 ],
-                'insert'           => '2006-12-20T00:00:00+01:00',
-                'cancelled'        => false,
-                'bundle'           => false,
-            ], [
-                'id'               => '7d010996ab5656e369a63cdccb5f56e7',
-                'amount'           => 1.0,
-                'product'          => [
-                    'id'    => 'b56369b1fc9d7b97f9c5fc343b349ece',
+                'insert' => '2006-12-20T00:00:00+01:00',
+                'cancelled' => false,
+                'bundle' => false,
+            ],
+            [
+                'id' => '7d010996ab5656e369a63cdccb5f56e7',
+                'amount' => 1.0,
+                'product' => [
+                    'id' => 'b56369b1fc9d7b97f9c5fc343b349ece',
                     'title' => 'Kite CORE GTS',
                 ],
-                'sku'              => '1208',
-                'title'            => 'Kite CORE GTS',
+                'sku' => '1208',
+                'title' => 'Kite CORE GTS',
                 'shortDescription' => 'Die Sportversion des GT',
-                'price'            => [
+                'price' => [
                     'price' => 879.0,
-                    'vat'   => 19.0,
+                    'vat' => 19.0,
                 ],
-                'itemPrice'        => [
+                'itemPrice' => [
                     'price' => 879.0,
                 ],
-                'dimensions'       => [
+                'dimensions' => [
                     'length' => 0.0,
-                    'width'  => 0.0,
+                    'width' => 0.0,
                     'height' => 0.0,
                     'weight' => 0.0,
                 ],
-                'insert'           => '2015-12-20T00:00:00+01:00',
-                'cancelled'        => false,
-                'bundle'           => false,
+                'insert' => '2015-12-20T00:00:00+01:00',
+                'cancelled' => false,
+                'bundle' => false,
             ],
         ];
 
@@ -220,8 +221,8 @@ final class CustomerOrderItemsCest extends BaseCest
     {
         $I->updateInDatabase(
             'oxarticles',
-            ['oxactive' => (int) $active],
-            ['oxid'     => $productId]
+            ['oxactive' => (int)$active],
+            ['oxid' => $productId]
         );
     }
 }

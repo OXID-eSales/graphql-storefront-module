@@ -29,11 +29,13 @@ final class BannerTest extends TestCase
      */
     public function testActive($active, $from, $to, $now, $expected): void
     {
-        $banner = new Banner($this->getModelStub(
-            $active,
-            $from,
-            $to
-        ));
+        $banner = new Banner(
+            $this->getModelStub(
+                $active,
+                $from,
+                $to
+            )
+        );
         $this->assertSame($expected, $banner->isActive($now));
     }
 
@@ -42,37 +44,37 @@ final class BannerTest extends TestCase
         return [
             [
                 'active' => '1',
-                'from'   => '',
-                'to'     => '',
-                'now'    => null,
+                'from' => '',
+                'to' => '',
+                'now' => null,
                 'result' => true,
             ],
             [
                 'active' => '0',
-                'from'   => '',
-                'to'     => '',
-                'now'    => null,
+                'from' => '',
+                'to' => '',
+                'now' => null,
                 'result' => false,
             ],
             [
                 'active' => '1',
-                'from'   => '2018-01-01 12:00:00',
-                'to'     => '2018-01-01 19:00:00',
-                'now'    => null,
+                'from' => '2018-01-01 12:00:00',
+                'to' => '2018-01-01 19:00:00',
+                'now' => null,
                 'result' => true,
             ],
             [
                 'active' => '0',
-                'from'   => '2018-01-01 12:00:00',
-                'to'     => '2018-01-01 19:00:00',
-                'now'    => null,
+                'from' => '2018-01-01 12:00:00',
+                'to' => '2018-01-01 19:00:00',
+                'now' => null,
                 'result' => false,
             ],
             [
                 'active' => '0',
-                'from'   => '2018-01-01 12:00:00',
-                'to'     => '2018-01-01 19:00:00',
-                'now'    => new DateTimeImmutable('2018-01-01 16:00:00'),
+                'from' => '2018-01-01 12:00:00',
+                'to' => '2018-01-01 19:00:00',
+                'now' => new DateTimeImmutable('2018-01-01 16:00:00'),
                 'result' => true,
             ],
         ];

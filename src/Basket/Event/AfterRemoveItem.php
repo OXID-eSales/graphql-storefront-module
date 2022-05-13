@@ -13,7 +13,6 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class AfterRemoveItem extends AbstractItemEvent implements BasketModifyInterface
 {
-
     /** @var ID */
     protected $basketItemId;
 

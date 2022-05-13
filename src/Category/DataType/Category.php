@@ -52,14 +52,14 @@ final class Category implements ShopModelAwareInterface
     public function getParentId(): ID
     {
         return new ID(
-            (string) $this->category->getRawFieldData('oxparentid')
+            (string)$this->category->getRawFieldData('oxparentid')
         );
     }
 
     public function getRootId(): ID
     {
         return new ID(
-            (string) $this->category->getRawFieldData('oxrootid')
+            (string)$this->category->getRawFieldData('oxrootid')
         );
     }
 
@@ -72,7 +72,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getPosition(): int
     {
-        return (int) $this->category->getRawFieldData('oxsort');
+        return (int)$this->category->getRawFieldData('oxsort');
     }
 
     /**
@@ -133,7 +133,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getExternalLink(): string
     {
-        return (string) $this->category->getRawFieldData('oxextlink');
+        return (string)$this->category->getRawFieldData('oxextlink');
     }
 
     /**
@@ -141,7 +141,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getTemplate(): string
     {
-        return (string) $this->category->getRawFieldData('oxtemplate');
+        return (string)$this->category->getRawFieldData('oxtemplate');
     }
 
     /**
@@ -152,7 +152,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getPriceFrom(): float
     {
-        return (float) $this->category->getRawFieldData('oxpricefrom');
+        return (float)$this->category->getRawFieldData('oxpricefrom');
     }
 
     /**
@@ -163,7 +163,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getPriceTo(): float
     {
-        return (float) $this->category->getRawFieldData('oxpriceto');
+        return (float)$this->category->getRawFieldData('oxpriceto');
     }
 
     /**
@@ -189,7 +189,7 @@ final class Category implements ShopModelAwareInterface
     {
         $vat = $this->category->getRawFieldData('oxvat');
 
-        return null === $vat ? $vat : (float) $vat;
+        return null === $vat ? $vat : (float)$vat;
     }
 
     /**
@@ -200,7 +200,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function skipDiscount(): bool
     {
-        return (bool) $this->category->getRawFieldData('oxskipdiscounts');
+        return (bool)$this->category->getRawFieldData('oxskipdiscounts');
     }
 
     /**
@@ -208,7 +208,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function showSuffix(): bool
     {
-        return (bool) $this->category->getRawFieldData('oxshowsuffix');
+        return (bool)$this->category->getRawFieldData('oxshowsuffix');
     }
 
     /**
@@ -230,7 +230,7 @@ final class Category implements ShopModelAwareInterface
 
     public function getDefSortMode(): int
     {
-        return (int) $this->category->getRawFieldData('oxdefsortmode');
+        return (int)$this->category->getRawFieldData('oxdefsortmode');
     }
 
     /**

@@ -27,11 +27,13 @@ final class AttributeEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Attribute was not found by id: ' . self::ATTRIBUTE_ID,
@@ -48,11 +50,13 @@ final class AttributeEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
         $this->addAttributeToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -66,24 +70,24 @@ final class AttributeEnterpriseTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'Lieferumfang',
+                'title' => 'Lieferumfang',
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'Included in delivery',
+                'title' => 'Included in delivery',
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'title'      => 'Lieferumfang',
+                'title' => 'Lieferumfang',
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'title'      => 'Included in delivery',
+                'title' => 'Included in delivery',
             ],
         ];
     }
@@ -99,11 +103,13 @@ final class AttributeEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addAttributeToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -117,7 +123,7 @@ final class AttributeEnterpriseTest extends MultishopTestCase
      * @dataProvider providerGetAttributeMultishop
      *
      * @param string $languageId
-     * @param array  $attributes
+     * @param array $attributes
      */
     public function testAttributeListMultishop(string $shopId, $languageId, $attributes): void
     {
@@ -125,11 +131,13 @@ final class AttributeEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addAttributesToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             attributes {
                 title
             }
-        }');
+        }'
+        );
 
         foreach ($attributes as $key => $attribute) {
             $this->assertSame(
@@ -143,7 +151,7 @@ final class AttributeEnterpriseTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
                 'attributes' => [
                     'EU-Größe',
@@ -152,7 +160,7 @@ final class AttributeEnterpriseTest extends MultishopTestCase
                 ],
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
                 'attributes' => [
                     'EU-Size',
@@ -161,7 +169,7 @@ final class AttributeEnterpriseTest extends MultishopTestCase
                 ],
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
                 'attributes' => [
                     'EU-Größe',
@@ -170,7 +178,7 @@ final class AttributeEnterpriseTest extends MultishopTestCase
                 ],
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
                 'attributes' => [
                     'EU-Size',

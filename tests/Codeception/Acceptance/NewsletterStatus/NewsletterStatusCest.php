@@ -41,14 +41,15 @@ final class NewsletterStatusCest extends BaseCest
         $I->deleteFromDatabase(
             'oxnewssubscribed',
             [
-                'OXEMAIL'  => self::OTHER_USERNAME,
+                'OXEMAIL' => self::OTHER_USERNAME,
             ]
         );
     }
 
     public function testNewsletterOptInNoDatabaseEntry(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation{
+        $I->sendGQLQuery(
+            'mutation{
           newsletterOptIn(newsletterStatus: {
             email:"' . self::OTHER_USERNAME . '",
             confirmCode:"' . md5(self::OTHER_USERNAME . self::OTHER_USER_OXPASSALT) . '"
@@ -56,7 +57,8 @@ final class NewsletterStatusCest extends BaseCest
             email
             status
           }
-        }');
+        }'
+        );
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
             'Newsletter subscription status was not found for: ' . self::OTHER_USERNAME,
@@ -68,7 +70,8 @@ final class NewsletterStatusCest extends BaseCest
     {
         $this->prepareTestData($I);
 
-        $I->sendGQLQuery('mutation{
+        $I->sendGQLQuery(
+            'mutation{
           newsletterOptIn(newsletterStatus: {
             email:"' . self::OTHER_USERNAME . '",
             confirmCode:"incorrect"
@@ -76,7 +79,8 @@ final class NewsletterStatusCest extends BaseCest
             email
             status
           }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -91,7 +95,8 @@ final class NewsletterStatusCest extends BaseCest
     {
         $this->prepareTestData($I);
 
-        $I->sendGQLQuery('mutation{
+        $I->sendGQLQuery(
+            'mutation{
           newsletterOptIn(newsletterStatus: {
             email:"",
             confirmCode:""
@@ -99,7 +104,8 @@ final class NewsletterStatusCest extends BaseCest
             email
             status
           }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -114,7 +120,8 @@ final class NewsletterStatusCest extends BaseCest
     {
         $this->prepareTestData($I);
 
-        $I->sendGQLQuery('mutation{
+        $I->sendGQLQuery(
+            'mutation{
           newsletterOptIn(newsletterStatus: {
             email:"' . self::OTHER_USERNAME . '",
             confirmCode:"' . md5(self::OTHER_USERNAME . self::OTHER_USER_OXPASSALT) . '"
@@ -129,7 +136,8 @@ final class NewsletterStatusCest extends BaseCest
             unsubscribed
             updated
           }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -155,7 +163,7 @@ final class NewsletterStatusCest extends BaseCest
         $I->seeInDatabase(
             'oxnewssubscribed',
             [
-                'OXUSERID'  => self::OTHER_USER_OXID,
+                'OXUSERID' => self::OTHER_USER_OXID,
                 'OXDBOPTIN' => 0,
             ]
         );
@@ -163,11 +171,13 @@ final class NewsletterStatusCest extends BaseCest
 
     public function testNewsletterStatusUnsubscribeForMissingData(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterUnsubscribe (newsletterStatus: {
               email: "' . self::NONEXISTING_USERNAME . '"
             })
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -181,9 +191,11 @@ final class NewsletterStatusCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterUnsubscribe
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -192,9 +204,11 @@ final class NewsletterStatusCest extends BaseCest
 
     public function testNewsletterStatusUnsubscribeForMissingDataOrToken(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterUnsubscribe
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -206,11 +220,13 @@ final class NewsletterStatusCest extends BaseCest
         $this->prepareTestData($I, 1);
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             newsletterUnsubscribe (newsletterStatus: {
               email: "' . self::OTHER_USERNAME . '"
             })
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -219,7 +235,7 @@ final class NewsletterStatusCest extends BaseCest
         $I->seeInDatabase(
             'oxnewssubscribed',
             [
-                'OXUSERID'  => self::OTHER_USER_OXID,
+                'OXUSERID' => self::OTHER_USER_OXID,
                 'OXDBOPTIN' => 0,
             ]
         );
@@ -230,8 +246,8 @@ final class NewsletterStatusCest extends BaseCest
         $I->haveInDatabase(
             'oxnewssubscribed',
             [
-                'OXID'           => self::SUBSCRIPTION_ID,
-                'OXSUBSCRIBED'   => '2020-04-01 13:13:13',
+                'OXID' => self::SUBSCRIPTION_ID,
+                'OXSUBSCRIBED' => '2020-04-01 13:13:13',
                 'OXUNSUBSCRIBED' => '1980-01-01 00:00:00',
             ]
         );
@@ -239,11 +255,11 @@ final class NewsletterStatusCest extends BaseCest
         $I->updateInDatabase(
             'oxnewssubscribed',
             [
-                'OXUSERID'     => self::OTHER_USER_OXID,
-                'OXDBOPTIN'    => $optin,
-                'OXEMAIL'      => self::OTHER_USERNAME,
-                'OXFNAME'      => 'Marc',
-                'OXLNAME'      => 'Muster',
+                'OXUSERID' => self::OTHER_USER_OXID,
+                'OXDBOPTIN' => $optin,
+                'OXEMAIL' => self::OTHER_USERNAME,
+                'OXFNAME' => 'Marc',
+                'OXLNAME' => 'Muster',
                 'OXSUBSCRIBED' => '2020-04-01 13:13:13',
             ],
             [

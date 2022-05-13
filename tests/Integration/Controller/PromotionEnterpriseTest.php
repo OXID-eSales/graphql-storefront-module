@@ -25,14 +25,16 @@ final class PromotionEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             promotion (promotionId: "' . self::PROMOTION_SUB_SHOP_ID . '") {
                 id
                 active
                 title
                 text
             }
-        }');
+        }'
+        );
 
         $promotion = $result['body']['data']['promotion'];
 
@@ -41,12 +43,14 @@ final class PromotionEnterpriseTest extends MultishopTestCase
         $this->assertSame('Current sub shop Promotion 1 DE', $promotion['title']);
         $this->assertSame('Long description 1 DE', $promotion['text']);
 
-        $this->assertEmpty(array_diff(array_keys($promotion), [
-            'id',
-            'active',
-            'title',
-            'text',
-        ]));
+        $this->assertEmpty(
+            array_diff(array_keys($promotion), [
+                'id',
+                'active',
+                'title',
+                'text',
+            ])
+        );
     }
 
     /**
@@ -56,11 +60,13 @@ final class PromotionEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             promotions {
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 2 active promotion for shop 2
         $this->assertCount(

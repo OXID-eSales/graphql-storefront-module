@@ -30,7 +30,7 @@ final class Link
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->authorizationService = $authorizationService;
     }
 
@@ -43,11 +43,11 @@ final class Link
         try {
             /** @var LinkDataType $link */
             $link = $this->repository->getById(
-                (string) $id,
+                (string)$id,
                 LinkDataType::class
             );
         } catch (NotFound $e) {
-            throw LinkNotFound::byId((string) $id);
+            throw LinkNotFound::byId((string)$id);
         }
 
         if ($link->isActive()) {

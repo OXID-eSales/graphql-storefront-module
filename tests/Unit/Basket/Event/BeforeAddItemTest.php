@@ -20,9 +20,9 @@ final class BeforeAddItemTest extends AbstractItemEventTest
     public function testSetAmmount(): void
     {
         $event = $this->prepareEvent();
-        $event->setAmount((float) self::SET_AMMOUNT);
+        $event->setAmount((float)self::SET_AMMOUNT);
 
-        $this->assertSame((float) self::SET_AMMOUNT, $event->getAmount());
+        $this->assertSame((float)self::SET_AMMOUNT, $event->getAmount());
     }
 
     protected function prepareEvent(): Event
@@ -30,7 +30,7 @@ final class BeforeAddItemTest extends AbstractItemEventTest
         return new Event(
             new ID(self::BASKET_ID),
             new ID(self::BASKET_ITEM_ID),
-            (float) self::AMMOUNT
+            (float)self::AMMOUNT
         );
     }
 }

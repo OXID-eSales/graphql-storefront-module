@@ -45,21 +45,21 @@ final class InvoiceAddressFactory
 
         $customer->assign(
             [
-                'oxsal'       => $salutation,
-                'oxfname'     => $firstName,
-                'oxlname'     => $lastName,
-                'oxcompany'   => $company ?: $customer->getRawFieldData('oxcompany'),
-                'oxaddinfo'   => $additionalInfo ?: $customer->getRawFieldData('oxaddinfo'),
-                'oxstreet'    => $street,
-                'oxstreetnr'  => $streetNumber,
-                'oxzip'       => $zipCode,
-                'oxcity'      => $city,
-                'oxcountryid' => (string) $countryId,
-                'oxstateid'   => (string) $stateId,
-                'oxustid'     => $vatID ?: $customer->getRawFieldData('oxustid'),
-                'oxprivfon'   => $phone ?: $customer->getRawFieldData('oxprivfon'),
-                'oxmobfon'    => $mobile ?: $customer->getRawFieldData('oxmobfon'),
-                'oxfax'       => $fax ?: $customer->getRawFieldData('oxfax'),
+                'oxsal' => $salutation,
+                'oxfname' => $firstName,
+                'oxlname' => $lastName,
+                'oxcompany' => $company ?: $customer->getRawFieldData('oxcompany'),
+                'oxaddinfo' => $additionalInfo ?: $customer->getRawFieldData('oxaddinfo'),
+                'oxstreet' => $street,
+                'oxstreetnr' => $streetNumber,
+                'oxzip' => $zipCode,
+                'oxcity' => $city,
+                'oxcountryid' => (string)$countryId,
+                'oxstateid' => (string)$stateId,
+                'oxustid' => $vatID ?: $customer->getRawFieldData('oxustid'),
+                'oxprivfon' => $phone ?: $customer->getRawFieldData('oxprivfon'),
+                'oxmobfon' => $mobile ?: $customer->getRawFieldData('oxmobfon'),
+                'oxfax' => $fax ?: $customer->getRawFieldData('oxfax'),
             ]
         );
 
@@ -68,7 +68,7 @@ final class InvoiceAddressFactory
 
         /** @var RequiredAddressFields */
         $requiredAddressFields = oxNew(RequiredAddressFields::class);
-        $requiredFields        = $requiredAddressFields->getBillingFields();
+        $requiredFields = $requiredAddressFields->getBillingFields();
         $validator->setRequiredFields(
             $requiredFields
         );
@@ -76,11 +76,11 @@ final class InvoiceAddressFactory
         $externalFields = [
             'oxcountryid' => [
                 'class' => EshopCountryModel::class,
-                'id'    => (string) $countryId,
+                'id' => (string)$countryId,
             ],
             'oxstateid' => [
                 'class' => EshopStateModel::class,
-                'id'    => (string) $stateId,
+                'id' => (string)$stateId,
             ],
         ];
 

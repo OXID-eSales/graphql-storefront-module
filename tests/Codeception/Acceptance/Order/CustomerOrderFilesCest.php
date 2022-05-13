@@ -84,28 +84,28 @@ final class CustomerOrderFilesCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $customerFiles = $result['data']['customer']['files'];
-        $orderFiles    = $result['data']['customer']['orders'][0]['files'];
+        $orderFiles = $result['data']['customer']['orders'][0]['files'];
 
         $expectedFiles = [
             [
                 'file' => [
                     'product' => [
-                        'id'     => 'oiaa81b5e002fc2f73b9398c361c0b97',
+                        'id' => 'oiaa81b5e002fc2f73b9398c361c0b97',
                         'active' => true,
-                        'title'  => 'Online-Shops mit OXID eShop',
+                        'title' => 'Online-Shops mit OXID eShop',
                     ],
-                    'id'               => 'oiaad7812ae7127283b8fd6d309ea5d5',
-                    'filename'         => 'ch03.pdf',
+                    'id' => 'oiaad7812ae7127283b8fd6d309ea5d5',
+                    'filename' => 'ch03.pdf',
                     'onlyPaidDownload' => false,
                 ],
-                'id'                          => '729aafa296783575ddfd8e9527355b3b',
-                'filename'                    => 'ch03.pdf',
-                'firstDownload'               => '2020-09-10T09:14:15+02:00',
-                'latestDownload'              => '2020-09-10T09:14:15+02:00',
-                'downloadCount'               => 1,
-                'maxDownloadCount'            => 0,
-                'validUntil'                  => '2020-09-11T09:14:15+02:00',
-                'valid'                       => false,
+                'id' => '729aafa296783575ddfd8e9527355b3b',
+                'filename' => 'ch03.pdf',
+                'firstDownload' => '2020-09-10T09:14:15+02:00',
+                'latestDownload' => '2020-09-10T09:14:15+02:00',
+                'downloadCount' => 1,
+                'maxDownloadCount' => 0,
+                'validUntil' => '2020-09-11T09:14:15+02:00',
+                'valid' => false,
             ],
         ];
 
@@ -148,7 +148,7 @@ final class CustomerOrderFilesCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame([
-            'id'   => '886deb7e49bb2e51b4fb939f6ed7655c',
+            'id' => '886deb7e49bb2e51b4fb939f6ed7655c',
             'file' => null,
         ], $result['data']['customer']['orders'][0]['files'][0]);
     }

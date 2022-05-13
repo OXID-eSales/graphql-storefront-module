@@ -22,7 +22,7 @@ final class Reviewer
     public function __construct(
         Repository $repository
     ) {
-        $this->repository            = $repository;
+        $this->repository = $repository;
     }
 
     /**

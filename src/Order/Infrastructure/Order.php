@@ -28,8 +28,8 @@ final class Order
 {
     public function deliveryAddress(OrderDataType $order): ?OrderDeliveryAddress
     {
-        $result    = new OrderDeliveryAddress($order->getEshopModel());
-        $countryId = (string) $result->countryId();
+        $result = new OrderDeliveryAddress($order->getEshopModel());
+        $countryId = (string)$result->countryId();
 
         if (empty($countryId)) {
             $result = null;
@@ -76,7 +76,7 @@ final class Order
     {
         /** @var Iterator<OrderArticle> $orderArticles */
         $orderArticles = $order->getEshopModel()->getOrderArticles();
-        $items         = [];
+        $items = [];
 
         foreach ($orderArticles as $oneArticle) {
             $items[] = new OrderItem($oneArticle);
@@ -97,7 +97,7 @@ final class Order
     {
         /** @var OrderFileListModel $orderFileList */
         $orderFileList = oxNew(OrderFileListModel::class);
-        $orderFileList->loadOrderFiles((string) $order->getId());
+        $orderFileList->loadOrderFiles((string)$order->getId());
         $result = [];
 
         if ($orderFiles = $orderFileList->getArray()) {

@@ -33,7 +33,7 @@ final class Category
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->authorizationService = $authorizationService;
     }
 
@@ -45,9 +45,9 @@ final class Category
     {
         try {
             /** @var CategoryDataType $category */
-            $category = $this->repository->getById((string) $id, CategoryDataType::class);
+            $category = $this->repository->getById((string)$id, CategoryDataType::class);
         } catch (NotFound $e) {
-            throw CategoryNotFound::byId((string) $id);
+            throw CategoryNotFound::byId((string)$id);
         }
 
         if ($category->isActive()) {

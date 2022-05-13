@@ -39,11 +39,11 @@ final class NewsletterStatusSubscribe
         string $email,
         ?string $userId
     ) {
-        $this->salutation      = $salutation;
-        $this->firstName       = $firstName;
-        $this->lastName        = $lastName;
-        $this->email           = $email;
-        $this->userId          = $userId;
+        $this->salutation = $salutation;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->userId = $userId;
     }
 
     /**

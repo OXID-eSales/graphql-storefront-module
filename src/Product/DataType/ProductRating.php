@@ -51,7 +51,7 @@ final class ProductRating implements ShopModelAwareInterface
          *
          * @var int
          */
-        return (int) $this->product->getArticleRatingCount(false);
+        return (int)$this->product->getArticleRatingCount(false);
     }
 
     /**

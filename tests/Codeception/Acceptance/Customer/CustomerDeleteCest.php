@@ -28,9 +28,11 @@ final class CustomerDeleteCest extends BaseCest
 
     public function testDeleteNotLoggedInCustomer(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             customerDelete
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -47,9 +49,11 @@ final class CustomerDeleteCest extends BaseCest
 
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             customerDelete
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -66,9 +70,11 @@ final class CustomerDeleteCest extends BaseCest
 
         $I->login(self::ADMIN_USERNAME, self::ADMIN_PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             customerDelete
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();

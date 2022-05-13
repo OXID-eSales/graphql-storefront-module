@@ -25,14 +25,14 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->updateInDatabase(
             'oxvouchers',
             [
-                'OXDATEUSED'       => null,
-                'OXORDERID'        => '',
-                'OXUSERID'         => '',
-                'OXRESERVED'       => 0,
-                'OEGQL_BASKETID'   => 'null',
+                'OXDATEUSED' => null,
+                'OXORDERID' => '',
+                'OXUSERID' => '',
+                'OXRESERVED' => 0,
+                'OEGQL_BASKETID' => 'null',
             ],
             [
-                'OXUSERID'          => self::USER_OXID,
+                'OXUSERID' => self::USER_OXID,
             ]
         );
 
@@ -52,7 +52,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $basketCosts = $this->checkBasketCosts($I, $basketId);
 
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -68,9 +68,9 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => 'voucher1xid',
-                'oxorderid'      => $orderId,
-                'oxreserved >'   => 0,
+                'oxid' => 'voucher1xid',
+                'oxorderid' => $orderId,
+                'oxreserved >' => 0,
 
                 'oegql_basketid' => $basketId,
             ]
@@ -94,10 +94,10 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->updateInDatabase(
             'oxvouchers',
             [
-                'oxreserved'     => time() - 10900,
+                'oxreserved' => time() - 10900,
             ],
             [
-                'oxid'           => 'voucher1xid',
+                'oxid' => 'voucher1xid',
                 'oegql_basketid' => $basketId,
             ]
         );
@@ -144,10 +144,10 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->haveInDatabase(
             'oxobject2discount',
             [
-                'OXID'         => 'voucher_assigned_to_product',
+                'OXID' => 'voucher_assigned_to_product',
                 'OXDISCOUNTID' => 'my_personal_voucher',
-                'OXOBJECTID'   => self::PRODUCT_ID,
-                'OXTYPE'       => 'oxarticles',
+                'OXOBJECTID' => self::PRODUCT_ID,
+                'OXTYPE' => 'oxarticles',
             ]
         );
 
@@ -171,19 +171,19 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->haveInDatabase(
             'oxobject2discount',
             [
-                'OXID'         => 'voucher_assigned_to_product',
+                'OXID' => 'voucher_assigned_to_product',
                 'OXDISCOUNTID' => 'product_voucher',
-                'OXOBJECTID'   => self::PRODUCT_ID,
-                'OXTYPE'       => 'oxarticles',
+                'OXOBJECTID' => self::PRODUCT_ID,
+                'OXTYPE' => 'oxarticles',
             ]
         );
         $I->haveInDatabase(
             'oxobject2discount',
             [
-                'OXID'         => 'voucher_assigned_to_otherproduct',
+                'OXID' => 'voucher_assigned_to_otherproduct',
                 'OXDISCOUNTID' => 'product_voucher',
-                'OXOBJECTID'   => 'other_product_id',
-                'OXTYPE'       => 'oxarticles',
+                'OXOBJECTID' => 'other_product_id',
+                'OXTYPE' => 'oxarticles',
             ]
         );
 
@@ -210,10 +210,10 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->haveInDatabase(
             'oxobject2discount',
             [
-                'OXID'         => 'voucher_assigned_to_category',
+                'OXID' => 'voucher_assigned_to_category',
                 'OXDISCOUNTID' => 'personal_voucher',
-                'OXOBJECTID'   => self::CATEGORY_ID,
-                'OXTYPE'       => 'oxcategories',
+                'OXOBJECTID' => self::CATEGORY_ID,
+                'OXTYPE' => 'oxcategories',
             ]
         );
 
@@ -237,10 +237,10 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->haveInDatabase(
             'oxobject2discount',
             [
-                'OXID'         => 'voucher_assigned_to_category',
+                'OXID' => 'voucher_assigned_to_category',
                 'OXDISCOUNTID' => 'category_voucher',
-                'OXOBJECTID'   => self::CATEGORY_ID,
-                'OXTYPE'       => 'oxcategories',
+                'OXOBJECTID' => self::CATEGORY_ID,
+                'OXTYPE' => 'oxcategories',
             ]
         );
 
@@ -253,11 +253,11 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
             'oxobject2category',
             [
                 'OXOBJECTID' => 'other_product',
-                'OXCATNID'   => self::CATEGORY_ID,
+                'OXCATNID' => self::CATEGORY_ID,
             ],
             [
                 'OXOBJECTID' => self::PRODUCT_ID,
-                'OXCATNID'   => self::CATEGORY_ID,
+                'OXCATNID' => self::CATEGORY_ID,
             ]
         );
 
@@ -272,11 +272,11 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
             'oxobject2category',
             [
                 'OXOBJECTID' => self::PRODUCT_ID,
-                'OXCATNID'   => self::CATEGORY_ID,
+                'OXCATNID' => self::CATEGORY_ID,
             ],
             [
                 'OXOBJECTID' => 'other_product',
-                'OXCATNID'   => self::CATEGORY_ID,
+                'OXCATNID' => self::CATEGORY_ID,
             ]
         );
     }
@@ -289,8 +289,8 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->haveInDatabase(
             'oxobject2group',
             [
-                'OXID'       => 'voucher_assigned_to_user_group',
-                'OXSHOPID'   => 1,
+                'OXID' => 'voucher_assigned_to_user_group',
+                'OXSHOPID' => 1,
                 'OXOBJECTID' => 'my_personal_voucher',
                 'OXGROUPSID' => 'oxidcustomer',
             ]
@@ -316,8 +316,8 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->haveInDatabase(
             'oxobject2group',
             [
-                'OXID'       => 'voucher_assigned_to_user_group',
-                'OXSHOPID'   => 1,
+                'OXID' => 'voucher_assigned_to_user_group',
+                'OXSHOPID' => 1,
                 'OXOBJECTID' => 'user_voucher',
                 'OXGROUPSID' => 'oxidgoodcust',
             ]
@@ -367,7 +367,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxminimumvalue' => 20.00],
-            ['oxid'           => 'my_personal_voucher']
+            ['oxid' => 'my_personal_voucher']
         );
 
         $basketId = $this->prepareBasket($I, 'minvalue_voucher_ok');
@@ -389,7 +389,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxminimumvalue' => 20.00],
-            ['oxid'           => 'minvalue_voucher']
+            ['oxid' => 'minvalue_voucher']
         );
 
         $basketId = $this->prepareBasket($I, 'minvalue_voucher');
@@ -400,7 +400,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->updateInDatabase(
             'oxvoucherseries',
             ['oxminimumvalue' => 100.00],
-            ['oxid'           => 'minvalue_voucher']
+            ['oxid' => 'minvalue_voucher']
         );
 
         //place the order
@@ -430,7 +430,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
             ]
         );
 
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -445,16 +445,16 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->haveInDatabase(
             'oxvouchers',
             [
-                'OXDATEUSED'       => null,
-                'OXORDERID'        => '',
-                'OXUSERID'         => '',
-                'OXRESERVED'       => 0,
-                'OXVOUCHERNR'      => 'myDeleteVoucher',
+                'OXDATEUSED' => null,
+                'OXORDERID' => '',
+                'OXUSERID' => '',
+                'OXRESERVED' => 0,
+                'OXVOUCHERNR' => 'myDeleteVoucher',
                 'OXVOUCHERSERIEID' => 'delete_voucher',
-                'OXDISCOUNT'       => 5,
-                'OXID'             => 'my_delete_voucher_1',
-                'OXTIMESTAMP'      => date('Y-m-d', strtotime('-1 day')),
-                'OEGQL_BASKETID'   => 'null',
+                'OXDISCOUNT' => 5,
+                'OXID' => 'my_delete_voucher_1',
+                'OXTIMESTAMP' => date('Y-m-d', strtotime('-1 day')),
+                'OEGQL_BASKETID' => 'null',
             ]
         );
     }
@@ -484,10 +484,14 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         return $basketCosts;
     }
 
-    private function checkPlaceOrder(AcceptanceTester $I, string $basketId, array $basketCosts, string $voucherId = 'voucher1id'): void
-    {
+    private function checkPlaceOrder(
+        AcceptanceTester $I,
+        string $basketId,
+        array $basketCosts,
+        string $voucherId = 'voucher1id'
+    ): void {
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history
@@ -503,9 +507,9 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => $voucherId,
-                'oxorderid'      => $orderId,
-                'oxreserved >'   => 0,
+                'oxid' => $voucherId,
+                'oxorderid' => $orderId,
+                'oxreserved >' => 0,
                 'oegql_basketid' => $basketId,
             ]
         );
@@ -518,7 +522,7 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         string $voucherId = 'voucher1xid'
     ): void {
         //place the order
-        $result  = $this->placeOrder($I, $basketId);
+        $result = $this->placeOrder($I, $basketId);
         $orderId = $result['data']['placeOrder']['id'];
 
         //check order history, voucher was not applied
@@ -532,9 +536,9 @@ final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest
         $I->seeInDatabase(
             'oxvouchers',
             [
-                'oxid'           => $voucherId,
-                'oxorderid'      => '',
-                'oxreserved'     => 0,
+                'oxid' => $voucherId,
+                'oxorderid' => '',
+                'oxreserved' => 0,
                 'oegql_basketid' => '',
             ]
         );

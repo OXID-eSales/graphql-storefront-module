@@ -17,25 +17,27 @@ final class BannerEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             banners {
                 id,
                 title,
                 sorting
             }
-        }');
+        }'
+        );
 
         $this->assertCount(2, $result['body']['data']['banners']);
 
         $this->assertSame([
             [
-                'id'      => '_test_second_shop_banner_2',
-                'title'   => 'subshop banner 2',
+                'id' => '_test_second_shop_banner_2',
+                'title' => 'subshop banner 2',
                 'sorting' => 1,
             ],
             [
-                'id'      => '_test_second_shop_banner_1',
-                'title'   => 'subshop banner 1',
+                'id' => '_test_second_shop_banner_1',
+                'title' => 'subshop banner 1',
                 'sorting' => 2,
             ],
         ], $result['body']['data']['banners']);

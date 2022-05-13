@@ -29,9 +29,9 @@ final class CountryEnterpriseCest extends MultishopBaseCest
      */
     public function testCountryPerShopAndLanguage(AcceptanceTester $I, Example $data): void
     {
-        $shopId     = (int) $data['shopId'];
-        $languageId = (int) $data['languageId'];
-        $title      = $data['title'];
+        $shopId = (int)$data['shopId'];
+        $languageId = (int)$data['languageId'];
+        $title = $data['title'];
 
         $I->sendGQLQuery(
             'query{
@@ -50,8 +50,8 @@ final class CountryEnterpriseCest extends MultishopBaseCest
 
         $I->assertEquals(
             [
-                'id'          => self::ACTIVE_COUNTRY,
-                'title'       => $title,
+                'id' => self::ACTIVE_COUNTRY,
+                'title' => $title,
             ],
             $result['data']['country']
         );
@@ -80,10 +80,10 @@ final class CountryEnterpriseCest extends MultishopBaseCest
         // Test default sorting for countries
         $I->assertEquals(
             [
-                ['title' => 'Germany',        'position' => 1],
-                ['title' => 'United States',  'position' => 2],
-                ['title' => 'Switzerland',    'position' => 3],
-                ['title' => 'Austria',        'position' => 4],
+                ['title' => 'Germany', 'position' => 1],
+                ['title' => 'United States', 'position' => 2],
+                ['title' => 'Switzerland', 'position' => 3],
+                ['title' => 'Austria', 'position' => 4],
                 ['title' => 'United Kingdom', 'position' => 5],
             ],
             $countries
@@ -92,11 +92,16 @@ final class CountryEnterpriseCest extends MultishopBaseCest
 
     public function testGetCountryListWithReversePositionSorting(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries(sort: {position: "DESC"}) {
                 id
             }
-        }', null, 1, 2);
+        }',
+            null,
+            1,
+            2
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -115,23 +120,28 @@ final class CountryEnterpriseCest extends MultishopBaseCest
 
     public function testGetCountryListWithTitleSorting(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             countries(sort: {position: "", title: "ASC"}) {
                 title
                 position
             }
-        }', null, 1, 2);
+        }',
+            null,
+            1,
+            2
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
             [
-                ['title' => 'Austria',        'position' => 4],
-                ['title' => 'Germany',        'position' => 1],
-                ['title' => 'Switzerland',    'position' => 3],
+                ['title' => 'Austria', 'position' => 4],
+                ['title' => 'Germany', 'position' => 1],
+                ['title' => 'Switzerland', 'position' => 3],
                 ['title' => 'United Kingdom', 'position' => 5],
-                ['title' => 'United States',  'position' => 2],
+                ['title' => 'United States', 'position' => 2],
             ],
             $result['data']['countries']
         );
@@ -141,24 +151,24 @@ final class CountryEnterpriseCest extends MultishopBaseCest
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'Deutschland',
+                'title' => 'Deutschland',
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'Germany',
+                'title' => 'Germany',
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'title'      => 'Deutschland',
+                'title' => 'Deutschland',
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'title'      => 'Germany',
+                'title' => 'Germany',
             ],
         ];
     }

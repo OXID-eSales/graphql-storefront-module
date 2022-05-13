@@ -20,7 +20,8 @@ final class CurrencyTest extends TestCase
 {
     public function testGetCurrencyQuery(): void
     {
-        $result = $this->query('
+        $result = $this->query(
+            '
             query {
                 currency {
                     id
@@ -29,7 +30,8 @@ final class CurrencyTest extends TestCase
                     sign
                 }
             }
-        ');
+        '
+        );
 
         $configCurrency = Registry::getConfig()->getActShopCurrencyObject();
         $resultCurrency = $result['body']['data']['currency'];
@@ -43,7 +45,7 @@ final class CurrencyTest extends TestCase
             $resultCurrency['name']
         );
         $this->assertSame(
-            (float) $configCurrency->rate,
+            (float)$configCurrency->rate,
             $resultCurrency['rate']
         );
         $this->assertSame(
@@ -57,7 +59,9 @@ final class CurrencyTest extends TestCase
      */
     public function testGetCurrencyByName(string $name): void
     {
-        $result = $this->query(sprintf('
+        $result = $this->query(
+            sprintf(
+                '
             query {
                 currency (name: "%s") {
                     id
@@ -66,7 +70,10 @@ final class CurrencyTest extends TestCase
                     sign
                 }
             }
-        ', $name));
+        ',
+                $name
+            )
+        );
 
         $configCurrency = Registry::getConfig()->getCurrencyObject($name);
         $resultCurrency = $result['body']['data']['currency'];
@@ -80,7 +87,7 @@ final class CurrencyTest extends TestCase
             $resultCurrency['name']
         );
         $this->assertSame(
-            (float) $configCurrency->rate,
+            (float)$configCurrency->rate,
             $resultCurrency['rate']
         );
         $this->assertSame(
@@ -104,7 +111,9 @@ final class CurrencyTest extends TestCase
      */
     public function testGetCurrencyByNameShouldFail(string $name): void
     {
-        $result = $this->query(sprintf('
+        $result = $this->query(
+            sprintf(
+                '
             query {
                 currency (name: "%s") {
                     id
@@ -113,7 +122,10 @@ final class CurrencyTest extends TestCase
                     sign
                 }
             }
-        ', $name));
+        ',
+                $name
+            )
+        );
 
         $this->assertSame(
             'Currency "' . $name . '" was not found',
@@ -133,7 +145,8 @@ final class CurrencyTest extends TestCase
 
     public function testGetCurrencyList(): void
     {
-        $result = $this->query('
+        $result = $this->query(
+            '
             query {
                 currencies{
                     id
@@ -142,7 +155,8 @@ final class CurrencyTest extends TestCase
                     sign
                 }
             }
-        ');
+        '
+        );
 
         $configCurrencies = Registry::getConfig()->getCurrencyArray();
         $resultCurrencies = $result['body']['data']['currencies'];
@@ -157,7 +171,7 @@ final class CurrencyTest extends TestCase
                 $resultCurrencies[$key]['name']
             );
             $this->assertSame(
-                (float) $expectedCurrency->rate,
+                (float)$expectedCurrency->rate,
                 $resultCurrencies[$key]['rate']
             );
             $this->assertSame(

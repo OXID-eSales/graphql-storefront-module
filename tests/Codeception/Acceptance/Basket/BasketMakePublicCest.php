@@ -117,7 +117,7 @@ final class BasketMakePublicCest extends BaseCest
         );
 
         $I->seeResponseIsJson();
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         $I->assertTrue($result['data']['basketMakePublic']['public']);
     }
@@ -138,7 +138,7 @@ final class BasketMakePublicCest extends BaseCest
         );
 
         $I->seeResponseIsJson();
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         return $result['data']['basketCreate']['id'];
     }

@@ -20,9 +20,9 @@ final class StateModelStub extends EshopStateModel
     }
 
     /**
+     * @param mixed $data
      * @var array
      *
-     * @param mixed $data
      */
     public function assign($data): void
     {

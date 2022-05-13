@@ -33,7 +33,7 @@ final class ProductAttributeTest extends TestCase
         $article->load('096e38032896a847682651d565966c45');
         $product = new Product($article);
 
-        $productRelation   = $this->productRelationService();
+        $productRelation = $this->productRelationService();
         $productAttributes = $productRelation->getAttributes($product);
 
         $this->assertCount(2, $productAttributes);
@@ -54,7 +54,7 @@ final class ProductAttributeTest extends TestCase
         $article->load('096e38032896a847682651d565966c45');
         $product = new Product($article);
 
-        $productRelation   = $this->productRelationService();
+        $productRelation = $this->productRelationService();
         $productAttributes = $productRelation->getAttributes($product);
 
         $this->assertEquals($title, $productAttributes[$key]->getAttribute()->getTitle());

@@ -25,7 +25,7 @@ final class AddressFilterList extends FilterList
 
     public function withUserFilter(StringFilter $user): self
     {
-        $filter         = clone $this;
+        $filter = clone $this;
         $filter->userId = $user;
 
         return $filter;

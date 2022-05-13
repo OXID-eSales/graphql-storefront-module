@@ -24,10 +24,10 @@ final class BasketProduct
         $basket = $basketProductGross->getEshopModel();
 
         $productVats = [];
-        $vats        = $basket->getProductVats(false);
+        $vats = $basket->getProductVats(false);
 
         foreach ($vats as $vatRate => $vatPrice) {
-            $productVats[] = new BasketProductVats((float) $vatRate, (float) $vatPrice);
+            $productVats[] = new BasketProductVats((float)$vatRate, (float)$vatPrice);
         }
 
         return $productVats;

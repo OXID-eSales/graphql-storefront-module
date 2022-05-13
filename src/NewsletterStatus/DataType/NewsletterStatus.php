@@ -56,7 +56,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
      */
     public function salutation(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxsal');
+        return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxsal');
     }
 
     /**
@@ -64,7 +64,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
      */
     public function firstName(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxfname');
+        return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxfname');
     }
 
     /**
@@ -72,7 +72,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
      */
     public function lastName(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxlname');
+        return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxlname');
     }
 
     /**
@@ -80,7 +80,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
      */
     public function email(): string
     {
-        return (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxemail');
+        return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxemail');
     }
 
     /**
@@ -102,7 +102,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
      */
     public function failedEmailCount(): int
     {
-        return (int) $this->newsletterSubscriptionStatus->getRawFieldData('oxemailfailed');
+        return (int)$this->newsletterSubscriptionStatus->getRawFieldData('oxemailfailed');
     }
 
     /**
@@ -111,7 +111,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
     public function subscribed(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxsubscribed')
+            (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxsubscribed')
         );
     }
 
@@ -120,7 +120,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
      */
     public function unsubscribed(): ?DateTimeInterface
     {
-        $dateTime = (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxunsubscribed');
+        $dateTime = (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxunsubscribed');
 
         return DateTimeImmutableFactory::fromString(
             $dateTime
@@ -133,14 +133,14 @@ final class NewsletterStatus implements ShopModelAwareInterface
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxtimestamp')
+            (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxtimestamp')
         );
     }
 
     public function userId(): ID
     {
         return new ID(
-            (string) $this->newsletterSubscriptionStatus->getRawFieldData('oxuserid')
+            (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxuserid')
         );
     }
 

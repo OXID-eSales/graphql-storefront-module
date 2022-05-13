@@ -53,7 +53,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. '
+            . 'For more information about the problem, check Troubleshooting section in documentation.',
             $result['errors'][0]['message']
         );
     }
@@ -81,7 +82,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. '
+            . 'For more information about the problem, check Troubleshooting section in documentation.',
             $result['errors'][0]['message']
         );
     }
@@ -129,7 +131,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. For more information about the problem, check Troubleshooting section in documentation.',
+            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. '
+            . 'For more information about the problem, check Troubleshooting section in documentation.',
             $result['errors'][0]['message']
         );
     }
@@ -141,10 +144,10 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $I->getRest()->sendPOST(
             $uri,
             [
-                'shp'     => 2,
-                'lang'    => 0,
-                'cl'      => 'start',
-                'fnc'     => 'login',
+                'shp' => 2,
+                'lang' => 0,
+                'cl' => 'start',
+                'fnc' => 'login',
                 'lgn_usr' => self::USERNAME,
                 'lgn_pwd' => self::PASSWORD,
             ]
@@ -183,7 +186,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $rest->deleteHeader('Cookie');
         $rest->haveHTTPHeader('Content-Type', 'application/json');
         $rest->sendPOST($uri, [
-            'query'     => $query,
+            'query' => $query,
         ]);
     }
 
@@ -195,7 +198,7 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $rest->haveHTTPHeader('Cookie', 'sid_key=oxid;sid=' . $sid);
         $rest->haveHTTPHeader('Content-Type', 'application/json');
         $rest->sendPOST($uri, [
-            'query'     => $query,
+            'query' => $query,
         ]);
     }
 }

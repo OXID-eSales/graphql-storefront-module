@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\WishedPrice\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\OutOfBounds;
+
 use function sprintf;
 
 final class WishedPriceOutOfBounds extends OutOfBounds

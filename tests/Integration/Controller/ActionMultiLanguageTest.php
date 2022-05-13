@@ -19,7 +19,7 @@ final class ActionMultiLanguageTest extends TokenTestCase
      * @dataProvider providerGetActionWithFilterMultiLanguage
      *
      * @param string $languageId
-     * @param array  $action
+     * @param array $action
      */
     public function testGetSingleActiveActionMultilanguage($languageId, $action): void
     {
@@ -52,8 +52,8 @@ final class ActionMultiLanguageTest extends TokenTestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'result'     => [
-                    'title'    => 'Angebot der Woche',
+                'result' => [
+                    'title' => 'Angebot der Woche',
                     'products' => [
                         [
                             'title' => 'Kuyichi Ledergürtel JEVER',
@@ -63,8 +63,8 @@ final class ActionMultiLanguageTest extends TokenTestCase
             ],
             'en' => [
                 'languageId' => '1',
-                'result'     => [
-                    'title'    => 'Week\'s Special',
+                'result' => [
+                    'title' => 'Week\'s Special',
                     'products' => [
                         [
                             'title' => 'Kuyichi leather belt JEVER',

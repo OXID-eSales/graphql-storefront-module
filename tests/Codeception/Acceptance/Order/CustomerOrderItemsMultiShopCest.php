@@ -33,36 +33,36 @@ final class CustomerOrderItemsMultiShopCest extends MultishopBaseCest
         $I->login(self::USER_SHOP_2, self::PASSWORD, 2);
 
         $result = $this->queryCustomerOrderItems($I);
-        $items  = $result['data']['customer']['orders'][0]['items'];
+        $items = $result['data']['customer']['orders'][0]['items'];
 
         $I->assertCount(1, $items);
 
         $expectedItem = [
-            'id'               => '677688370a4a64d8336107bcf174fdeb',
-            'amount'           => 1.0,
-            'product'          => [
-                'id'    => '_test_product_for_basket',
+            'id' => '677688370a4a64d8336107bcf174fdeb',
+            'amount' => 1.0,
+            'product' => [
+                'id' => '_test_product_for_basket',
                 'title' => 'Product 621',
             ],
-            'sku'              => '621',
-            'title'            => 'Product 1',
+            'sku' => '621',
+            'title' => 'Product 1',
             'shortDescription' => '',
-            'price'            => [
+            'price' => [
                 'price' => 10.0,
-                'vat'   => 19.0,
+                'vat' => 19.0,
             ],
-            'itemPrice'        => [
+            'itemPrice' => [
                 'price' => 10.0,
             ],
-            'dimensions'       => [
+            'dimensions' => [
                 'length' => 0.0,
-                'width'  => 0.0,
+                'width' => 0.0,
                 'height' => 0.0,
                 'weight' => 0.0,
             ],
-            'insert'           => '2020-05-25T00:00:00+02:00',
-            'cancelled'        => false,
-            'bundle'           => false,
+            'insert' => '2020-05-25T00:00:00+02:00',
+            'cancelled' => false,
+            'bundle' => false,
         ];
 
         $I->assertEquals($expectedItem, $items[0]);
@@ -79,7 +79,7 @@ final class CustomerOrderItemsMultiShopCest extends MultishopBaseCest
 
         $result = $this->queryCustomerOrderItems($I);
 
-        $items  = [];
+        $items = [];
         $orders = $result['data']['customer']['orders'];
 
         foreach ($orders as $order) {
@@ -93,31 +93,31 @@ final class CustomerOrderItemsMultiShopCest extends MultishopBaseCest
         $I->assertCount(1, $items);
 
         $expectedItem = [
-            'id'               => '677688370a4a64d8336107bcf174fde1',
-            'amount'           => 1.0,
-            'product'          => [
-                'id'    => '_test_product_for_basket',
+            'id' => '677688370a4a64d8336107bcf174fde1',
+            'amount' => 1.0,
+            'product' => [
+                'id' => '_test_product_for_basket',
                 'title' => 'Product 621',
             ],
-            'sku'              => '621',
-            'title'            => 'Product 1',
+            'sku' => '621',
+            'title' => 'Product 1',
             'shortDescription' => '',
-            'price'            => [
+            'price' => [
                 'price' => 10.0,
-                'vat'   => 19.0,
+                'vat' => 19.0,
             ],
-            'itemPrice'        => [
+            'itemPrice' => [
                 'price' => 10.0,
             ],
-            'dimensions'       => [
+            'dimensions' => [
                 'length' => 0.0,
-                'width'  => 0.0,
+                'width' => 0.0,
                 'height' => 0.0,
                 'weight' => 0.0,
             ],
-            'insert'           => '2020-05-25T00:00:00+02:00',
-            'cancelled'        => false,
-            'bundle'           => false,
+            'insert' => '2020-05-25T00:00:00+02:00',
+            'cancelled' => false,
+            'bundle' => false,
         ];
 
         $I->assertEquals($expectedItem, $items[0]);

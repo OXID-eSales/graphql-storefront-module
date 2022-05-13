@@ -25,7 +25,7 @@ final class OrderProductBruttoSum implements ShopModelAwareInterface
     public function __construct(
         EshopOrderModel $order
     ) {
-        $this->order                      = $order;
+        $this->order = $order;
     }
 
     public function getEshopModel(): EshopOrderModel
@@ -38,7 +38,7 @@ final class OrderProductBruttoSum implements ShopModelAwareInterface
      */
     public function getSum(): float
     {
-        return (float) ($this->order->getRawFieldData('oxtotalbrutsum'));
+        return (float)($this->order->getRawFieldData('oxtotalbrutsum'));
     }
 
     public static function getModelClass(): string

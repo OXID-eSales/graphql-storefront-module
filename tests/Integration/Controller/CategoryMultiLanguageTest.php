@@ -17,7 +17,7 @@ final class CategoryMultiLanguageTest extends TestCase
 {
     public const SORTING_DESC = 1;
 
-    public const SORTING_ASC  = 0;
+    public const SORTING_ASC = 0;
 
     private const ACTIVE_CATEGORY = 'd86fdf0d67bf76dc427aabd2e53e0a97';
 
@@ -44,7 +44,7 @@ final class CategoryMultiLanguageTest extends TestCase
 
         $this->assertEquals(
             [
-                'id'    => self::ACTIVE_CATEGORY,
+                'id' => self::ACTIVE_CATEGORY,
                 'title' => $title,
             ],
             $result['body']['data']['category']
@@ -56,11 +56,11 @@ final class CategoryMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'title'      => 'Schuhe',
+                'title' => 'Schuhe',
             ],
             'en' => [
                 'languageId' => '1',
-                'title'      => 'Shoes',
+                'title' => 'Shoes',
             ],
         ];
     }
@@ -75,14 +75,16 @@ final class CategoryMultiLanguageTest extends TestCase
             $languageId
         );
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                 title
                 products {
                     title
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             $products,
@@ -95,7 +97,7 @@ final class CategoryMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'products'   => [
+                'products' => [
                     [
                         'title' => 'Kuyichi Gürtel JUNO',
                     ],
@@ -109,7 +111,7 @@ final class CategoryMultiLanguageTest extends TestCase
             ],
             'en' => [
                 'languageId' => '1',
-                'products'   => [
+                'products' => [
                     [
                         'title' => 'Kuyichi belt JUNO',
                     ],
@@ -157,13 +159,13 @@ final class CategoryMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'contains'   => 'Sch',
-                'count'      => 1,
+                'contains' => 'Sch',
+                'count' => 1,
             ],
             'en' => [
                 'languageId' => '1',
-                'contains'   => 'Sho',
-                'count'      => 1,
+                'contains' => 'Sho',
+                'count' => 1,
             ],
         ];
     }
@@ -175,7 +177,8 @@ final class CategoryMultiLanguageTest extends TestCase
     {
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             categories(
                 sort: {
                     position: ""
@@ -185,7 +188,8 @@ final class CategoryMultiLanguageTest extends TestCase
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $titles = [];
 
@@ -201,8 +205,11 @@ final class CategoryMultiLanguageTest extends TestCase
     /**
      * @dataProvider dataProviderCategoryProductListFastSorting
      */
-    public function testMultiLanguageCategoryProductListFastSorting(string $sorting, int $sortMode, array $expectedProducts): void
-    {
+    public function testMultiLanguageCategoryProductListFastSorting(
+        string $sorting,
+        int $sortMode,
+        array $expectedProducts
+    ): void {
         $categoryId = '0f4fb00809cec9aa0910aa9c8fe36751';
 
         $this->setGETRequestParameter('lang', '2');
@@ -219,20 +226,22 @@ final class CategoryMultiLanguageTest extends TestCase
             ->set('OXDEFSORTMODE', ':sortMode')
             ->where('OXID = :OXID')
             ->setParameters([
-                ':OXID'          => $categoryId,
-                ':sort'          => $sorting,
-                ':sortMode'      => $sortMode,
+                ':OXID' => $categoryId,
+                ':sort' => $sorting,
+                ':sortMode' => $sortMode,
             ])
             ->execute();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
           category (categoryId: "' . $categoryId . '") {
             id
             products {
                 id
             }
           }
-        }');
+        }'
+        );
 
         $products = $result['body']['data']['category']['products'];
 
@@ -259,7 +268,7 @@ final class CategoryMultiLanguageTest extends TestCase
                     ['id' => 'fadc492a5807c56eb80b0507accd756b'],
                 ],
             ],
-            'title_asc'  => [
+            'title_asc' => [
                 'oxtitle',
                 self::SORTING_ASC,
                 [

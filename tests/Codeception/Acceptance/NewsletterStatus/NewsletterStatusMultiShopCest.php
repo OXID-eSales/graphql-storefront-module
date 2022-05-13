@@ -102,10 +102,10 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'   => 1,
+                'shopId' => 1,
             ],
             'shop_2' => [
-                'shopId'   => 2,
+                'shopId' => 2,
             ],
         ];
     }
@@ -201,11 +201,11 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
     {
         return [
             'malluser' => [
-                'flag'            => true,
+                'flag' => true,
                 'expectedFailure' => false,
             ],
             'no_malluser' => [
-                'flag'            => false,
+                'flag' => false,
                 'expectedFailure' => true,
             ],
         ];
@@ -237,7 +237,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
         $I->seeInDatabase(
             'oxnewssubscribed',
             [
-                'OXID'      => '_othertestuser1',
+                'OXID' => '_othertestuser1',
                 'OXDBOPTIN' => 2,
             ]
         );
@@ -245,7 +245,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
         $I->seeInDatabase(
             'oxnewssubscribed',
             [
-                'OXID'      => '_othertestuser2',
+                'OXID' => '_othertestuser2',
                 'OXDBOPTIN' => 0,
             ]
         );
@@ -279,7 +279,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
         $I->seeInDatabase(
             'oxnewssubscribed',
             [
-                'OXID'      => '_othertestuser2',
+                'OXID' => '_othertestuser2',
                 'OXDBOPTIN' => 0,
             ]
         );
@@ -299,8 +299,8 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
         $I->haveInDatabase(
             'oxnewssubscribed',
             [
-                'OXID'           => $oxid,
-                'oxsubscribed'   => '2020-04-01 13:13:13',
+                'OXID' => $oxid,
+                'oxsubscribed' => '2020-04-01 13:13:13',
                 'oxunsubscribed' => '1980-01-01 00:00:00',
             ]
         );
@@ -308,10 +308,10 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
         $I->updateInDatabase(
             'oxnewssubscribed',
             [
-                'oxuserid'     => self::OTHER_USER_OXID,
-                'oxemail'      => self::OTHER_USERNAME,
-                'oxdboptin'    => 2,
-                'oxshopid'     => $shopid,
+                'oxuserid' => self::OTHER_USER_OXID,
+                'oxemail' => self::OTHER_USERNAME,
+                'oxdboptin' => 2,
+                'oxshopid' => $shopid,
                 'oxsubscribed' => '2020-04-01 13:13:13',
             ],
             [

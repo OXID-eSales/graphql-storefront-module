@@ -39,20 +39,22 @@ final class ProductRelationServiceTest extends TokenTestCase
 
     private const ACTIVE_PRODUCT_WITHOUT_MANUFACTURER = 'f33d5bcc7135908fd36fc736c643aa1c';
 
-    private const INACTIVE_PRODUCT  = '09602cddb5af0aba745293d08ae6bcf6';
+    private const INACTIVE_PRODUCT = '09602cddb5af0aba745293d08ae6bcf6';
 
     private const ACTIVE_MAIN_BUNDLE_PRODUCT = '_test_active_main_bundle';
 
     public function testGetAccessoriesRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                 id
                 accessories {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $product = $result['body']['data']['product'];
 
@@ -81,14 +83,16 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                 id
                 accessories {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $product = $result['body']['data']['product'];
 
@@ -107,7 +111,8 @@ final class ProductRelationServiceTest extends TokenTestCase
      */
     public function testGetProductAttributesRelation(string $productId, array $expected): void
     {
-        $result = $this->query('
+        $result = $this->query(
+            '
             query{
                 product(productId: "' . $productId . '" ){
                     attributes {
@@ -118,7 +123,8 @@ final class ProductRelationServiceTest extends TokenTestCase
                     }
                 }
             }
-        ');
+        '
+        );
 
         $this->assertSame(
             sort($expected),
@@ -130,33 +136,33 @@ final class ProductRelationServiceTest extends TokenTestCase
     {
         return [
             [
-                'product'  => 'b56369b1fc9d7b97f9c5fc343b349ece',
+                'product' => 'b56369b1fc9d7b97f9c5fc343b349ece',
                 'expected' => [
                     [
-                        'value'     => 'Kite, Backpack, Reparaturset',
+                        'value' => 'Kite, Backpack, Reparaturset',
                         'attribute' => ['title' => 'Lieferumfang'],
                     ],
                     [
-                        'value'     => 'Allround',
+                        'value' => 'Allround',
                         'attribute' => ['title' => 'Einsatzbereich'],
                     ],
                 ],
             ],
             [
-                'product'  => 'f4f0cb3606e231c3fdb34fcaee2d6d04',
+                'product' => 'f4f0cb3606e231c3fdb34fcaee2d6d04',
                 'expected' => [
                     [
-                        'value'     => 'Allround',
+                        'value' => 'Allround',
                         'attribute' => ['title' => 'Einsatzbereich'],
                     ],
                     [
-                        'value'     => 'Kite, Tasche, CPR Control System, Pumpe',
+                        'value' => 'Kite, Tasche, CPR Control System, Pumpe',
                         'attribute' => ['title' => 'Lieferumfang'],
                     ],
                 ],
             ],
             [
-                'product'  => '058de8224773a1d5fd54d523f0c823e0',
+                'product' => '058de8224773a1d5fd54d523f0c823e0',
                 'expected' => [],
             ],
         ];
@@ -169,7 +175,8 @@ final class ProductRelationServiceTest extends TokenTestCase
      */
     public function testGetSelectionListsRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_SELECTION_LISTS . '") {
                 id
                 selectionLists {
@@ -179,7 +186,8 @@ final class ProductRelationServiceTest extends TokenTestCase
                     }
                 }
             }
-        }');
+        }'
+        );
 
         $product = $result['body']['data']['product'];
 
@@ -190,7 +198,7 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $this->assertSame(
             [
-                'title'  => 'test selection list [DE] šÄßüл',
+                'title' => 'test selection list [DE] šÄßüл',
                 'fields' => [
                     [
                         'value' => 'selvar1 [DE]',
@@ -220,14 +228,16 @@ final class ProductRelationServiceTest extends TokenTestCase
     {
         $this->getConfig()->setConfigParam('blGBModerate', $configValue);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 reviews {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $product = $result['body']['data']['product'];
 
@@ -268,14 +278,16 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $this->getConfig()->setConfigParam('blGBModerate', true);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 reviews {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $product = $result['body']['data']['product'];
 
@@ -292,14 +304,16 @@ final class ProductRelationServiceTest extends TokenTestCase
 
     public function testGetNoReviewsRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                 id
                 reviews {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             0,
@@ -313,7 +327,8 @@ final class ProductRelationServiceTest extends TokenTestCase
      */
     public function testGetUnitNameAndPriceRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_UNITNAME . '") {
                 id
                 unit {
@@ -323,7 +338,8 @@ final class ProductRelationServiceTest extends TokenTestCase
                     }
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame('g', $result['body']['data']['product']['unit']['name']);
         $this->assertSame(0.42, $result['body']['data']['product']['unit']['price']['price']);
@@ -335,28 +351,32 @@ final class ProductRelationServiceTest extends TokenTestCase
      */
     public function testGetRestockDateRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_RESTOCK_DATE . '") {
                 id
                 stock {
                     restockDate
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame('2999-12-31T00:00:00+01:00', $result['body']['data']['product']['stock']['restockDate']);
     }
 
     public function testGetProductVendorRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "6b63456b3abeeeccd9b085a76ffba1a3") {
                 id
                 vendor {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'a57c56e3ba710eafb2225e98f058d989',
@@ -366,7 +386,8 @@ final class ProductRelationServiceTest extends TokenTestCase
 
     public function testGetCrossSellingRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 crossSelling {
@@ -374,7 +395,8 @@ final class ProductRelationServiceTest extends TokenTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             3,
@@ -383,7 +405,7 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $this->assertSame(
             [
-                'id'     => self::INACTIVE_CROSSSELLING_PRODUCT,
+                'id' => self::INACTIVE_CROSSSELLING_PRODUCT,
                 'active' => true,
             ],
             $result['body']['data']['product']['crossSelling'][0]
@@ -392,14 +414,16 @@ final class ProductRelationServiceTest extends TokenTestCase
 
     public function testGetNoCrossSellingRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITHOUT_CROSSSELLING . '") {
                 id
                 crossSelling {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             [],
@@ -409,14 +433,16 @@ final class ProductRelationServiceTest extends TokenTestCase
 
     public function testGetProductManufacturerRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "6b63456b3abeeeccd9b085a76ffba1a3") {
                 id
                 manufacturer {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             '9434afb379a46d6c141de9c9e5b94fcf',
@@ -426,32 +452,36 @@ final class ProductRelationServiceTest extends TokenTestCase
 
     public function testGetProductWithoutManufacturerRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITHOUT_MANUFACTURER . '") {
                 id
                 manufacturer {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertNull($result['body']['data']['product']['manufacturer']);
     }
 
     public function testGetNoProductBundleItemRelation(): void
     {
-        $config   = Registry::getConfig();
+        $config = Registry::getConfig();
         $oldParam = $config->getConfigParam('bl_perfLoadAccessoires');
         $config->setConfigParam('bl_perfLoadAccessoires', false);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
                 id
                 bundleProduct {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertNull($result['body']['data']['product']['bundleProduct']);
 
@@ -466,30 +496,32 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $queryBuilder = $queryBuilderFactory->create();
         $queryBuilder->update('oxarticles')
-                     ->set('oxbundleid', ':BUNDLEID')
-                     ->where('OXID = :OXID')
-                     ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
-                     ->setParameter(':BUNDLEID', 'THIS-IS-INVALID')
-                     ->execute();
+            ->set('oxbundleid', ':BUNDLEID')
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
+            ->setParameter(':BUNDLEID', 'THIS-IS-INVALID')
+            ->execute();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
                 id
                 bundleProduct {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertNull($result['body']['data']['product']['bundleProduct']);
 
         $queryBuilder = $queryBuilderFactory->create();
         $queryBuilder->update('oxarticles')
-                     ->set('oxbundleid', ':BUNDLEID')
-                     ->where('OXID = :OXID')
-                     ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
-                     ->setParameter(':BUNDLEID', '')
-                     ->execute();
+            ->set('oxbundleid', ':BUNDLEID')
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
+            ->setParameter(':BUNDLEID', '')
+            ->execute();
     }
 
     public function testGetNoInvisibleProductBundleItemRelation(): void
@@ -500,44 +532,48 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $queryBuilder = $queryBuilderFactory->create();
         $queryBuilder->update('oxarticles')
-                     ->set('oxbundleid', ':BUNDLEID')
-                     ->where('OXID = :OXID')
-                     ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
-                     ->setParameter(':BUNDLEID', self::INACTIVE_PRODUCT)
-                     ->execute();
+            ->set('oxbundleid', ':BUNDLEID')
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
+            ->setParameter(':BUNDLEID', self::INACTIVE_PRODUCT)
+            ->execute();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
                 id
                 bundleProduct {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertNull($result['body']['data']['product']['bundleProduct']);
 
         $queryBuilder = $queryBuilderFactory->create();
         $queryBuilder->update('oxarticles')
-                     ->set('oxbundleid', ':BUNDLEID')
-                     ->where('OXID = :OXID')
-                     ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
-                     ->setParameter(':BUNDLEID', '')
-                     ->execute();
+            ->set('oxbundleid', ':BUNDLEID')
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
+            ->setParameter(':BUNDLEID', '')
+            ->execute();
     }
 
     public function testGetInvisibleProductBundleItemRelation(): void
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_MAIN_BUNDLE_PRODUCT . '") {
                 id
                 bundleProduct {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             '_test_inactive_bundle',
@@ -553,20 +589,22 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $queryBuilder = $queryBuilderFactory->create();
         $queryBuilder->update('oxarticles')
-                     ->set('oxbundleid', ':BUNDLEID')
-                     ->where('OXID = :OXID')
-                     ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
-                     ->setParameter(':BUNDLEID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
-                     ->execute();
+            ->set('oxbundleid', ':BUNDLEID')
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
+            ->setParameter(':BUNDLEID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
+            ->execute();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM . '") {
                 id
                 bundleProduct {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM,
@@ -575,11 +613,11 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $queryBuilder = $queryBuilderFactory->create();
         $queryBuilder->update('oxarticles')
-                     ->set('oxbundleid', ':BUNDLEID')
-                     ->where('OXID = :OXID')
-                     ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
-                     ->setParameter(':BUNDLEID', '')
-                     ->execute();
+            ->set('oxbundleid', ':BUNDLEID')
+            ->where('OXID = :OXID')
+            ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
+            ->setParameter(':BUNDLEID', '')
+            ->execute();
     }
 
     /**
@@ -588,7 +626,8 @@ final class ProductRelationServiceTest extends TokenTestCase
      */
     public function testGetScalePricesRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_SCALE_PRICES . '") {
                 id
                 scalePrices {
@@ -599,7 +638,8 @@ final class ProductRelationServiceTest extends TokenTestCase
                     amountTo
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             3,
@@ -608,30 +648,30 @@ final class ProductRelationServiceTest extends TokenTestCase
         $this->assertSame(
             [
                 'absoluteScalePrice' => true,
-                'absolutePrice'      => 27.9,
-                'discount'           => null,
-                'amountFrom'         => 5,
-                'amountTo'           => 9,
+                'absolutePrice' => 27.9,
+                'discount' => null,
+                'amountFrom' => 5,
+                'amountTo' => 9,
             ],
             $result['body']['data']['product']['scalePrices'][0]
         );
         $this->assertSame(
             [
                 'absoluteScalePrice' => true,
-                'absolutePrice'      => 25.9,
-                'discount'           => null,
-                'amountFrom'         => 10,
-                'amountTo'           => 19,
+                'absolutePrice' => 25.9,
+                'discount' => null,
+                'amountFrom' => 10,
+                'amountTo' => 19,
             ],
             $result['body']['data']['product']['scalePrices'][1]
         );
         $this->assertSame(
             [
                 'absoluteScalePrice' => true,
-                'absolutePrice'      => 21.9,
-                'discount'           => null,
-                'amountFrom'         => 20,
-                'amountTo'           => 99,
+                'absolutePrice' => 21.9,
+                'discount' => null,
+                'amountFrom' => 20,
+                'amountTo' => 99,
             ],
             $result['body']['data']['product']['scalePrices'][2]
         );
@@ -639,14 +679,16 @@ final class ProductRelationServiceTest extends TokenTestCase
 
     public function testGetProductCategoryRelation(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 categories {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             '0f40c6a077b68c21f164767c4a903fd2',

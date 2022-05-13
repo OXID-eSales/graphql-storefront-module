@@ -94,9 +94,9 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function addItemToBasket(AcceptanceTester $I, string $basketId, string $productId, float $amount): array
     {
         $variables = [
-            'basketId'  => new ID($basketId),
+            'basketId' => new ID($basketId),
             'productId' => new ID($productId),
-            'amount'    => $amount,
+            'amount' => $amount,
         ];
 
         $mutation = '
@@ -128,7 +128,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function queryBasketDeliveryMethods(AcceptanceTester $I, string $basketId): array
     {
         $variables = [
-            'basketId'  => new ID($basketId),
+            'basketId' => new ID($basketId),
         ];
 
         $query = '
@@ -147,7 +147,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function queryBasketPaymentMethods(AcceptanceTester $I, string $basketId): array
     {
         $variables = [
-            'basketId'  => new ID($basketId),
+            'basketId' => new ID($basketId),
         ];
 
         $query = '
@@ -169,7 +169,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
         string $deliverySetId
     ): string {
         $variables = [
-            'basketId'   => new ID($basketId),
+            'basketId' => new ID($basketId),
             'deliveryId' => new ID($deliverySetId),
         ];
 
@@ -189,16 +189,16 @@ abstract class PlaceOrderBaseCest extends BaseCest
         $result = $this->getGQLResponse($I, $mutation, $variables);
 
         if (array_key_exists('errors', $result)) {
-            return (string) $result['errors'][0]['message'];
+            return (string)$result['errors'][0]['message'];
         }
 
-        return (string) $result['data']['basketSetDeliveryMethod']['deliveryMethod']['id'];
+        return (string)$result['data']['basketSetDeliveryMethod']['deliveryMethod']['id'];
     }
 
     protected function setBasketPaymentMethod(AcceptanceTester $I, string $basketId, string $paymentId): string
     {
         $variables = [
-            'basketId'  => new ID($basketId),
+            'basketId' => new ID($basketId),
             'paymentId' => new ID($paymentId),
         ];
 
@@ -274,9 +274,9 @@ abstract class PlaceOrderBaseCest extends BaseCest
     ): array {
         //now actually place the order
         $variables = [
-            'basketId'                  => new ID($basketId),
+            'basketId' => new ID($basketId),
             'confirmTermsAndConditions' => $termsAndConditions,
-            'remark'                    => $remark,
+            'remark' => $remark,
         ];
 
         $mutation = '
@@ -309,8 +309,10 @@ abstract class PlaceOrderBaseCest extends BaseCest
         );
     }
 
-    protected function createDeliveryAddress(AcceptanceTester $I, string $countryId = 'a7c40f631fc920687.20179984'): string
-    {
+    protected function createDeliveryAddress(
+        AcceptanceTester $I,
+        string $countryId = 'a7c40f631fc920687.20179984'
+    ): string {
         $variables = [
             'countryId' => new ID($countryId),
         ];
@@ -345,7 +347,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
         $deliveryAddressId = $this->createDeliveryAddress($I, $countryId);
 
         $variables = [
-            'basketId'          => new ID($basketId),
+            'basketId' => new ID($basketId),
             'deliveryAddressId' => $deliveryAddressId,
         ];
 
@@ -366,7 +368,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function addVoucherToBasket(AcceptanceTester $I, string $basketId, string $voucherNumber): void
     {
         $variables = [
-            'basketId'      => new ID($basketId),
+            'basketId' => new ID($basketId),
             'voucherNumber' => $voucherNumber,
         ];
 
@@ -387,7 +389,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function queryBasketCost(AcceptanceTester $I, string $basketId): array
     {
         $variables = [
-            'basketId'  => new ID($basketId),
+            'basketId' => new ID($basketId),
         ];
 
         $query = '
@@ -419,7 +421,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function registerCustomer(AcceptanceTester $I, string $email, string $password = self::PASSWORD): array
     {
         $variables = [
-            'email'    => $email,
+            'email' => $email,
             'password' => $password,
         ];
 
@@ -447,13 +449,13 @@ abstract class PlaceOrderBaseCest extends BaseCest
     protected function setInvoiceAddress(AcceptanceTester $I): array
     {
         $variables = [
-            'firstName'    => 'Test',
-            'lastName'     => 'Registered',
-            'street'       => 'Landstraße',
+            'firstName' => 'Test',
+            'lastName' => 'Registered',
+            'street' => 'Landstraße',
             'streetNumber' => '66',
-            'zipCode'      => '22547',
-            'city'         => 'Hamburg',
-            'countryId'    => new ID('a7c40f631fc920687.20179984'),
+            'zipCode' => '22547',
+            'city' => 'Hamburg',
+            'countryId' => new ID('a7c40f631fc920687.20179984'),
         ];
 
         $I->sendGQLQuery(

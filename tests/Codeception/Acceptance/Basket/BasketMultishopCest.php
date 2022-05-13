@@ -84,7 +84,7 @@ final class BasketMultishopCest extends MultishopBaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result   = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
+        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
         $basketId = $result['data']['basketCreate']['id'];
 
         $I->logout();
@@ -109,7 +109,7 @@ final class BasketMultishopCest extends MultishopBaseCest
 
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $result   = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
+        $result = $this->createBasket($I, self::BASKET_NOTICE_LIST, 'false');
         $basketId = $result['data']['basketCreate']['id'];
 
         $I->logout();
@@ -175,31 +175,31 @@ final class BasketMultishopCest extends MultishopBaseCest
 
         $I->assertEquals(
             [
-                'productNet'   => [
+                'productNet' => [
                     'price' => 8.4,
-                    'vat'   => 0,
+                    'vat' => 0,
                 ],
                 'productGross' => [
                     'vats' => [
                         [
-                            'vatRate'  => 19,
+                            'vatRate' => 19,
                             'vatPrice' => 1.6,
                         ],
                     ],
-                    'sum'  => 10,
+                    'sum' => 10,
                 ],
                 'payment' => [
                     'price' => 7.5,
-                    'vat'   => 19,
+                    'vat' => 19,
                 ],
-                'currency'     => [
+                'currency' => [
                     'name' => 'EUR',
                     'rate' => 1,
                 ],
-                'discount'     => 0,
-                'voucher'      => 0,
-                'total'        => 21.4,
-                'delivery'     => [
+                'discount' => 0,
+                'voucher' => 0,
+                'total' => 21.4,
+                'delivery' => [
                     'price' => 3.9,
                 ],
             ],

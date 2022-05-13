@@ -46,7 +46,7 @@ final class OrderFile implements ShopModelAwareInterface
      */
     public function filename(): string
     {
-        return (string) $this->orderFile->getRawFieldData('OXFILENAME');
+        return (string)$this->orderFile->getRawFieldData('OXFILENAME');
     }
 
     /**
@@ -55,7 +55,7 @@ final class OrderFile implements ShopModelAwareInterface
     public function firstDownload(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->orderFile->getRawFieldData('OXFIRSTDOWNLOAD')
+            (string)$this->orderFile->getRawFieldData('OXFIRSTDOWNLOAD')
         );
     }
 
@@ -65,7 +65,7 @@ final class OrderFile implements ShopModelAwareInterface
     public function latestDownload(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->orderFile->getRawFieldData('OXLASTDOWNLOAD')
+            (string)$this->orderFile->getRawFieldData('OXLASTDOWNLOAD')
         );
     }
 
@@ -74,7 +74,7 @@ final class OrderFile implements ShopModelAwareInterface
      */
     public function downloadCount(): int
     {
-        return (int) $this->orderFile->getRawFieldData('OXDOWNLOADCOUNT');
+        return (int)$this->orderFile->getRawFieldData('OXDOWNLOADCOUNT');
     }
 
     /**
@@ -82,7 +82,7 @@ final class OrderFile implements ShopModelAwareInterface
      */
     public function maxDownloadCount(): int
     {
-        return (int) $this->orderFile->getRawFieldData('OXMAXDOWNLOADCOUNT');
+        return (int)$this->orderFile->getRawFieldData('OXMAXDOWNLOADCOUNT');
     }
 
     /**
@@ -91,7 +91,7 @@ final class OrderFile implements ShopModelAwareInterface
     public function validUntil(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->orderFile->getRawFieldData('OXVALIDUNTIL')
+            (string)$this->orderFile->getRawFieldData('OXVALIDUNTIL')
         );
     }
 
@@ -100,7 +100,7 @@ final class OrderFile implements ShopModelAwareInterface
      */
     public function valid(): bool
     {
-        return (bool) $this->orderFile->isValid();
+        return (bool)$this->orderFile->isValid();
     }
 
     /**
@@ -109,10 +109,10 @@ final class OrderFile implements ShopModelAwareInterface
     public function url(): string
     {
         /** @var EshopSeoEncoder $seoEncoder */
-        $seoEncoder  = EshopRegistry::getSeoEncoder();
-        $shopUrl     = EshopRegistry::getConfig()->getShopHomeUrl();
+        $seoEncoder = EshopRegistry::getSeoEncoder();
+        $shopUrl = EshopRegistry::getConfig()->getShopHomeUrl();
         $downloadUrl = $shopUrl . 'cl=download';
-        $seoUrl      = $seoEncoder->getStaticUrl($downloadUrl) ?: $downloadUrl;
+        $seoUrl = $seoEncoder->getStaticUrl($downloadUrl) ?: $downloadUrl;
 
         //Take care of some extra parameter after seo url
         $filePath = (strpos($seoUrl, '?') !== false ? '&' : '?') . sprintf('sorderfileid=%s', $this->id());
@@ -122,7 +122,7 @@ final class OrderFile implements ShopModelAwareInterface
 
     public function fileId(): string
     {
-        return (string) $this->orderFile->getRawFieldData('OXFILEID');
+        return (string)$this->orderFile->getRawFieldData('OXFILEID');
     }
 
     public function getEshopModel(): OrderFileModel

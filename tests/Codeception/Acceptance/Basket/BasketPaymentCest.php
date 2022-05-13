@@ -45,19 +45,21 @@ final class BasketPaymentCest extends BaseCest
      */
     public function getBasketPayment(AcceptanceTester $I, Example $data): void
     {
-        $basketId  = $data['basketId'];
+        $basketId = $data['basketId'];
         $paymentId = $data['paymentId'];
 
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             basket(basketId: "' . $basketId . '") {
                 id
                 payment {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -81,37 +83,37 @@ final class BasketPaymentCest extends BaseCest
 
         $I->assertSame([
             [
-                'id'    => 'oxidinvoice',
+                'id' => 'oxidinvoice',
                 'title' => 'Rechnung',
-                'cost'  => [
+                'cost' => [
                     'price' => 0,
                 ],
             ],
             [
-                'id'    => 'oxidpayadvance',
+                'id' => 'oxidpayadvance',
                 'title' => 'Vorauskasse',
-                'cost'  => [
+                'cost' => [
                     'price' => 0,
                 ],
             ],
             [
-                'id'    => 'oxiddebitnote',
+                'id' => 'oxiddebitnote',
                 'title' => 'Bankeinzug/Lastschrift',
-                'cost'  => [
+                'cost' => [
                     'price' => 0,
                 ],
             ],
             [
-                'id'    => 'oxidcashondel',
+                'id' => 'oxidcashondel',
                 'title' => 'Nachnahme',
-                'cost'  => [
+                'cost' => [
                     'price' => 7.5,
                 ],
             ],
             [
-                'id'    => 'oxidgraphql',
+                'id' => 'oxidgraphql',
                 'title' => 'GraphQL',
-                'cost'  => [
+                'cost' => [
                     'price' => 7.77,
                 ],
             ],
@@ -156,24 +158,24 @@ final class BasketPaymentCest extends BaseCest
         ]);
 
         $this->preparePayment($I, [
-            'OXADDSUM'      => 10,
-            'OXADDSUMTYPE'  => '%',
+            'OXADDSUM' => 10,
+            'OXADDSUMTYPE' => '%',
             'OXADDSUMRULES' => $data['payment_rule'],
         ]);
 
         $result = $this->basketPaymentQuery($I, self::BASKET_PAYMENT_COST);
 
         $I->assertSame([
-            'id'    => 'oxidgraphql',
+            'id' => 'oxidgraphql',
             'title' => 'GraphQL',
-            'cost'  => [
+            'cost' => [
                 'price' => $data['cost'],
             ],
         ], end($result['data']['basketPayments']));
 
         //Reset payment and discounts
         $this->preparePayment($I, [
-            'OXADDSUM'     => 7.77,
+            'OXADDSUM' => 7.77,
             'OXADDSUMTYPE' => 'abs',
         ]);
         $I->updateInDatabase('oxdiscount', [
@@ -188,17 +190,17 @@ final class BasketPaymentCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $this->preparePayment($I, [
-            'OXADDSUM'      => 10,
-            'OXADDSUMTYPE'  => '%',
+            'OXADDSUM' => 10,
+            'OXADDSUMTYPE' => '%',
             'OXADDSUMRULES' => 15,
         ]);
 
         $result = $this->basketPaymentQuery($I, self::BASKET_PAYMENT_COST);
 
         $I->assertSame([
-            'id'    => 'oxidgraphql',
+            'id' => 'oxidgraphql',
             'title' => 'GraphQL',
-            'cost'  => [
+            'cost' => [
                 'price' => 25.47,
             ],
         ], end($result['data']['basketPayments']));
@@ -208,15 +210,15 @@ final class BasketPaymentCest extends BaseCest
         $result = $this->basketPaymentQuery($I, self::BASKET_PAYMENT_COST);
 
         $I->assertSame([
-            'id'    => 'oxidgraphql',
+            'id' => 'oxidgraphql',
             'title' => 'GraphQL',
-            'cost'  => [
+            'cost' => [
                 'price' => 38.37,
             ],
         ], end($result['data']['basketPayments']));
 
         $this->preparePayment($I, [
-            'OXADDSUM'     => 7.77,
+            'OXADDSUM' => 7.77,
             'OXADDSUMTYPE' => 'abs',
         ]);
     }
@@ -226,19 +228,19 @@ final class BasketPaymentCest extends BaseCest
         return [
             'products_discount_voucher_shipping' => [
                 'payment_rule' => 15,
-                'cost'         => 22.89,
+                'cost' => 22.89,
             ],
-            'products_discount_voucher'          => [
+            'products_discount_voucher' => [
                 'payment_rule' => 7,
-                'cost'         => 22.22,
+                'cost' => 22.22,
             ],
-            'products_discount'                  => [
+            'products_discount' => [
                 'payment_rule' => 3,
-                'cost'         => 23.22,
+                'cost' => 23.22,
             ],
-            'products'                           => [
+            'products' => [
                 'payment_rule' => 1,
-                'cost'         => 25.8,
+                'cost' => 25.8,
             ],
         ];
     }
@@ -247,11 +249,11 @@ final class BasketPaymentCest extends BaseCest
     {
         return [
             [
-                'basketId'  => self::BASKET_WITH_PAYMENT_ID,
+                'basketId' => self::BASKET_WITH_PAYMENT_ID,
                 'paymentId' => self::PAYMENT_ID,
             ],
             [
-                'basketId'  => self::BASKET_WITHOUT_PAYMENT_ID,
+                'basketId' => self::BASKET_WITHOUT_PAYMENT_ID,
                 'paymentId' => null,
             ],
         ];
@@ -291,9 +293,14 @@ final class BasketPaymentCest extends BaseCest
         return $I->grabJsonResponseAsArray();
     }
 
-    private function basketAddItemMutation(AcceptanceTester $I, string $basketId, string $productId, int $amount = 1): void
-    {
-        $I->sendGQLQuery('
+    private function basketAddItemMutation(
+        AcceptanceTester $I,
+        string $basketId,
+        string $productId,
+        int $amount = 1
+    ): void {
+        $I->sendGQLQuery(
+            '
             mutation {
                 basketAddItem(
                     basketId: "' . $basketId . '",
@@ -303,7 +310,8 @@ final class BasketPaymentCest extends BaseCest
                     id
                 }
             }
-        ');
+        '
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();

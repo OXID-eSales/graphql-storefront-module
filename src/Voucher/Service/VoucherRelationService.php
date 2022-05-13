@@ -33,6 +33,6 @@ final class VoucherRelationService
      */
     public function series(Voucher $voucher): VoucherSeries
     {
-        return $this->voucherSeriesService->series((string) $voucher->seriesId());
+        return $this->voucherSeriesService->series((string)$voucher->seriesId());
     }
 }

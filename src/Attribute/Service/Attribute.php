@@ -30,7 +30,7 @@ final class Attribute
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->authorizationService = $authorizationService;
     }
 
@@ -42,11 +42,11 @@ final class Attribute
         try {
             /** @var AttributeDataType $attribute */
             $attribute = $this->repository->getById(
-                (string) $id,
+                (string)$id,
                 AttributeDataType::class
             );
         } catch (NotFound $e) {
-            throw AttributeNotFound::byId((string) $id);
+            throw AttributeNotFound::byId((string)$id);
         }
 
         return $attribute;
