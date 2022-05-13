@@ -13,7 +13,6 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class AfterAddItem extends AbstractItemEvent implements BasketModifyInterface
 {
-
     /** @var ID */
     protected $productId;
 
