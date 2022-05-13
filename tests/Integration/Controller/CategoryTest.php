@@ -85,7 +85,10 @@ final class CategoryTest extends BaseTestCase
         $this->assertNull($category['vat']);
         $this->assertFalse($category['skipDiscount']);
         $this->assertTrue($category['showSuffix']);
-        $this->assertMatchesRegularExpression('@https?://.*/Bekleidung/Sportswear/Neopren/Schuhe/@', $category['seo']['url']);
+        $this->assertMatchesRegularExpression(
+            '@https?://.*/Bekleidung/Sportswear/Neopren/Schuhe/@',
+            $category['seo']['url']
+        );
         $this->assertInstanceOf(
             DateTimeInterface::class,
             new DateTimeImmutable($category['timestamp'])

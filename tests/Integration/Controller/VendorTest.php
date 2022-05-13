@@ -52,7 +52,10 @@ final class VendorTest extends TokenTestCase
         $this->assertNull($vendor['icon']);
         $this->assertEquals('www.true-fashion.com', $vendor['title']);
         $this->assertSame('Ethical style outlet', $vendor['shortdesc']);
-        $this->assertMatchesRegularExpression('@https?://.*/Nach-Lieferant/www-true-fashion-com/$@', $vendor['seo']['url']);
+        $this->assertMatchesRegularExpression(
+            '@https?://.*/Nach-Lieferant/www-true-fashion-com/$@',
+            $vendor['seo']['url']
+        );
         $this->assertEquals('', $vendor['seo']['description']);
         $this->assertEquals('', $vendor['seo']['keywords']);
 

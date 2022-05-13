@@ -30,6 +30,7 @@ final class BeforeRemoveItem extends AbstractItemEvent implements BasketModifyIn
     {
         return $this->basketItemId;
     }
+
     public function setAmount(float $amount): void
     {
         $this->amount = $amount;

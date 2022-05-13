@@ -30,6 +30,7 @@ final class BeforeAddItem extends AbstractItemEvent implements BasketModifyInter
     {
         return $this->productId;
     }
+
     public function setAmount(float $amount): void
     {
         $this->amount = $amount;
