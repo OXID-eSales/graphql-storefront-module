@@ -1,0 +1,16 @@
+parameters:
+    checkMissingIterableValueType: false
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+    stubFiles:
+        - stubs/EshopArticle.stub
+        - stubs/EshopArticleList.stub
+        - stubs/EshopBasket.stub
+        - stubs/EshopUser.stub
+        - stubs/EshopVoucher.stub
+        - stubs/EshopDiscount.stub
+        - stubs/EshopRegistry.stub
+    level: max
+    scanFiles:
+        - ../../vendor/oxid-esales/oxideshop-ce/source/oxfunctions.php
+        - ../../vendor/oxid-esales/oxideshop-ce/source/overridablefunctions.php

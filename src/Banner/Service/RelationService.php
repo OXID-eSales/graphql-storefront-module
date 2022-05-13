@@ -34,8 +34,8 @@ final class RelationService
         ProductService $productService,
         BannerInfrastructure $bannerInfrastructure
     ) {
-        $this->productService        = $productService;
-        $this->bannerInfrastructure  = $bannerInfrastructure;
+        $this->productService = $productService;
+        $this->bannerInfrastructure = $bannerInfrastructure;
     }
 
     /**

@@ -46,9 +46,9 @@ final class ShopBasketTest extends TestCase
         $userBasketModel->load($userBasketId);
         $basketDataType = new BasketDataType($userBasketModel);
 
-        $basketInfrastructure     = ContainerFactory::getInstance()->getContainer()->get(BasketInfrastructure::class);
+        $basketInfrastructure = ContainerFactory::getInstance()->getContainer()->get(BasketInfrastructure::class);
         $reconstructedBasketModel = $basketInfrastructure->getBasket($basketDataType);
-        $reconstructed            = $reconstructedBasketModel->getContents();
+        $reconstructed = $reconstructedBasketModel->getContents();
 
         asort($reconstructed);
         $this->assertEquals(3, count($reconstructed));
@@ -69,7 +69,7 @@ final class ShopBasketTest extends TestCase
     }
 }
 
-final class TestEshopBasketModel extends EshopBasketModel
+final class TestEshopBasketModel extends EshopBasketModel // phpcs:ignore
 {
     public function saveAsUserBasket(string $title): string
     {

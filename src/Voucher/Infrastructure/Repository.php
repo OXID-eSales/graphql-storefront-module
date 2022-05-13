@@ -34,7 +34,7 @@ final class Repository
         SharedRepository $sharedRepository,
         QueryBuilderFactoryInterface $queryBuilderFactory
     ) {
-        $this->sharedRepository    = $sharedRepository;
+        $this->sharedRepository = $sharedRepository;
         $this->queryBuilderFactory = $queryBuilderFactory;
     }
 
@@ -73,7 +73,7 @@ final class Repository
 
     public function addBasketIdToVoucher(ID $basketId, string $voucherId): void
     {
-        $this->updateVoucherBasketId($voucherId, (string) $basketId);
+        $this->updateVoucherBasketId($voucherId, (string)$basketId);
     }
 
     public function removeBasketIdFromVoucher(string $voucherId): void
@@ -111,7 +111,7 @@ final class Repository
             ->setParameters(
                 [
                     'basketid' => $basketId,
-                    'OXID'     => $voucherId,
+                    'OXID' => $voucherId,
                 ]
             )
             ->execute();

@@ -55,8 +55,8 @@ final class RelationService
         CategoryService $categoryService,
         ProductInfrastructure $productInfrastructure
     ) {
-        $this->productService        = $productService;
-        $this->categoryService       = $categoryService;
+        $this->productService = $productService;
+        $this->categoryService = $categoryService;
         $this->productInfrastructure = $productInfrastructure;
     }
 

@@ -20,8 +20,8 @@ final class ProductImageTest extends TestCase
     public function testProductImage(): void
     {
         $imageValue = 'image value';
-        $iconValue  = 'icon value';
-        $zoomValue  = 'zoom value';
+        $iconValue = 'icon value';
+        $zoomValue = 'zoom value';
 
         $productImage = new ProductImage($imageValue, $iconValue, $zoomValue);
 

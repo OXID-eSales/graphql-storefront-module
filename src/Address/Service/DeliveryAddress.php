@@ -37,9 +37,9 @@ final class DeliveryAddress
         Authentication $authenticationService,
         Authorization $authorizationService
     ) {
-        $this->repository                 = $repository;
-        $this->authenticationService      = $authenticationService;
-        $this->authorizationService       = $authorizationService;
+        $this->repository = $repository;
+        $this->authenticationService = $authenticationService;
+        $this->authorizationService = $authorizationService;
     }
 
     /**
@@ -50,7 +50,7 @@ final class DeliveryAddress
         return $this->repository->getByFilter(
             $filterList->withUserFilter(
                 new StringFilter(
-                    (string) $this->authenticationService->getUser()->id()
+                    (string)$this->authenticationService->getUser()->id()
                 )
             ),
             DeliveryAddressDataType::class
@@ -96,7 +96,7 @@ final class DeliveryAddress
      */
     public function getDeliveryAddress(ID $id): DeliveryAddressDataType
     {
-        $id = (string) $id->val();
+        $id = (string)$id->val();
 
         /** Only logged in users can query delivery addresses */
         if (!$this->authenticationService->isLogged()) {
@@ -119,6 +119,6 @@ final class DeliveryAddress
 
     private function isSameUser(DeliveryAddressDataType $deliveryAddress): bool
     {
-        return (string) $deliveryAddress->userId() === (string) $this->authenticationService->getUser()->id();
+        return (string)$deliveryAddress->userId() === (string)$this->authenticationService->getUser()->id();
     }
 }

@@ -33,7 +33,7 @@ abstract class BaseCest
      */
     protected function activateModules(int $shopId = 1): void
     {
-        $testConfig        = new \OxidEsales\TestingLibrary\TestConfig();
+        $testConfig = new \OxidEsales\TestingLibrary\TestConfig();
         $modulesToActivate = $testConfig->getModulesToActivate();
 
         if ($modulesToActivate) {

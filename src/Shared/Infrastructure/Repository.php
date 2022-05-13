@@ -84,7 +84,7 @@ final class Repository
         );
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder->select($model->getViewName() . '.*')
-                     ->from($model->getViewName());
+            ->from($model->getViewName());
 
         if (
             $filter->getActive() !== null &&
@@ -144,8 +144,8 @@ final class Repository
 
         $queryBuilder = $this->queryBuilderFactory->create();
         $queryBuilder->select($model->getViewName() . '.*')
-                     ->from($model->getViewName())
-                     ->orderBy($model->getViewName() . '.oxid');
+            ->from($model->getViewName())
+            ->orderBy($model->getViewName() . '.oxid');
 
         if (
             $filter->getActive() !== null &&
@@ -183,9 +183,9 @@ final class Repository
     }
 
     /**
+     * @return true
      * @throws NotFound
      *
-     * @return true
      */
     public function delete(BaseModel $item): bool
     {

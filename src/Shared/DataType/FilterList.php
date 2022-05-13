@@ -25,7 +25,7 @@ abstract class FilterList
 
     public function withActiveFilter(?BoolFilter $active): self
     {
-        $filterList         = clone $this;
+        $filterList = clone $this;
         $filterList->active = $active;
 
         return $filterList;

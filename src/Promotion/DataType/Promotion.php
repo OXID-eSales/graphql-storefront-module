@@ -56,7 +56,7 @@ final class Promotion implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->actionsModel->getRawFieldData('oxactive') && $this->isActiveNow();
+        return (bool)$this->actionsModel->getRawFieldData('oxactive') && $this->isActiveNow();
     }
 
     /**

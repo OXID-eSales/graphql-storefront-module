@@ -1,28 +1,28 @@
 namespace: OxidEsales\GraphQL\Storefront\Tests\Codeception
 params:
-  - Codeception/Config/params.php
+    - Codeception/Config/params.php
 paths:
-  tests: Codeception
-  output: Codeception/_output
-  data: Codeception/_data
-  support: Codeception/_support
-  envs: Codeception/_envs
-  actor_suffix: Tester
+    tests: Codeception
+    output: Codeception/_output
+    data: Codeception/_data
+    support: Codeception/_support
+    envs: Codeception/_envs
+    actor_suffix: Tester
 
 settings:
-  colors: true
-  log: true
-  memory_limit: 4096M
+    colors: true
+    log: true
+    memory_limit: 4096M
 
 extensions:
-  enabled:
-    - Codeception\Extension\RunFailed
+    enabled:
+        - Codeception\Extension\RunFailed
 
 coverage:
-  enabled: true
-  remote: false
-  local: true
-  c3_url: '%SHOP_URL%'
-  remote_config: 'vendor/oxid-esales/graphql-storefront/tests/codeception.yml'
-  include:
-    - ../src/*
+    enabled: true
+    remote: false
+    local: true
+    c3_url: '%SHOP_URL%'
+    remote_config: 'vendor/oxid-esales/graphql-storefront/tests/codeception.yml'
+    include:
+        - ../src/*

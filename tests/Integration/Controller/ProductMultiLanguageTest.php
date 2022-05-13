@@ -22,13 +22,13 @@ final class ProductMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'title'      => 'Bindung O\'BRIEN DECADE CT 2010',
-                'url'        => 'Wakeboarding/Bindungen/',
+                'title' => 'Bindung O\'BRIEN DECADE CT 2010',
+                'url' => 'Wakeboarding/Bindungen/',
             ],
             'en' => [
                 'languageId' => '1',
-                'title'      => 'Binding O\'BRIEN DECADE CT 2010',
-                'url'        => 'en/Wakeboarding/Bindings',
+                'title' => 'Binding O\'BRIEN DECADE CT 2010',
+                'url' => 'en/Wakeboarding/Bindings',
             ],
         ];
     }
@@ -53,7 +53,7 @@ final class ProductMultiLanguageTest extends TestCase
             $languageId
         );
 
-        $result  = $this->query($query);
+        $result = $this->query($query);
         $product = $result['body']['data']['product'];
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_PRODUCT, $product['id']);
@@ -66,17 +66,17 @@ final class ProductMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'count'      => 0,
+                'count' => 0,
             ],
             'en' => [
                 'languageId' => '1',
-                'count'      => 1,
+                'count' => 1,
             ],
         ];
     }
 
     /**
-     *  @dataProvider providerGetProductVariantsMultilanguage
+     * @dataProvider providerGetProductVariantsMultilanguage
      */
     public function testGetProductVariantsMultilanguage(
         string $languageId,
@@ -117,13 +117,13 @@ final class ProductMultiLanguageTest extends TestCase
     {
         return [
             'de' => [
-                'languageId'    => '0',
-                'labels'        => [
+                'languageId' => '0',
+                'labels' => [
                     'Größe',
                     'Farbe',
                 ],
                 'variants' => [
-                    'id'            => '6b6efaa522be53c3e86fdb41f0542a8a',
+                    'id' => '6b6efaa522be53c3e86fdb41f0542a8a',
                     'variantValues' => [
                         'W 30/L 30',
                         'Blau',
@@ -132,12 +132,12 @@ final class ProductMultiLanguageTest extends TestCase
             ],
             'en' => [
                 'languageId' => '1',
-                'labels'     => [
+                'labels' => [
                     'Size',
                     'Color',
                 ],
                 'values' => [
-                    'id'            => '6b6efaa522be53c3e86fdb41f0542a8a',
+                    'id' => '6b6efaa522be53c3e86fdb41f0542a8a',
                     'variantValues' => [
                         'W 30/L 30',
                         'Blue ',
@@ -148,13 +148,14 @@ final class ProductMultiLanguageTest extends TestCase
     }
 
     /**
-     *  @dataProvider providerGetProductVariantsMultilanguage
+     * @dataProvider providerGetProductVariantsMultilanguage
      */
     public function testSortedProductListByTitle(string $languageId): void
     {
         $this->setGETRequestParameter('lang', $languageId);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(
                 sort: {
                     position: ""
@@ -164,7 +165,8 @@ final class ProductMultiLanguageTest extends TestCase
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $titles = [];
 

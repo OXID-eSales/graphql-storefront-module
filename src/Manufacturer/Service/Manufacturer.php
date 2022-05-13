@@ -32,7 +32,7 @@ final class Manufacturer
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->authorizationService = $authorizationService;
     }
 
@@ -45,11 +45,11 @@ final class Manufacturer
         try {
             /** @var ManufacturerDataType $manufacturer */
             $manufacturer = $this->repository->getById(
-                (string) $id,
+                (string)$id,
                 ManufacturerDataType::class
             );
         } catch (NotFound $e) {
-            throw ManufacturerNotFound::byId((string) $id);
+            throw ManufacturerNotFound::byId((string)$id);
         }
 
         if ($manufacturer->isActive()) {

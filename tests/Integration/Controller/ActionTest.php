@@ -34,7 +34,8 @@ final class ActionTest extends BaseTestCase
 
     public function testGetSingleActiveActionWithoutProducts(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             action(actionId: "' . self::ACTIVE_ACTION_WITHOUT_PRODUCTS . '") {
                 id
                 active
@@ -43,28 +44,31 @@ final class ActionTest extends BaseTestCase
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $action = $result['body']['data']['action'];
 
         $this->assertEquals([
-            'id'       => self::ACTIVE_ACTION_WITHOUT_PRODUCTS,
-            'active'   => true,
-            'title'    => 'Newsletter',
+            'id' => self::ACTIVE_ACTION_WITHOUT_PRODUCTS,
+            'active' => true,
+            'title' => 'Newsletter',
             'products' => [],
         ], $action);
     }
 
     public function testGetSingleActiveActionWithProducts(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             action(actionId: "' . self::ACTIVE_ACTION_WITH_PRODUCTS . '") {
                 id
                 products{
                   id
                 }
             }
-        }');
+        }'
+        );
 
         $products = $result['body']['data']['action']['products'];
 
@@ -88,12 +92,14 @@ final class ActionTest extends BaseTestCase
 
     public function testGetSingleInactiveAction(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             action (actionId: "' . self::INACTIVE_ACTION . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Unauthorized',
@@ -103,12 +109,14 @@ final class ActionTest extends BaseTestCase
 
     public function testGetSingleNonExistingAction(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             action (actionId: "non_existing_id") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Action was not found by id: non_existing_id',
@@ -118,12 +126,14 @@ final class ActionTest extends BaseTestCase
 
     public function testGetSingleWrongTypeAction(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             action (actionId: "' . self::WRONG_TYPE_ACTION . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Action was not found by id: ' . self::WRONG_TYPE_ACTION,
@@ -135,55 +145,59 @@ final class ActionTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             action (actionId: "' . self::INACTIVE_ACTION . '") {
                 id
                 title
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertEquals([
-            'id'     => self::INACTIVE_ACTION,
-            'title'  => 'Startseite unten',
+            'id' => self::INACTIVE_ACTION,
+            'title' => 'Startseite unten',
             'active' => false,
         ], $result['body']['data']['action']);
     }
 
     public function testGetActionsList(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             actions {
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertCount(6, $result['body']['data']['actions']);
 
         $this->assertSame([
             [
-                'id'    => 'oxbargain',
+                'id' => 'oxbargain',
                 'title' => 'Angebot der Woche',
             ],
             [
-                'id'    => 'oxcatoffer',
+                'id' => 'oxcatoffer',
                 'title' => 'Kategorien-Topangebot',
             ],
             [
-                'id'    => 'oxnewest',
+                'id' => 'oxnewest',
                 'title' => 'Frisch eingetroffen',
             ],
             [
-                'id'    => 'oxnewsletter',
+                'id' => 'oxnewsletter',
                 'title' => 'Newsletter',
             ],
             [
-                'id'    => 'oxtop5',
+                'id' => 'oxtop5',
                 'title' => 'Topseller',
             ],
             [
-                'id'    => 'oxtopstart',
+                'id' => 'oxtopstart',
                 'title' => 'Topangebot Startseite',
             ],
         ], $result['body']['data']['actions']);
@@ -193,50 +207,52 @@ final class ActionTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             actions {
                 id,
                 title,
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertCount(7, $result['body']['data']['actions']);
 
         $this->assertEquals([
             [
-                'id'     => 'oxbargain',
-                'title'  => 'Angebot der Woche',
+                'id' => 'oxbargain',
+                'title' => 'Angebot der Woche',
                 'active' => true,
             ],
             [
-                'id'     => 'oxcatoffer',
-                'title'  => 'Kategorien-Topangebot',
+                'id' => 'oxcatoffer',
+                'title' => 'Kategorien-Topangebot',
                 'active' => true,
             ],
             [
-                'id'     => 'oxnewest',
-                'title'  => 'Frisch eingetroffen',
+                'id' => 'oxnewest',
+                'title' => 'Frisch eingetroffen',
                 'active' => true,
             ],
             [
-                'id'     => 'oxnewsletter',
-                'title'  => 'Newsletter',
+                'id' => 'oxnewsletter',
+                'title' => 'Newsletter',
                 'active' => true,
             ],
             [
-                'id'     => 'oxstart',
-                'title'  => 'Startseite unten',
+                'id' => 'oxstart',
+                'title' => 'Startseite unten',
                 'active' => false,
             ],
             [
-                'id'     => 'oxtop5',
-                'title'  => 'Topseller',
+                'id' => 'oxtop5',
+                'title' => 'Topseller',
                 'active' => true,
             ],
             [
-                'id'     => 'oxtopstart',
-                'title'  => 'Topangebot Startseite',
+                'id' => 'oxtopstart',
+                'title' => 'Topangebot Startseite',
                 'active' => true,
             ],
         ], $result['body']['data']['actions']);
@@ -247,14 +263,16 @@ final class ActionTest extends BaseTestCase
      */
     public function testGetActionsListWithFilter(string $contains, array $expected): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             actions(filter: {actionId: {contains: "' . $contains . '"}}) {
                 id
                 products{
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertEquals($expected, $result['body']['data']['actions']);
     }
@@ -266,7 +284,7 @@ final class ActionTest extends BaseTestCase
                 'new',
                 [
                     [
-                        'id'       => 'oxnewest',
+                        'id' => 'oxnewest',
                         'products' => [
                             [
                                 'id' => 'f4f73033cf5045525644042325355732',
@@ -295,7 +313,7 @@ final class ActionTest extends BaseTestCase
                         ],
                     ],
                     [
-                        'id'       => 'oxnewsletter',
+                        'id' => 'oxnewsletter',
                         'products' => [],
                     ],
                 ],
@@ -304,7 +322,7 @@ final class ActionTest extends BaseTestCase
                 'bar',
                 [
                     [
-                        'id'       => 'oxbargain',
+                        'id' => 'oxbargain',
                         'products' => [
                             [
                                 'id' => 'dc5ffdf380e15674b56dd562a7cb6aec',
@@ -324,24 +342,27 @@ final class ActionTest extends BaseTestCase
     {
         return [
             [
-                'withToken'             => false,
-                'expectedProducts'      => [
+                'withToken' => false,
+                'expectedProducts' => [
                     [
-                        'id'     => 'd86e244c8114c8214fbf83da8d6336b3',
+                        'id' => 'd86e244c8114c8214fbf83da8d6336b3',
                         'active' => true,
-                    ], [
-                        'id'     => 'ed6573c0259d6a6fb641d106dcb2faec',
+                    ],
+                    [
+                        'id' => 'ed6573c0259d6a6fb641d106dcb2faec',
                         'active' => true,
                     ],
                 ],
-            ], [
-                'withToken'             => true,
-                'expectedProducts'      => [
+            ],
+            [
+                'withToken' => true,
+                'expectedProducts' => [
                     [
-                        'id'     => 'd86e244c8114c8214fbf83da8d6336b3',
+                        'id' => 'd86e244c8114c8214fbf83da8d6336b3',
                         'active' => true,
-                    ], [
-                        'id'     => 'ed6573c0259d6a6fb641d106dcb2faec',
+                    ],
+                    [
+                        'id' => 'ed6573c0259d6a6fb641d106dcb2faec',
                         'active' => true,
                     ],
                     // TODO: Using a valid token, this list should also contain inactive products
@@ -369,7 +390,8 @@ final class ActionTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             actions(filter: {
                 actionId: {
                     contains: "' . self::ACTIVE_ACTION_WITH_INACTIVE_PRODUCT . '"
@@ -381,7 +403,8 @@ final class ActionTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             count($expectedProducts),
@@ -409,7 +432,8 @@ final class ActionTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             action (actionId: "' . self::ACTIVE_ACTION_WITH_INACTIVE_PRODUCT . '") {
                 id
                 products {
@@ -417,7 +441,8 @@ final class ActionTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             count($expectedProducts),
@@ -434,36 +459,36 @@ final class ActionTest extends BaseTestCase
     {
         return [
             [
-                'withToken'      => false,
+                'withToken' => false,
                 'isActionActive' => false,
-                'expected'       => [],
+                'expected' => [],
             ],
             [
-                'withToken'      => true,
+                'withToken' => true,
                 'isActionActive' => false,
-                'expected'       => [
+                'expected' => [
                     [
-                        'id'     => self::INACTIVE_ACTION,
+                        'id' => self::INACTIVE_ACTION,
                         'active' => false,
                     ],
                 ],
             ],
             [
-                'withToken'      => false,
+                'withToken' => false,
                 'isActionActive' => true,
-                'expected'       => [
+                'expected' => [
                     [
-                        'id'     => self::ACTIVE_ACTION_WITH_PRODUCTS,
+                        'id' => self::ACTIVE_ACTION_WITH_PRODUCTS,
                         'active' => true,
                     ],
                 ],
             ],
             [
-                'withToken'      => false,
+                'withToken' => false,
                 'isActionActive' => true,
-                'expected'       => [
+                'expected' => [
                     [
-                        'id'     => self::ACTIVE_ACTION_WITH_PRODUCTS,
+                        'id' => self::ACTIVE_ACTION_WITH_PRODUCTS,
                         'active' => true,
                     ],
                 ],
@@ -482,12 +507,14 @@ final class ActionTest extends BaseTestCase
 
         $actionId = $isActionActive ? self::ACTIVE_ACTION_WITH_PRODUCTS : self::INACTIVE_ACTION;
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             actions(filter: {actionId: {equals: "' . $actionId . '"}}) {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertEquals($expected, $result['body']['data']['actions']);
     }

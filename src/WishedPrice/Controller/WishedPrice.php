@@ -41,9 +41,9 @@ final class WishedPrice
     /**
      * @Query()
      *
+     * @return WishedPriceDataType[]
      * @throws InvalidToken
      *
-     * @return WishedPriceDataType[]
      */
     public function wishedPrices(): array
     {

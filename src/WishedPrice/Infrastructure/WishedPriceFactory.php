@@ -27,7 +27,7 @@ final class WishedPriceFactory
         Repository $repository,
         CurrencyRepository $currencyRepository
     ) {
-        $this->repository         = $repository;
+        $this->repository = $repository;
         $this->currencyRepository = $currencyRepository;
     }
 
@@ -44,10 +44,10 @@ final class WishedPriceFactory
         $model = oxNew(PriceAlarm::class);
         $model->assign(
             [
-                'OXUSERID'   => $userId,
-                'OXEMAIL'    => $userName,
-                'OXARTID'    => (string) $productId->val(),
-                'OXPRICE'    => round($price, $currency->getPrecision()),
+                'OXUSERID' => $userId,
+                'OXEMAIL' => $userName,
+                'OXARTID' => (string)$productId->val(),
+                'OXPRICE' => round($price, $currency->getPrecision()),
                 'OXCURRENCY' => $currency->getName(),
             ]
         );

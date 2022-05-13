@@ -28,7 +28,7 @@ final class ProductRelationServiceTest extends TestCase
 {
     public function testGetNoCategoryIfNotAssignedToProduct(): void
     {
-        $noCategoryProductModelStub = new class() extends EshopArticleModel {
+        $noCategoryProductModelStub = new class () extends EshopArticleModel {
             public function __construct()
             {
             }
@@ -51,14 +51,14 @@ final class ProductRelationServiceTest extends TestCase
 
     public function testGetNoCategoryIfEmptyCategoryAssignedToProduct(): void
     {
-        $emptyCategoryProductModelStub = new class() extends EshopArticleModel {
+        $emptyCategoryProductModelStub = new class () extends EshopArticleModel {
             public function __construct()
             {
             }
 
             public function getCategory()
             {
-                return new class() extends EshopCategoryModel {
+                return new class () extends EshopCategoryModel {
                     public function __construct()
                     {
                     }

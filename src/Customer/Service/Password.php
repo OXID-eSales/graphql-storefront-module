@@ -30,18 +30,18 @@ final class Password
         CustomerService $customerService,
         Authentication $authenticationService
     ) {
-        $this->repository                 = $repository;
-        $this->customerService            = $customerService;
-        $this->authenticationService      = $authenticationService;
+        $this->repository = $repository;
+        $this->customerService = $customerService;
+        $this->authenticationService = $authenticationService;
     }
 
     public function change(string $old, string $new): bool
     {
         $customerModel = $this->customerService
-                          ->customer(
-                              (string) $this->authenticationService->getUser()->id()
-                          )
-                          ->getEshopModel();
+            ->customer(
+                (string)$this->authenticationService->getUser()->id()
+            )
+            ->getEshopModel();
 
         if (!$customerModel->isSamePassword($old)) {
             throw PasswordMismatch::byOldPassword();

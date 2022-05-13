@@ -30,7 +30,7 @@ final class NewsletterOptInInput
         SubscriberService $subscriberService,
         NewsletterStatusRepository $newsletterStatusRepository
     ) {
-        $this->subscriberService          = $subscriberService;
+        $this->subscriberService = $subscriberService;
         $this->newsletterStatusRepository = $newsletterStatusRepository;
     }
 
@@ -44,7 +44,7 @@ final class NewsletterOptInInput
 
         try {
             /** @var SubscriberType $subscriber */
-            $subscriber = $this->subscriberService->subscriber((string) $newsletterStatus->userId());
+            $subscriber = $this->subscriberService->subscriber((string)$newsletterStatus->userId());
         } catch (SubscriberNotFound $exception) {
             throw NewsletterStatusNotFound::byEmail($email);
         }

@@ -24,10 +24,10 @@ final class OrderProduct
         $order = $orderProductGross->getEshopModel();
 
         $productVats = [];
-        $vats        = $order->getProductVats(false);
+        $vats = $order->getProductVats(false);
 
         foreach ($vats as $vatRate => $vatPrice) {
-            $productVats[] = new OrderProductVats((float) $vatRate, (float) $vatPrice);
+            $productVats[] = new OrderProductVats((float)$vatRate, (float)$vatPrice);
         }
 
         return $productVats;

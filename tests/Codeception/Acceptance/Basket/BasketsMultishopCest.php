@@ -26,7 +26,7 @@ final class BasketsMultishopCest extends MultishopBaseCest
      */
     public function testGetBasketsPerShops(AcceptanceTester $I, Example $data): void
     {
-        $shopId       = $data[0];
+        $shopId = $data[0];
         $basketsCount = $data[1];
 
         $response = $this->basketsQuery($I, self::USERNAME, $shopId);

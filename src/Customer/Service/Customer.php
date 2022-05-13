@@ -47,11 +47,11 @@ final class Customer
         Legacy $legacyService,
         Authorization $authorizationService
     ) {
-        $this->repository             = $repository;
-        $this->customerRepository     = $customerRepository;
-        $this->authenticationService  = $authenticationService;
-        $this->legacyService          = $legacyService;
-        $this->authorizationService   = $authorizationService;
+        $this->repository = $repository;
+        $this->customerRepository = $customerRepository;
+        $this->authenticationService = $authenticationService;
+        $this->legacyService = $legacyService;
+        $this->authorizationService = $authorizationService;
     }
 
     /**
@@ -61,7 +61,7 @@ final class Customer
     public function customer(string $id): CustomerDataType
     {
         if (
-            (string) $id !== (string) $this->authenticationService->getUser()->id() &&
+            (string)$id !== (string)$this->authenticationService->getUser()->id() &&
             !$this->authorizationService->isAllowed('VIEW_ALL_CUSTOMERS')
         ) {
             throw new InvalidLogin('Unauthorized');
@@ -77,7 +77,7 @@ final class Customer
 
     public function changeEmail(string $email): CustomerDataType
     {
-        if (!((string) $id = (string) $this->authenticationService->getUser()->id())) {
+        if (!((string)$id = (string)$this->authenticationService->getUser()->id())) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -102,7 +102,7 @@ final class Customer
 
     public function changeBirthdate(DateTimeInterface $birthdate): CustomerDataType
     {
-        if (!((string) $id = (string) $this->authenticationService->getUser()->id())) {
+        if (!((string)$id = (string)$this->authenticationService->getUser()->id())) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -118,17 +118,17 @@ final class Customer
      */
     public function deleteCustomer(): bool
     {
-        if (!((string) $id = (string) $this->authenticationService->getUser()->id())) {
+        if (!((string)$id = (string)$this->authenticationService->getUser()->id())) {
             throw new InvalidLogin('Unauthorized');
         }
 
-        if (!(bool) $this->legacyService->getConfigParam('blAllowUsersToDeleteTheirAccount')) {
+        if (!(bool)$this->legacyService->getConfigParam('blAllowUsersToDeleteTheirAccount')) {
             throw CustomerNotDeletable::notEnabledByAdmin();
         }
 
         $customerModel = $this->fetchCustomer($id)->getEshopModel();
 
-        if ((bool) $customerModel->isMallAdmin()) {
+        if ((bool)$customerModel->isMallAdmin()) {
             throw CustomerNotDeletable::whileMallAdmin();
         }
 
@@ -149,7 +149,7 @@ final class Customer
 
     public function fetchCustomer(string $id): CustomerDataType
     {
-        $ignoreSubShop = (bool) $this->legacyService->getConfigParam('blMallUsers');
+        $ignoreSubShop = (bool)$this->legacyService->getConfigParam('blMallUsers');
 
         try {
             /** @var CustomerDataType $customer */

@@ -30,7 +30,7 @@ abstract class AddressRelations
         StateService $stateService
     ) {
         $this->countryService = $countryService;
-        $this->stateService   = $stateService;
+        $this->stateService = $stateService;
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class AddressRelations
     {
         try {
             return $this->stateService->state(
-                (string) $address->stateId()
+                (string)$address->stateId()
             );
         } catch (StateNotFound $e) {
             return null;

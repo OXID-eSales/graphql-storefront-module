@@ -96,9 +96,9 @@ final class ReviewMultiShopCest extends MultishopBaseCest
 
         if (isset($result['data']['reviewSet']['id'])) {
             $this->createdReviews[] = [
-                'id'     => $result['data']['reviewSet']['id'],
+                'id' => $result['data']['reviewSet']['id'],
                 'shopId' => $shopId,
-                'user'   => self::USERNAME,
+                'user' => self::USERNAME,
             ];
         }
     }
@@ -109,19 +109,19 @@ final class ReviewMultiShopCest extends MultishopBaseCest
 
         $I->login(self::OTHER_USERNAME, self::PASSWORD, 1);
 
-        $result                   = $this->reviewSet($I, self::PRODUCT_ID_SHOP_1);
+        $result = $this->reviewSet($I, self::PRODUCT_ID_SHOP_1);
         $reviewIdWithShop1Product = $result['data']['reviewSet']['id'];
-        $this->createdReviews[]   = [
-            'id'     => $reviewIdWithShop1Product,
+        $this->createdReviews[] = [
+            'id' => $reviewIdWithShop1Product,
             'shopId' => 1,
-            'user'   => self::OTHER_USERNAME,
+            'user' => self::OTHER_USERNAME,
         ];
 
-        $result                   = $this->reviewSet($I, self::PRODUCT_ID_BOTH_SHOPS);
-        $this->createdReviews[]   = [
-            'id'     => $result['data']['reviewSet']['id'],
+        $result = $this->reviewSet($I, self::PRODUCT_ID_BOTH_SHOPS);
+        $this->createdReviews[] = [
+            'id' => $result['data']['reviewSet']['id'],
             'shopId' => 1,
-            'user'   => self::OTHER_USERNAME,
+            'user' => self::OTHER_USERNAME,
         ];
 
         //let mall user set a review for same product in subshop
@@ -137,11 +137,11 @@ final class ReviewMultiShopCest extends MultishopBaseCest
         );
 
         //review another product
-        $result                   = $this->reviewSet($I, self::PRODUCT_ID_SHOP_2, 2);
-        $this->createdReviews[]   = [
-            'id'     => $result['data']['reviewSet']['id'],
+        $result = $this->reviewSet($I, self::PRODUCT_ID_SHOP_2, 2);
+        $this->createdReviews[] = [
+            'id' => $result['data']['reviewSet']['id'],
             'shopId' => 2,
-            'user'   => self::OTHER_USERNAME,
+            'user' => self::OTHER_USERNAME,
         ];
 
         //get reviews for subshop
@@ -159,25 +159,25 @@ final class ReviewMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop1' => [
-                'shopId'                => 1,
-                'productId'             => self::PRODUCT_ID_SHOP_1,
-                'retryExpectedError'    => 'Review for product with id: %s already exists',
+                'shopId' => 1,
+                'productId' => self::PRODUCT_ID_SHOP_1,
+                'retryExpectedError' => 'Review for product with id: %s already exists',
             ],
             'shop2' => [
-                'shopId'                => 2,
-                'productId'             => self::PRODUCT_ID_SHOP_2,
-                'retryExpectedError'    => 'Review for product with id: %s already exists',
+                'shopId' => 2,
+                'productId' => self::PRODUCT_ID_SHOP_2,
+                'retryExpectedError' => 'Review for product with id: %s already exists',
             ],
             'shop1_with_shop2product' => [
-                'shopId'                => 1,
-                'productId'             => self::PRODUCT_ID_SHOP_2,
-                'expectedError'         => 'Product was not found by id: %s',
-                'retryExpectedError'    => 'Product was not found by id: %s',
+                'shopId' => 1,
+                'productId' => self::PRODUCT_ID_SHOP_2,
+                'expectedError' => 'Product was not found by id: %s',
+                'retryExpectedError' => 'Product was not found by id: %s',
             ],
             'shop2_with_inheritedproduct' => [
-                'shopId'                => 2,
-                'productId'             => self::PRODUCT_ID_BOTH_SHOPS,
-                'retryExpectedError'    => 'Review for product with id: %s already exists',
+                'shopId' => 2,
+                'productId' => self::PRODUCT_ID_BOTH_SHOPS,
+                'retryExpectedError' => 'Review for product with id: %s already exists',
             ],
         ];
     }
@@ -207,8 +207,12 @@ final class ReviewMultiShopCest extends MultishopBaseCest
         return $I->grabJsonResponseAsArray();
     }
 
-    private function reviewDelete(AcceptanceTester $I, string $id, int $shopId = 1, string $user = self::OTHER_USERNAME): void
-    {
+    private function reviewDelete(
+        AcceptanceTester $I,
+        string $id,
+        int $shopId = 1,
+        string $user = self::OTHER_USERNAME
+    ): void {
         $I->login($user, self::PASSWORD, $shopId);
 
         $I->sendGQLQuery(

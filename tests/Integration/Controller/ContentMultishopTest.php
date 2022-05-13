@@ -38,11 +38,13 @@ final class ContentMultishopTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
         $this->addContentToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             self::CONTENT_ID_FOR_SHOP_2,
@@ -61,11 +63,13 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $this->setGETRequestParameter('shp', '1');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Content was not found by id: ' . self::CONTENT_ID_FOR_SHOP_2,
@@ -81,11 +85,13 @@ final class ContentMultishopTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::CONTENT_ID . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Content was not found by id: ' . self::CONTENT_ID,
@@ -102,11 +108,13 @@ final class ContentMultishopTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             contents {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             0,
@@ -124,16 +132,18 @@ final class ContentMultishopTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', '0');
         $this->addContentToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::CONTENT_ID_FOR_SHOP_2,
+                'id' => self::CONTENT_ID_FOR_SHOP_2,
                 'title' => 'Wie bestellen?',
             ],
             $result['body']['data']['content']
@@ -150,11 +160,13 @@ final class ContentMultishopTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
         $this->addContentToShops([2]);
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             contents {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             1,
@@ -169,28 +181,28 @@ final class ContentMultishopTest extends MultishopTestCase
     {
         return [
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'title'      => 'Wie bestellen?',
-                'id'         => self::CONTENT_ID_FOR_SHOP_2,
+                'title' => 'Wie bestellen?',
+                'id' => self::CONTENT_ID_FOR_SHOP_2,
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'title'      => 'How to order?',
-                'id'         => self::CONTENT_ID_FOR_SHOP_2,
+                'title' => 'How to order?',
+                'id' => self::CONTENT_ID_FOR_SHOP_2,
             ],
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'Wie bestellen?',
-                'id'         => self::CONTENT_ID,
+                'title' => 'Wie bestellen?',
+                'id' => self::CONTENT_ID,
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'How to order?',
-                'id'         => self::CONTENT_ID,
+                'title' => 'How to order?',
+                'id' => self::CONTENT_ID,
             ],
         ];
     }
@@ -212,16 +224,18 @@ final class ContentMultishopTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addContentToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             content (contentId: "' . $id . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => $id,
+                'id' => $id,
                 'title' => $title,
             ],
             $result['body']['data']['content']
@@ -245,7 +259,8 @@ final class ContentMultishopTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addContentToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             contents(filter: {
                 folder: {
                     equals: "CMSFOLDER_USERINFO"
@@ -254,11 +269,12 @@ final class ContentMultishopTest extends MultishopTestCase
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => $id,
+                'id' => $id,
                 'title' => $title,
             ],
             $result['body']['data']['contents'][0]

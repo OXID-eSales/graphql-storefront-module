@@ -31,7 +31,7 @@ final class Contact
         Legacy $legacy,
         ContactFormBridgeInterface $contactFormBridge
     ) {
-        $this->legacy            = $legacy;
+        $this->legacy = $legacy;
         $this->contactFormBridge = $contactFormBridge;
     }
 
@@ -59,7 +59,7 @@ final class Contact
         $form->handleRequest($contactRequest->getFields());
         $message = $this->contactFormBridge->getContactFormMessage($form);
         /** @var EshopEmail $mailer */
-        $mailer  = $this->legacy->getEmail();
+        $mailer = $this->legacy->getEmail();
 
         return $mailer->sendContactMail($contactRequest->getEmail(), $contactRequest->getSubject(), $message);
     }

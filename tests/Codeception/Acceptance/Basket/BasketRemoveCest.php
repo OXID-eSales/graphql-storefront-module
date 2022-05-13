@@ -106,14 +106,16 @@ final class BasketRemoveCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketCreate(basket: {title: "new-basket-list"}) {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
-        $result =  $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         $I->logout();
 

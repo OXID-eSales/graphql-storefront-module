@@ -40,9 +40,9 @@ final class Banner
         Authentication $authenticationService,
         BannerInfrastructure $bannerInfrastructure
     ) {
-        $this->repository            = $repository;
-        $this->authorizationService  = $authorizationService;
-        $this->bannerInfrastructure  = $bannerInfrastructure;
+        $this->repository = $repository;
+        $this->authorizationService = $authorizationService;
+        $this->bannerInfrastructure = $bannerInfrastructure;
         $this->authenticationService = $authenticationService;
     }
 
@@ -54,9 +54,9 @@ final class Banner
     {
         try {
             /** @var BannerDataType $banner */
-            $banner = $this->repository->getById((string) $id, BannerDataType::class);
+            $banner = $this->repository->getById((string)$id, BannerDataType::class);
         } catch (NotFound $e) {
-            throw BannerNotFound::byId((string) $id);
+            throw BannerNotFound::byId((string)$id);
         }
 
         if ($banner->isActive()) {
@@ -78,7 +78,7 @@ final class Banner
         $userId = null;
 
         try {
-            $userId = (string) $this->authenticationService->getUser()->id();
+            $userId = (string)$this->authenticationService->getUser()->id();
         } catch (InvalidToken $e) {
         }
 

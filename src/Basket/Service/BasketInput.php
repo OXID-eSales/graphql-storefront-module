@@ -32,9 +32,9 @@ final class BasketInput
         BasketRepository $basketRepository,
         BasketFactory $basketFactory
     ) {
-        $this->authentication   = $authentication;
+        $this->authentication = $authentication;
         $this->basketRepository = $basketRepository;
-        $this->basketFactory    = $basketFactory;
+        $this->basketFactory = $basketFactory;
     }
 
     /**
@@ -46,7 +46,7 @@ final class BasketInput
             throw BasketExists::byTitle($title);
         }
 
-        return $this->basketFactory->createBasket((string) $this->authentication->getUser()->id(), $title, $public);
+        return $this->basketFactory->createBasket((string)$this->authentication->getUser()->id(), $title, $public);
     }
 
     private function doesBasketExist(string $title): bool

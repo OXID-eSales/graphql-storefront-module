@@ -45,8 +45,8 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
-        $result   = $this->basketSetDeliveryAddress($I, $basketId, self::DELIVERY_ADDRESS_ID);
-        $basket   = $result['data']['basketSetDeliveryAddress'];
+        $result = $this->basketSetDeliveryAddress($I, $basketId, self::DELIVERY_ADDRESS_ID);
+        $basket = $result['data']['basketSetDeliveryAddress'];
 
         $I->assertSame('User', $basket['owner']['firstName']);
         $I->assertSame(self::DELIVERY_ADDRESS_ID, $basket['deliveryAddress']['id']);
@@ -102,7 +102,7 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
-        $result   = $this->basketSetDeliveryAddress($I, $basketId, self::WRONG_DELIVERY_ADDRESS_ID);
+        $result = $this->basketSetDeliveryAddress($I, $basketId, self::WRONG_DELIVERY_ADDRESS_ID);
 
         $expectedException = DeliveryAddressNotFound::byId(self::WRONG_DELIVERY_ADDRESS_ID);
         $I->assertSame(
@@ -118,7 +118,7 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
-        $result   = $this->basketSetDeliveryAddress($I, $basketId, 'non-existing-delivery-id');
+        $result = $this->basketSetDeliveryAddress($I, $basketId, 'non-existing-delivery-id');
 
         $expectedException = DeliveryAddressNotFound::byId('non-existing-delivery-id');
         $I->assertSame(
@@ -134,8 +134,8 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
-        $result   = $this->basketSetDeliveryAddress($I, $basketId, null);
-        $basket   = $result['data']['basketSetDeliveryAddress'];
+        $result = $this->basketSetDeliveryAddress($I, $basketId, null);
+        $basket = $result['data']['basketSetDeliveryAddress'];
 
         $I->assertNull($basket['deliveryAddress']);
 
@@ -147,7 +147,7 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
-        $result   = $this->basketSetDeliveryAddress($I, $basketId, '');
+        $result = $this->basketSetDeliveryAddress($I, $basketId, '');
 
         $expectedException = DeliveryAddressNotFound::byId('');
         $I->assertSame(
@@ -163,8 +163,8 @@ final class BasketDeliveryAddressCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
 
         $basketId = $this->basketCreate($I);
-        $result   = $this->basketSetDeliveryAddress($I, $basketId, self::DELIVERY_ADDRESS_ID);
-        $basket   = $result['data']['basketSetDeliveryAddress'];
+        $result = $this->basketSetDeliveryAddress($I, $basketId, self::DELIVERY_ADDRESS_ID);
+        $basket = $result['data']['basketSetDeliveryAddress'];
         $I->assertSame(self::DELIVERY_ADDRESS_ID, $basket['deliveryAddress']['id']);
 
         $basket = $this->basketSetDeliveryAddress($I, $basketId)['data']['basketSetDeliveryAddress'];
@@ -178,7 +178,7 @@ final class BasketDeliveryAddressCest extends BaseCest
      */
     public function getBasketDeliveryAddress(AcceptanceTester $I, Example $data): void
     {
-        $basketId  = $data['basketId'];
+        $basketId = $data['basketId'];
         $addressId = $data['addressId'];
 
         $I->login(self::USERNAME, self::PASSWORD);
@@ -204,11 +204,11 @@ final class BasketDeliveryAddressCest extends BaseCest
     {
         return [
             [
-                'basketId'  => self::BASKET_WITH_ADDRESS_ID,
+                'basketId' => self::BASKET_WITH_ADDRESS_ID,
                 'addressId' => self::DELIVERY_ADDRESS_ID,
             ],
             [
-                'basketId'  => self::BASKET_WITHOUT_ADDRESS_ID,
+                'basketId' => self::BASKET_WITHOUT_ADDRESS_ID,
                 'addressId' => null,
             ],
         ];
@@ -245,8 +245,11 @@ final class BasketDeliveryAddressCest extends BaseCest
         );
     }
 
-    private function basketSetDeliveryAddress(AcceptanceTester $I, string $basketId, ?string $deliveryAddressId = null): array
-    {
+    private function basketSetDeliveryAddress(
+        AcceptanceTester $I,
+        string $basketId,
+        ?string $deliveryAddressId = null
+    ): array {
         $optionalArguments = '';
 
         if ($deliveryAddressId !== null) {

@@ -21,7 +21,7 @@ final class AttributeFilterList extends FilterList
     public function __construct(
         ?StringFilter $title = null
     ) {
-        $this->title  = $title;
+        $this->title = $title;
         $this->active = null;
     }
 

@@ -41,9 +41,9 @@ final class Basket
         PlaceOrderService $placeOrderService,
         EventDispatcherInterface $eventDispatcher
     ) {
-        $this->basketService     = $basketService;
+        $this->basketService = $basketService;
         $this->placeOrderService = $placeOrderService;
-        $this->eventDispatcher   = $eventDispatcher;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

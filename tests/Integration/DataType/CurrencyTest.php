@@ -20,22 +20,22 @@ final class CurrencyTest extends TestCase
 {
     public function testGetCurrency(): void
     {
-        $currencyObject           = new stdClass();
-        $currencyObject->id       = 0;
-        $currencyObject->name     = 'EUR';
-        $currencyObject->rate     = '1.00';
-        $currencyObject->dec      = ',';
+        $currencyObject = new stdClass();
+        $currencyObject->id = 0;
+        $currencyObject->name = 'EUR';
+        $currencyObject->rate = '1.00';
+        $currencyObject->dec = ',';
         $currencyObject->thousand = '.';
-        $currencyObject->sign     = '€';
-        $currencyObject->decimal  = '2';
+        $currencyObject->sign = '€';
+        $currencyObject->decimal = '2';
         $currencyObject->selected = 0;
 
         $currency = new Currency($currencyObject);
 
         $this->assertSame($currencyObject->id, $currency->getId());
-        $this->assertSame((float) $currencyObject->rate, $currency->getRate());
+        $this->assertSame((float)$currencyObject->rate, $currency->getRate());
         $this->assertSame($currencyObject->name, $currency->getName());
         $this->assertSame($currencyObject->sign, $currency->getSign());
-        $this->assertSame((int) $currencyObject->decimal, $currency->getPrecision());
+        $this->assertSame((int)$currencyObject->decimal, $currency->getPrecision());
     }
 }

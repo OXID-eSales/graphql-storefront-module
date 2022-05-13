@@ -17,7 +17,7 @@ final class ProductWithTokenTest extends TokenTestCase
 {
     private const ACTIVE_PRODUCT = '058e613db53d782adfc9f2ccb43c45fe';
 
-    private const INACTIVE_PRODUCT  = '09602cddb5af0aba745293d08ae6bcf6';
+    private const INACTIVE_PRODUCT = '09602cddb5af0aba745293d08ae6bcf6';
 
     protected function setUp(): void
     {
@@ -28,13 +28,15 @@ final class ProductWithTokenTest extends TokenTestCase
 
     public function testGetSingleActiveProduct(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 active
                 title
             }
-        }');
+        }'
+        );
 
         $product = $result['body']['data']['product'];
 
@@ -48,20 +50,24 @@ final class ProductWithTokenTest extends TokenTestCase
             $result['body']['data']['product']['timestamp']
         );
 
-        $this->assertEmpty(array_diff(array_keys($product), [
-            'id',
-            'active',
-            'title',
-        ]));
+        $this->assertEmpty(
+            array_diff(array_keys($product), [
+                'id',
+                'active',
+                'title',
+            ])
+        );
     }
 
     public function testGetInactiveProduct(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::INACTIVE_PRODUCT . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -73,11 +79,13 @@ final class ProductWithTokenTest extends TokenTestCase
 
     public function testGetSingleNonExistingProduct(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "DOES-NOT-EXIST") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Product was not found by id: DOES-NOT-EXIST',
@@ -87,11 +95,13 @@ final class ProductWithTokenTest extends TokenTestCase
 
     public function testGetAllProducts(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             54,

@@ -19,7 +19,7 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     private const ACTIVE_MANUFACTURER = '9434afb379a46d6c141de9c9e5b94fcf';
 
     //RRD
-    private const INACTIVE_MANUFACTURER  = 'adca51c88a3caa1c7b939fd6a229ae3a';
+    private const INACTIVE_MANUFACTURER = 'adca51c88a3caa1c7b939fd6a229ae3a';
 
     protected function setUp(): void
     {
@@ -30,7 +30,8 @@ final class ManufacturerWithTokenTest extends TokenTestCase
 
     public function testGetSingleActiveManufacturer(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
                 id
                 active
@@ -42,7 +43,8 @@ final class ManufacturerWithTokenTest extends TokenTestCase
                   url
                 }
             }
-        }');
+        }'
+        );
 
         $manufacturer = $result['body']['data']['manufacturer'];
 
@@ -60,24 +62,28 @@ final class ManufacturerWithTokenTest extends TokenTestCase
             $result['body']['data']['manufacturer']['timestamp']
         );
 
-        $this->assertEmpty(array_diff(array_keys($manufacturer), [
-            'id',
-            'active',
-            'icon',
-            'title',
-            'shortdesc',
-            'timestamp',
-            'seo',
-        ]));
+        $this->assertEmpty(
+            array_diff(array_keys($manufacturer), [
+                'id',
+                'active',
+                'icon',
+                'title',
+                'shortdesc',
+                'timestamp',
+                'seo',
+            ])
+        );
     }
 
     public function testGetSingleInactiveManufacturer(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "' . self::INACTIVE_MANUFACTURER . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -89,11 +95,13 @@ final class ManufacturerWithTokenTest extends TokenTestCase
 
     public function testGetSingleNonExistingManufacturer(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturer (manufacturerId: "DOES-NOT-EXIST") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Manufacturer was not found by id: DOES-NOT-EXIST',
@@ -103,11 +111,13 @@ final class ManufacturerWithTokenTest extends TokenTestCase
 
     public function testGetManufacturerListWithoutFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturers {
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have total 15 manufacturers, 4 inactive and 11 active
         $this->assertEquals(
@@ -118,7 +128,8 @@ final class ManufacturerWithTokenTest extends TokenTestCase
 
     public function testGetManufacturerListWithPartialFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturers(filter: {
                 title: {
                     beginsWith: "Fly"
@@ -126,7 +137,8 @@ final class ManufacturerWithTokenTest extends TokenTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
@@ -143,7 +155,8 @@ final class ManufacturerWithTokenTest extends TokenTestCase
 
     public function testGetEmptyManufacturerListWithExactMatchFilter(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             manufacturers(filter: {
                 title: {
                     equals: "Flysurfer"
@@ -151,7 +164,8 @@ final class ManufacturerWithTokenTest extends TokenTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [

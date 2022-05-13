@@ -40,27 +40,27 @@ final class DeliveryAddressFactory
         /** @var EshopAddressModel */
         $address = oxNew(EshopAddressModel::class);
         $address->assign([
-            'oxsal'       => $salutation,
-            'oxuserid'    => $userid,
-            'oxfname'     => $firstname,
-            'oxlname'     => $lastname,
-            'oxcompany'   => $company,
-            'oxaddinfo'   => $additionalInfo,
-            'oxstreet'    => $street,
-            'oxstreetnr'  => $streetNumber,
-            'oxzip'       => $zipCode,
-            'oxcity'      => $city,
-            'oxcountryid' => (string) $countryId,
-            'oxstateid'   => (string) $stateId,
-            'oxfon'       => $phone,
-            'oxfax'       => $fax,
+            'oxsal' => $salutation,
+            'oxuserid' => $userid,
+            'oxfname' => $firstname,
+            'oxlname' => $lastname,
+            'oxcompany' => $company,
+            'oxaddinfo' => $additionalInfo,
+            'oxstreet' => $street,
+            'oxstreetnr' => $streetNumber,
+            'oxzip' => $zipCode,
+            'oxcity' => $city,
+            'oxcountryid' => (string)$countryId,
+            'oxstateid' => (string)$stateId,
+            'oxfon' => $phone,
+            'oxfax' => $fax,
         ]);
 
         /** @var RequiredFieldsValidator */
         $validator = oxNew(RequiredFieldsValidator::class);
         /** @var RequiredAddressFields */
         $requiredAddressFields = oxNew(RequiredAddressFields::class);
-        $requiredFields        = $requiredAddressFields->getDeliveryFields();
+        $requiredFields = $requiredAddressFields->getDeliveryFields();
         $validator->setRequiredFields(
             $requiredFields
         );
@@ -68,11 +68,11 @@ final class DeliveryAddressFactory
         $externalFields = [
             'oxcountryid' => [
                 'class' => EshopCountryModel::class,
-                'id'    => (string) $countryId,
+                'id' => (string)$countryId,
             ],
             'oxstateid' => [
                 'class' => EshopStateModel::class,
-                'id'    => (string) $stateId,
+                'id' => (string)$stateId,
             ],
         ];
 

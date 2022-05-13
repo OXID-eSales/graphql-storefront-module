@@ -38,11 +38,13 @@ final class ProductEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::PRODUCT_ID . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Product was not found by id: ' . self::PRODUCT_ID,
@@ -60,16 +62,18 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', '0');
         $this->addProductToShops([2], self::PRODUCT_ID);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::PRODUCT_ID . '") {
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::PRODUCT_ID,
+                'id' => self::PRODUCT_ID,
                 'title' => 'Bindung O\'BRIEN DECADE CT 2010',
             ],
             $result['body']['data']['product']
@@ -83,24 +87,24 @@ final class ProductEnterpriseTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'Bindung O\'BRIEN DECADE CT 2010',
+                'title' => 'Bindung O\'BRIEN DECADE CT 2010',
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'Binding O\'BRIEN DECADE CT 2010',
+                'title' => 'Binding O\'BRIEN DECADE CT 2010',
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'title'      => 'Bindung O\'BRIEN DECADE CT 2010',
+                'title' => 'Bindung O\'BRIEN DECADE CT 2010',
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'title'      => 'Binding O\'BRIEN DECADE CT 2010',
+                'title' => 'Binding O\'BRIEN DECADE CT 2010',
             ],
         ];
     }
@@ -120,16 +124,18 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addProductToShops([2], self::PRODUCT_ID);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::PRODUCT_ID . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::PRODUCT_ID,
+                'id' => self::PRODUCT_ID,
                 'title' => $title,
             ],
             $result['body']['data']['product']
@@ -149,7 +155,8 @@ final class ProductEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addProductToShops([2], self::ACTIVE_PRODUCT_WITH_VARIANTS);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
                 variantLabels
                 variants {
@@ -157,7 +164,8 @@ final class ProductEnterpriseTest extends MultishopTestCase
                     variantValues
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             $result['body']['data']['product']['variantLabels'],
@@ -174,14 +182,14 @@ final class ProductEnterpriseTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'labels'     => [
+                'labels' => [
                     'Größe',
                     'Farbe',
                 ],
-                'variants'   => [
-                    'id'            => '6b6efaa522be53c3e86fdb41f0542a8a',
+                'variants' => [
+                    'id' => '6b6efaa522be53c3e86fdb41f0542a8a',
                     'variantValues' => [
                         'W 30/L 30',
                         'Blau',
@@ -189,14 +197,14 @@ final class ProductEnterpriseTest extends MultishopTestCase
                 ],
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'labels'     => [
+                'labels' => [
                     'Size',
                     'Color',
                 ],
-                'values'     => [
-                    'id'            => '6b6efaa522be53c3e86fdb41f0542a8a',
+                'values' => [
+                    'id' => '6b6efaa522be53c3e86fdb41f0542a8a',
                     'variantValues' => [
                         'W 30/L 30',
                         'Blue ',
@@ -204,22 +212,22 @@ final class ProductEnterpriseTest extends MultishopTestCase
                 ],
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'labels'     => [
+                'labels' => [
                     'Größe',
                     'Farbe',
                 ],
-                'variants'   => [],
+                'variants' => [],
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'labels'     => [
+                'labels' => [
                     'Size',
                     'Color',
                 ],
-                'variants'   => [],
+                'variants' => [],
             ],
         ];
     }

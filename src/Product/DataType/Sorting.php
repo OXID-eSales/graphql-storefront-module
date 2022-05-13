@@ -42,13 +42,13 @@ final class Sorting extends BaseSorting
         ?string $title = null
     ): self {
         return new self([
-            'oxsort'        => $position,
+            'oxsort' => $position,
             'oxvarminprice' => $minPriceVariant,
-            'oxprice'       => $price,
-            'oxartnum'      => $productNumber,
-            'oxrating'      => $rating,
-            'oxstock'       => $stock,
-            'oxtitle'       => $title,
+            'oxprice' => $price,
+            'oxartnum' => $productNumber,
+            'oxrating' => $rating,
+            'oxstock' => $stock,
+            'oxtitle' => $title,
         ]);
     }
 }

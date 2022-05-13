@@ -24,10 +24,10 @@ final class BasketCost
 
     public function getProductNetSum(BasketCostDataType $basketCost): EshopPriceModel
     {
-        $netSum = (float) $basketCost->getEshopModel()->getNettoSum();
+        $netSum = (float)$basketCost->getEshopModel()->getNettoSum();
 
         /** @var EshopPriceModel $price */
-        $price  = oxNew(EshopPriceModel::class);
+        $price = oxNew(EshopPriceModel::class);
         $price->setNettoPriceMode();
         $price->setPrice($netSum);
 

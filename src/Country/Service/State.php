@@ -25,7 +25,7 @@ final class State
     public function __construct(
         Repository $repository
     ) {
-        $this->repository      = $repository;
+        $this->repository = $repository;
     }
 
     /**

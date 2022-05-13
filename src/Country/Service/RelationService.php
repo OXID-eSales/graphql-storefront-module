@@ -45,7 +45,7 @@ final class RelationService
             new StateFilterList(
                 new IDFilter(
                     new ID(
-                        (string) $country->getId()
+                        (string)$country->getId()
                     )
                 )
             ),

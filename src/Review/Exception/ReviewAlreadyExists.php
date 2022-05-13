@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Review\Exception;
 
 use OxidEsales\GraphQL\Base\Exception\Exists;
+
 use function sprintf;
 
 final class ReviewAlreadyExists extends Exists

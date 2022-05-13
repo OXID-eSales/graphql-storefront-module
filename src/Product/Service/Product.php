@@ -32,7 +32,7 @@ final class Product
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->authorizationService = $authorizationService;
     }
 
@@ -44,9 +44,9 @@ final class Product
     {
         try {
             /** @var ProductDataType $product */
-            $product = $this->repository->getById((string) $id, ProductDataType::class);
+            $product = $this->repository->getById((string)$id, ProductDataType::class);
         } catch (NotFound $e) {
-            throw ProductNotFound::byId((string) $id);
+            throw ProductNotFound::byId((string)$id);
         }
 
         if ($product->isActive()) {

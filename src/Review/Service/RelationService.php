@@ -41,9 +41,9 @@ final class RelationService
         ReviewerService $reviewerService,
         ReviewInfrastructure $reviewInfrastructure
     ) {
-        $this->productService          = $productService;
-        $this->reviewerService         = $reviewerService;
-        $this->reviewInfrastructure    = $reviewInfrastructure;
+        $this->productService = $productService;
+        $this->reviewerService = $reviewerService;
+        $this->reviewInfrastructure = $reviewInfrastructure;
     }
 
     /**
@@ -51,7 +51,7 @@ final class RelationService
      */
     public function getReviewer(Review $review): ?Reviewer
     {
-        $reviewerId = (string) $review->getReviewerId();
+        $reviewerId = (string)$review->getReviewerId();
 
         return $this->reviewerService->reviewer($reviewerId);
     }

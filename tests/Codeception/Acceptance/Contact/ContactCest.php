@@ -21,14 +21,16 @@ final class ContactCest extends BaseCest
 {
     public function testContactRequest(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation{contactRequest(request:{
+        $I->sendGQLQuery(
+            'mutation{contactRequest(request:{
             email:"sometest@somedomain.com"
             firstName:"myName"
             lastName:"mySurname"
             salutation:"mr"
             subject:"some subject"
             message:"some message"
-        })}');
+        })}'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -37,9 +39,11 @@ final class ContactCest extends BaseCest
 
     public function testContactRequestUsesShopValidation(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation{contactRequest(request:{
+        $I->sendGQLQuery(
+            'mutation{contactRequest(request:{
             email:"wrongEmail"
-        })}');
+        })}'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();

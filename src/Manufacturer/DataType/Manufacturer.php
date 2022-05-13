@@ -49,7 +49,7 @@ final class Manufacturer implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->manufacturer->getRawFieldData('oxactive');
+        return (bool)$this->manufacturer->getRawFieldData('oxactive');
     }
 
     /**
@@ -81,7 +81,7 @@ final class Manufacturer implements ShopModelAwareInterface
      */
     public function getTimestamp(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString((string) $this->manufacturer->getRawFieldData('oxtimestamp'));
+        return DateTimeImmutableFactory::fromString((string)$this->manufacturer->getRawFieldData('oxtimestamp'));
     }
 
     /**

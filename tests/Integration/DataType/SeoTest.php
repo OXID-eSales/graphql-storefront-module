@@ -33,16 +33,16 @@ final class SeoTest extends BaseTestCase
     {
         return [
             'de_seo_active' => [
-                'languageId'  => '0',
+                'languageId' => '0',
                 'description' => 'german seo description',
-                'keywords'    => 'german seo keywords',
-                'url'         => 'Kiteboarding/Kiteboards/Kiteboard-CABRINHA-CALIBER-2011.html',
+                'keywords' => 'german seo keywords',
+                'url' => 'Kiteboarding/Kiteboards/Kiteboard-CABRINHA-CALIBER-2011.html',
             ],
             'en_seo_active' => [
-                'languageId'  => '1',
+                'languageId' => '1',
                 'description' => 'english seo description',
-                'keywords'    => 'english seo keywords',
-                'url'         => 'Kiteboarding/Kiteboards/Kiteboard-CABRINHA-CALIBER-2011.html',
+                'keywords' => 'english seo keywords',
+                'url' => 'Kiteboarding/Kiteboards/Kiteboard-CABRINHA-CALIBER-2011.html',
             ],
         ];
     }

@@ -27,11 +27,13 @@ final class LinkEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             link (linkId: "' . self::LINK_ID . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Link was not found by id: ' . self::LINK_ID,
@@ -46,11 +48,13 @@ final class LinkEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             links {
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 2 active links
         $this->assertCount(
@@ -69,16 +73,18 @@ final class LinkEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', '1');
         $this->addLinkToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             link (linkId: "' . self::LINK_ID . '") {
                 id,
                 description
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'          => self::LINK_ID,
+                'id' => self::LINK_ID,
                 'description' => '<p>English Description active</p>',
             ],
             $result['body']['data']['link']
@@ -93,11 +99,13 @@ final class LinkEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
         $this->addLinkToShops([2]);
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             links {
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 1 active link for shop 2
         $this->assertCount(
@@ -113,23 +121,23 @@ final class LinkEnterpriseTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'      => '1',
-                'languageId'  => '0',
+                'shopId' => '1',
+                'languageId' => '0',
                 'description' => '<p>Deutsche Beschreibung aktiv</p>',
             ],
             'shop_1_en' => [
-                'shopId'      => '1',
-                'languageId'  => '1',
+                'shopId' => '1',
+                'languageId' => '1',
                 'description' => '<p>English Description active</p>',
             ],
             'shop_2_de' => [
-                'shopId'      => '2',
-                'languageId'  => '0',
+                'shopId' => '2',
+                'languageId' => '0',
                 'description' => '<p>Deutsche Beschreibung aktiv</p>',
             ],
             'shop_2_en' => [
-                'shopId'      => '2',
-                'languageId'  => '1',
+                'shopId' => '2',
+                'languageId' => '1',
                 'description' => '<p>English Description active</p>',
             ],
         ];
@@ -151,16 +159,18 @@ final class LinkEnterpriseTest extends MultishopTestCase
 
         $this->addLinkToShops([$shopId]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             link (linkId: "' . self::LINK_ID . '") {
                 id
                 description
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'          => self::LINK_ID,
+                'id' => self::LINK_ID,
                 'description' => $description,
             ],
             $result['body']['data']['link']
@@ -182,7 +192,8 @@ final class LinkEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addLinkToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             links(filter: {
                 description: {
                     equals: "' . $description . '"
@@ -191,11 +202,12 @@ final class LinkEnterpriseTest extends MultishopTestCase
                 id,
                 description
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'          => self::LINK_ID,
+                'id' => self::LINK_ID,
                 'description' => $description,
             ],
             $result['body']['data']['links'][0]

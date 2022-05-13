@@ -38,7 +38,7 @@ final class DeliveryProvider implements ShopModelAwareInterface
      */
     public function getId(): ID
     {
-        return new ID((string) $this->order->getId());
+        return new ID((string)$this->order->getId());
     }
 
     /**
@@ -46,7 +46,7 @@ final class DeliveryProvider implements ShopModelAwareInterface
      */
     public function getActive(): bool
     {
-        return (bool) ($this->order->getRawFieldData('oxactive'));
+        return (bool)($this->order->getRawFieldData('oxactive'));
     }
 
     /**
@@ -54,7 +54,7 @@ final class DeliveryProvider implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) ($this->order->getRawFieldData('oxtitle'));
+        return (string)($this->order->getRawFieldData('oxtitle'));
     }
 
     public static function getModelClass(): string

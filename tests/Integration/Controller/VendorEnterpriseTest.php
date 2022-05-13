@@ -27,11 +27,13 @@ final class VendorEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor (vendorId: "' . self::VENDOR_ID . '") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Vendor was not found by id: ' . self::VENDOR_ID,
@@ -46,11 +48,13 @@ final class VendorEnterpriseTest extends MultishopTestCase
     {
         $this->setGETRequestParameter('shp', '2');
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             vendors {
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 2 active vendors
         $this->assertCount(
@@ -69,7 +73,8 @@ final class VendorEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', '0');
         $this->addVendorToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor (vendorId: "' . self::VENDOR_ID . '") {
                 id,
                 title
@@ -77,12 +82,13 @@ final class VendorEnterpriseTest extends MultishopTestCase
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'       => self::VENDOR_ID,
-                'title'    => 'https://fashioncity.com/de',
+                'id' => self::VENDOR_ID,
+                'title' => 'https://fashioncity.com/de',
                 'products' => [],
             ],
             $result['body']['data']['vendor']
@@ -97,11 +103,13 @@ final class VendorEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('shp', '2');
         $this->addVendorToShops([2]);
 
-        $result = $this->query('query{
+        $result = $this->query(
+            'query{
             vendors {
                 id
             }
-        }');
+        }'
+        );
 
         // fixtures have 2 active vendors
         $this->assertCount(
@@ -117,24 +125,24 @@ final class VendorEnterpriseTest extends MultishopTestCase
     {
         return [
             'shop_1_de' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '0',
-                'title'      => 'https://fashioncity.com/de',
+                'title' => 'https://fashioncity.com/de',
             ],
             'shop_1_en' => [
-                'shopId'     => '1',
+                'shopId' => '1',
                 'languageId' => '1',
-                'title'      => 'https://fashioncity.com/en',
+                'title' => 'https://fashioncity.com/en',
             ],
             'shop_2_de' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '0',
-                'title'      => 'https://fashioncity.com/de',
+                'title' => 'https://fashioncity.com/de',
             ],
             'shop_2_en' => [
-                'shopId'     => '2',
+                'shopId' => '2',
                 'languageId' => '1',
-                'title'      => 'https://fashioncity.com/en',
+                'title' => 'https://fashioncity.com/en',
             ],
         ];
     }
@@ -154,16 +162,18 @@ final class VendorEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addVendorToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendor (vendorId: "' . self::VENDOR_ID . '") {
                 id
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::VENDOR_ID,
+                'id' => self::VENDOR_ID,
                 'title' => $title,
             ],
             $result['body']['data']['vendor']
@@ -185,7 +195,8 @@ final class VendorEnterpriseTest extends MultishopTestCase
         $this->setGETRequestParameter('lang', $languageId);
         $this->addVendorToShops([2]);
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             vendors(filter: {
                 title: {
                     equals: "' . $title . '"
@@ -194,11 +205,12 @@ final class VendorEnterpriseTest extends MultishopTestCase
                 id,
                 title
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'    => self::VENDOR_ID,
+                'id' => self::VENDOR_ID,
                 'title' => $title,
             ],
             $result['body']['data']['vendors'][0]

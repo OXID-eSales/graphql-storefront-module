@@ -32,7 +32,7 @@ final class Vendor
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->authorizationService = $authorizationService;
     }
 
@@ -44,11 +44,11 @@ final class Vendor
     {
         try {
             $vendor = $this->repository->getById(
-                (string) $id,
+                (string)$id,
                 VendorDataType::class
             );
         } catch (NotFound $e) {
-            throw VendorNotFound::byId((string) $id);
+            throw VendorNotFound::byId((string)$id);
         }
 
         if ($vendor->isActive()) {

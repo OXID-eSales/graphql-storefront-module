@@ -69,7 +69,8 @@ final class ReviewCest extends BaseCest
 
     public function testSetReviewWithoutToken(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             reviewSet(review: {
                 rating: 5,
                 text: "' . self::TEXT . '",
@@ -77,7 +78,8 @@ final class ReviewCest extends BaseCest
             }){
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -103,32 +105,32 @@ final class ReviewCest extends BaseCest
         );
 
         $reviewData = $result['data']['reviewSet'];
-        $id         = $reviewData['id'];
+        $id = $reviewData['id'];
 
         $I->assertIsString('%s', $id);
         $I->assertSame(self::TEST_PRODUCT_ID, $reviewData['product']['id']);
         $I->assertEquals($data['text'], $reviewData['text']);
-        $I->assertEquals((int) $data['rating'], $reviewData['rating']);
+        $I->assertEquals((int)$data['rating'], $reviewData['rating']);
 
         $result = $this->queryReview($I, $id);
         $I->assertEquals($data['text'], $result['data']['review']['text']);
-        $I->assertEquals((int) $data['rating'], $result['data']['review']['rating']);
+        $I->assertEquals((int)$data['rating'], $result['data']['review']['rating']);
     }
 
     public function setReviewDataProvider()
     {
         return [
             'text_only' => [
-                'text'   => self::TEXT,
+                'text' => self::TEXT,
                 'rating' => '',
             ],
             'rating_only' => [
-                'text'   => '',
+                'text' => '',
                 'rating' => '5',
 
             ],
             'text_and_rating' => [
-                'text'   => self::TEXT,
+                'text' => self::TEXT,
                 'rating' => '5',
             ],
         ];
@@ -190,7 +192,8 @@ final class ReviewCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('query{
+        $I->sendGQLQuery(
+            'query{
             customer {
                 reviews{
                     id
@@ -198,7 +201,8 @@ final class ReviewCest extends BaseCest
                     rating
                 }
             }
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -237,7 +241,7 @@ final class ReviewCest extends BaseCest
         $I->login('admin', 'admin');
 
         //query, expected result: 2 ratings, average 2.0
-        $result        = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
+        $result = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
         $productRating = $result['data']['product']['rating'];
         $I->assertSame(2, $productRating['count']);
         $I->assertEquals(2.0, $productRating['rating']);
@@ -248,7 +252,7 @@ final class ReviewCest extends BaseCest
         $I->assertSame(5, $review['rating']);
 
         //query, expected result: 3 ratings, average 3.0
-        $result        = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
+        $result = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
         $productRating = $result['data']['product']['rating'];
         $I->assertEquals(3, $productRating['rating']);
         $I->assertSame(3, $productRating['count']);
@@ -257,7 +261,7 @@ final class ReviewCest extends BaseCest
         $this->reviewDelete($I, $review['id']);
 
         //query, expected result: 2 ratings, average 2.0
-        $result        = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
+        $result = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
         $productRating = $result['data']['product']['rating'];
         $I->assertEquals(2, $productRating['rating']);
         $I->assertSame(2, $productRating['count']);
@@ -268,7 +272,7 @@ final class ReviewCest extends BaseCest
         $I->assertSame(4, $rating);
 
         //query, expected result: 3 ratings, average 2.7
-        $result        = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
+        $result = $this->queryProduct($I, self::PRODUCT_WITH_AVERAGE_RATING);
         $productRating = $result['data']['product']['rating'];
         $I->assertSame(2.7, $productRating['rating']);
         $I->assertSame(3, $productRating['count']);
@@ -284,7 +288,7 @@ final class ReviewCest extends BaseCest
         $I->assertSame(0, $review['rating']);
 
         //Make sure the product is without rating
-        $result        = $this->queryProduct($I, self::TEST_PRODUCT_ID);
+        $result = $this->queryProduct($I, self::TEST_PRODUCT_ID);
         $productRating = $result['data']['product']['rating'];
         $I->assertSame(0, $productRating['count']);
         $I->assertEquals(0, $productRating['rating']);
@@ -298,7 +302,7 @@ final class ReviewCest extends BaseCest
         $I->assertSame(5, $review['rating']);
 
         //Check product's average rating
-        $result        = $this->queryProduct($I, self::TEST_PRODUCT_ID);
+        $result = $this->queryProduct($I, self::TEST_PRODUCT_ID);
         $productRating = $result['data']['product']['rating'];
         $I->assertSame(1, $productRating['count']);
         $I->assertEquals(5, $productRating['rating']);
@@ -306,9 +310,11 @@ final class ReviewCest extends BaseCest
 
     public function testDeleteReviewWithoutToken(AcceptanceTester $I): void
     {
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             reviewDelete(reviewId: "' . self::TEST_DATA_REVIEW . '")
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -322,14 +328,16 @@ final class ReviewCest extends BaseCest
     public function testDeleteReviewByOtherUser(AcceptanceTester $I): void
     {
         $I->login(self::DIFFERENT_USERNAME, self::DIFFERENT_USER_PASSWORD);
-        $result   = $this->reviewSet($I, self::PRODUCT_ID, self::REVIEW_TEXT, '4');
+        $result = $this->reviewSet($I, self::PRODUCT_ID, self::REVIEW_TEXT, '4');
         $reviewId = $result['data']['reviewSet']['id'];
 
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             reviewDelete(reviewId: "' . $reviewId . '")
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
@@ -344,9 +352,11 @@ final class ReviewCest extends BaseCest
     {
         $I->login('admin', 'admin');
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             reviewDelete(reviewId: "something-that-does-not-exist")
-        }');
+        }'
+        );
 
         $result = $I->grabJsonResponseAsArray();
 
@@ -359,14 +369,16 @@ final class ReviewCest extends BaseCest
     public function testDeleteFailsIfManageFlagSetToFalse(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
-        $result   = $this->reviewSet($I, self::TEST_PRODUCT_ID, self::REVIEW_TEXT, '4');
+        $result = $this->reviewSet($I, self::TEST_PRODUCT_ID, self::REVIEW_TEXT, '4');
         $reviewId = $result['data']['reviewSet']['id'];
 
         $I->updateConfigInDatabase('blAllowUsersToManageTheirReviews', false, 'bool');
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             reviewDelete(reviewId: "' . $reviewId . '")
-        }');
+        }'
+        );
 
         $I->updateConfigInDatabase('blAllowUsersToManageTheirReviews', true, 'bool');
 
@@ -421,7 +433,7 @@ final class ReviewCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         if (isset($result['data'])) {
-            $newId                        = $result['data']['reviewSet']['id'];
+            $newId = $result['data']['reviewSet']['id'];
             $this->createdReviews[$newId] = $newId;
         }
 
@@ -434,9 +446,11 @@ final class ReviewCest extends BaseCest
             unset($this->createdReviews[$id]);
         }
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
              reviewDelete(reviewId: "' . $id . '")
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
 
@@ -447,13 +461,15 @@ final class ReviewCest extends BaseCest
 
     private function queryReview(AcceptanceTester $I, string $id): array
     {
-        $I->sendGQLQuery('query {
+        $I->sendGQLQuery(
+            'query {
             review(reviewId: "' . $id . '") {
                 id
                 text
                 rating
             }
-        }');
+        }'
+        );
 
         return $I->grabJsonResponseAsArray();
     }

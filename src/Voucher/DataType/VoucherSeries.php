@@ -49,7 +49,7 @@ final class VoucherSeries implements ShopModelAwareInterface
      */
     public function title(): string
     {
-        return (string) $this->getEshopModel()->getRawFieldData('OXSERIENR');
+        return (string)$this->getEshopModel()->getRawFieldData('OXSERIENR');
     }
 
     /**
@@ -57,7 +57,7 @@ final class VoucherSeries implements ShopModelAwareInterface
      */
     public function description(): string
     {
-        return (string) $this->getEshopModel()->getRawFieldData('OXSERIEDESCRIPTION');
+        return (string)$this->getEshopModel()->getRawFieldData('OXSERIEDESCRIPTION');
     }
 
     /**
@@ -66,7 +66,7 @@ final class VoucherSeries implements ShopModelAwareInterface
     public function validFrom(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->getEshopModel()->getRawFieldData('OXBEGINDATE')
+            (string)$this->getEshopModel()->getRawFieldData('OXBEGINDATE')
         );
     }
 
@@ -76,7 +76,7 @@ final class VoucherSeries implements ShopModelAwareInterface
     public function validTo(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string) $this->getEshopModel()->getRawFieldData('OXENDDATE')
+            (string)$this->getEshopModel()->getRawFieldData('OXENDDATE')
         );
     }
 
@@ -85,7 +85,7 @@ final class VoucherSeries implements ShopModelAwareInterface
      */
     public function discount(): float
     {
-        return (float) $this->getEshopModel()->getRawFieldData('OXDISCOUNT');
+        return (float)$this->getEshopModel()->getRawFieldData('OXDISCOUNT');
     }
 
     /**
@@ -93,7 +93,7 @@ final class VoucherSeries implements ShopModelAwareInterface
      */
     public function discountType(): string
     {
-        return (string) $this->getEshopModel()->getRawFieldData('OXDISCOUNTTYPE');
+        return (string)$this->getEshopModel()->getRawFieldData('OXDISCOUNTTYPE');
     }
 
     public static function getModelClass(): string

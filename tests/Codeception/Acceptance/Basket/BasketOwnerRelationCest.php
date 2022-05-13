@@ -69,14 +69,16 @@ final class BasketOwnerRelationCest extends BaseCest
     {
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketCreate(basket: {title: "new-basket-list", public: true}) {
                 id
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         $I->logout();
 

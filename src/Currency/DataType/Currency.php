@@ -47,7 +47,7 @@ final class Currency
      */
     public function getRate(): float
     {
-        return (float) $this->currency->rate;
+        return (float)$this->currency->rate;
     }
 
     /**
@@ -60,6 +60,6 @@ final class Currency
 
     public function getPrecision(): int
     {
-        return (int) $this->currency->decimal;
+        return (int)$this->currency->decimal;
     }
 }

@@ -67,35 +67,35 @@ final class BasketVoucherCest extends BaseCest
         unset($voucher1['reserved'], $voucher2['reserved']);
 
         $expectedSeries1 = [
-            'id'           => 'serie2',
-            'title'        => 'serie2',
-            'description'  => 'serie2 description',
-            'validFrom'    => '2000-01-01T00:00:00+01:00',
-            'validTo'      => '2050-12-31T00:00:00+01:00',
-            'discount'     => 2.0,
+            'id' => 'serie2',
+            'title' => 'serie2',
+            'description' => 'serie2 description',
+            'validFrom' => '2000-01-01T00:00:00+01:00',
+            'validTo' => '2050-12-31T00:00:00+01:00',
+            'discount' => 2.0,
             'discountType' => 'absolute',
         ];
         $expectedVoucher1 = [
-            'id'       => 'serie2voucher',
-            'voucher'  => 'serie2voucher',
+            'id' => 'serie2voucher',
+            'voucher' => 'serie2voucher',
             'discount' => null,
-            'series'   => $expectedSeries1,
+            'series' => $expectedSeries1,
         ];
 
         $expectedSeries2 = [
-            'id'           => 'serie3',
-            'title'        => 'serie3',
-            'description'  => 'serie3 description',
-            'validFrom'    => '2000-01-01T00:00:00+01:00',
-            'validTo'      => '2050-12-31T00:00:00+01:00',
-            'discount'     => 3.0,
+            'id' => 'serie3',
+            'title' => 'serie3',
+            'description' => 'serie3 description',
+            'validFrom' => '2000-01-01T00:00:00+01:00',
+            'validTo' => '2050-12-31T00:00:00+01:00',
+            'discount' => 3.0,
             'discountType' => 'absolute',
         ];
         $expectedVoucher2 = [
-            'id'       => 'serie3voucher',
-            'voucher'  => 'serie3voucher',
+            'id' => 'serie3voucher',
+            'voucher' => 'serie3voucher',
             'discount' => null,
-            'series'   => $expectedSeries2,
+            'series' => $expectedSeries2,
         ];
 
         $I->assertEquals($expectedVoucher1, $voucher1);
@@ -141,16 +141,18 @@ final class BasketVoucherCest extends BaseCest
     {
         $I->login();
 
-        $I->sendGQLQuery('mutation {
+        $I->sendGQLQuery(
+            'mutation {
             basketAddVoucher(basketId: "' . self::PRIVATE_BASKET . '", voucherNumber: "voucher-number") {
                 vouchers {
                     number
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
-        $result          = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
             MissingAuthorizationException::forbidden()->getMessage(),
@@ -165,16 +167,18 @@ final class BasketVoucherCest extends BaseCest
     {
         $I->login();
 
-        $I->sendGQLQuery('mutation{
+        $I->sendGQLQuery(
+            'mutation{
             basketRemoveVoucher(basketId: "' . self::PRIVATE_BASKET . '", voucherId: "voucher-number") {
                 vouchers {
                     number
                 }
             }
-        }');
+        }'
+        );
 
         $I->seeResponseIsJson();
-        $result          = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
             MissingAuthorizationException::forbidden()->getMessage(),

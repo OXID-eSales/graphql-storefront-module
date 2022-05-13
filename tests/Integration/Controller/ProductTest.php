@@ -15,6 +15,7 @@ use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 use ReflectionClass;
+
 use function version_compare;
 
 final class ProductTest extends BaseTestCase
@@ -23,7 +24,7 @@ final class ProductTest extends BaseTestCase
 
     private const ACTIVE_PRODUCT_WITH_MORE_CATEGORIES = 'b56164c54701f07df14b141da197c207';
 
-    private const INACTIVE_PRODUCT  = '09602cddb5af0aba745293d08ae6bcf6';
+    private const INACTIVE_PRODUCT = '09602cddb5af0aba745293d08ae6bcf6';
 
     private const ACTIVE_PRODUCT_WITH_ACCESSORIES = '05848170643ab0deb9914566391c0c63';
 
@@ -70,7 +71,8 @@ final class ProductTest extends BaseTestCase
 
     public function testGetSingleActiveProduct(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 dimensions {
                     length
@@ -186,7 +188,8 @@ final class ProductTest extends BaseTestCase
                 timestamp
                 wishedPriceEnabled
             }
-        }');
+        }'
+        );
 
         $product = $result['body']['data']['product'];
 
@@ -225,11 +228,11 @@ final class ProductTest extends BaseTestCase
         $this->assertNull($product['vendor']);
         $this->assertNull($product['bundle']);
 
-        $currency         = $price['currency'];
+        $currency = $price['currency'];
         $expectedCurrency = Registry::getConfig()->getActShopCurrencyObject();
         $this->assertSame($expectedCurrency->id, $currency['id']);
         $this->assertSame($expectedCurrency->name, $currency['name']);
-        $this->assertSame((float) $expectedCurrency->rate, $currency['rate']);
+        $this->assertSame((float)$expectedCurrency->rate, $currency['rate']);
         $this->assertSame($expectedCurrency->sign, $currency['sign']);
 
         $listPrice = $product['listPrice'];
@@ -249,7 +252,7 @@ final class ProductTest extends BaseTestCase
         );
 
         $imageGallery = $product['imageGallery'];
-        $images       = $imageGallery['images'][0];
+        $images = $imageGallery['images'][0];
         $this->assertMatchesRegularExpression(
             '@https?://.*/out/pictures/generated/product/1/540_340_75/obrien_decade_ct_boot_2010_1.jpg@',
             $images['image']
@@ -315,12 +318,14 @@ final class ProductTest extends BaseTestCase
 
     public function testGetSingleInactiveProductWithoutToken(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::INACTIVE_PRODUCT . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Unauthorized',
@@ -332,16 +337,18 @@ final class ProductTest extends BaseTestCase
     {
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "' . self::INACTIVE_PRODUCT . '") {
                 id
                 active
             }
-        }');
+        }'
+        );
 
         $this->assertEquals(
             [
-                'id'     => self::INACTIVE_PRODUCT,
+                'id' => self::INACTIVE_PRODUCT,
                 'active' => false,
             ],
             $result['body']['data']['product']
@@ -350,11 +357,13 @@ final class ProductTest extends BaseTestCase
 
     public function testGetSingleNonExistingProduct(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product (productId: "DOES-NOT-EXIST") {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             'Product was not found by id: DOES-NOT-EXIST',
@@ -364,7 +373,8 @@ final class ProductTest extends BaseTestCase
 
     public function testGetProductVariants(): void
     {
-        $result = $this->query('
+        $result = $this->query(
+            '
             query{
                 product(productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '" ){
                     variantLabels
@@ -375,7 +385,8 @@ final class ProductTest extends BaseTestCase
                     }
                 }
             }
-        ');
+        '
+        );
 
         $this->assertSame(
             $result['body']['data']['product']['variantLabels'],
@@ -389,72 +400,72 @@ final class ProductTest extends BaseTestCase
 
         $expectedVariants = [
             [
-                'id'            => '6b6efaa522be53c3e86fdb41f0542a8a',
-                'active'        => true,
+                'id' => '6b6efaa522be53c3e86fdb41f0542a8a',
+                'active' => true,
                 'variantValues' => [
                     'W 30/L 30',
                     'Blau',
                 ],
             ],
             [
-                'id'            => '6b65c82bfe8fa19865d560f8c1a905b4',
-                'active'        => true,
+                'id' => '6b65c82bfe8fa19865d560f8c1a905b4',
+                'active' => true,
                 'variantValues' => [
                     'W 30/L 30',
                     'Smoke Gray',
                 ],
             ],
             [
-                'id'            => '6b6ee4ad0a02a725a136ca139e226dd5',
-                'active'        => true,
+                'id' => '6b6ee4ad0a02a725a136ca139e226dd5',
+                'active' => true,
                 'variantValues' => [
                     'W 30/L 30',
                     'Super Blue',
                 ],
             ],
             [
-                'id'            => '6b628e6a8ffa98fea6f2ee9d708b1b23',
-                'active'        => true,
+                'id' => '6b628e6a8ffa98fea6f2ee9d708b1b23',
+                'active' => true,
                 'variantValues' => [
                     'W 31/L 34',
                     'Blau',
                 ],
             ],
             [
-                'id'            => '6b6e2c7af07fd2b9d82223ff35f4e08f',
-                'active'        => true,
+                'id' => '6b6e2c7af07fd2b9d82223ff35f4e08f',
+                'active' => true,
                 'variantValues' => [
                     'W 31/L 34',
                     'Smoke Gray',
                 ],
             ],
             [
-                'id'            => '6b6d187d3f648ab5d7875ce863244095',
-                'active'        => true,
+                'id' => '6b6d187d3f648ab5d7875ce863244095',
+                'active' => true,
                 'variantValues' => [
                     'W 31/L 34',
                     'Super Blue',
                 ],
             ],
             [
-                'id'            => '6b65295a7fe5fa6faaa2f0ac3f9b0f80',
-                'active'        => true,
+                'id' => '6b65295a7fe5fa6faaa2f0ac3f9b0f80',
+                'active' => true,
                 'variantValues' => [
                     'W 34/L 34',
                     'Blau',
                 ],
             ],
             [
-                'id'            => '6b6e0bb9f2b8b5f070f91593073b4555',
-                'active'        => true,
+                'id' => '6b6e0bb9f2b8b5f070f91593073b4555',
+                'active' => true,
                 'variantValues' => [
                     'W 34/L 34',
                     'Smoke Gray',
                 ],
             ],
             [
-                'id'            => '6b6cf1ed0c0b3e784b05b1c9c207d352',
-                'active'        => true,
+                'id' => '6b6cf1ed0c0b3e784b05b1c9c207d352',
+                'active' => true,
                 'variantValues' => [
                     'W 34/L 34',
                     'Super Blue',
@@ -467,7 +478,8 @@ final class ProductTest extends BaseTestCase
 
     public function testGetNoProductVariants(): void
     {
-        $result = $this->query('
+        $result = $this->query(
+            '
             query{
                 product(productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '"){
                     variants {
@@ -475,7 +487,8 @@ final class ProductTest extends BaseTestCase
                     }
                 }
             }
-        ');
+        '
+        );
 
         $this->assertCount(
             0,
@@ -485,11 +498,13 @@ final class ProductTest extends BaseTestCase
 
     public function testProducts(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             53,
@@ -499,7 +514,7 @@ final class ProductTest extends BaseTestCase
 
     public function dataProviderSortedProductsList()
     {
-        return  [
+        return [
             'min_price_variant_asc' => [
                 'sortquery' => '
                     sort: {
@@ -507,9 +522,9 @@ final class ProductTest extends BaseTestCase
                         minPriceVariant: "ASC"
                     }
                 ',
-                'method'    => 'asort',
-                'field'     => 'varMinPrice',
-                'mode'      => SORT_NUMERIC,
+                'method' => 'asort',
+                'field' => 'varMinPrice',
+                'mode' => SORT_NUMERIC,
             ],
             'min_price_variant_desc' => [
                 'sortquery' => '
@@ -518,8 +533,8 @@ final class ProductTest extends BaseTestCase
                         minPriceVariant: "DESC"
                     }
                 ',
-                'method'    => 'array_multisort',
-                'field'     => 'varMinPrice',
+                'method' => 'array_multisort',
+                'field' => 'varMinPrice',
             ],
             'product_number_asc' => [
                 'sortquery' => '
@@ -528,9 +543,9 @@ final class ProductTest extends BaseTestCase
                         productNumber: "ASC"
                     }
                 ',
-                'method'    => 'asort',
-                'field'     => 'sku',
-                'mode'      => SORT_STRING,
+                'method' => 'asort',
+                'field' => 'sku',
+                'mode' => SORT_STRING,
             ],
             'product_number_desc' => [
                 'sortquery' => '
@@ -539,9 +554,9 @@ final class ProductTest extends BaseTestCase
                         productNumber: "DESC"
                     }
                 ',
-                'method'    => 'arsort',
-                'field'     => 'sku',
-                'mode'      => SORT_STRING,
+                'method' => 'arsort',
+                'field' => 'sku',
+                'mode' => SORT_STRING,
             ],
             'price_asc' => [
                 'sortquery' => '
@@ -551,8 +566,8 @@ final class ProductTest extends BaseTestCase
                         title: "ASC"
                     }
                 ',
-                'method'    => 'uasort_asc',
-                'field'     => 'price',
+                'method' => 'uasort_asc',
+                'field' => 'price',
             ],
             'price_desc' => [
                 'sortquery' => '
@@ -562,8 +577,8 @@ final class ProductTest extends BaseTestCase
                         title: "DESC"
                     }
                 ',
-                'method'    => 'uasort_desc',
-                'field'     => 'price',
+                'method' => 'uasort_desc',
+                'field' => 'price',
             ],
             'rating_asc' => [
                 'sortquery' => '
@@ -573,8 +588,8 @@ final class ProductTest extends BaseTestCase
                         title: "ASC"
                     }
                 ',
-                'method'    => 'uasort_asc',
-                'field'     => 'rating',
+                'method' => 'uasort_asc',
+                'field' => 'rating',
             ],
             'rating_desc' => [
                 'sortquery' => '
@@ -584,8 +599,8 @@ final class ProductTest extends BaseTestCase
                         title: "DESC"
                     }
                 ',
-                'method'    => 'uasort_desc',
-                'field'     => 'rating',
+                'method' => 'uasort_desc',
+                'field' => 'rating',
             ],
             'stock_asc' => [
                 'sortquery' => '
@@ -595,8 +610,8 @@ final class ProductTest extends BaseTestCase
                         title: "ASC"
                     }
                 ',
-                'method'    => 'uasort_asc',
-                'field'     => 'stock',
+                'method' => 'uasort_asc',
+                'field' => 'stock',
             ],
             'stock_desc' => [
                 'sortquery' => '
@@ -606,8 +621,8 @@ final class ProductTest extends BaseTestCase
                         title: "DESC"
                     }
                 ',
-                'method'    => 'uasort_desc',
-                'field'     => 'stock',
+                'method' => 'uasort_desc',
+                'field' => 'stock',
             ],
             'title_asc' => [
                 'sortquery' => '
@@ -616,8 +631,8 @@ final class ProductTest extends BaseTestCase
                         title: "ASC"
                     }
                 ',
-                'method'    => 'asort',
-                'field'     => 'title',
+                'method' => 'asort',
+                'field' => 'title',
             ],
             'title_desc' => [
                 'sortquery' => '
@@ -626,8 +641,8 @@ final class ProductTest extends BaseTestCase
                         title: "DESC"
                     }
                 ',
-                'method'    => 'arsort',
-                'field'     => 'title',
+                'method' => 'arsort',
+                'field' => 'title',
             ],
         ];
     }
@@ -641,7 +656,8 @@ final class ProductTest extends BaseTestCase
         string $field,
         ?int $mode = null
     ): void {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(
                 ' . $sortQuery . '
             ) {
@@ -659,14 +675,15 @@ final class ProductTest extends BaseTestCase
                     price
                 }
             }
-        }');
+        }'
+        );
 
         $orderedProducts = [];
 
         foreach ($result['body']['data']['products'] as $product) {
             if (in_array($field, ['stock', 'rating', 'price'])) {
                 $orderedProducts[$product['id']] = [
-                    $field  => $product[$field][$field],
+                    $field => $product[$field][$field],
                     'title' => $product['title'],
                 ];
             } else {
@@ -687,7 +704,13 @@ final class ProductTest extends BaseTestCase
                 return $item2 <=> $item1;
             });
         } else {
-            $mode ? $method($expected, $mode) : $method(array_values($expected), SORT_DESC, $expected);
+            $mode ? $method($expected, $mode) : $method(
+                array_values($expected),
+                SORT_DESC,
+                array_keys($expected),
+                SORT_ASC,
+                $expected
+            );
         }
 
         $this->assertSame($expected, $orderedProducts);
@@ -698,11 +721,13 @@ final class ProductTest extends BaseTestCase
      */
     public function testProductsOffsetAndLimit(int $offset, int $limit, array $expectedProducts): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(pagination: {offset: ' . $offset . ', limit: ' . $limit . '}) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertArraySameNonAssociative($expectedProducts, $result['body']['data']['products']);
     }
@@ -748,13 +773,15 @@ final class ProductTest extends BaseTestCase
      */
     public function testProductsByManufacturer(string $manufacturerId, int $expectedCount): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(filter: { manufacturer: { equals: "' . $manufacturerId . '" } }) {
                 manufacturer {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             $expectedCount,
@@ -788,13 +815,15 @@ final class ProductTest extends BaseTestCase
      */
     public function testProductsByVendor(string $vendorId, int $expectedCount): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(filter: { vendor: { equals: "' . $vendorId . '" } }) {
                 vendor {
                     id
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             $expectedCount,
@@ -827,11 +856,13 @@ final class ProductTest extends BaseTestCase
      */
     public function testProductsByCategory(string $categoryId, int $expectedCount): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(filter: { category: { equals: "' . $categoryId . '" } }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertCount(
             $expectedCount,
@@ -845,7 +876,8 @@ final class ProductTest extends BaseTestCase
 
         $this->prepareToken();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(
                 filter: { category: { equals: "' . self::ACTIVE_PRODUCT_CATEGORY . '" } }
                 sort: { position: "" }
@@ -855,7 +887,8 @@ final class ProductTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $category = $result['body']['data']['products'][0]['categories'][0];
         $this->assertNull($category);
@@ -879,7 +912,7 @@ final class ProductTest extends BaseTestCase
 
     public function testDeliveryStatusHandling(): void
     {
-        $noStockProduct      = 'fadc492a5807c56eb80b0507accd756b';
+        $noStockProduct = 'fadc492a5807c56eb80b0507accd756b';
         $queryBuilderFactory = ContainerFactory::getInstance()
             ->getContainer()
             ->get(QueryBuilderFactoryInterface::class);
@@ -894,7 +927,8 @@ final class ProductTest extends BaseTestCase
             ->setParameter(':STOCKFLAG', '2');
         $query->execute();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products (filter: {
                 title: {
                     contains: "SPLEENE"
@@ -902,7 +936,8 @@ final class ProductTest extends BaseTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             [],
@@ -911,9 +946,10 @@ final class ProductTest extends BaseTestCase
 
         // reset stock flag to: default
         $query->setParameter(':STOCKFLAG', '1')
-              ->execute();
+            ->execute();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products (filter: {
                 title: {
                     contains: "SPLEENE"
@@ -921,7 +957,8 @@ final class ProductTest extends BaseTestCase
             }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             [
@@ -936,12 +973,12 @@ final class ProductTest extends BaseTestCase
         return [
             [
                 'isVendorActive' => false,
-                'withToken'      => false,
+                'withToken' => false,
                 'expectedVendor' => null,
             ],
             [
                 'isVendorActive' => false,
-                'withToken'      => true,
+                'withToken' => true,
                 'expectedVendor' => null,
                 // TODO: Using a valid token, this list should also contain inactive vendors
                 // [
@@ -951,17 +988,17 @@ final class ProductTest extends BaseTestCase
             ],
             [
                 'isVendorActive' => true,
-                'withToken'      => false,
+                'withToken' => false,
                 'expectedVendor' => [
-                    'id'     => self::VENDOR_OF_ACTIVE_PRODUCT,
+                    'id' => self::VENDOR_OF_ACTIVE_PRODUCT,
                     'active' => true,
                 ],
             ],
             [
                 'isVendorActive' => true,
-                'withToken'      => true,
+                'withToken' => true,
                 'expectedVendor' => [
-                    'id'     => self::VENDOR_OF_ACTIVE_PRODUCT,
+                    'id' => self::VENDOR_OF_ACTIVE_PRODUCT,
                     'active' => true,
                 ],
             ],
@@ -984,14 +1021,16 @@ final class ProductTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product(productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
                 vendor {
                     id
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $productVendor = $result['body']['data']['product']['vendor'];
         $this->assertSame($expectedVendor, $productVendor);
@@ -1002,12 +1041,12 @@ final class ProductTest extends BaseTestCase
         return [
             [
                 'isManufacturerActive' => false,
-                'withToken'            => false,
+                'withToken' => false,
                 'expectedManufacturer' => null,
             ],
             [
                 'isManufacturerActive' => false,
-                'withToken'            => true,
+                'withToken' => true,
                 'expectedManufacturer' => null,
                 // TODO: Using a valid token, this list should also contain inactive manufacturers
                 // [
@@ -1017,17 +1056,17 @@ final class ProductTest extends BaseTestCase
             ],
             [
                 'isManufacturerActive' => true,
-                'withToken'            => false,
+                'withToken' => false,
                 'expectedManufacturer' => [
-                    'id'     => self::ACTIVE_PRODUCT_MANUFACTURER,
+                    'id' => self::ACTIVE_PRODUCT_MANUFACTURER,
                     'active' => true,
                 ],
             ],
             [
                 'isManufacturerActive' => true,
-                'withToken'            => true,
+                'withToken' => true,
                 'expectedManufacturer' => [
-                    'id'     => self::ACTIVE_PRODUCT_MANUFACTURER,
+                    'id' => self::ACTIVE_PRODUCT_MANUFACTURER,
                     'active' => true,
                 ],
             ],
@@ -1050,14 +1089,16 @@ final class ProductTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 manufacturer {
                     id
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $productManufacturer = $result['body']['data']['product']['manufacturer'];
         $this->assertSame($expectedManufacturer, $productManufacturer);
@@ -1067,13 +1108,13 @@ final class ProductTest extends BaseTestCase
     {
         return [
             [
-                'isCSProductActive'    => false,
-                'withToken'            => false,
+                'isCSProductActive' => false,
+                'withToken' => false,
                 'expectedCrossSelling' => [],
             ],
             [
-                'isCSProductActive'    => false,
-                'withToken'            => true,
+                'isCSProductActive' => false,
+                'withToken' => true,
                 'expectedCrossSelling' => [
                     // TODO: Using a valid token, this list should also contain inactive products
                     // [
@@ -1083,21 +1124,21 @@ final class ProductTest extends BaseTestCase
                 ],
             ],
             [
-                'isCSProductActive'    => true,
-                'withToken'            => false,
+                'isCSProductActive' => true,
+                'withToken' => false,
                 'expectedCrossSelling' => [
                     [
-                        'id'     => self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT,
                         'active' => true,
                     ],
                 ],
             ],
             [
-                'isCSProductActive'    => true,
-                'withToken'            => true,
+                'isCSProductActive' => true,
+                'withToken' => true,
                 'expectedCrossSelling' => [
                     [
-                        'id'     => self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_CROSSSOLD_FOR_ACTIVE_PRODUCT,
                         'active' => true,
                     ],
                 ],
@@ -1121,14 +1162,16 @@ final class ProductTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 crossSelling {
                     id
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $productCrossSelling = $result['body']['data']['product']['crossSelling'];
 
@@ -1146,12 +1189,12 @@ final class ProductTest extends BaseTestCase
         return [
             [
                 'isCategoryActive' => 0,
-                'withToken'        => false,
+                'withToken' => false,
                 'expectedCategory' => null,
             ],
             [
                 'isCategoryActive' => 0,
-                'withToken'        => true,
+                'withToken' => true,
                 'expectedCategory' => null,
                 // TODO: Using a valid token, this list should also contain inactive categories
                 //'expectedCategory' => [
@@ -1161,17 +1204,17 @@ final class ProductTest extends BaseTestCase
             ],
             [
                 'isCategoryActive' => 1,
-                'withToken'        => false,
+                'withToken' => false,
                 'expectedCategory' => [
-                    'id'     => self::ACTIVE_PRODUCT_CATEGORY,
+                    'id' => self::ACTIVE_PRODUCT_CATEGORY,
                     'active' => true,
                 ],
             ],
             [
                 'isCategoryActive' => 1,
-                'withToken'        => true,
+                'withToken' => true,
                 'expectedCategory' => [
-                    'id'     => self::ACTIVE_PRODUCT_CATEGORY,
+                    'id' => self::ACTIVE_PRODUCT_CATEGORY,
                     'active' => true,
                 ],
             ],
@@ -1189,14 +1232,16 @@ final class ProductTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 categories(onlyMainCategory: true) {
                     id
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $this->assertCount($expectedCategory ? 1 : 0, $result['body']['data']['product']['categories']);
         $productMainCategory = $result['body']['data']['product']['categories'][0];
@@ -1206,22 +1251,24 @@ final class ProductTest extends BaseTestCase
 
     public function testGetProductAllCategories(): void
     {
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
                 product(productId: "' . self::ACTIVE_PRODUCT_WITH_MORE_CATEGORIES . '") {
                     categories(onlyMainCategory: false) {
                         id
                         active
                     }
                 }
-            }');
+            }'
+        );
 
         $expectedCategories = [
             [
-                'id'     => self::ACTIVE_PRODUCT_CATEGORY,
+                'id' => self::ACTIVE_PRODUCT_CATEGORY,
                 'active' => true,
             ],
             [
-                'id'     => self::ACTIVE_PRODUCT_CATEGORY_2,
+                'id' => self::ACTIVE_PRODUCT_CATEGORY_2,
                 'active' => true,
             ],
         ];
@@ -1237,20 +1284,20 @@ final class ProductTest extends BaseTestCase
         return [
             [
                 'isCategoryActive' => false,
-                'withToken'        => false,
+                'withToken' => false,
                 'expectedProducts' => [
                     [
-                        'id'         => self::ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_PRODUCT,
                         'categories' => [],
                     ],
                 ],
             ],
             [
                 'isCategoryActive' => false,
-                'withToken'        => true,
+                'withToken' => true,
                 'expectedProducts' => [
                     [
-                        'id'         => self::ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_PRODUCT,
                         'categories' => [],
                         // TODO: Using a valid token, this list should also contain an inactive category
                         //       EshopModelArticle::getCategory() only returns active category
@@ -1263,13 +1310,13 @@ final class ProductTest extends BaseTestCase
             ],
             [
                 'isCategoryActive' => true,
-                'withToken'        => false,
+                'withToken' => false,
                 'expectedProducts' => [
                     [
-                        'id'         => self::ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_PRODUCT,
                         'categories' => [
                             [
-                                'id'     => self::ACTIVE_PRODUCT_CATEGORY,
+                                'id' => self::ACTIVE_PRODUCT_CATEGORY,
                                 'active' => true,
                             ],
                         ],
@@ -1278,13 +1325,13 @@ final class ProductTest extends BaseTestCase
             ],
             [
                 'isCategoryActive' => true,
-                'withToken'        => true,
+                'withToken' => true,
                 'expectedProducts' => [
                     [
-                        'id'         => self::ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_PRODUCT,
                         'categories' => [
                             [
-                                'id'     => self::ACTIVE_PRODUCT_CATEGORY,
+                                'id' => self::ACTIVE_PRODUCT_CATEGORY,
                                 'active' => true,
                             ],
                         ],
@@ -1310,7 +1357,8 @@ final class ProductTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(
                 filter: {
                     category: {
@@ -1327,7 +1375,8 @@ final class ProductTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $actualProducts = $result['body']['data']['products'];
 
@@ -1339,20 +1388,20 @@ final class ProductTest extends BaseTestCase
         return [
             [
                 'isManufacturerActive' => false,
-                'withToken'            => false,
-                'expectedProducts'     => [
+                'withToken' => false,
+                'expectedProducts' => [
                     [
-                        'id'           => self::ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_PRODUCT,
                         'manufacturer' => null,
                     ],
                 ],
             ],
             [
                 'isManufacturerActive' => false,
-                'withToken'            => true,
-                'expectedProducts'     => [
+                'withToken' => true,
+                'expectedProducts' => [
                     [
-                        'id'           => self::ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_PRODUCT,
                         'manufacturer' => null,
                         // TODO: Using a valid token, this list should also contain an inactive manufacturer
                         //       EshopModelArticle::getManufacturer() only returns active manufacturer
@@ -1365,12 +1414,12 @@ final class ProductTest extends BaseTestCase
             ],
             [
                 'isManufacturerActive' => true,
-                'withToken'            => false,
-                'expectedProducts'     => [
+                'withToken' => false,
+                'expectedProducts' => [
                     [
-                        'id'           => self::ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_PRODUCT,
                         'manufacturer' => [
-                            'id'     => self::ACTIVE_PRODUCT_MANUFACTURER,
+                            'id' => self::ACTIVE_PRODUCT_MANUFACTURER,
                             'active' => true,
                         ],
                     ],
@@ -1378,12 +1427,12 @@ final class ProductTest extends BaseTestCase
             ],
             [
                 'isManufacturerActive' => true,
-                'withToken'            => true,
-                'expectedProducts'     => [
+                'withToken' => true,
+                'expectedProducts' => [
                     [
-                        'id'           => self::ACTIVE_PRODUCT,
+                        'id' => self::ACTIVE_PRODUCT,
                         'manufacturer' => [
-                            'id'     => self::ACTIVE_PRODUCT_MANUFACTURER,
+                            'id' => self::ACTIVE_PRODUCT_MANUFACTURER,
                             'active' => true,
                         ],
                     ],
@@ -1408,7 +1457,8 @@ final class ProductTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(
                 filter: {
                     manufacturer: {
@@ -1425,7 +1475,8 @@ final class ProductTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $actualProducts = $result['body']['data']['products'];
 
@@ -1436,21 +1487,21 @@ final class ProductTest extends BaseTestCase
     {
         return [
             [
-                'isVendorActive'   => false,
-                'withToken'        => false,
+                'isVendorActive' => false,
+                'withToken' => false,
                 'expectedProducts' => [
                     [
-                        'id'     => self::ACTIVE_PRODUCT_WITH_VARIANTS,
+                        'id' => self::ACTIVE_PRODUCT_WITH_VARIANTS,
                         'vendor' => null,
                     ],
                 ],
             ],
             [
-                'isVendorActive'   => false,
-                'withToken'        => true,
+                'isVendorActive' => false,
+                'withToken' => true,
                 'expectedProducts' => [
                     [
-                        'id'     => self::ACTIVE_PRODUCT_WITH_VARIANTS,
+                        'id' => self::ACTIVE_PRODUCT_WITH_VARIANTS,
                         'vendor' => null,
                         // TODO: Using a valid token, this list should also contain an inactive vendor
                         //       EshopModelArticle::getVendor() only returns active vendor
@@ -1462,26 +1513,26 @@ final class ProductTest extends BaseTestCase
                 ],
             ],
             [
-                'isVendorActive'   => true,
-                'withToken'        => false,
+                'isVendorActive' => true,
+                'withToken' => false,
                 'expectedProducts' => [
                     [
-                        'id'     => self::ACTIVE_PRODUCT_WITH_VARIANTS,
+                        'id' => self::ACTIVE_PRODUCT_WITH_VARIANTS,
                         'vendor' => [
-                            'id'     => self::VENDOR_OF_ACTIVE_PRODUCT,
+                            'id' => self::VENDOR_OF_ACTIVE_PRODUCT,
                             'active' => true,
                         ],
                     ],
                 ],
             ],
             [
-                'isVendorActive'   => true,
-                'withToken'        => true,
+                'isVendorActive' => true,
+                'withToken' => true,
                 'expectedProducts' => [
                     [
-                        'id'     => self::ACTIVE_PRODUCT_WITH_VARIANTS,
+                        'id' => self::ACTIVE_PRODUCT_WITH_VARIANTS,
                         'vendor' => [
-                            'id'     => self::VENDOR_OF_ACTIVE_PRODUCT,
+                            'id' => self::VENDOR_OF_ACTIVE_PRODUCT,
                             'active' => true,
                         ],
                     ],
@@ -1506,7 +1557,8 @@ final class ProductTest extends BaseTestCase
             $this->prepareToken();
         }
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(
                 filter: {
                     vendor: {
@@ -1523,7 +1575,8 @@ final class ProductTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $actualProducts = $result['body']['data']['products'];
         $this->assertEquals($expectedProducts, $actualProducts);
@@ -1531,7 +1584,8 @@ final class ProductTest extends BaseTestCase
 
     public function testProductExistsInListFilteredByCategory(): void
     {
-        $productResult = $this->query('query {
+        $productResult = $this->query(
+            'query {
             product(productId: "' . self::ACTIVE_PRODUCT . '") {
                 id
                 active
@@ -1541,15 +1595,16 @@ final class ProductTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $expectedProduct = [
-            'id'         => self::ACTIVE_PRODUCT,
-            'active'     => true,
-            'title'      => self::ACTIVE_PRODUCT_FULL_TITLE,
+            'id' => self::ACTIVE_PRODUCT,
+            'active' => true,
+            'title' => self::ACTIVE_PRODUCT_FULL_TITLE,
             'categories' => [
                 [
-                    'id'     => self::ACTIVE_PRODUCT_CATEGORY,
+                    'id' => self::ACTIVE_PRODUCT_CATEGORY,
                     'active' => true,
                 ],
             ],
@@ -1557,7 +1612,8 @@ final class ProductTest extends BaseTestCase
         $actualProduct = $productResult['body']['data']['product'];
         $this->assertEquals($expectedProduct, $actualProduct);
 
-        $productListResult = $this->query('query {
+        $productListResult = $this->query(
+            'query {
             products(filter: {
                 category: {equals: "' . self::ACTIVE_PRODUCT_CATEGORY . '"}
                 title: {contains: "' . self::ACTIVE_PRODUCT_TITLE . '"}
@@ -1570,7 +1626,8 @@ final class ProductTest extends BaseTestCase
                     active
                 }
             }
-        }');
+        }'
+        );
 
         $actualProducts = $productListResult['body']['data']['products'];
         $this->assertEquals([$actualProduct], $actualProducts);
@@ -1578,7 +1635,8 @@ final class ProductTest extends BaseTestCase
 
     public function testProductRelationVariants(): void
     {
-        $response = $this->query('query {
+        $response = $this->query(
+            'query {
             product(productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '"){
                 accessories {
                     variants {
@@ -1611,26 +1669,27 @@ final class ProductTest extends BaseTestCase
                    }
                 }
             }
-        }');
+        }'
+        );
 
         $expectedProduct = [
-            'accessories'  => [],
+            'accessories' => [],
             'crossSelling' => [
                 [
                     'variants' => [
                         [
-                            'id'           => '6b6b9f89cb8decee837d1a4c60742875',
-                            'accessories'  => [],
+                            'id' => '6b6b9f89cb8decee837d1a4c60742875',
+                            'accessories' => [],
                             'crossSelling' => [],
                         ],
                         [
-                            'id'           => '6b63ed599fcfa07768dbfbd93991543b',
-                            'accessories'  => [],
+                            'id' => '6b63ed599fcfa07768dbfbd93991543b',
+                            'accessories' => [],
                             'crossSelling' => [],
                         ],
                         [
-                            'id'           => '6b6b42499614ce3bfbee01f6eaba2f30',
-                            'accessories'  => [],
+                            'id' => '6b6b42499614ce3bfbee01f6eaba2f30',
+                            'accessories' => [],
                             'crossSelling' => [],
                         ],
                     ],
@@ -1638,18 +1697,18 @@ final class ProductTest extends BaseTestCase
                 [
                     'variants' => [
                         [
-                            'id'           => '6b62700a4eb25d6c370ea2ae3807b9e3',
-                            'accessories'  => [],
+                            'id' => '6b62700a4eb25d6c370ea2ae3807b9e3',
+                            'accessories' => [],
                             'crossSelling' => [],
                         ],
                         [
-                            'id'           => '6b6a6aedca3e438e98d51f0a5d586c0b',
-                            'accessories'  => [],
+                            'id' => '6b6a6aedca3e438e98d51f0a5d586c0b',
+                            'accessories' => [],
                             'crossSelling' => [],
                         ],
                         [
-                            'id'           => '6b6b6abed58b118ee988c92856b8b675',
-                            'accessories'  => [],
+                            'id' => '6b6b6abed58b118ee988c92856b8b675',
+                            'accessories' => [],
                             'crossSelling' => [],
                         ],
                     ],
@@ -1665,7 +1724,8 @@ final class ProductTest extends BaseTestCase
 
     public function testProductListRelationVariants(): void
     {
-        $response = $this->query('query {
+        $response = $this->query(
+            'query {
             products(filter:{title:{contains:"Kuyichi"}} pagination:{limit:2}){
                 accessories {
                     variants {
@@ -1698,27 +1758,28 @@ final class ProductTest extends BaseTestCase
                    }
                 }
             }
-        }');
+        }'
+        );
 
         $expectedProducts = [
             [
-                'accessories'  => [],
+                'accessories' => [],
                 'crossSelling' => [
                     [
                         'variants' => [
                             [
-                                'id'           => '6b6b9f89cb8decee837d1a4c60742875',
-                                'accessories'  => [],
+                                'id' => '6b6b9f89cb8decee837d1a4c60742875',
+                                'accessories' => [],
                                 'crossSelling' => [],
                             ],
                             [
-                                'id'           => '6b63ed599fcfa07768dbfbd93991543b',
-                                'accessories'  => [],
+                                'id' => '6b63ed599fcfa07768dbfbd93991543b',
+                                'accessories' => [],
                                 'crossSelling' => [],
                             ],
                             [
-                                'id'           => '6b6b42499614ce3bfbee01f6eaba2f30',
-                                'accessories'  => [],
+                                'id' => '6b6b42499614ce3bfbee01f6eaba2f30',
+                                'accessories' => [],
                                 'crossSelling' => [],
                             ],
                         ],
@@ -1726,18 +1787,18 @@ final class ProductTest extends BaseTestCase
                     [
                         'variants' => [
                             [
-                                'id'           => '6b62700a4eb25d6c370ea2ae3807b9e3',
-                                'accessories'  => [],
+                                'id' => '6b62700a4eb25d6c370ea2ae3807b9e3',
+                                'accessories' => [],
                                 'crossSelling' => [],
                             ],
                             [
-                                'id'           => '6b6a6aedca3e438e98d51f0a5d586c0b',
-                                'accessories'  => [],
+                                'id' => '6b6a6aedca3e438e98d51f0a5d586c0b',
+                                'accessories' => [],
                                 'crossSelling' => [],
                             ],
                             [
-                                'id'           => '6b6b6abed58b118ee988c92856b8b675',
-                                'accessories'  => [],
+                                'id' => '6b6b6abed58b118ee988c92856b8b675',
+                                'accessories' => [],
                                 'crossSelling' => [],
                             ],
                         ],
@@ -1747,13 +1808,13 @@ final class ProductTest extends BaseTestCase
                 ],
             ],
             [
-                'accessories'  => [],
+                'accessories' => [],
                 'crossSelling' => [
                     [
                         'variants' => [
                             [
-                                'id'           => '09646538b54bac72b4ccb92fb5e3649f',
-                                'accessories'  => [],
+                                'id' => '09646538b54bac72b4ccb92fb5e3649f',
+                                'accessories' => [],
                                 'crossSelling' => [
                                     ['variants' => []],
                                     ['variants' => []],
@@ -1766,8 +1827,8 @@ final class ProductTest extends BaseTestCase
                                 ],
                             ],
                             [
-                                'id'           => '0964a33fb0e51ca6b907a34fbede7c2e',
-                                'accessories'  => [],
+                                'id' => '0964a33fb0e51ca6b907a34fbede7c2e',
+                                'accessories' => [],
                                 'crossSelling' => [
                                     [
                                         'variants' => [
@@ -1780,8 +1841,8 @@ final class ProductTest extends BaseTestCase
                                 ],
                             ],
                             [
-                                'id'           => '096e38032896a847682651d565966c45',
-                                'accessories'  => [],
+                                'id' => '096e38032896a847682651d565966c45',
+                                'accessories' => [],
                                 'crossSelling' => [
                                     ['variants' => []],
                                     ['variants' => []],
@@ -1794,8 +1855,8 @@ final class ProductTest extends BaseTestCase
                                 ],
                             ],
                             [
-                                'id'           => '096a1b0849d5ffa4dd48cd388902420b',
-                                'accessories'  => [],
+                                'id' => '096a1b0849d5ffa4dd48cd388902420b',
+                                'accessories' => [],
                                 'crossSelling' => [
                                     ['variants' => []],
                                     ['variants' => []],
@@ -1824,7 +1885,8 @@ final class ProductTest extends BaseTestCase
     {
         $expectedProducts = $this->prepareProductListSorting();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(filter: {
                 title: {
                   contains: "kite"
@@ -1832,7 +1894,8 @@ final class ProductTest extends BaseTestCase
               }) {
                 id
             }
-        }');
+        }'
+        );
 
         $this->assertSame(
             $expectedProducts,
@@ -1852,7 +1915,8 @@ final class ProductTest extends BaseTestCase
             ->get(QueryBuilderFactoryInterface::class);
         $queryBuilder = $queryBuilderFactory->create();
 
-        $result = $this->query('query {
+        $result = $this->query(
+            'query {
             products(filter: {
                 title: {
                   contains: "kite"
@@ -1860,9 +1924,10 @@ final class ProductTest extends BaseTestCase
               }) {
                 id
             }
-        }');
+        }'
+        );
 
-        $sort     = 0;
+        $sort = 0;
         $products = $result['body']['data']['products'];
         //shuffle products to make sure that default sort is not the same
         shuffle($products);

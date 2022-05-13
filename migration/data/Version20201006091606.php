@@ -14,7 +14,7 @@ use Doctrine\Migrations\AbstractMigration;
 
 final class Version20201006091606 extends AbstractMigration
 {
-    public function up(Schema $schema) : void
+    public function up(Schema $schema): void
     {
         $this->addSql("ALTER TABLE `oxvouchers`
           ADD COLUMN `OEGQL_BASKETID` char(32)
@@ -22,7 +22,7 @@ final class Version20201006091606 extends AbstractMigration
           COMMENT 'Relation to oxuserbasket';");
     }
 
-    public function down(Schema $schema) : void
+    public function down(Schema $schema): void
     {
     }
 }

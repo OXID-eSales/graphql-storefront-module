@@ -39,7 +39,7 @@ final class ProductDimensions
      */
     public function getLength(): float
     {
-        return (float) $this->product->getRawFieldData('oxlength');
+        return (float)$this->product->getRawFieldData('oxlength');
     }
 
     /**
@@ -47,7 +47,7 @@ final class ProductDimensions
      */
     public function getWidth(): float
     {
-        return (float) $this->product->getRawFieldData('oxwidth');
+        return (float)$this->product->getRawFieldData('oxwidth');
     }
 
     /**
@@ -55,7 +55,7 @@ final class ProductDimensions
      */
     public function getHeight(): float
     {
-        return (float) $this->product->getRawFieldData('oxheight');
+        return (float)$this->product->getRawFieldData('oxheight');
     }
 
     /**
@@ -63,6 +63,6 @@ final class ProductDimensions
      */
     public function getWeight(): float
     {
-        return (float) $this->product->getRawFieldData('oxweight');
+        return (float)$this->product->getRawFieldData('oxweight');
     }
 }

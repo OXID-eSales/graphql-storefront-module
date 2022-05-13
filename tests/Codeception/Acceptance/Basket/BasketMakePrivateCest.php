@@ -117,7 +117,7 @@ final class BasketMakePrivateCest extends BaseCest
         );
 
         $I->seeResponseIsJson();
-        $result      = $I->grabJsonResponseAsArray();
+        $result = $I->grabJsonResponseAsArray();
 
         return $result['data']['basketCreate']['id'];
     }

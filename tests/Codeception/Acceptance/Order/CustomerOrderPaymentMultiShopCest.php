@@ -36,10 +36,10 @@ final class CustomerOrderPaymentMultiShopCest extends MultishopBaseCest
      */
     public function testCustomerOrderPaymentPerShop(AcceptanceTester $I, Example $data): void
     {
-        $languageId  = 0;
-        $shopId      = $data['shopId'];
+        $languageId = 0;
+        $shopId = $data['shopId'];
         $orderNumber = $data['orderNumber'];
-        $paymentId   = $data['paymentId'];
+        $paymentId = $data['paymentId'];
 
         $I->login(self::USERNAME, self::PASSWORD, $shopId);
 
@@ -80,14 +80,14 @@ final class CustomerOrderPaymentMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'      => 1,
+                'shopId' => 1,
                 'orderNumber' => 4,
-                'paymentId'   => 'oxiddebitnote',
+                'paymentId' => 'oxiddebitnote',
             ],
             'shop_2' => [
-                'shopId'      => 2,
+                'shopId' => 2,
                 'orderNumber' => 5,
-                'paymentId'   => 'oxidinvoice',
+                'paymentId' => 'oxidinvoice',
             ],
         ];
     }

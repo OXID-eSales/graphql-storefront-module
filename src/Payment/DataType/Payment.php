@@ -44,7 +44,7 @@ class Payment implements ShopModelAwareInterface
      */
     public function isActive(): bool
     {
-        return (bool) $this->payment->getRawFieldData('oxactive');
+        return (bool)$this->payment->getRawFieldData('oxactive');
     }
 
     /**
@@ -52,7 +52,7 @@ class Payment implements ShopModelAwareInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->payment->getRawFieldData('oxdesc');
+        return (string)$this->payment->getRawFieldData('oxdesc');
     }
 
     /**
@@ -60,7 +60,7 @@ class Payment implements ShopModelAwareInterface
      */
     public function getDescription(): string
     {
-        return (string) $this->payment->getRawFieldData('oxlongdesc');
+        return (string)$this->payment->getRawFieldData('oxlongdesc');
     }
 
     /**

@@ -35,8 +35,8 @@ final class CustomerRegisterInput
         Legacy $legacyService,
         CustomerRegisterFactory $customerRegisterFactory
     ) {
-        $this->repository              = $repository;
-        $this->legacyService           = $legacyService;
+        $this->repository = $repository;
+        $this->legacyService = $legacyService;
         $this->customerRegisterFactory = $customerRegisterFactory;
     }
 
@@ -53,7 +53,8 @@ final class CustomerRegisterInput
             throw InvalidEmail::byString($email);
         }
 
-        if (strlen($password) == 0 ||
+        if (
+            strlen($password) == 0 ||
             (strlen($password) < $this->legacyService->getConfigParam('iPasswordLength'))
         ) {
             throw PasswordMismatch::byLength();

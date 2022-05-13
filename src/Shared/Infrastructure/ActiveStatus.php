@@ -18,17 +18,17 @@ trait ActiveStatus
     {
         $model = $this->getEshopModel();
 
-        $active = (bool) $model->getRawFieldData('oxactive');
+        $active = (bool)$model->getRawFieldData('oxactive');
 
         if ($active) {
             return true;
         }
 
         $from = DateTimeImmutableFactory::fromString(
-            (string) $model->getRawFieldData('oxactivefrom')
+            (string)$model->getRawFieldData('oxactivefrom')
         );
         $to = DateTimeImmutableFactory::fromString(
-            (string) $model->getRawFieldData('oxactiveto')
+            (string)$model->getRawFieldData('oxactiveto')
         );
         $now = $now ?? DateTimeImmutableFactory::fromString('now');
 

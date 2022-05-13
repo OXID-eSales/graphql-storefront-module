@@ -21,7 +21,7 @@ final class CountryFilterList extends FilterList
     public function __construct(
         ?StringFilter $title = null
     ) {
-        $this->title  = $title;
+        $this->title = $title;
         parent::__construct();
     }
 

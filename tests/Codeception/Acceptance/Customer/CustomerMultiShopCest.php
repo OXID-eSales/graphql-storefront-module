@@ -41,7 +41,7 @@ final class CustomerMultiShopCest extends MultishopBaseCest
      */
     public function testCustomerNewsletterPerShopForMallUser(AcceptanceTester $I, Example $data): void
     {
-        $shopId   = $data['shopId'];
+        $shopId = $data['shopId'];
         $expected = $data['expected'];
 
         $I->updateConfigInDatabaseForShops('blMallUsers', true, 'bool', [1, 2]);
@@ -116,8 +116,8 @@ final class CustomerMultiShopCest extends MultishopBaseCest
     {
         $I->updateConfigInDatabaseForShops('blMallUsers', false, 'bool', [1, 2]);
 
-        $shopId         = $data['shopId'];
-        $expectedError  = $data['expectedError'];
+        $shopId = $data['shopId'];
+        $expectedError = $data['expectedError'];
 
         $I->sendGQLQuery(
             'mutation ($email: String!, $password: String!){
@@ -151,28 +151,28 @@ final class CustomerMultiShopCest extends MultishopBaseCest
     {
         return [
             [
-                'shopId'         => 2,
-                'email'          => 'user@oxid-esales.com',
-                'userId'         => '309db395b6c85c3881fcb9b437a73dd6',
-                'expectedError'  => "This e-mail address 'user@oxid-esales.com' already exists!",
+                'shopId' => 2,
+                'email' => 'user@oxid-esales.com',
+                'userId' => '309db395b6c85c3881fcb9b437a73dd6',
+                'expectedError' => "This e-mail address 'user@oxid-esales.com' already exists!",
             ],
             [
-                'shopId'         => 2,
-                'email'          => '',
-                'userId'         => '309db395b6c85c3881fcb9b437a73dd6',
-                'expectedError'  => 'The e-mail address must not be empty!',
+                'shopId' => 2,
+                'email' => '',
+                'userId' => '309db395b6c85c3881fcb9b437a73dd6',
+                'expectedError' => 'The e-mail address must not be empty!',
             ],
             [
-                'shopId'         => 2,
-                'email'          => 'otheruser@oxid-esales.com',
-                'userId'         => '309db395b6c85c3881fcb9b437a73ddx',
-                'expectedError'  => null,
+                'shopId' => 2,
+                'email' => 'otheruser@oxid-esales.com',
+                'userId' => '309db395b6c85c3881fcb9b437a73ddx',
+                'expectedError' => null,
             ],
             [
-                'shopId'         => 1,
-                'email'          => 'newUser@oxid-esales.com',
-                'userId'         => '9119cc8cd9593c214be93ee558235f3x',
-                'expectedError'  => null,
+                'shopId' => 1,
+                'email' => 'newUser@oxid-esales.com',
+                'userId' => '9119cc8cd9593c214be93ee558235f3x',
+                'expectedError' => null,
             ],
         ];
     }
@@ -182,9 +182,9 @@ final class CustomerMultiShopCest extends MultishopBaseCest
      */
     public function testCustomerEmailUpdate(AcceptanceTester $I, Example $data): void
     {
-        $shopId         = $data['shopId'];
-        $userId         = $data['userId'];
-        $expectedError  = $data['expectedError'];
+        $shopId = $data['shopId'];
+        $userId = $data['userId'];
+        $expectedError = $data['expectedError'];
 
         $I->updateConfigInDatabaseForShops('blMallUsers', false, 'bool', [1, 2]);
 
@@ -243,8 +243,8 @@ final class CustomerMultiShopCest extends MultishopBaseCest
 
         $I->assertEquals(
             [
-                'id'        => '123ad3b5380202966df6ff128e9eecaq',
-                'email'     => self::USERNAME,
+                'id' => '123ad3b5380202966df6ff128e9eecaq',
+                'email' => self::USERNAME,
                 'birthdate' => '1986-12-25T00:00:00+01:00',
             ],
             $result['data']['customerBirthdateUpdate']
@@ -285,11 +285,11 @@ final class CustomerMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'   => 1,
+                'shopId' => 1,
                 'expected' => 'SUBSCRIBED',
             ],
             'shop_2' => [
-                'shopId'   => 2,
+                'shopId' => 2,
                 'expected' => 'MISSING_DOUBLE_OPTIN',
             ],
         ];
@@ -299,36 +299,36 @@ final class CustomerMultiShopCest extends MultishopBaseCest
     {
         return [
             [
-                'shopId'         => 1,
-                'variables'      => [
-                    'email'    => 'user@oxid-esales.com',
+                'shopId' => 1,
+                'variables' => [
+                    'email' => 'user@oxid-esales.com',
                     'password' => 'useruser',
                 ],
-                'expectedError'  => "This e-mail address 'user@oxid-esales.com' already exists!",
+                'expectedError' => "This e-mail address 'user@oxid-esales.com' already exists!",
             ],
             [
-                'shopId'         => 2,
-                'variables'      => [
-                    'email'    => 'user@oxid-esales.com',
+                'shopId' => 2,
+                'variables' => [
+                    'email' => 'user@oxid-esales.com',
                     'password' => 'useruser',
                 ],
-                'expectedError'  => "This e-mail address 'user@oxid-esales.com' already exists!",
+                'expectedError' => "This e-mail address 'user@oxid-esales.com' already exists!",
             ],
             [
-                'shopId'         => 1,
-                'variables'      => [
-                    'email'    => 'testUserEE@oxid-esales.com',
+                'shopId' => 1,
+                'variables' => [
+                    'email' => 'testUserEE@oxid-esales.com',
                     'password' => 'useruser',
                 ],
-                'expectedError'  => null,
+                'expectedError' => null,
             ],
             [
-                'shopId'         => 2,
-                'variables'      => [
-                    'email'    => 'testUserEE@oxid-esales.com',
+                'shopId' => 2,
+                'variables' => [
+                    'email' => 'testUserEE@oxid-esales.com',
                     'password' => 'useruser',
                 ],
-                'expectedError'  => null,
+                'expectedError' => null,
             ],
         ];
     }
@@ -337,11 +337,11 @@ final class CustomerMultiShopCest extends MultishopBaseCest
     {
         return [
             'shop_1' => [
-                'shopId'   => 1,
+                'shopId' => 1,
                 'expected' => 4,
             ],
             'shop_2' => [
-                'shopId'   => 2,
+                'shopId' => 2,
                 'expected' => 1,
             ],
         ];

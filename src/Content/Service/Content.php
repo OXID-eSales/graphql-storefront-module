@@ -30,7 +30,7 @@ final class Content
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository           = $repository;
+        $this->repository = $repository;
         $this->authorizationService = $authorizationService;
     }
 
@@ -42,12 +42,12 @@ final class Content
     {
         try {
             $content = $this->repository->getById(
-                (string) $id,
+                (string)$id,
                 ContentDataType::class,
                 false
             );
         } catch (NotFound $e) {
-            throw ContentNotFound::byId((string) $id);
+            throw ContentNotFound::byId((string)$id);
         }
 
         if ($content->isActive()) {

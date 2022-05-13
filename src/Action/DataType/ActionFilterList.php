@@ -25,7 +25,7 @@ final class ActionFilterList extends FilterList
         ?BoolFilter $active = null
     ) {
         $this->actionId = $actionId;
-        $this->active   = $active;
+        $this->active = $active;
         parent::__construct();
     }
 
@@ -37,7 +37,7 @@ final class ActionFilterList extends FilterList
     public function getFilters(): array
     {
         return [
-            'oxid'   => $this->actionId,
+            'oxid' => $this->actionId,
             'oxtype' => new IntegerFilter(null, 2),
         ];
     }

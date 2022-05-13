@@ -50,12 +50,12 @@ final class Review
         ActivityService $reviewActivityService,
         Legacy $legacyService
     ) {
-        $this->repository            = $repository;
-        $this->reviewRepository      = $reviewRepository;
+        $this->repository = $repository;
+        $this->reviewRepository = $reviewRepository;
         $this->authenticationService = $authenticationService;
-        $this->authorizationService  = $authorizationService;
+        $this->authorizationService = $authorizationService;
         $this->reviewActivityService = $reviewActivityService;
-        $this->legacyService         = $legacyService;
+        $this->legacyService = $legacyService;
     }
 
     /**
@@ -66,9 +66,9 @@ final class Review
     {
         try {
             /** @var ReviewDataType $review */
-            $review = $this->repository->getById((string) $id, ReviewDataType::class);
+            $review = $this->repository->getById((string)$id, ReviewDataType::class);
         } catch (NotFound $e) {
-            throw ReviewNotFound::byId((string) $id);
+            throw ReviewNotFound::byId((string)$id);
         }
 
         if ($this->reviewActivityService->isActive($review)) {
@@ -83,14 +83,14 @@ final class Review
     }
 
     /**
-     * @throws InvalidLogin
+     * @return true
      * @throws ReviewNotFound
      *
-     * @return true
+     * @throws InvalidLogin
      */
     public function delete(ID $id): bool
     {
-        if (!((bool) $this->legacyService->getConfigParam('blAllowUsersToManageTheirReviews'))) {
+        if (!((bool)$this->legacyService->getConfigParam('blAllowUsersToManageTheirReviews'))) {
             throw new InvalidLogin('Unauthorized - users are not allowed to manage their reviews');
         }
         $review = $this->review($id);
@@ -98,7 +98,7 @@ final class Review
         //user can delete only its own review, admin can delete any review
         if (
             !$this->authorizationService->isAllowed('DELETE_REVIEW')
-            && (string) $this->authenticationService->getUser()->id() !== $review->getReviewerId()
+            && (string)$this->authenticationService->getUser()->id() !== $review->getReviewerId()
         ) {
             throw new InvalidLogin('Unauthorized');
         }
@@ -110,7 +110,7 @@ final class Review
 
     public function save(ReviewDataType $review): ReviewDataType
     {
-        if ($this->reviewRepository->doesReviewExist((string) $this->authenticationService->getUser()->id(), $review)) {
+        if ($this->reviewRepository->doesReviewExist((string)$this->authenticationService->getUser()->id(), $review)) {
             throw ReviewAlreadyExists::byObjectId($review->getObjectId());
         }
 
