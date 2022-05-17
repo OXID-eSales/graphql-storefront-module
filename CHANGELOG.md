@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New Exception ``OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields``
 - Not mandatory ``remark`` parameter added for ``placeOrder`` mutation [PR-9](https://github.com/OXID-eSales/graphql-storefront-module/pull/9)
 
+### Fixed
+- Code quality tools list simplified and reconfigured to fit our quality requirements
+
 ## [2.0.1] - 2022-01-03
 
 ### Added
