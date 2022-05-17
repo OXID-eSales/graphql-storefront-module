@@ -52,13 +52,13 @@ final class BasketPaymentCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            basket(basketId: "' . $basketId . '") {
-                id
-                payment {
+                basket(basketId: "' . $basketId . '") {
                     id
+                    payment {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();

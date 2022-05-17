@@ -50,11 +50,11 @@ final class PromotionMultiLanguageTest extends TestCase
 
         $result = $this->query(
             'query {
-            promotion (promotionId: "' . self::PROMOTION_ID . '") {
-                id
-                title
-            }
-        }'
+                promotion (promotionId: "' . self::PROMOTION_ID . '") {
+                    id
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(

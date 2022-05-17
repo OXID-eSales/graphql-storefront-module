@@ -27,13 +27,13 @@ final class PromotionEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            promotion (promotionId: "' . self::PROMOTION_SUB_SHOP_ID . '") {
-                id
-                active
-                title
-                text
-            }
-        }'
+                promotion (promotionId: "' . self::PROMOTION_SUB_SHOP_ID . '") {
+                    id
+                    active
+                    title
+                    text
+                }
+            }'
         );
 
         $promotion = $result['body']['data']['promotion'];
@@ -62,10 +62,10 @@ final class PromotionEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query{
-            promotions {
-                id
-            }
-        }'
+                promotions {
+                    id
+                }
+            }'
         );
 
         // fixtures have 2 active promotion for shop 2

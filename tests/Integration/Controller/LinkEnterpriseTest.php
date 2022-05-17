@@ -29,10 +29,10 @@ final class LinkEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            link (linkId: "' . self::LINK_ID . '") {
-                id
-            }
-        }'
+                link (linkId: "' . self::LINK_ID . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -50,10 +50,10 @@ final class LinkEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query{
-            links {
-                id
-            }
-        }'
+                links {
+                    id
+                }
+            }'
         );
 
         // fixtures have 2 active links
@@ -75,11 +75,11 @@ final class LinkEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            link (linkId: "' . self::LINK_ID . '") {
-                id,
-                description
-            }
-        }'
+                link (linkId: "' . self::LINK_ID . '") {
+                    id,
+                    description
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -101,10 +101,10 @@ final class LinkEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query{
-            links {
-                id
-            }
-        }'
+                links {
+                    id
+                }
+            }'
         );
 
         // fixtures have 1 active link for shop 2
@@ -161,11 +161,11 @@ final class LinkEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            link (linkId: "' . self::LINK_ID . '") {
-                id
-                description
-            }
-        }'
+                link (linkId: "' . self::LINK_ID . '") {
+                    id
+                    description
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -194,15 +194,15 @@ final class LinkEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            links(filter: {
-                description: {
-                    equals: "' . $description . '"
+                links(filter: {
+                    description: {
+                        equals: "' . $description . '"
+                    }
+                }) {
+                    id,
+                    description
                 }
-            }) {
-                id,
-                description
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(

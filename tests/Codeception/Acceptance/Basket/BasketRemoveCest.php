@@ -108,10 +108,10 @@ final class BasketRemoveCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            basketCreate(basket: {title: "new-basket-list"}) {
-                id
-            }
-        }'
+                basketCreate(basket: {title: "new-basket-list"}) {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();

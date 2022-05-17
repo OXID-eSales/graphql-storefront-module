@@ -71,10 +71,10 @@ final class BasketOwnerRelationCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            basketCreate(basket: {title: "new-basket-list", public: true}) {
-                id
-            }
-        }'
+                basketCreate(basket: {title: "new-basket-list", public: true}) {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();

@@ -30,12 +30,12 @@ final class ProductWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            product (productId: "' . self::ACTIVE_PRODUCT . '") {
-                id
-                active
-                title
-            }
-        }'
+                product (productId: "' . self::ACTIVE_PRODUCT . '") {
+                    id
+                    active
+                    title
+                }
+            }'
         );
 
         $product = $result['body']['data']['product'];
@@ -63,10 +63,10 @@ final class ProductWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            product (productId: "' . self::INACTIVE_PRODUCT . '") {
-                id
-            }
-        }'
+                product (productId: "' . self::INACTIVE_PRODUCT . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -81,10 +81,10 @@ final class ProductWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            product (productId: "DOES-NOT-EXIST") {
-                id
-            }
-        }'
+                product (productId: "DOES-NOT-EXIST") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -97,10 +97,10 @@ final class ProductWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            products {
-                id
-            }
-        }'
+                products {
+                    id
+                }
+            }'
         );
 
         $this->assertCount(

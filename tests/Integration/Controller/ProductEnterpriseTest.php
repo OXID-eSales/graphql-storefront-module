@@ -40,10 +40,10 @@ final class ProductEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            product (productId: "' . self::PRODUCT_ID . '") {
-                id
-            }
-        }'
+                product (productId: "' . self::PRODUCT_ID . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -64,11 +64,11 @@ final class ProductEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            product (productId: "' . self::PRODUCT_ID . '") {
-                id,
-                title
-            }
-        }'
+                product (productId: "' . self::PRODUCT_ID . '") {
+                    id,
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -126,11 +126,11 @@ final class ProductEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            product (productId: "' . self::PRODUCT_ID . '") {
-                id
-                title
-            }
-        }'
+                product (productId: "' . self::PRODUCT_ID . '") {
+                    id
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -157,14 +157,14 @@ final class ProductEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            product (productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
-                variantLabels
-                variants {
-                    id
-                    variantValues
+                product (productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
+                    variantLabels
+                    variants {
+                        id
+                        variantValues
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertSame(

@@ -101,25 +101,25 @@ final class InvoiceAddressMultiShopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'mutation {
-                    customerInvoiceAddressSet(invoiceAddress: {
-                        salutation: "MRS"
-                        firstName: "Janice"
-                        lastName: "Dodo"
-                        company: "No GmbH"
-                        additionalInfo: "Invoice address"
-                        street: "SomeStreet"
-                        streetNumber: "999"
-                        zipCode: "10000"
-                        city: "Any City"
-                        countryId: "a7c40f631fc920687.20179984"
-                        phone: "123456"
-                        mobile: "12345678"
-                        fax: "555"
-                    }){
-                        firstName
-                        lastName
-                      }
-                }',
+                customerInvoiceAddressSet(invoiceAddress: {
+                    salutation: "MRS"
+                    firstName: "Janice"
+                    lastName: "Dodo"
+                    company: "No GmbH"
+                    additionalInfo: "Invoice address"
+                    street: "SomeStreet"
+                    streetNumber: "999"
+                    zipCode: "10000"
+                    city: "Any City"
+                    countryId: "a7c40f631fc920687.20179984"
+                    phone: "123456"
+                    mobile: "12345678"
+                    fax: "555"
+                }){
+                    firstName
+                    lastName
+                  }
+            }',
             null,
             0,
             2

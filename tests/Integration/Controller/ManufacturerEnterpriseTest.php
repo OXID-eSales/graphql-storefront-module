@@ -33,10 +33,10 @@ final class ManufacturerEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
-                id
-            }
-        }'
+                manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(

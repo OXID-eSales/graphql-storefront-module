@@ -32,10 +32,10 @@ final class AttributeTest extends TestCase
     {
         $result = $this->query(
             'query {
-            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
-                title
-            }
-        }'
+                attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
+                    title
+                }
+            }'
         );
 
         $attribute = $result['body']['data']['attribute'];
@@ -50,10 +50,10 @@ final class AttributeTest extends TestCase
     {
         $result = $this->query(
             'query {
-            attribute (attributeId: "DOES-NOT-EXIST") {
-                title
-            }
-        }'
+                attribute (attributeId: "DOES-NOT-EXIST") {
+                    title
+                }
+            }'
         );
 
         $this->assertSame(
@@ -106,10 +106,10 @@ final class AttributeTest extends TestCase
     {
         $result = $this->query(
             'query {
-            attributes {
-                title
-            }
-        }'
+                attributes {
+                    title
+                }
+            }'
         );
 
         $this->assertCount(
@@ -122,14 +122,14 @@ final class AttributeTest extends TestCase
     {
         $result = $this->query(
             'query {
-            attributes(filter: {
-                title: {
-                    beginsWith: "a"
+                attributes(filter: {
+                    title: {
+                        beginsWith: "a"
+                    }
+                }) {
+                    title
                 }
-            }) {
-                title
-            }
-        }'
+            }'
         );
 
         $this->assertCount(
@@ -150,10 +150,10 @@ final class AttributeTest extends TestCase
 
         $result = $this->query(
             'query {
-            attributes {
-                title
-            }
-        }'
+                attributes {
+                    title
+                }
+            }'
         );
 
         foreach ($attributes as $key => $attribute) {

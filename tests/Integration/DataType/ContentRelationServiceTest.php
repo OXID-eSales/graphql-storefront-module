@@ -30,13 +30,13 @@ final class ContentRelationServiceTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            content (contentId: "' . self::ACTIVE_CONTENT_WITH_SEO . '") {
-                id
-                seo {
-                    url
+                content (contentId: "' . self::ACTIVE_CONTENT_WITH_SEO . '") {
+                    id
+                    seo {
+                        url
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $content = $result['body']['data']['content'];
@@ -79,12 +79,12 @@ final class ContentRelationServiceTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            content (contentId: "' . $categoryId . '") {
-                category {
-                    title
+                content (contentId: "' . $categoryId . '") {
+                    category {
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $content = $result['body']['data']['content'];

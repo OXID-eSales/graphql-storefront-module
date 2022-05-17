@@ -27,23 +27,23 @@ final class ContentTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            content (contentId: "' . self::ACTIVE_CONTENT . '") {
-                id
-                active
-                title
-                content
-                rawContent
-                folder
-                version
-                seo {
-                  url
+                content (contentId: "' . self::ACTIVE_CONTENT . '") {
+                    id
+                    active
+                    title
+                    content
+                    rawContent
+                    folder
+                    version
+                    seo {
+                      url
+                    }
+                    category {
+                      id
+                      title
+                    }
                 }
-                category {
-                  id
-                  title
-                }
-            }
-        }'
+            }'
         );
 
         $content = $result['body']['data']['content'];
@@ -80,11 +80,11 @@ final class ContentTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            content (contentId: "' . self::ACTIVE_CONTENT_AGB . '") {
-                id
-                version
-            }
-        }'
+                content (contentId: "' . self::ACTIVE_CONTENT_AGB . '") {
+                    id
+                    version
+                }
+            }'
         );
 
         $content = $result['body']['data']['content'];
@@ -103,23 +103,23 @@ final class ContentTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            content (contentId: "' . self::INACTIVE_CONTENT . '") {
-                id
-                active
-                title
-                content
-                rawContent
-                folder
-                version
-                seo {
-                  url
+                content (contentId: "' . self::INACTIVE_CONTENT . '") {
+                    id
+                    active
+                    title
+                    content
+                    rawContent
+                    folder
+                    version
+                    seo {
+                      url
+                    }
+                    category {
+                      id
+                      title
+                    }
                 }
-                category {
-                  id
-                  title
-                }
-            }
-        }'
+            }'
         );
 
         $this->assertSame(
@@ -134,10 +134,10 @@ final class ContentTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            content (contentId: "' . self::INACTIVE_CONTENT . '") {
-                id
-            }
-        }'
+                content (contentId: "' . self::INACTIVE_CONTENT . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -152,10 +152,10 @@ final class ContentTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            content (contentId: "DOES-NOT-EXIST") {
-                id
-            }
-        }'
+                content (contentId: "DOES-NOT-EXIST") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -171,10 +171,10 @@ final class ContentTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            contents {
-                id
-            }
-        }'
+                contents {
+                    id
+                }
+            }'
         );
 
         $this->assertCount(
@@ -192,10 +192,10 @@ final class ContentTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            contents {
-                id
-            }
-        }'
+                contents {
+                    id
+                }
+            }'
         );
 
         $this->assertCount(
@@ -208,14 +208,14 @@ final class ContentTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            contents (filter: {
-                folder: {
-                    equals: "CMSFOLDER_EMAILS"
+                contents (filter: {
+                    folder: {
+                        equals: "CMSFOLDER_EMAILS"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertCount(
@@ -228,14 +228,14 @@ final class ContentTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            contents (filter: {
-                folder: {
-                    contains: "FOLDER"
+                contents (filter: {
+                    folder: {
+                        contains: "FOLDER"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertCount(
@@ -248,14 +248,14 @@ final class ContentTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            contents (filter: {
-                folder: {
-                    contains: "DOES-NOT-EXIST"
+                contents (filter: {
+                    folder: {
+                        contains: "DOES-NOT-EXIST"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -288,13 +288,13 @@ final class ContentTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            content(contentId: "' . self::ACTIVE_CONTENT . '") {
-                id
-                category {
-                    active
+                content(contentId: "' . self::ACTIVE_CONTENT . '") {
+                    id
+                    category {
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $category = $result['body']['data']['content']['category'];
@@ -330,18 +330,18 @@ final class ContentTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            contents (filter: {
-                folder: {
-                    equals: "CMSFOLDER_CATEGORY"
-                }
-            }) {
-                id
-                category {
+                contents (filter: {
+                    folder: {
+                        equals: "CMSFOLDER_CATEGORY"
+                    }
+                }) {
                     id
-                    active
+                    category {
+                        id
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $contentCategory = $result['body']['data']['contents'][0]['category'];

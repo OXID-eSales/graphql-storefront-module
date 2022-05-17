@@ -31,13 +31,13 @@ final class PromotionTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            promotion (promotionId: "' . self::ACTIVE_PROMOTION . '") {
-                id
-                active
-                title
-                text
-            }
-        }'
+                promotion (promotionId: "' . self::ACTIVE_PROMOTION . '") {
+                    id
+                    active
+                    title
+                    text
+                }
+            }'
         );
 
         $promotion = $result['body']['data']['promotion'];
@@ -61,13 +61,13 @@ final class PromotionTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            promotion (promotionId: "' . self::INACTIVE_PROMOTION . '") {
-                id
-                active
-                title
-                text
-            }
-        }'
+                promotion (promotionId: "' . self::INACTIVE_PROMOTION . '") {
+                    id
+                    active
+                    title
+                    text
+                }
+            }'
         );
 
         $this->assertSame(
@@ -82,13 +82,13 @@ final class PromotionTest extends TokenTestCase
 
         $result = $this->query(
             'query {
-            promotion (promotionId: "' . self::INACTIVE_PROMOTION . '") {
-                id
-                active
-                title
-                text
-            }
-        }'
+                promotion (promotionId: "' . self::INACTIVE_PROMOTION . '") {
+                    id
+                    active
+                    title
+                    text
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -106,13 +106,13 @@ final class PromotionTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            promotion (promotionId: "DOES-NOT-EXIST") {
-                id
-                active
-                title
-                text
-            }
-        }'
+                promotion (promotionId: "DOES-NOT-EXIST") {
+                    id
+                    active
+                    title
+                    text
+                }
+            }'
         );
 
         $this->assertSame(
@@ -125,13 +125,13 @@ final class PromotionTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            promotions {
-                id
-                active
-                title
-                text
-            }
-        }'
+                promotions {
+                    id
+                    active
+                    title
+                    text
+                }
+            }'
         );
 
         // fixtures have 2 active promotions
@@ -147,10 +147,10 @@ final class PromotionTest extends TokenTestCase
 
         $result = $this->query(
             'query{
-            promotions {
-                id
-            }
-        }'
+                promotions {
+                    id
+                }
+            }'
         );
 
         // TODO: Fixtures have 2 active and 4 inactive promotions

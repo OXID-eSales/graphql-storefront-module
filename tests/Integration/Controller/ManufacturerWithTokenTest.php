@@ -32,18 +32,18 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
-                id
-                active
-                icon
-                title
-                shortdesc
-                timestamp
-                seo {
-                  url
+                manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
+                    id
+                    active
+                    icon
+                    title
+                    shortdesc
+                    timestamp
+                    seo {
+                      url
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $manufacturer = $result['body']['data']['manufacturer'];
@@ -79,10 +79,10 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "' . self::INACTIVE_MANUFACTURER . '") {
-                id
-            }
-        }'
+                manufacturer (manufacturerId: "' . self::INACTIVE_MANUFACTURER . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -97,10 +97,10 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "DOES-NOT-EXIST") {
-                id
-            }
-        }'
+                manufacturer (manufacturerId: "DOES-NOT-EXIST") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -113,10 +113,10 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturers {
-                id
-            }
-        }'
+                manufacturers {
+                    id
+                }
+            }'
         );
 
         // fixtures have total 15 manufacturers, 4 inactive and 11 active
@@ -130,14 +130,14 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturers(filter: {
-                title: {
-                    beginsWith: "Fly"
+                manufacturers(filter: {
+                    title: {
+                        beginsWith: "Fly"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -157,14 +157,14 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturers(filter: {
-                title: {
-                    equals: "Flysurfer"
+                manufacturers(filter: {
+                    title: {
+                        equals: "Flysurfer"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(

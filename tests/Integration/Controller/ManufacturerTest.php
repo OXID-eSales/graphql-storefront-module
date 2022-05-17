@@ -39,20 +39,20 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
-                id
-                active
-                icon
-                title
-                shortdesc
-                timestamp
-                seo {
-                  description
-                  keywords
-                  url
+                manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
+                    id
+                    active
+                    icon
+                    title
+                    shortdesc
+                    timestamp
+                    seo {
+                      description
+                      keywords
+                      url
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $manufacturer = $result['body']['data']['manufacturer'];
@@ -83,15 +83,15 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "' . self::INACTIVE_MANUFACTURER . '") {
-                id
-                active
-                icon
-                title
-                shortdesc
-                timestamp
-            }
-        }'
+                manufacturer (manufacturerId: "' . self::INACTIVE_MANUFACTURER . '") {
+                    id
+                    active
+                    icon
+                    title
+                    shortdesc
+                    timestamp
+                }
+            }'
         );
         $this->assertSame(
             'Unauthorized',
@@ -103,15 +103,15 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "DOES-NOT-EXIST") {
-                id
-                active
-                icon
-                title
-                shortdesc
-                timestamp
-            }
-        }'
+                manufacturer (manufacturerId: "DOES-NOT-EXIST") {
+                    id
+                    active
+                    icon
+                    title
+                    shortdesc
+                    timestamp
+                }
+            }'
         );
         $this->assertSame(
             'Manufacturer was not found by id: DOES-NOT-EXIST',
@@ -123,15 +123,15 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            manufacturers {
-                id
-                active
-                icon
-                title
-                shortdesc
-                timestamp
-            }
-        }'
+                manufacturers {
+                    id
+                    active
+                    icon
+                    title
+                    shortdesc
+                    timestamp
+                }
+            }'
         );
 
         // fixtures have 11 active manufacturers
@@ -145,14 +145,14 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            manufacturers(filter: {
-                title: {
-                    contains: "l"
+                manufacturers(filter: {
+                    title: {
+                        contains: "l"
+                    }
+                }){
+                    id
                 }
-            }){
-                id
-            }
-        }'
+            }'
         );
 
         // fixtures have 3 active manufacturers with lowercase l and 3 inactive
@@ -166,14 +166,14 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            manufacturers(filter: {
-                title: {
-                    beginsWith: "Fly"
+                manufacturers(filter: {
+                    title: {
+                        beginsWith: "Fly"
+                    }
+                }){
+                    id
                 }
-            }){
-                id
-            }
-        }'
+            }'
         );
 
         // fixtures have 2 inactive manufacturers starting with Fly
@@ -187,14 +187,14 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            manufacturers(filter: {
-                title: {
-                    equals: "DOES-NOT-EXIST"
+                manufacturers(filter: {
+                    title: {
+                        equals: "DOES-NOT-EXIST"
+                    }
+                }){
+                    id
                 }
-            }){
-                id
-            }
-        }'
+            }'
         );
 
         // fixtures have 0 manufacturers matching title DOES-NOT-EXIST
@@ -208,14 +208,14 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER_WITHOUT_PRODUCTS . '") {
-                id
-                products
-                {
-                  id
+                manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER_WITHOUT_PRODUCTS . '") {
+                    id
+                    products
+                    {
+                      id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -228,14 +228,14 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
-                id
-                products(pagination: {limit: 1})
-                {
-                  id
+                manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
+                    id
+                    products(pagination: {limit: 1})
+                    {
+                      id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -290,13 +290,13 @@ final class ManufacturerTest extends TokenTestCase
 
         $result = $this->query(
             'query {
-            manufacturer(manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
-                id
-                products {
-                    active
+                manufacturer(manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
+                    id
+                    products {
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertCount(
@@ -357,14 +357,14 @@ final class ManufacturerTest extends TokenTestCase
     {
         $result = $this->query(
             'query ($offset: Int, $limit: Int) {
-            manufacturer (manufacturerId: "' . self::ACTIVE_MULTILANGUAGE_MANUFACTURER . '") {
-                id
-                products(pagination: {offset: $offset, limit: $limit})
-                {
-                  id
+                manufacturer (manufacturerId: "' . self::ACTIVE_MULTILANGUAGE_MANUFACTURER . '") {
+                    id
+                    products(pagination: {offset: $offset, limit: $limit})
+                    {
+                      id
+                    }
                 }
-            }
-        }',
+            }',
             [
                 'offset' => $offset,
                 'limit' => $limit,
@@ -440,13 +440,13 @@ final class ManufacturerTest extends TokenTestCase
     ): void {
         $result = $this->query(
             'query {
-            manufacturers(
-                ' . $sortQuery . '
-            ) {
-                id
-                title
-            }
-        }'
+                manufacturers(
+                    ' . $sortQuery . '
+                ) {
+                    id
+                    title
+                }
+            }'
         );
 
         $sortedManufacturers = [];

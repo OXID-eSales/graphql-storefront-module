@@ -27,15 +27,15 @@ final class ReviewMultiLanguageTest extends TestCase
 
         $result = $this->query(
             'query {
-            review(reviewId: "_test_lang_' . $languageId . '_review") {
-                id
-                language {
+                review(reviewId: "_test_lang_' . $languageId . '_review") {
                     id
-                    code
-                    language
+                    language {
+                        id
+                        code
+                        language
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $review = $result['body']['data']['review'];
