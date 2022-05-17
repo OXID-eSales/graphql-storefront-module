@@ -156,16 +156,16 @@ final class ProductMultiLanguageTest extends TestCase
 
         $result = $this->query(
             'query {
-            products(
-                sort: {
-                    position: ""
-                    title: "ASC"
+                products(
+                    sort: {
+                        position: ""
+                        title: "ASC"
+                    }
+                ) {
+                    id
+                    title
                 }
-            ) {
-                id
-                title
-            }
-        }'
+            }'
         );
 
         $titles = [];

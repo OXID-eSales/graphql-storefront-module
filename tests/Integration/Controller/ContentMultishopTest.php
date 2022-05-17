@@ -40,10 +40,10 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
-                id
-            }
-        }'
+                content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -65,10 +65,10 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
-                id
-            }
-        }'
+                content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -87,10 +87,10 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            content (contentId: "' . self::CONTENT_ID . '") {
-                id
-            }
-        }'
+                content (contentId: "' . self::CONTENT_ID . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -110,10 +110,10 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $result = $this->query(
             'query{
-            contents {
-                id
-            }
-        }'
+                contents {
+                    id
+                }
+            }'
         );
 
         $this->assertCount(
@@ -134,11 +134,11 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
-                id,
-                title
-            }
-        }'
+                content (contentId: "' . self::CONTENT_ID_FOR_SHOP_2 . '") {
+                    id,
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -162,10 +162,10 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $result = $this->query(
             'query{
-            contents {
-                id
-            }
-        }'
+                contents {
+                    id
+                }
+            }'
         );
 
         $this->assertCount(
@@ -226,11 +226,11 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            content (contentId: "' . $id . '") {
-                id
-                title
-            }
-        }'
+                content (contentId: "' . $id . '") {
+                    id
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -261,15 +261,15 @@ final class ContentMultishopTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            contents(filter: {
-                folder: {
-                    equals: "CMSFOLDER_USERINFO"
+                contents(filter: {
+                    folder: {
+                        equals: "CMSFOLDER_USERINFO"
+                    }
+                }) {
+                    id,
+                    title
                 }
-            }) {
-                id,
-                title
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(

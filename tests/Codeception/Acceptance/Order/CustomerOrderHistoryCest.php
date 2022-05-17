@@ -214,21 +214,21 @@ final class CustomerOrderHistoryCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            customer {
-                id
-                orders(
-                    pagination: {limit: 1, offset: 0}
-                ){
+                customer {
                     id
-                    vouchers {
+                    orders(
+                        pagination: {limit: 1, offset: 0}
+                    ){
                         id
-                        number
-                        discount
-                        redeemedAt
+                        vouchers {
+                            id
+                            number
+                            discount
+                            redeemedAt
+                        }
                     }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();

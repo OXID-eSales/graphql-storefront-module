@@ -47,13 +47,13 @@ final class ProductRelationServiceTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
-                id
-                accessories {
+                product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                     id
+                    accessories {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $product = $result['body']['data']['product'];
@@ -85,13 +85,13 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $result = $this->query(
             'query {
-            product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
-                id
-                accessories {
+                product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                     id
+                    accessories {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $product = $result['body']['data']['product'];
@@ -177,16 +177,16 @@ final class ProductRelationServiceTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            product (productId: "' . self::ACTIVE_PRODUCT_WITH_SELECTION_LISTS . '") {
-                id
-                selectionLists {
-                    title
-                    fields {
-                        value
+                product (productId: "' . self::ACTIVE_PRODUCT_WITH_SELECTION_LISTS . '") {
+                    id
+                    selectionLists {
+                        title
+                        fields {
+                            value
+                        }
                     }
                 }
-            }
-        }'
+            }'
         );
 
         $product = $result['body']['data']['product'];
@@ -230,13 +230,13 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $result = $this->query(
             'query {
-            product (productId: "' . self::ACTIVE_PRODUCT . '") {
-                id
-                reviews {
+                product (productId: "' . self::ACTIVE_PRODUCT . '") {
                     id
+                    reviews {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $product = $result['body']['data']['product'];
@@ -280,13 +280,13 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $result = $this->query(
             'query {
-            product (productId: "' . self::ACTIVE_PRODUCT . '") {
-                id
-                reviews {
+                product (productId: "' . self::ACTIVE_PRODUCT . '") {
                     id
+                    reviews {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $product = $result['body']['data']['product'];
@@ -306,13 +306,13 @@ final class ProductRelationServiceTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
-                id
-                reviews {
+                product (productId: "' . self::ACTIVE_PRODUCT_WITH_ACCESSORIES . '") {
                     id
+                    reviews {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertCount(

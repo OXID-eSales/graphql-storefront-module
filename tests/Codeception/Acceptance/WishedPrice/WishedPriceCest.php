@@ -63,25 +63,25 @@ final class WishedPriceCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
         $I->sendGQLQuery(
             'query{
-            wishedPrice(wishedPriceId: "' . self::WISHED_PRICE . '") {
-                product {
-                    title
+                wishedPrice(wishedPriceId: "' . self::WISHED_PRICE . '") {
+                    product {
+                        title
+                    }
+                    price {
+                        price
+                    }
+                    currency {
+                        name
+                    }
+                    id
+                    email
+                    notificationDate
+                    creationDate
+                    inquirer {
+                        firstName
+                    }
                 }
-                price {
-                    price
-                }
-                currency {
-                    name
-                }
-                id
-                email
-                notificationDate
-                creationDate
-                inquirer {
-                    firstName
-                }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -116,10 +116,10 @@ final class WishedPriceCest extends BaseCest
         $I->login(self::USERNAME, self::PASSWORD);
         $I->sendGQLQuery(
             'query{
-            wishedPrice(wishedPriceId: "' . self::WISHED_PRICE_2 . '") {
-                notificationDate
-            }
-        }'
+                wishedPrice(wishedPriceId: "' . self::WISHED_PRICE_2 . '") {
+                    notificationDate
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -134,10 +134,10 @@ final class WishedPriceCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query{
-            wishedPrice(wishedPriceId: "' . self::WISHED_PRICE . '") {
-                id
-            }
-        }'
+                wishedPrice(wishedPriceId: "' . self::WISHED_PRICE . '") {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -158,10 +158,10 @@ final class WishedPriceCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-            wishedPrice(wishedPriceId: "' . $data['id'] . '") {
-                id
-            }
-        }'
+                wishedPrice(wishedPriceId: "' . $data['id'] . '") {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -215,10 +215,10 @@ final class WishedPriceCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-            wishedPrice(wishedPriceId: "' . $data['id'] . '") {
-                id
-            }
-        }'
+                wishedPrice(wishedPriceId: "' . $data['id'] . '") {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -255,8 +255,8 @@ final class WishedPriceCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            wishedPriceDelete(wishedPriceId: "' . self::WISHED_PRICE_TO_BE_DELETED . '")
-        }'
+                wishedPriceDelete(wishedPriceId: "' . self::WISHED_PRICE_TO_BE_DELETED . '")
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -277,8 +277,8 @@ final class WishedPriceCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            wishedPriceDelete(wishedPriceId: "' . $data['oxid'] . '")
-        }'
+                wishedPriceDelete(wishedPriceId: "' . $data['oxid'] . '")
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -303,8 +303,8 @@ final class WishedPriceCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            wishedPriceDelete(wishedPriceId: "non_existing_wished_price")
-        }'
+                wishedPriceDelete(wishedPriceId: "non_existing_wished_price")
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -339,10 +339,10 @@ final class WishedPriceCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            wishedPrices {
-                id
-            }
-        }'
+                wishedPrices {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -364,10 +364,10 @@ final class WishedPriceCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            wishedPrices {
-                id
-            }
-        }'
+                wishedPrices {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -400,17 +400,17 @@ final class WishedPriceCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            wishedPriceSet(wishedPrice: {
-                productId: "' . self::PRODUCT_ID . '",
-                currencyName: "EUR",
-                price: 15.00
-            }) {
-                id
-                email
-                notificationDate
-                creationDate
-            }
-        }'
+                wishedPriceSet(wishedPrice: {
+                    productId: "' . self::PRODUCT_ID . '",
+                    currencyName: "EUR",
+                    price: 15.00
+                }) {
+                    id
+                    email
+                    notificationDate
+                    creationDate
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -431,14 +431,14 @@ final class WishedPriceCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            wishedPriceSet(wishedPrice: { productId: "' . $data['productId'] . '", currencyName: "' .
-            $data['currency'] . '", price: ' . $data['price'] . '}) {
-                id
-                email
-                notificationDate
-                creationDate
-            }
-        }'
+                wishedPriceSet(wishedPrice: { productId: "' . $data['productId'] . '", currencyName: "' .
+                $data['currency'] . '", price: ' . $data['price'] . '}) {
+                    id
+                    email
+                    notificationDate
+                    creationDate
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -491,24 +491,24 @@ final class WishedPriceCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            wishedPriceSet(wishedPrice: {
-                productId: "' . self::PRODUCT_ID . '",
-                currencyName: "EUR",
-                price: 15.00
-            }) {
-                id
-                inquirer {
-                    firstName
-                }
-                email
-                product {
+                wishedPriceSet(wishedPrice: {
+                    productId: "' . self::PRODUCT_ID . '",
+                    currencyName: "EUR",
+                    price: 15.00
+                }) {
                     id
+                    inquirer {
+                        firstName
+                    }
+                    email
+                    product {
+                        id
+                    }
+                    currency {
+                        name
+                    }
                 }
-                currency {
-                    name
-                }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -545,14 +545,14 @@ final class WishedPriceCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            wishedPriceSet(wishedPrice: {
-                productId: "' . self::PRODUCT_ID . '",
-                currencyName: "EUR",
-                price: 15.00
-            }) {
-                id
-            }
-        }'
+                wishedPriceSet(wishedPrice: {
+                    productId: "' . self::PRODUCT_ID . '",
+                    currencyName: "EUR",
+                    price: 15.00
+                }) {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();

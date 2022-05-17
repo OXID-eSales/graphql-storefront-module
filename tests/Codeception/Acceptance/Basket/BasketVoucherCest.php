@@ -143,12 +143,12 @@ final class BasketVoucherCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            basketAddVoucher(basketId: "' . self::PRIVATE_BASKET . '", voucherNumber: "voucher-number") {
-                vouchers {
-                    number
+                basketAddVoucher(basketId: "' . self::PRIVATE_BASKET . '", voucherNumber: "voucher-number") {
+                    vouchers {
+                        number
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -169,12 +169,12 @@ final class BasketVoucherCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation{
-            basketRemoveVoucher(basketId: "' . self::PRIVATE_BASKET . '", voucherId: "voucher-number") {
-                vouchers {
-                    number
+                basketRemoveVoucher(basketId: "' . self::PRIVATE_BASKET . '", voucherId: "voucher-number") {
+                    vouchers {
+                        number
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();

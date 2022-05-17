@@ -65,11 +65,11 @@ final class InvoiceAddressCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            customerInvoiceAddress {
-                firstName
-                lastName
-            }
-        }'
+                customerInvoiceAddress {
+                    firstName
+                    lastName
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -87,22 +87,22 @@ final class InvoiceAddressCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            customerInvoiceAddress {
-                salutation
-                firstName
-                lastName
-                company
-                additionalInfo
-                street
-                streetNumber
-                zipCode
-                city
-                vatID
-                phone
-                mobile
-                fax
-            }
-        }'
+                customerInvoiceAddress {
+                    salutation
+                    firstName
+                    lastName
+                    company
+                    additionalInfo
+                    street
+                    streetNumber
+                    zipCode
+                    city
+                    vatID
+                    phone
+                    mobile
+                    fax
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -139,37 +139,37 @@ final class InvoiceAddressCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            customerInvoiceAddressSet (
-                invoiceAddress: {
-                    salutation: "' . $invoiceData['salutation'] . '"
-                    firstName: "' . $invoiceData['firstName'] . '"
-                    lastName: "' . $invoiceData['lastName'] . '"
-                    street: "' . $invoiceData['street'] . '"
-                    streetNumber: "' . $invoiceData['streetNumber'] . '"
-                    zipCode: "' . $invoiceData['zipCode'] . '"
-                    city: "' . $invoiceData['city'] . '"
-                    countryId: "' . $invoiceData['country']['id'] . '"
+                customerInvoiceAddressSet (
+                    invoiceAddress: {
+                        salutation: "' . $invoiceData['salutation'] . '"
+                        firstName: "' . $invoiceData['firstName'] . '"
+                        lastName: "' . $invoiceData['lastName'] . '"
+                        street: "' . $invoiceData['street'] . '"
+                        streetNumber: "' . $invoiceData['streetNumber'] . '"
+                        zipCode: "' . $invoiceData['zipCode'] . '"
+                        city: "' . $invoiceData['city'] . '"
+                        countryId: "' . $invoiceData['country']['id'] . '"
+                    }
+                ){
+                    salutation
+                    firstName
+                    lastName
+                    company
+                    additionalInfo
+                    street
+                    streetNumber
+                    zipCode
+                    city
+                    country {
+                        id
+                        title
+                    }
+                    vatID
+                    phone
+                    mobile
+                    fax
                 }
-            ){
-                salutation
-                firstName
-                lastName
-                company
-                additionalInfo
-                street
-                streetNumber
-                zipCode
-                city
-                country {
-                    id
-                    title
-                }
-                vatID
-                phone
-                mobile
-                fax
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -205,36 +205,36 @@ final class InvoiceAddressCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            customerInvoiceAddressSet (
-                invoiceAddress: {
-                    salutation: "' . $invoiceData['salutation'] . '"
-                    firstName: "' . $invoiceData['firstName'] . '"
-                    lastName: "' . $invoiceData['lastName'] . '"
-                    street: "' . $invoiceData['street'] . '"
-                    streetNumber: "' . $invoiceData['streetNumber'] . '"
-                    zipCode: "' . $invoiceData['zipCode'] . '"
-                    city: "' . $invoiceData['city'] . '"
-                    countryId: "' . $invoiceData['country']['id'] . '"
+                customerInvoiceAddressSet (
+                    invoiceAddress: {
+                        salutation: "' . $invoiceData['salutation'] . '"
+                        firstName: "' . $invoiceData['firstName'] . '"
+                        lastName: "' . $invoiceData['lastName'] . '"
+                        street: "' . $invoiceData['street'] . '"
+                        streetNumber: "' . $invoiceData['streetNumber'] . '"
+                        zipCode: "' . $invoiceData['zipCode'] . '"
+                        city: "' . $invoiceData['city'] . '"
+                        countryId: "' . $invoiceData['country']['id'] . '"
+                    }
+                ){
+                    salutation
+                    firstName
+                    lastName
+                    company
+                    additionalInfo
+                    street
+                    streetNumber
+                    zipCode
+                    city
+                    country {
+                        title
+                    }
+                    vatID
+                    phone
+                    mobile
+                    fax
                 }
-            ){
-                salutation
-                firstName
-                lastName
-                company
-                additionalInfo
-                street
-                streetNumber
-                zipCode
-                city
-                country {
-                    title
-                }
-                vatID
-                phone
-                mobile
-                fax
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -260,30 +260,30 @@ final class InvoiceAddressCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            customerInvoiceAddressSet (
-                invoiceAddress: {' .
-            $queryPart
-            . '}
-            ){
-                salutation
-                firstName
-                lastName
-                company
-                additionalInfo
-                street
-                streetNumber
-                zipCode
-                city
-                country {
-                    id
-                    title
+                customerInvoiceAddressSet (
+                    invoiceAddress: {' .
+                $queryPart
+                . '}
+                ){
+                    salutation
+                    firstName
+                    lastName
+                    company
+                    additionalInfo
+                    street
+                    streetNumber
+                    zipCode
+                    city
+                    country {
+                        id
+                        title
+                    }
+                    vatID
+                    phone
+                    mobile
+                    fax
                 }
-                vatID
-                phone
-                mobile
-                fax
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -312,32 +312,32 @@ final class InvoiceAddressCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            customerInvoiceAddressSet (
-                invoiceAddress: {' .
-            $queryPart
-            . '}
-            ){
-                salutation
-                firstName
-                lastName
-                company
-                additionalInfo
-                street
-                streetNumber
-                zipCode
-                city
-                country {
-                    id
+                customerInvoiceAddressSet (
+                    invoiceAddress: {' .
+                $queryPart
+                . '}
+                ){
+                    salutation
+                    firstName
+                    lastName
+                    company
+                    additionalInfo
+                    street
+                    streetNumber
+                    zipCode
+                    city
+                    country {
+                        id
+                    }
+                    state {
+                        id
+                    }
+                    vatID
+                    phone
+                    mobile
+                    fax
                 }
-                state {
-                    id
-                }
-                vatID
-                phone
-                mobile
-                fax
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();

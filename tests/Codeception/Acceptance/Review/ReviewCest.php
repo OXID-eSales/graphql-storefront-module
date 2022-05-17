@@ -71,14 +71,14 @@ final class ReviewCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            reviewSet(review: {
-                rating: 5,
-                text: "' . self::TEXT . '",
-                productId: "' . self::TEST_PRODUCT_ID . '"
-            }){
-                id
-            }
-        }'
+                reviewSet(review: {
+                    rating: 5,
+                    text: "' . self::TEXT . '",
+                    productId: "' . self::TEST_PRODUCT_ID . '"
+                }){
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -194,14 +194,14 @@ final class ReviewCest extends BaseCest
 
         $I->sendGQLQuery(
             'query{
-            customer {
-                reviews{
-                    id
-                    text
-                    rating
+                customer {
+                    reviews{
+                        id
+                        text
+                        rating
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -312,8 +312,8 @@ final class ReviewCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            reviewDelete(reviewId: "' . self::TEST_DATA_REVIEW . '")
-        }'
+                reviewDelete(reviewId: "' . self::TEST_DATA_REVIEW . '")
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -335,8 +335,8 @@ final class ReviewCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            reviewDelete(reviewId: "' . $reviewId . '")
-        }'
+                reviewDelete(reviewId: "' . $reviewId . '")
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -354,8 +354,8 @@ final class ReviewCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            reviewDelete(reviewId: "something-that-does-not-exist")
-        }'
+                reviewDelete(reviewId: "something-that-does-not-exist")
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -376,8 +376,8 @@ final class ReviewCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            reviewDelete(reviewId: "' . $reviewId . '")
-        }'
+                reviewDelete(reviewId: "' . $reviewId . '")
+            }'
         );
 
         $I->updateConfigInDatabase('blAllowUsersToManageTheirReviews', true, 'bool');
@@ -448,8 +448,8 @@ final class ReviewCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-             reviewDelete(reviewId: "' . $id . '")
-        }'
+                 reviewDelete(reviewId: "' . $id . '")
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -463,12 +463,12 @@ final class ReviewCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            review(reviewId: "' . $id . '") {
-                id
-                text
-                rating
-            }
-        }'
+                review(reviewId: "' . $id . '") {
+                    id
+                    text
+                    rating
+                }
+            }'
         );
 
         return $I->grabJsonResponseAsArray();

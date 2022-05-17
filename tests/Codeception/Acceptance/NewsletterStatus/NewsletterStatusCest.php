@@ -50,14 +50,14 @@ final class NewsletterStatusCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation{
-          newsletterOptIn(newsletterStatus: {
-            email:"' . self::OTHER_USERNAME . '",
-            confirmCode:"' . md5(self::OTHER_USERNAME . self::OTHER_USER_OXPASSALT) . '"
-          }){
-            email
-            status
-          }
-        }'
+              newsletterOptIn(newsletterStatus: {
+                email:"' . self::OTHER_USERNAME . '",
+                confirmCode:"' . md5(self::OTHER_USERNAME . self::OTHER_USER_OXPASSALT) . '"
+              }){
+                email
+                status
+              }
+            }'
         );
         $result = $I->grabJsonResponseAsArray();
         $I->assertEquals(
@@ -72,14 +72,14 @@ final class NewsletterStatusCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation{
-          newsletterOptIn(newsletterStatus: {
-            email:"' . self::OTHER_USERNAME . '",
-            confirmCode:"incorrect"
-          }){
-            email
-            status
-          }
-        }'
+              newsletterOptIn(newsletterStatus: {
+                email:"' . self::OTHER_USERNAME . '",
+                confirmCode:"incorrect"
+              }){
+                email
+                status
+              }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -97,14 +97,14 @@ final class NewsletterStatusCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation{
-          newsletterOptIn(newsletterStatus: {
-            email:"",
-            confirmCode:""
-          }){
-            email
-            status
-          }
-        }'
+              newsletterOptIn(newsletterStatus: {
+                email:"",
+                confirmCode:""
+              }){
+                email
+                status
+              }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -122,21 +122,21 @@ final class NewsletterStatusCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation{
-          newsletterOptIn(newsletterStatus: {
-            email:"' . self::OTHER_USERNAME . '",
-            confirmCode:"' . md5(self::OTHER_USERNAME . self::OTHER_USER_OXPASSALT) . '"
-          }){
-            salutation
-            firstName
-            lastName
-            email
-            status
-            failedEmailCount
-            subscribed
-            unsubscribed
-            updated
-          }
-        }'
+              newsletterOptIn(newsletterStatus: {
+                email:"' . self::OTHER_USERNAME . '",
+                confirmCode:"' . md5(self::OTHER_USERNAME . self::OTHER_USER_OXPASSALT) . '"
+              }){
+                salutation
+                firstName
+                lastName
+                email
+                status
+                failedEmailCount
+                subscribed
+                unsubscribed
+                updated
+              }
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -173,10 +173,10 @@ final class NewsletterStatusCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            newsletterUnsubscribe (newsletterStatus: {
-              email: "' . self::NONEXISTING_USERNAME . '"
-            })
-        }'
+                newsletterUnsubscribe (newsletterStatus: {
+                  email: "' . self::NONEXISTING_USERNAME . '"
+                })
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -193,8 +193,8 @@ final class NewsletterStatusCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterUnsubscribe
-        }'
+                newsletterUnsubscribe
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -206,8 +206,8 @@ final class NewsletterStatusCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            newsletterUnsubscribe
-        }'
+                newsletterUnsubscribe
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -222,10 +222,10 @@ final class NewsletterStatusCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterUnsubscribe (newsletterStatus: {
-              email: "' . self::OTHER_USERNAME . '"
-            })
-        }'
+                newsletterUnsubscribe (newsletterStatus: {
+                  email: "' . self::OTHER_USERNAME . '"
+                })
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();

@@ -94,10 +94,10 @@ final class CountryEnterpriseCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries(sort: {position: "DESC"}) {
-                id
-            }
-        }',
+                countries(sort: {position: "DESC"}) {
+                    id
+                }
+            }',
             null,
             1,
             2
@@ -122,11 +122,11 @@ final class CountryEnterpriseCest extends MultishopBaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries(sort: {position: "", title: "ASC"}) {
-                title
-                position
-            }
-        }',
+                countries(sort: {position: "", title: "ASC"}) {
+                    title
+                    position
+                }
+            }',
             null,
             1,
             2

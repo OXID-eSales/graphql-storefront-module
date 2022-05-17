@@ -19,11 +19,11 @@ final class ActionEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            actions {
-                id,
-                title
-            }
-        }'
+                actions {
+                    id,
+                    title
+                }
+            }'
         );
 
         $this->assertCount(6, $result['body']['data']['actions']);

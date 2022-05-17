@@ -73,122 +73,122 @@ final class ProductTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            product(productId: "' . self::ACTIVE_PRODUCT . '") {
-                dimensions {
-                    length
-                    width
-                    height
-                    weight
-                }
-                price {
-                    price
-                    vat
-                    vatValue
-                    nettoPriceMode
-                    currency {
-                        id
-                        name
-                        rate
-                        sign
+                product(productId: "' . self::ACTIVE_PRODUCT . '") {
+                    dimensions {
+                        length
+                        width
+                        height
+                        weight
                     }
-                }
-                listPrice {
-                    price
-                    vat
-                    vatValue
-                    nettoPriceMode
-                }
-                stock {
-                    stock
-                    stockStatus
-                    restockDate
-                }
-                imageGallery {
-                    images {
-                        image
-                        icon
-                        zoom
-                    }
-                    icon
-                    thumb
-                }
-                rating {
-                    rating
-                    count
-                }
-                scalePrices {
-                    absoluteScalePrice
-                    absolutePrice
-                    discount
-                    amountFrom
-                    amountTo
-                }
-                unit {
                     price {
                         price
                         vat
                         vatValue
                         nettoPriceMode
+                        currency {
+                            id
+                            name
+                            rate
+                            sign
+                        }
                     }
-                    name
-                }
-                seo {
-                    description
-                    keywords
-                    url
-                }
-                accessories {
-                    id
-                    variants {
+                    listPrice {
+                        price
+                        vat
+                        vatValue
+                        nettoPriceMode
+                    }
+                    stock {
+                        stock
+                        stockStatus
+                        restockDate
+                    }
+                    imageGallery {
+                        images {
+                            image
+                            icon
+                            zoom
+                        }
+                        icon
+                        thumb
+                    }
+                    rating {
+                        rating
+                        count
+                    }
+                    scalePrices {
+                        absoluteScalePrice
+                        absolutePrice
+                        discount
+                        amountFrom
+                        amountTo
+                    }
+                    unit {
+                        price {
+                            price
+                            vat
+                            vatValue
+                            nettoPriceMode
+                        }
+                        name
+                    }
+                    seo {
+                        description
+                        keywords
+                        url
+                    }
+                    accessories {
                         id
+                        variants {
+                            id
+                        }
                     }
-                }
-                deliveryTime {
-                    minDeliveryTime
-                    maxDeliveryTime
-                    deliveryTimeUnit
-                }
-                attributes {
-                    attribute {
-                        title
+                    deliveryTime {
+                        minDeliveryTime
+                        maxDeliveryTime
+                        deliveryTimeUnit
                     }
-                    value
-                }
-                selectionLists {
-                    title
-                    fields {
+                    attributes {
+                        attribute {
+                            title
+                        }
                         value
                     }
-                }
-                variants {
+                    selectionLists {
+                        title
+                        fields {
+                            value
+                        }
+                    }
+                    variants {
+                        id
+                        active
+                    }
                     id
                     active
+                    sku
+                    ean
+                    manufacturerEan
+                    manufacturer {
+                        id
+                    }
+                    vendor {
+                        id
+                    }
+                    bundleProduct {
+                        id
+                    }
+                    mpn
+                    title
+                    shortDescription
+                    longDescription
+                    vat
+                    insert
+                    freeShipping
+                    timestamp
+                    wishedPriceEnabled
                 }
-                id
-                active
-                sku
-                ean
-                manufacturerEan
-                manufacturer {
-                    id
-                }
-                vendor {
-                    id
-                }
-                bundleProduct {
-                    id
-                }
-                mpn
-                title
-                shortDescription
-                longDescription
-                vat
-                insert
-                freeShipping
-                timestamp
-                wishedPriceEnabled
-            }
-        }'
+            }'
         );
 
         $product = $result['body']['data']['product'];
@@ -320,11 +320,11 @@ final class ProductTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            product (productId: "' . self::INACTIVE_PRODUCT . '") {
-                id
-                active
-            }
-        }'
+                product (productId: "' . self::INACTIVE_PRODUCT . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $this->assertSame(
@@ -339,11 +339,11 @@ final class ProductTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            product (productId: "' . self::INACTIVE_PRODUCT . '") {
-                id
-                active
-            }
-        }'
+                product (productId: "' . self::INACTIVE_PRODUCT . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -359,10 +359,10 @@ final class ProductTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            product (productId: "DOES-NOT-EXIST") {
-                id
-            }
-        }'
+                product (productId: "DOES-NOT-EXIST") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -500,10 +500,10 @@ final class ProductTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            products {
-                id
-            }
-        }'
+                products {
+                    id
+                }
+            }'
         );
 
         $this->assertCount(
@@ -658,24 +658,24 @@ final class ProductTest extends BaseTestCase
     ): void {
         $result = $this->query(
             'query {
-            products(
-                ' . $sortQuery . '
-            ) {
-                id
-                title
-                varMinPrice
-                sku
-                stock{
-                    stock
+                products(
+                    ' . $sortQuery . '
+                ) {
+                    id
+                    title
+                    varMinPrice
+                    sku
+                    stock{
+                        stock
+                    }
+                    rating{
+                        rating
+                    }
+                    price {
+                        price
+                    }
                 }
-                rating{
-                    rating
-                }
-                price {
-                    price
-                }
-            }
-        }'
+            }'
         );
 
         $orderedProducts = [];
@@ -723,10 +723,10 @@ final class ProductTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            products(pagination: {offset: ' . $offset . ', limit: ' . $limit . '}) {
-                id
-            }
-        }'
+                products(pagination: {offset: ' . $offset . ', limit: ' . $limit . '}) {
+                    id
+                }
+            }'
         );
 
         $this->assertArraySameNonAssociative($expectedProducts, $result['body']['data']['products']);
@@ -775,12 +775,12 @@ final class ProductTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            products(filter: { manufacturer: { equals: "' . $manufacturerId . '" } }) {
-                manufacturer {
-                    id
+                products(filter: { manufacturer: { equals: "' . $manufacturerId . '" } }) {
+                    manufacturer {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertCount(
@@ -817,12 +817,12 @@ final class ProductTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            products(filter: { vendor: { equals: "' . $vendorId . '" } }) {
-                vendor {
-                    id
+                products(filter: { vendor: { equals: "' . $vendorId . '" } }) {
+                    vendor {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertCount(
@@ -858,10 +858,10 @@ final class ProductTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            products(filter: { category: { equals: "' . $categoryId . '" } }) {
-                id
-            }
-        }'
+                products(filter: { category: { equals: "' . $categoryId . '" } }) {
+                    id
+                }
+            }'
         );
 
         $this->assertCount(
@@ -878,16 +878,16 @@ final class ProductTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            products(
-                filter: { category: { equals: "' . self::ACTIVE_PRODUCT_CATEGORY . '" } }
-                sort: { position: "" }
-            ) {
-                id
-                categories(onlyMainCategory: true){
-                    active
+                products(
+                    filter: { category: { equals: "' . self::ACTIVE_PRODUCT_CATEGORY . '" } }
+                    sort: { position: "" }
+                ) {
+                    id
+                    categories(onlyMainCategory: true){
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $category = $result['body']['data']['products'][0]['categories'][0];
@@ -929,14 +929,14 @@ final class ProductTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            products (filter: {
-                title: {
-                    contains: "SPLEENE"
+                products (filter: {
+                    title: {
+                        contains: "SPLEENE"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertSame(
@@ -950,14 +950,14 @@ final class ProductTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            products (filter: {
-                title: {
-                    contains: "SPLEENE"
+                products (filter: {
+                    title: {
+                        contains: "SPLEENE"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertSame(
@@ -1023,13 +1023,13 @@ final class ProductTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            product(productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
-                vendor {
-                    id
-                    active
+                product(productId: "' . self::ACTIVE_PRODUCT_WITH_VARIANTS . '") {
+                    vendor {
+                        id
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $productVendor = $result['body']['data']['product']['vendor'];
@@ -1091,13 +1091,13 @@ final class ProductTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            product(productId: "' . self::ACTIVE_PRODUCT . '") {
-                manufacturer {
-                    id
-                    active
+                product(productId: "' . self::ACTIVE_PRODUCT . '") {
+                    manufacturer {
+                        id
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $productManufacturer = $result['body']['data']['product']['manufacturer'];
@@ -1164,13 +1164,13 @@ final class ProductTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            product(productId: "' . self::ACTIVE_PRODUCT . '") {
-                crossSelling {
-                    id
-                    active
+                product(productId: "' . self::ACTIVE_PRODUCT . '") {
+                    crossSelling {
+                        id
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $productCrossSelling = $result['body']['data']['product']['crossSelling'];
@@ -1234,13 +1234,13 @@ final class ProductTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            product(productId: "' . self::ACTIVE_PRODUCT . '") {
-                categories(onlyMainCategory: true) {
-                    id
-                    active
+                product(productId: "' . self::ACTIVE_PRODUCT . '") {
+                    categories(onlyMainCategory: true) {
+                        id
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertCount($expectedCategory ? 1 : 0, $result['body']['data']['product']['categories']);

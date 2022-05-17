@@ -29,10 +29,10 @@ final class VendorEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            vendor (vendorId: "' . self::VENDOR_ID . '") {
-                id
-            }
-        }'
+                vendor (vendorId: "' . self::VENDOR_ID . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -50,10 +50,10 @@ final class VendorEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query{
-            vendors {
-                id
-            }
-        }'
+                vendors {
+                    id
+                }
+            }'
         );
 
         // fixtures have 2 active vendors
@@ -75,14 +75,14 @@ final class VendorEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            vendor (vendorId: "' . self::VENDOR_ID . '") {
-                id,
-                title
-                products {
-                    id
+                vendor (vendorId: "' . self::VENDOR_ID . '") {
+                    id,
+                    title
+                    products {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -105,10 +105,10 @@ final class VendorEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query{
-            vendors {
-                id
-            }
-        }'
+                vendors {
+                    id
+                }
+            }'
         );
 
         // fixtures have 2 active vendors
@@ -164,11 +164,11 @@ final class VendorEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            vendor (vendorId: "' . self::VENDOR_ID . '") {
-                id
-                title
-            }
-        }'
+                vendor (vendorId: "' . self::VENDOR_ID . '") {
+                    id
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -197,15 +197,15 @@ final class VendorEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            vendors(filter: {
-                title: {
-                    equals: "' . $title . '"
+                vendors(filter: {
+                    title: {
+                        equals: "' . $title . '"
+                    }
+                }) {
+                    id,
+                    title
                 }
-            }) {
-                id,
-                title
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(

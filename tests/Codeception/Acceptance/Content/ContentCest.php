@@ -29,12 +29,12 @@ final class ContentCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            content (contentId: "' . self::CONTENT_WITH_TEMPLATE . '") {
-                id
-                content
-                rawContent
-            }
-        }'
+                content (contentId: "' . self::CONTENT_WITH_TEMPLATE . '") {
+                    id
+                    content
+                    rawContent
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -59,11 +59,11 @@ final class ContentCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            content (contentId: "' . self::CONTENT_WITH_VCMS_TEMPLATE . '") {
-                id
-                content
-            }
-        }'
+                content (contentId: "' . self::CONTENT_WITH_VCMS_TEMPLATE . '") {
+                    id
+                    content
+                }
+            }'
         );
 
         $I->seeResponseIsJson();

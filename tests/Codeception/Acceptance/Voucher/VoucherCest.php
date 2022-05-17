@@ -906,14 +906,14 @@ final class VoucherCest extends BaseCest
     ): void {
         $I->sendGQLQuery(
             'mutation {
-            basketRemoveItem(
-                basketId: "' . $basketId . '",
-                basketItemId: "' . $basketItemId . '",
-                amount: ' . $amount . '
-            ) {
-                id
-            }
-        }'
+                basketRemoveItem(
+                    basketId: "' . $basketId . '",
+                    basketItemId: "' . $basketItemId . '",
+                    amount: ' . $amount . '
+                ) {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -963,10 +963,10 @@ final class VoucherCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            basketCreate(basket: {title: "' . $title . '", public: false}) {
-                id
-            }
-        }'
+                basketCreate(basket: {title: "' . $title . '", public: false}) {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -980,8 +980,8 @@ final class VoucherCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            basketRemove(basketId: "' . $basketId . '")
-        }'
+                basketRemove(basketId: "' . $basketId . '")
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -995,16 +995,16 @@ final class VoucherCest extends BaseCest
     ): array {
         $I->sendGQLQuery(
             'mutation {
-            basketAddItem(basketId: "' . $basketId . '", productId: "' . $productId . '", amount: ' . $amount . ') {
-                id
-                items {
+                basketAddItem(basketId: "' . $basketId . '", productId: "' . $productId . '", amount: ' . $amount . ') {
                     id
-                    product {
+                    items {
                         id
+                        product {
+                            id
+                        }
                     }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();

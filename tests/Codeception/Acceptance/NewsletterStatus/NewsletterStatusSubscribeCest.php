@@ -54,11 +54,11 @@ final class NewsletterStatusSubscribeCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            newsletterSubscribe (newsletterStatus: {})
-            {
-               status
-            }
-        }'
+                newsletterSubscribe (newsletterStatus: {})
+                {
+                   status
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -77,11 +77,11 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterSubscribe (newsletterStatus: {})
-            {
-               status
-            }
-        }'
+                newsletterSubscribe (newsletterStatus: {})
+                {
+                   status
+                }
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -98,12 +98,12 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterSubscribe(newsletterStatus: {
-              email: "' . self::OTHER_USERNAME . '"
-            }) {
-                status
-            }
-        }'
+                newsletterSubscribe(newsletterStatus: {
+                  email: "' . self::OTHER_USERNAME . '"
+                }) {
+                    status
+                }
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -120,12 +120,12 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterSubscribe(newsletterStatus: {
-              email: "' . self::OTHER_USERNAME . '"
-            }) {
-                status
-            }
-        }'
+                newsletterSubscribe(newsletterStatus: {
+                  email: "' . self::OTHER_USERNAME . '"
+                }) {
+                    status
+                }
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -143,11 +143,11 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterSubscribe (newsletterStatus: {})
-            {
-                status
-            }
-        }'
+                newsletterSubscribe (newsletterStatus: {})
+                {
+                    status
+                }
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -166,19 +166,19 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterSubscribe(newsletterStatus: {
-              salutation: "' . $input['salutation'] . '"
-              firstName: "' . $input['firstName'] . '"
-              lastName: "' . $input['lastName'] . '"
-              email: "' . $input['email'] . '"
-            }) {
-                salutation
-                firstName
-                lastName
-                email
-                status
-            }
-        }'
+                newsletterSubscribe(newsletterStatus: {
+                  salutation: "' . $input['salutation'] . '"
+                  firstName: "' . $input['firstName'] . '"
+                  lastName: "' . $input['lastName'] . '"
+                  email: "' . $input['email'] . '"
+                }) {
+                    salutation
+                    firstName
+                    lastName
+                    email
+                    status
+                }
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -289,19 +289,19 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterSubscribe(newsletterStatus: {
-              salutation: "mrs"
-              firstName: "Newgirl"
-              lastName: "Intown"
-              email: "' . self::OTHER_USERNAME . '"
-            }) {
-                salutation
-                firstName
-                lastName
-                email
-                status
-            }
-        }'
+                newsletterSubscribe(newsletterStatus: {
+                  salutation: "mrs"
+                  firstName: "Newgirl"
+                  lastName: "Intown"
+                  email: "' . self::OTHER_USERNAME . '"
+                }) {
+                    salutation
+                    firstName
+                    lastName
+                    email
+                    status
+                }
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -326,19 +326,19 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            newsletterSubscribe(newsletterStatus: {
-              salutation: "mrs"
-              firstName: "Newgirl"
-              lastName: "Intown"
-              email: "' . self::OTHER_USERNAME . '"
-            }) {
-                salutation
-                firstName
-                lastName
-                email
-                status
-            }
-        }'
+                newsletterSubscribe(newsletterStatus: {
+                  salutation: "mrs"
+                  firstName: "Newgirl"
+                  lastName: "Intown"
+                  email: "' . self::OTHER_USERNAME . '"
+                }) {
+                    salutation
+                    firstName
+                    lastName
+                    email
+                    status
+                }
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();
@@ -392,13 +392,13 @@ final class NewsletterStatusSubscribeCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            customer {
-                id
-                newsletterStatus {
-                    status
+                customer {
+                    id
+                    newsletterStatus {
+                        status
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $result = $I->grabJsonResponseAsArray();

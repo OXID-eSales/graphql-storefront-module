@@ -36,22 +36,22 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            country (countryId: "' . self::ACTIVE_COUNTRY . '") {
-                id
-                position
-                active
-                title
-                isoAlpha2
-                isoAlpha3
-                isoNumeric
-                shortDescription
-                description
-                creationDate
-                states {
+                country (countryId: "' . self::ACTIVE_COUNTRY . '") {
                     id
+                    position
+                    active
+                    title
+                    isoAlpha2
+                    isoAlpha3
+                    isoNumeric
+                    shortDescription
+                    description
+                    creationDate
+                    states {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -82,11 +82,11 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            country (countryId: "' . self::INACTIVE_COUNTRY . '") {
-                id
-                active
-            }
-        }'
+                country (countryId: "' . self::INACTIVE_COUNTRY . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -104,11 +104,11 @@ final class CountryCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            country (countryId: "' . self::INACTIVE_COUNTRY . '") {
-                id
-                active
-            }
-        }'
+                country (countryId: "' . self::INACTIVE_COUNTRY . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -127,10 +127,10 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            country (countryId: "' . self::DOES_NOT_EXIST . '") {
-                id
-            }
-        }'
+                country (countryId: "' . self::DOES_NOT_EXIST . '") {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -143,11 +143,11 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries {
-                title
-                position
-            }
-        }',
+                countries {
+                    title
+                    position
+                }
+            }',
             [],
             1
         );
@@ -175,16 +175,16 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries(filter: {
-                title: {
-                    contains: "sch"
+                countries(filter: {
+                    title: {
+                        contains: "sch"
+                    }
+                }) {
+                    id
+                    title
+                    position
                 }
-            }) {
-                id
-                title
-                position
-            }
-        }',
+            }',
             [],
             0
         );
@@ -205,15 +205,15 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries(filter: {
-                title: {
-                    equals: "Deutschland"
+                countries(filter: {
+                    title: {
+                        equals: "Deutschland"
+                    }
+                }) {
+                    id,
+                    title
                 }
-            }) {
-                id,
-                title
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -234,14 +234,14 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries(filter: {
-                title: {
-                    contains: "' . self::DOES_NOT_EXIST . '"
+                countries(filter: {
+                    title: {
+                        contains: "' . self::DOES_NOT_EXIST . '"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -257,10 +257,10 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries(sort: {position: "DESC"}) {
-                id
-            }
-        }'
+                countries(sort: {position: "DESC"}) {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -282,15 +282,15 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries(
-                sort: {
-                    position: ""
-                    title: "ASC"
+                countries(
+                    sort: {
+                        position: ""
+                        title: "ASC"
+                    }
+                ) {
+                    id
                 }
-            ) {
-                id
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -312,13 +312,13 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
-                states {
-                    id
-                    title
+                country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
+                    states {
+                        id
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -389,12 +389,12 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries {
-                states {
-                    title
+                countries {
+                    states {
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -415,13 +415,13 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
-                states {
-                    id
-                    title
+                country (countryId: "' . self::COUNTRY_WITH_STATES . '") {
+                    states {
+                        id
+                        title
+                    }
                 }
-            }
-        }',
+            }',
             [],
             0
         );
@@ -452,13 +452,13 @@ final class CountryCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            countries {
-                states {
-                    id
-                    title
+                countries {
+                    states {
+                        id
+                        title
+                    }
                 }
-            }
-        }',
+            }',
             [],
             0
         );

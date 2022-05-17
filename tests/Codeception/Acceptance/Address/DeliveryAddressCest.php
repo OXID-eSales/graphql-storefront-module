@@ -247,10 +247,10 @@ final class DeliveryAddressCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            customerDeliveryAddresses {
-                id
-            }
-        }'
+                customerDeliveryAddresses {
+                    id
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -271,14 +271,14 @@ final class DeliveryAddressCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            customerDeliveryAddresses {
-                id
-                firstName
-                lastName
-                street
-                streetNumber
-            }
-        }'
+                customerDeliveryAddresses {
+                    id
+                    firstName
+                    lastName
+                    street
+                    streetNumber
+                }
+            }'
         );
 
         $I->seeResponseIsJson();

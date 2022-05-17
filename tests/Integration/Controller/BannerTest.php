@@ -42,19 +42,19 @@ final class BannerTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            banner(bannerId: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
-                id
-                active
-                title
-                picture
-                link
-                sorting
-                product{
-                  id
-                  title
+                banner(bannerId: "' . self::ACTIVE_BANNER_WITH_PRODUCT . '") {
+                    id
+                    active
+                    title
+                    picture
+                    link
+                    sorting
+                    product{
+                      id
+                      title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $banner = $result['body']['data']['banner'];

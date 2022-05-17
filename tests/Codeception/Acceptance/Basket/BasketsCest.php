@@ -157,27 +157,27 @@ final class BasketsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            baskets(owner: "' . $owner . '") {
-                owner {
-                    lastName
-                }
-                items(pagination: {limit: 10, offset: 0}) {
-                    id
-                    product {
-                        id
-                        title
-                        price {
-                            price
-                        }
+                baskets(owner: "' . $owner . '") {
+                    owner {
+                        lastName
                     }
-                    amount
+                    items(pagination: {limit: 10, offset: 0}) {
+                        id
+                        product {
+                            id
+                            title
+                            price {
+                                price
+                            }
+                        }
+                        amount
+                    }
+                    id
+                    title
+                    creationDate
+                    lastUpdateDate
                 }
-                id
-                title
-                creationDate
-                lastUpdateDate
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -189,10 +189,10 @@ final class BasketsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            basketMakePrivate(basketId: "' . $basketId . '") {
-                public
-            }
-        }'
+                basketMakePrivate(basketId: "' . $basketId . '") {
+                    public
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -204,10 +204,10 @@ final class BasketsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            basketMakePublic(basketId: "' . $basketId . '") {
-                public
-            }
-        }'
+                basketMakePublic(basketId: "' . $basketId . '") {
+                    public
+                }
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -219,17 +219,17 @@ final class BasketsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-            basket (basketId: "' . $basketId . '") {
-                items {
-                    product {
-                        id
-                        price {
-                            price
+                basket (basketId: "' . $basketId . '") {
+                    items {
+                        product {
+                            id
+                            price {
+                                price
+                            }
                         }
                     }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();

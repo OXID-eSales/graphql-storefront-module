@@ -19,12 +19,12 @@ final class BannerEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            banners {
-                id,
-                title,
-                sorting
-            }
-        }'
+                banners {
+                    id,
+                    title,
+                    sorting
+                }
+            }'
         );
 
         $this->assertCount(2, $result['body']['data']['banners']);

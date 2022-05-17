@@ -29,10 +29,10 @@ final class AttributeEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
-                title
-            }
-        }'
+                attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
+                    title
+                }
+            }'
         );
 
         $this->assertSame(
@@ -52,10 +52,10 @@ final class AttributeEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
-                title
-            }
-        }'
+                attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -105,10 +105,10 @@ final class AttributeEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
-                title
-            }
-        }'
+                attribute (attributeId: "' . self::ATTRIBUTE_ID . '") {
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -133,10 +133,10 @@ final class AttributeEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            attributes {
-                title
-            }
-        }'
+                attributes {
+                    title
+                }
+            }'
         );
 
         foreach ($attributes as $key => $attribute) {

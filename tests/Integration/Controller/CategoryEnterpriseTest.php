@@ -45,10 +45,10 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
-                id
-            }
-        }'
+                category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -69,11 +69,11 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
-                id,
-                title
-            }
-        }'
+                category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
+                    id,
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -130,11 +130,11 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
-                id
-                title
-            }
-        }'
+                category (categoryId: "' . self::CATEGORY_IDS['shoes-active'] . '") {
+                    id
+                    title
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -155,10 +155,10 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query{
-            categories {
-                id
-            }
-        }'
+                categories {
+                    id
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -183,15 +183,15 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            categories(filter: {
-                title: {
-                    equals: "' . $title . '"
+                categories(filter: {
+                    title: {
+                        equals: "' . $title . '"
+                    }
+                }) {
+                    id,
+                    title
                 }
-            }) {
-                id,
-                title
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -209,14 +209,14 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            categories (filter: {
-                title: {
-                    equals: "Jeans"
+                categories (filter: {
+                    title: {
+                        equals: "Jeans"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertEmpty($result['body']['data']['categories']);
@@ -232,10 +232,10 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            categories {
-                id
-            }
-        }'
+                categories {
+                    id
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -259,13 +259,13 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_IDS['supplies-active'] . '") {
-                title
-                products {
+                category (categoryId: "' . self::CATEGORY_IDS['supplies-active'] . '") {
                     title
+                    products {
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -292,13 +292,13 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-            categories {
-                title
-                products {
+                categories {
                     title
+                    products {
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertCount(
@@ -353,13 +353,13 @@ final class CategoryEnterpriseTest extends MultishopTestCase
 
         $result = $this->query(
             'query {
-          category (categoryId: "' . self::CATEGORY_IDS['test-active'] . '") {
-            id
-            products {
+              category (categoryId: "' . self::CATEGORY_IDS['test-active'] . '") {
                 id
-            }
-          }
-        }'
+                products {
+                    id
+                }
+              }
+            }'
         );
 
         $products = $result['body']['data']['category']['products'];

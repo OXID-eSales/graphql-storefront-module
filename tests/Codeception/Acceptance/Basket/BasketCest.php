@@ -273,19 +273,19 @@ final class BasketCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            basketCreate(basket: {title: "' . $title . '"}) {
-                owner {
-                    firstName
-                }
-                items(pagination: {limit: 10, offset: 0}) {
-                    product {
-                        title
+                basketCreate(basket: {title: "' . $title . '"}) {
+                    owner {
+                        firstName
                     }
+                    items(pagination: {limit: 10, offset: 0}) {
+                        product {
+                            title
+                        }
+                    }
+                    id
+                    public
                 }
-                id
-                public
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -297,8 +297,8 @@ final class BasketCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            basketRemove(basketId: "' . $basketId . '")
-        }'
+                basketRemove(basketId: "' . $basketId . '")
+            }'
         );
 
         $I->seeResponseIsJson();

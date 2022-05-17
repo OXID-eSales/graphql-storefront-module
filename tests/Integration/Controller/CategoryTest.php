@@ -37,30 +37,30 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
-                id
-                position
-                active
-                hidden
-                title
-                shortDescription
-                longDescription
-                thumbnail
-                externalLink
-                template
-                priceFrom
-                priceTo
-                icon
-                promotionIcon
-                vat
-                skipDiscount
-                showSuffix
-                timestamp
-                seo {
-                    url
+                category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
+                    id
+                    position
+                    active
+                    hidden
+                    title
+                    shortDescription
+                    longDescription
+                    thumbnail
+                    externalLink
+                    template
+                    priceFrom
+                    priceTo
+                    icon
+                    promotionIcon
+                    vat
+                    skipDiscount
+                    showSuffix
+                    timestamp
+                    seo {
+                        url
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $category = $result['body']['data']['category'];
@@ -102,11 +102,11 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::INACTIVE_CATEGORY . '") {
-                id
-                active
-            }
-        }'
+                category (categoryId: "' . self::INACTIVE_CATEGORY . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $this->assertSame(
@@ -121,11 +121,11 @@ final class CategoryTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::INACTIVE_CATEGORY . '") {
-                id
-                active
-            }
-        }'
+                category (categoryId: "' . self::INACTIVE_CATEGORY . '") {
+                    id
+                    active
+                }
+            }'
         );
         $this->assertEquals(
             [
@@ -140,10 +140,10 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            category (categoryId: "DOES-NOT-EXIST") {
-                id
-            }
-        }'
+                category (categoryId: "DOES-NOT-EXIST") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(
@@ -156,19 +156,19 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
-                id
-                parent {
-                    id
-                }
-                root {
+                category (categoryId: "' . self::ACTIVE_CATEGORY . '") {
                     id
                     parent {
                         id
                     }
+                    root {
+                        id
+                        parent {
+                            id
+                        }
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $category = $result['body']['data']['category'];
@@ -192,11 +192,11 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query{
-            category(categoryId: "' . self::CATEGORY_WITHOUT_CHILDREN . '"){
-                id
-                children{id}
-            }
-        }'
+                category(categoryId: "' . self::CATEGORY_WITHOUT_CHILDREN . '"){
+                    id
+                    children{id}
+                }
+            }'
         );
 
         $children = $result['body']['data']['category']['children'];
@@ -211,13 +211,13 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query{
-            category(categoryId: "' . self::CATEGORY_WITH_CHILDREN . '"){
-                id
-                children {
+                category(categoryId: "' . self::CATEGORY_WITH_CHILDREN . '"){
                     id
+                    children {
+                        id
+                    }
                 }
-            }
-         }'
+            }'
         );
 
         $children = $result['body']['data']['category']['children'];
@@ -240,32 +240,32 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            category(categoryId: "' . self::CATEGORY_WITH_CHILDREN . '") {
-                children {
-                    id
-                    position
-                    active
-                    hidden
-                    title
-                    shortDescription
-                    longDescription
-                    thumbnail
-                    externalLink
-                    template
-                    priceFrom
-                    priceTo
-                    icon
-                    promotionIcon
-                    vat
-                    skipDiscount
-                    showSuffix
-                    timestamp
-                    seo {
-                        url
+                category(categoryId: "' . self::CATEGORY_WITH_CHILDREN . '") {
+                    children {
+                        id
+                        position
+                        active
+                        hidden
+                        title
+                        shortDescription
+                        longDescription
+                        thumbnail
+                        externalLink
+                        template
+                        priceFrom
+                        priceTo
+                        icon
+                        promotionIcon
+                        vat
+                        skipDiscount
+                        showSuffix
+                        timestamp
+                        seo {
+                            url
+                        }
                     }
                 }
-            }
-        }'
+            }'
         );
 
         $child = $result['body']['data']['category']['children'][0];
@@ -304,11 +304,11 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            categories {
-                id
-                position
-            }
-        }'
+                categories {
+                    id
+                    position
+                }
+            }'
         );
 
         $this->assertCount(
@@ -321,14 +321,14 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            categories(filter: {
-                title: {
-                    contains: "l"
+                categories(filter: {
+                    title: {
+                        contains: "l"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -344,15 +344,15 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            categories(filter: {
-                title: {
-                    equals: "Jeans"
+                categories(filter: {
+                    title: {
+                        equals: "Jeans"
+                    }
+                }) {
+                    id,
+                    title
                 }
-            }) {
-                id,
-                title
-            }
-        }'
+            }'
         );
 
         $this->assertSame(
@@ -370,14 +370,14 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            categories(filter: {
-                title: {
-                    contains: "DOES-NOT-EXIST"
+                categories(filter: {
+                    title: {
+                        contains: "DOES-NOT-EXIST"
+                    }
+                }) {
+                    id
                 }
-            }) {
-                id
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -395,15 +395,15 @@ final class CategoryTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_WITH_CHILDREN . '") {
-                id
-                seo{
-                    description
-                    keywords
-                    url
+                category (categoryId: "' . self::CATEGORY_WITH_CHILDREN . '") {
+                    id
+                    seo{
+                        description
+                        keywords
+                        url
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -428,14 +428,14 @@ final class CategoryTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
-                title
-                products {
-                    id
+                category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                     title
+                    products {
+                        id
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $products = $result['body']['data']['category']['products'];
@@ -505,16 +505,16 @@ final class CategoryTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
-                title
-                products (sort: {
-                   position: "",
-                   title: "DESC"
-                }){
-                    active
+                category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
+                    title
+                    products (sort: {
+                       position: "",
+                       title: "DESC"
+                    }){
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertCount(
@@ -547,23 +547,23 @@ final class CategoryTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
-                title
-                products(
-                    pagination: {
-                        offset: ' . $offset . '
-                        limit: ' . $limit . '
-                    }
-                    sort: {
-                        position: ""
-                        title: "ASC"
-                    }
-                ) {
-                    id
+                category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                     title
+                    products(
+                        pagination: {
+                            offset: ' . $offset . '
+                            limit: ' . $limit . '
+                        }
+                        sort: {
+                            position: ""
+                            title: "ASC"
+                        }
+                    ) {
+                        id
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -718,23 +718,23 @@ final class CategoryTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            categories(
-                filter: {
-                    parentId: {
-                        equals: "' . self::CATEGORY_WITH_CHILDREN . '"
+                categories(
+                    filter: {
+                        parentId: {
+                            equals: "' . self::CATEGORY_WITH_CHILDREN . '"
+                        }
+                        title: {
+                            equals: "Bindungen"
+                        }
                     }
-                    title: {
-                        equals: "Bindungen"
-                    }
-                }
-            ) {
-                id
-                parent {
+                ) {
                     id
-                    active
+                    parent {
+                        id
+                        active
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $actualCategories = $result['body']['data']['categories'];
@@ -801,14 +801,14 @@ final class CategoryTest extends BaseTestCase
     ): void {
         $result = $this->query(
             'query {
-            categories( ' .
-            $sortQuery .
-            ') {
-                id
-                title
-                position
-            }
-        }'
+                categories( ' .
+                $sortQuery .
+                ') {
+                    id
+                    title
+                    position
+                }
+            }'
         );
 
         $titles = [];

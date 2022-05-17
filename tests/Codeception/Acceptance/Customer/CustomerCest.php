@@ -135,14 +135,14 @@ final class CustomerCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            customer {
-                id
-                firstName
-                newsletterStatus {
-                    status
+                customer {
+                    id
+                    firstName
+                    newsletterStatus {
+                        status
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -160,14 +160,14 @@ final class CustomerCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            customer {
-                id
-                firstName
-                newsletterStatus {
-                    status
+                customer {
+                    id
+                    firstName
+                    newsletterStatus {
+                        status
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -182,22 +182,22 @@ final class CustomerCest extends BaseCest
 
         $I->sendGQLQuery(
             'query {
-            customer {
-                id
-                firstName
-                newsletterStatus {
-                    salutation
+                customer {
+                    id
                     firstName
-                    lastName
-                    email
-                    status
-                    failedEmailCount
-                    subscribed
-                    unsubscribed
-                    updated
+                    newsletterStatus {
+                        salutation
+                        firstName
+                        lastName
+                        email
+                        status
+                        failedEmailCount
+                        subscribed
+                        unsubscribed
+                        updated
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -234,16 +234,16 @@ final class CustomerCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            customerRegister(customer: {
-                email: "' . $email . '",
-                password: "' . $password . '",
-                ' . ($birthdate ? 'birthdate: "' . $birthdate . '"' : '') . '
-            }) {
-                id
-                email
-                birthdate
-            }
-        }',
+                customerRegister(customer: {
+                    email: "' . $email . '",
+                    password: "' . $password . '",
+                    ' . ($birthdate ? 'birthdate: "' . $birthdate . '"' : '') . '
+                }) {
+                    id
+                    email
+                    birthdate
+                }
+            }',
             []
         );
 
@@ -286,15 +286,15 @@ final class CustomerCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            customerRegister(customer: {
-                email: "' . $email . '",
-                password: "' . $password . '"
-            }) {
-                id
-                email
-                birthdate
-            }
-        }',
+                customerRegister(customer: {
+                    email: "' . $email . '",
+                    password: "' . $password . '"
+                }) {
+                    id
+                    email
+                    birthdate
+                }
+            }',
             []
         );
 

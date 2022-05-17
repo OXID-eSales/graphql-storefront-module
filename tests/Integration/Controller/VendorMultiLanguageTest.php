@@ -164,14 +164,14 @@ final class VendorMultiLanguageTest extends TestCase
 
         $result = $this->query(
             'query {
-            vendors(
-                sort: {
-                    title: "ASC"
+                vendors(
+                    sort: {
+                        title: "ASC"
+                    }
+                ) {
+                    title
                 }
-            ) {
-                title
-            }
-        }'
+            }'
         );
 
         $sortedVendors = $result['body']['data']['vendors'];

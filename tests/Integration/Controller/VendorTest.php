@@ -27,23 +27,23 @@ final class VendorTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
-                id
-                active
-                icon
-                title
-                shortdesc
-                timestamp
-                seo {
-                  description
-                  keywords
-                  url
-                }
-                products {
+                vendor (vendorId: "' . self::ACTIVE_VENDOR . '") {
                     id
+                    active
+                    icon
+                    title
+                    shortdesc
+                    timestamp
+                    seo {
+                      description
+                      keywords
+                      url
+                    }
+                    products {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $vendor = $result['body']['data']['vendor'];

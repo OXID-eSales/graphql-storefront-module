@@ -31,21 +31,21 @@ final class ReviewTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            review(reviewId: "' . self::ACTIVE_REVIEW . '") {
-                id
-                active
-                text
-                rating
-                createAt
-                reviewer {
-                    firstName
-                }
-                product {
+                review(reviewId: "' . self::ACTIVE_REVIEW . '") {
                     id
-                    title
+                    active
+                    text
+                    rating
+                    createAt
+                    reviewer {
+                        firstName
+                    }
+                    product {
+                        id
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $review = $result['body']['data']['review'];
@@ -72,21 +72,21 @@ final class ReviewTest extends TokenTestCase
 
         $result = $this->query(
             'query {
-            review(reviewId: "' . self::ACTIVE_REVIEW . '") {
-                id
-                active
-                text
-                rating
-                createAt
-                reviewer {
-                    firstName
-                }
-                product {
+                review(reviewId: "' . self::ACTIVE_REVIEW . '") {
                     id
-                    title
+                    active
+                    text
+                    rating
+                    createAt
+                    reviewer {
+                        firstName
+                    }
+                    product {
+                        id
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $review = $result['body']['data']['review'];
@@ -125,11 +125,11 @@ final class ReviewTest extends TokenTestCase
 
         $result = $this->query(
             'query {
-            review (reviewId: "' . self::INACTIVE_REVIEW . '") {
-                id
-                active
-            }
-        }'
+                review (reviewId: "' . self::INACTIVE_REVIEW . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         if ($expectError === true) {
@@ -182,10 +182,10 @@ final class ReviewTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            review (reviewId: "DOES-NOT-EXIST") {
-                id
-            }
-        }'
+                review (reviewId: "DOES-NOT-EXIST") {
+                    id
+                }
+            }'
         );
 
         $this->assertSame(

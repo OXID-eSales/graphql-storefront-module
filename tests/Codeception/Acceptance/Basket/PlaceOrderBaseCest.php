@@ -427,16 +427,16 @@ abstract class PlaceOrderBaseCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation ($email: String!, $password: String!) {
-            customerRegister (
-                customer: {
-                    email:    $email,
-                    password: $password
+                customerRegister (
+                    customer: {
+                        email:    $email,
+                        password: $password
+                    }
+                ) {
+                    id
+                    email
                 }
-            ) {
-                id
-                email
-            }
-        }',
+            }',
             $variables
         );
 

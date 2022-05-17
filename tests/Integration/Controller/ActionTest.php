@@ -36,15 +36,15 @@ final class ActionTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            action(actionId: "' . self::ACTIVE_ACTION_WITHOUT_PRODUCTS . '") {
-                id
-                active
-                title
-                products {
+                action(actionId: "' . self::ACTIVE_ACTION_WITHOUT_PRODUCTS . '") {
                     id
+                    active
+                    title
+                    products {
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $action = $result['body']['data']['action'];
@@ -61,13 +61,13 @@ final class ActionTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            action(actionId: "' . self::ACTIVE_ACTION_WITH_PRODUCTS . '") {
-                id
-                products{
-                  id
+                action(actionId: "' . self::ACTIVE_ACTION_WITH_PRODUCTS . '") {
+                    id
+                    products{
+                      id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $products = $result['body']['data']['action']['products'];
@@ -94,11 +94,11 @@ final class ActionTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            action (actionId: "' . self::INACTIVE_ACTION . '") {
-                id
-                active
-            }
-        }'
+                action (actionId: "' . self::INACTIVE_ACTION . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $this->assertSame(
@@ -111,11 +111,11 @@ final class ActionTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            action (actionId: "non_existing_id") {
-                id
-                active
-            }
-        }'
+                action (actionId: "non_existing_id") {
+                    id
+                    active
+                }
+            }'
         );
 
         $this->assertSame(
@@ -128,11 +128,11 @@ final class ActionTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            action (actionId: "' . self::WRONG_TYPE_ACTION . '") {
-                id
-                active
-            }
-        }'
+                action (actionId: "' . self::WRONG_TYPE_ACTION . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $this->assertSame(
@@ -147,12 +147,12 @@ final class ActionTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            action (actionId: "' . self::INACTIVE_ACTION . '") {
-                id
-                title
-                active
-            }
-        }'
+                action (actionId: "' . self::INACTIVE_ACTION . '") {
+                    id
+                    title
+                    active
+                }
+            }'
         );
 
         $this->assertEquals([
@@ -166,11 +166,11 @@ final class ActionTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            actions {
-                id,
-                title
-            }
-        }'
+                actions {
+                    id,
+                    title
+                }
+            }'
         );
 
         $this->assertCount(6, $result['body']['data']['actions']);
@@ -209,12 +209,12 @@ final class ActionTest extends BaseTestCase
 
         $result = $this->query(
             'query {
-            actions {
-                id,
-                title,
-                active
-            }
-        }'
+                actions {
+                    id,
+                    title,
+                    active
+                }
+            }'
         );
 
         $this->assertCount(7, $result['body']['data']['actions']);
@@ -265,13 +265,13 @@ final class ActionTest extends BaseTestCase
     {
         $result = $this->query(
             'query {
-            actions(filter: {actionId: {contains: "' . $contains . '"}}) {
-                id
-                products{
+                actions(filter: {actionId: {contains: "' . $contains . '"}}) {
                     id
+                    products{
+                        id
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertEquals($expected, $result['body']['data']['actions']);

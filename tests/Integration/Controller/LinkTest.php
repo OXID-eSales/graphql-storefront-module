@@ -33,15 +33,15 @@ final class LinkTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            link (linkId: "' . self::ACTIVE_LINK . '") {
-                id
-                active
-                timestamp
-                description
-                url
-                creationDate
-            }
-        }'
+                link (linkId: "' . self::ACTIVE_LINK . '") {
+                    id
+                    active
+                    timestamp
+                    description
+                    url
+                    creationDate
+                }
+            }'
         );
 
         $link = $result['body']['data']['link'];
@@ -72,11 +72,11 @@ final class LinkTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            link (linkId: "' . self::INACTIVE_LINK . '") {
-                id
-                active
-            }
-        }'
+                link (linkId: "' . self::INACTIVE_LINK . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $this->assertSame(
@@ -91,11 +91,11 @@ final class LinkTest extends TokenTestCase
 
         $result = $this->query(
             'query {
-            link (linkId: "' . self::INACTIVE_LINK . '") {
-                id
-                active
-            }
-        }'
+                link (linkId: "' . self::INACTIVE_LINK . '") {
+                    id
+                    active
+                }
+            }'
         );
 
         $this->assertEquals(
@@ -111,15 +111,15 @@ final class LinkTest extends TokenTestCase
     {
         $result = $this->query(
             'query {
-            link (linkId: "DOES-NOT-EXIST") {
-                id
-                active
-                timestamp
-                description
-                url
-                creationDate
-            }
-        }'
+                link (linkId: "DOES-NOT-EXIST") {
+                    id
+                    active
+                    timestamp
+                    description
+                    url
+                    creationDate
+                }
+            }'
         );
 
         $this->assertSame(
@@ -132,15 +132,15 @@ final class LinkTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            links {
-                id
-                active
-                timestamp
-                description
-                url
-                creationDate
-            }
-        }'
+                links {
+                    id
+                    active
+                    timestamp
+                    description
+                    url
+                    creationDate
+                }
+            }'
         );
 
         // fixtures have 2 active links
@@ -154,14 +154,14 @@ final class LinkTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            links(filter: {
-                description: {
-                    contains: "a"
+                links(filter: {
+                    description: {
+                        contains: "a"
+                    }
+                }){
+                    id
                 }
-            }){
-                id
-            }
-        }'
+            }'
         );
 
         // fixtures have 2 active links with lowercase a
@@ -175,14 +175,14 @@ final class LinkTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            links(filter: {
-                description: {
-                    beginsWith: "inactive"
+                links(filter: {
+                    description: {
+                        beginsWith: "inactive"
+                    }
+                }){
+                    id
                 }
-            }){
-                id
-            }
-        }'
+            }'
         );
 
         // fixtures have 2 inactive links starting with inactive
@@ -196,14 +196,14 @@ final class LinkTest extends TokenTestCase
     {
         $result = $this->query(
             'query{
-            links(filter: {
-                description: {
-                    equals: "DOES-NOT-EXIST"
+                links(filter: {
+                    description: {
+                        equals: "DOES-NOT-EXIST"
+                    }
+                }){
+                    id
                 }
-            }){
-                id
-            }
-        }'
+            }'
         );
 
         // fixtures have 0 links with description matching DOES-NOT-EXIST

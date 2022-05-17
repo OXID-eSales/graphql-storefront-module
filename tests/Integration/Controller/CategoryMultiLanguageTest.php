@@ -77,13 +77,13 @@ final class CategoryMultiLanguageTest extends TestCase
 
         $result = $this->query(
             'query {
-            category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
-                title
-                products {
+                category (categoryId: "' . self::CATEGORY_WITH_PRODUCTS . '") {
                     title
+                    products {
+                        title
+                    }
                 }
-            }
-        }'
+            }'
         );
 
         $this->assertEquals(
@@ -179,16 +179,16 @@ final class CategoryMultiLanguageTest extends TestCase
 
         $result = $this->query(
             'query {
-            categories(
-                sort: {
-                    position: ""
-                    title: "ASC"
+                categories(
+                    sort: {
+                        position: ""
+                        title: "ASC"
+                    }
+                ) {
+                    id
+                    title
                 }
-            ) {
-                id
-                title
-            }
-        }'
+            }'
         );
 
         $titles = [];
@@ -234,13 +234,13 @@ final class CategoryMultiLanguageTest extends TestCase
 
         $result = $this->query(
             'query {
-          category (categoryId: "' . $categoryId . '") {
-            id
-            products {
+              category (categoryId: "' . $categoryId . '") {
                 id
-            }
-          }
-        }'
+                products {
+                    id
+                }
+              }
+            }'
         );
 
         $products = $result['body']['data']['category']['products'];

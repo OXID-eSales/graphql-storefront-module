@@ -30,8 +30,8 @@ final class CustomerDeleteCest extends BaseCest
     {
         $I->sendGQLQuery(
             'mutation {
-            customerDelete
-        }'
+                customerDelete
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -51,8 +51,8 @@ final class CustomerDeleteCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            customerDelete
-        }'
+                customerDelete
+            }'
         );
 
         $I->seeResponseIsJson();
@@ -72,8 +72,8 @@ final class CustomerDeleteCest extends BaseCest
 
         $I->sendGQLQuery(
             'mutation {
-            customerDelete
-        }'
+                customerDelete
+            }'
         );
 
         $I->seeResponseIsJson();
