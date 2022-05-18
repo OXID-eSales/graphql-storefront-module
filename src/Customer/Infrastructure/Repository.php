@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Customer\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
-use OxidEsales\EshopCommunity\Core\Email;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
@@ -44,7 +43,7 @@ final class Repository
         }
 
         //Todo: Parameter if private sales is active or not, will be implemented in OXDEV-5273
-        $user->sendRegistrationEmail(false);
+        $user->sendRegistrationEmail();
 
         return new CustomerDataType($user);
     }
