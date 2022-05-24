@@ -707,8 +707,6 @@ final class ProductTest extends BaseTestCase
             $mode ? $method($expected, $mode) : $method(
                 array_values($expected),
                 SORT_DESC,
-                array_keys($expected),
-                SORT_ASC,
                 $expected
             );
         }
