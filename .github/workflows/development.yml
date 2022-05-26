@@ -160,7 +160,6 @@ jobs:
                   sleep 2
 
             - name: Run tests
-              continue-on-error: true
               run: |
                   docker-compose exec -T \
                     -e PARTIAL_MODULE_PATHS=oe/graphql-base,oe/graphql-storefront \
@@ -207,7 +206,6 @@ jobs:
                   sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' source/source/bootstrap.php
 
             - name: Run tests
-              continue-on-error: true
               run: |
                   docker-compose exec -T \
                     -e PARTIAL_MODULE_PATHS=oe/graphql-base,oe/graphql-storefront \
