@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Code quality tools list simplified and reconfigured to fit our quality requirements
 - Send registration email when creating a user
+- Do not crush on not available Address country [PR-10](https://github.com/OXID-eSales/graphql-storefront-module/pull/10)
 
 ## [2.0.1] - 2022-01-03
 
