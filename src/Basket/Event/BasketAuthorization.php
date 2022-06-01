@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BasketAuthorization extends Event

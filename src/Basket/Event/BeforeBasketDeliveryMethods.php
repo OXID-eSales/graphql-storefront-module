@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BeforeBasketDeliveryMethods extends Event implements BasketModifyInterface

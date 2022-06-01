@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BeforePlaceOrder extends Event implements BasketModifyInterface
