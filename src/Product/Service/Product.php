@@ -113,8 +113,7 @@ final class Product
 
         Registry::getConfig()->setConfigParam('blLoadVariants', true);
 
-        if ($product->isActive() || $this->authorizationService->isAllowed('VIEW_INACTIVE_PRODUCT'))
-        {
+        if ($product->isActive() || $this->authorizationService->isAllowed('VIEW_INACTIVE_PRODUCT')) {
             if ($variantSelections = $product->getEshopModel()->getVariantSelections($varSelids, $childId)) {
                 return new VariantSelections($variantSelections);
             }

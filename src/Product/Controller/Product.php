@@ -61,8 +61,6 @@ final class Product
      * @param string $productId
      * @param ?string[] $varSelids
      * @return ?VariantSelections
-     * @throws InvalidLogin
-     * @throws ProductNotFound
      */
     public function variantSelections(string $productId, ?array $varSelids): ?VariantSelections
     {

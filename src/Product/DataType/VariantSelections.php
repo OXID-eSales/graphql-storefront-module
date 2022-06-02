@@ -36,7 +36,7 @@ class VariantSelections
     {
         $variantSelectionList = [];
 
-        if (!isset($this->variantSelections['selections']) || !count($this->variantSelections['selections']) ) {
+        if (!isset($this->variantSelections['selections']) || !count($this->variantSelections['selections'])) {
             return $variantSelectionList;
         }
 

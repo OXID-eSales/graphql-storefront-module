@@ -36,15 +36,15 @@ final class Product
     /**
      * get parent by id. return parent if available, otherwise current article
      *
-     * @param $id
+     * @param string $id
      * @return ProductDataType
      * @throws NotFound
      */
-    public function getParentById($id): ProductDataType
+    public function getParentById(string $id): ProductDataType
     {
         $article = oxNew(EshopProductModel::class);
 
-        if (!$article->load($id) || !$article->canView()) {
+        if (!$article->load($id) || (method_exists($article, 'canView') && !$article->canView())) {
             throw new NotFound($id);
         }
 
