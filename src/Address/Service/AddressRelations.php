@@ -36,7 +36,7 @@ abstract class AddressRelations
     /**
      * @Field()
      */
-    public function country(AddressInterface $address): Country
+    public function country(AddressInterface $address): ?Country
     {
         return $this->countryService->country(
             $address->countryId()
