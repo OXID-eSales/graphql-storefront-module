@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Product\Infrastructure;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
 use OxidEsales\Eshop\Application\Model\ArticleList as EshopProductListModel;
 use OxidEsales\Eshop\Application\Model\Attribute as EshopAttributeModel;
@@ -49,12 +50,21 @@ final class Product
         }
 
         if ($parentId = $article->getFieldData('oxparentid')) {
-            if (!$article->load($parentId) || !$article->canView()) {
+            if (!$article->load($parentId) || (method_exists($article, 'canView') && !$article->canView())) {
                 throw new NotFound($parentId);
             }
         }
 
         return new ProductDataType($article);
+    }
+
+    /**
+     * @return void
+     */
+    public function setLoadVariants(): void
+    {
+        /** @phpstan-ignore-next-line */
+        Registry::getConfig()->setConfigParam('blLoadVariants', true);
     }
 
     /**

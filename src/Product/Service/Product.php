@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Product\Service;
 
-use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\Sorting\Sorting as BaseSorting;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
@@ -111,7 +110,7 @@ final class Product
             $childId = $productId;
         }
 
-        Registry::getConfig()->setConfigParam('blLoadVariants', true);
+        $this->productInfrastructure->setLoadVariants();
 
         if ($product->isActive() || $this->authorizationService->isAllowed('VIEW_INACTIVE_PRODUCT')) {
             if ($variantSelections = $product->getEshopModel()->getVariantSelections($varSelids, $childId)) {
