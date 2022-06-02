@@ -45,10 +45,10 @@ final class VariantSelectionList
     {
         /** @phpstan-ignore-next-line */
         if ($activeSelection = $this->variantSelectList->getActiveSelection()) {
-            return new Selection($activeSelection);
+            return new Selection($activeSelection); // @phpstan-ignore-line
         }
 
-        return null;
+        return null; // @phpstan-ignore-line
     }
 
     /**
