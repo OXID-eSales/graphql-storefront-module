@@ -18,6 +18,7 @@ use OxidEsales\Eshop\Application\Model\Manufacturer as EshopManufacturerModel;
 use OxidEsales\Eshop\Application\Model\Review as EshopReviewModel;
 use OxidEsales\Eshop\Application\Model\SelectList as EshopSelectionListModel;
 use OxidEsales\Eshop\Application\Model\Vendor as EshopVendorModel;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductAttribute as ProductAttributeDataType;
@@ -32,6 +33,30 @@ use function is_iterable;
 
 final class Product
 {
+    /**
+     * get parent by id. return parent if available, otherwise current article
+     *
+     * @param $id
+     * @return ProductDataType
+     * @throws NotFound
+     */
+    public function getParentById($id): ProductDataType
+    {
+        $article = oxNew(EshopProductModel::class);
+
+        if (!$article->load($id) || !$article->canView()) {
+            throw new NotFound($id);
+        }
+
+        if ($parentId = $article->getFieldData('oxparentid')) {
+            if (!$article->load($parentId) || !$article->canView()) {
+                throw new NotFound($parentId);
+            }
+        }
+
+        return new ProductDataType($article);
+    }
+
     /**
      * @return ProductScalePriceDataType[]
      */
