@@ -43,12 +43,10 @@ final class VariantSelectionList
      */
     public function getActiveSelection(): ?Selection
     {
-        /** @phpstan-ignore-next-line */
-        if ($activeSelection = $this->variantSelectList->getActiveSelection()) {
-            return new Selection($activeSelection); // @phpstan-ignore-line
-        }
+        $activeSelection = $this->variantSelectList->getActiveSelection();
 
-        return null; // @phpstan-ignore-line
+        /** @phpstan-ignore-next-line */
+        return $activeSelection ? new Selection($activeSelection) : null;
     }
 
     /**
