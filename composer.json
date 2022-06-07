@@ -49,7 +49,7 @@
         "phpstan": "phpstan -ctests/PhpStan/phpstan.neon analyse src/",
         "phpstan-report": "phpstan -ctests/PhpStan/phpstan.neon analyse src/ --error-format=json > phpstan.report.json",
 
-        "phpmd": "phpmd src text cleancode,codesize,design,naming,unusedcode",
+        "phpmd": "phpmd src text cleancode,codesize,design,unusedcode",
         "phpmd-report": "phpmd src json cleancode,codesize,design,naming,unusedcode --reportfile phpmd.report.json",
 
         "deptrac": "vendor/bin/deptrac analyze depfile.yml",
