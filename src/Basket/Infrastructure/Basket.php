@@ -313,7 +313,7 @@ final class Basket
         // performing special actions after user finishes order (assignment to special user groups)
         $userModel->onOrderExecute($basketModel, $status);
 
-        if ($status !== $orderModel::ORDER_STATE_OK && $status !== $orderModel::ORDER_STATE_MAILINGERROR) {
+        if (!in_array($status, [$orderModel::ORDER_STATE_OK, $orderModel::ORDER_STATE_MAILINGERROR])) {
             throw PlaceOrderException::byBasketId($userBasketModel->getId(), (string)$status);
         }
 
