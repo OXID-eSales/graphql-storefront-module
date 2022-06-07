@@ -59,8 +59,8 @@ final class DeliveryAddressFactory
         /** @var RequiredFieldsValidator */
         $validator = oxNew(RequiredFieldsValidator::class);
         /** @var RequiredAddressFields */
-        $requiredAddressFields = oxNew(RequiredAddressFields::class);
-        $requiredFields = $requiredAddressFields->getDeliveryFields();
+        $requiredFields = oxNew(RequiredAddressFields::class);
+        $requiredFields = $requiredFields->getDeliveryFields();
         $validator->setRequiredFields(
             $requiredFields
         );
@@ -91,8 +91,8 @@ final class DeliveryAddressFactory
 
         if (!$validator->validateFields($address)) {
             $invalidFields = array_map(
-                function ($v) {
-                    return str_replace('oxaddress__ox', '', $v);
+                function ($fieldNames) {
+                    return str_replace('oxaddress__ox', '', $fieldNames);
                 },
                 $validator->getInvalidFields()
             );

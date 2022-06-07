@@ -24,10 +24,10 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 final class NewsletterStatus
 {
     /** @var NewsletterSubscriptionRepository */
-    private $NewsletterSubscriptionRepository;
+    private $newsletterSubscriptionRepository;
 
     /** @var NewsletterStatusRepository */
-    private $NewsletterStatusRepository;
+    private $newsletterStatusRepository;
 
     /** @var Repository */
     private $repository;
@@ -45,8 +45,8 @@ final class NewsletterStatus
         Repository $repository,
         SubscriberService $subscriberService
     ) {
-        $this->NewsletterSubscriptionRepository = $NewsletterSubscriptionRepository;
-        $this->NewsletterStatusRepository = $NewsletterStatusRepository;
+        $this->newsletterSubscriptionRepository = $NewsletterSubscriptionRepository;
+        $this->newsletterStatusRepository = $NewsletterStatusRepository;
         $this->authenticationService = $authenticationService;
         $this->repository = $repository;
         $this->subscriberService = $subscriberService;
@@ -59,7 +59,7 @@ final class NewsletterStatus
             throw new InvalidLogin('Unauthenticated');
         }
 
-        return $this->NewsletterSubscriptionRepository->getByUserId(
+        return $this->newsletterSubscriptionRepository->getByUserId(
             (string)$this->authenticationService->getUser()->id()
         );
     }
@@ -68,9 +68,9 @@ final class NewsletterStatus
     {
         $subscriber = $this->subscriberService->subscriber((string)$newsletterStatus->userId());
 
-        $this->NewsletterStatusRepository->optIn($subscriber, $newsletterStatus);
+        $this->newsletterStatusRepository->optIn($subscriber, $newsletterStatus);
 
-        return $this->NewsletterSubscriptionRepository->getByUserId(
+        return $this->newsletterSubscriptionRepository->getByUserId(
             $subscriber->getId()
         );
     }
@@ -92,15 +92,15 @@ final class NewsletterStatus
 
         $subscriber = $this->subscriberService->subscriber($userId);
 
-        return $this->NewsletterStatusRepository->unsubscribe($subscriber);
+        return $this->newsletterStatusRepository->unsubscribe($subscriber);
     }
 
     public function subscribe(NewsletterStatusSubscribe $newsletterStatusSubscribe): NewsletterStatusType
     {
-        $customer = $this->NewsletterStatusRepository->createNewsletterUser($newsletterStatusSubscribe);
+        $customer = $this->newsletterStatusRepository->createNewsletterUser($newsletterStatusSubscribe);
         $subscriber = new SubscriberType($customer->getEshopModel());
 
-        return $this->NewsletterStatusRepository->subscribe(
+        return $this->newsletterStatusRepository->subscribe(
             $subscriber,
             $newsletterStatusSubscribe->userId() ? false : true
         );
