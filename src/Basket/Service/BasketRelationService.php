@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\Service;
 
 use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
+use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use OxidEsales\GraphQL\Storefront\Address\Exception\DeliveryAddressNotFound;
@@ -55,13 +56,17 @@ final class BasketRelationService
     /** @var DeliveryMethodService */
     private $deliveryMethodService;
 
+    /** @var Authentication */
+    private $authenticationService;
+
     public function __construct(
         BasketItemService $basketItemService,
         BasketService $basketService,
         VoucherRepository $voucherRepository,
         DeliveryAddressService $deliveryAddressService,
         PaymentService $paymentService,
-        DeliveryMethodService $deliveryMethodService
+        DeliveryMethodService $deliveryMethodService,
+        Authentication $authenticationService
     ) {
         $this->deliveryAddressService = $deliveryAddressService;
         $this->paymentService = $paymentService;
@@ -69,14 +74,21 @@ final class BasketRelationService
         $this->basketItemService = $basketItemService;
         $this->basketService = $basketService;
         $this->voucherRepository = $voucherRepository;
+        $this->authenticationService = $authenticationService;
     }
 
     /**
      * @Field()
      */
-    public function owner(Basket $basket): BasketOwner
+    public function owner(Basket $basket): ?BasketOwner
     {
-        return $this->basketService->basketOwner((string)$basket->getUserId());
+        $owner = null;
+
+        if (!$this->authenticationService->getUser()->isAnonymous()) {
+            $owner = $this->basketService->basketOwner((string)$basket->getUserId());
+        }
+
+        return $owner;
     }
 
     /**

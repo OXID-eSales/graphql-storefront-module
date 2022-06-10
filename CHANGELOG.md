@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Send registration email when creating a user
 - Do not crush on not available Address country [PR-10](https://github.com/OXID-eSales/graphql-storefront-module/pull/10)
 
+### Changed
+- ``OxidEsales\GraphQL\Storefront\Basket\Service\BasketRelationService::owner()`` return value will be null for anonymous user.
+
 ## [2.0.1] - 2022-01-03
 
 ### Added
