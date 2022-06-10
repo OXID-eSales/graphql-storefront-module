@@ -125,14 +125,14 @@ final class OrderDeliveryAddress implements AddressInterface, ShopModelAwareInte
     public function countryId(): ID
     {
         return new ID(
-            $this->order->getRawFieldData('oxdelcountryid')
+            (string) $this->order->getRawFieldData('oxdelcountryid')
         );
     }
 
     public function stateId(): ID
     {
         return new ID(
-            $this->order->getRawFieldData('oxdelstateid')
+            (string) $this->order->getRawFieldData('oxdelstateid')
         );
     }
 
