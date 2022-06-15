@@ -317,7 +317,7 @@ abstract class PlaceOrderBaseCest extends BaseCest
                       }
                     }
                     deliveryAddress {
-                      #salutation
+                      salutation
                       firstName
                       lastName
                       company
