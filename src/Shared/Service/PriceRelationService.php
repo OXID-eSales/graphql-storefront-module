@@ -34,7 +34,8 @@ final class PriceRelationService
      */
     public function getCurrency(Price $price): Currency
     {
-        if ($currencyObject = $price->getCurrencyObject()) {
+        $currencyObject = $price->getCurrencyObject();
+        if ($currencyObject) {
             return new Currency($currencyObject);
         }
 

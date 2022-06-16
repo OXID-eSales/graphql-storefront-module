@@ -96,9 +96,10 @@ class Voucher extends Voucher_parent
         $iCount = 0;
 
         foreach ($oBasket->getContents() as $oBasketItem) {
+            $oArticle = $oBasketItem->getArticle();
             if (
                 !$oBasketItem->isDiscountArticle()
-                && ($oArticle = $oBasketItem->getArticle())
+                && $oArticle
                 && !$oArticle->skipDiscounts()
                 && $oDiscount->isForBasketItem($oArticle)
             ) {

@@ -288,6 +288,138 @@ abstract class PlaceOrderBaseCest extends BaseCest
                 ) {
                     id
                     orderNumber
+                    invoiceNumber
+                    paid
+                    remark
+                    cancelled
+                    invoiced
+                    ordered
+                    updated
+                    invoiceAddress {
+                      salutation
+                      email
+                      firstName
+                      lastName
+                      company
+                      additionalInfo
+                      street
+                      streetNumber
+                      zipCode
+                      city
+                      vatID
+                      phone
+                      fax
+                      country {
+                         id
+                      }
+                      state {
+                        id
+                      }
+                    }
+                    deliveryAddress {
+                      salutation
+                      firstName
+                      lastName
+                      company
+                      additionalInfo
+                      street
+                      streetNumber
+                      zipCode
+                      city
+                      phone
+                      fax
+                      country{
+                         id
+                      }
+                      state{
+                         id
+                      }
+                    }
+                    cost {
+                      total
+                      voucher
+                      discount
+                      delivery{
+                         vat
+                      }
+                      payment{
+                         vat
+                      }
+                      productNet{
+                         vat
+                      }
+                      productGross {
+                        vats {
+                           vatRate
+                        }
+                      }
+                      currency{
+                         id
+                      }
+                    }
+                    delivery {
+                      trackingNumber
+                      trackingURL
+                      dispatched
+                      provider{
+                         id
+                      }
+                    }
+                    vouchers {
+                      id
+                      voucher
+                      number
+                      reserved
+                      discount
+                      redeemedAt
+                      series{
+                         id
+                      }
+                    }
+                    items {
+                      id
+                      amount
+                      sku
+                      title
+                      shortDescription
+                      price {
+                         price
+                      }
+                      itemPrice {
+                        price
+                      }
+                      insert
+                      timestamp
+                      cancelled
+                      bundle
+                      product {
+                         id
+                      }
+                    }
+                    payment {
+                      id
+                      updated
+                      payment{
+                         id
+                      }
+                      values {
+                         value
+                      }
+                    }
+                    files {
+                      id
+                      filename
+                      firstDownload
+                      latestDownload
+                      downloadCount
+                      maxDownloadCount
+                      validUntil
+                      valid
+                      url
+                      file {
+                        filename
+                      }
+                    }
                 }
             }
         ';

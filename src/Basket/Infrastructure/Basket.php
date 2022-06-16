@@ -89,26 +89,21 @@ final class Basket
 
         if ($onStock !== true) {
             $blOverride = true;
+            $amount = 0;
+            // product cannot be bought
+            $graphQlError = BasketItemAmountLimitedStock::productOutOfStock((string)$productId);
 
-            if ($productStock == 0) {
-                $amount = 0;
-
-                // product cannot be bought
-                GraphQLQueryHandler::addError(
-                    BasketItemAmountLimitedStock::productOutOfStock((string)$productId)
-                );
-            } else {
+            if ($productStock != 0) {
                 $amount = $productStock;
-
                 // product stock limit is reached
-                GraphQLQueryHandler::addError(
-                    BasketItemAmountLimitedStock::limitedAvailability(
-                        (string)$productId,
-                        $productStock,
-                        $item ? $item->getId() : null
-                    )
+                $graphQlError = BasketItemAmountLimitedStock::limitedAvailability(
+                    (string)$productId,
+                    $productStock,
+                    $item ? $item->getId() : null
                 );
             }
+
+            GraphQLQueryHandler::addError($graphQlError);
         }
 
         if (!$product->isBuyable()) {
@@ -318,20 +313,20 @@ final class Basket
         // performing special actions after user finishes order (assignment to special user groups)
         $userModel->onOrderExecute($basketModel, $status);
 
-        //we need to delete the basket after order to prevent ordering it twice
-        if ($status === $orderModel::ORDER_STATE_OK || $status === $orderModel::ORDER_STATE_MAILINGERROR) {
-            $event = new BeforeBasketRemoveOnPlaceOrder(
-                new ID($userBasketModel->getId())
-            );
-            $this->eventDispatcher->dispatch(
-                $event
-            );
-
-            if (!$event->getPreserveBasketAfterOrder()) {
-                $userBasketModel->delete();
-            }
-        } else {
+        if (!in_array($status, [$orderModel::ORDER_STATE_OK, $orderModel::ORDER_STATE_MAILINGERROR])) {
             throw PlaceOrderException::byBasketId($userBasketModel->getId(), (string)$status);
+        }
+
+        //we need to delete the basket after order to prevent ordering it twice
+        $event = new BeforeBasketRemoveOnPlaceOrder(
+            new ID($userBasketModel->getId())
+        );
+        $this->eventDispatcher->dispatch(
+            $event
+        );
+
+        if (!$event->getPreserveBasketAfterOrder()) {
+            $userBasketModel->delete();
         }
 
         //return order data type

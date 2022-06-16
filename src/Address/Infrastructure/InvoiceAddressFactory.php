@@ -67,8 +67,8 @@ final class InvoiceAddressFactory
         $validator = oxNew(RequiredFieldsValidator::class);
 
         /** @var RequiredAddressFields */
-        $requiredAddressFields = oxNew(RequiredAddressFields::class);
-        $requiredFields = $requiredAddressFields->getBillingFields();
+        $requiredFields = oxNew(RequiredAddressFields::class);
+        $requiredFields = $requiredFields->getBillingFields();
         $validator->setRequiredFields(
             $requiredFields
         );
@@ -99,8 +99,8 @@ final class InvoiceAddressFactory
 
         if (!$validator->validateFields($customer)) {
             $invalidFields = array_map(
-                function ($v) {
-                    return str_replace('oxuser__ox', '', $v);
+                function ($fieldName) {
+                    return str_replace('oxuser__ox', '', $fieldName);
                 },
                 $validator->getInvalidFields()
             );

@@ -77,7 +77,8 @@ final class Customer
 
     public function changeEmail(string $email): CustomerDataType
     {
-        if (!((string)$id = (string)$this->authenticationService->getUser()->id())) {
+        $userId = (string)$this->authenticationService->getUser()->id();
+        if (!$userId) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -89,7 +90,7 @@ final class Customer
             throw InvalidEmail::byString($email);
         }
 
-        $customer = $this->fetchCustomer($id);
+        $customer = $this->fetchCustomer($userId);
 
         if ($customer->getEshopModel()->checkIfEmailExists($email)) {
             throw CustomerExists::byEmail($email);
@@ -102,11 +103,12 @@ final class Customer
 
     public function changeBirthdate(DateTimeInterface $birthdate): CustomerDataType
     {
-        if (!((string)$id = (string)$this->authenticationService->getUser()->id())) {
+        $userId = (string)$this->authenticationService->getUser()->id();
+        if (!$userId) {
             throw new InvalidLogin('Unauthorized');
         }
 
-        $customer = $this->fetchCustomer($id);
+        $customer = $this->fetchCustomer($userId);
 
         return $this->updateCustomer($customer, [
             'OXBIRTHDATE' => $birthdate->format('Y-m-d 00:00:00'),
@@ -118,7 +120,8 @@ final class Customer
      */
     public function deleteCustomer(): bool
     {
-        if (!((string)$id = (string)$this->authenticationService->getUser()->id())) {
+        $userId = (string)$this->authenticationService->getUser()->id();
+        if (!$userId) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -126,7 +129,7 @@ final class Customer
             throw CustomerNotDeletable::notEnabledByAdmin();
         }
 
-        $customerModel = $this->fetchCustomer($id)->getEshopModel();
+        $customerModel = $this->fetchCustomer($userId)->getEshopModel();
 
         if ((bool)$customerModel->isMallAdmin()) {
             throw CustomerNotDeletable::whileMallAdmin();
