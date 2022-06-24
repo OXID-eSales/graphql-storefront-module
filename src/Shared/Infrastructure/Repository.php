@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 use InvalidArgumentException;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use Doctrine\DBAL\Query\QueryBuilder;
 use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
@@ -26,10 +27,15 @@ final class Repository
     /** @var QueryBuilderFactoryInterface */
     private $queryBuilderFactory;
 
+    /** @var ListConfiguration */
+    private $listConfiguration;
+
     public function __construct(
-        QueryBuilderFactoryInterface $queryBuilderFactory
+        QueryBuilderFactoryInterface $queryBuilderFactory,
+        ListConfiguration $listConfiguration
     ) {
         $this->queryBuilderFactory = $queryBuilderFactory;
+        $this->listConfiguration = $listConfiguration;
     }
 
     /**
@@ -77,7 +83,7 @@ final class Repository
         BaseSorting $sorting,
         bool $disableSubShop = true
     ): array {
-        $types = [];
+
         $model = $this->getModel(
             $type::getModelClass(),
             $disableSubShop
@@ -108,18 +114,11 @@ final class Repository
 
         $sorting->addToQuery($queryBuilder);
 
-        $queryBuilder->getConnection()->setFetchMode(PDO::FETCH_ASSOC);
-
-        /** @var \Doctrine\DBAL\Statement $result */
-        $result = $queryBuilder->execute();
-
-        foreach ($result as $row) {
-            $newModel = clone $model;
-            $newModel->assign($row);
-            $types[] = new $type($newModel);
-        }
-
-        return $types;
+        return $this->getTypesList(
+            $queryBuilder,
+            $model,
+            $type
+        );
     }
 
     /**
@@ -169,17 +168,11 @@ final class Repository
             $pagination->addPaginationToQuery($queryBuilder);
         }
 
-        $queryBuilder->getConnection()->setFetchMode(PDO::FETCH_ASSOC);
-        /** @var \Doctrine\DBAL\Statement $result */
-        $result = $queryBuilder->execute();
-
-        foreach ($result as $row) {
-            $newModel = clone $model;
-            $newModel->assign($row);
-            $types[] = new $type($newModel);
-        }
-
-        return $types;
+        return $this->getTypesList(
+            $queryBuilder,
+            $model,
+            $type
+        );
     }
 
     /**
@@ -226,5 +219,35 @@ final class Repository
         }
 
         return $model;
+    }
+
+    /**
+     * @template T
+     *
+     * @param class-string<T> $type
+     *
+     * @return T[]
+     */
+    private function getTypesList(
+        QueryBuilder $queryBuilder,
+        BaseModel $model,
+        string $type
+    ): array {
+        $types = [];
+        $loadListObjects = $this->listConfiguration->shouldLoadModel($model);
+
+        $queryBuilder->getConnection()->setFetchMode(PDO::FETCH_ASSOC);
+
+        /** @var \Doctrine\DBAL\Statement $result */
+        $result = $queryBuilder->execute();
+
+        foreach ($result as $row) {
+            $newModel = clone $model;
+            $newModel->assign($row);
+            !$loadListObjects ?: $newModel->load($newModel->getId());
+            $types[] = new $type($newModel);
+        }
+
+        return $types;
     }
 }

@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - New Event ``OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem``
 - Not mandatory ``remark`` parameter added for ``placeOrder`` mutation [PR-9](https://github.com/OXID-eSales/graphql-storefront-module/pull/9)
+- New service ``OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration``. Optionally supply core table name of list objects that must be instantiated with BaseModel::load().
 
 ### Fixed
 - Code quality tools list simplified and reconfigured to fit our quality requirements
