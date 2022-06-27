@@ -505,9 +505,8 @@ final class Basket
      */
     public function getBasketDeliveryMethods(ID $basketId): array
     {
-        $event = new BeforeBasketDeliveryMethods($basketId);
-        $this->eventDispatcher->dispatch(
-            $event,
+        $event = $this->eventDispatcher->dispatch(
+            new BeforeBasketDeliveryMethods($basketId)
         );
 
         if ($event->getDeliveryMethods() !== null) {
