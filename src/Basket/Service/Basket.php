@@ -505,6 +505,7 @@ final class Basket
      */
     public function getBasketDeliveryMethods(ID $basketId): array
     {
+        /** @var BeforeBasketDeliveryMethods $event */
         $event = $this->eventDispatcher->dispatch(
             new BeforeBasketDeliveryMethods($basketId)
         );
