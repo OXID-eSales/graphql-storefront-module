@@ -16,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
- * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AbstractItemEventTest
+ * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AbstractItemEvent
  * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem
  * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem
  */

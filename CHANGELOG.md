@@ -107,7 +107,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed compatibility issues related to `thecodingmachine/graphqlite:^4.1.2` update
 
 ### Changed
-- Use `@Rights` annotation instead of `@Logged` so that an anonymus token user could create/modify basket and place an order
+- Use `@Rights` annotation instead of `@Logged` so that an anonymous token user could create/modify basket and place an order
 
 ## [0.1.0] - 2020-12-16
 

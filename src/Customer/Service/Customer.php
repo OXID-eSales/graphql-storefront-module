@@ -77,10 +77,7 @@ final class Customer
 
     public function changeEmail(string $email): CustomerDataType
     {
-        $userId = (string)$this->authenticationService->getUser()->id();
-        if (!$userId) {
-            throw new InvalidLogin('Unauthorized');
-        }
+        $userId = $this->getAuthenticatedUserId();
 
         if (!strlen($email)) {
             throw InvalidEmail::byEmptyString();
@@ -103,10 +100,7 @@ final class Customer
 
     public function changeBirthdate(DateTimeInterface $birthdate): CustomerDataType
     {
-        $userId = (string)$this->authenticationService->getUser()->id();
-        if (!$userId) {
-            throw new InvalidLogin('Unauthorized');
-        }
+        $userId = $this->getAuthenticatedUserId();
 
         $customer = $this->fetchCustomer($userId);
 
@@ -120,10 +114,7 @@ final class Customer
      */
     public function deleteCustomer(): bool
     {
-        $userId = (string)$this->authenticationService->getUser()->id();
-        if (!$userId) {
-            throw new InvalidLogin('Unauthorized');
-        }
+        $userId = $this->getAuthenticatedUserId();
 
         if (!(bool)$this->legacyService->getConfigParam('blAllowUsersToDeleteTheirAccount')) {
             throw CustomerNotDeletable::notEnabledByAdmin();
@@ -176,5 +167,18 @@ final class Customer
         $customerModel->save();
 
         return $customer;
+    }
+
+    /**
+     * @throws InvalidLogin
+     */
+    private function getAuthenticatedUserId(): string
+    {
+        $userId = (string)$this->authenticationService->getUser()->id();
+        if (!$userId) {
+            throw new InvalidLogin('Unauthorized');
+        }
+
+        return $userId;
     }
 }
