@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Shared\Infrastructure;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use PHPUnit\Framework\TestCase;
 
@@ -22,7 +23,8 @@ final class RepositoryTest extends TestCase
     {
         $this->expectException(\Error::class);
         $repository = new Repository(
-            $this->createMock(QueryBuilderFactoryInterface::class)
+            $this->createMock(QueryBuilderFactoryInterface::class),
+            new ListConfiguration()
         );
         $repository->getById(
             'foo',
@@ -34,7 +36,8 @@ final class RepositoryTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $repository = new Repository(
-            $this->createMock(QueryBuilderFactoryInterface::class)
+            $this->createMock(QueryBuilderFactoryInterface::class),
+            new ListConfiguration()
         );
         $repository->getById(
             'foo',
@@ -46,7 +49,8 @@ final class RepositoryTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $repository = new Repository(
-            $this->createMock(QueryBuilderFactoryInterface::class)
+            $this->createMock(QueryBuilderFactoryInterface::class),
+            new ListConfiguration()
         );
         $repository->getById(
             'foo',
@@ -58,7 +62,8 @@ final class RepositoryTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
         $repository = new Repository(
-            $this->createMock(QueryBuilderFactoryInterface::class)
+            $this->createMock(QueryBuilderFactoryInterface::class),
+            new ListConfiguration()
         );
         $repository->getByFilter(
             new EmptyFilterList(),
@@ -70,7 +75,8 @@ final class RepositoryTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $repository = new Repository(
-            $this->createMock(QueryBuilderFactoryInterface::class)
+            $this->createMock(QueryBuilderFactoryInterface::class),
+            new ListConfiguration()
         );
         $repository->delete(new CorrectModel());
     }
@@ -78,7 +84,8 @@ final class RepositoryTest extends TestCase
     public function testModelSave(): void
     {
         $repository = new Repository(
-            $this->createMock(QueryBuilderFactoryInterface::class)
+            $this->createMock(QueryBuilderFactoryInterface::class),
+            new ListConfiguration()
         );
 
         $model = $this->createPartialMock(
@@ -93,7 +100,8 @@ final class RepositoryTest extends TestCase
     {
         $this->expectException(\RuntimeException::class);
         $repository = new Repository(
-            $this->createMock(QueryBuilderFactoryInterface::class)
+            $this->createMock(QueryBuilderFactoryInterface::class),
+            new ListConfiguration()
         );
 
         $model = $this->createPartialMock(

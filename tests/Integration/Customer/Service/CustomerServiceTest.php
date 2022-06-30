@@ -23,6 +23,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 
 final class CustomerServiceTest extends TestCase
 {
@@ -93,7 +94,10 @@ final class CustomerServiceTest extends TestCase
             ->willReturn($userDataType);
 
         $customerService = new CustomerService(
-            new Repository($container->get(QueryBuilderFactoryInterface::class)),
+            new Repository(
+                $container->get(QueryBuilderFactoryInterface::class),
+                new ListConfiguration()
+            ),
             $container->get(CustomerRepository::class),
             $authenticationMock,
             $legacyServiceMock,

@@ -29,3 +29,9 @@ services:
 
   OxidEsales\GraphQL\Storefront\Shared\Service\Authorization:
       class: OxidEsales\GraphQL\Storefront\Shared\Service\Authorization
+
+  OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration:
+      class: OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration
+      arguments:
+          $map: {}
+      public: true

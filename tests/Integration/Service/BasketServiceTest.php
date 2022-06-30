@@ -30,6 +30,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as StorefrontBasketService;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketDeliveryMethods;
 use OxidEsales\EshopCommunity\Internal\Framework\Event\ShopAwareEventDispatcher;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use PHPUnit\Framework\TestCase;
 
 final class BasketServiceTest extends TestCase
@@ -50,7 +51,10 @@ final class BasketServiceTest extends TestCase
         $container = ContainerFactory::getInstance()->getContainer();
 
         $service = new StorefrontBasketService(
-            new Repository($container->get(QueryBuilderFactoryInterface::class)),
+            new Repository(
+                $container->get(QueryBuilderFactoryInterface::class),
+                new ListConfiguration()
+            ),
             $container->get(BasketRepository::class),
             $container->get(Authentication::class),
             new Authorization(),
