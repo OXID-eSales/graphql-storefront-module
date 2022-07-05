@@ -15,13 +15,8 @@ use function sprintf;
 
 final class CustomerNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Customer was not found by id: %s', $id));
-    }
-
-    public static function byEmail(string $email): self
-    {
-        return new self(sprintf('Customer was not found for: %s', $email));
+        parent::__construct(sprintf('Customer was not found by id: %s', $id));
     }
 }

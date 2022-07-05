@@ -15,8 +15,8 @@ use function sprintf;
 
 final class SubscriberNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Subscriber was not found by id: %s', $id));
+        parent::__construct(sprintf('Subscriber was not found by id: %s', $id));
     }
 }

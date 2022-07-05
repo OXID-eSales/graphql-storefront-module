@@ -13,8 +13,8 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 
 final class ActionNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Action was not found by id: %s', $id));
+        parent::__construct(sprintf('Action was not found by id: %s', $id));
     }
 }

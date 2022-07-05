@@ -56,7 +56,7 @@ final class Banner
             /** @var BannerDataType $banner */
             $banner = $this->repository->getById((string)$id, BannerDataType::class);
         } catch (NotFound $e) {
-            throw BannerNotFound::byId((string)$id);
+            throw new BannerNotFound((string)$id);
         }
 
         if ($banner->isActive()) {

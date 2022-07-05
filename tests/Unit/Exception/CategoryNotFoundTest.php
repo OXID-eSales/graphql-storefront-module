@@ -22,6 +22,6 @@ final class CategoryNotFoundTest extends TestCase
         $this->expectException(CategoryNotFound::class);
         $this->expectExceptionMessage('CATID');
 
-        throw CategoryNotFound::byId('CATID');
+        throw new CategoryNotFound('CATID');
     }
 }

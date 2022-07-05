@@ -22,6 +22,6 @@ final class AttributeNotFoundTest extends TestCase
         $this->expectException(AttributeNotFound::class);
         $this->expectExceptionMessage('ATTRID');
 
-        throw AttributeNotFound::byId('ATTRID');
+        throw new AttributeNotFound('ATTRID');
     }
 }

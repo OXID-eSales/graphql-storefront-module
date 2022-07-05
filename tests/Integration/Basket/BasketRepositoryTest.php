@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Basket;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\Eshop\Application\Model\User as EshopModelUser;
 use OxidEsales\Eshop\Application\Model\UserBasket as EshopModelUserBasket;
-use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
+use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketForUserNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Repository;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
@@ -42,8 +42,8 @@ final class BasketRepositoryTest extends TestCase
             ->getContainer()
             ->get(Repository::class);
 
-        $this->expectException(BasketNotFound::class);
-        $this->expectExceptionMessage((BasketNotFound::byOwnerAndTitle($userId, $basketTitle))->getMessage());
+        $this->expectException(BasketForUserNotFound::class);
+        $this->expectExceptionMessage((new BasketForUserNotFound($userId, $basketTitle))->getMessage());
 
         $basketRepository->customerBasketByTitle($customerDataType, $basketTitle);
     }

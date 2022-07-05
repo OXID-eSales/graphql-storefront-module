@@ -34,7 +34,7 @@ final class Inquirer
             /** @var InquirerDataType $inquirer */
             $inquirer = $this->repository->getById($id, InquirerDataType::class);
         } catch (NotFound $e) {
-            throw InquirerNotFound::byId($id);
+            throw new InquirerNotFound($id);
         }
 
         return $inquirer;

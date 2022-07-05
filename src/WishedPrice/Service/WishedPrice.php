@@ -86,7 +86,7 @@ final class WishedPrice
         $product = $this->wishedPriceRelationService->getProduct($wishedPrice);
 
         if (!$product->wishedPriceEnabled() && !$this->authorizationService->isAllowed('VIEW_WISHED_PRICES')) {
-            throw WishedPriceNotFound::byId((string)$id);
+            throw new WishedPriceNotFound((string)$id);
         }
 
         return $wishedPrice;
@@ -141,7 +141,7 @@ final class WishedPrice
                 false
             );
         } catch (NotFound $e) {
-            throw WishedPriceNotFound::byId((string)$id);
+            throw new WishedPriceNotFound((string)$id);
         }
 
         /** If the logged in user is authorized return the wished price */

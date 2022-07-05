@@ -42,7 +42,7 @@ final class Subscriber
             /** @var SubscriberDataType $subscriber */
             $subscriber = $this->repository->getById($id, SubscriberDataType::class, $ignoreSubshop);
         } catch (NotFound $e) {
-            throw SubscriberNotFound::byId($id);
+            throw new SubscriberNotFound($id);
         }
 
         return $subscriber;

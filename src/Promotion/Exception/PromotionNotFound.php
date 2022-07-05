@@ -13,8 +13,8 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 
 final class PromotionNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Promotion was not found by id: %s', $id));
+        parent::__construct(sprintf('Promotion was not found by id: %s', $id));
     }
 }

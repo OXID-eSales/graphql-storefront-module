@@ -15,8 +15,8 @@ use function sprintf;
 
 final class VoucherNotApplied extends NotFound
 {
-    public static function byId(string $voucherId, string $basketId): self
+    public function __construct(string $voucherId, string $basketId)
     {
-        return new self(sprintf('Voucher with id: %s was not applied to basket with id: %s', $voucherId, $basketId));
+        parent::__construct(sprintf('Voucher with id: %s was not applied to basket with id: %s', $voucherId, $basketId));
     }
 }

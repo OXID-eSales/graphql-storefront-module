@@ -13,8 +13,8 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 
 final class FileNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('File was not found by id: %s', $id));
+        parent::__construct(sprintf('File was not found by id: %s', $id));
     }
 }

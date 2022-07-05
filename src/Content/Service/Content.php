@@ -47,7 +47,7 @@ final class Content
                 false
             );
         } catch (NotFound $e) {
-            throw ContentNotFound::byId((string)$id);
+            throw new ContentNotFound((string)$id);
         }
 
         if ($content->isActive()) {

@@ -49,7 +49,7 @@ final class Action
                 ActionDataType::class
             );
         } catch (NotFound $e) {
-            throw ActionNotFound::byId($id);
+            throw new ActionNotFound($id);
         }
 
         if ($action->isActive()) {

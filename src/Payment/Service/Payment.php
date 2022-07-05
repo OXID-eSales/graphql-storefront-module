@@ -34,7 +34,7 @@ final class Payment
             /** @var PaymentDataType $payment */
             $payment = $this->repository->getById($id, PaymentDataType::class);
         } catch (NotFound $e) {
-            throw PaymentNotFound::byId($id);
+            throw new PaymentNotFound($id);
         }
 
         return $payment->isActive() ? $payment : null;

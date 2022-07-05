@@ -57,7 +57,7 @@ final class Translation
         $translations = $this->translationInfrastructure->getTranslations($languageId);
 
         if (!isset($translations[$key])) {
-            throw TranslationNotFound::byKey($key);
+            throw new TranslationNotFound($key);
         }
 
         return new TranslationDataType($key, $translations[$key]);

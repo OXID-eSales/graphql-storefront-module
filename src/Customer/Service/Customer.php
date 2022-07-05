@@ -153,7 +153,7 @@ final class Customer
                 $ignoreSubShop
             );
         } catch (NotFound $e) {
-            throw CustomerNotFound::byId($id);
+            throw new CustomerNotFound($id);
         }
 
         return $customer;

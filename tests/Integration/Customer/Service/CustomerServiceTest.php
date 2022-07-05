@@ -36,7 +36,7 @@ final class CustomerServiceTest extends TestCase
             ->get(CustomerService::class);
 
         $this->expectException(CustomerNotFound::class);
-        $this->expectExceptionMessage((CustomerNotFound::byId($customerId))->getMessage());
+        $this->expectExceptionMessage((new CustomerNotFound($customerId))->getMessage());
 
         $customerService->fetchCustomer($customerId);
     }

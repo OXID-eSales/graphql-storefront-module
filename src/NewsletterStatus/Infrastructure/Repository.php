@@ -12,12 +12,13 @@ namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure;
 use OxidEsales\Eshop\Application\Model\NewsSubscribed as EshopNewsletterSubscriptionStatusModel;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as NewsletterStatusType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusForUserNotFound;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusNotFound;
 
 final class Repository
 {
     /**
-     * @throws NewsletterStatusNotFound
+     * @throws NewsletterStatusForUserNotFound
      */
     public function getByUserId(
         string $userId
@@ -26,7 +27,7 @@ final class Repository
         $model = oxNew(NewsletterStatusType::getModelClass());
 
         if (!$model->loadFromUserId($userId)) {
-            throw NewsletterStatusNotFound::byUserId($userId);
+            throw new NewsletterStatusForUserNotFound($userId);
         }
 
         return new NewsletterStatusType($model);
@@ -51,7 +52,7 @@ final class Repository
         $newsletterStatusModel = oxNew(NewsletterStatusType::getModelClass());
 
         if (!$newsletterStatusModel->loadFromEmail($email)) {
-            throw NewsletterStatusNotFound::byEmail($email);
+            throw new NewsletterStatusNotFound($email);
         }
 
         return $newsletterStatusModel;

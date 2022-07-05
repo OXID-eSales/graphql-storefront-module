@@ -15,8 +15,8 @@ use function sprintf;
 
 final class DeliveryAddressNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Delivery address was not found by id: %s', $id));
+        parent::__construct(sprintf('Delivery address was not found by id: %s', $id));
     }
 }

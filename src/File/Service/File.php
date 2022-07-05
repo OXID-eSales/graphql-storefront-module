@@ -37,7 +37,7 @@ final class File
                 FileDataType::class
             );
         } catch (NotFound $e) {
-            throw FileNotFound::byId($id);
+            throw new FileNotFound($id);
         }
 
         return $file;

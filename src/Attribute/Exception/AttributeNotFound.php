@@ -13,8 +13,8 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 
 final class AttributeNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Attribute was not found by id: %s', $id));
+        parent::__construct(sprintf('Attribute was not found by id: %s', $id));
     }
 }

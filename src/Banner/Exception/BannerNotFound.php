@@ -15,8 +15,8 @@ use function sprintf;
 
 final class BannerNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Banner was not found by id: %s', $id));
+        parent::__construct(sprintf('Banner was not found by id: %s', $id));
     }
 }

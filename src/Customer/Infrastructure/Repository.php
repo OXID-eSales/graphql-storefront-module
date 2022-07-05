@@ -39,7 +39,7 @@ final class Repository
         }
 
         if (!$user->load($user->getId())) {
-            throw CustomerNotFound::byId($user->getId());
+            throw new CustomerNotFound($user->getId());
         }
 
         //Todo: Parameter if private sales is active or not, will be implemented in OXDEV-5273

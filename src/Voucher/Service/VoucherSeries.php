@@ -30,7 +30,7 @@ final class VoucherSeries
             /** @var SeriesDataType $series */
             $series = $this->repository->getById($id, SeriesDataType::class);
         } catch (NotFound $exception) {
-            throw SeriesNotFound::byId($id);
+            throw new SeriesNotFound($id);
         }
 
         return $series;

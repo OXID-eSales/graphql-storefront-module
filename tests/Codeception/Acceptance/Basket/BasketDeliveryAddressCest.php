@@ -90,7 +90,7 @@ final class BasketDeliveryAddressCest extends BaseCest
 
         $result = $this->basketSetDeliveryAddress($I, 'non-existing-basket-id', self::DELIVERY_ADDRESS_ID);
 
-        $expectedException = BasketNotFound::byId('non-existing-basket-id');
+        $expectedException = new BasketNotFound('non-existing-basket-id');
         $I->assertSame(
             $expectedException->getMessage(),
             $result['errors'][0]['message']
@@ -104,7 +104,7 @@ final class BasketDeliveryAddressCest extends BaseCest
         $basketId = $this->basketCreate($I);
         $result = $this->basketSetDeliveryAddress($I, $basketId, self::WRONG_DELIVERY_ADDRESS_ID);
 
-        $expectedException = DeliveryAddressNotFound::byId(self::WRONG_DELIVERY_ADDRESS_ID);
+        $expectedException = new DeliveryAddressNotFound(self::WRONG_DELIVERY_ADDRESS_ID);
         $I->assertSame(
             $expectedException->getMessage(),
             $result['errors'][0]['message']
@@ -120,7 +120,7 @@ final class BasketDeliveryAddressCest extends BaseCest
         $basketId = $this->basketCreate($I);
         $result = $this->basketSetDeliveryAddress($I, $basketId, 'non-existing-delivery-id');
 
-        $expectedException = DeliveryAddressNotFound::byId('non-existing-delivery-id');
+        $expectedException = new DeliveryAddressNotFound('non-existing-delivery-id');
         $I->assertSame(
             $expectedException->getMessage(),
             $result['errors'][0]['message']
@@ -149,7 +149,7 @@ final class BasketDeliveryAddressCest extends BaseCest
         $basketId = $this->basketCreate($I);
         $result = $this->basketSetDeliveryAddress($I, $basketId, '');
 
-        $expectedException = DeliveryAddressNotFound::byId('');
+        $expectedException = new DeliveryAddressNotFound('');
         $I->assertSame(
             $expectedException->getMessage(),
             $result['errors'][0]['message']

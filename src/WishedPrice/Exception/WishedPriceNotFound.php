@@ -15,8 +15,8 @@ use function sprintf;
 
 final class WishedPriceNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('Wished price was not found by id: %s', $id));
+        parent::__construct(sprintf('Wished price was not found by id: %s', $id));
     }
 }

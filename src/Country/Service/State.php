@@ -53,7 +53,7 @@ final class State
                 false
             );
         } catch (NotFound $e) {
-            throw StateNotFound::byId($id);
+            throw new StateNotFound($id);
         }
 
         return $state;

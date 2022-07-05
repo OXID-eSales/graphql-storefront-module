@@ -111,7 +111,7 @@ final class DeliveryAddress
                 false
             );
         } catch (NotFound $e) {
-            throw DeliveryAddressNotFound::byId($id);
+            throw new DeliveryAddressNotFound($id);
         }
 
         return $deliveryAddress;

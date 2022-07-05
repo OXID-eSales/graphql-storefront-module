@@ -15,8 +15,8 @@ use function sprintf;
 
 final class StateNotFound extends NotFound
 {
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(sprintf('State was not found by id: %s', $id));
+        parent::__construct(sprintf('State was not found by id: %s', $id));
     }
 }

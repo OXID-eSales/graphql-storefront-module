@@ -15,13 +15,14 @@ use function sprintf;
 
 final class CurrencyNotFound extends NotFound
 {
-    public static function byActiveInShop(): self
+    public function __construct(string $name = null)
     {
-        return new self(sprintf('No active currency was found'));
-    }
+        $message = 'No active currency was found';
 
-    public static function byName(string $name): self
-    {
-        return new self(sprintf('Currency "%s" was not found', $name));
+        if($name) {
+            $message = sprintf('Currency "%s" was not found', $name);
+        }
+
+        parent::__construct($message);
     }
 }

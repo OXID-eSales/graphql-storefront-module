@@ -103,7 +103,7 @@ final class BasketAddItemCest extends BasketBaseCest
         $result = $this->basketAddItemMutation($I, 'non_existing_basket_id', self::PRODUCT_ID);
 
         $I->assertSame(
-            BasketNotFound::byId('non_existing_basket_id')->getMessage(),
+            (new BasketNotFound('non_existing_basket_id'))->getMessage(),
             $result['errors'][0]['message']
         );
     }
@@ -327,7 +327,7 @@ final class BasketAddItemCest extends BasketBaseCest
         $result = $this->basketAddItemMutation($I, self::PUBLIC_BASKET, 'non_existing_product');
 
         $I->assertSame(
-            ProductNotFound::byId('non_existing_product')->getMessage(),
+            (new ProductNotFound('non_existing_product'))->getMessage(),
             $result['errors'][0]['message']
         );
     }

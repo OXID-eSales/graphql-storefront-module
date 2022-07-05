@@ -15,8 +15,8 @@ use function sprintf;
 
 final class TranslationNotFound extends NotFound
 {
-    public static function byKey(string $key): self
+    public function __construct(string $key)
     {
-        return new self(sprintf('Translation was not found by key: %s', $key));
+        parent::__construct(sprintf('Translation was not found by key: %s', $key));
     }
 }

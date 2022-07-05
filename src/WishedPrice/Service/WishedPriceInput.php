@@ -71,12 +71,12 @@ final class WishedPriceInput
             /** @var ProductDataType $product */
             $product = $this->repository->getById($id, ProductDataType::class);
         } catch (NotFound $e) {
-            throw ProductNotFound::byId($id);
+            throw new ProductNotFound($id);
         }
 
         // Throw 404 if product has wished prices disabled
         if (!$product->getEshopModel()->isPriceAlarm()) {
-            throw ProductNotFound::byId($id);
+            throw new ProductNotFound($id);
         }
 
         return true;

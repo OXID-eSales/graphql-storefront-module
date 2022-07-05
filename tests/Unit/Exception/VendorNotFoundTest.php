@@ -22,6 +22,6 @@ final class VendorNotFoundTest extends TestCase
         $this->expectException(VendorNotFound::class);
         $this->expectExceptionMessage('VENDORID');
 
-        throw VendorNotFound::byId('VENDORID');
+        throw new VendorNotFound('VENDORID');
     }
 }

@@ -34,7 +34,7 @@ final class Action implements ShopModelAwareInterface
         $this->action = $action;
 
         if (!in_array($action->getRawFieldData('oxtype'), self::ACTION_TYPE)) {
-            throw NotFound::notFound();
+            throw new NotFound();
         }
     }
 

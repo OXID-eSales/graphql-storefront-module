@@ -52,7 +52,7 @@ final class Promotion
                 PromotionDataType::class
             );
         } catch (NotFound $e) {
-            throw PromotionNotFound::byId((string)$id);
+            throw new PromotionNotFound((string)$id);
         }
 
         if ($promotion->isActive()) {

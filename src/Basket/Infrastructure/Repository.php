@@ -22,6 +22,7 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketByTitleAndUserIdFilterList;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket as PublicBasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Sorting;
+use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketForUserNotFound;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
@@ -74,21 +75,21 @@ final class Repository
                 false
             );
         } catch (NotFound $e) {
-            throw BasketNotFound::byId($id);
+            throw new BasketNotFound($id);
         }
 
         return $basket;
     }
 
     /**
-     * @throws BasketNotFound
+     * @throws BasketForUserNotFound
      */
     public function customerBasketByTitle(CustomerDataType $customer, string $title): BasketDataType
     {
         $model = $customer->getEshopModel()->getBasket($title);
 
         if (!$model->getId()) {
-            throw BasketNotFound::byOwnerAndTitle(
+            throw new BasketForUserNotFound(
                 (string)$customer->getId(),
                 $title
             );

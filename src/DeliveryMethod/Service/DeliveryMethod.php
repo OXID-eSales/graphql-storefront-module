@@ -38,7 +38,7 @@ final class DeliveryMethod
                 false
             );
         } catch (NotFound $e) {
-            throw DeliveryMethodNotFound::byId($id);
+            throw new DeliveryMethodNotFound($id);
         }
 
         return $deliveryMethod;

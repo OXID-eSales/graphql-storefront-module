@@ -13,10 +13,10 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 
 use function sprintf;
 
-final class BasketNotFound extends NotFound
+final class BasketForUserNotFound extends NotFound
 {
-    public function __construct(string $id)
+    public function __construct(string $userId, string $title)
     {
-        parent::__construct(sprintf('Basket was not found by id: %s', $id));
+        parent::__construct(sprintf('Basket "%s" not found for user "%s"', $title, $userId));
     }
 }

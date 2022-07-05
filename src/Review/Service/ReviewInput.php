@@ -85,7 +85,7 @@ final class ReviewInput
         try {
             $this->repository->getById($productId, Product::class);
         } catch (NotFound $e) {
-            throw ProductNotFound::byId($productId);
+            throw new ProductNotFound($productId);
         }
 
         return true;

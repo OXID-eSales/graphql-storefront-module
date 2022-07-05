@@ -13,10 +13,10 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 
 use function sprintf;
 
-final class NewsletterStatusNotFound extends NotFound
+final class NewsletterStatusForUserNotFound extends NotFound
 {
-    public function __construct(string $email)
+    public function __construct(string $userId)
     {
-        parent::__construct(sprintf('Newsletter subscription status was not found for: %s', $email));
+        parent::__construct(sprintf('Newsletter subscription status was not found for userid: %s', $userId));
     }
 }

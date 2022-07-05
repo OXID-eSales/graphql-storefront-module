@@ -46,7 +46,7 @@ final class Attribute
                 AttributeDataType::class
             );
         } catch (NotFound $e) {
-            throw AttributeNotFound::byId((string)$id);
+            throw new AttributeNotFound((string)$id);
         }
 
         return $attribute;

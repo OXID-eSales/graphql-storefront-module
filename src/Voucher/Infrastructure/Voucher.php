@@ -88,7 +88,7 @@ final class Voucher
             $voucherModel->unMarkAsReserved();
             $this->repository->removeBasketIdFromVoucher($voucherId);
         } else {
-            throw VoucherNotApplied::byId($voucherId, (string)$userBasket->id());
+            throw new VoucherNotApplied($voucherId, (string)$userBasket->id());
         }
     }
 

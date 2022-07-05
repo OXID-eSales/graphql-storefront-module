@@ -46,7 +46,7 @@ final class NewsletterOptInInput
             /** @var SubscriberType $subscriber */
             $subscriber = $this->subscriberService->subscriber((string)$newsletterStatus->userId());
         } catch (SubscriberNotFound $exception) {
-            throw NewsletterStatusNotFound::byEmail($email);
+            throw new NewsletterStatusNotFound($email);
         }
 
         $this->verifyConfirmCode($subscriber, $confirmCode);

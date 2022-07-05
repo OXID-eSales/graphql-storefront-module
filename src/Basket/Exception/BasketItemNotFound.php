@@ -15,13 +15,14 @@ use function sprintf;
 
 final class BasketItemNotFound extends NotFound
 {
-    public static function byId(string $basketItemId): self
+    public function __construct(string $basketItemId, ?string $basketId = null)
     {
-        return new self(sprintf('Basket item was not found by id: %s', $basketItemId));
-    }
+        $message = sprintf('Basket item was not found by id: %s', $basketItemId);
 
-    public static function byIdInBasket(string $basketItemId, string $basketId): self
-    {
-        return new self(sprintf('Basket item with id %s not found in your basket %s', $basketItemId, $basketId));
+        if ($basketId) {
+            $message = sprintf('Basket item with id %s not found in your basket %s', $basketItemId, $basketId);
+        }
+
+        parent::__construct($message);
     }
 }

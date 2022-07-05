@@ -46,7 +46,7 @@ final class Product
             /** @var ProductDataType $product */
             $product = $this->repository->getById((string)$id, ProductDataType::class);
         } catch (NotFound $e) {
-            throw ProductNotFound::byId((string)$id);
+            throw new ProductNotFound((string)$id);
         }
 
         if ($product->isActive()) {

@@ -34,7 +34,7 @@ final class Repository
         $currency = $this->config->getCurrencyObject($name);
 
         if (!$currency instanceof stdClass) {
-            throw CurrencyNotFound::byName($name);
+            throw new CurrencyNotFound($name);
         }
 
         return new Currency($currency);
@@ -49,7 +49,7 @@ final class Repository
         $currency = $this->config->getActShopCurrencyObject();
 
         if (!$currency instanceof stdClass) {
-            throw CurrencyNotFound::byActiveInShop();
+            throw new CurrencyNotFound();
         }
 
         return new Currency($currency);

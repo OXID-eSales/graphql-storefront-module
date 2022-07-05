@@ -15,13 +15,8 @@ final class VoucherNotFound extends NotFound
 {
     protected const DEFAULT_MESSAGE = 'ERROR_MESSAGE_VOUCHER_NOVOUCHER';
 
-    public static function byId(string $id): self
+    public function __construct(string $id)
     {
-        return new self(self::DEFAULT_MESSAGE, 0, null, 'Exception', ['id' => $id]);
-    }
-
-    public static function byNumber(string $number): self
-    {
-        return new self(self::DEFAULT_MESSAGE, 0, null, 'Exception', ['number' => $number]);
+        parent::__construct(self::DEFAULT_MESSAGE, ['id' => $id]);
     }
 }

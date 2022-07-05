@@ -20,7 +20,7 @@ use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer as CustomerInfrastructure;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository as CustomerRepository;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as NewsletterStatusType;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusNotFound;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusForUserNotFound;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\NewsletterStatus as NewsletterStatusService;
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderFile;
@@ -95,7 +95,7 @@ final class RelationService
     {
         try {
             return $this->newsletterStatusService->newsletterStatus();
-        } catch (NewsletterStatusNotFound $e) {
+        } catch (NewsletterStatusForUserNotFound $e) {
             return null;
         }
     }

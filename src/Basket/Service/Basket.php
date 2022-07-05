@@ -249,7 +249,7 @@ final class Basket
                 $ignoreSubShop
             );
         } catch (NotFound $e) {
-            throw CustomerNotFound::byId($id);
+            throw new CustomerNotFound($id);
         }
 
         return $customer;
@@ -399,7 +399,7 @@ final class Basket
             null !== $deliveryAddressId &&
             !$this->deliveryAddressBelongsToUser($deliveryAddressId)
         ) {
-            throw DeliveryAddressNotFound::byId((string)$deliveryAddressId);
+            throw new DeliveryAddressNotFound((string)$deliveryAddressId);
         }
 
         $deliveryAddressId = $deliveryAddressId ? (string)$deliveryAddressId : null;

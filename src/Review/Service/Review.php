@@ -68,7 +68,7 @@ final class Review
             /** @var ReviewDataType $review */
             $review = $this->repository->getById((string)$id, ReviewDataType::class);
         } catch (NotFound $e) {
-            throw ReviewNotFound::byId((string)$id);
+            throw new ReviewNotFound((string)$id);
         }
 
         if ($this->reviewActivityService->isActive($review)) {

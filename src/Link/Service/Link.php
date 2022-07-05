@@ -47,7 +47,7 @@ final class Link
                 LinkDataType::class
             );
         } catch (NotFound $e) {
-            throw LinkNotFound::byId((string)$id);
+            throw new LinkNotFound((string)$id);
         }
 
         if ($link->isActive()) {

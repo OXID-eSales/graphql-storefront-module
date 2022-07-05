@@ -34,7 +34,7 @@ final class Reviewer
             /** @var ReviewerDataType $reviewer */
             $reviewer = $this->repository->getById($id, ReviewerDataType::class);
         } catch (NotFound $e) {
-            throw ReviewerNotFound::byId($id);
+            throw new ReviewerNotFound($id);
         }
 
         return $reviewer;

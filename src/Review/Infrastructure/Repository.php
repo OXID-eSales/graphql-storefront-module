@@ -110,7 +110,7 @@ final class Repository
         $result = $queryBuilder->execute();
 
         if ($result->rowCount() !== 1) {
-            throw NotFound::notFound();
+            throw new NotFound();
         }
 
         /** @var EshopRatingModel */
