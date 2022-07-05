@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ``OxidEsales\GraphQL\Storefrnt\Address\Exception\DeliveryAddressMissingFields``
   - ``OxidEsales\GraphQL\Storefrnt\Address\Exception\InvoiceAddressMissingFields``
 
+### Changed
+- Refactore NotFound exception and children to create instance with constructor instead of static methods.
+
 ## [2.1.0] - Unreleased
 
 ### Added
