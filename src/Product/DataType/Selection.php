@@ -34,6 +34,30 @@ final class Selection
      */
     public function getValue(): string
     {
+        return (string)$this->selection->getValue();
+    }
+
+    /**
+     * @Field()
+     */
+    public function getName(): string
+    {
         return (string)$this->selection->getName();
+    }
+
+    /**
+     * @Field()
+     */
+    public function isActive(): bool
+    {
+        return (bool)$this->selection->isActive();
+    }
+
+    /**
+     * @Field()
+     */
+    public function isDisabled(): bool
+    {
+        return (bool)$this->selection->isDisabled();
     }
 }
