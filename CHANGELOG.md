@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.1.0] - Unreleased
+## [2.1.0] - 2022-07-14
 
 ### Added
 - New Event ``OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem``
@@ -109,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
-[2.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.1...b-6.5.x
+[2.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v1.0.0-rc1...v1.0.0
