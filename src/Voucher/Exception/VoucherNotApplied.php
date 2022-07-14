@@ -17,6 +17,12 @@ final class VoucherNotApplied extends NotFound
 {
     public function __construct(string $voucherId, string $basketId)
     {
-        parent::__construct(sprintf('Voucher with id: %s was not applied to basket with id: %s', $voucherId, $basketId));
+        parent::__construct(
+            sprintf(
+                'Voucher with id: %s was not applied to basket with id: %s',
+                $voucherId,
+                $basketId
+            )
+        );
     }
 }

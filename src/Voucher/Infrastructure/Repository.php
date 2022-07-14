@@ -20,6 +20,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepo
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNotFound;
+use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNumberNotFound;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Repository
@@ -51,7 +52,7 @@ final class Repository
                 false
             );
         } catch (NotFound $e) {
-            throw VoucherNotFound::byId($id);
+            throw new VoucherNotFound($id);
         }
 
         return $voucher;
@@ -65,7 +66,7 @@ final class Repository
         try {
             $voucherModel->getVoucherByNr($voucher, [], true);
         } catch (Exception $exception) {
-            throw VoucherNotFound::byNumber($voucher);
+            throw new VoucherNumberNotFound($voucher);
         }
 
         return $this->getVoucherById($voucherModel->getId());

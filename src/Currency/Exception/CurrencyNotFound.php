@@ -19,7 +19,7 @@ final class CurrencyNotFound extends NotFound
     {
         $message = 'No active currency was found';
 
-        if($name) {
+        if ($name) {
             $message = sprintf('Currency "%s" was not found', $name);
         }
 

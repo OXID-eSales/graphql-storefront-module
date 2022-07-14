@@ -10,12 +10,12 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Service;
 
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as NewsletterStatusType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusSubscribe;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as SubscriberType;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\SubscriberNotFound;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\NewsletterStatus as NewsletterStatusRepository;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository as NewsletterSubscriptionRepository;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber as SubscriberService;
@@ -87,7 +87,7 @@ final class NewsletterStatus
 
         /** If we don't have email from token or as parameter */
         if (!$userId) {
-            throw new SubscriberNotFound('Missing subscriber email or token');
+            throw new NotFound('Missing subscriber email or token');
         }
 
         $subscriber = $this->subscriberService->subscriber($userId);
