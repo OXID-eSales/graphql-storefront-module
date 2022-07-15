@@ -13,10 +13,10 @@ jobs:
 
     steps:
       - name: Clone testing environment
-        run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git . && git reset --hard v3.0.0
+        run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git .
 
       - name: Clone the shop
-        run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ce.git --branch master --single-branch source
+        run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ce.git --branch b-7.0.x --single-branch source
 
       - name: Prepare container configuration
         run: |
