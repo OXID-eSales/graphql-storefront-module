@@ -14,11 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Refactore NotFound exception and children to create instance with constructor instead of static methods.
 
-## [2.1.0] - Unreleased
+## [2.1.0] - 2022-07-14
 
 ### Added
 - New Event ``OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem``
-- New Exception ``OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields``
 - Not mandatory ``remark`` parameter added for ``placeOrder`` mutation [PR-9](https://github.com/OXID-eSales/graphql-storefront-module/pull/9)
 - New service ``OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration``. Optionally supply core table name of list objects that must be instantiated with BaseModel::load().
 
@@ -108,7 +107,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Remove ``final`` statement from shop extending classes [PR-3](https://github.com/OXID-eSales/graphql-storefront-module/pull/3)
-- Fixed compatibility issues related to `thecodingmachine/graphqlite:^4.1.2` update
 
 ### Changed
 - Use `@Rights` annotation instead of `@Logged` so that an anonymous token user could create/modify basket and place an order
@@ -121,7 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
-[2.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.1...b-6.5.x
+[2.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v1.0.0-rc1...v1.0.0
