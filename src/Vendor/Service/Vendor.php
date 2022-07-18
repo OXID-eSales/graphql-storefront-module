@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Vendor\Service;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Storefront\Product\Service\AbstractActiveFilterService;
+use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Sorting;

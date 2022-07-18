@@ -7,11 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Storefront\Product\Service;
+namespace OxidEsales\GraphQL\Storefront\Shared\Service;
 
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 
 abstract class AbstractActiveFilterService
 {

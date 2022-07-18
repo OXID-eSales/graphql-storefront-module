@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Storefront\Country\DataType\Country as CountryDataType;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountryFilterList;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountrySorting;
 use OxidEsales\GraphQL\Storefront\Country\Exception\CountryNotFound;
-use OxidEsales\GraphQL\Storefront\Product\Service\AbstractActiveFilterService;
+use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;

@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
-use OxidEsales\GraphQL\Storefront\Product\Service\AbstractActiveFilterService;
+use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -73,6 +73,6 @@ final class Category extends AbstractActiveFilterService
 
     protected function getInactivePermission(): string
     {
-       return 'VIEW_INACTIVE_CATEGORY';
+        return 'VIEW_INACTIVE_CATEGORY';
     }
 }

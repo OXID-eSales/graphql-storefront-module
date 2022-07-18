@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as Manufact
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
-use OxidEsales\GraphQL\Storefront\Product\Service\AbstractActiveFilterService;
+use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;

@@ -14,7 +14,7 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Content\DataType\Content as ContentDataType;
 use OxidEsales\GraphQL\Storefront\Content\DataType\ContentFilterList;
 use OxidEsales\GraphQL\Storefront\Content\Exception\ContentNotFound;
-use OxidEsales\GraphQL\Storefront\Product\Service\AbstractActiveFilterService;
+use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
