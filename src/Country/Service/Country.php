@@ -16,24 +16,18 @@ use OxidEsales\GraphQL\Storefront\Country\DataType\Country as CountryDataType;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountryFilterList;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountrySorting;
 use OxidEsales\GraphQL\Storefront\Country\Exception\CountryNotFound;
+use OxidEsales\GraphQL\Storefront\Product\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class Country
+final class Country extends AbstractActiveFilterService
 {
-    /** @var Repository */
-    private $repository;
-
-    /** @var Authorization */
-    private $authorizationService;
-
     public function __construct(
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository = $repository;
-        $this->authorizationService = $authorizationService;
+        parent::__construct($repository, $authorizationService);
     }
 
     /**
@@ -71,9 +65,7 @@ final class Country
         CountryFilterList $filter,
         CountrySorting $sorting
     ): array {
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_COUNTRY')) {
-            $filter = $filter->withActiveFilter(null);
-        }
+        $this->setActiveFilter($filter);
 
         return $this->repository->getList(
             CountryDataType::class,
@@ -81,5 +73,10 @@ final class Country
             new PaginationFilter(),
             $sorting
         );
+    }
+
+    protected function getInactivePermission(): string
+    {
+        return 'VIEW_INACTIVE_COUNTRY';
     }
 }

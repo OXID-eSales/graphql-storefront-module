@@ -14,24 +14,18 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Link\DataType\Link as LinkDataType;
 use OxidEsales\GraphQL\Storefront\Link\DataType\LinkFilterList;
 use OxidEsales\GraphQL\Storefront\Link\Exception\LinkNotFound;
+use OxidEsales\GraphQL\Storefront\Product\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class Link
+final class Link extends AbstractActiveFilterService
 {
-    /** @var Repository */
-    private $repository;
-
-    /** @var Authorization */
-    private $authorizationService;
-
     public function __construct(
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository = $repository;
-        $this->authorizationService = $authorizationService;
+        parent::__construct($repository, $authorizationService);
     }
 
     /**
@@ -68,13 +62,16 @@ final class Link
     {
         // In case user has VIEW_INACTIVE_LINK permissions
         // return all links including inactive ones
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_LINK')) {
-            $filter = $filter->withActiveFilter(null);
-        }
+        $this->setActiveFilter($filter);
 
         return $this->repository->getByFilter(
             $filter,
             LinkDataType::class
         );
+    }
+
+    protected function getInactivePermission(): string
+    {
+        return 'VIEW_INACTIVE_LINK';
     }
 }

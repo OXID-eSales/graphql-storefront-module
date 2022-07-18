@@ -30,13 +30,6 @@ final class ProductRatingRelationService
 
     public function getRatings(ProductRating $rating): array
     {
-        /*
-        return $this->repository->getByFilter(
-            new ProductRatingFilterList(
-                new StringFilter((string)$rating->getEshopModel()->getId())
-            ),
-            Rating::class
-        ); */
         return [];
     }
 }

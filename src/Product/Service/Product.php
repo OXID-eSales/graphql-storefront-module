@@ -20,20 +20,13 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class Product
+final class Product extends AbstractActiveFilterService
 {
-    /** @var Repository */
-    private $repository;
-
-    /** @var Authorization */
-    private $authorizationService;
-
     public function __construct(
         Repository $repository,
         Authorization $authorizationService
     ) {
-        $this->repository = $repository;
-        $this->authorizationService = $authorizationService;
+        parent::__construct($repository, $authorizationService);
     }
 
     /**
@@ -70,9 +63,7 @@ final class Product
     ): array {
         // In case user has VIEW_INACTIVE_PRODUCT permissions
         // return all products including inactive ones
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_PRODUCT')) {
-            $filter = $filter->withActiveFilter(null);
-        }
+        $this->setActiveFilter($filter);
 
         return $this->repository->getList(
             ProductDataType::class,
@@ -80,5 +71,10 @@ final class Product
             $pagination ?? new PaginationFilter(),
             $sort
         );
+    }
+
+    protected function getInactivePermission(): string
+    {
+        return 'VIEW_INACTIVE_PRODUCT';
     }
 }
