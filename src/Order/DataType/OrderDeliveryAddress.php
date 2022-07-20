@@ -10,137 +10,31 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
+use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
-use OxidEsales\GraphQL\Storefront\Address\DataType\AddressInterface;
-use TheCodingMachine\GraphQLite\Annotations\Field;
+use OxidEsales\GraphQL\Storefront\Address\DataType\AbstractAddress;
 use TheCodingMachine\GraphQLite\Annotations\Type;
-use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @Type()
  */
-final class OrderDeliveryAddress implements AddressInterface, ShopModelAwareInterface
+final class OrderDeliveryAddress extends AbstractAddress implements ShopModelAwareInterface
 {
-    /** @var EshopOrderModel */
-    private $order;
-
     public function __construct(EshopOrderModel $order)
     {
-        $this->order = $order;
-    }
-
-    public function getEshopModel(): EshopOrderModel
-    {
-        return $this->order;
+        parent::__construct($order, 'oxdel');
     }
 
     /**
-     * @Field()
+     * @return EshopOrderModel
      */
-    public function salutation(): string
+    public function getEshopModel(): BaseModel
     {
-        return (string)$this->order->getRawFieldData('oxdelsal');
-    }
-
-    /**
-     * @Field()
-     */
-    public function firstName(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdelfname');
-    }
-
-    /**
-     * @Field()
-     */
-    public function lastName(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdellname');
-    }
-
-    /**
-     * @Field()
-     */
-    public function company(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdelcompany');
-    }
-
-    /**
-     * @Field()
-     */
-    public function additionalInfo(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdeladdinfo');
-    }
-
-    /**
-     * @Field()
-     */
-    public function street(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdelstreet');
-    }
-
-    /**
-     * @Field()
-     */
-    public function streetNumber(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdelstreetnr');
-    }
-
-    /**
-     * @Field()
-     */
-    public function zipCode(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdelzip');
-    }
-
-    /**
-     * @Field()
-     */
-    public function city(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdelcity');
-    }
-
-    /**
-     * @Field()
-     */
-    public function phone(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdelfon');
-    }
-
-    /**
-     * @Field()
-     */
-    public function fax(): string
-    {
-        return (string)$this->order->getRawFieldData('oxdelfax');
-    }
-
-    public function countryId(): ID
-    {
-        return $this->getFieldAsID('oxdelcountryid');
-    }
-
-    public function stateId(): ID
-    {
-        return $this->getFieldAsID('oxdelstateid');
+        return $this->model;
     }
 
     public static function getModelClass(): string
     {
         return EshopOrderModel::class;
-    }
-
-    private function getFieldAsID(string $fieldName): ID
-    {
-        return new ID(
-            (string) $this->order->getRawFieldData($fieldName)
-        );
     }
 }

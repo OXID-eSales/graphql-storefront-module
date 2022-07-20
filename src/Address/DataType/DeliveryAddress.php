@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Address\DataType;
 
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Address as EshopAddressModel;
+use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
@@ -20,26 +21,19 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class DeliveryAddress implements AddressInterface, ShopModelAwareInterface
+final class DeliveryAddress extends AbstractAddress implements ShopModelAwareInterface
 {
-    /** @var EshopAddressModel */
-    private $address;
-
     public function __construct(EshopAddressModel $address)
     {
-        $this->address = $address;
+        parent::__construct($address, 'ox');
     }
 
-    public function getEshopModel(): EshopAddressModel
+    /**
+     * @return EshopAddressModel
+     */
+    public function getEshopModel(): BaseModel
     {
-        return $this->address;
-    }
-
-    public function countryId(): ID
-    {
-        return new ID(
-            $this->address->getRawFieldData('oxcountryid')
-        );
+        return $this->model;
     }
 
     /**
@@ -48,96 +42,8 @@ final class DeliveryAddress implements AddressInterface, ShopModelAwareInterface
     public function id(): ID
     {
         return new ID(
-            $this->address->getId()
+            $this->model->getId()
         );
-    }
-
-    /**
-     * @Field()
-     */
-    public function salutation(): string
-    {
-        return (string)$this->address->getRawFieldData('oxsal');
-    }
-
-    /**
-     * @Field()
-     */
-    public function firstName(): string
-    {
-        return (string)$this->address->getRawFieldData('oxfname');
-    }
-
-    /**
-     * @Field()
-     */
-    public function lastName(): string
-    {
-        return (string)$this->address->getRawFieldData('oxlname');
-    }
-
-    /**
-     * @Field()
-     */
-    public function company(): string
-    {
-        return (string)$this->address->getRawFieldData('oxcompany');
-    }
-
-    /**
-     * @Field()
-     */
-    public function additionalInfo(): string
-    {
-        return (string)$this->address->getRawFieldData('oxaddinfo');
-    }
-
-    /**
-     * @Field()
-     */
-    public function street(): string
-    {
-        return (string)$this->address->getRawFieldData('oxstreet');
-    }
-
-    /**
-     * @Field()
-     */
-    public function streetNumber(): string
-    {
-        return (string)$this->address->getRawFieldData('oxstreetnr');
-    }
-
-    /**
-     * @Field()
-     */
-    public function zipCode(): string
-    {
-        return (string)$this->address->getRawFieldData('oxzip');
-    }
-
-    /**
-     * @Field()
-     */
-    public function city(): string
-    {
-        return (string)$this->address->getRawFieldData('oxcity');
-    }
-
-    /**
-     * @Field()
-     */
-    public function phone(): string
-    {
-        return (string)$this->address->getRawFieldData('oxfon');
-    }
-
-    /**
-     * @Field()
-     */
-    public function fax(): string
-    {
-        return (string)$this->address->getRawFieldData('oxfax');
     }
 
     /**
@@ -145,23 +51,12 @@ final class DeliveryAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function updated(): ?DateTimeInterface
     {
-        return DateTimeImmutableFactory::fromString(
-            (string)$this->address->getRawFieldData('oxtimestamp')
-        );
+        return DateTimeImmutableFactory::fromString($this->getFieldValue('timestamp'));
     }
 
     public function userId(): ID
     {
-        return new ID(
-            (string)$this->address->getRawFieldData('oxuserid')
-        );
-    }
-
-    public function stateId(): ID
-    {
-        return new ID(
-            $this->address->getRawFieldData('oxstateid')
-        );
+        return new ID($this->getFieldValue('userid'));
     }
 
     public static function getModelClass(): string
