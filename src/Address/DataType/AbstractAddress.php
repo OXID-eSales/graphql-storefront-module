@@ -41,7 +41,7 @@ abstract class AbstractAddress
      */
     public function salutation(): string
     {
-        return $this->getFieldValue(self::SAL_FIELD_NAME);
+        return $this->getFieldValue(static::SAL_FIELD_NAME);
     }
 
     /**
@@ -49,7 +49,7 @@ abstract class AbstractAddress
      */
     public function firstName(): string
     {
-        return $this->getFieldValue(self::FNAME_FIELD_NAME);
+        return $this->getFieldValue(static::FNAME_FIELD_NAME);
     }
 
     /**
@@ -57,7 +57,7 @@ abstract class AbstractAddress
      */
     public function lastName(): string
     {
-        return $this->getFieldValue(self::LNAME_FIELD_NAME);
+        return $this->getFieldValue(static::LNAME_FIELD_NAME);
     }
 
     /**
@@ -65,7 +65,7 @@ abstract class AbstractAddress
      */
     public function company(): string
     {
-        return $this->getFieldValue(self::COMPANY_FIELD_NAME);
+        return $this->getFieldValue(static::COMPANY_FIELD_NAME);
     }
 
     /**
@@ -73,7 +73,7 @@ abstract class AbstractAddress
      */
     public function additionalInfo(): string
     {
-        return $this->getFieldValue(self::INFO_FIELD_NAME);
+        return $this->getFieldValue(static::INFO_FIELD_NAME);
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class AbstractAddress
      */
     public function street(): string
     {
-        return $this->getFieldValue(self::STREET_FIELD_NAME);
+        return $this->getFieldValue(static::STREET_FIELD_NAME);
     }
 
     /**
@@ -89,7 +89,7 @@ abstract class AbstractAddress
      */
     public function streetNumber(): string
     {
-        return $this->getFieldValue(self::STREETNR_FIELD_NAME);
+        return $this->getFieldValue(static::STREETNR_FIELD_NAME);
     }
 
     /**
@@ -97,7 +97,7 @@ abstract class AbstractAddress
      */
     public function zipCode(): string
     {
-        return $this->getFieldValue(self::ZIP_FIELD_NAME);
+        return $this->getFieldValue(static::ZIP_FIELD_NAME);
     }
 
     /**
@@ -105,7 +105,7 @@ abstract class AbstractAddress
      */
     public function city(): string
     {
-        return $this->getFieldValue(self::CITY_FIELD_NAME);
+        return $this->getFieldValue(static::CITY_FIELD_NAME);
     }
 
     /**
@@ -113,7 +113,7 @@ abstract class AbstractAddress
      */
     public function phone(): string
     {
-        return $this->getFieldValue(self::PHONE_FIELD_NAME);
+        return $this->getFieldValue(static::PHONE_FIELD_NAME);
     }
 
     /**
@@ -121,17 +121,17 @@ abstract class AbstractAddress
      */
     public function fax(): string
     {
-        return $this->getFieldValue(self::FAX_FIELD_NAME);
+        return $this->getFieldValue(static::FAX_FIELD_NAME);
     }
 
     public function countryId(): ID
     {
-        return new ID($this->getFieldValue(self::COUNTRY_FIELD_NAME));
+        return new ID($this->getFieldValue(static::COUNTRY_FIELD_NAME));
     }
 
     public function stateId(): ID
     {
-        return new ID($this->getFieldValue(self::STATE_FIELD_NAME));
+        return new ID($this->getFieldValue(static::STATE_FIELD_NAME));
     }
 
     protected function getFieldValue(string $field): string
