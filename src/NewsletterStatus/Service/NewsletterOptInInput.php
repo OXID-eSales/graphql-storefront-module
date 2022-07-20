@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Service;
 
+use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as NewsletterStatusType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as SubscriberType;
@@ -18,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository as 
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber as SubscriberService;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
-final class NewsletterOptInInput
+final class NewsletterOptInInput extends AbstractNewsletterInput
 {
     /** @var SubscriberService */
     private $subscriberService;
@@ -28,10 +29,13 @@ final class NewsletterOptInInput
 
     public function __construct(
         SubscriberService $subscriberService,
-        NewsletterStatusRepository $newsletterStatusRepository
+        NewsletterStatusRepository $newsletterStatusRepository,
+        Legacy $legacyService
     ) {
         $this->subscriberService = $subscriberService;
         $this->newsletterStatusRepository = $newsletterStatusRepository;
+
+        parent::__construct($legacyService);
     }
 
     /**
@@ -39,7 +43,7 @@ final class NewsletterOptInInput
      */
     public function fromUserInput(string $email, string $confirmCode): NewsletterStatusType
     {
-        $this->assertEmailNotEmpty($email);
+        $this->assertValidEmail($email);
         $newsletterStatus = $this->newsletterStatusRepository->getByEmail($email);
 
         try {
@@ -52,15 +56,6 @@ final class NewsletterOptInInput
         $this->verifyConfirmCode($subscriber, $confirmCode);
 
         return $newsletterStatus;
-    }
-
-    private function assertEmailNotEmpty(string $email): bool
-    {
-        if (!strlen($email)) {
-            throw InvalidEmail::byEmptyString();
-        }
-
-        return true;
     }
 
     /**
