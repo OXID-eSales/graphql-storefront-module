@@ -29,12 +29,10 @@ abstract class AbstractAddress
     protected const COUNTRY_FIELD_NAME = 'countryid';
     protected const STATE_FIELD_NAME = 'stateid';
 
-    protected BaseModel $model;
     private string $prefix;
 
-    public function __construct(BaseModel $model, string $prefix)
+    public function __construct(string $prefix)
     {
-        $this->model = $model;
         $this->prefix = $prefix;
     }
 
@@ -136,8 +134,11 @@ abstract class AbstractAddress
         return new ID($this->getFieldValue(self::STATE_FIELD_NAME));
     }
 
-    protected function getFieldValue($field): string
+    protected function getFieldValue(string $field): string
     {
-        return (string)$this->model->getRawFieldData($this->prefix.$field);
+        $model = $this->getEshopModel();
+        return (string)$model->getRawFieldData($this->prefix . $field);
     }
+
+    public abstract function getEshopModel(): BaseModel;
 }

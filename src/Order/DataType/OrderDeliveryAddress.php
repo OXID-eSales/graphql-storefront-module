@@ -10,7 +10,6 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
-use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Storefront\Address\DataType\AbstractAddress;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -20,17 +19,17 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
  */
 final class OrderDeliveryAddress extends AbstractAddress implements ShopModelAwareInterface
 {
+    private EshopOrderModel $order;
+
     public function __construct(EshopOrderModel $order)
     {
-        parent::__construct($order, 'oxdel');
+        $this->order = $order;
+        parent::__construct('oxdel');
     }
 
-    /**
-     * @return EshopOrderModel
-     */
-    public function getEshopModel(): BaseModel
+    public function getEshopModel(): EshopOrderModel
     {
-        return $this->model;
+        return $this->order;
     }
 
     public static function getModelClass(): string
