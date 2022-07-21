@@ -13,9 +13,10 @@ use OxidEsales\Eshop\Core\Price as EshopPriceModel;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketCost as BasketCostDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketProductBruttoSum;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\AbstractCost;
 use stdClass;
 
-final class BasketCost
+final class BasketCost extends AbstractCost
 {
     public function getBasketCurrencyObject(BasketCostDataType $basketCost): stdClass
     {
@@ -26,12 +27,7 @@ final class BasketCost
     {
         $netSum = (float)$basketCost->getEshopModel()->getNettoSum();
 
-        /** @var EshopPriceModel $price */
-        $price = oxNew(EshopPriceModel::class);
-        $price->setNettoPriceMode();
-        $price->setPrice($netSum);
-
-        return $price;
+        return $this->getNetPriceObject($netSum);
     }
 
     public function getProductGross(BasketCostDataType $basketCost): BasketProductBruttoSum

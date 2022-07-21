@@ -12,9 +12,10 @@ namespace OxidEsales\GraphQL\Storefront\Order\Infrastructure;
 use OxidEsales\Eshop\Core\Price as EshopPriceModel;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderCost as OrderCostDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderProductBruttoSum;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\AbstractCost;
 use stdClass;
 
-final class OrderCost
+final class OrderCost extends AbstractCost
 {
     public function getOrderCurrencyObject(OrderCostDataType $orderCost): stdClass
     {
@@ -39,12 +40,7 @@ final class OrderCost
     {
         $netSum = (float)$orderCost->getEshopModel()->getRawFieldData('oxtotalnetsum');
 
-        /** @var EshopPriceModel $price */
-        $price = oxNew(EshopPriceModel::class);
-        $price->setNettoPriceMode();
-        $price->setPrice($netSum);
-
-        return $price;
+        return $this->getNetPriceObject($netSum);
     }
 
     public function getProductGross(OrderCostDataType $orderCost): OrderProductBruttoSum
