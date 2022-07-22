@@ -17,32 +17,13 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 /**
  * @Type()
  */
-final class OrderProductBruttoSum implements ShopModelAwareInterface
+final class OrderProductBruttoSum extends AbstractOrderDataType implements ShopModelAwareInterface
 {
-    /** @var EshopOrderModel */
-    private $order;
-
-    public function __construct(
-        EshopOrderModel $order
-    ) {
-        $this->order = $order;
-    }
-
-    public function getEshopModel(): EshopOrderModel
-    {
-        return $this->order;
-    }
-
     /**
      * @Field()
      */
     public function getSum(): float
     {
         return (float)($this->order->getRawFieldData('oxtotalbrutsum'));
-    }
-
-    public static function getModelClass(): string
-    {
-        return EshopOrderModel::class;
     }
 }

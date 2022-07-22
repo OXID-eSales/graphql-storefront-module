@@ -20,21 +20,8 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class Order implements ShopModelAwareInterface
+final class Order extends AbstractOrderDataType implements ShopModelAwareInterface
 {
-    /** @var EshopOrderModel */
-    private $order;
-
-    public function __construct(EshopOrderModel $order)
-    {
-        $this->order = $order;
-    }
-
-    public function getEshopModel(): EshopOrderModel
-    {
-        return $this->order;
-    }
-
     /**
      * @Field()
      */
@@ -113,10 +100,5 @@ final class Order implements ShopModelAwareInterface
         return DateTimeImmutableFactory::fromString(
             (string)$this->order->getRawFieldData('oxtimestamp')
         );
-    }
-
-    public static function getModelClass(): string
-    {
-        return \OxidEsales\Eshop\Application\Model\Order::class;
     }
 }

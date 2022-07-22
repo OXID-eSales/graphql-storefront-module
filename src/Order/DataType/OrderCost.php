@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
-use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -17,21 +16,8 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 /**
  * @Type()
  */
-final class OrderCost implements ShopModelAwareInterface
+final class OrderCost extends AbstractOrderDataType implements ShopModelAwareInterface
 {
-    /** @var EshopOrderModel */
-    private $order;
-
-    public function __construct(EshopOrderModel $order)
-    {
-        $this->order = $order;
-    }
-
-    public function getEshopModel(): EshopOrderModel
-    {
-        return $this->order;
-    }
-
     /**
      * @Field()
      */
@@ -54,10 +40,5 @@ final class OrderCost implements ShopModelAwareInterface
     public function getDiscount(): float
     {
         return (float)$this->order->getRawFieldData('oxdiscount');
-    }
-
-    public static function getModelClass(): string
-    {
-        return EshopOrderModel::class;
     }
 }
