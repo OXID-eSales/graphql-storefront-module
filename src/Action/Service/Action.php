@@ -21,13 +21,6 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Action extends AbstractActiveFilterService
 {
-    public function __construct(
-        Repository $repository,
-        Authorization $authorizationService
-    ) {
-        parent::__construct($repository, $authorizationService);
-    }
-
     /**
      * @throws ActionNotFound
      * @throws InvalidLogin

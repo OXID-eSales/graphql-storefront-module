@@ -23,13 +23,6 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Product extends AbstractActiveFilterService
 {
-    public function __construct(
-        Repository $repository,
-        Authorization $authorizationService
-    ) {
-        parent::__construct($repository, $authorizationService);
-    }
-
     /**
      * @throws ProductNotFound
      * @throws InvalidLogin
