@@ -9,14 +9,13 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
-use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class OrderCost extends AbstractOrderDataType implements ShopModelAwareInterface
+final class OrderCost extends AbstractOrderDataType
 {
     /**
      * @Field()

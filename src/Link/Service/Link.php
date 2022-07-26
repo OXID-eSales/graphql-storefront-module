@@ -15,8 +15,6 @@ use OxidEsales\GraphQL\Storefront\Link\DataType\Link as LinkDataType;
 use OxidEsales\GraphQL\Storefront\Link\DataType\LinkFilterList;
 use OxidEsales\GraphQL\Storefront\Link\Exception\LinkNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Link extends AbstractActiveFilterService
@@ -41,7 +39,7 @@ final class Link extends AbstractActiveFilterService
             return $link;
         }
 
-        if (!$this->authorizationService->isAllowed('VIEW_INACTIVE_LINK')) {
+        if (!$this->authorizationService->isAllowed($this->getInactivePermission())) {
             throw new InvalidLogin('Unauthorized');
         }
 

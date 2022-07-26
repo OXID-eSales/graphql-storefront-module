@@ -17,8 +17,6 @@ use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerFilterList;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Manufacturer extends AbstractActiveFilterService
@@ -43,7 +41,7 @@ final class Manufacturer extends AbstractActiveFilterService
             return $manufacturer;
         }
 
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_MANUFACTURER')) {
+        if ($this->authorizationService->isAllowed($this->getInactivePermission())) {
             return $manufacturer;
         }
 

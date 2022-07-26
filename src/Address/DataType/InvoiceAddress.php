@@ -12,14 +12,13 @@ namespace OxidEsales\GraphQL\Storefront\Address\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class InvoiceAddress extends AbstractAddress implements ShopModelAwareInterface
+final class InvoiceAddress extends AbstractAddress
 {
     protected const PHONE_FIELD_NAME = 'privfon';
     private EshopUserModel $customer;

@@ -17,8 +17,6 @@ use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Category extends AbstractActiveFilterService
@@ -40,7 +38,7 @@ final class Category extends AbstractActiveFilterService
             return $category;
         }
 
-        if (!$this->authorizationService->isAllowed('VIEW_INACTIVE_CATEGORY')) {
+        if (!$this->authorizationService->isAllowed($this->getInactivePermission())) {
             throw new InvalidLogin('Unauthorized');
         }
 

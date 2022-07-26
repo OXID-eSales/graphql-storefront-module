@@ -15,8 +15,6 @@ use OxidEsales\GraphQL\Storefront\Action\DataType\Action as ActionDataType;
 use OxidEsales\GraphQL\Storefront\Action\DataType\ActionFilterList;
 use OxidEsales\GraphQL\Storefront\Action\Exception\ActionNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Action extends AbstractActiveFilterService
@@ -43,7 +41,7 @@ final class Action extends AbstractActiveFilterService
             return $action;
         }
 
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_ACTION')) {
+        if ($this->authorizationService->isAllowed($this->getInactivePermission())) {
             return $action;
         }
 

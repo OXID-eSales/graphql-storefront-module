@@ -14,8 +14,6 @@ use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute as AttributeDataT
 use OxidEsales\GraphQL\Storefront\Attribute\DataType\AttributeFilterList;
 use OxidEsales\GraphQL\Storefront\Attribute\Exception\AttributeNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Attribute extends AbstractActiveFilterService

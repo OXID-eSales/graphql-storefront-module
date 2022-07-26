@@ -13,8 +13,6 @@ use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\VendorFilterList;
@@ -42,7 +40,7 @@ final class Vendor extends AbstractActiveFilterService
             return $vendor;
         }
 
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_VENDOR')) {
+        if ($this->authorizationService->isAllowed($this->getInactivePermission())) {
             return $vendor;
         }
 

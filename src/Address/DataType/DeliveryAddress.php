@@ -12,7 +12,6 @@ namespace OxidEsales\GraphQL\Storefront\Address\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\Address as EshopAddressModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -20,7 +19,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 /**
  * @Type()
  */
-final class DeliveryAddress extends AbstractAddress implements ShopModelAwareInterface
+final class DeliveryAddress extends AbstractAddress
 {
     private EshopAddressModel $address;
 

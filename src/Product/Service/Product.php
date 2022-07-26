@@ -16,9 +16,7 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Product extends AbstractActiveFilterService
@@ -40,7 +38,7 @@ final class Product extends AbstractActiveFilterService
             return $product;
         }
 
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_PRODUCT')) {
+        if ($this->authorizationService->isAllowed($this->getInactivePermission())) {
             return $product;
         }
 

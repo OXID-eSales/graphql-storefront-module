@@ -11,14 +11,13 @@ namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use DateTimeInterface;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class OrderDelivery extends AbstractOrderDataType implements ShopModelAwareInterface
+final class OrderDelivery extends AbstractOrderDataType
 {
     /**
      * @Field()

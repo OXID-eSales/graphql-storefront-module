@@ -17,8 +17,6 @@ use OxidEsales\GraphQL\Storefront\Country\DataType\CountryFilterList;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountrySorting;
 use OxidEsales\GraphQL\Storefront\Country\Exception\CountryNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Country extends AbstractActiveFilterService
@@ -44,7 +42,7 @@ final class Country extends AbstractActiveFilterService
             return $country;
         }
 
-        if (!$this->authorizationService->isAllowed('VIEW_INACTIVE_COUNTRY')) {
+        if (!$this->authorizationService->isAllowed($this->getInactivePermission())) {
             throw new InvalidLogin('Unauthorized');
         }
 

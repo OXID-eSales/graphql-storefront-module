@@ -9,11 +9,11 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Address\DataType;
 
-use OxidEsales\Eshop\Core\Model\BaseModel;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-abstract class AbstractAddress
+abstract class AbstractAddress implements ShopModelAwareInterface
 {
     protected const SAL_FIELD_NAME = 'sal';
     protected const FNAME_FIELD_NAME = 'fname';
@@ -139,6 +139,4 @@ abstract class AbstractAddress
         $model = $this->getEshopModel();
         return (string)$model->getRawFieldData($this->prefix . $field);
     }
-
-    public abstract function getEshopModel(): BaseModel;
 }
