@@ -16,24 +16,26 @@ abstract class BasketBaseCest extends BaseCest
 {
     protected function basketCreateMutation(
         AcceptanceTester $I,
-        string $title
-    ): array {
+        string $title,
+        bool $public = false
+    ): ?array {
         $mutation = '
-            mutation ($title: String!) {
-                basketCreate(basket: {title: $title}) {
+            mutation ($title: String!, $public: Boolean!) {
+                basketCreate(basket: {title: $title, public: $public}) {
                     id
                 }
             }
         ';
 
         $variables = [
-            'title' => $title,
+            'title'  => $title,
+            'public' => $public
         ];
 
         $I->sendGQLQuery($mutation, $variables);
         $I->seeResponseIsJson();
 
-        return $I->grabJsonResponseAsArray()['data']['basketCreate'];
+        return $I->grabJsonResponseAsArray()['data']['basketCreate'] ?? null;
     }
 
     protected function basketQuery(
