@@ -12,30 +12,15 @@ namespace OxidEsales\GraphQL\Storefront\Vendor\Service;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\VendorFilterList;
 use OxidEsales\GraphQL\Storefront\Vendor\Exception\VendorNotFound;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class Vendor
+final class Vendor extends AbstractActiveFilterService
 {
-    /** @var Repository */
-    private $repository;
-
-    /** @var Authorization */
-    private $authorizationService;
-
-    public function __construct(
-        Repository $repository,
-        Authorization $authorizationService
-    ) {
-        $this->repository = $repository;
-        $this->authorizationService = $authorizationService;
-    }
-
     /**
      * @throws VendorNotFound
      * @throws InvalidLogin
@@ -55,7 +40,7 @@ final class Vendor
             return $vendor;
         }
 
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_VENDOR')) {
+        if ($this->authorizationService->isAllowed($this->getInactivePermission())) {
             return $vendor;
         }
 
@@ -71,9 +56,7 @@ final class Vendor
     ): array {
         // In case user has VIEW_INACTIVE_VENDOR permissions
         // return all vendors including inactive
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_VENDOR')) {
-            $filter = $filter->withActiveFilter(null);
-        }
+        $this->setActiveFilter($filter);
 
         return $this->repository->getList(
             VendorDataType::class,
@@ -81,5 +64,10 @@ final class Vendor
             new PaginationFilter(),
             $sort
         );
+    }
+
+    protected function getInactivePermission(): string
+    {
+        return 'VIEW_INACTIVE_VENDOR';
     }
 }

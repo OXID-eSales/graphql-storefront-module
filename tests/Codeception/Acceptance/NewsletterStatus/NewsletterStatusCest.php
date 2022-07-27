@@ -111,7 +111,7 @@ final class NewsletterStatusCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertEquals(
-            'The e-mail address must not be empty!',
+            'This e-mail address \'\' is invalid!',
             $result['errors'][0]['message']
         );
     }

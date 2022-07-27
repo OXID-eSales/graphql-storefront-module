@@ -11,24 +11,21 @@ namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Service;
 
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Base\Service\Authentication;
-use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusSubscribe;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
-final class NewsletterSubscribeInput
+final class NewsletterSubscribeInput extends AbstractNewsletterInput
 {
     /** @var Authentication */
     private $authenticationService;
-
-    /** @var Legacy */
-    private $legacyService;
 
     public function __construct(
         Authentication $authenticationService,
         Legacy $legacyService
     ) {
         $this->authenticationService = $authenticationService;
-        $this->legacyService = $legacyService;
+
+        parent::__construct($legacyService);
     }
 
     /**
@@ -56,14 +53,5 @@ final class NewsletterSubscribeInput
             (string)$email,
             $userId
         );
-    }
-
-    private function assertValidEmail(string $email): bool
-    {
-        if (!$this->legacyService->isValidEmail($email)) {
-            throw InvalidEmail::byString($email);
-        }
-
-        return true;
     }
 }

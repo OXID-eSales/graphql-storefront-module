@@ -10,30 +10,15 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use DateTimeInterface;
-use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class OrderDelivery implements ShopModelAwareInterface
+final class OrderDelivery extends AbstractOrderDataType
 {
-    /** @var EshopOrderModel */
-    private $order;
-
-    public function __construct(EshopOrderModel $order)
-    {
-        $this->order = $order;
-    }
-
-    public function getEshopModel(): EshopOrderModel
-    {
-        return $this->order;
-    }
-
     /**
      * @Field()
      */
@@ -58,10 +43,5 @@ final class OrderDelivery implements ShopModelAwareInterface
         return DateTimeImmutableFactory::fromString(
             (string)$this->order->getRawFieldData('oxsenddate')
         );
-    }
-
-    public static function getModelClass(): string
-    {
-        return EshopOrderModel::class;
     }
 }

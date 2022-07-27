@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Category\Service;
 
-use OxidEsales\GraphQL\Base\DataType\Filter\BoolFilter;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
@@ -17,26 +16,11 @@ use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class Category
+final class Category extends AbstractActiveFilterService
 {
-    /** @var Repository */
-    private $repository;
-
-    /** @var Authorization */
-    private $authorizationService;
-
-    public function __construct(
-        Repository $repository,
-        Authorization $authorizationService
-    ) {
-        $this->repository = $repository;
-        $this->authorizationService = $authorizationService;
-    }
-
     /**
      * @throws CategoryNotFound
      * @throws InvalidLogin
@@ -54,7 +38,7 @@ final class Category
             return $category;
         }
 
-        if (!$this->authorizationService->isAllowed('VIEW_INACTIVE_CATEGORY')) {
+        if (!$this->authorizationService->isAllowed($this->getInactivePermission())) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -68,9 +52,7 @@ final class Category
         CategoryFilterList $filter,
         Sorting $sort
     ): array {
-        if (!$this->authorizationService->isAllowed('VIEW_INACTIVE_CATEGORY')) {
-            $filter = $filter->withActiveFilter(new BoolFilter(true));
-        }
+        $this->setActiveFilter($filter);
 
         return $this->repository->getList(
             CategoryDataType::class,
@@ -78,5 +60,10 @@ final class Category
             new PaginationFilter(),
             $sort
         );
+    }
+
+    protected function getInactivePermission(): string
+    {
+        return 'VIEW_INACTIVE_CATEGORY';
     }
 }

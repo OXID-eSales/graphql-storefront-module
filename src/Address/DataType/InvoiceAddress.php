@@ -12,22 +12,21 @@ namespace OxidEsales\GraphQL\Storefront\Address\DataType;
 use DateTimeInterface;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
-use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
-use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
  * @Type()
  */
-final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
+final class InvoiceAddress extends AbstractAddress
 {
-    /** @var EshopUserModel */
-    private $customer;
+    protected const PHONE_FIELD_NAME = 'privfon';
+    private EshopUserModel $customer;
 
     public function __construct(EshopUserModel $customer)
     {
         $this->customer = $customer;
+        parent::__construct('ox');
     }
 
     public function getEshopModel(): EshopUserModel
@@ -38,89 +37,9 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
     /**
      * @Field()
      */
-    public function salutation(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxsal');
-    }
-
-    /**
-     * @Field()
-     */
-    public function firstName(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxfname');
-    }
-
-    /**
-     * @Field()
-     */
-    public function lastName(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxlname');
-    }
-
-    /**
-     * @Field()
-     */
-    public function company(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxcompany');
-    }
-
-    /**
-     * @Field()
-     */
-    public function additionalInfo(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxaddinfo');
-    }
-
-    /**
-     * @Field()
-     */
-    public function street(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxstreet');
-    }
-
-    /**
-     * @Field()
-     */
-    public function streetNumber(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxstreetnr');
-    }
-
-    /**
-     * @Field()
-     */
-    public function zipCode(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxzip');
-    }
-
-    /**
-     * @Field()
-     */
-    public function city(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxcity');
-    }
-
-    /**
-     * @Field()
-     */
     public function vatID(): string
     {
-        return (string)$this->customer->getRawFieldData('oxustid');
-    }
-
-    /**
-     * @Field()
-     */
-    public function phone(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxprivfon');
+        return $this->getFieldValue('ustid');
     }
 
     /**
@@ -128,15 +47,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
      */
     public function mobile(): string
     {
-        return (string)$this->customer->getRawFieldData('oxmobfon');
-    }
-
-    /**
-     * @Field()
-     */
-    public function fax(): string
-    {
-        return (string)$this->customer->getRawFieldData('oxfax');
+        return $this->getFieldValue('mobfon');
     }
 
     /**
@@ -145,7 +56,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
     public function created(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string)$this->customer->getRawFieldData('oxcreate')
+            $this->getFieldValue('create')
         );
     }
 
@@ -155,21 +66,7 @@ final class InvoiceAddress implements AddressInterface, ShopModelAwareInterface
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
-            (string)$this->customer->getRawFieldData('oxtimestamp')
-        );
-    }
-
-    public function countryId(): ID
-    {
-        return new ID(
-            $this->customer->getRawFieldData('oxcountryid')
-        );
-    }
-
-    public function stateId(): ID
-    {
-        return new ID(
-            $this->customer->getRawFieldData('oxstateid')
+            $this->getFieldValue('timestamp')
         );
     }
 

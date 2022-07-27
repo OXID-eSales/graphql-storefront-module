@@ -10,20 +10,15 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 
 use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
-use OxidEsales\GraphQL\Storefront\Address\DataType\AbstractAddress;
-use TheCodingMachine\GraphQLite\Annotations\Type;
+use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 
-/**
- * @Type()
- */
-final class OrderDeliveryAddress extends AbstractAddress
+abstract class AbstractOrderDataType implements ShopModelAwareInterface
 {
-    private EshopOrderModel $order;
+    protected EshopOrderModel $order;
 
     public function __construct(EshopOrderModel $order)
     {
         $this->order = $order;
-        parent::__construct('oxdel');
     }
 
     public function getEshopModel(): EshopOrderModel

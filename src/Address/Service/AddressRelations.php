@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Address\Service;
 
-use OxidEsales\GraphQL\Storefront\Address\DataType\AddressInterface;
+use OxidEsales\GraphQL\Storefront\Address\DataType\AbstractAddress;
 use OxidEsales\GraphQL\Storefront\Country\DataType\Country;
 use OxidEsales\GraphQL\Storefront\Country\DataType\State;
 use OxidEsales\GraphQL\Storefront\Country\Exception\StateNotFound;
@@ -36,7 +36,7 @@ abstract class AddressRelations
     /**
      * @Field()
      */
-    public function country(AddressInterface $address): ?Country
+    public function country(AbstractAddress $address): ?Country
     {
         return $this->countryService->country(
             $address->countryId()
@@ -46,7 +46,7 @@ abstract class AddressRelations
     /**
      * @Field()
      */
-    public function state(AddressInterface $address): ?State
+    public function state(AbstractAddress $address): ?State
     {
         try {
             return $this->stateService->state(

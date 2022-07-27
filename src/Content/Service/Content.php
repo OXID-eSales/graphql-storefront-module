@@ -14,26 +14,11 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Content\DataType\Content as ContentDataType;
 use OxidEsales\GraphQL\Storefront\Content\DataType\ContentFilterList;
 use OxidEsales\GraphQL\Storefront\Content\Exception\ContentNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class Content
+final class Content extends AbstractActiveFilterService
 {
-    /** @var Repository */
-    private $repository;
-
-    /** @var Authorization */
-    private $authorizationService;
-
-    public function __construct(
-        Repository $repository,
-        Authorization $authorizationService
-    ) {
-        $this->repository = $repository;
-        $this->authorizationService = $authorizationService;
-    }
-
     /**
      * @throws ContentNotFound
      * @throws InvalidLogin
@@ -54,7 +39,7 @@ final class Content
             return $content;
         }
 
-        if (!$this->authorizationService->isAllowed('VIEW_INACTIVE_CONTENT')) {
+        if (!$this->authorizationService->isAllowed($this->getInactivePermission())) {
             throw new InvalidLogin('Unauthorized');
         }
 
@@ -68,13 +53,16 @@ final class Content
     {
         // In case user has VIEW_INACTIVE_CONTENT permissions
         // return all contents including inactive
-        if ($this->authorizationService->isAllowed('VIEW_INACTIVE_CONTENT')) {
-            $filter = $filter->withActiveFilter(null);
-        }
+        $this->setActiveFilter($filter);
 
         return $this->repository->getByFilter(
             $filter,
             ContentDataType::class
         );
+    }
+
+    protected function getInactivePermission(): string
+    {
+        return 'VIEW_INACTIVE_CONTENT';
     }
 }
