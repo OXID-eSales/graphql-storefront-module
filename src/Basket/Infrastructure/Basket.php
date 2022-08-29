@@ -164,60 +164,10 @@ final class Basket
         return true;
     }
 
-    public function makePublic(BasketDataType $basket): bool
+    public function assignAndSave(BasketDataType $basket, array $assignValues): bool
     {
         $model = $basket->getEshopModel();
-        $model->assign([
-            'oxuserbaskets__oxpublic' => 1,
-        ]);
-
-        return $this->repository->saveModel($model);
-    }
-
-    public function makePrivate(BasketDataType $basket): bool
-    {
-        $model = $basket->getEshopModel();
-        $model->assign([
-            'oxuserbaskets__oxpublic' => 0,
-        ]);
-
-        return $this->repository->saveModel($model);
-    }
-
-    public function setDeliveryAddress(BasketDataType $basket, ?string $deliveryAddressId = null): bool
-    {
-        $model = $basket->getEshopModel();
-
-        $model->assign([
-            'OEGQL_DELADDRESSID' => $deliveryAddressId,
-        ]);
-
-        return $this->repository->saveModel($model);
-    }
-
-    public function setPayment(BasketDataType $basket, string $paymentId): bool
-    {
-        $model = $basket->getEshopModel();
-
-        $model->assign([
-            'OEGQL_PAYMENTID' => $paymentId,
-        ]);
-
-        return $this->repository->saveModel($model);
-    }
-
-    /**
-     * Update delivery method id for user basket
-     * Resets payment id as it may be not available for new delivery method
-     */
-    public function setDeliveryMethod(BasketDataType $basket, string $deliveryMethodId): bool
-    {
-        $model = $basket->getEshopModel();
-
-        $model->assign([
-            'OEGQL_DELIVERYMETHODID' => $deliveryMethodId,
-            'OEGQL_PAYMENTID' => '',
-        ]);
+        $model->assign($assignValues);
 
         return $this->repository->saveModel($model);
     }

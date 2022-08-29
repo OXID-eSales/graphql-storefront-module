@@ -138,7 +138,6 @@ final class Repository
         ?PaginationFilter $pagination = null,
         bool $disableSubShop = true
     ): array {
-        $types = [];
         $model = $this->getModel($type::getModelClass(), $disableSubShop);
 
         $queryBuilder = $this->queryBuilderFactory->create();
