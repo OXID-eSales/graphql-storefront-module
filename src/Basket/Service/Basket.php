@@ -343,7 +343,12 @@ final class Basket
     {
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
-        $this->basketInfraService->makePublic($basket);
+        $this->basketInfraService->assignAndSave(
+            $basket,
+            [
+                'oxuserbaskets__oxpublic' => 1
+            ]
+        );
 
         return $basket;
     }
@@ -355,7 +360,12 @@ final class Basket
     {
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
-        $this->basketInfraService->makePrivate($basket);
+        $this->basketInfraService->assignAndSave(
+            $basket,
+            [
+                'oxuserbaskets__oxpublic' => 0
+            ]
+        );
 
         return $basket;
     }
@@ -403,7 +413,12 @@ final class Basket
         }
 
         $deliveryAddressId = $deliveryAddressId ? (string)$deliveryAddressId : null;
-        $this->basketInfrastructure->setDeliveryAddress($basket, $deliveryAddressId);
+        $this->basketInfrastructure->assignAndSave(
+            $basket,
+            [
+                'OEGQL_DELADDRESSID' => $deliveryAddressId
+            ]
+        );
 
         $this->sharedInfrastructure->getBasket($basket);
 
@@ -447,14 +462,7 @@ final class Basket
             throw PaymentValidationFailed::byDeliveryMethod();
         }
 
-        $customer = $this->customerService->customer((string)$basket->getUserId()->val());
-        $country = $this->getBasketDeliveryCountryId($basket);
-
-        $deliveries = $this->basketInfrastructure->getBasketAvailableDeliveryMethods(
-            $customer,
-            $basket,
-            $country
-        );
+        $deliveries = $this->getAvailableDeliveries($basketId);
 
         $paymentMethods = isset($deliveries[$deliveryMethodId])
             ? $deliveries[$deliveryMethodId]->getPaymentTypes()
@@ -470,7 +478,12 @@ final class Basket
     {
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
-        $this->basketInfrastructure->setPayment($basket, (string)$paymentId->val());
+        $this->basketInfrastructure->assignAndSave(
+            $basket,
+            [
+                'OEGQL_PAYMENTID' => (string)$paymentId->val()
+            ]
+        );
 
         return $basket;
     }
@@ -480,15 +493,7 @@ final class Basket
      */
     public function isDeliveryMethodAvailableForBasket(ID $basketId, ID $deliveryMethodId): bool
     {
-        $basket = $this->getAuthenticatedCustomerBasket($basketId);
-        $customer = $this->customerService->customer((string)$basket->getUserId()->val());
-        $country = $this->getBasketDeliveryCountryId($basket);
-
-        $deliveries = $this->basketInfrastructure->getBasketAvailableDeliveryMethods(
-            $customer,
-            $basket,
-            $country
-        );
+        $deliveries = $this->getAvailableDeliveries($basketId);
 
         return array_key_exists((string)$deliveryMethodId->val(), $deliveries);
     }
@@ -501,7 +506,15 @@ final class Basket
     {
         $basket = $this->getAuthenticatedCustomerBasket($basketId);
 
-        $this->basketInfrastructure->setDeliveryMethod($basket, (string)$deliveryId->val());
+        // Update delivery method id for user basket
+        // Resets payment id as it may be not available for new delivery method
+        $this->basketInfrastructure->assignAndSave(
+            $basket,
+            [
+                'OEGQL_DELIVERYMETHODID' => (string)$deliveryId->val(),
+                'OEGQL_PAYMENTID' => '',
+            ]
+        );
 
         return $basket;
     }
@@ -521,15 +534,7 @@ final class Basket
             return $event->getDeliveryMethods();
         }
 
-        $basket = $this->getAuthenticatedCustomerBasket($basketId);
-        $customer = $this->customerService->customer((string)$basket->getUserId()->val());
-        $country = $this->getBasketDeliveryCountryId($basket);
-
-        return $this->basketInfrastructure->getBasketAvailableDeliveryMethods(
-            $customer,
-            $basket,
-            $country
-        );
+        return $this->getAvailableDeliveries($basketId);
     }
 
     /**
@@ -547,15 +552,7 @@ final class Basket
             return $event->getPayments();
         }
 
-        $basket = $this->getAuthenticatedCustomerBasket($basketId);
-        $customer = $this->customerService->customer((string)$basket->getUserId()->val());
-        $country = $this->getBasketDeliveryCountryId($basket);
-
-        $deliveries = $this->basketInfrastructure->getBasketAvailableDeliveryMethods(
-            $customer,
-            $basket,
-            $country
-        );
+        $deliveries = $this->getAvailableDeliveries($basketId);
 
         $result = [];
 
@@ -566,6 +563,19 @@ final class Basket
         }
 
         return array_unique($result, SORT_REGULAR);
+    }
+
+    private function getAvailableDeliveries(ID $basketId): array
+    {
+        $basket = $this->getAuthenticatedCustomerBasket($basketId);
+        $customer = $this->customerService->customer((string)$basket->getUserId()->val());
+        $country = $this->getBasketDeliveryCountryId($basket);
+
+        return $this->basketInfrastructure->getBasketAvailableDeliveryMethods(
+            $customer,
+            $basket,
+            $country
+        );
     }
 
     private function deliveryAddressBelongsToUser(ID $deliveryAddressId): bool
