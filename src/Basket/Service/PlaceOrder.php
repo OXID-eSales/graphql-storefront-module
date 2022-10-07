@@ -51,6 +51,8 @@ final class PlaceOrder
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
+    private BasketFinder $basketFinderService;
+
     public function __construct(
         Authentication $authenticationService,
         Legacy $legacyService,
@@ -58,7 +60,8 @@ final class PlaceOrder
         BasketInfrastructure $basketInfrastructure,
         BasketRelationService $basketRelationService,
         BasketService $basketService,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        BasketFinder $basketFinderService
     ) {
         $this->authenticationService = $authenticationService;
         $this->legacyService = $legacyService;
@@ -67,6 +70,8 @@ final class PlaceOrder
         $this->basketInfrastructure = $basketInfrastructure;
         $this->basketService = $basketService;
         $this->eventDispatcher = $eventDispatcher;
+        $this->basketFinderService = $basketFinderService;
+
     }
 
     /**
@@ -86,7 +91,7 @@ final class PlaceOrder
             BeforePlaceOrder::class
         );
 
-        $userBasket = $this->basketService->getAuthenticatedCustomerBasket($basketId);
+        $userBasket = $this->basketFinderService->getAuthenticatedCustomerBasket($basketId);
 
         $this->checkTermsAndConditionsConsent($userBasket, $termsAndConditions);
 

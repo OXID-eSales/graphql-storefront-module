@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Shop;
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\Discount as EshopDiscountModel;
 use OxidEsales\Eshop\Core\Exception\ObjectException as EshopObjectException;
-use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
+use OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder as BasketFinderService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -133,8 +133,8 @@ class Voucher extends Voucher_parent
         $basketId = $this->getRawFieldData('oegql_basketid');
 
         if ($basketId) {
-            /** @var BasketService $basketService */
-            $basketService = $this->getContainer()->get(BasketService::class);
+            /** @var BasketFinderService $basketService */
+            $basketService = $this->getContainer()->get(BasketFinderService::class);
             $basket = $basketService->basket(new ID($basketId));
 
             /** @var SharedBasketInfrastructure $sharedBasketInfrastructure */

@@ -75,11 +75,10 @@ final class Banner
      */
     public function banners(): array
     {
-        $userId = null;
-
         try {
             $userId = (string)$this->authenticationService->getUser()->id();
         } catch (InvalidToken $e) {
+            $userId = null;
         }
 
         return $this->bannerInfrastructure->banners($userId);

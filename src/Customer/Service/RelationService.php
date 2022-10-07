@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress as InvoiceAddressDataType;
 use OxidEsales\GraphQL\Storefront\Address\Service\InvoiceAddress as InvoiceAddressService;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
-use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
+use OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder as BasketFinderService;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer as CustomerInfrastructure;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository as CustomerRepository;
@@ -48,26 +48,25 @@ final class RelationService
     /** @var InvoiceAddressService */
     private $invoiceAddressService;
 
-    /** @var BasketService */
-    private $basketService;
-
     /** @var CustomerInfrastructure */
     private $customerInfrastructure;
+
+    private BasketFinderService $basketFinderService;
 
     public function __construct(
         ReviewService $reviewService,
         NewsletterStatusService $newsletterStatusService,
         CustomerRepository $customerRepository,
         InvoiceAddressService $invoiceAddressService,
-        BasketService $basketService,
-        CustomerInfrastructure $customerInfrastructure
+        CustomerInfrastructure $customerInfrastructure,
+        BasketFinderService $basketFinderService
     ) {
         $this->reviewService = $reviewService;
         $this->newsletterStatusService = $newsletterStatusService;
         $this->customerRepository = $customerRepository;
         $this->invoiceAddressService = $invoiceAddressService;
-        $this->basketService = $basketService;
         $this->customerInfrastructure = $customerInfrastructure;
+        $this->basketFinderService = $basketFinderService;
     }
 
     /**
@@ -123,7 +122,7 @@ final class RelationService
      */
     public function getBasket(CustomerDataType $customer, string $title): BasketDataType
     {
-        return $this->basketService->basketByOwnerAndTitle($customer, $title);
+        return $this->basketFinderService->basketByOwnerAndTitle($customer, $title);
     }
 
     /**
@@ -133,7 +132,7 @@ final class RelationService
      */
     public function getBaskets(CustomerDataType $customer): array
     {
-        return $this->basketService->basketsByOwner($customer);
+        return $this->basketFinderService->basketsByOwner($customer);
     }
 
     /**

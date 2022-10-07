@@ -13,6 +13,8 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\PublicBasket as PublicBasketDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketModify;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
+use OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder as BasketFinderService;
+use OxidEsales\GraphQL\Storefront\Basket\Service\BasketItem as BasketItemService;
 use OxidEsales\GraphQL\Storefront\Basket\Service\PlaceOrder as PlaceOrderService;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
 use OxidEsales\GraphQL\Storefront\Order\DataType\Order as OrderDataType;
@@ -36,14 +38,22 @@ final class Basket
     /** @var EventDispatcherInterface */
     private $eventDispatcher;
 
+    private BasketFinderService $basketFinderService;
+
+    private BasketItemService $basketItemService;
+
     public function __construct(
         BasketService $basketService,
         PlaceOrderService $placeOrderService,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        BasketFinderService $basketFinderService,
+        BasketItemService $basketItemService
     ) {
         $this->basketService = $basketService;
         $this->placeOrderService = $placeOrderService;
         $this->eventDispatcher = $eventDispatcher;
+        $this->basketFinderService = $basketFinderService;
+        $this->basketItemService = $basketItemService;
     }
 
     /**
@@ -54,7 +64,7 @@ final class Basket
      */
     public function basket(ID $basketId): BasketDataType
     {
-        return $this->basketService->basket($basketId);
+        return $this->basketFinderService->basket($basketId);
     }
 
     /**
@@ -64,7 +74,7 @@ final class Basket
      */
     public function publicBasket(ID $basketId): PublicBasketDataType
     {
-        return $this->basketService->publicBasket($basketId);
+        return $this->basketFinderService->publicBasket($basketId);
     }
 
     /**
@@ -73,7 +83,7 @@ final class Basket
      */
     public function basketAddItem(ID $basketId, ID $productId, float $amount): BasketDataType
     {
-        return $this->basketService->addBasketItem($basketId, $productId, $amount);
+        return $this->basketItemService->addItemToBasket($basketId, $productId, $amount);
     }
 
     /**
