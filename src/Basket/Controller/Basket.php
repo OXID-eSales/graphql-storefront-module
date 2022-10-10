@@ -92,7 +92,7 @@ final class Basket
      */
     public function basketRemoveItem(ID $basketId, ID $basketItemId, float $amount): BasketDataType
     {
-        return $this->basketService->removeBasketItem($basketId, $basketItemId, $amount);
+        return $this->basketItemService->removeItemFromBasket($basketId, $basketItemId, $amount);
     }
 
     /**

@@ -70,9 +70,6 @@ final class Basket
     /** @var Legacy */
     private $legacyService;
 
-    /** @var ProductService */
-    private $productService;
-
     /** @var SharedInfrastructure */
     private $sharedInfrastructure;
 
@@ -111,7 +108,6 @@ final class Basket
         Authentication $authenticationService,
         Authorization $authorizationService,
         Legacy $legacyService,
-        ProductService $productService,
         SharedInfrastructure $sharedInfrastructure,
         BasketVoucher $basketVoucherService,
         VoucherInfrastructure $voucherInfrastructure,
@@ -129,7 +125,6 @@ final class Basket
         $this->authenticationService = $authenticationService;
         $this->authorizationService = $authorizationService;
         $this->legacyService = $legacyService;
-        $this->productService = $productService;
         $this->sharedInfrastructure = $sharedInfrastructure;
         $this->basketVoucherService = $basketVoucherService;
         $this->voucherInfrastructure = $voucherInfrastructure;
@@ -193,63 +188,6 @@ final class Basket
         }
 
         return $customer;
-    }
-
-    public function addBasketItem(ID $basketId, ID $productId, float $amount): BasketDataType
-    {
-        $this->eventDispatcher->dispatch(
-            new BeforeAddItem($basketId, $productId, $amount),
-            BeforeAddItem::class
-        );
-
-        $basket = $this->basketFinderService->getAuthenticatedCustomerBasket($basketId);
-
-        $this->productService->product($productId);
-
-        $event = new BeforeAddItem(
-            $basketId,
-            $productId,
-            $amount
-        );
-
-        $this->eventDispatcher->dispatch(
-            $event,
-            BeforeAddItem::class
-        );
-
-        $this->basketInfrastructure->addBasketItem($basket, $productId, $amount);
-
-        $this->eventDispatcher->dispatch(
-            new AfterAddItem($basketId, $productId, $amount),
-            AfterAddItem::class
-        );
-
-        return $basket;
-    }
-
-    public function removeBasketItem(ID $basketId, ID $basketItemId, float $amount): BasketDataType
-    {
-        $basket = $this->basketFinderService->getAuthenticatedCustomerBasket($basketId);
-
-        $event = new BeforeRemoveItem(
-            $basketId,
-            $basketItemId,
-            $amount
-        );
-
-        $this->eventDispatcher->dispatch(
-            $event,
-            BeforeRemoveItem::class
-        );
-
-        $this->basketInfrastructure->removeBasketItem($basket, $basketItemId, $event->getAmount());
-
-        $this->eventDispatcher->dispatch(
-            new AfterRemoveItem($basketId, $basketItemId, $amount),
-            AfterRemoveItem::class
-        );
-
-        return $basket;
     }
 
     /**
