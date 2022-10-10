@@ -73,9 +73,6 @@ final class Basket
     /** @var SharedInfrastructure */
     private $sharedInfrastructure;
 
-    /** @var BasketVoucher */
-    private $basketVoucherService;
-
     /** @var VoucherInfrastructure */
     private $voucherInfrastructure;
 
@@ -109,7 +106,6 @@ final class Basket
         Authorization $authorizationService,
         Legacy $legacyService,
         SharedInfrastructure $sharedInfrastructure,
-        BasketVoucher $basketVoucherService,
         VoucherInfrastructure $voucherInfrastructure,
         CustomerInfrastructure $customerInfrastructure,
         BasketInfrastructure $basketInfrastructure,
@@ -126,7 +122,6 @@ final class Basket
         $this->authorizationService = $authorizationService;
         $this->legacyService = $legacyService;
         $this->sharedInfrastructure = $sharedInfrastructure;
-        $this->basketVoucherService = $basketVoucherService;
         $this->voucherInfrastructure = $voucherInfrastructure;
         $this->voucherRepository = $voucherRepository;
         $this->basketInfrastructure = $basketInfrastructure;
@@ -253,24 +248,6 @@ final class Basket
         $basketModel = $this->sharedInfrastructure->getCalculatedBasket($basket);
 
         return new BasketCost($basketModel);
-    }
-
-    public function addVoucher(ID $basketId, string $voucherNumber): BasketDataType
-    {
-        $basket = $this->basketFinderService->getAuthenticatedCustomerBasket($basketId);
-
-        $this->basketVoucherService->addVoucherToBasket($voucherNumber, $basket);
-
-        return $basket;
-    }
-
-    public function removeVoucher(ID $basketId, ID $voucherId): BasketDataType
-    {
-        $basket = $this->basketFinderService->getAuthenticatedCustomerBasket($basketId);
-
-        $this->basketVoucherService->removeVoucherFromBasket($voucherId, $basket);
-
-        return $basket;
     }
 
     /**

@@ -21,33 +21,18 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BasketVoucher
 {
-    /** @var Repository */
-    private $repository;
-
     /** @var VoucherRepository */
     private $voucherRepository;
 
     /** @var VoucherInfrastructure */
     private $voucherInfrastructure;
 
-    /** @var Authentication */
-    private $authentication;
-
-    /** @var SharedInfrastructure */
-    private $sharedInfrastructure;
-
     public function __construct(
-        Repository $repository,
         VoucherRepository $voucherRepository,
         VoucherInfrastructure $voucherInfrastructure,
-        Authentication $authentication,
-        SharedInfrastructure $sharedInfrastructure
     ) {
-        $this->repository = $repository;
         $this->voucherRepository = $voucherRepository;
         $this->voucherInfrastructure = $voucherInfrastructure;
-        $this->authentication = $authentication;
-        $this->sharedInfrastructure = $sharedInfrastructure;
     }
 
     public function addVoucherToBasket(
