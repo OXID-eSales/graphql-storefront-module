@@ -35,3 +35,12 @@ services:
       arguments:
           $map: {}
       public: true
+
+  OxidEsales\GraphQL\Storefront\Shared\Subscriber\BeforeModuleDeactivation:
+      class: OxidEsales\GraphQL\Storefront\Shared\Subscriber\BeforeModuleDeactivation
+      arguments: ['%oxidesales.graphqlstorefront.depends_on_modules%']
+      tags: [ 'kernel.event_subscriber' ]
+      public: true
+
+parameters:
+    oxidesales.graphqlstorefront.depends_on_modules: ['oe_graphql_base']
