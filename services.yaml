@@ -35,3 +35,11 @@ services:
       arguments:
           $map: {}
       public: true
+
+  OxidEsales\GraphQL\Storefront\Shared\Service\ModuleDependencyService:
+      class: OxidEsales\GraphQL\Storefront\Shared\Service\ModuleDependencyService
+      tags: [ 'kernel.module_dependencies' ]
+
+  OxidEsales\GraphQL\Storefront\Shared\Subscriber\ModuleDeactivation:
+      class: OxidEsales\GraphQL\Storefront\Shared\Subscriber\ModuleDeactivation
+      tags: [ 'kernel.event_subscriber' ]
