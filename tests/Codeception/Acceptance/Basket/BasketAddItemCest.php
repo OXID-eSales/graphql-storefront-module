@@ -254,7 +254,7 @@ final class BasketAddItemCest extends BasketBaseCest
         $addAmount = 10;
         $result = $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, $addAmount);
         $expectedMessage = BasketItemAmountLimitedStock::limitedAvailability(self::PRODUCT_ID, $initialAmount + 1);
-        $I->assertStringStartsWith($expectedMessage, $result['errors'][0]['message']);
+        $I->assertStringStartsWith($expectedMessage->getMessage(), $result['errors'][0]['message']);
 
         //check the basket, we now should have $initialAmount + 1
         $basket = $this->basketQuery($I, $basketId);

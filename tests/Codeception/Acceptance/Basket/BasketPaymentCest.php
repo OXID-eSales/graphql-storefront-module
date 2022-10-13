@@ -80,44 +80,51 @@ final class BasketPaymentCest extends BaseCest
         $basketId = $this->basketCreate($I);
 
         $result = $this->basketPaymentQuery($I, $basketId);
-
-        $I->assertSame([
-            [
+        $expected = [
+            'oxidinvoice' => [
                 'id' => 'oxidinvoice',
                 'title' => 'Rechnung',
                 'cost' => [
                     'price' => 0,
                 ],
             ],
-            [
+            'oxidpayadvance' => [
                 'id' => 'oxidpayadvance',
                 'title' => 'Vorauskasse',
                 'cost' => [
                     'price' => 0,
                 ],
             ],
-            [
+            'oxiddebitnote' => [
                 'id' => 'oxiddebitnote',
                 'title' => 'Bankeinzug/Lastschrift',
                 'cost' => [
                     'price' => 0,
                 ],
             ],
-            [
+            'oxidcashondel' => [
                 'id' => 'oxidcashondel',
                 'title' => 'Nachnahme',
                 'cost' => [
                     'price' => 7.5,
                 ],
             ],
-            [
+            'oxidgraphql' => [
                 'id' => 'oxidgraphql',
                 'title' => 'GraphQL',
                 'cost' => [
                     'price' => 7.77,
                 ],
             ],
-        ], $result['data']['basketPayments']);
+        ];
+
+        $I->assertNotEmpty($result['data']['basketPayments']);
+        $I->assertSame(count($result['data']['basketPayments']), count($expected));
+
+        foreach ($result['data']['basketPayments'] as $basketPayment) {
+            $I->assertSame($expected[$basketPayment['id']], $basketPayment);
+        }
+
     }
 
     public function testNonExistingBasketPayments(AcceptanceTester $I): void

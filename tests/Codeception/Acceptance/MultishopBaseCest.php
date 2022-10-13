@@ -16,10 +16,11 @@ use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
 use OxidEsales\Facts\Facts;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
+use Symfony\Component\Console\Tester\CommandTester;
 
 $facts = new Facts();
 
-require_once $facts->getVendorPath() . '/oxid-esales/testing-library/base.php';
+//require_once $facts->getVendorPath() . '/oxid-esales/testing-library/base.php';
 
 abstract class MultishopBaseCest extends BaseCest
 {
@@ -57,12 +58,21 @@ abstract class MultishopBaseCest extends BaseCest
         $container->get(ShopConfigurationDaoBridgeInterface::class)->save($shopConfiguration);
 
         $this->regenerateDatabaseViews();
-        $this->activateModules(self::SUBSHOP_ID);
+        $this->activateModule();
     }
 
     private function regenerateDatabaseViews(): void
     {
         $vendorPath = (new Facts())->getVendorPath();
         exec($vendorPath . '/bin/oe-eshop-db_views_generate');
+    }
+
+    private function activateModule()
+    {
+        $commandTester = new CommandTester(
+            ContainerFactory::getInstance()->getContainer()->get('console.command_loader')->get('oe:module:activate')
+        );
+
+        $commandTester->execute(['module-id' => 'oe_graphql_storefront']);
     }
 }

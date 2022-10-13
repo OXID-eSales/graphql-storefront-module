@@ -12,6 +12,9 @@ namespace OxidEsales\GraphQL\Storefront\Content\DataType;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Content as EshopContentModel;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererInterface;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -72,13 +75,18 @@ final class Content implements ShopModelAwareInterface
         $oActView = oxNew(FrontendController::class);
         $oActView->addGlobalParams();
 
-        /** @var \OxidEsales\Eshop\Core\UtilsView $oUtilsView */
-        $oUtilsView = Registry::getUtilsView();
+        $container = ContainerFactory::getInstance()->getContainer();
 
-        return $oUtilsView->getRenderedContent(
+        /** @var TemplateRendererInterface $templateRenderInterface */
+        $templateRenderInterface = $container->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
+
+        $activeLanguageId = Registry::getLang()->getTplLanguage();
+        $contentId = $this->content->getId();
+
+        return $templateRenderInterface->renderFragment(
             $this->content->getRawFieldData('oxcontent'),
-            $oActView->getViewData(),
-            $this->content->getId()
+            "ox:{$contentId}{$activeLanguageId}",
+            $oActView->getViewData()
         );
     }
 

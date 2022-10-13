@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-use OxidEsales\Eshop\Core\ConfigFile;
+use OxidEsales\Codeception\Module\Database\DatabaseDefaultsFileGenerator;
+use OxidEsales\Facts\Config\ConfigFile;
 use OxidEsales\Facts\Facts;
-use OxidEsales\TestingLibrary\Services\Library\DatabaseDefaultsFileGenerator;
 
 $facts = new Facts();
 $selenium_server_port = getenv('SELENIUM_SERVER_PORT');

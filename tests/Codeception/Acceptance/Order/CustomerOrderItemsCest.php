@@ -28,6 +28,9 @@ final class CustomerOrderItemsCest extends BaseCest
 
     private const ORDER_WITH_DELETED_PRODUCT = '_order_with_deleted_product';
 
+    /**
+     * @group order1
+     */
     public function testCustomerOrderItems(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
@@ -83,10 +86,10 @@ final class CustomerOrderItemsCest extends BaseCest
                 'amount' => 1.0,
                 'product' => [
                     'id' => '058e613db53d782adfc9f2ccb43c45fe',
-                    'title' => 'Bindung O\'BRIEN DECADE CT 2010',
+                    'title' => 'Bindung O\'BRIEN DECADE CT',
                 ],
                 'sku' => '2401',
-                'title' => 'Bindung O\'BRIEN DECADE CT 2010',
+                'title' => 'Bindung O\'BRIEN DECADE CT',
                 'shortDescription' => 'Geringes Gewicht, beste Performance!',
                 'price' => [
                     'price' => 359.0,

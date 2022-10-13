@@ -48,7 +48,7 @@ UPDATE `oxarticles` SET `OXRATING` = '2', `OXRATINGCNT` = '2' WHERE oxid = '_tes
 
 UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = '1', `OXSUBSCRIBED` = '2020-04-01 11:11:11', `OXUNSUBSCRIBED` = '0000-00-00 00:00:00' WHERE `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
 
-UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = 1 where `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
+UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = 1, OXEMAIL = 'user@oxid-esales.com' where `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
 
 REPLACE INTO `oxaddress` (`OXID`, `OXUSERID`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXCITY`, `OXCOUNTRY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXSAL`, `OXTIMESTAMP`) VALUES
 ('test_delivery_address',	'e7af1c3b786fd02906ccd75698f4e6b9',	'Marc',	'Muster',	'Hauptstr',	'13',	'Freiburg',	'Germany',	'a7c40f631fc920687.20179984', '',	'79098',	'MR',	'2020-07-14 14:12:48'),
@@ -75,11 +75,11 @@ REPLACE INTO `oxuserbasketitems` (`OXID`, `OXBASKETID`, `OXARTID`, `OXAMOUNT`, `
 ('_test_basket_item_2', '_test_basket_private', '_test_product_for_basket', 1, 'N;', ''),
 ('_test_voucherbasket_item_1', '_test_voucher_public', '_test_product_for_basket', 1, 'N;', '');
 
-UPDATE `oxcountry` SET `oxorder` = 1 where `OXID` = 'a7c40f631fc920687.20179984';
-UPDATE `oxcountry` SET `oxorder` = 2 where `OXID` = '8f241f11096877ac0.98748826';
-UPDATE `oxcountry` SET `oxorder` = 3 where `OXID` = 'a7c40f6321c6f6109.43859248';
-UPDATE `oxcountry` SET `oxorder` = 4 where `OXID` = 'a7c40f6320aeb2ec2.72885259';
-UPDATE `oxcountry` SET `oxorder` = 5 where `OXID` = 'a7c40f632a0804ab5.18804076';
+UPDATE `oxcountry` SET `oxorder` = 1, `oxactive` = 1 where `OXID` = 'a7c40f631fc920687.20179984';
+UPDATE `oxcountry` SET `oxorder` = 2, `oxactive` = 1 where `OXID` = '8f241f11096877ac0.98748826';
+UPDATE `oxcountry` SET `oxorder` = 3, `oxactive` = 1 where `OXID` = 'a7c40f6321c6f6109.43859248';
+UPDATE `oxcountry` SET `oxorder` = 4, `oxactive` = 1 where `OXID` = 'a7c40f6320aeb2ec2.72885259';
+UPDATE `oxcountry` SET `oxorder` = 5, `oxactive` = 1 where `OXID` = 'a7c40f632a0804ab5.18804076';
 
 REPLACE INTO `oxorder` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXORDERDATE`, `OXORDERNR`, `OXBILLCOMPANY`, `OXBILLEMAIL`, `OXBILLFNAME`,
  `OXBILLLNAME`, `OXBILLSTREET`, `OXBILLSTREETNR`, `OXBILLADDINFO`, `OXBILLCITY`,

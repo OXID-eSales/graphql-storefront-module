@@ -10,7 +10,9 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Content;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Dao\ModuleConfigurationDaoInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
+use OxidEsales\EshopCommunity\Tests\TestContainerFactory;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -90,10 +92,11 @@ final class ContentCest extends BaseCest
 
     private function isVCMSActive(): bool
     {
-        $moduleActivation = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(ModuleActivationBridgeInterface::class);
+        $container = (new TestContainerFactory())->create();
+        $container->compile();
+        $container->get('oxid_esales.module.install.service.launched_shop_project_configuration_generator')->generate();
+        $moduleActivation = $container->get(ModuleConfigurationDaoInterface::class);
 
-        return (bool)$moduleActivation->isActive('ddoevisualcms', 1);
+        return (bool)$moduleActivation->exists('ddoevisualcms', 1);
     }
 }
