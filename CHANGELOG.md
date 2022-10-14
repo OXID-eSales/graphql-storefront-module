@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.0.0] - Unreleased
 
+### Added
+- Classes:
+  - ``OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder``
+
 ### Removed
 - Classes:
   - ``OxidEsales\GraphQL\Storefrnt\Address\Exception\DeliveryAddressMissingFields``
@@ -13,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Refactore NotFound exception and children to create instance with constructor instead of static methods.
+- Move methods from Basket-Service to BasketItem, BasketVoucher and BasketFinder-Service
 
 ## [2.1.0] - 2022-07-14
 
