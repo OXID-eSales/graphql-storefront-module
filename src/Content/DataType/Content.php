@@ -77,13 +77,13 @@ final class Content implements ShopModelAwareInterface
 
         $container = ContainerFactory::getInstance()->getContainer();
 
-        /** @var TemplateRendererInterface $templateRenderInterface */
-        $templateRenderInterface = $container->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
+        /** @var TemplateRendererInterface $templateRenderer */
+        $templateRenderer = $container->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
 
         $activeLanguageId = Registry::getLang()->getTplLanguage();
         $contentId = $this->content->getId();
 
-        return $templateRenderInterface->renderFragment(
+        return $templateRenderer->renderFragment(
             $this->content->getRawFieldData('oxcontent'),
             "ox:{$contentId}{$activeLanguageId}",
             $oActView->getViewData()

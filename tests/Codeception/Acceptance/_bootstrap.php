@@ -11,4 +11,3 @@ declare(strict_types=1);
 use Webmozart\PathUtil\Path;
 
 require_once Path::join((new \OxidEsales\Facts\Facts())->getShopRootPath(), 'source', 'bootstrap.php');
-

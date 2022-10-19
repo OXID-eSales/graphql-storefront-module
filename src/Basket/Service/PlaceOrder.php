@@ -71,7 +71,6 @@ final class PlaceOrder
         $this->basketService = $basketService;
         $this->eventDispatcher = $eventDispatcher;
         $this->basketFinderService = $basketFinderService;
-
     }
 
     /**

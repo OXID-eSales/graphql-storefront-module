@@ -89,6 +89,4 @@ final class BasketFinder
     {
         return $this->basketRepository->customerBaskets($customer);
     }
-
-
 }

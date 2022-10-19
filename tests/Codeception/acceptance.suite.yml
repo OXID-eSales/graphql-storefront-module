@@ -19,6 +19,11 @@ modules:
         -   \OxidEsales\Codeception\Module\Database:
                 config_key: 'fq45QS09_fqyx09239QQ'
                 depends: Db
+        -   \OxidEsales\Codeception\Module\SelectTheme:
+                theme_id: twig
+                depends:
+                    - \OxidEsales\Codeception\Module\Database
+                    - Db
         -   REST:
                 url: '%SHOP_URL%'
                 depends: PhpBrowser

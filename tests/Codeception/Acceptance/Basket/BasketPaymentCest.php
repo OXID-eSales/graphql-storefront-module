@@ -124,7 +124,6 @@ final class BasketPaymentCest extends BaseCest
         foreach ($result['data']['basketPayments'] as $basketPayment) {
             $I->assertSame($expected[$basketPayment['id']], $basketPayment);
         }
-
     }
 
     public function testNonExistingBasketPayments(AcceptanceTester $I): void

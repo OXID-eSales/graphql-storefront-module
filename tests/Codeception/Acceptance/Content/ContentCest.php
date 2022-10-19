@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Content;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Dao\ModuleConfigurationDaoInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Exception\ModuleConfigurationNotFoundException;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
-use OxidEsales\EshopCommunity\Tests\TestContainerFactory;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -47,7 +47,7 @@ final class ContentCest extends BaseCest
             [
                 'id' => self::CONTENT_WITH_TEMPLATE,
                 'content' => 'GraphQL rendered content DE',
-                'rawContent' => 'GraphQL [{if true }]rendered [{/if}]content DE',
+                'rawContent' => 'GraphQL {% if true %}rendered {% endif %}content DE',
             ],
             $content
         );
@@ -92,11 +92,16 @@ final class ContentCest extends BaseCest
 
     private function isVCMSActive(): bool
     {
-        $container = (new TestContainerFactory())->create();
-        $container->compile();
-        $container->get('oxid_esales.module.install.service.launched_shop_project_configuration_generator')->generate();
-        $moduleActivation = $container->get(ModuleConfigurationDaoInterface::class);
+        $moduleActivation = ContainerFactory::getInstance()
+            ->getContainer()
+            ->get(ModuleActivationBridgeInterface::class);
 
-        return (bool)$moduleActivation->exists('ddoevisualcms', 1);
+        try {
+            $isActive = (bool)$moduleActivation->isActive('ddoevisualcms', 1);
+        } catch (ModuleConfigurationNotFoundException $exception) {
+            $isActive = false;
+        }
+
+        return $isActive;
     }
 }
