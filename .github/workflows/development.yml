@@ -67,8 +67,6 @@ jobs:
             - name: Install module
               run: |
                   docker-compose exec -T \
-                    php composer require oxid-esales/graphql-base:* --no-interaction
-                  docker-compose exec -T \
                     php composer config repositories.oxid-esales/grapqhl-storefront \
                     --json '{"type":"path", "url":"./test-module", "options": {"symlink": true}}'
                   docker-compose exec -T \
