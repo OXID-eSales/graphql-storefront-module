@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance;
 
 use Codeception\Scenario;
+use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
@@ -57,6 +58,7 @@ abstract class MultishopBaseCest extends BaseCest
         Registry::getConfig()->setShopId(self::SUBSHOP_ID);
         $container->get(ShopConfigurationDaoBridgeInterface::class)->save($shopConfiguration);
 
+        $this->copyContent();
         $this->regenerateDatabaseViews();
         $this->activateModule();
     }
@@ -74,5 +76,25 @@ abstract class MultishopBaseCest extends BaseCest
         );
 
         $commandTester->execute(['module-id' => 'oe_graphql_storefront']);
+    }
+
+    private function copyContent()
+    {
+        //copy contents
+        $shopContentList = oxNew(\OxidEsales\Eshop\Core\Model\ListModel::class);
+        $shopContentList->init("oxi18n", 'oxcontents');
+        $shopContentList->getBaseObject()->setEnableMultilang(false);
+
+        $shopContentList->selectString("select * from oxcontents where oxshopid = '1'");
+        foreach ($shopContentList as $shopContent) {
+            try {
+                $shopContent->oxcontents__oxshopid->setValue(self::SUBSHOP_ID);
+                $shopContent->delete();
+                $shopContent->setId();
+                $shopContent->save();
+            } catch (DatabaseErrorException $e) {
+                // This happen on executing multiple tests
+            }
+        }
     }
 }
