@@ -15,13 +15,11 @@ use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
+use OxidEsales\EshopEnterprise\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationGeneratorBridgeInterface;
 use OxidEsales\Facts\Facts;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
-use Symfony\Component\Console\Tester\CommandTester;
-
-$facts = new Facts();
-
-//require_once $facts->getVendorPath() . '/oxid-esales/testing-library/base.php';
+use Psr\Container\ContainerInterface;
 
 abstract class MultishopBaseCest extends BaseCest
 {
@@ -57,10 +55,13 @@ abstract class MultishopBaseCest extends BaseCest
         $shopConfiguration = $container->get(ShopConfigurationDaoBridgeInterface::class)->get();
         Registry::getConfig()->setShopId(self::SUBSHOP_ID);
         $container->get(ShopConfigurationDaoBridgeInterface::class)->save($shopConfiguration);
+        $container->get(ShopConfigurationGeneratorBridgeInterface::class)->generateForShop(self::SUBSHOP_ID);
 
         $this->copyContent();
         $this->regenerateDatabaseViews();
-        $this->activateModule();
+        $this->activateModule($container);
+
+        ContainerFactory::resetContainer();
     }
 
     private function regenerateDatabaseViews(): void
@@ -69,13 +70,14 @@ abstract class MultishopBaseCest extends BaseCest
         exec($vendorPath . '/bin/oe-eshop-db_views_generate');
     }
 
-    private function activateModule()
+    private function activateModule(ContainerInterface $container)
     {
-        $commandTester = new CommandTester(
-            ContainerFactory::getInstance()->getContainer()->get('console.command_loader')->get('oe:module:activate')
-        );
-
-        $commandTester->execute(['module-id' => 'oe_graphql_storefront']);
+        $container
+            ->get(ModuleActivationBridgeInterface::class)
+            ->activate('oe_graphql_base', self::SUBSHOP_ID);
+        $container
+            ->get(ModuleActivationBridgeInterface::class)
+            ->activate('oe_graphql_storefront', self::SUBSHOP_ID);
     }
 
     private function copyContent()
