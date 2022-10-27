@@ -5,7 +5,7 @@ env:
 
 on:
   push:
-    branches: [ master-installable-OXDEV-6054 ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -84,9 +84,9 @@ jobs:
           TOKEN=$(curl --silent http://localhost/graphql?skipSession=1 -H 'Content-Type: application/json' --data-binary '{"query":"query {token(username: \"admin\", password:\"admin\")}"}' | sed -n 's|.*"token":"\(.*\)\"}}|\1|p')
           graphdoc -e http://localhost/graphql?skipSession=1 -o $GITHUB_WORKSPACE/docs/_static/schema -f -x "Authorization: Bearer $TOKEN"
 
-#      - name: Deploy
-#        uses: JamesIves/github-pages-deploy-action@releases/v3
-#        with:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          BRANCH: schema
-#          FOLDER: docs/_static/schema
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: schema
+          FOLDER: docs/_static/schema
