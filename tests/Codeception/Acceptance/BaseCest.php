@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance;
 
 use Codeception\Scenario;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Exception\ModuleSetupException;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Service\ModuleActivationServiceInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 abstract class BaseCest
@@ -25,13 +24,5 @@ abstract class BaseCest
     public function _after(AcceptanceTester $I): void
     {
         $I->logout();
-    }
-
-    /**
-     * Activates modules
-     */
-    protected function activateModules(AcceptanceTester $I, int $shopId = 1): void
-    {
-        $I->activateModule($this->testModule1Id);
     }
 }

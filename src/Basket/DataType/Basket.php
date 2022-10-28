@@ -74,8 +74,6 @@ final class Basket extends AbstractBasket implements ShopModelAwareInterface
         );
 
         return $event->getAuthorized();
-
-//        return $this->getUserId()->val() === $userId;
     }
 
     /**

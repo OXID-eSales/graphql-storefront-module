@@ -28,9 +28,6 @@ final class CustomerOrderItemsCest extends BaseCest
 
     private const ORDER_WITH_DELETED_PRODUCT = '_order_with_deleted_product';
 
-    /**
-     * @group order1
-     */
     public function testCustomerOrderItems(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);
