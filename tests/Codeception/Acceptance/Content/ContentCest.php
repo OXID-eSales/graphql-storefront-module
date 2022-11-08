@@ -9,7 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Content;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Exception\ModuleConfigurationNotFoundException;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
@@ -45,7 +47,7 @@ final class ContentCest extends BaseCest
             [
                 'id' => self::CONTENT_WITH_TEMPLATE,
                 'content' => 'GraphQL rendered content DE',
-                'rawContent' => 'GraphQL [{if true }]rendered [{/if}]content DE',
+                'rawContent' => 'GraphQL {% if true %}rendered {% endif %}content DE',
             ],
             $content
         );
@@ -94,6 +96,12 @@ final class ContentCest extends BaseCest
             ->getContainer()
             ->get(ModuleActivationBridgeInterface::class);
 
-        return (bool)$moduleActivation->isActive('ddoevisualcms', 1);
+        try {
+            $isActive = (bool)$moduleActivation->isActive('ddoevisualcms', 1);
+        } catch (ModuleConfigurationNotFoundException $exception) {
+            $isActive = false;
+        }
+
+        return $isActive;
     }
 }

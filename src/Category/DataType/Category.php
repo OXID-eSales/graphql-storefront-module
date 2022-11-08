@@ -115,7 +115,7 @@ final class Category implements ShopModelAwareInterface
      */
     public function getLongDescription(): string
     {
-        return $this->category->getLongDesc();
+        return $this->category->getRawFieldData('oxlongdesc');
     }
 
     /**

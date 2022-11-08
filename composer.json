@@ -31,7 +31,7 @@
         "oxid-esales/oxideshop-ce": "dev-b-7.0.x",
         "qossmic/deptrac-shim": "^0.15.0",
         "codeception/module-rest": "*",
-        "codeception/module-phpbrowser": "^1.0.2",
+        "codeception/module-phpbrowser": "*",
         "codeception/module-db": "*"
     },
     "minimum-stability": "dev",

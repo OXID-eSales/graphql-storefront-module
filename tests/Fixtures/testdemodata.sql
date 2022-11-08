@@ -48,7 +48,7 @@ UPDATE `oxarticles` SET `OXRATING` = '2', `OXRATINGCNT` = '2' WHERE oxid = '_tes
 
 UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = '1', `OXSUBSCRIBED` = '2020-04-01 11:11:11', `OXUNSUBSCRIBED` = '0000-00-00 00:00:00' WHERE `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
 
-UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = 1 where `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
+UPDATE `oxnewssubscribed` SET `OXDBOPTIN` = 1, OXEMAIL = 'user@oxid-esales.com' where `OXUSERID` = 'e7af1c3b786fd02906ccd75698f4e6b9';
 
 REPLACE INTO `oxaddress` (`OXID`, `OXUSERID`, `OXFNAME`, `OXLNAME`, `OXSTREET`, `OXSTREETNR`, `OXCITY`, `OXCOUNTRY`, `OXCOUNTRYID`, `OXSTATEID`, `OXZIP`, `OXSAL`, `OXTIMESTAMP`) VALUES
 ('test_delivery_address',	'e7af1c3b786fd02906ccd75698f4e6b9',	'Marc',	'Muster',	'Hauptstr',	'13',	'Freiburg',	'Germany',	'a7c40f631fc920687.20179984', '',	'79098',	'MR',	'2020-07-14 14:12:48'),
@@ -75,11 +75,11 @@ REPLACE INTO `oxuserbasketitems` (`OXID`, `OXBASKETID`, `OXARTID`, `OXAMOUNT`, `
 ('_test_basket_item_2', '_test_basket_private', '_test_product_for_basket', 1, 'N;', ''),
 ('_test_voucherbasket_item_1', '_test_voucher_public', '_test_product_for_basket', 1, 'N;', '');
 
-UPDATE `oxcountry` SET `oxorder` = 1 where `OXID` = 'a7c40f631fc920687.20179984';
-UPDATE `oxcountry` SET `oxorder` = 2 where `OXID` = '8f241f11096877ac0.98748826';
-UPDATE `oxcountry` SET `oxorder` = 3 where `OXID` = 'a7c40f6321c6f6109.43859248';
-UPDATE `oxcountry` SET `oxorder` = 4 where `OXID` = 'a7c40f6320aeb2ec2.72885259';
-UPDATE `oxcountry` SET `oxorder` = 5 where `OXID` = 'a7c40f632a0804ab5.18804076';
+UPDATE `oxcountry` SET `oxorder` = 1, `oxactive` = 1 where `OXID` = 'a7c40f631fc920687.20179984';
+UPDATE `oxcountry` SET `oxorder` = 2, `oxactive` = 1 where `OXID` = '8f241f11096877ac0.98748826';
+UPDATE `oxcountry` SET `oxorder` = 3, `oxactive` = 1 where `OXID` = 'a7c40f6321c6f6109.43859248';
+UPDATE `oxcountry` SET `oxorder` = 4, `oxactive` = 1 where `OXID` = 'a7c40f6320aeb2ec2.72885259';
+UPDATE `oxcountry` SET `oxorder` = 5, `oxactive` = 1 where `OXID` = 'a7c40f632a0804ab5.18804076';
 
 REPLACE INTO `oxorder` (`OXID`, `OXSHOPID`, `OXUSERID`, `OXORDERDATE`, `OXORDERNR`, `OXBILLCOMPANY`, `OXBILLEMAIL`, `OXBILLFNAME`,
  `OXBILLLNAME`, `OXBILLSTREET`, `OXBILLSTREETNR`, `OXBILLADDINFO`, `OXBILLCITY`,
@@ -236,5 +236,5 @@ REPLACE INTO `oxvouchers` (`OXDATEUSED`, `OXORDERID`, `OXUSERID`, `OXRESERVED`, 
 ('2020-10-10',	'',	'',	0,	'basket_payment_cost_voucher',	'basket_payment_cost_voucher',	10.00,	'basket_payment_cost_voucher_1',	'2020-11-16 11:26:01',	'basket_payment_cost');
 
 INSERT INTO `oxcontents` (`OXID`, `OXLOADID`, `OXSHOPID`, `OXSNIPPET`, `OXTYPE`, `OXACTIVE`, `OXACTIVE_1`, `OXPOSITION`, `OXTITLE`, `OXCONTENT`, `OXTITLE_1`, `OXCONTENT_1`, `OXACTIVE_2`, `OXTITLE_2`, `OXCONTENT_2`, `OXACTIVE_3`, `OXTITLE_3`, `OXCONTENT_3`, `OXCATID`, `OXFOLDER`, `OXTERMVERSION`, `OXTIMESTAMP`) VALUES
-('4d4106027b63b623b2c4ee1ea6838d7f', 'graphqlcontenttemplate', 1, 1, 0, 1, 1, '', 'GraphQL content with template DE', 'GraphQL [{if true }]rendered [{/if}]content DE',	'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32'),
-('9f825347decfdb7008d162700be95dc1', 'graphqlcontentvcms', 1, 1, 0, 1, 1, '', 'GraphQL content with VCMS template DE', '[{veparse}][row][col size="12" offset="0" class=""][text]GraphQL VCMS [{if true }]rendered [{/if}]content DE[/text][/col][/row][{/veparse}]', 'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32');
+('4d4106027b63b623b2c4ee1ea6838d7f', 'graphqlcontenttemplate', 1, 1, 0, 1, 1, '', 'GraphQL content with template DE', 'GraphQL {% if true %}rendered {% endif %}content DE',	'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32'),
+('9f825347decfdb7008d162700be95dc1', 'graphqlcontentvcms', 1, 1, 0, 1, 1, '', 'GraphQL content with VCMS template DE', '{% veparse %}[row][col size="12" offset="0" class=""][text]GraphQL VCMS {% if true %}rendered {% endif %}content DE[/text][/col][/row][{% endveparse %}', 'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32');

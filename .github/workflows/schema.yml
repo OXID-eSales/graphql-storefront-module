@@ -28,8 +28,9 @@ jobs:
 
           perl -pi\
             -e 's#display_errors =.*#display_errors = false#g;'\
-            -e 'print "xdebug.max_nesting_level=1000\nxdebug.mode=coverage\n\n"'\
-            containers/php-fpm/custom.ini
+            -e 'print "xdebug.max_nesting_level=1000\nxdebug.mode=coverage\n\n";'\
+            -e 'print "error_reporting = E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING\n"'\
+            containers/php/custom.ini
 
           perl -pi\
             -e 's#/var/www/#/var/www/source/#g;'\
@@ -66,7 +67,10 @@ jobs:
           docker-compose exec -T php composer require oxid-esales/graphql-storefront:dev-master --no-interaction
 
       - name: Reset shop
-        run: docker-compose exec -T php php vendor/bin/reset-shop
+        run: |
+          docker-compose exec -T \
+            php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
+            --db-name=example --db-user=root --db-password=root --force
 
       - name: Activate modules
         run: |

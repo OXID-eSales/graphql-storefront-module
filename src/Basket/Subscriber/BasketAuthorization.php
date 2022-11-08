@@ -9,10 +9,10 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Basket\Subscriber;
 
-use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BasketAuthorization as OriginalEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class BasketAuthorization extends AbstractShopAwareEventSubscriber
+final class BasketAuthorization implements EventSubscriberInterface
 {
     public function handleAuthorization(OriginalEvent $event): OriginalEvent
     {

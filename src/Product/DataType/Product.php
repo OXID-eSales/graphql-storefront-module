@@ -108,7 +108,7 @@ final class Product implements ShopModelAwareInterface
      */
     public function getLongDescription(): string
     {
-        return (string)$this->product->getLongDesc();
+        return (string)$this->product->getLongDescription();
     }
 
     /**
