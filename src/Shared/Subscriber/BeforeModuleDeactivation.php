@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Shared\Subscriber;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Event\BeforeModuleDeactivationEvent;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Event\BeforeModuleDeactivationEvent as OriginalEvent;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Exception\ModuleSetupException;
 
@@ -37,7 +38,7 @@ final class BeforeModuleDeactivation extends AbstractShopAwareEventSubscriber
     public static function getSubscribedEvents()
     {
         return [
-            'OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Event\BeforeModuleDeactivationEvent' => 'handle',
+            BeforeModuleDeactivationEvent::class => 'handle',
         ];
     }
 }

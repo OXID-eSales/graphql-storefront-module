@@ -1,3 +1,6 @@
+parameters:
+  oxidesales.graphqlstorefront.depends_on_modules: [ 'oe_graphql_base' ]
+
 services:
 
   _defaults:
@@ -16,31 +19,28 @@ services:
     public: true
 
   OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper:
-      class: OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper
-      tags: ['graphql_namespace_mapper']
+    class: OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper
+    tags: [ 'graphql_namespace_mapper' ]
 
   OxidEsales\GraphQL\Storefront\Shared\Service\PermissionProvider:
-      class: OxidEsales\GraphQL\Storefront\Shared\Service\PermissionProvider
-      tags: ['graphql_permission_provider']
+    class: OxidEsales\GraphQL\Storefront\Shared\Service\PermissionProvider
+    tags: [ 'graphql_permission_provider' ]
 
   OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization:
-      class: OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization
-      tags: [ 'kernel.event_subscriber' ]
+    class: OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization
+    tags: [ 'kernel.event_subscriber' ]
 
   OxidEsales\GraphQL\Storefront\Shared\Service\Authorization:
-      class: OxidEsales\GraphQL\Storefront\Shared\Service\Authorization
+    class: OxidEsales\GraphQL\Storefront\Shared\Service\Authorization
 
   OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration:
-      class: OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration
-      arguments:
-          $map: {}
-      public: true
+    class: OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration
+    arguments:
+      $map: { }
+    public: true
 
   OxidEsales\GraphQL\Storefront\Shared\Subscriber\BeforeModuleDeactivation:
-      class: OxidEsales\GraphQL\Storefront\Shared\Subscriber\BeforeModuleDeactivation
-      arguments: ['%oxidesales.graphqlstorefront.depends_on_modules%']
-      tags: [ 'kernel.event_subscriber' ]
-      public: true
-
-parameters:
-    oxidesales.graphqlstorefront.depends_on_modules: ['oe_graphql_base']
+    class: OxidEsales\GraphQL\Storefront\Shared\Subscriber\BeforeModuleDeactivation
+    arguments: [ '%oxidesales.graphqlstorefront.depends_on_modules%' ]
+    tags: [ 'kernel.event_subscriber' ]
+    public: true

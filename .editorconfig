@@ -12,6 +12,10 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
+# Unix-style newlines with a newline ending every file
+[*.yaml]
+indent_size = 2
+
 # Tab indentation (no size specified)
 [Makefile]
 indent_style = tab
