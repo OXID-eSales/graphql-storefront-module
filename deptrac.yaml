@@ -1,0 +1,34 @@
+deptrac:
+  paths:
+    - ./src/
+    - ./vendor/oxid-esales/oxideshop-ce/source/
+    - ./vendor/oxid-esales/oxideshop-unified-namespace-generator/
+  layers:
+    - name: Controller
+      collectors:
+        - type: class
+          value: .*GraphQL.*Controller\\.*
+    - name: Service
+      collectors:
+        - type: class
+          value: .*GraphQL.*Service\\.*
+    - name: Infrastructure
+      collectors:
+        - type: class
+          value: .*GraphQL.*Repository\\.*
+        - type: class
+          value: .*GraphQL.*Infrastructure\\.*
+    - name: Core
+      collectors:
+        - type: directory
+          value: .*vendor/oxid-esales/oxideshop-ce/source/.*
+        - type: directory
+          value: .*vendor/oxid-esales/oxideshop-unified-namespace-generator/.*
+  ruleset:
+    Controller:
+      - Service
+    Service:
+      - Infrastructure
+    Infrastructure:
+      - Core
+    Core: ~
