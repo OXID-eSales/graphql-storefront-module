@@ -6,7 +6,7 @@ jobs:
     install_shop_with_module:
         strategy:
             matrix:
-                includes:
+                include:
                     - php: '8.0'
                       mysql: '5.7'
                     - php: '8.1'
@@ -177,7 +177,11 @@ jobs:
     codeception_tests:
         strategy:
             matrix:
-                php: [ '8.0', '8.1' ]
+                include:
+                    - php: '8.0'
+                      mysql: '5.7'
+                    - php: '8.1'
+                      mysql: '8.0'
                 group:
                   - 'address'
                   - 'basket'
