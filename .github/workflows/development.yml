@@ -177,11 +177,7 @@ jobs:
     codeception_tests:
         strategy:
             matrix:
-                includes:
-                    - php: '8.0'
-                      mysql: '5.7'
-                    - php: '8.1'
-                      mysql: '8.0'
+                php: [ '8.0', '8.1' ]
                 group:
                   - 'address'
                   - 'basket'
