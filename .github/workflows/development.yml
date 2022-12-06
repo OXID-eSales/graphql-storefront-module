@@ -6,7 +6,11 @@ jobs:
     install_shop_with_module:
         strategy:
             matrix:
-                php: [ '8.0', '8.1' ]
+                includes:
+                    - php: '8.0'
+                      mysql: '5.7'
+                    - php: '8.1'
+                      mysql: '8.0'
         runs-on: ubuntu-latest
         steps:
             - name: Clone testing environment
@@ -173,7 +177,11 @@ jobs:
     codeception_tests:
         strategy:
             matrix:
-                php: [ '8.0', '8.1' ]
+                includes:
+                    - php: '8.0'
+                      mysql: '5.7'
+                    - php: '8.1'
+                      mysql: '8.0'
                 group:
                   - 'address'
                   - 'basket'
