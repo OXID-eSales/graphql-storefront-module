@@ -1,18 +1,79 @@
 name: Development
 
-on: [ push, pull_request ]
+on:
+    workflow_dispatch:
+        inputs:
+            php:
+                description: 'PHP version'
+                required: true
+                default: '8.0'
+                type: choice
+                options:
+                    - '8.0'
+                    - '8.1'
+
+            mysql:
+                description: 'MySQL version'
+                required: true
+                default: '5.7.37'
+                type: choice
+                options:
+                    - '5.7.37'
+                    - '8.0'
+
+            module_codecept_test_group:
+                description: 'Module codeception test group'
+                required: true
+                default: 'address'
+                type: choice
+                options:
+                    - 'address'
+                    - 'basket'
+                    - 'customer'
+                    - 'order'
+                    - 'other'
+
+
+env:
+    PACKAGE_NAME: 'oxid-esales/graphql-storefront'
+    MODULE_IDS: 'oe_graphql_storefront'
 
 jobs:
+    prepare_environment:
+        runs-on: self-hosted
+        outputs:
+            PHP_VERSION: ${{ steps.php_version.outputs.PHP_VERSION }}
+            MYSQL_VERSION: ${{ steps.mysql_version.outputs.MYSQL_VERSION }}
+            MODULE_CODECEPT_TEST_GROUP: ${{ steps.module_codecept_test_group.outputs.MODULE_CODECEPT_TEST_GROUP }}
+        steps:
+            - id: php_version
+              run: |
+                  echo -n "PHP_VERSION=${{ inputs.php }}" >> $GITHUB_OUTPUT
+            - id: mysql_version
+              run: |
+                  echo -n "MYSQL_VERSION=${{ inputs.mysql }}" >> $GITHUB_OUTPUT
+            - id: module_codecept_test_group
+              run: |
+                  echo -n "MODULE_CODECEPT_TEST_GROUP=${{ inputs.module_codecept_test_group }}" >> $GITHUB_OUTPUT
+
     install_shop_with_module:
-        strategy:
-            matrix:
-                include:
-                    - php: '8.0'
-                      mysql: '5.7'
-                    - php: '8.1'
-                      mysql: '8.0'
+        needs: [ prepare_environment ]
         runs-on: ubuntu-latest
         steps:
+            - name: print test parameters
+              run: |
+                  echo "Running job with PHP version ${{ needs.prepare_environment.outputs.PHP_VERSION}}"
+                  echo "Running job with MySQL version ${{ needs.prepare_environment.outputs.MYSQL_VERSION }}"
+                  echo "Running job with theme ${{ needs.prepare_environment.outputs.THEME_ID }}"
+                  echo "Running job with module codeception test group ${{ needs.prepare_environment.outputs.MODULE_CODECEPT_TEST_GROUP }}"
+                  echo ${{ github.event_name }}
+
+            - name: context php_version
+              run: |
+                  echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION }}" >> $GITHUB_ENV
+            - name: context mysql_version
+              run: |
+                  echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
             - name: Clone testing environment
               run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git .
 
@@ -24,15 +85,17 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
+                  key: shopInstallation-${{ needs.prepare_environment.outputs.PHP_VERSION }}-${{ github.sha }}
 
             - name: Prepare container configuration
               run: |
                   make setup
                   make addbasicservices
+
                   perl -pi\
-                    -e "s#PHP_VERSION=.*#PHP_VERSION='${{ matrix.php }}'#g;"\
-                    .env
+                  -e 's#PHP_VERSION=.*#PHP_VERSION=${{ env.PHP_VERSION }}#g;'\
+                  -e "s#MYSQL_VERSION=.*#MYSQL_VERSION='${{ env.MYSQL_VERSION }}'#g;"\
+                  .env
 
                   perl -pi\
                       -e 's#display_errors =.*#display_errors = false#g;'\
@@ -89,6 +152,7 @@ jobs:
                   sleep 2
 
     styles:
+        needs: [ prepare_environment ]
         strategy:
             matrix:
                 php: [ '8.0', '8.1' ]
@@ -102,7 +166,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ matrix.php }}
+                  php-version: ${{ needs.prepare_environment.outputs.PHP_VERSION }}
                   coverage: xdebug
                   extensions: gd, zip
 
@@ -136,7 +200,7 @@ jobs:
               working-directory: source/test-module
               run: composer deptrac
 
-#    unit_tests:
+#    unit_tests
 #        strategy:
 #            matrix:
 #                php: [ '8.0' ]
@@ -175,20 +239,7 @@ jobs:
 #                      /var/www/vendor/oxid-esales/graphql-storefront/tests/
 
     codeception_tests:
-        strategy:
-            matrix:
-                include:
-                    - php: '8.0'
-                      mysql: '5.7'
-                    - php: '8.1'
-                      mysql: '8.0'
-                group:
-                  - 'address'
-                  - 'basket'
-                  - 'customer'
-                  - 'order'
-                  - 'other'
-        needs: [ install_shop_with_module ]
+        needs: [ prepare_environment, install_shop_with_module ]
         runs-on: ubuntu-latest
         steps:
             - name: Load current installation from cache
@@ -196,9 +247,9 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
+                  key: shopInstallation-${{ needs.prepare_environment.outputs.PHP_VERSION }}-${{ github.sha }}
                   restore-keys: |
-                      shopInstallation-${{ matrix.php }}-${{ github.sha }}
+                      shopInstallation-${{ needs.prepare_environment.outputs.PHP_VERSION }}-${{ github.sha }}
 
             - name: Start containers
               run: |
@@ -239,7 +290,7 @@ jobs:
               run: |
                   docker-compose exec -T \
                     -e SELENIUM_SERVER_HOST=selenium \
-                    -e MODULE_IDS=oe_graphql_storefront \
+                    -e MODULE_IDS=${{ env.MODULE_IDS }} \
                     -e XDEBUG_MODE=coverage \
                     php php vendor/bin/codecept run acceptance \
-                      -c /var/www/vendor/oxid-esales/graphql-storefront/tests/codeception.yml -g ${{ matrix.group }}
+                      -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ needs.prepare_environment.outputs.MODULE_CODECEPT_TEST_GROUP }}

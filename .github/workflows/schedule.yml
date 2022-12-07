@@ -1,0 +1,36 @@
+name: Schedule for storefront actions
+
+on:
+    schedule:
+        - cron: '0 15 * * 0'
+    push:
+        branches:
+            - b-7.0.x-make_mysql_8_compatible-OXDEV-6056
+
+jobs:
+    twig_php_80:
+        runs-on: self-hosted
+        steps:
+            - name: run full twig development workflow
+              uses: convictional/trigger-workflow-and-wait@v1.6.5
+              with:
+                  owner: oxid-esales
+                  repo: graphql-storefront
+                  github_user: ${{ secrets.CI_USER }}
+                  github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
+                  workflow_file_name: development.yml
+                  ref: ${{ github.ref_name }}
+                  client_payload:  '{"php": "8.0", "mysql": "5.7.37", "module_codecept_test_group": "nginx_module"}'
+    twig_php_81:
+        runs-on: self-hosted
+        steps:
+            - name: run full twig development workflow
+              uses: convictional/trigger-workflow-and-wait@v1.6.5
+              with:
+                  owner: oxid-esales
+                  repo: graphql-storefront
+                  github_user: ${{ secrets.CI_USER }}
+                  github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
+                  workflow_file_name: development.yml
+                  ref: ${{ github.ref_name }}
+                  client_payload:  '{"php": "8.1", "mysql": "8.0", "template_engine": "twig", "module_codecept_test_group": "nginx_module", "run_all_tests": "module_and_shop"}'
