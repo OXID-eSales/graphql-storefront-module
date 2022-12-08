@@ -1,6 +1,9 @@
 name: Development
 
-on: [ push, pull_request ]
+on:
+    push:
+    pull_request:
+    workflow_dispatch:
 
 jobs:
     install_shop_with_module:
