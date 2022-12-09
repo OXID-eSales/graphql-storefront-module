@@ -361,3 +361,30 @@ jobs:
                       data/php/logs/error_log.txt
                       source/tests/Codeception/_output
 
+
+    notify_slack:
+        needs: [ styles, codeception_tests ]
+        runs-on: ubuntu-latest
+        if: always()
+        steps:
+            - name: Send custom JSON data to Slack workflow
+              uses: slackapi/slack-github-action@v1.23.0
+              with:
+                  payload: >
+                      { "text": "
+                      ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled run of' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
+                      ${{ (needs.unit_tests_module.result=='success' && needs.integration_tests_module.result=='success' && needs.codeception_tests_module.result=='success') && 'Successful' || 'Failed' }}
+                      ", "blocks": [ { "type": "header","text": { "type": "plain_text", "emoji": true, "text": "
+                      ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
+                      " } },{ "type": "section","fields": [ { "type": "mrkdwn","text": "
+                      *Status:* ${{ (needs.unit_tests_module.result=='success' && needs.integration_tests_module.result=='success' && needs.codeception_tests_module.result=='success') && ':white_check_mark:' || ':x:' }}
+                      " },{ "type": "mrkdwn","text": "
+                      Repository: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}/actions/runs/${{ github.run_id }}>
+                      " } ] },{ "type": "section", "text": { "type": "mrkdwn", "text": "
+#                      \n* Module Unit ${{ (needs.unit_tests.result=='success') && ':white_check_mark:' || ':x:' }}
+                      \n* Module Codeception ${{ (needs.codeception_tests.result=='success') && ':white_check_mark:' || ':x:' }}
+                      \n* Module Styles ${{ (needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
+                      " } }, { "type": "divider" } ] }
+              env:
+                  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+                  SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
