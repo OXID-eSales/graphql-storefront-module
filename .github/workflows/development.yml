@@ -121,11 +121,13 @@ jobs:
               run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ee.git --branch b-7.0.x --single-branch source
 
             - name: Cache current installation
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ needs.prepare_environment.outputs.PHP_VERSION }}-${{ github.sha }}
+                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  restore-keys: |
+                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 
             - name: Prepare container configuration
               run: |
@@ -282,14 +284,24 @@ jobs:
         needs: [ prepare_environment, install_shop_with_module ]
         runs-on: ubuntu-latest
         steps:
+            - name: context php_version
+              run: |
+                  echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
+            - name: context mysql_version
+              run: |
+                  echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
+            - name: context shop_edition
+              run: |
+                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION}}" >> $GITHUB_ENV
+
             - name: Load current installation from cache
               uses: actions/cache@v2
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ needs.prepare_environment.outputs.PHP_VERSION }}-${{ github.sha }}
+                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
                   restore-keys: |
-                      shopInstallation-${{ needs.prepare_environment.outputs.PHP_VERSION }}-${{ github.sha }}
+                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 
             - name: Start containers
               run: |
@@ -334,3 +346,18 @@ jobs:
                     -e XDEBUG_MODE=coverage \
                     php php vendor/bin/codecept run acceptance \
                       -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ needs.prepare_environment.outputs.MODULE_CODECEPT_TEST_GROUP }}
+
+            - name: Upload log artifact
+              if: always()
+              uses: actions/upload-artifact@v3
+              with:
+                  name: ModuleCodeceptionTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  path: |
+                      docker-compose.yml
+                      source/composer.json
+                      source/composer.lock
+                      source/source/config.inc.php
+                      source/source/log/oxideshop.log
+                      data/php/logs/error_log.txt
+                      source/tests/Codeception/_output
+
