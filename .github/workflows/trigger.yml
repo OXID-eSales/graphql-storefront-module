@@ -8,7 +8,7 @@ on:
 
 jobs:
     twig:
-        runs-on: self-hosted
+        runs-on: ubuntu-latest
         steps:
             - name: run full twig development workflow
               uses: convictional/trigger-workflow-and-wait@v1.6.5
