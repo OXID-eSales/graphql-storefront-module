@@ -22,7 +22,7 @@ jobs:
                   ref: ${{ github.ref_name }}
                   client_payload:  '{"php": "8.0", "mysql": "5.7.37", "module_codecept_test_group": "nginx_module"}'
     twig_php_81:
-        runs-on: self-hosted
+        runs-on: ubuntu-latest
         steps:
             - name: run full twig development workflow
               uses: convictional/trigger-workflow-and-wait@v1.6.5
