@@ -33,6 +33,16 @@ on:
                     - 'order'
                     - 'other'
 
+            edition:
+                description: 'Shop edition'
+                required: true
+                default: 'ce'
+                type: choice
+                options:
+                    - 'ce'
+                    - 'pe'
+                    - 'ee'
+
 
 env:
     PACKAGE_NAME: 'oxid-esales/graphql-storefront'
@@ -40,11 +50,12 @@ env:
 
 jobs:
     prepare_environment:
-        runs-on: self-hosted
+        runs-on: ubuntu-latest
         outputs:
             PHP_VERSION: ${{ steps.php_version.outputs.PHP_VERSION }}
             MYSQL_VERSION: ${{ steps.mysql_version.outputs.MYSQL_VERSION }}
             MODULE_CODECEPT_TEST_GROUP: ${{ steps.module_codecept_test_group.outputs.MODULE_CODECEPT_TEST_GROUP }}
+            SHOP_EDITION: ${{ steps.module_codecept_test_group.outputs.SHOP_EDITION }}
         steps:
             - id: php_version
               run: |
@@ -55,6 +66,9 @@ jobs:
             - id: module_codecept_test_group
               run: |
                   echo -n "MODULE_CODECEPT_TEST_GROUP=${{ inputs.module_codecept_test_group }}" >> $GITHUB_OUTPUT
+            - id: edition
+              run: |
+                  echo -n "SHOP_EDITION=${{ inputs.edition }}" >> $GITHUB_OUTPUT
 
     install_shop_with_module:
         needs: [ prepare_environment ]
@@ -66,19 +80,45 @@ jobs:
                   echo "Running job with MySQL version ${{ needs.prepare_environment.outputs.MYSQL_VERSION }}"
                   echo "Running job with theme ${{ needs.prepare_environment.outputs.THEME_ID }}"
                   echo "Running job with module codeception test group ${{ needs.prepare_environment.outputs.MODULE_CODECEPT_TEST_GROUP }}"
+                  echo "Running job with shop edition ${{ needs.prepare_environment.outputs.SHOP_EDITION }}"
                   echo ${{ github.event_name }}
 
             - name: context php_version
               run: |
                   echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION }}" >> $GITHUB_ENV
+
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
+
+            - name: context shop_edition
+              run: |
+                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
+
             - name: Clone testing environment
               run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git .
 
             - name: Clone the shop
               run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ce.git --branch b-7.0.x --single-branch source
+
+            - name: Install PE shop
+              if: ((needs.prepare_environment.outputs.SHOP_EDITION == 'pe') || (needs.prepare_environment.outputs.SHOP_EDITION == 'ee') || (github.event_name == 'push'))
+              run: |
+                  docker-compose exec\
+                    php composer config repositories.oxid-esales/oxideshop-pe \
+                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_pe"}'
+                  docker-compose exec php composer require oxid-esales/oxideshop-pe:dev-b-7.0.x --no-update
+
+            - name: Install EE shop
+              if: ((needs.prepare_environment.outputs.SHOP_EDITION == 'ee') || (github.event_name == 'push'))
+              run: |
+                  docker-compose exec\
+                    php composer config repositories.oxid-esales/oxideshop-ee \
+                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_ee"}'
+                  docker-compose exec php composer require oxid-esales/oxideshop-ee:dev-b-7.0.x --no-update
+
+            - name: Require the EE shop
+              run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ee.git --branch b-7.0.x --single-branch source
 
             - name: Cache current installation
               uses: actions/cache@v2
