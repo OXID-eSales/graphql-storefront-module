@@ -79,7 +79,7 @@ jobs:
                     echo -n "MODULE_CODECEPT_TEST_GROUP=${{ inputs.module_codecept_test_group }}"
                   fi >> $GITHUB_OUTPUT
                   echo -n $CODECEPTION_MATRIX
-                  echo -n ${{ steps.module_codecept_test_group.outputs.CODECEPTION_MATRIX }}
+                  echo -n "${{ steps.module_codecept_test_group.outputs.CODECEPTION_MATRIX }}"
 
 
     install_shop_with_module:
