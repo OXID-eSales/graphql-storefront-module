@@ -117,9 +117,6 @@ jobs:
                     --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_ee"}'
                   docker-compose exec php composer require oxid-esales/oxideshop-ee:dev-b-7.0.x --no-update
 
-            - name: Require the EE shop
-              run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ee.git --branch b-7.0.x --single-branch source
-
             - name: Cache current installation
               uses: actions/cache@v3
               with:
