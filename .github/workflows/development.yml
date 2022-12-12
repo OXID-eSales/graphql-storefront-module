@@ -293,7 +293,7 @@ jobs:
         strategy:
             matrix:
                 php: [ '8.0', '8.1' ]
-                group: ${{ needs.prepare_environment.outputs.CODECEPTION_MATRIX }}
+                group: ${{ fromJSON(needs.prepare_environment.outputs.CODECEPTION_MATRIX) }}
         runs-on: ubuntu-latest
         steps:
             - name: context php_version
