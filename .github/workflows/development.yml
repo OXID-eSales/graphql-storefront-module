@@ -72,14 +72,13 @@ jobs:
               run: |
                   echo -n "SHOP_EDITION=${{ inputs.edition }}" >> $GITHUB_OUTPUT
             - id: codeception_matrix
+              name: Create codeception matrix
               run: |
                   if [[ ${{ inputs.module_codecept_test_group }} -eq "all" ]]; then
                     echo -n "CODECEPTION_MATRIX=[\"address\", \"basket\", \"customer\", \"order\", \"other\"]" >> $GITHUB_OUTPUT
                   else
                     echo -n "CODECEPTION_MATRIX=${{ inputs.module_codecept_test_group }}" >> $GITHUB_OUTPUT
                   fi
-                  echo -n $CODECEPTION_MATRIX
-                  echo -n "${{ steps.module_codecept_test_group.outputs.CODECEPTION_MATRIX }}"
 
 
     install_shop_with_module:
@@ -291,11 +290,15 @@ jobs:
 
     codeception_tests:
         needs: [ prepare_environment, install_shop_with_module ]
+        strategy:
+            matrix:
+                php: [ '8.0', '8.1' ]
+                group: ${{ needs.prepare_environment.outputs.CODECEPTION_MATRIX }}
         runs-on: ubuntu-latest
         steps:
             - name: context php_version
               run: |
-                  echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION}}" >> $GITHUB_ENV
+                  echo -n "PHP_VERSION=${{ matrix.php}}" >> $GITHUB_ENV
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
@@ -354,7 +357,7 @@ jobs:
                     -e MODULE_IDS=${{ env.MODULE_IDS }} \
                     -e XDEBUG_MODE=coverage \
                     php php vendor/bin/codecept run acceptance \
-                      -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ needs.prepare_environment.outputs.MODULE_CODECEPT_TEST_GROUP }}
+                      -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/codeception.yml -g ${{ matrix.group }}
 
             - name: Upload log artifact
               if: always()
