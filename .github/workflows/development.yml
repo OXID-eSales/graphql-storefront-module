@@ -133,9 +133,7 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
-                  restore-keys: |
-                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 
             - name: Prepare container configuration
               run: |
@@ -258,7 +256,7 @@ jobs:
 #        runs-on: ubuntu-latest
 #        steps:
 #            - name: Load current installation from cache
-#              uses: actions/cache@v2
+#              uses: actions/cache@v3
 #              with:
 #                  path: |
 #                      ./*
@@ -307,13 +305,13 @@ jobs:
                   echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION}}" >> $GITHUB_ENV
 
             - name: Load current installation from cache
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
                   restore-keys: |
-                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                      storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 
             - name: Start containers
               run: |
