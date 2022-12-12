@@ -384,7 +384,6 @@ jobs:
                       " },{ "type": "mrkdwn","text": "
                       Repository: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}/actions/runs/${{ github.run_id }}>
                       " } ] },{ "type": "section", "text": { "type": "mrkdwn", "text": "
-#                      \n* Module Unit ${{ (needs.unit_tests.result=='success') && ':white_check_mark:' || ':x:' }}
                       \n* Module Codeception ${{ (needs.codeception_tests.result=='success') && ':white_check_mark:' || ':x:' }}
                       \n* Module Styles ${{ (needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
                       " } }, { "type": "divider" } ] }
