@@ -20,7 +20,7 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: development.yml
                   ref: ${{ github.ref_name }}
-                  client_payload:  '{"php": "8.0", "mysql": "5.7.37", "module_codecept_test_group": "nginx_module"}'
+                  client_payload:  '{"php": "8.0", "mysql": "5.7.37", "module_codecept_test_group": "address"}'
     twig_php_81:
         runs-on: ubuntu-latest
         steps:
@@ -33,4 +33,4 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: development.yml
                   ref: ${{ github.ref_name }}
-                  client_payload:  '{"php": "8.1", "mysql": "8.0", "template_engine": "twig", "module_codecept_test_group": "nginx_module", "run_all_tests": "module_and_shop"}'
+                  client_payload:  '{"php": "8.1", "mysql": "8.0", "module_codecept_test_group": "address"}'
