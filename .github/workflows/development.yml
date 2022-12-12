@@ -24,9 +24,10 @@ on:
             module_codecept_test_group:
                 description: 'Module codeception test group'
                 required: true
-                default: 'address'
+                default: 'all'
                 type: choice
                 options:
+                    - 'all'
                     - 'address'
                     - 'basket'
                     - 'customer'
@@ -56,6 +57,7 @@ jobs:
             MYSQL_VERSION: ${{ steps.mysql_version.outputs.MYSQL_VERSION }}
             MODULE_CODECEPT_TEST_GROUP: ${{ steps.module_codecept_test_group.outputs.MODULE_CODECEPT_TEST_GROUP }}
             SHOP_EDITION: ${{ steps.module_codecept_test_group.outputs.SHOP_EDITION }}
+            CODECEPTION_MATRIX: ${{ steps.module_codecept_test_group.outputs.CODECEPTION_MATRIX }}
         steps:
             - id: php_version
               run: |
@@ -69,6 +71,16 @@ jobs:
             - id: edition
               run: |
                   echo -n "SHOP_EDITION=${{ inputs.edition }}" >> $GITHUB_OUTPUT
+            - id: create matrix
+              run: |
+                  if [[ ${{ inputs.module_codecept_test_group }} -eq "all" ]]; then
+                    echo -n "CODECEPTION_MATRIX=[\"address\", \"basket\", \"customer\", \"order\", \"other\"]";
+                  else
+                    echo -n "MODULE_CODECEPT_TEST_GROUP=${{ inputs.module_codecept_test_group }}"
+                  fi >> $GITHUB_OUTPUT
+                  echo -n $CODECEPTION_MATRIX
+                  echo -n ${{ outputs.CODECEPTION_MATRIX }}
+
 
     install_shop_with_module:
         needs: [ prepare_environment ]
