@@ -290,19 +290,18 @@ jobs:
         needs: [ prepare_environment, install_shop_with_module ]
         strategy:
             matrix:
-                php: [ '8.0', '8.1' ]
                 group: ${{ fromJSON(needs.prepare_environment.outputs.CODECEPTION_MATRIX) }}
         runs-on: ubuntu-latest
         steps:
             - name: context php_version
               run: |
-                  echo -n "PHP_VERSION=${{ matrix.php}}" >> $GITHUB_ENV
+                  echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION }}" >> $GITHUB_ENV
             - name: context mysql_version
               run: |
-                  echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
+                  echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
             - name: context shop_edition
               run: |
-                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION}}" >> $GITHUB_ENV
+                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
 
             - name: Load current installation from cache
               uses: actions/cache@v3
