@@ -249,20 +249,27 @@ jobs:
               run: composer deptrac
 
 #    unit_tests
-#        strategy:
-#            matrix:
-#                php: [ '8.0' ]
-#        needs: [ install_shop_with_module ]
+#        needs: [ prepare_environment, install_shop_with_module ]
 #        runs-on: ubuntu-latest
 #        steps:
+#            - name: context php_version
+#              run: |
+#                  echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION }}" >> $GITHUB_ENV
+#            - name: context mysql_version
+#              run: |
+#                  echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
+#            - name: context shop_edition
+#              run: |
+#                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
+#
 #            - name: Load current installation from cache
 #              uses: actions/cache@v3
 #              with:
 #                  path: |
 #                      ./*
-#                  key: shopInstallation-${{ matrix.php }}-${{ github.sha }}
+#                  key: storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 #                  restore-keys: |
-#                      shopInstallation-${{ matrix.php }}-${{ github.sha }}
+#                      storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 #
 #            - name: Start containers
 #              run: |
