@@ -382,11 +382,11 @@ jobs:
                   payload: >
                       { "text": "
                       ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled run of' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
-                      ${{ (needs.codeception_tests_module.result=='success' && needs.styles.result=='success') && 'Successful' || 'Failed' }}
+                      ${{ (needs.codeception_tests.result=='success' && needs.styles.result=='success') && 'Successful' || 'Failed' }}
                       ", "blocks": [ { "type": "header","text": { "type": "plain_text", "emoji": true, "text": "
                       ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
                       " } },{ "type": "section","fields": [ { "type": "mrkdwn","text": "
-                      *Status:* ${{ (needs.codeception_tests_module.result=='success' && needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
+                      *Status:* ${{ (needs.codeception_tests.result=='success' && needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
                       " },{ "type": "mrkdwn","text": "
                       Repository: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}/actions/runs/${{ github.run_id }}>
                       " } ] },{ "type": "section", "text": { "type": "mrkdwn", "text": "
