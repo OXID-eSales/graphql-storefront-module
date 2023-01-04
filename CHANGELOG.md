@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactore NotFound exception and children to create instance with constructor instead of static methods.
 - Move methods from Basket-Service to BasketItem, BasketVoucher and BasketFinder-Service
 
+## [2.2.0] - Unreleased
+
+### Added
+- Dependency on Base module. Base module cannot be deactivated till Storefront is active.
+
 ## [2.1.0] - 2022-07-14
 
 ### Added
@@ -124,6 +129,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
+[2.2.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v1.0.0...v2.0.0
