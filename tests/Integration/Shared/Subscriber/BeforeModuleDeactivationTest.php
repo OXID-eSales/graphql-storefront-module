@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Shared\Infrastructure;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Exception\ModuleSetupException;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Exception\ModuleSetupValidationException;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
@@ -30,7 +31,7 @@ final class BeforeModuleDeactivationTest extends TestCase
 
         $handler = $container->get(BeforeModuleDeactivation::class);
 
-        $this->expectException(ModuleSetupException::class);
+        $this->expectException(ModuleSetupValidationException::class);
 
         $handler->handle($event);
     }

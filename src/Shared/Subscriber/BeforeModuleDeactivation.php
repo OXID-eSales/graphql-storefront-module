@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Shared\Subscriber;
 
-use OxidEsales\EshopCommunity\Internal\Framework\Event\AbstractShopAwareEventSubscriber;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Event\BeforeModuleDeactivationEvent;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Event\BeforeModuleDeactivationEvent as OriginalEvent;
-use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Exception\ModuleSetupException;
+use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Exception\ModuleSetupValidationException;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-final class BeforeModuleDeactivation extends AbstractShopAwareEventSubscriber
+final class BeforeModuleDeactivation implements EventSubscriberInterface
 {
     private array $dependencies;
 
@@ -26,7 +26,7 @@ final class BeforeModuleDeactivation extends AbstractShopAwareEventSubscriber
     public function handle(OriginalEvent $event): OriginalEvent
     {
         if (in_array($event->getModuleId(), $this->dependencies)) {
-            throw new ModuleSetupException(
+            throw new ModuleSetupValidationException(
                 'Module with id "' . $event->getModuleId() .
                 '" cannot be deactivated while GraphQL Storefront module is active.'
             );
