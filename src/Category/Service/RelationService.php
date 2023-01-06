@@ -17,7 +17,6 @@ use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryIDFilter;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
-use OxidEsales\GraphQL\Storefront\Category\Infrastructure\Category as CategoryInfrastructure;
 use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
@@ -28,6 +27,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryAttribute;
+use OxidEsales\Eshop\Application\Model\Attribute as EshopAttributeModel;
 
 /**
  * @ExtendType(class=Category::class)
