@@ -17,6 +17,7 @@ use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryIDFilter;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Category\Exception\CategoryNotFound;
+use OxidEsales\GraphQL\Storefront\Category\Infrastructure\Category as CategoryInfrastructure;
 use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
@@ -26,6 +27,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
+use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryAttribute;
 
 /**
  * @ExtendType(class=Category::class)
@@ -127,4 +129,28 @@ final class RelationService
 
         return $result;
     }
+
+    /**
+     * @Field()
+     *
+     * @return CategoryAttribute[]
+     */
+    public function getAttributes(Category $category): array
+    {
+        $categoryAttributes = $category->getEshopModel()->getAttributes();
+    
+        if (!is_iterable($categoryAttributes) || count($categoryAttributes) === 0) {
+            return [];
+        }
+    
+        $attributes = [];
+    
+        /** @var EshopAttributeModel $attribute */
+        foreach ($categoryAttributes as $key => $attribute) {
+            $attributes[$key] = new CategoryAttribute($attribute);
+        }
+    
+        return $attributes;
+    }
+
 }
