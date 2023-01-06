@@ -24,7 +24,7 @@ final class Category
      */
     public function getAttributes(CategoryDataType $category): array
     {
-        /** @var EshopAttributeListModel $productAttributes */
+        /** @var EshopAttributeListModel $categoryAttributes */
         $categoryAttributes = $category->getEshopModel()->getAttributes();
     
         if (!is_iterable($categoryAttributes) || count($categoryAttributes) === 0) {
