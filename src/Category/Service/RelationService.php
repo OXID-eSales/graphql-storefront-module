@@ -21,13 +21,13 @@ use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Sorting as ProductSorting;
+use OxidEsales\GraphQL\Storefront\Category\Infrastructure\Category as CategoryInfrastructure;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryAttribute;
-use OxidEsales\Eshop\Application\Model\Attribute as EshopAttributeModel;
 
 /**
  * @ExtendType(class=Category::class)
@@ -40,12 +40,17 @@ final class RelationService
     /** @var CategoryService */
     private $categoryService;
 
+    /** @var CategoryInfrastructure */
+    private $categoryInfrastructure;
+
     public function __construct(
         ProductService $productService,
-        CategoryService $categoryService
+        CategoryService $categoryService,
+        CategoryInfrastructure $categoryInfrastructure
     ) {
         $this->productService = $productService;
         $this->categoryService = $categoryService;
+        $this->categoryInfrastructure = $categoryInfrastructure;
     }
 
     /**
@@ -137,20 +142,7 @@ final class RelationService
      */
     public function getAttributes(Category $category): array
     {
-        $categoryAttributes = $category->getEshopModel()->getAttributes();
-    
-        if (!is_iterable($categoryAttributes) || count($categoryAttributes) === 0) {
-            return [];
-        }
-    
-        $attributes = [];
-    
-        /** @var EshopAttributeModel $attribute */
-        foreach ($categoryAttributes as $key => $attribute) {
-            $attributes[$key] = new CategoryAttribute($attribute);
-        }
-    
-        return $attributes;
+        return $this->categoryInfrastructure->getAttributes($category);
     }
 
 }
