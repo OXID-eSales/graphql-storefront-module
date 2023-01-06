@@ -26,18 +26,18 @@ final class Category
     {
         /** @var EshopAttributeListModel $categoryAttributes */
         $categoryAttributes = $category->getEshopModel()->getAttributes();
-    
+
         if (!is_iterable($categoryAttributes) || count($categoryAttributes) === 0) {
             return [];
         }
-    
+
         $attributes = [];
-    
+
         /** @var EshopAttributeModel $attribute */
         foreach ($categoryAttributes as $key => $attribute) {
             $attributes[$key] = new CategoryAttributeDataType($attribute);
         }
-    
+
         return $attributes;
     }
 }

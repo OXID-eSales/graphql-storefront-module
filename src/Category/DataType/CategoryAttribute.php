@@ -43,7 +43,7 @@ final class CategoryAttribute implements ShopModelAwareInterface
 
     /**
      * @Field()
-     * 
+     *
      * @return string[]
      */
     public function getValues(): array
