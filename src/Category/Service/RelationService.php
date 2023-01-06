@@ -144,5 +144,4 @@ final class RelationService
     {
         return $this->categoryInfrastructure->getAttributes($category);
     }
-
 }
