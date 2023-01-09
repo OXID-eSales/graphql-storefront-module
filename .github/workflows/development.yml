@@ -112,28 +112,6 @@ jobs:
             - name: Clone the shop
               run: git clone --depth 1 https://github.com/OXID-eSales/oxideshop_ce.git --branch b-7.0.x --single-branch source
 
-            - name: Set Github dependencies
-              if: ((needs.prepare_environment.outputs.SHOP_EDITION == 'pe') || (needs.prepare_environment.outputs.SHOP_EDITION == 'ee'))
-              run: |
-                  docker-compose run -T --rm php composer config github-protocols https
-                  docker-compose run -T --rm php composer config -g github-oauth.github.com ${{ secrets.GH_CI_JENKINS_TOKEN }}
-
-            - name: Set EE shop in composer config
-              if: (needs.prepare_environment.outputs.SHOP_EDITION == 'ee')
-              run: |
-                  docker-compose run -T --rm php composer config repositories.oxid-esales/oxideshop-ee git https://github.com/OXID-eSales/oxideshop_ee.git
-
-            - name: Install PE shop
-              if: ((needs.prepare_environment.outputs.SHOP_EDITION == 'pe') || (needs.prepare_environment.outputs.SHOP_EDITION == 'ee'))
-              run: |
-                  docker-compose run -T --rm php composer config repositories.oxid-esales/oxideshop-pe git https://github.com/OXID-eSales/oxideshop_pe.git
-                  docker-compose run -T --rm php composer require oxid-esales/oxideshop-pe:dev-b-7.0.x --no-update
-
-            - name: Install EE shop
-              if: (needs.prepare_environment.outputs.SHOP_EDITION == 'ee')
-              run: |
-                  docker-compose run -T --rm php composer require oxid-esales/oxideshop-ee:dev-b-7.0.x --no-update --no-plugins --no-scripts
-
             - name: Cache current installation
               uses: actions/cache@v3
               with:
@@ -174,6 +152,28 @@ jobs:
                          -e 's/<sShopDir>/\/var\/www\/source\//'\
                          -e 's/<sCompileDir>/\/var\/www\/source\/tmp\//'\
                       source/source/config.inc.php
+
+            - name: Set Github dependencies
+              if: ((needs.prepare_environment.outputs.SHOP_EDITION == 'pe') || (needs.prepare_environment.outputs.SHOP_EDITION == 'ee'))
+              run: |
+                  docker-compose run -T --rm php composer config github-protocols https
+                  docker-compose run -T --rm php composer config -g github-oauth.github.com ${{ secrets.GH_CI_JENKINS_TOKEN }}
+
+            - name: Set EE shop in composer config
+              if: (needs.prepare_environment.outputs.SHOP_EDITION == 'ee')
+              run: |
+                  docker-compose run -T --rm php composer config repositories.oxid-esales/oxideshop-ee git https://github.com/OXID-eSales/oxideshop_ee.git
+
+            - name: Install PE shop
+              if: ((needs.prepare_environment.outputs.SHOP_EDITION == 'pe') || (needs.prepare_environment.outputs.SHOP_EDITION == 'ee'))
+              run: |
+                  docker-compose run -T --rm php composer config repositories.oxid-esales/oxideshop-pe git https://github.com/OXID-eSales/oxideshop_pe.git
+                  docker-compose run -T --rm php composer require oxid-esales/oxideshop-pe:dev-b-7.0.x --no-update
+
+            - name: Install EE shop
+              if: (needs.prepare_environment.outputs.SHOP_EDITION == 'ee')
+              run: |
+                  docker-compose run -T --rm php composer require oxid-esales/oxideshop-ee:dev-b-7.0.x --no-update --no-plugins --no-scripts
 
             - name: Start containers
               run: |
