@@ -316,6 +316,7 @@ jobs:
     codeception_tests:
         needs: [ prepare_environment, install_shop_with_module ]
         strategy:
+            fail-fast: false
             matrix:
                 group: ${{ fromJSON(needs.prepare_environment.outputs.CODECEPTION_MATRIX) }}
         runs-on: ubuntu-latest
