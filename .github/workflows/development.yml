@@ -85,6 +85,18 @@ jobs:
         needs: [ prepare_environment ]
         runs-on: ubuntu-latest
         steps:
+            -   name: Cleanup workspace
+                run: |
+                    ls -la ./
+                    rm -rf ./* || true
+                    rm -rf ./.??* || true
+                    ls -la ./
+
+            -   name: Cleanup Docker
+                run: |
+                    c=$(docker ps -q) && [[ $c ]] && docker kill $c
+                    docker system prune --force
+
             - name: print test parameters
               run: |
                   echo "Running job with PHP version ${{ needs.prepare_environment.outputs.PHP_VERSION}}"
@@ -308,6 +320,17 @@ jobs:
                 group: ${{ fromJSON(needs.prepare_environment.outputs.CODECEPTION_MATRIX) }}
         runs-on: ubuntu-latest
         steps:
+            - name: Cleanup workspace
+              run: |
+                  ls -la ./
+                  rm -rf ./* || true
+                  rm -rf ./.??* || true
+                  ls -la ./
+            - name: Cleanup Docker
+              run: |
+                  c=$(docker ps -q) && [[ $c ]] && docker kill $c
+                  docker system prune --force
+
             - name: context php_version
               run: |
                   echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION }}" >> $GITHUB_ENV
