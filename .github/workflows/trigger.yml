@@ -5,7 +5,6 @@ on:
     push:
         branches:
             - b-7.0.x
-            - b-7.0.x-make_mysql_8_compatible-OXDEV-6056
 
 jobs:
     twig:
