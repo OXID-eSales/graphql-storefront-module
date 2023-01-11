@@ -28,10 +28,6 @@ final class RelationServiceCest extends BaseCest
 
     private const BASKET_WISH_LIST = 'wishlist';
 
-    private const BASKET_WISH_LIST_ONE = 'whishlist_one';
-
-    private const BASKET_WISH_LIST_TWO = 'whishlist_two';
-
     private const BASKET_NOTICE_LIST = 'noticelist';
 
     private const BASKET_SAVED_BASKET = 'savedbasket';
@@ -101,7 +97,7 @@ final class RelationServiceCest extends BaseCest
     {
         $I->login(self::EXISTING_USERNAME, self::PASSWORD);
 
-        $basketId = $this->basketCreate($I, self::BASKET_WISH_LIST_ONE);
+        $basketId = $this->basketCreate($I, self::BASKET_WISH_LIST);
         $this->basketAddItemMutation($I, $basketId, self::PRODUCT_ID, 1);
 
         $result = $this->queryBasketRelation($I, self::BASKET_WISH_LIST);
@@ -122,7 +118,7 @@ final class RelationServiceCest extends BaseCest
         $I->login(self::EXISTING_USERNAME, self::PASSWORD);
 
         $noticeId = $this->basketCreate($I, self::BASKET_NOTICE_LIST);
-        $wishId = $this->basketCreate($I, self::BASKET_WISH_LIST_TWO);
+        $wishId = $this->basketCreate($I, self::BASKET_WISH_LIST);
         $savedId = $this->basketCreate($I, self::BASKET_SAVED_BASKET);
 
         $this->basketAddItemMutation($I, $wishId, self::PRODUCT_ID, 1);

@@ -370,9 +370,9 @@ jobs:
             - name: Install codeception dependencies
               run: |
                   docker-compose exec -T \
-                    php composer config repositories.oxid-esales/oxideshop-demodata-ce \
-                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_ce"}'
-                  docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-ce:dev-master --no-update
+                    php composer config repositories.oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }} \
+                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_${{ env.SHOP_EDITION }}"}'
+                  docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }}:dev-master --no-update
                   docker-compose exec -T php composer require codeception/c3 --dev --no-update
                   docker-compose exec -T php composer require codeception/module-rest:* --dev --no-update
                   docker-compose exec -T php composer require codeception/module-phpbrowser:* --dev --no-update
