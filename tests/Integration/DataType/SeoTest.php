@@ -22,7 +22,7 @@ final class SeoTest extends BaseTestCase
 {
     private const PRODUCT_ID = '058de8224773a1d5fd54d523f0c823e0';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

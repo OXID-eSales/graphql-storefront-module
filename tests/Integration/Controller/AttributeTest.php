@@ -9,16 +9,16 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
 /**
  * Class AttributeTest
  */
-final class AttributeTest extends TestCase
+final class AttributeTest extends BaseTestCase
 {
     private const ATTRIBUTE_ID = '6cf89d2d73e666457d167cebfc3eb492';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

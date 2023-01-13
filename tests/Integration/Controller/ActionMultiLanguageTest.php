@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
 
-final class ActionMultiLanguageTest extends TokenTestCase
+final class ActionMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_ACTION_WITH_PRODUCTS = 'oxbargain';
 
@@ -53,10 +53,19 @@ final class ActionMultiLanguageTest extends TokenTestCase
             'de' => [
                 'languageId' => '0',
                 'result' => [
-                    'title' => 'Angebot der Woche',
+                    'title' => 'Angebote der Woche',
                     'products' => [
                         [
-                            'title' => 'Kuyichi Ledergürtel JEVER',
+                            'title' => 'Kite CORE GT',
+                        ],
+                        [
+                            'title' => 'Kiteboard CABRINHA CALIBER'
+                        ],
+                        [
+                            'title' => 'Wakeboard LIQUID FORCE GROOVE'
+                        ],
+                        [
+                            'title' => 'Neoprenanzug NPX ASSASSIN'
                         ],
                     ],
                 ],
@@ -67,7 +76,16 @@ final class ActionMultiLanguageTest extends TokenTestCase
                     'title' => 'Week\'s Special',
                     'products' => [
                         [
-                            'title' => 'Kuyichi leather belt JEVER',
+                            'title' => 'Kite CORE GT',
+                        ],
+                        [
+                            'title' => 'Kiteboard CABRINHA CALIBER'
+                        ],
+                        [
+                            'title' => 'Wakeboard GROOVE'
+                        ],
+                        [
+                            'title' => 'Wetsuit NPX ASSASSIN'
                         ],
                     ],
                 ],

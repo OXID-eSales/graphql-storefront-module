@@ -11,9 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class ManufacturerTest extends TokenTestCase
+final class ManufacturerTest extends BaseTestCase
 {
     private const ACTIVE_MANUFACTURER = 'oiaf6ab7e12e86291e86dd3ff891fe40';
 
@@ -25,7 +25,7 @@ final class ManufacturerTest extends TokenTestCase
 
     private const PRODUCT_RELATED_TO_ACTIVE_MANUFACTURER = '058e613db53d782adfc9f2ccb43c45fe';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

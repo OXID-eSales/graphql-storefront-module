@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
 
-final class ReviewMultiLanguageTest extends TestCase
+final class ReviewMultiLanguageTest extends MultiLanguageTestCase
 {
     /**
      * @param $languageId

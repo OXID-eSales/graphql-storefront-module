@@ -15,6 +15,8 @@ use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
 
 abstract class BaseTestCase extends TokenTestCase
 {
+    use DemoData;
+
     protected function setActiveState(string $id, string $table = 'oxarticles', int $active = 1): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()

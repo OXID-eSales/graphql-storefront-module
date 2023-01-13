@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
 
-final class PromotionMultiLanguageTest extends TestCase
+final class PromotionMultiLanguageTest extends MultiLanguageTestCase
 {
     private const PROMOTION_ID = 'test_active_promotion_1';
 

@@ -51,6 +51,8 @@ final class DeliveryAddressCest extends BaseCest
 
     public function _after(AcceptanceTester $I): void
     {
+        parent::_after($I);
+
         $I->updateConfigInDatabase('aMustFillFields', $this->mustFillFieldsDefault['value'], 'arr');
     }
 

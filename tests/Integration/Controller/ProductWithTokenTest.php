@@ -10,16 +10,16 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use DateTimeImmutable;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 use TheCodingMachine\GraphQLite\Types\DateTimeType;
 
-final class ProductWithTokenTest extends TokenTestCase
+final class ProductWithTokenTest extends BaseTestCase
 {
     private const ACTIVE_PRODUCT = '058e613db53d782adfc9f2ccb43c45fe';
 
     private const INACTIVE_PRODUCT = '09602cddb5af0aba745293d08ae6bcf6';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -104,7 +104,7 @@ final class ProductWithTokenTest extends TokenTestCase
         );
 
         $this->assertCount(
-            54,
+            52,
             $result['body']['data']['products']
         );
     }

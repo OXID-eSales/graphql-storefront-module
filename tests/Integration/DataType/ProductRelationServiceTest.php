@@ -13,12 +13,15 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\DemoData;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Product\Service\RelationService
  */
 final class ProductRelationServiceTest extends TokenTestCase
 {
+    use DemoData;
+
     private const ACTIVE_PRODUCT = '058e613db53d782adfc9f2ccb43c45fe';
 
     private const ACTIVE_PRODUCT_WITH_ACCESSORIES = '05848170643ab0deb9914566391c0c63';
@@ -40,8 +43,6 @@ final class ProductRelationServiceTest extends TokenTestCase
     private const ACTIVE_PRODUCT_WITHOUT_MANUFACTURER = 'f33d5bcc7135908fd36fc736c643aa1c';
 
     private const INACTIVE_PRODUCT = '09602cddb5af0aba745293d08ae6bcf6';
-
-    private const ACTIVE_MAIN_BUNDLE_PRODUCT = '_test_active_main_bundle';
 
     public function testGetAccessoriesRelation(): void
     {
@@ -226,7 +227,7 @@ final class ProductRelationServiceTest extends TokenTestCase
      */
     public function testGetReviewsRelation($configValue, $expectedIds): void
     {
-        $this->getConfig()->setConfigParam('blGBModerate', $configValue);
+        Registry::getConfig()->saveShopConfVar('bool', 'blGBModerate', $configValue);
 
         $result = $this->query(
             'query {
@@ -276,7 +277,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     {
         $this->prepareToken();
 
-        $this->getConfig()->setConfigParam('blGBModerate', true);
+        Registry::getConfig()->saveShopConfVar('bool', 'blGBModerate', true);
 
         $result = $this->query(
             'query {
@@ -470,7 +471,7 @@ final class ProductRelationServiceTest extends TokenTestCase
     {
         $config = Registry::getConfig();
         $oldParam = $config->getConfigParam('bl_perfLoadAccessoires');
-        $config->setConfigParam('bl_perfLoadAccessoires', false);
+        $config->saveShopConfVar('bool', 'bl_perfLoadAccessoires', false);
 
         $result = $this->query(
             'query {
@@ -485,7 +486,7 @@ final class ProductRelationServiceTest extends TokenTestCase
 
         $this->assertNull($result['body']['data']['product']['bundleProduct']);
 
-        $config->setConfigParam('bl_perfLoadAccessoires', $oldParam);
+        $config->saveShopConfVar('bool', 'bl_perfLoadAccessoires', $oldParam);
     }
 
     public function testGetNoNonExistingProductBundleItemRelation(): void
@@ -558,27 +559,6 @@ final class ProductRelationServiceTest extends TokenTestCase
             ->setParameter(':OXID', self::ACTIVE_PRODUCT_WITH_BUNDLE_ITEM)
             ->setParameter(':BUNDLEID', '')
             ->execute();
-    }
-
-    public function testGetInvisibleProductBundleItemRelation(): void
-    {
-        $this->prepareToken();
-
-        $result = $this->query(
-            'query {
-            product (productId: "' . self::ACTIVE_MAIN_BUNDLE_PRODUCT . '") {
-                id
-                bundleProduct {
-                    id
-                }
-            }
-        }'
-        );
-
-        $this->assertSame(
-            '_test_inactive_bundle',
-            $result['body']['data']['product']['bundleProduct']['id']
-        );
     }
 
     public function testGetExistingProductBundleItemRelation(): void

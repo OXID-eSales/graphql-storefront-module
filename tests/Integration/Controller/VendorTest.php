@@ -12,10 +12,10 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 use DateTimeImmutable;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 use TheCodingMachine\GraphQLite\Types\DateTimeType;
 
-final class VendorTest extends TokenTestCase
+final class VendorTest extends BaseTestCase
 {
     private const ACTIVE_VENDOR = 'a57c56e3ba710eafb2225e98f058d989';
 

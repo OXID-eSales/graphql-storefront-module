@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
 
-final class ManufacturerMultiLanguageTest extends TestCase
+final class ManufacturerMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_MULTILANGUAGE_MANUFACTURER = 'adc6df0977329923a6330cc8f3c0a906';
 
@@ -27,7 +27,7 @@ final class ManufacturerMultiLanguageTest extends TestCase
             'en' => [
                 'languageId' => '1',
                 'title' => 'Liquid Force Kite',
-                'url' => 'en/By-manufacturer/Liquid-Force-Kite/',
+                'url' => 'en/By-Manufacturer/Liquid-Force-Kite/',
                 'productDescription' => 'Proven quality in a new design',
             ],
         ];

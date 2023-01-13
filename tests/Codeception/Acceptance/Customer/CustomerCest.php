@@ -39,30 +39,6 @@ final class CustomerCest extends BaseCest
 
     private const USERNAME_FOR_EMAIL_CHANGE = 'foremailchangeCE@oxid-esales.com';
 
-    public function _before(AcceptanceTester $I, Scenario $scenario): void
-    {
-        parent::_before($I, $scenario);
-
-        $I->deleteFromDatabase(
-            'oxnewssubscribed',
-            [
-                'OXEMAIL' => self::EXISTING_USERNAME,
-            ]
-        );
-    }
-
-    public function _after(AcceptanceTester $I): void
-    {
-        $I->logout();
-
-        $I->deleteFromDatabase(
-            'oxnewssubscribed',
-            [
-                'OXEMAIL' => self::EXISTING_USERNAME,
-            ]
-        );
-    }
-
     public function testCustomerForNotLoggedInUser(AcceptanceTester $I): void
     {
         $I->sendGQLQuery(
@@ -210,7 +186,7 @@ final class CustomerCest extends BaseCest
             'email' => self::USERNAME,
             'status' => 'SUBSCRIBED',
             'failedEmailCount' => 0,
-            'subscribed' => '2020-04-01T11:11:11+02:00',
+            'subscribed' => '2011-02-01T08:41:25+01:00',
             'unsubscribed' => null,
         ];
 
@@ -383,6 +359,9 @@ final class CustomerCest extends BaseCest
         );
     }
 
+    /**
+     * @group sieg
+     */
     public function testBaskets(AcceptanceTester $I): void
     {
         $I->login(self::USERNAME, self::PASSWORD);

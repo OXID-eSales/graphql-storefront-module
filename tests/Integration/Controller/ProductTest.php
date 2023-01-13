@@ -42,18 +42,18 @@ final class ProductTest extends BaseTestCase
 
     private const ACTIVE_PRODUCT_TITLE = 'DECADE';
 
-    private const ACTIVE_PRODUCT_FULL_TITLE = 'Bindung O\'BRIEN DECADE CT 2010';
+    private const ACTIVE_PRODUCT_FULL_TITLE = 'Bindung O\'BRIEN DECADE CT';
 
     private const ACTIVE_PRODUCT_WITH_VARIANTS_TITLE = 'Kuyichi Jeans ANNA';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
         $this->setActiveState(self::ACTIVE_PRODUCT);
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories');
         $this->setActiveState(self::VENDOR_OF_ACTIVE_PRODUCT, 'oxvendor');
@@ -292,10 +292,10 @@ final class ProductTest extends BaseTestCase
         $this->assertSame([], $product['selectionLists']);
         $this->assertSame([], $product['variants']);
         $this->assertSame('', $product['mpn']);
-        $this->assertSame('Bindung O\'BRIEN DECADE CT 2010', $product['title']);
+        $this->assertSame('Bindung O\'BRIEN DECADE CT', $product['title']);
         $this->assertSame('Geringes Gewicht, beste Performance!', $product['shortDescription']);
         $this->assertSame(
-            "<p>\r\n<div class=\"product_title_big\">\r\n<h2>O'Brien Decade CT Boot 2010</h2></div>\r\n" .
+            "<p>\r\n<div class=\"product_title_big\">\r\n<h2>O'Brien Decade CT Boot</h2></div>\r\n" .
             "    Die Decade Pro Bindung ist nicht nur\r\n Close-Toe Boots mit hammer Style," .
             " sondern es war das Ziel den Komfort\r\nvon normalen Boots in eine Wakeboard-Bindung einzubringen," .
             " dabei\r\nleichtgewichtig zu bleiben, und damit perfekte Performance auf dem\r\nWasser zu ermöglichen." .
@@ -507,7 +507,7 @@ final class ProductTest extends BaseTestCase
         );
 
         $this->assertCount(
-            53,
+            52,
             $result['body']['data']['products']
         );
     }

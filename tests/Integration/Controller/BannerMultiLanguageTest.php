@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
 
-final class BannerMultiLanguageTest extends TokenTestCase
+final class BannerMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_BANNER_WITH_PRODUCT = 'b5639c6431b26687321f6ce654878fa5';
 

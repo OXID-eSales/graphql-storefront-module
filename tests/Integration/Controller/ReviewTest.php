@@ -9,11 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
-final class ReviewTest extends TokenTestCase
+final class ReviewTest extends BaseTestCase
 {
     private const ACTIVE_REVIEW = '94415306f824dc1aa2fce0dc4f12783d';
 
@@ -61,7 +62,7 @@ final class ReviewTest extends TokenTestCase
             ],
             'product' => [
                 'id' => self::REVIEW_PRODUCT,
-                'title' => 'Kite NBK EVO 2010',
+                'title' => 'Kite NBK EVO',
             ],
         ], $review);
     }
@@ -102,7 +103,7 @@ final class ReviewTest extends TokenTestCase
             ],
             'product' => [
                 'id' => self::REVIEW_PRODUCT,
-                'title' => 'Kite NBK EVO 2010',
+                'title' => 'Kite NBK EVO',
             ],
         ], $review);
     }
@@ -117,7 +118,7 @@ final class ReviewTest extends TokenTestCase
      */
     public function testGetInactiveReview($moderation, $withToken, $expectError, $active): void
     {
-        $this->getConfig()->setConfigParam('blGBModerate', $moderation);
+        Registry::getConfig()->saveShopConfVar('bool', 'blGBModerate', $moderation);
 
         if ($withToken) {
             $this->prepareToken();
@@ -198,7 +199,7 @@ final class ReviewTest extends TokenTestCase
     {
         return [
             'admin' => [
-                'username' => 'admin',
+                'username' => 'admin@admin.com',
                 'password' => 'admin',
             ],
             'user' => [
@@ -264,7 +265,7 @@ final class ReviewTest extends TokenTestCase
     {
         return [
             'admin_wrong_product' => [
-                'username' => 'admin',
+                'username' => 'admin@admin.com',
                 'password' => 'admin',
                 'oxid' => self::WRONG_PRODUCT,
             ],
@@ -274,7 +275,7 @@ final class ReviewTest extends TokenTestCase
                 'oxid' => self::WRONG_PRODUCT,
             ],
             'admin_wrong_type' => [
-                'username' => 'admin',
+                'username' => 'admin@admin.com',
                 'password' => 'admin',
                 'oxid' => self::WRONG_OBJECT_TYPE,
             ],
@@ -345,7 +346,7 @@ final class ReviewTest extends TokenTestCase
             ],
             [
                 'token' => [
-                    'username' => 'admin',
+                    'username' => 'admin@admin.com',
                     'password' => 'admin',
                 ],
                 'expectedProduct' => [

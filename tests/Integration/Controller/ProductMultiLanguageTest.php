@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
 
-final class ProductMultiLanguageTest extends TestCase
+final class ProductMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_MULTILANGUAGE_PRODUCT = '058e613db53d782adfc9f2ccb43c45fe';
 
@@ -22,12 +22,12 @@ final class ProductMultiLanguageTest extends TestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'title' => 'Bindung O\'BRIEN DECADE CT 2010',
+                'title' => 'Bindung O\'BRIEN DECADE CT',
                 'url' => 'Wakeboarding/Bindungen/',
             ],
             'en' => [
                 'languageId' => '1',
-                'title' => 'Binding O\'BRIEN DECADE CT 2010',
+                'title' => 'Binding O\'BRIEN DECADE CT',
                 'url' => 'en/Wakeboarding/Bindings',
             ],
         ];

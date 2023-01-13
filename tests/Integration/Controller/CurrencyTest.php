@@ -10,13 +10,13 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Currency\DataType\Currency
  * @covers OxidEsales\GraphQL\Storefront\Currency\Controller\Currency
  */
-final class CurrencyTest extends TestCase
+final class CurrencyTest extends BaseTestCase
 {
     public function testGetCurrencyQuery(): void
     {

@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
 
-final class ContentMultiLanguageTest extends TestCase
+final class ContentMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_CONTENT = 'e6fc3fe89d5da58da9bfcfba451fd365';
 

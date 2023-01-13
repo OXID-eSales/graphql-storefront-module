@@ -25,6 +25,10 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 
+// TODO: Hack to make testDeletCustomerNotPossible get the right model from shop
+// after testing library was dropped for integration tests
+define('OXID_PHP_UNIT', 'OXID_PHP_UNIT');
+
 final class CustomerServiceTest extends TestCase
 {
     public function testFetchNotExistingCustomer(): void
@@ -49,7 +53,7 @@ final class CustomerServiceTest extends TestCase
         $legacyServiceMock = $this
             ->getMockBuilder(Legacy::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getConfigParam'])
+            ->onlyMethods(['getConfigParam'])
             ->getMock();
         $legacyServiceMock->expects($this->any())
             ->method('getConfigParam')
@@ -87,7 +91,7 @@ final class CustomerServiceTest extends TestCase
         $authenticationMock = $this
             ->getMockBuilder(Authentication::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getUser'])
+            ->onlyMethods(['getUser'])
             ->getMock();
         $authenticationMock->expects($this->any())
             ->method('getUser')
@@ -101,7 +105,7 @@ final class CustomerServiceTest extends TestCase
             $container->get(CustomerRepository::class),
             $authenticationMock,
             $legacyServiceMock,
-            $container->get(Authorization::class)
+            new Authorization()
         );
 
         $this->expectException(CustomerNotDeletable::class);

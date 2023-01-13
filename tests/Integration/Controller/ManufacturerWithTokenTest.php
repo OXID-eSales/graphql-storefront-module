@@ -10,10 +10,10 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use DateTimeImmutable;
-use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 use TheCodingMachine\GraphQLite\Types\DateTimeType;
 
-final class ManufacturerWithTokenTest extends TokenTestCase
+final class ManufacturerWithTokenTest extends BaseTestCase
 {
     //Kuyichi
     private const ACTIVE_MANUFACTURER = '9434afb379a46d6c141de9c9e5b94fcf';
@@ -21,7 +21,7 @@ final class ManufacturerWithTokenTest extends TokenTestCase
     //RRD
     private const INACTIVE_MANUFACTURER = 'adca51c88a3caa1c7b939fd6a229ae3a';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

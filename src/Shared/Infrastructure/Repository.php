@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use OxidEsales\Eshop\Core\Model\BaseModel;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use Doctrine\DBAL\Query\QueryBuilder;
+use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
@@ -215,6 +216,10 @@ final class Repository
 
         if (method_exists($model, 'setDisableShopCheck')) {
             $model->setDisableShopCheck($disableSubShop);
+        }
+
+        if (method_exists($model, 'setLanguage')) {
+            $model->setLanguage(Registry::getLang()->getBaseLanguage());
         }
 
         return $model;

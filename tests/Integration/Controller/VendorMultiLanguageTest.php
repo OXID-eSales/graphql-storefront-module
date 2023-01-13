@@ -9,9 +9,9 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
-use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
 
-final class VendorMultiLanguageTest extends TestCase
+final class VendorMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_VENDOR = 'a57c56e3ba710eafb2225e98f058d989';
 

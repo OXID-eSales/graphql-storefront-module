@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\Facts\Facts;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
 final class ContentTest extends BaseTestCase
@@ -218,8 +219,16 @@ final class ContentTest extends BaseTestCase
             }'
         );
 
+        $expectedCount = 25;
+
+        // Due to demodata for EE been different
+        $facts = new Facts();
+        if ($facts->getEdition() == 'EE') {
+            $expectedCount = 24;
+        }
+
         $this->assertCount(
-            25,
+            $expectedCount,
             $result['body']['data']['contents']
         );
     }

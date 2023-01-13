@@ -6,41 +6,38 @@ bootstrap: _bootstrap.php
 modules:
     enabled:
         - Asserts
-        -   Db:
-                dsn: 'mysql:host=%DB_HOST%;dbname=%DB_NAME%;charset=utf8'
-                user: '%DB_USERNAME%'
-                password: '%DB_PASSWORD%'
-                port: '%DB_PORT%'
-                dump: '%DUMP_PATH%'
-                mysql_config: '%MYSQL_CONFIG_PATH%'
-                populate: true # run populator before all tests
-                cleanup: false # run populator before each test
-                populator: 'mysql --defaults-file=$mysql_config --default-character-set=utf8 $dbname < $dump'
-        -   \OxidEsales\Codeception\Module\Database:
-                config_key: 'fq45QS09_fqyx09239QQ'
-                depends: Db
-        -   \OxidEsales\Codeception\Module\SelectTheme:
-                theme_id: twig
-                depends:
-                    - \OxidEsales\Codeception\Module\Database
-                    - Db
-        -   REST:
-                url: '%SHOP_URL%'
-                depends: PhpBrowser
-                part: Json
-        -   PhpBrowser:
-                url: '%SHOP_URL%'
-                cookies:
-                    cookie-1:
-                        Name: XDEBUG_SESSION_START
-                        Value: PHPSTORM
-                        HttpOnly: false
-                    cookie-2:
-                        Name: XDEBUG_SESSION
-                        Value: PHPSTORM
-                        HttpOnly: false
-        -   \OxidEsales\GraphQL\Base\Tests\Codeception\Module\AcceptanceHelper:
-                depends:
-                    - REST
+        - \OxidEsales\Codeception\Module\ShopSetup:
+            dump: '%DUMP_PATH%'
+            fixtures: '%FIXTURES_PATH%'
+            license: '%license_key%'
+        - Db:
+            dsn: 'mysql:host=%DB_HOST%;dbname=%DB_NAME%;charset=utf8'
+            user: '%DB_USERNAME%'
+            password: '%DB_PASSWORD%'
+            port: '%DB_PORT%'
+            module_dump: '%MODULE_DUMP_PATH%'
+            mysql_config: '%MYSQL_CONFIG_PATH%'
+            populate: true # run populator before all tests
+            cleanup: false # run populator before each test
+            populator: >
+                mysql --defaults-file=$mysql_config --default-character-set=utf8 $dbname < $module_dump
+        - \OxidEsales\Codeception\Module\Database:
+            config_key: 'fq45QS09_fqyx09239QQ'
+            depends: Db
+        - \OxidEsales\Codeception\Module\SelectTheme:
+            theme_id: twig
+            depends:
+                - \OxidEsales\Codeception\Module\Database
+                - Db
+        - REST:
+            url: '%SHOP_URL%'
+            depends: PhpBrowser
+            part: Json
+        - PhpBrowser:
+            url: '%SHOP_URL%'
+        - \OxidEsales\GraphQL\Base\Tests\Codeception\Module\AcceptanceHelper:
+            depends:
+                - REST
+        - \OxidEsales\Codeception\Module\OxideshopModules
 step_decorators:
     - \Codeception\Step\Retry

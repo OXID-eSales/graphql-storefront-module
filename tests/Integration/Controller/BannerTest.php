@@ -28,7 +28,7 @@ final class BannerTest extends BaseTestCase
 
     private const ACTIVE_BANNER_PRODUCT = 'f4fc98f99e3660bd2ecd7450f832c41a';
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 

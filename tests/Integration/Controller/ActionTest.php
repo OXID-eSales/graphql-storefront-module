@@ -25,7 +25,7 @@ final class ActionTest extends BaseTestCase
 
     private const PRODUCT_RELATED_TO_ACTIVE_ACTION = 'ed6a4182ae58874e4fdaa4775566af6c';
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         $this->setActiveState(self::PRODUCT_RELATED_TO_ACTIVE_ACTION, 'oxarticles', 1);
 
@@ -72,17 +72,11 @@ final class ActionTest extends BaseTestCase
 
         $products = $result['body']['data']['action']['products'];
 
-        $this->assertCount(4, $products);
+        $this->assertCount(2, $products);
 
         $this->assertEquals([
             [
                 'id' => 'fadc492a5807c56eb80b0507accd756b',
-            ],
-            [
-                'id' => 'f4fc98f99e3660bd2ecd7450f832c41a',
-            ],
-            [
-                'id' => 'f4f73033cf5045525644042325355732',
             ],
             [
                 'id' => '058de8224773a1d5fd54d523f0c823e0',
@@ -178,7 +172,7 @@ final class ActionTest extends BaseTestCase
         $this->assertSame([
             [
                 'id' => 'oxbargain',
-                'title' => 'Angebot der Woche',
+                'title' => 'Angebote der Woche',
             ],
             [
                 'id' => 'oxcatoffer',
@@ -222,7 +216,7 @@ final class ActionTest extends BaseTestCase
         $this->assertEquals([
             [
                 'id' => 'oxbargain',
-                'title' => 'Angebot der Woche',
+                'title' => 'Angebote der Woche',
                 'active' => true,
             ],
             [
@@ -293,13 +287,10 @@ final class ActionTest extends BaseTestCase
                                 'id' => 'f4f2d8eee51b0fd5eb60a46dff1166d8',
                             ],
                             [
-                                'id' => 'dc581d8a115035cbfb0223c9c736f513',
-                            ],
-                            [
                                 'id' => 'b56369b1fc9d7b97f9c5fc343b349ece',
                             ],
                             [
-                                'id' => 'ed6573c0259d6a6fb641d106dcb2faec',
+                                'id' => 'd86e244c8114c8214fbf83da8d6336b3',
                             ],
                             [
                                 'id' => '531b537118f5f4d7a427cdb825440922',
@@ -308,7 +299,10 @@ final class ActionTest extends BaseTestCase
                                 'id' => 'b56597806428de2f58b1c6c7d3e0e093',
                             ],
                             [
-                                'id' => 'b563ab240dc19b89fc0349866b2be9c0',
+                                'id' => '05848170643ab0deb9914566391c0c63',
+                            ],
+                            [
+                                'id' => 'adcb9deae73557006a8ac748f45288b4',
                             ],
                         ],
                     ],
@@ -325,8 +319,17 @@ final class ActionTest extends BaseTestCase
                         'id' => 'oxbargain',
                         'products' => [
                             [
-                                'id' => 'dc5ffdf380e15674b56dd562a7cb6aec',
+                                'id' => 'f4fe052346b4ec271011e25c052682c5',
                             ],
+                            [
+                                'id' => '058de8224773a1d5fd54d523f0c823e0',
+                            ],
+                            [
+                                'id' => 'ed6573c0259d6a6fb641d106dcb2faec',
+                            ],
+                            [
+                                'id' => 'f4fc98f99e3660bd2ecd7450f832c41a',
+                            ]
                         ],
                     ],
                 ],
