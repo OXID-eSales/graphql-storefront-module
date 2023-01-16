@@ -307,7 +307,7 @@ jobs:
               run: |
                   docker-compose exec -T \
                     -e XDEBUG_MODE=coverage \
-                    php php vendor/bin/phpunit -vvvv \
+                    php php vendor/bin/phpunit -vvv \
                       -c /var/www/vendor/oxid-esales/graphql-storefront/tests/phpunit.xml \
                       --coverage-html=Coverage \
                       --coverage-clover=/var/www/coverage.xml \
