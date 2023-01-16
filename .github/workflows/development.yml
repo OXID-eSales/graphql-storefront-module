@@ -307,7 +307,7 @@ jobs:
               run: |
                   docker-compose exec -T \
                     -e XDEBUG_MODE=coverage \
-                    php php vendor/bin/phpunit \
+                    php php vendor/bin/phpunit -vvvv \
                       -c /var/www/vendor/oxid-esales/graphql-storefront/tests/phpunit.xml \
                       --coverage-html=Coverage \
                       --coverage-clover=/var/www/coverage.xml \
@@ -413,7 +413,7 @@ jobs:
 
 
     notify_slack:
-        needs: [ styles, codeception_tests ]
+        needs: [ styles, unit_tests, codeception_tests ]
         runs-on: ubuntu-latest
         if: always()
         steps:
@@ -423,14 +423,15 @@ jobs:
                   payload: >
                       { "text": "
                       ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled run of' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
-                      ${{ (needs.codeception_tests.result=='success' && needs.styles.result=='success') && 'Successful' || 'Failed' }}
+                      ${{ (needs.codeception_tests.result=='success' && needs.unit_tests.result=='success' && needs.styles.result=='success') && 'Successful' || 'Failed' }}
                       ", "blocks": [ { "type": "header","text": { "type": "plain_text", "emoji": true, "text": "
                       ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
                       " } },{ "type": "section","fields": [ { "type": "mrkdwn","text": "
-                      *Status:* ${{ (needs.codeception_tests.result=='success' && needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
+                      *Status:* ${{ (needs.codeception_tests.result=='success' && needs.unit_tests.result=='success' && needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
                       " },{ "type": "mrkdwn","text": "
                       Repository: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}/actions/runs/${{ github.run_id }}>
                       " } ] },{ "type": "section", "text": { "type": "mrkdwn", "text": "
+                      \n* Module Unit ${{ (needs.unit_tests.result=='success') && ':white_check_mark:' || ':x:' }}
                       \n* Module Codeception ${{ (needs.codeception_tests.result=='success') && ':white_check_mark:' || ':x:' }}
                       \n* Module Styles ${{ (needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
                       " } }, { "type": "divider" } ] }
