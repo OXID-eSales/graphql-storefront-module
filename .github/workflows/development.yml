@@ -219,6 +219,11 @@ jobs:
                   docker-compose down
                   sleep 2
 
+            - name: Cleanup Docker
+              run: |
+                  c=$(docker ps -q) && [[ $c ]] && docker kill $c
+                  docker system prune --force
+
     styles:
         needs: [ prepare_environment ]
         strategy:
@@ -307,13 +312,31 @@ jobs:
               run: |
                   docker-compose exec -T \
                     -e XDEBUG_MODE=coverage \
-                    php php vendor/bin/phpunit -vvv \
+                    php php vendor/bin/phpunit \
                       -c /var/www/vendor/oxid-esales/graphql-storefront/tests/phpunit.xml \
-                      --coverage-html=Coverage \
+                      --coverage-php=/var/www/unit.cov
                       --coverage-clover=/var/www/coverage.xml \
-                      --coverage-text \
-                      --log-junit=/var/www/phpunit.xml \
-                      /var/www/vendor/oxid-esales/graphql-storefront/tests/
+                      --coverage-text
+
+            - name: Upload log artifact
+              if: always()
+              uses: actions/upload-artifact@v3
+              with:
+                  name: ModuleUnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+                  path: |
+                      source/unit.cov
+                      source/source/log/oxideshop.log
+                      data/php/logs/error_log.txt
+
+            - name: Stop containers
+              run: |
+                  docker-compose down
+                  sleep 2
+
+            - name: Cleanup Docker
+              run: |
+                  c=$(docker ps -q) && [[ $c ]] && docker kill $c
+                  docker system prune --force
 
     codeception_tests:
         needs: [ prepare_environment, install_shop_with_module ]
@@ -411,6 +434,15 @@ jobs:
                       data/php/logs/error_log.txt
                       source/tests/Codeception/_output
 
+            - name: Stop containers
+              run: |
+                  docker-compose down
+                  sleep 2
+
+            - name: Cleanup Docker
+              run: |
+                  c=$(docker ps -q) && [[ $c ]] && docker kill $c
+                  docker system prune --force
 
     notify_slack:
         needs: [ styles, unit_tests, codeception_tests ]
