@@ -331,13 +331,14 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v3
               with:
-                  name: UnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+                  name: UnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
                   path: |
                       source/unit.cov
                       source/source/log/oxideshop.log
                       data/php/logs/error_log.txt
 
             - name: Stop containers
+              if: always()
               run: |
                   docker-compose down
                   sleep 2
@@ -444,6 +445,7 @@ jobs:
                       source/tests/Codeception/_output
 
             - name: Stop containers
+              if: always()
               run: |
                   docker-compose down
                   sleep 2
