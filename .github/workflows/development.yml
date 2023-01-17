@@ -129,9 +129,9 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
                   restore-keys: |
-                      storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 
             - name: Prepare container configuration
               run: |
@@ -273,6 +273,15 @@ jobs:
               working-directory: source/test-module
               run: composer deptrac
 
+            - name: Upload log artifact
+              if: always()
+              uses: actions/upload-artifact@v3
+              with:
+                name: StylesLog-${{ env.PHP_VERSION }}-${{ github.sha }}
+                path: |
+                  source/source/modules/oe/nginx/phpstan.report.json
+                  source/source/modules/oe/nginx/phpmd.report.json
+
     unit_tests:
         needs: [ prepare_environment, install_shop_with_module ]
         runs-on: ubuntu-latest
@@ -294,9 +303,9 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
                   restore-keys: |
-                      storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 
             - name: Start containers
               run: |
@@ -322,7 +331,7 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v3
               with:
-                  name: ModuleUnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
+                  name: UnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.TEMPLATE_ENGINE }}-${{ github.sha }}
                   path: |
                       source/unit.cov
                       source/source/log/oxideshop.log
@@ -372,9 +381,9 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
                   restore-keys: |
-                      storefrontModule-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
 
             - name: Start containers
               run: |
@@ -424,7 +433,7 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v3
               with:
-                  name: ModuleCodeceptionTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  name: CodeceptionTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
                   path: |
                       docker-compose.yml
                       source/composer.json
