@@ -21,9 +21,8 @@ on:
                     - '5.7.37'
                     - '8.0'
 
-            module_codecept_test_group:
+            codeception_test_group:
                 description: 'Module codeception test group'
-                required: true
                 default: 'all'
                 type: choice
                 options:
@@ -36,7 +35,6 @@ on:
 
             edition:
                 description: 'Shop edition'
-                required: true
                 default: 'ce'
                 type: choice
                 options:
@@ -46,7 +44,6 @@ on:
 
             sonarcloud:
                 description: 'Execute sonarcloud scan'
-                required: true
                 default: false
                 type: boolean
 

@@ -9,15 +9,10 @@ on:
 
 jobs:
     twig:
-        runs-on: ubuntu-latest
-        steps:
-            - name: run full twig development workflow
-              uses: convictional/trigger-workflow-and-wait@v1.6.5
-              with:
-                  owner: oxid-esales
-                  repo: graphql-storefront
-                  github_user: ${{ secrets.CI_USER }}
-                  github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
-                  workflow_file_name: development.yml
-                  ref: ${{ github.ref_name }}
-                  client_payload:  '{"php": "8.0", "mysql": "5.7.37", "module_codecept_test_group": "all", "edition": "ce", "sonarcloud": true}'
+        name: 'Php-8.0-Mysql-5.7'
+        uses: ./.github/workflows/development.yml
+        secrets: inherit
+        with:
+            php: '8.0'
+            mysql: '5.7.37'
+            sonarcloud: true
