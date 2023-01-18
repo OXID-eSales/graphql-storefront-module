@@ -226,13 +226,13 @@ jobs:
             - name: Checkout current module
               uses: actions/checkout@v2
               with:
-                  path: source/test-module
+                  path: source/source/modules/oe/graphql-storefront
 
             - name: Install module
               run: |
                   docker-compose exec -T \
                     php composer config repositories.${{ env.PACKAGE_NAME }} \
-                    --json '{"type":"path", "url":"./test-module", "options": {"symlink": true}}'
+                    --json '{"type":"path", "url":"./source/modules/oe/graphql-storefront", "options": {"symlink": true}}'
                   docker-compose exec -T \
                     php composer require ${{ env.PACKAGE_NAME }}:* --no-interaction --no-update
 
@@ -584,15 +584,12 @@ jobs:
 
     styles:
         needs: [ prepare_environment ]
-        strategy:
-            matrix:
-                php: [ '8.0', '8.1' ]
         runs-on: ubuntu-latest
         steps:
             - name: Checkout current module
               uses: actions/checkout@v2
               with:
-                  path: source/test-module
+                  path: source/source/modules/graphql-storefront
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
@@ -603,32 +600,32 @@ jobs:
 
             - name: Install module dependencies
               id: dependencies
-              working-directory: source/test-module
+              working-directory: source/source/modules/graphql-storefront
               run: composer install
 
             - name: Run phpcs
               id: phpcs
               if: always()
-              working-directory: source/test-module
+              working-directory: source/source/modules/graphql-storefront
               run: composer phpcs
 
             - name: Run phpstan
               id: phpstan
               if: always()
-              working-directory: source/test-module
+              working-directory: source/source/modules/graphql-storefront
               run: composer phpstan-report || composer phpstan
 
             - name: Run phpmd
               id: phpmd
               continue-on-error: true
               if: always()
-              working-directory: source/test-module
+              working-directory: source/source/modules/graphql-storefront
               run: composer phpmd-report || composer phpmd
 
             - name: Deptrac Analyzer
               id: deptrac
               if: always()
-              working-directory: source/test-module
+              working-directory: source/source/modules/graphql-storefront
               run: composer deptrac
 
             - name: Upload log artifact
