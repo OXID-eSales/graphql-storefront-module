@@ -402,7 +402,7 @@ jobs:
                   -e XDEBUG_MODE=coverage \
                   php php vendor/bin/phpunit \
                    --bootstrap=/var/www/source/bootstrap.php \
-                   -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpunitintegration.xml \
+                   -c /var/www/vendor/${{ env.PACKAGE_NAME }}/tests/phpintegration.xml \
                    --coverage-php=/var/www/integration.cov
 
             - name: Upload log artifact
@@ -692,7 +692,7 @@ jobs:
                       -Dsonar.cpd.php.minimumLines=5
 
     notify_slack:
-        needs: [ styles, unit_tests, codeception_tests ]
+        needs: [ styles, unit_tests, integration_tests, codeception_tests ]
         runs-on: ubuntu-latest
         if: always()
         steps:
@@ -702,7 +702,7 @@ jobs:
                   payload: >
                       { "text": "
                       ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled run of' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
-                      ${{ (needs.codeception_tests.result=='success' && needs.unit_tests.result=='success' && needs.styles.result=='success') && 'Successful' || 'Failed' }}
+                      ${{ (needs.codeception_tests.result=='success' && needs.unit_tests.result=='success' && needs.integration_tests.result=='success' && needs.styles.result=='success') && 'Successful' || 'Failed' }}
                       ", "blocks": [ { "type": "header","text": { "type": "plain_text", "emoji": true, "text": "
                       ${{ github.event_name == 'workflow_dispatch' && 'Manual run of' || 'Scheduled' }} ${{ github.workflow }} on ${{ github.repository }} by ${{ github.actor }}
                       " } },{ "type": "section","fields": [ { "type": "mrkdwn","text": "
@@ -710,9 +710,10 @@ jobs:
                       " },{ "type": "mrkdwn","text": "
                       Repository: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|${{ github.repository }}/actions/runs/${{ github.run_id }}>
                       " } ] },{ "type": "section", "text": { "type": "mrkdwn", "text": "
-                      \n* Module Unit ${{ (needs.unit_tests.result=='success') && ':white_check_mark:' || ':x:' }}
-                      \n* Module Codeception ${{ (needs.codeception_tests.result=='success') && ':white_check_mark:' || ':x:' }}
-                      \n* Module Styles ${{ (needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
+                      \n* Unit ${{ (needs.unit_tests.result=='success') && ':white_check_mark:' || ':x:' }}
+                      \n* Codeception ${{ (needs.codeception_tests.result=='success') && ':white_check_mark:' || ':x:' }}
+                      \n* Integration ${{ (needs.integration_tests.result=='success') && ':white_check_mark:' || ':x:' }}
+                      \n* Styles ${{ (needs.styles.result=='success') && ':white_check_mark:' || ':x:' }}
                       " } }, { "type": "divider" } ] }
               env:
                   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
