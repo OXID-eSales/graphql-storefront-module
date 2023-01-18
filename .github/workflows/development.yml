@@ -620,7 +620,7 @@ jobs:
     sonarcloud:
         needs: [ prepare_environment, styles, prepare_coverage_results ]
         if: inputs.sonarcloud
-        runs-on: self-hosted
+        runs-on: ubuntu-latest
         steps:
             - name: context php_version
               run: |
