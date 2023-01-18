@@ -420,6 +420,7 @@ jobs:
               run: |
                   docker-compose down
                   sleep 2
+
             - name: Cleanup Docker
               run: |
                   c=$(docker ps -q) && [[ $c ]] && docker kill $c
