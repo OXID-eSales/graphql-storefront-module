@@ -238,19 +238,19 @@ jobs:
 
             - name: Install dependencies
               run: |
-                  docker-compose exec -T php composer update --no-interaction
                   docker-compose exec -T \
                     php composer config repositories.oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }} \
                     --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_${{ env.SHOP_EDITION }}"}'
                   docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }}:dev-master --no-update
+                  docker-compose exec -T php composer update --no-interaction
 
-            - name: Set shop-id suffix for CE
-              if: (env.SHOP_EDITION == 'ce')
+            - name: Set shop-id suffix for CE/PE
+              if: ((env.SHOP_EDITION == 'ce') || (env.SHOP_EDITION == 'pe'))
               run: |
                   echo -n "SHOP_ID_SUFFIX=" >> $GITHUB_ENV
 
-            - name: Set shop-id suffix for PE/EE
-              if: ((env.SHOP_EDITION == 'pe') || (env.SHOP_EDITION == 'ee'))
+            - name: Set shop-id suffix for EE
+              if: (env.SHOP_EDITION == 'ee')
               run: |
                   echo -n "SHOP_ID_SUFFIX=--shop-id=1" >> $GITHUB_ENV
 
@@ -524,6 +524,7 @@ jobs:
 
     prepare_coverage_results:
         needs: [ prepare_environment, unit_tests, integration_tests ]
+        if: ${{ always() && inputs.sonarcloud }}
         runs-on: ubuntu-latest
         steps:
             - name: context php_version
