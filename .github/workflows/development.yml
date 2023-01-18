@@ -48,6 +48,8 @@ on:
 env:
     PACKAGE_NAME: 'oxid-esales/graphql-storefront'
     MODULE_IDS: 'oe_graphql_storefront'
+    SONARCLOUD_ORGANIZATION: 'oxid-esales'
+    SONARCLOUD_PROJECT_KEY: 'OXID-eSales_storefront-module'
 
 jobs:
     prepare_environment:
