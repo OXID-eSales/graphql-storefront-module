@@ -217,15 +217,15 @@ jobs:
                     --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_${{ env.SHOP_EDITION }}"}'
                   docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }}:dev-master --no-update
 
-            - name: Set shop-id suffix
-              if: ((env.SHOP_EDITION == 'pe') || (env.SHOP_EDITION == 'ee'))
-              run: |
-                  echo -n "SHOP_ID_SUFFIX=--shop-id=1" >> $GITHUB_ENV
-
-            - name: Set shop-id suffix
+            - name: Set shop-id suffix for CE
               if: (env.SHOP_EDITION == 'ce')
               run: |
                   echo -n "SHOP_ID_SUFFIX=" >> $GITHUB_ENV
+
+            - name: Set shop-id suffix for PE/EE
+              if: ((env.SHOP_EDITION == 'pe') || (env.SHOP_EDITION == 'ee'))
+              run: |
+                  echo -n "SHOP_ID_SUFFIX=--shop-id=1" >> $GITHUB_ENV
 
             - name: Reset and prepare shop
               run: |
@@ -239,6 +239,18 @@ jobs:
                   docker-compose exec -T php bin/oe-console oe:module:install-assets
                   docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base ${{ env.SHOP_ID_SUFFIX }}
                   docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_storefront ${{ env.SHOP_ID_SUFFIX }}
+
+            - name: Add license key for PE
+              if: (env.SHOP_EDITION == 'pe')
+              run: |
+                  docker-compose exec -T \
+                  php bin/oe-console oe:license:add ${{ secrets.GH_PE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
+
+            - name: Add license key for EE
+              if: (env.SHOP_EDITION == 'ee')
+              run: |
+                  docker-compose exec -T \
+                  php bin/oe-console oe:license:add ${{ secrets.GH_EE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
 
             - name: Stop containers
               run: |
