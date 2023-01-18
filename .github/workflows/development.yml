@@ -1,6 +1,28 @@
 name: Development
 
 on:
+    workflow_call:
+        inputs:
+            php:
+                required: true
+                type: string
+
+            mysql:
+                required: true
+                type: string
+
+            codeception_test_group:
+                default: 'all'
+                type: string
+
+            edition:
+                default: 'ce'
+                type: string
+
+            sonarcloud:
+                default: false
+                type: boolean
+
     workflow_dispatch:
         inputs:
             php:
@@ -23,6 +45,7 @@ on:
 
             codeception_test_group:
                 description: 'Module codeception test group'
+                required: true
                 default: 'all'
                 type: choice
                 options:
@@ -35,6 +58,7 @@ on:
 
             edition:
                 description: 'Shop edition'
+                required: true
                 default: 'ce'
                 type: choice
                 options:
@@ -44,6 +68,7 @@ on:
 
             sonarcloud:
                 description: 'Execute sonarcloud scan'
+                required: true
                 default: false
                 type: boolean
 
