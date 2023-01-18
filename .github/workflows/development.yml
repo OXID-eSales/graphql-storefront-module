@@ -44,6 +44,11 @@ on:
                     - 'pe'
                     - 'ee'
 
+            sonarcloud:
+                description: 'Execute sonarcloud scan'
+                required: true
+                default: false
+                type: boolean
 
 env:
     PACKAGE_NAME: 'oxid-esales/graphql-storefront'
@@ -497,7 +502,7 @@ jobs:
 
     prepare_coverage_results:
         needs: [ prepare_environment, unit_tests, integration_tests ]
-        runs-on: self-hosted
+        runs-on: ubuntu-latest
         steps:
             - name: context php_version
               run: |
@@ -614,7 +619,7 @@ jobs:
 
     sonarcloud:
         needs: [ prepare_environment, styles, prepare_coverage_results ]
-        if: always()
+        if: inputs.sonarcloud
         runs-on: self-hosted
         steps:
             - name: context php_version

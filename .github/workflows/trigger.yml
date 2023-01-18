@@ -20,4 +20,4 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: development.yml
                   ref: ${{ github.ref_name }}
-                  client_payload:  '{"php": "8.0", "mysql": "5.7.37", "module_codecept_test_group": "all", "edition": "ce"}'
+                  client_payload:  '{"php": "8.0", "mysql": "5.7.37", "module_codecept_test_group": "all", "edition": "ce", "sonarcloud": false}'
