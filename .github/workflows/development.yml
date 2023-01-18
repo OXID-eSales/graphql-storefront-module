@@ -233,8 +233,6 @@ jobs:
                     php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
                     --db-name=example --db-user=root --db-password=root --force ${{ env.SHOP_ID_SUFFIX }}
                   docker-compose exec -T php bin/oe-console oe:setup:demodata ${{ env.SHOP_ID_SUFFIX }}
-                  docker-compose exec -T \
-                    php bin/oe-console oe:license:add ${{ secrets.GH_EE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
                   docker-compose exec -T php bin/oe-console oe:module:install ./vendor/${{ env.PACKAGE_NAME }}/
                   docker-compose exec -T php bin/oe-console oe:module:install-assets
                   docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base ${{ env.SHOP_ID_SUFFIX }}
@@ -244,13 +242,13 @@ jobs:
               if: (env.SHOP_EDITION == 'pe')
               run: |
                   docker-compose exec -T \
-                  php bin/oe-console oe:license:add ${{ secrets.GH_PE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
+                    php bin/oe-console oe:license:add ${{ secrets.GH_PE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
 
             - name: Add license key for EE
               if: (env.SHOP_EDITION == 'ee')
               run: |
                   docker-compose exec -T \
-                  php bin/oe-console oe:license:add ${{ secrets.GH_EE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
+                    php bin/oe-console oe:license:add ${{ secrets.GH_EE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
 
             - name: Stop containers
               run: |
