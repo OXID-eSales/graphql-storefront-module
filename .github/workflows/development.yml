@@ -316,7 +316,7 @@ jobs:
                   c=$(docker ps -q) && [[ $c ]] && docker kill $c
                   docker system prune --force
 
-    integration_tests_module:
+    integration_tests:
         needs: [ prepare_environment, install_shop_with_module ]
         runs-on: ubuntu-latest
         steps:
@@ -486,7 +486,7 @@ jobs:
                   docker system prune --force
 
     prepare_coverage_results:
-        needs: [ prepare_environment, unit_tests_module, integration_tests_module ]
+        needs: [ prepare_environment, unit_tests, integration_tests ]
         runs-on: self-hosted
         steps:
             - name: context php_version
