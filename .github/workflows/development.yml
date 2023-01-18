@@ -84,7 +84,7 @@ jobs:
         outputs:
             PHP_VERSION: ${{ steps.php_version.outputs.PHP_VERSION }}
             MYSQL_VERSION: ${{ steps.mysql_version.outputs.MYSQL_VERSION }}
-            MODULE_CODECEPT_TEST_GROUP: ${{ steps.module_codecept_test_group.outputs.MODULE_CODECEPT_TEST_GROUP }}
+            CODECEPTION_TEST_GROUP: ${{ steps.codeception_test_group.outputs.CODECEPTION_TEST_GROUP }}
             SHOP_EDITION: ${{ steps.edition.outputs.SHOP_EDITION }}
             CODECEPTION_MATRIX: ${{ steps.codeception_matrix.outputs.CODECEPTION_MATRIX }}
         steps:
@@ -94,19 +94,19 @@ jobs:
             - id: mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ inputs.mysql }}" >> $GITHUB_OUTPUT
-            - id: module_codecept_test_group
+            - id: codeception_test_group
               run: |
-                  echo -n "MODULE_CODECEPT_TEST_GROUP=${{ inputs.module_codecept_test_group }}" >> $GITHUB_OUTPUT
+                  echo -n "CODECEPTION_TEST_GROUP=${{ inputs.codeception_test_group }}" >> $GITHUB_OUTPUT
             - id: edition
               run: |
                   echo -n "SHOP_EDITION=${{ inputs.edition }}" >> $GITHUB_OUTPUT
             - id: codeception_matrix
               name: Create codeception matrix
               run: |
-                  if [[ ${{ inputs.module_codecept_test_group }} -eq "all" ]]; then
+                  if [[ ${{ inputs.codeception_test_group }} -eq "all" ]]; then
                     echo -n "CODECEPTION_MATRIX=[\"address\", \"basket\", \"customer\", \"order\", \"other\"]" >> $GITHUB_OUTPUT
                   else
-                    echo -n "CODECEPTION_MATRIX=${{ inputs.module_codecept_test_group }}" >> $GITHUB_OUTPUT
+                    echo -n "CODECEPTION_MATRIX=${{ inputs.codeception_test_group }}" >> $GITHUB_OUTPUT
                   fi
 
 
@@ -130,7 +130,7 @@ jobs:
               run: |
                   echo "Running job with PHP version ${{ needs.prepare_environment.outputs.PHP_VERSION}}"
                   echo "Running job with MySQL version ${{ needs.prepare_environment.outputs.MYSQL_VERSION }}"
-                  echo "Running job with module codeception test group ${{ needs.prepare_environment.outputs.MODULE_CODECEPT_TEST_GROUP }}"
+                  echo "Running job with module codeception test group ${{ needs.prepare_environment.outputs.CODECEPTION_TEST_GROUP }}"
                   echo "Running job with shop edition ${{ needs.prepare_environment.outputs.SHOP_EDITION }}"
                   echo "Running job with codeception matrix ${{ needs.prepare_environment.outputs.CODECEPTION_MATRIX }}"
                   echo ${{ github.event_name }}
@@ -641,7 +641,7 @@ jobs:
 
     sonarcloud:
         needs: [ prepare_environment, styles, prepare_coverage_results ]
-        if: inputs.sonarcloud
+        if: ${{ always() && inputs.sonarcloud }}
         runs-on: ubuntu-latest
         steps:
             - name: context php_version
