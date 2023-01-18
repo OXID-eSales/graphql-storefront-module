@@ -209,12 +209,36 @@ jobs:
                   docker-compose exec -T \
                     php composer require ${{ env.PACKAGE_NAME }}:* --no-interaction --no-update
 
-            - name: Install dependencies and reset shop
+            - name: Install dependencies
               run: |
                   docker-compose exec -T php composer update --no-interaction
                   docker-compose exec -T \
+                    php composer config repositories.oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }} \
+                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_${{ env.SHOP_EDITION }}"}'
+                  docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }}:dev-master --no-update
+
+            - name: Set shop-id suffix
+              if: ((env.SHOP_EDITION == 'pe') || (env.SHOP_EDITION == 'ee'))
+              run: |
+                  echo -n "SHOP_ID_SUFFIX=--shop-id=1" >> $GITHUB_ENV
+
+            - name: Set shop-id suffix
+              if: (env.SHOP_EDITION == 'ce')
+              run: |
+                  echo -n "SHOP_ID_SUFFIX=" >> $GITHUB_ENV
+
+            - name: Reset and prepare shop
+              run: |
+                  docker-compose exec -T \
                     php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
-                    --db-name=example --db-user=root --db-password=root --force
+                    --db-name=example --db-user=root --db-password=root --force ${{ env.SHOP_ID_SUFFIX }}
+                  docker-compose exec -T php bin/oe-console oe:setup:demodata ${{ env.SHOP_ID_SUFFIX }}
+                  docker-compose exec -T \
+                    php bin/oe-console oe:license:add ${{ secrets.GH_EE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
+                  docker-compose exec -T php bin/oe-console oe:module:install ./vendor/${{ env.PACKAGE_NAME }}/
+                  docker-compose exec -T php bin/oe-console oe:module:install-assets
+                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base ${{ env.SHOP_ID_SUFFIX }}
+                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_storefront ${{ env.SHOP_ID_SUFFIX }}
 
             - name: Stop containers
               run: |
@@ -434,10 +458,10 @@ jobs:
 
             - name: Install codeception dependencies
               run: |
-                  docker-compose exec -T \
-                    php composer config repositories.oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }} \
-                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_${{ env.SHOP_EDITION }}"}'
-                  docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }}:dev-master --no-update
+#                  docker-compose exec -T \
+#                    php composer config repositories.oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }} \
+#                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_${{ env.SHOP_EDITION }}"}'
+#                  docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }}:dev-master --no-update
                   docker-compose exec -T php composer require codeception/c3 --dev --no-update
                   docker-compose exec -T php composer require codeception/module-rest:* --dev --no-update
                   docker-compose exec -T php composer require codeception/module-phpbrowser:* --dev --no-update
@@ -445,11 +469,11 @@ jobs:
                   docker-compose exec -T php composer update
                   sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' source/source/bootstrap.php
 
-            - name: Activate module
-              run: |
-                  docker-compose exec -T php bin/oe-console oe:setup:demodata
-                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base
-                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_storefront
+#            - name: Activate module
+#              run: |
+#                  docker-compose exec -T php bin/oe-console oe:setup:demodata
+#                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base
+#                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_storefront
 
             - name: Run tests
               run: |
