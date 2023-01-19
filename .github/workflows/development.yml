@@ -590,7 +590,7 @@ jobs:
             - name: Checkout current module
               uses: actions/checkout@v2
               with:
-                  path: source/source/modules/graphql-storefront
+                  path: source/source/modules/oe/graphql-storefront
 
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
@@ -601,32 +601,32 @@ jobs:
 
             - name: Install module dependencies
               id: dependencies
-              working-directory: source/source/modules/graphql-storefront
+              working-directory: source/source/modules/oe/graphql-storefront
               run: composer install
 
             - name: Run phpcs
               id: phpcs
               if: always()
-              working-directory: source/source/modules/graphql-storefront
+              working-directory: source/source/modules/oe/graphql-storefront
               run: composer phpcs
 
             - name: Run phpstan
               id: phpstan
               if: always()
-              working-directory: source/source/modules/graphql-storefront
+              working-directory: source/source/modules/oe/graphql-storefront
               run: composer phpstan-report || composer phpstan
 
             - name: Run phpmd
               id: phpmd
               continue-on-error: true
               if: always()
-              working-directory: source/source/modules/graphql-storefront
+              working-directory: source/source/modules/oe/graphql-storefront
               run: composer phpmd-report || composer phpmd
 
             - name: Deptrac Analyzer
               id: deptrac
               if: always()
-              working-directory: source/source/modules/graphql-storefront
+              working-directory: source/source/modules/oe/graphql-storefront
               run: composer deptrac
 
             - name: Upload log artifact
