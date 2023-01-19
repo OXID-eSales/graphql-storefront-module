@@ -76,7 +76,7 @@ env:
     PACKAGE_NAME: 'oxid-esales/graphql-storefront'
     MODULE_IDS: 'oe_graphql_storefront'
     SONARCLOUD_ORGANIZATION: 'oxid-esales'
-    SONARCLOUD_PROJECT_KEY: 'OXID-eSales_storefront-module'
+    SONARCLOUD_PROJECT_KEY: 'OXID-eSales_graphql-storefront-module'
 
 jobs:
     prepare_environment:
@@ -693,7 +693,6 @@ jobs:
                       -Dsonar.php.phpstan.reportPaths=styles/phpstan.report.json
                       -Dsonar.cpd.php.minimumTokens=25
                       -Dsonar.cpd.php.minimumLines=5
-                      -X
 
     notify_slack:
         needs: [ styles, unit_tests, integration_tests, codeception_tests ]
