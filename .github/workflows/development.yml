@@ -158,9 +158,7 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
-                  restore-keys: |
-                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
             - name: Prepare container configuration
               run: |
@@ -308,9 +306,9 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
                   restore-keys: |
-                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                      shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
             - name: Start containers
               run: |
@@ -381,9 +379,9 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
                   restore-keys: |
-                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                      shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
             - name: Login to Docker Hub
               uses: docker/login-action@v2
@@ -448,9 +446,11 @@ jobs:
             - name: context php_version
               run: |
                   echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION }}" >> $GITHUB_ENV
+
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
+
             - name: context shop_edition
               run: |
                   echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
@@ -460,9 +460,9 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
                   restore-keys: |
-                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                      shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
             - name: Start containers
               run: |
@@ -543,9 +543,9 @@ jobs:
               with:
                   path: |
                       ./*
-                  key: shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  key: shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
                   restore-keys: |
-                      shopInstallation-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                      shopInstallation-${{ join(inputs, '-') }}-${{ github.run_number }}-${{ github.run_attempt }}
 
             - name: Download unit artifacts
               uses: actions/download-artifact@v3
@@ -587,6 +587,10 @@ jobs:
         needs: [ prepare_environment ]
         runs-on: ubuntu-latest
         steps:
+            - name: context php_version
+              run: |
+                  echo -n "PHP_VERSION=${{ needs.prepare_environment.outputs.PHP_VERSION }}" >> $GITHUB_ENV
+
             - name: Checkout current module
               uses: actions/checkout@v2
               with:
@@ -595,7 +599,7 @@ jobs:
             - name: Setup PHP
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ needs.prepare_environment.outputs.PHP_VERSION }}
+                  php-version: ${{ env.PHP_VERSION }}
                   coverage: xdebug
                   extensions: gd, zip
 
