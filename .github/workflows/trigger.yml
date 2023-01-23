@@ -8,11 +8,23 @@ on:
             - b-7.0.x-*
 
 jobs:
-    twig:
-        name: 'Php-8.0-Mysql-5.7'
-        uses: ./.github/workflows/development.yml
-        secrets: inherit
-        with:
-            php: '8.0'
-            mysql: '5.7.37'
-            sonarcloud: true
+#    twig:
+#        name: 'Php-8.0-Mysql-5.7'
+#        uses: ./.github/workflows/development.yml
+#        secrets: inherit
+#        with:
+#            php: '8.0'
+#            mysql: '5.7.37'
+#            sonarcloud: true
+    test_EE:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Trigger EE workflow and wait for results
+              uses: convictional/trigger-workflow-and-wait@v1.6.5
+              with:
+                  owner: oxid-esales
+                  repo: module_workflows
+                  github_user: ${{ secrets.CI_USER }}
+                  github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
+                  workflow_file_name: storefront_workflow.yml
+                  ref: "master-storefront_workflow-OXDEV-6056"
