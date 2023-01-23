@@ -263,18 +263,6 @@ jobs:
                   docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base ${{ env.SHOP_ID_SUFFIX }}
                   docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_storefront ${{ env.SHOP_ID_SUFFIX }}
 
-            - name: Add license key for PE
-              if: (env.SHOP_EDITION == 'pe')
-              run: |
-                  docker-compose exec -T \
-                    php bin/oe-console oe:license:add ${{ secrets.GH_PE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
-
-            - name: Add license key for EE
-              if: (env.SHOP_EDITION == 'ee')
-              run: |
-                  docker-compose exec -T \
-                    php bin/oe-console oe:license:add ${{ secrets.GH_EE_LICENSE }} ${{ env.SHOP_ID_SUFFIX }}
-
             - name: Stop containers
               run: |
                   docker-compose down
