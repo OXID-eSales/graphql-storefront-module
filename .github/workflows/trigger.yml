@@ -23,7 +23,7 @@ jobs:
               uses: convictional/trigger-workflow-and-wait@v1.6.5
               with:
                   owner: oxid-esales
-                  repo: module_workflows
+                  repo: module-workflows
                   github_user: ${{ secrets.CI_USER }}
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yml
