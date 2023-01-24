@@ -28,5 +28,5 @@ jobs:
                   github_user: ${{ secrets.CI_USER }}
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yml
-                  ref: "master-storefront_workflow-OXDEV-6056"
-                  client_payload: '{"php": "8.0", "mysql": "5.7.37", "edition": "ee", "ref": "master-storefront_workflow-OXDEV-6056"}'
+                  ref: ${{ github.ref_name }}
+                  client_payload: "{\"php\": \"8.0\", \"mysql\": \"5.7.37\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
