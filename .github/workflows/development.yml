@@ -15,10 +15,6 @@ on:
                 default: 'all'
                 type: string
 
-            edition:
-                default: 'ce'
-                type: string
-
             sonarcloud:
                 default: false
                 type: boolean
@@ -56,16 +52,6 @@ on:
                     - 'order'
                     - 'other'
 
-            edition:
-                description: 'Shop edition'
-                required: true
-                default: 'ce'
-                type: choice
-                options:
-                    - 'ce'
-                    - 'pe'
-                    - 'ee'
-
             sonarcloud:
                 description: 'Execute sonarcloud scan'
                 required: true
@@ -85,7 +71,6 @@ jobs:
             PHP_VERSION: ${{ steps.php_version.outputs.PHP_VERSION }}
             MYSQL_VERSION: ${{ steps.mysql_version.outputs.MYSQL_VERSION }}
             CODECEPTION_TEST_GROUP: ${{ steps.codeception_test_group.outputs.CODECEPTION_TEST_GROUP }}
-            SHOP_EDITION: ${{ steps.edition.outputs.SHOP_EDITION }}
             CODECEPTION_MATRIX: ${{ steps.codeception_matrix.outputs.CODECEPTION_MATRIX }}
         steps:
             - id: php_version
@@ -97,9 +82,6 @@ jobs:
             - id: codeception_test_group
               run: |
                   echo -n "CODECEPTION_TEST_GROUP=${{ inputs.codeception_test_group }}" >> $GITHUB_OUTPUT
-            - id: edition
-              run: |
-                  echo -n "SHOP_EDITION=${{ inputs.edition }}" >> $GITHUB_OUTPUT
             - id: codeception_matrix
               name: Create codeception matrix
               run: |
@@ -131,7 +113,7 @@ jobs:
                   echo "Running job with PHP version ${{ needs.prepare_environment.outputs.PHP_VERSION}}"
                   echo "Running job with MySQL version ${{ needs.prepare_environment.outputs.MYSQL_VERSION }}"
                   echo "Running job with module codeception test group ${{ needs.prepare_environment.outputs.CODECEPTION_TEST_GROUP }}"
-                  echo "Running job with shop edition ${{ needs.prepare_environment.outputs.SHOP_EDITION }}"
+                  echo "Running job with shop edition CE"
                   echo "Running job with codeception matrix ${{ needs.prepare_environment.outputs.CODECEPTION_MATRIX }}"
                   echo ${{ github.event_name }}
 
@@ -142,10 +124,6 @@ jobs:
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
-
-            - name: context shop_edition
-              run: |
-                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
 
             - name: Clone testing environment
               run: git clone https://github.com/OXID-eSales/docker-eshop-sdk.git .
@@ -194,28 +172,6 @@ jobs:
                          -e 's/<sCompileDir>/\/var\/www\/source\/tmp\//'\
                       source/source/config.inc.php
 
-            - name: Set Github dependencies
-              if: ((env.SHOP_EDITION == 'pe') || (env.SHOP_EDITION == 'ee'))
-              run: |
-                  docker-compose run -T --rm php composer config github-protocols https
-                  docker-compose run -T --rm php composer config -g github-oauth.github.com ${{ secrets.GH_CI_JENKINS_TOKEN }}
-
-            - name: Set EE shop in composer config
-              if: (env.SHOP_EDITION == 'ee')
-              run: |
-                  docker-compose run -T --rm php composer config repositories.oxid-esales/oxideshop-ee git https://github.com/OXID-eSales/oxideshop_ee.git
-
-            - name: Install PE shop
-              if: ((needs.prepare_environment.outputs.SHOP_EDITION == 'pe') || (needs.prepare_environment.outputs.SHOP_EDITION == 'ee'))
-              run: |
-                  docker-compose run -T --rm php composer config repositories.oxid-esales/oxideshop-pe git https://github.com/OXID-eSales/oxideshop_pe.git
-                  docker-compose run -T --rm php composer require oxid-esales/oxideshop-pe:dev-b-7.0.x --no-update
-
-            - name: Install EE shop
-              if: (needs.prepare_environment.outputs.SHOP_EDITION == 'ee')
-              run: |
-                  docker-compose run -T --rm php composer require oxid-esales/oxideshop-ee:dev-b-7.0.x --no-update --no-plugins --no-scripts
-
             - name: Start containers
               run: |
                   make up
@@ -237,31 +193,21 @@ jobs:
             - name: Install dependencies
               run: |
                   docker-compose exec -T \
-                    php composer config repositories.oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }} \
-                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_${{ env.SHOP_EDITION }}"}'
-                  docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-${{ env.SHOP_EDITION }}:dev-master --no-update
+                    php composer config repositories.oxid-esales/oxideshop-demodata-ce \
+                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_ce"}'
+                  docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-ce:dev-master --no-update
                   docker-compose exec -T php composer update --no-interaction
-
-            - name: Set shop-id suffix for CE/PE
-              if: ((env.SHOP_EDITION == 'ce') || (env.SHOP_EDITION == 'pe'))
-              run: |
-                  echo -n "SHOP_ID_SUFFIX=" >> $GITHUB_ENV
-
-            - name: Set shop-id suffix for EE
-              if: (env.SHOP_EDITION == 'ee')
-              run: |
-                  echo -n "SHOP_ID_SUFFIX=--shop-id=1" >> $GITHUB_ENV
 
             - name: Reset and prepare shop
               run: |
                   docker-compose exec -T \
                     php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
-                    --db-name=example --db-user=root --db-password=root --force ${{ env.SHOP_ID_SUFFIX }}
-                  docker-compose exec -T php bin/oe-console oe:setup:demodata ${{ env.SHOP_ID_SUFFIX }}
+                    --db-name=example --db-user=root --db-password=root --force
+                  docker-compose exec -T php bin/oe-console oe:setup:demodata
                   docker-compose exec -T php bin/oe-console oe:module:install ./vendor/${{ env.PACKAGE_NAME }}/
                   docker-compose exec -T php bin/oe-console oe:module:install-assets
-                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base ${{ env.SHOP_ID_SUFFIX }}
-                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_storefront ${{ env.SHOP_ID_SUFFIX }}
+                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base
+                  docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_storefront
 
             - name: Stop containers
               run: |
@@ -284,10 +230,6 @@ jobs:
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
-
-            - name: context shop_edition
-              run: |
-                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
 
             - name: Load current installation from cache
               uses: actions/cache@v3
@@ -322,7 +264,7 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v3
               with:
-                  name: UnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  name: UnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
                   path: |
                       source/unit.cov
                       source/source/log/oxideshop.log
@@ -350,10 +292,6 @@ jobs:
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
-
-            - name: context shop_edition
-              run: |
-                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
 
             - name: Cleanup workspace
               run: |
@@ -395,7 +333,7 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v3
               with:
-                  name: IntegrationTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  name: IntegrationTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
                   path: |
                       source/integration.cov
                       source/source/log/oxideshop.log
@@ -438,10 +376,6 @@ jobs:
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
-
-            - name: context shop_edition
-              run: |
-                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
 
             - name: Load current installation from cache
               uses: actions/cache@v3
@@ -490,7 +424,7 @@ jobs:
               if: always()
               uses: actions/upload-artifact@v3
               with:
-                  name: CodeceptionTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  name: CodeceptionTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
                   path: |
                       docker-compose.yml
                       source/composer.json
@@ -522,9 +456,6 @@ jobs:
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION }}" >> $GITHUB_ENV
-            - name: context shop_edition
-              run: |
-                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
 
             - name: Load current installation from cache
               uses: actions/cache@v3
@@ -538,13 +469,13 @@ jobs:
             - name: Download unit artifacts
               uses: actions/download-artifact@v3
               with:
-                  name: UnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  name: UnitTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
                   path: ./source/coverage/
 
             - name: Download integration artifacts
               uses: actions/download-artifact@v3
               with:
-                  name: IntegrationTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  name: IntegrationTestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
                   path: ./source/coverage/
 
             - name: Login to Docker Hub
@@ -568,7 +499,7 @@ jobs:
             - name: Upload log artifact
               uses: actions/upload-artifact@v3
               with:
-                  name: TestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  name: TestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
                   path: source/coverage.xml
 
     styles:
@@ -641,9 +572,6 @@ jobs:
             - name: context mysql_version
               run: |
                   echo -n "MYSQL_VERSION=${{ needs.prepare_environment.outputs.MYSQL_VERSION}}" >> $GITHUB_ENV
-            - name: context shop_edition
-              run: |
-                  echo -n "SHOP_EDITION=${{ needs.prepare_environment.outputs.SHOP_EDITION }}" >> $GITHUB_ENV
 
             - name: Checkout current module
               uses: actions/checkout@v3
@@ -652,7 +580,7 @@ jobs:
               continue-on-error: true
               uses: actions/download-artifact@v3
               with:
-                  name: TestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ env.SHOP_EDITION }}-${{ github.sha }}
+                  name: TestsLog-${{ env.PHP_VERSION }}-${{ env.MYSQL_VERSION }}-${{ github.sha }}
                   path: ./tests/
 
             - name: Download styles artifacts
