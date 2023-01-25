@@ -1,0 +1,18 @@
+name: Trigger workflow for storefront actions
+
+on:
+    pull_request:
+    push:
+        branches:
+            - b-7.0.x
+            - b-7.0.x-*
+
+jobs:
+    twig:
+        name: 'Php-8.0-Mysql-8.0'
+        uses: ./.github/workflows/development.yml
+        secrets: inherit
+        with:
+            php: '8.0'
+            mysql: '8.0'
+            sonarcloud: true
