@@ -50,6 +50,7 @@ on:
                     - 'basket'
                     - 'customer'
                     - 'order'
+                    - 'pricing'
                     - 'other'
 
             sonarcloud:
@@ -86,7 +87,7 @@ jobs:
               name: Create codeception matrix
               run: |
                   if [[ ${{ inputs.codeception_test_group }} -eq "all" ]]; then
-                    echo -n "CODECEPTION_MATRIX=[\"address\", \"basket\", \"customer\", \"order\", \"other\"]" >> $GITHUB_OUTPUT
+                    echo -n "CODECEPTION_MATRIX=[\"address\", \"basket\", \"customer\", \"order\", \"pricing\", \"other\"]" >> $GITHUB_OUTPUT
                   else
                     echo -n "CODECEPTION_MATRIX=${{ inputs.codeception_test_group }}" >> $GITHUB_OUTPUT
                   fi

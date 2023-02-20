@@ -46,7 +46,10 @@ final class VendorMultishopCest extends MultishopBaseCest
                 vendor (vendorId: "' . self::VENDOR_ID . '") {
                     id
                 }
-            }'
+            }',
+            null,
+            0,
+            2
         );
 
         $I->seeResponseIsJson();

@@ -147,7 +147,7 @@ final class CustomerMultiShopCest extends MultishopBaseCest
         }
     }
 
-    public function dataProviderCustomerEmailUpdate()
+    protected function dataProviderCustomerEmailUpdate()
     {
         return [
             [

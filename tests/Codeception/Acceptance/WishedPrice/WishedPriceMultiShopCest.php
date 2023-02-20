@@ -18,7 +18,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group wishedprice
  * @group oe_graphql_storefront
- * @group other
+ * @group pricing
  */
 final class WishedPriceMultiShopCest extends MultishopBaseCest
 {
@@ -111,7 +111,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
         );
     }
 
-    public function dataProviderWishedPricePerShop()
+    protected function dataProviderWishedPricePerShop()
     {
         return [
             [
@@ -214,7 +214,7 @@ final class WishedPriceMultiShopCest extends MultishopBaseCest
         $I->assertEquals($shopId, $wishedPrice->getShopId());
     }
 
-    public function wishedPriceSetPerShopDataProvider(): array
+    protected function wishedPriceSetPerShopDataProvider(): array
     {
         return [
             [

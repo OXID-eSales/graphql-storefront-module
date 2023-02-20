@@ -16,7 +16,7 @@ use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException;
 /**
  * @group voucher
  * @group oe_graphql_storefront
- * @group other
+ * @group pricing
  */
 final class VoucherCest extends BaseCest
 {

@@ -98,7 +98,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
         $I->assertTrue($result['data']['newsletterUnsubscribe']);
     }
 
-    public function providerNewsletterStatusPerShop()
+    protected function providerNewsletterStatusPerShop()
     {
         return [
             'shop_1' => [
@@ -197,7 +197,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
         }
     }
 
-    public function providerNewsletterStatusMallUser()
+    protected function providerNewsletterStatusMallUser()
     {
         return [
             'malluser' => [

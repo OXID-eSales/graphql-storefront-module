@@ -186,7 +186,7 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $I->assertEquals($input, $result['data']['newsletterSubscribe']);
     }
 
-    public function providerNewsletterSubscribeNotExistingUser()
+    protected function providerNewsletterSubscribeNotExistingUser()
     {
         $newUserMail = random_int(0, 10) . time() . '@oxid-esales.com';
 
@@ -248,7 +248,7 @@ final class NewsletterStatusSubscribeCest extends BaseCest
         $I->assertEquals($data['expected'], $result['errors'][0]['message']);
     }
 
-    public function dataProviderNewsletterSubscribeNotExistingUserIncompleteInput()
+    protected function dataProviderNewsletterSubscribeNotExistingUserIncompleteInput()
     {
         $strangeEmail = str_pad('x', 1000) . '@oxid-esales.com';
 

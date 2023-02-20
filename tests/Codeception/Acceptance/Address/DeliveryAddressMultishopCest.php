@@ -93,7 +93,7 @@ final class DeliveryAddressMultiShopCest extends MultishopBaseCest
         );
     }
 
-    public function deliveryAddressDeletionProvider(): array
+    protected function deliveryAddressDeletionProvider(): array
     {
         return [
             'set1' => [

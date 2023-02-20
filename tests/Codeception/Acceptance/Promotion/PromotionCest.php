@@ -204,7 +204,7 @@ final class PromotionCest extends BaseCest
     }
 
 
-    public function dataProviderGetPromotionMultilanguage(): array
+    protected function dataProviderGetPromotionMultilanguage(): array
     {
         return [
             'de' => [

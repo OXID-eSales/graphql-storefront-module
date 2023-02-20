@@ -20,6 +20,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 final class ProductRelationsCest extends BaseCest
 {
     private const ACTIVE_MAIN_BUNDLE_PRODUCT = '_test_active_main_bundle';
+    private const BUNDLE_PRODUCT = '_test_inactive_bundle';
 
     public function testGetInvisibleProductBundleItemRelation(AcceptanceTester $I): void
     {
@@ -40,7 +41,7 @@ final class ProductRelationsCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            '_test_inactive_bundle',
+            self::BUNDLE_PRODUCT,
             $result['data']['product']['bundleProduct']['id']
         );
     }

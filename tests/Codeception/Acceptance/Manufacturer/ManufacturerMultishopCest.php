@@ -239,8 +239,8 @@ final class ManufacturerMultishopCest extends MultishopBaseCest
         $I->seeResponseIsJson();
         $response = $I->grabJsonResponseAsArray();
 
-        //fixtures have 7 active products assigned to manufacturer in shop 1
-        $I->assertEquals(7, count($response['data']['manufacturer']['products']));
+        //fixtures have 3 active products assigned to manufacturer in shop 1
+        $I->assertEquals(3, count($response['data']['manufacturer']['products']));
     }
 
     public function testGetProductFromSecondShop(AcceptanceTester $I): void

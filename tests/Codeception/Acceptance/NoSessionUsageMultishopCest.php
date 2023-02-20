@@ -32,9 +32,10 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
 
     public function testSubshopIdFromSessionParameter(AcceptanceTester $I): void
     {
-        //Try again but this time send shop 2 sid but no shp parameter.
-        //EE is forced to check session for shp. So in case sid parameter is sent,
-        //session would started and subshop id found in 'actshop' session variable.
+        //Try sending shop 2 sid but no shp parameter.
+        //This should result in a product returned correctly from subshop.
+        //Before that EE was forced to check session for shp. So in case sid parameter is sent,
+        //session would start and subshop id found in 'actshop' session variable.
         //Unless we make sure that graphql does not process requests with sid/force_sid parameter.
         $sid = $this->getSubShopSessionId($I);
         $this->sendQueryWithSidWithoutShopIdParameter(
@@ -48,14 +49,12 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             $sid
         );
 
-        //We prevent graphql from processing any request with already started session
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. '
-            . 'For more information about the problem, check Troubleshooting section in documentation.',
-            $result['errors'][0]['message']
+            self::SUBSHOP_PRODUCT_ID,
+            $result['data']['product']['id']
         );
     }
 
@@ -77,13 +76,11 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
             $sid
         );
 
-        //We prevent graphql from processing any request with already started session
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'OXID eShop PHP session spotted. Ensure you have skipSession=1 parameter sent to the widget.php. '
-            . 'For more information about the problem, check Troubleshooting section in documentation.',
+            'Product was not found by id: ' . self::SUBSHOP_PRODUCT_ID,
             $result['errors'][0]['message']
         );
     }

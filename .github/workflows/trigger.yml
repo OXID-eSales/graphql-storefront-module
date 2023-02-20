@@ -16,3 +16,17 @@ jobs:
             php: '8.1'
             mysql: '8.0'
             sonarcloud: true
+
+    twig_php_81_ee:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Trigger EE workflow and wait for results
+              uses: convictional/trigger-workflow-and-wait@v1.6.5
+              with:
+                  owner: oxid-esales
+                  repo: module-workflows
+                  github_user: ${{ secrets.CI_USER }}
+                  github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
+                  workflow_file_name: storefront_workflow.yml
+                  ref: "master"
+                  client_payload: "{\"php\": \"8.1\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"

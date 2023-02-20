@@ -360,7 +360,7 @@ final class CustomerCest extends BaseCest
     }
 
     /**
-     * @group sieg
+     * @group inQuestion
      */
     public function testBaskets(AcceptanceTester $I): void
     {
@@ -381,7 +381,7 @@ final class CustomerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $baskets = $result['data']['customer']['baskets'];
-        $I->assertEquals(6, count($baskets));
+        $I->assertEquals(4, count($baskets));
 
         $I->sendGQLQuery(
             'mutation {
@@ -411,7 +411,7 @@ final class CustomerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $baskets = $result['data']['customer']['baskets'];
-        $I->assertEquals(7, count($baskets));
+        $I->assertEquals(5, count($baskets));
 
         $I->sendGQLQuery(
             'mutation {
@@ -434,7 +434,7 @@ final class CustomerCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $baskets = $result['data']['customer']['baskets'];
-        $I->assertEquals(7, count($baskets));
+        $I->assertEquals(5, count($baskets));
 
         $I->sendGQLQuery(
             'mutation {

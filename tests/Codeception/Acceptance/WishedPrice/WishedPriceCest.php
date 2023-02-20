@@ -17,7 +17,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group wishedprice
  * @group oe_graphql_storefront
- * @group other
+ * @group pricing
  */
 final class WishedPriceCest extends BaseCest
 {
@@ -177,7 +177,7 @@ final class WishedPriceCest extends BaseCest
         }
     }
 
-    public function dataProviderWishedPrices404and401()
+    protected function dataProviderWishedPrices404and401()
     {
         return [
             [
@@ -230,7 +230,7 @@ final class WishedPriceCest extends BaseCest
         );
     }
 
-    public function dataProviderWishedPricesWithAuthorization()
+    protected function dataProviderWishedPricesWithAuthorization()
     {
         return [
             [
@@ -313,7 +313,7 @@ final class WishedPriceCest extends BaseCest
         $I->assertArrayHasKey('errors', $result);
     }
 
-    public function providerDeleteWishedPrice()
+    protected function providerDeleteWishedPrice()
     {
         return [
             'admin' => [
@@ -380,7 +380,7 @@ final class WishedPriceCest extends BaseCest
         );
     }
 
-    public function providerWishedPrices()
+    protected function providerWishedPrices()
     {
         return [
             'admin' => [
@@ -447,7 +447,7 @@ final class WishedPriceCest extends BaseCest
         $I->assertEquals($data['message'], $result['errors'][0]['message']);
     }
 
-    public function wishedPriceSetWithMissingEntitiesProvider(): array
+    protected function wishedPriceSetWithMissingEntitiesProvider(): array
     {
         return [
             'not_existing_product' => [

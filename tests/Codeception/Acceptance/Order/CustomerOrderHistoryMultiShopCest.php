@@ -61,7 +61,7 @@ final class CustomerOrderHistoryMultiShopCest extends MultishopBaseCest
         $I->assertCount($expectedOrdersCount, $result['data']['customer']['orders']);
     }
 
-    public function ordersCountProvider(): array
+    protected function ordersCountProvider(): array
     {
         return [
             [

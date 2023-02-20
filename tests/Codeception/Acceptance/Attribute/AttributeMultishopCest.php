@@ -70,7 +70,7 @@ final class AttributeMultishopCest extends MultishopBaseCest
         $this->removeAttributeFromShops([2]);
     }
 
-    public function dataProviderGetAttributeMultilanguage(): array
+    protected function dataProviderGetAttributeMultilanguage(): array
     {
         return [
             'shop_1_de' => [

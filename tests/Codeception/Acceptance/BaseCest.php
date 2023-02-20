@@ -17,8 +17,6 @@ abstract class BaseCest
 {
     public function _before(AcceptanceTester $I, Scenario $scenario): void
     {
-        //Some voucher tests are too fast so give 1 minute extra reservation time gap
-        $I->updateConfigInDatabase('iVoucherTimeout', (time() - 60), 'int');
     }
 
     public function _after(AcceptanceTester $I): void

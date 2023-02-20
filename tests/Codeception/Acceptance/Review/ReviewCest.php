@@ -117,7 +117,7 @@ final class ReviewCest extends BaseCest
         $I->assertEquals((int)$data['rating'], $result['data']['review']['rating']);
     }
 
-    public function setReviewDataProvider()
+    protected function setReviewDataProvider()
     {
         return [
             'text_only' => [
@@ -222,7 +222,7 @@ final class ReviewCest extends BaseCest
         $I->assertEquals($data['expected'], count($result['data']['product']['reviews']));
     }
 
-    public function providerProductMultiLanguageReview()
+    protected function providerProductMultiLanguageReview()
     {
         return [
             'english' => [

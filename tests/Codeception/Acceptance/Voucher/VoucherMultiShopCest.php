@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group voucher
  * @group oe_graphql_storefront
- * @group other
+ * @group pricing
  */
 final class VoucherMultiShopCest extends MultishopBaseCest
 {

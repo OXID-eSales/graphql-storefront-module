@@ -36,7 +36,7 @@ final class ActionMultishopCest extends MultishopBaseCest
             [
                 [
                     'id' => 'oxbargain',
-                    'title' => 'Angebote der Woche',
+                    'title' => 'Angebot der Woche',
                 ],
                 [
                     'id' => 'oxcatoffer',
