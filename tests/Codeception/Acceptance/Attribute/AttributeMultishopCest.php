@@ -116,6 +116,16 @@ final class AttributeMultishopCest extends MultishopBaseCest
         );
 
         $this->removeAttributeFromShops([2]);
+
+        $I->seeResponseIsJson();
+        $response = $I->grabJsonResponseAsArray();
+
+        $I->assertEquals(
+            [
+                'title' => $data['title'],
+            ],
+            $response['data']['attribute']
+        );
     }
 
     protected function dataProviderGetAttributeMultishop(): array

@@ -289,6 +289,11 @@ final class ManufacturerMultishopCest extends MultishopBaseCest
             }'
         );
 
+        $I->seeResponseIsJson();
+        $response = $I->grabJsonResponseAsArray();
+
+        $I->assertEquals(0, $response['data']['manufacturer']['products']);
+
         $this->removeManufacturerFromShop($I, 2);
     }
 
