@@ -202,6 +202,15 @@ final class PromotionCest extends BaseCest
             }
         }';
         $I->sendGQLQuery($query, null, self::LANGUAGE);
+
+        $I->seeResponseIsJson();
+
+        $response = $I->grabJsonResponseAsArray();
+
+        $I->assertCount(
+            1,
+            $response['data']['promotions']
+        );
     }
 
 

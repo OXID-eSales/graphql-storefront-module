@@ -42,7 +42,7 @@ final class PromotionMultishopCest extends MultishopBaseCest
 
         $I->assertSame(self::PROMOTION_SUB_SHOP_ID, $promotion['id']);
         $I->assertSame(true, $promotion['active']);
-        $I->assertSame('Current sub shop promotion 1 DE', $promotion['title']);
+        $I->assertSame('Current sub shop Promotion 1 DE', $promotion['title']);
         $I->assertSame('Long description 1 DE', $promotion['text']);
 
         $I->assertEmpty(
