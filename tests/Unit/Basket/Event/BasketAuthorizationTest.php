@@ -25,7 +25,8 @@ final class BasketAuthorizationTest extends TestCase
 
     public function testGetEventData(): void
     {
-        $basket = new BasketDataType(oxNew(EshopModelUserBasket::class));
+        $userBasket = $this->createMock(EshopModelUserBasket::class);
+        $basket = new BasketDataType($userBasket);
 
         $event =
             new Event(

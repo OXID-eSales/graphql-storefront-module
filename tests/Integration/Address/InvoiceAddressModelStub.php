@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Address\DataType;
+namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Address;
 
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\Eshop\Core\Field;
