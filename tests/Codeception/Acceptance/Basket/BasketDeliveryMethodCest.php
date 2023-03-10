@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group oe_graphql_checkout
- * @group basket4
+ * @group basket
  * @group delivery
  * @group oe_graphql_storefront
  */

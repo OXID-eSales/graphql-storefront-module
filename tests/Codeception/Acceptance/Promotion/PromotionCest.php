@@ -16,6 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group promotion
+ * @group pricing
  * @group oe_graphql_storefront
  */
 final class PromotionCest extends BaseCest
