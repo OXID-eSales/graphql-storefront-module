@@ -24,11 +24,15 @@ final class ManufacturerMultishopCest extends MultishopBaseCest
 
     private const MANUFACTURER_MAP_ID = '909';
 
-    private const MANUFACTURER_WITH_SINGLE_PRODUCT_MAP_ID = '914';
-
     private const PRODUCT_RELATED_TO_MANUFACTURER = 'b56164c54701f07df14b141da197c207';
 
-    private const PRODUCT_RELATED_TO_MANUFACTURER_MAP_ID = '1109';
+    private const MANUFACTURER_WITH_SINGLE_PRODUCT_MAP_ID = '914';
+
+    private const MANUFACTURER_WITH_SINGLE_PRODUCT_ID = '3a9fd0ec4b41d001e770b1d2d7af3e73';
+
+    private const SINGLE_PRODUCT_ID = 'f4f73033cf5045525644042325355732';
+
+    private const SINGLE_PRODUCT_MAP_ID = '1109';
 
     public function testGetSingleNotInShopActiveManufacturerWillFail(AcceptanceTester $I): void
     {
@@ -250,7 +254,7 @@ final class ManufacturerMultishopCest extends MultishopBaseCest
 
         $I->sendGQLQuery(
             'query {
-                manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
+                manufacturer (manufacturerId: "' . self::MANUFACTURER_WITH_SINGLE_PRODUCT_ID . '") {
                     products
                     {
                         id
@@ -265,7 +269,7 @@ final class ManufacturerMultishopCest extends MultishopBaseCest
 
         //fixtures have 7 active products assigned to manufacturer in shop 1
         $I->assertEquals(
-            self::PRODUCT_RELATED_TO_MANUFACTURER,
+            self::SINGLE_PRODUCT_ID,
             $response['data']['manufacturer']['products'][0]['id']
         );
 
@@ -275,24 +279,28 @@ final class ManufacturerMultishopCest extends MultishopBaseCest
 
     public function testProductIsNotFetchedFromFirstShop(AcceptanceTester $I): void
     {
-        $this->addManufacturerToShop($I, 2, self::MANUFACTURER_MAP_ID);
+        //this manufacturer has 1 product in first shop
+        $this->addManufacturerToShop($I, 2, self::MANUFACTURER_WITH_SINGLE_PRODUCT_MAP_ID);
 
         $I->sendGQLQuery(
             'query {
-                manufacturer (manufacturerId: "' . self::MANUFACTURER_ID . '") {
+                manufacturer (manufacturerId: "' . self::MANUFACTURER_WITH_SINGLE_PRODUCT_ID . '") {
                     id
                     products
                     {
                         id
                     }
                 }
-            }'
+            }',
+            null,
+            0,
+            2
         );
 
         $I->seeResponseIsJson();
         $response = $I->grabJsonResponseAsArray();
 
-        $I->assertEquals(0, $response['data']['manufacturer']['products']);
+        $I->assertCount(0, $response['data']['manufacturer']['products']);
 
         $this->removeManufacturerFromShop($I, 2);
     }
@@ -332,7 +340,7 @@ final class ManufacturerMultishopCest extends MultishopBaseCest
             'oxarticles2shop',
             [
                 'oxshopid' => $shopId,
-                'oxmapobjectid' => self::PRODUCT_RELATED_TO_MANUFACTURER_MAP_ID,
+                'oxmapobjectid' => self::SINGLE_PRODUCT_MAP_ID,
             ]
         );
     }
@@ -343,7 +351,7 @@ final class ManufacturerMultishopCest extends MultishopBaseCest
             'oxarticles2shop',
             [
                 'oxshopid' => $shopId,
-                'oxmapobjectid' => self::PRODUCT_RELATED_TO_MANUFACTURER_MAP_ID,
+                'oxmapobjectid' => self::SINGLE_PRODUCT_MAP_ID,
             ]
         );
     }
