@@ -1,11 +1,12 @@
 name: Schema
 
 env:
-  PHP: '8.0'
+  PHP_VERSION: '8.1'
+  MYSQL_VERSION: '8.0'
 
 on:
   push:
-    branches: [ master ]
+    tags: [ v3.* ]
 
 jobs:
   build:
@@ -22,8 +23,10 @@ jobs:
         run: |
           make setup
           make addbasicservices
+
           perl -pi\
-            -e "s#PHP_VERSION=.*#PHP_VERSION='${{ env.PHP }}'#g;"\
+            -e "s#PHP_VERSION=.*#PHP_VERSION='${{ env.PHP_VERSION }}'#g;"\
+            -e "s#MYSQL_VERSION=.*#MYSQL_VERSION='${{ env.MYSQL_VERSION }}'#g;"\
             .env
 
           perl -pi\
@@ -64,7 +67,7 @@ jobs:
 
       - name: Install module
         run: |
-          docker-compose exec -T php composer require oxid-esales/graphql-storefront:dev-master --no-interaction
+          docker-compose exec -T php composer require oxid-esales/graphql-storefront:dev-${{ github.ref_name }} --no-interaction
 
       - name: Reset shop
         run: |

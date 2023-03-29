@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.0.0] - Unreleased
 
 ### Added
+- Support for PHP 8.1
+- Support for MySQL 8
 - Classes:
   - ``OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder``
 
@@ -16,8 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - ``OxidEsales\GraphQL\Storefrnt\Address\Exception\InvoiceAddressMissingFields``
 
 ### Changed
-- Refactore NotFound exception and children to create instance with constructor instead of static methods.
-- Move methods from Basket-Service to BasketItem, BasketVoucher and BasketFinder-Service
+- Refactored NotFound exception and children to create instance with constructor instead of static methods.
+- Moved methods from Basket-Service to BasketItem, BasketVoucher and BasketFinder-Service
+- License file was updated to be consistent with other OXID eSales modules
 
 ## [2.2.0] - Unreleased
 
