@@ -5,20 +5,13 @@
     "keywords": ["oxid", "modules", "eShop", "GraphQL"],
     "homepage": "https://www.oxid-esales.com",
     "license": ["proprietary"],
-    "extra": {
-        "oxideshop": {
-            "target-directory": "oe/graphql-storefront",
-            "blacklist-filter": [
-                "tests/**/*"
-            ]
-        }
-    },
     "require": {
         "php": "^8.0",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-master"
+        "oxid-esales/graphql-base": "dev-b-7.0.x"
     },
     "conflict": {
+        "oxid-esales/oxideshop-ce": "<7.0",
         "oxid-esales/graphql-catalogue": "*",
         "oxid-esales/graphql-account": "*",
         "oxid-esales/graphql-checkout": "*"
