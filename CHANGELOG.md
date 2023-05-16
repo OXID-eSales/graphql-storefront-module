@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Dependency on Base module. Base module cannot be deactivated till Storefront is active.
 
+### Changed
+- License updated - now using OXID Module and Component License
+
 ## [2.1.0] - 2022-07-14
 
 ### Added
