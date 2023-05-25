@@ -13,11 +13,11 @@ This module provides [GraphQL](https://www.graphql.org) queries and mutations fo
 
 ## Usage
 
-This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v6.8.0` component, which is part of the `v6.3.0` compilation) up and running.
+This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.0.0` component, which is part of the `v7.0.0` compilation) up and running.
 
 ## Branch compatibility
 
-* b-7.0.x branch is compatible with OXID eShop compilation b-7.0.x (which uses `graphql-base` b-7.0.x branch)
+* 3.x versions (or b-7.0.x branch) are compatible with OXID eShop compilation b-7.0.x (which uses `graphql-base` b-7.0.x branch)
 * ^2.1 versions (b-6.5.x branch) are compatible with OXID eShop compilation b-6.5.x (which uses `graphql-base` 7.x version resp. b-6.5.x branch)
 * 2.0.x versions (b-6.4.x branch) are compatible with OXID eShop compilation b-6.4.x (which uses `graphql-base` 6.x version resp. b-6.4.x branch)
 * 1.x versions (b-6.3.x branch) are compatible with OXID eShop compilation 6.3.x (no PHP8 support)
@@ -27,8 +27,8 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v6.8.0` co
 Switch to the shop root directory (the file `composer.json` and the directories `source/` and `vendor/` are located there).
 
 ```bash
-# Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 2.x version
-$ composer require oxid-esales/graphql-storefront ^2.0.0
+# Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 3.x version
+$ composer require oxid-esales/graphql-storefront ^3.0.0
 
 $ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-base
 $ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-storefront
@@ -51,29 +51,33 @@ A good starting point is to check the [How to use section in the GraphQL Base Mo
 
 ## Testing
 
-### Linting, syntax check, static analysis and unit tests
+### Linting, syntax check, static analysis
 
 ```bash
 $ composer update
-$ composer test
+$ composer static
 ```
 
-### Integration/Acceptance tests
+### Unit/Integration/Acceptance tests
 
 - install this module into a running OXID eShop
-- change the `test_config.yml`
-  - add `oe/graphql-base,oe/graphql-storefront` to the `partial_module_paths`
-  - set `activate_all_modules` to `true`
--
-  ```bash
-  $ composer require codeception/module-rest --dev
-  $ composer require codeception/module-phpbrowser --dev
-  $ composer require codeception/module-db --dev
-  ```
-
+- reset shop's database
 ```bash
-$ vendor/bin/runtests
-$ vendor/bin/runtests-codeception
+$ bin/oe-console oe:database:reset --db-host=db-host --db-port=db-port --db-name=db-name --db-user=db-user --db-password=db-password --force
+```
+
+- run Unit tests
+```bash
+$ ./vendor/bin/phpunit -c vendor/oxid-esales/graphql-storefront/tests/phpunit.xml
+```
+
+- run Integration tests
+```bash
+$ ./vendor/bin/phpunit --bootstrap=./source/bootstrap.php -c vendor/oxid-esales/graphql-storefront/tests/phpintegration.xml
+```
+- run Acceptance tests
+```bash
+$ SELENIUM_SERVER_HOST=selenium MODULE_IDS=oe_graphql_storefront vendor/bin/codecept run acceptance -c vendor/oxid-esales/graphql-storefront/tests/codeception.yml
 ```
 
 ## Contributing
