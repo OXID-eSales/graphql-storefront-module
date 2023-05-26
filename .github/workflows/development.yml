@@ -203,22 +203,13 @@ jobs:
                     php composer config repositories.${{ env.PACKAGE_NAME }} \
                     --json '{"type":"path", "url":"./source/modules/oe/graphql-storefront", "options": {"symlink": true}}'
                   docker-compose exec -T \
-                    php composer require ${{ env.PACKAGE_NAME }}:* --no-interaction --no-update
-
-            - name: Install dependencies
-              run: |
-                  docker-compose exec -T \
-                    php composer config repositories.oxid-esales/oxideshop-demodata-ce \
-                    --json '{"type":"git", "url":"https://github.com/OXID-eSales/oxideshop_demodata_ce"}'
-                  docker-compose exec -T php composer require oxid-esales/oxideshop-demodata-ce:dev-master --no-update
-                  docker-compose exec -T php composer update --no-interaction
+                    php composer require ${{ env.PACKAGE_NAME }}:* --no-interaction
 
             - name: Reset and prepare shop
               run: |
                   docker-compose exec -T \
                     php bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 \
                     --db-name=example --db-user=root --db-password=root --force
-                  docker-compose exec -T php bin/oe-console oe:setup:demodata
                   docker-compose exec -T php bin/oe-console oe:module:install ./vendor/${{ env.PACKAGE_NAME }}/
                   docker-compose exec -T php bin/oe-console oe:module:install-assets
                   docker-compose exec -T php bin/oe-console oe:module:activate oe_graphql_base
