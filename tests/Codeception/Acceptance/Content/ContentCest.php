@@ -24,14 +24,24 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 final class ContentCest extends BaseCest
 {
     private const CONTENT_WITH_TEMPLATE = '4d4106027b63b623b2c4ee1ea6838d7f';
+    private const CONTENT_WITH_TEMPLATE_SMARTY = '4d4106027b63b623b2c4ee1ea6838d7g';
 
     private const CONTENT_WITH_VCMS_TEMPLATE = '9f825347decfdb7008d162700be95dc1';
 
     public function contentWithTemplate(AcceptanceTester $I): void
     {
+        $theme = getenv('THEME_ID');
+        $contentId = self::CONTENT_WITH_TEMPLATE;
+        $rawContent = 'GraphQL {% if true %}rendered {% endif %}content DE';
+
+        if ($theme == 'flow') {
+            $contentId = self::CONTENT_WITH_TEMPLATE_SMARTY;
+            $rawContent = 'GraphQL [{ if true }]rendered [{ /if }]content DE';
+        }
+
         $I->sendGQLQuery(
             'query {
-                content (contentId: "' . self::CONTENT_WITH_TEMPLATE . '") {
+                content (contentId: "' . $contentId . '") {
                     id
                     content
                     rawContent
@@ -45,9 +55,9 @@ final class ContentCest extends BaseCest
 
         $I->assertEquals(
             [
-                'id' => self::CONTENT_WITH_TEMPLATE,
+                'id' => $contentId,
                 'content' => 'GraphQL rendered content DE',
-                'rawContent' => 'GraphQL {% if true %}rendered {% endif %}content DE',
+                'rawContent' => $rawContent,
             ],
             $content
         );
