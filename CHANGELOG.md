@@ -16,11 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Classes:
   - ``OxidEsales\GraphQL\Storefrnt\Address\Exception\DeliveryAddressMissingFields``
   - ``OxidEsales\GraphQL\Storefrnt\Address\Exception\InvoiceAddressMissingFields``
+- Module upgraded for eshop version 7
+    - NAME-constant removed from events
+    - Support PHP 7.4
 
 ### Changed
 - Refactored NotFound exception and children to create instance with constructor instead of static methods.
 - Moved methods from Basket-Service to BasketItem, BasketVoucher and BasketFinder-Service
 - License file was updated to be consistent with other OXID eSales modules
+- Module upgraded for eshop version 7
+    - Assetspath updated
+    - Migrations config structure updated
 
 ## [2.2.0] - Unreleased
 
