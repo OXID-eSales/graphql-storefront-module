@@ -62,12 +62,10 @@ jobs:
           make up
           sleep 2
 
-      - name: Install dependencies
-        run: docker-compose exec -T php composer update --no-interaction
-
-      - name: Install module
+      - name: Install module and dependencies
         run: |
-          docker-compose exec -T php composer require oxid-esales/graphql-storefront:${{ github.ref_name }} --no-interaction
+          docker-compose exec -T php composer require oxid-esales/graphql-storefront:${{ github.ref_name }} --no-update
+          docker-compose exec -T php composer update --no-interaction
 
       - name: Reset shop
         run: |
