@@ -25,10 +25,13 @@ trait DemoData
             ->create()
             ->getConnection();
 
+        $path = __DIR__ . '/../Fixtures/integrationtest_ce.sql';
+        if ($facts->getEdition() == 'EE') {
+            $path = __DIR__ . '/../Fixtures/integrationtest_ee.sql';
+        }
+
         $connection->executeStatement(
-            file_get_contents(
-                __DIR__ . '/../Fixtures/integrationtest_' . strtolower($facts->getEdition()) . '.sql'
-            )
+            file_get_contents($path)
         );
 
         parent::setUp();

@@ -48,7 +48,13 @@ function getTestFixtureSqlFilePath(): string
 {
     $facts = new Facts();
 
-    return Path::join(__DIR__, '/../../', 'Fixtures', 'testdemodata_' . strtolower($facts->getEdition()) . '.sql');
+    $path = Path::join(__DIR__, '/../../', 'Fixtures', 'testdemodata_ce.sql');
+
+    if ($facts->getEdition() == 'EE') {
+        $path = Path::join(__DIR__, '/../../', 'Fixtures', 'testdemodata_ee.sql');
+    }
+
+    return $path;
 }
 
 function getMysqlConfigPath()
