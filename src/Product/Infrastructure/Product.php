@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Product\Infrastructure;
 
+use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Application\Model\Article as EshopProductModel;
 use OxidEsales\Eshop\Application\Model\ArticleList as EshopProductListModel;
 use OxidEsales\Eshop\Application\Model\Attribute as EshopAttributeModel;
@@ -18,6 +19,7 @@ use OxidEsales\Eshop\Application\Model\Manufacturer as EshopManufacturerModel;
 use OxidEsales\Eshop\Application\Model\Review as EshopReviewModel;
 use OxidEsales\Eshop\Application\Model\SelectList as EshopSelectionListModel;
 use OxidEsales\Eshop\Application\Model\Vendor as EshopVendorModel;
+use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductAttribute as ProductAttributeDataType;
@@ -32,6 +34,38 @@ use function is_iterable;
 
 final class Product
 {
+    /**
+     * get parent by id. return parent if available, otherwise current article
+     *
+     * @param string $id
+     * @return ProductDataType
+     * @throws NotFound
+     */
+    public function getParentById(string $id): ProductDataType
+    {
+        $article = oxNew(EshopProductModel::class);
+
+        if (!$article->load($id) || (method_exists($article, 'canView') && !$article->canView())) {
+            throw new NotFound($id);
+        }
+
+        if ($parentId = $article->getFieldData('oxparentid')) {
+            if (!$article->load($parentId) || (method_exists($article, 'canView') && !$article->canView())) {
+                throw new NotFound($parentId);
+            }
+        }
+
+        return new ProductDataType($article);
+    }
+
+    /**
+     * @return void
+     */
+    public function setLoadVariants(): void
+    {
+        Registry::getConfig()->setConfigParam('blLoadVariants', true);
+    }
+
     /**
      * @return ProductScalePriceDataType[]
      */

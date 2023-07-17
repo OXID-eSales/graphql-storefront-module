@@ -14,13 +14,30 @@ use OxidEsales\GraphQL\Base\DataType\Sorting\Sorting as BaseSorting;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
+use OxidEsales\GraphQL\Storefront\Product\Infrastructure\Product as ProductInfrastructure;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
+use OxidEsales\GraphQL\Storefront\Product\DataType\VariantSelections;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
+use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Product extends AbstractActiveFilterService
 {
+    /** @var ProductInfrastructure */
+    private $productInfrastructure;
+
+    public function __construct(
+        Repository $repository,
+        Authorization $authorizationService,
+        ProductInfrastructure $productInfrastructure
+    ) {
+        parent::__construct($repository, $authorizationService);
+
+        $this->productInfrastructure = $productInfrastructure;
+    }
+
     /**
      * @throws ProductNotFound
      * @throws InvalidLogin
@@ -63,6 +80,40 @@ final class Product extends AbstractActiveFilterService
             $pagination ?? new PaginationFilter(),
             $sort
         );
+    }
+
+    /**
+     * @param string $productId
+     * @param string[]|null $varSelids
+     * @return ?VariantSelections
+     * @throws InvalidLogin
+     * @throws ProductNotFound
+     */
+    public function variantSelections(string $productId, ?array $varSelids): ?VariantSelections
+    {
+        try {
+            $product = $this->productInfrastructure->getParentById($productId);
+        } catch (NotFound $e) {
+            throw new ProductNotFound($productId);
+        }
+
+        $childId = null;
+
+        if ($product->getEshopModel()->getId() !== $productId) {
+            $childId = $productId;
+        }
+
+        $this->productInfrastructure->setLoadVariants();
+
+        if ($product->isActive() || $this->authorizationService->isAllowed('VIEW_INACTIVE_PRODUCT')) {
+            if ($variantSelections = $product->getEshopModel()->getVariantSelections($varSelids, $childId)) {
+                return new VariantSelections($variantSelections);
+            }
+
+            return null;
+        }
+
+        throw new InvalidLogin('Unauthorized');
     }
 
     protected function getInactivePermission(): string
