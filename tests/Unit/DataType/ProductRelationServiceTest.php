@@ -92,7 +92,8 @@ final class ProductRelationServiceTest extends TestCase
         return new RelationService(
             new ProductService(
                 $repo,
-                new Authorization()
+                new Authorization(),
+                new ProductInfrastructure()
             ),
             new CategoryService(
                 $repo,

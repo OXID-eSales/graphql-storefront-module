@@ -59,10 +59,10 @@ final class Product
      * @Query()
      *
      * @param string $productId
-     * @param ?string[] $varSelids
+     * @param ?string[] $varSelIds
      * @return ?VariantSelections
      */
-    public function variantSelections(string $productId, ?array $varSelids): ?VariantSelections
+    public function variantSelections(string $productId, ?array $varSelIds): ?VariantSelections
     {
         $varSelids = (isset($varSelids) && !!count($varSelids)) ? $varSelids : null;
 
