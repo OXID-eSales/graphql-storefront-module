@@ -183,7 +183,7 @@ final class ProductRelationServiceTest extends TokenTestCase
                     selectionLists {
                         title
                         fields {
-                            value
+                            name
                         }
                     }
                 }
@@ -202,16 +202,16 @@ final class ProductRelationServiceTest extends TokenTestCase
                 'title' => 'test selection list [DE] šÄßüл',
                 'fields' => [
                     [
-                        'value' => 'selvar1 [DE]',
+                        'name' => 'selvar1 [DE]',
                     ],
                     [
-                        'value' => 'selvar2 [DE]',
+                        'name' => 'selvar2 [DE]',
                     ],
                     [
-                        'value' => 'selvar3 [DE]',
+                        'name' => 'selvar3 [DE]',
                     ],
                     [
-                        'value' => 'selvar4 [DE]',
+                        'name' => 'selvar4 [DE]',
                     ],
                 ],
             ],

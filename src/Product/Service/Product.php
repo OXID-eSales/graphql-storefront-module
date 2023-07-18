@@ -84,12 +84,12 @@ final class Product extends AbstractActiveFilterService
 
     /**
      * @param string $productId
-     * @param string[]|null $varSelids
+     * @param string[]|null $varSelIds
      * @return ?VariantSelections
      * @throws InvalidLogin
      * @throws ProductNotFound
      */
-    public function variantSelections(string $productId, ?array $varSelids): ?VariantSelections
+    public function variantSelections(string $productId, ?array $varSelIds): ?VariantSelections
     {
         try {
             $product = $this->productInfrastructure->getParentById($productId);
@@ -106,7 +106,7 @@ final class Product extends AbstractActiveFilterService
         $this->productInfrastructure->setLoadVariants();
 
         if ($product->isActive() || $this->authorizationService->isAllowed('VIEW_INACTIVE_PRODUCT')) {
-            if ($variantSelections = $product->getEshopModel()->getVariantSelections($varSelids, $childId)) {
+            if ($variantSelections = $product->getEshopModel()->getVariantSelections($varSelIds, $childId)) {
                 return new VariantSelections($variantSelections);
             }
 

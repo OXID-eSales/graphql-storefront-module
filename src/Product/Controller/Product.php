@@ -64,8 +64,8 @@ final class Product
      */
     public function variantSelections(string $productId, ?array $varSelIds): ?VariantSelections
     {
-        $varSelids = (isset($varSelids) && !!count($varSelids)) ? $varSelids : null;
+        $varSelIds = (isset($varSelIds) && !!count($varSelIds)) ? $varSelIds : null;
 
-        return $this->productService->variantSelections($productId, $varSelids);
+        return $this->productService->variantSelections($productId, $varSelIds);
     }
 }
