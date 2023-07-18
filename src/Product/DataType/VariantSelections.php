@@ -54,7 +54,7 @@ class VariantSelections
      */
     public function getActiveVariant(): ?Product
     {
-        if (!isset($this->variantSelections['oActiveVariant'])) {
+        if (!isset($this->variantSelections['oActiveVariant']) || !$this->variantSelections['blPerfectFit']) {
             return null;
         }
 

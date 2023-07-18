@@ -10,30 +10,126 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Product;
 
 use Codeception\Example;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
+ * @group product
  * @group product_variants
  * @group other
  * @group oe_graphql_storefront
  */
 final class VariantSelectionsCest extends BaseCest
 {
-    private const PRODUCT_WITH_VARIANT = '6b66d82af984e5ad46b9cb27b1ef8aae';
+    private const PRODUCT_WITH_VARIANTS_ID = '6b66d82af984e5ad46b9cb27b1ef8aae';
+    private const WRONG_PRODUCT_ID = 'wrong_product_id';
+    private const NOT_PRODUCT_WITH_VARIANTS = 'dc5ffdf380e15674b56dd562a7cb6aec';
 
-    private const  PRODUCT_VARIANT_SELECTION_SIZE_1 = '5d4bc935f54e8f1f2cf08741638e1fcd'; // W 31/L 34
-    private const  PRODUCT_VARIANT_SELECTION_SIZE_2 = 'c033d4abea909bf1b3ccc19aa3469873'; // W 31/L 32
+    private const PRODUCT_VARIANT_SELECTION_SIZE_1 = '5d4bc935f54e8f1f2cf08741638e1fcd'; // W 31/L 34
+    private const PRODUCT_VARIANT_SELECTION_SIZE_2 = 'c033d4abea909bf1b3ccc19aa3469873'; // W 31/L 32
 
-    private const  PRODUCT_VARIANT_SELECTION_COLOR_1 = 'fffecac98899bf152fa73a094155ec58'; // Dark Red
-    private const  PRODUCT_VARIANT_SELECTION_COLOR_2 = '560173ba980b9f5f7f8d9d3cce1c2446'; // Dark Blue
+    private const PRODUCT_VARIANT_SELECTION_COLOR_1 = 'fffecac98899bf152fa73a094155ec58'; // Dark Red
+    private const PRODUCT_VARIANT_SELECTION_COLOR_2 = '560173ba980b9f5f7f8d9d3cce1c2446'; // Dark Blue
 
-    private const  PRODUCT_VARIANT_SELECTION_WASH_1 = 'd2a044259fd6006c4f119fe16ba720df'; // Predded Green
-    private const  PRODUCT_VARIANT_SELECTION_WASH_2 = 'd015e249c62ca12180f76bbe0b88d7c0'; // Bangle Blue
+    private const PRODUCT_VARIANT_SELECTION_WASH_1 = 'd2a044259fd6006c4f119fe16ba720df'; // Predded Green
+    private const PRODUCT_VARIANT_SELECTION_WASH_2 = 'd015e249c62ca12180f76bbe0b88d7c0'; // Bangle Blue
 
     private const PRODUCT_ACTIVE_VARIANT_ID_1 = '6b6b9f89cb8decee837d1a4c60742875'; // W 31/L 34
     private const PRODUCT_ACTIVE_VARIANT_ID_2 = '6b66f4b02ad619cdadb7ea04b6c19cc2'; // Dark Blue
     private const PRODUCT_ACTIVE_VARIANT_ID_3 = '6b6eb34fcceb69efafddaeeedb81d9a4'; // Bangle Blue
+
+    public function testWrongProductId(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'query {
+                variantSelections(productId: "' . self::WRONG_PRODUCT_ID . '", varSelIds: null) {
+                    selections {
+                        label
+                        activeSelection {
+                            name
+                        }
+                        fields {
+                            name
+                        }
+                    }
+                }
+            }',
+            [],
+            1
+        );
+
+        $result = $I->grabJsonResponseAsArray();
+
+        $expectedException = new ProductNotFound(self::WRONG_PRODUCT_ID);
+        $I->assertSame(
+            $expectedException->getMessage(),
+            $result['errors'][0]['message']
+        );
+    }
+
+    public function testVariantSelectionsOnVariantProduct(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'query {
+                variantSelections(productId: "' . self::PRODUCT_ACTIVE_VARIANT_ID_1 . '", varSelIds: null) {
+                    selections {
+                        label
+                        activeSelection {
+                            name
+                        }
+                        fields {
+                            name
+                        }
+                    }
+                    activeVariant {
+                        id
+                        title
+                        variantValues
+                    }
+                }
+            }',
+            [],
+            1
+        );
+
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            self::PRODUCT_ACTIVE_VARIANT_ID_1,
+            $result['data']['variantSelections']['activeVariant']['id']
+        );
+    }
+
+    public function testGetVariantSelectionsOnProductWithoutVariants(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'query {
+                variantSelections(productId: "' . self::NOT_PRODUCT_WITH_VARIANTS . '", varSelIds: null) {
+                    selections {
+                        label
+                        activeSelection {
+                            name
+                        }
+                        fields {
+                            name
+                        }
+                    }
+                    activeVariant {
+                        id
+                    }
+                }
+            }',
+            [],
+            1
+        );
+
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertNull(
+            $result['data']['variantSelections']
+        );
+    }
 
     /**
      * @dataProvider selectionFieldsProvider
@@ -42,7 +138,7 @@ final class VariantSelectionsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-                variantSelections(productId: "' . self::PRODUCT_WITH_VARIANT . '", varSelIds: ' . $data['varSelIds'] . ') {
+                variantSelections(productId: "' . self::PRODUCT_WITH_VARIANTS_ID . '", varSelIds: ' . $data['varSelIds'] . ') {
                     selections {
                         label
                         fields {
@@ -131,7 +227,7 @@ final class VariantSelectionsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-                variantSelections(productId: "' . self::PRODUCT_WITH_VARIANT . '", varSelIds: ' . $data['varSelIds'] . ') {
+                variantSelections(productId: "' . self::PRODUCT_WITH_VARIANTS_ID . '", varSelIds: ' . $data['varSelIds'] . ') {
                     selections {
                         label
                         activeSelection {
@@ -196,9 +292,7 @@ final class VariantSelectionsCest extends BaseCest
                     'Washing' => [
                         'activeSelection' => null
                     ],
-                    'activeVariant' => [
-                        'id' => self::PRODUCT_ACTIVE_VARIANT_ID_1
-                    ],
+                    'activeVariant' => null,
                 ],
             ],
             'color_selected_product' => [
@@ -216,9 +310,7 @@ final class VariantSelectionsCest extends BaseCest
                     'Washing' => [
                         'activeSelection' => null
                     ],
-                    'activeVariant' => [
-                        'id' => self::PRODUCT_ACTIVE_VARIANT_ID_2
-                    ],
+                    'activeVariant' => null,
                 ],
             ],
             'washing_selected_product' => [
@@ -236,9 +328,7 @@ final class VariantSelectionsCest extends BaseCest
                             'active' => true
                         ]
                     ],
-                    'activeVariant' => [
-                        'id' => self::PRODUCT_ACTIVE_VARIANT_ID_3
-                    ],
+                    'activeVariant' => null,
                 ],
             ],
             'size_color_selected_product' => [
@@ -259,8 +349,32 @@ final class VariantSelectionsCest extends BaseCest
                     'Washing' => [
                         'activeSelection' => null
                     ],
+                    'activeVariant' => null,
+                ],
+            ],
+            'perfect_fit' => [
+                'varSelIds' => '["' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '", "' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 . '", "' . self::PRODUCT_VARIANT_SELECTION_WASH_1 .'"]',
+                'expected' => [
+                    'Size' => [
+                        'activeSelection' => [
+                            'name' => 'W 31/L 32',
+                            'active' => true
+                        ]
+                    ],
+                    'Color' => [
+                        'activeSelection' => [
+                            'name' => 'Dark Blue',
+                            'active' => true
+                        ]
+                    ],
+                    'Washing' => [
+                        'activeSelection' => [
+                            'name' => 'Predded Green',
+                            'active' => true
+                        ]
+                    ],
                     'activeVariant' => [
-                        'id' => self::PRODUCT_ACTIVE_VARIANT_ID_3
+                        'id' => self::PRODUCT_ACTIVE_VARIANT_ID_2
                     ],
                 ],
             ],
