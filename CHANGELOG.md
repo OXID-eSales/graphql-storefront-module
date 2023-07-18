@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Support for MySQL 8
 - Classes:
   - ``OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder``
+- `variantSelections` query for fetching multidimensional variants [PR-11](https://github.com/OXID-eSales/graphql-storefront-module/pull/11)
 
 ### Removed
 - Classes:
