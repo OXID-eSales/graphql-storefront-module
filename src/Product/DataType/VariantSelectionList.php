@@ -43,9 +43,9 @@ final class VariantSelectionList
      */
     public function getActiveSelection(): ?Selection
     {
+        /** @var \OxidEsales\Eshop\Application\Model\Selection|null $activeSelection */
         $activeSelection = $this->variantSelectList->getActiveSelection();
 
-        /** @phpstan-ignore-next-line */
         return $activeSelection ? new Selection($activeSelection) : null;
     }
 
