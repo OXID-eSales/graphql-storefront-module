@@ -37,13 +37,15 @@ final class VariantSelectionsCest extends BaseCest
 
     private const PRODUCT_ACTIVE_VARIANT_ID_1 = '6b6b9f89cb8decee837d1a4c60742875'; // W 31/L 34
     private const PRODUCT_ACTIVE_VARIANT_ID_2 = '6b66f4b02ad619cdadb7ea04b6c19cc2'; // Dark Blue
-    private const PRODUCT_ACTIVE_VARIANT_ID_3 = '6b6eb34fcceb69efafddaeeedb81d9a4'; // Bangle Blue
 
     public function testWrongProductId(AcceptanceTester $I): void
     {
         $I->sendGQLQuery(
             'query {
-                variantSelections(productId: "' . self::WRONG_PRODUCT_ID . '", varSelIds: null) {
+                variantSelections(
+                    productId: "' . self::WRONG_PRODUCT_ID . '",
+                    varSelIds: null
+                ) {
                     selections {
                         label
                         activeSelection {
@@ -72,7 +74,10 @@ final class VariantSelectionsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-                variantSelections(productId: "' . self::PRODUCT_ACTIVE_VARIANT_ID_1 . '", varSelIds: null) {
+                variantSelections(
+                    productId: "' . self::PRODUCT_ACTIVE_VARIANT_ID_1 . '",
+                    varSelIds: null
+                ) {
                     selections {
                         label
                         activeSelection {
@@ -105,7 +110,10 @@ final class VariantSelectionsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-                variantSelections(productId: "' . self::NOT_PRODUCT_WITH_VARIANTS . '", varSelIds: null) {
+                variantSelections(
+                    productId: "' . self::NOT_PRODUCT_WITH_VARIANTS . '",
+                    varSelIds: null
+                ) {
                     selections {
                         label
                         activeSelection {
@@ -138,7 +146,10 @@ final class VariantSelectionsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-                variantSelections(productId: "' . self::PRODUCT_WITH_VARIANTS_ID . '", varSelIds: ' . $data['varSelIds'] . ') {
+                variantSelections(
+                    productId: "' . self::PRODUCT_WITH_VARIANTS_ID . '",
+                    varSelIds: ' . $data['varSelIds'] . '
+                ) {
                     selections {
                         label
                         fields {
@@ -176,45 +187,99 @@ final class VariantSelectionsCest extends BaseCest
     {
         return [
             'size_selected_product' => [
-                'varSelIds' => '["' . self:: PRODUCT_VARIANT_SELECTION_SIZE_1 . '"]',
+                'varSelIds' => '[
+                    "' . self:: PRODUCT_VARIANT_SELECTION_SIZE_1 . '"
+                ]',
                 'expectedFields' => [
-                    'active' => ['W 31/L 34'],
-                    'disabled' => ['Dark Red', 'Predded Green']
+                    'active' => [
+                        'W 31/L 34'
+                    ],
+                    'disabled' => [
+                        'Dark Red',
+                        'Predded Green'
+                    ]
                 ]
             ],
             'color_selected_product' => [
-                'varSelIds' => '["","' . self::PRODUCT_VARIANT_SELECTION_COLOR_1 . '"]',
+                'varSelIds' => '[
+                    "",
+                    "' . self::PRODUCT_VARIANT_SELECTION_COLOR_1 . '"
+                ]',
                 'expectedFields' => [
-                    'active' => ['Dark Red'],
-                    'disabled' => ['W 31/L 34', 'W 32/L 32', 'W 34/L 34', 'Predded Green']
+                    'active' => [
+                        'Dark Red'
+                    ],
+                    'disabled' => [
+                        'W 31/L 34',
+                        'W 32/L 32',
+                        'W 34/L 34',
+                        'Predded Green'
+                    ]
                 ]
             ],
             'washing_selected_product' => [
-                'varSelIds' => '["", "", "' . self::PRODUCT_VARIANT_SELECTION_WASH_1 . '"]',
+                'varSelIds' => '[
+                    "",
+                    "",
+                    "' . self::PRODUCT_VARIANT_SELECTION_WASH_1 . '"
+                ]',
                 'expectedFields' => [
-                    'active' => ['Predded Green'],
-                    'disabled' => ['W 31/L 34', 'W 32/L 32', 'W 34/L 34', 'Dark Red']
+                    'active' => [
+                        'Predded Green'
+                    ],
+                    'disabled' => [
+                        'W 31/L 34',
+                        'W 32/L 32',
+                        'W 34/L 34',
+                        'Dark Red'
+                    ]
                 ]
             ],
             'size_color_selected_product' => [
-                'varSelIds' => '["' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '", "' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 .'"]',
+                'varSelIds' => '[
+                    "' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '",
+                    "' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 . '"
+                ]',
                 'expectedFields' => [
-                    'active' => ['W 31/L 32', 'Dark Blue'],
-                    'disabled' => ['Bangle Blue']
+                    'active' => [
+                        'W 31/L 32',
+                        'Dark Blue'
+                    ],
+                    'disabled' => [
+                        'Bangle Blue'
+                    ]
                 ]
             ],
             'size_washing_selected_product' => [
-                'varSelIds' => '["' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '", "", "' . self::PRODUCT_VARIANT_SELECTION_WASH_2 . '"]',
+                'varSelIds' => '[
+                    "' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '",
+                    "",
+                    "' . self::PRODUCT_VARIANT_SELECTION_WASH_2 . '"
+                ]',
                 'expectedFields' => [
-                    'active' => ['W 31/L 32', 'Bangle Blue'],
-                    'disabled' => ['Dark Blue']
+                    'active' => [
+                        'W 31/L 32',
+                        'Bangle Blue'
+                    ],
+                    'disabled' => [
+                        'Dark Blue'
+                    ]
                 ]
             ],
             'color_washing_selected_product' => [
-                'varSelIds' => '["", "' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 .'", "' . self::PRODUCT_VARIANT_SELECTION_WASH_2 . '"]',
+                'varSelIds' => '[
+                    "",
+                    "' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 . '",
+                    "' . self::PRODUCT_VARIANT_SELECTION_WASH_2 . '"
+                ]',
                 'expectedFields' => [
-                    'active' => ['Bangle Blue', 'Dark Blue'],
-                    'disabled' => ['W 31/L 32']
+                    'active' => [
+                        'Bangle Blue',
+                        'Dark Blue'
+                    ],
+                    'disabled' => [
+                        'W 31/L 32'
+                    ]
                 ]
             ],
         ];
@@ -227,7 +292,10 @@ final class VariantSelectionsCest extends BaseCest
     {
         $I->sendGQLQuery(
             'query {
-                variantSelections(productId: "' . self::PRODUCT_WITH_VARIANTS_ID . '", varSelIds: ' . $data['varSelIds'] . ') {
+                variantSelections(
+                    productId: "' . self::PRODUCT_WITH_VARIANTS_ID . '",
+                    varSelIds: ' . $data['varSelIds'] . '
+                ) {
                     selections {
                         label
                         activeSelection {
@@ -278,7 +346,9 @@ final class VariantSelectionsCest extends BaseCest
                 ],
             ],
             'size_selected_product' => [
-                'varSelIds' => '["' . self:: PRODUCT_VARIANT_SELECTION_SIZE_1 . '"]',
+                'varSelIds' => '[
+                    "' . self:: PRODUCT_VARIANT_SELECTION_SIZE_1 . '"
+                ]',
                 'expected' => [
                     'Size' => [
                         'activeSelection' => [
@@ -296,7 +366,10 @@ final class VariantSelectionsCest extends BaseCest
                 ],
             ],
             'color_selected_product' => [
-                'varSelIds' => '["","' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 .'"]',
+                'varSelIds' => '[
+                    "",
+                    "' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 . '"
+                ]',
                 'expected' => [
                     'Size' => [
                         'activeSelection' => null
@@ -314,7 +387,11 @@ final class VariantSelectionsCest extends BaseCest
                 ],
             ],
             'washing_selected_product' => [
-                'varSelIds' => '["", "", "' . self::PRODUCT_VARIANT_SELECTION_WASH_2 . '"]',
+                'varSelIds' => '[
+                    "",
+                    "",
+                    "' . self::PRODUCT_VARIANT_SELECTION_WASH_2 . '"
+                ]',
                 'expected' => [
                     'Size' => [
                         'activeSelection' => null
@@ -332,7 +409,10 @@ final class VariantSelectionsCest extends BaseCest
                 ],
             ],
             'size_color_selected_product' => [
-                'varSelIds' => '["' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '", "' . self::PRODUCT_VARIANT_SELECTION_COLOR_1 . '"]',
+                'varSelIds' => '[
+                    "' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '",
+                    "' . self::PRODUCT_VARIANT_SELECTION_COLOR_1 . '"
+                ]',
                 'expected' => [
                     'Size' => [
                         'activeSelection' => [
@@ -353,7 +433,11 @@ final class VariantSelectionsCest extends BaseCest
                 ],
             ],
             'perfect_fit' => [
-                'varSelIds' => '["' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '", "' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 . '", "' . self::PRODUCT_VARIANT_SELECTION_WASH_1 .'"]',
+                'varSelIds' => '[
+                    "' . self::PRODUCT_VARIANT_SELECTION_SIZE_2 . '",
+                    "' . self::PRODUCT_VARIANT_SELECTION_COLOR_2 . '",
+                    "' . self::PRODUCT_VARIANT_SELECTION_WASH_1 . '"
+                ]',
                 'expected' => [
                     'Size' => [
                         'activeSelection' => [
