@@ -7,17 +7,18 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Storefront\Attribute\DataType;
+namespace OxidEsales\GraphQL\Storefront\Category\DataType;
 
 use OxidEsales\Eshop\Application\Model\Attribute as EshopAttributeModel;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
+use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
  * @Type()
  */
-final class Attribute implements ShopModelAwareInterface
+final class CategoryAttribute implements ShopModelAwareInterface
 {
     /** @var EshopAttributeModel */
     private $attribute;
@@ -35,11 +36,24 @@ final class Attribute implements ShopModelAwareInterface
     /**
      * @Field()
      */
-    public function getTitle(): string
+    public function getAttribute(): Attribute
     {
-        return (string)($this->attribute->getRawFieldData('oxtitle') ?? $this->attribute->getTitle());
+        return new Attribute($this->attribute);
     }
 
+    /**
+     * @Field()
+     *
+     * @return string[]
+     */
+    public function getValues(): array
+    {
+        return $this->attribute->getValues();
+    }
+
+    /**
+     * @return class-string
+     */
     public static function getModelClass(): string
     {
         return EshopAttributeModel::class;
