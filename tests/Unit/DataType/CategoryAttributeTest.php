@@ -21,7 +21,7 @@ final class CategoryAttributeTest extends TestCase
         $eshopAttributeMock = $this->createMock(EshopAttributeModel::class);
         $categoryAttribute = new CategoryAttribute($eshopAttributeMock);
 
-        $this->assertSame($eshopAttributeMock, $categoryAttribute->getEshopModel());
+        $this->assertEquals($eshopAttributeMock, $categoryAttribute->getEshopModel());
     }
 
     public function testGetAttribute(): void
@@ -30,7 +30,7 @@ final class CategoryAttributeTest extends TestCase
         $categoryAttribute = new CategoryAttribute($eshopAttributeMock);
 
         $attribute = $categoryAttribute->getAttribute();
-
+        $this->assertEquals($eshopAttributeMock, $attribute->getEshopModel());
         $this->assertInstanceOf(Attribute::class, $attribute);
     }
 
@@ -45,14 +45,14 @@ final class CategoryAttributeTest extends TestCase
 
         $values = $categoryAttribute->getValues();
 
-        $this->assertSame(['Value1', 'Value2'], $values);
+        $this->assertEquals(['Value1', 'Value2'], $values);
     }
 
     public function testGetModelClass(): void
     {
         $modelClass = CategoryAttribute::getModelClass();
 
-        $this->assertSame(EshopAttributeModel::class, $modelClass);
+        $this->assertEquals(EshopAttributeModel::class, $modelClass);
     }
 }
 
