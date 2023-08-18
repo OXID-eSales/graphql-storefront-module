@@ -3,10 +3,12 @@ SET @@session.sql_mode = '';
 UPDATE `oxcategories` SET `OXACTIVE` = 0, `OXACTIVE_1` = 0, `OXACTIVE_2` = 0, `OXACTIVE_3` = 0 WHERE `OXID` = 'd8665fef35f4d528e92c3d664f4a00c0';
 
 REPLACE INTO `oxcategories` (`OXID`, `OXMAPID`, `OXPARENTID`, `OXLEFT`, `OXRIGHT`, `OXROOTID`, `OXSORT`, `OXACTIVE`, `OXHIDDEN`, `OXSHOPID`, `OXTITLE`, `OXDESC`, `OXLONGDESC`, `OXTHUMB`, `OXTHUMB_1`, `OXTHUMB_2`, `OXTHUMB_3`, `OXEXTLINK`, `OXTEMPLATE`, `OXDEFSORT`, `OXDEFSORTMODE`, `OXPRICEFROM`, `OXPRICETO`, `OXACTIVE_1`, `OXTITLE_1`, `OXDESC_1`, `OXLONGDESC_1`, `OXACTIVE_2`, `OXTITLE_2`, `OXDESC_2`, `OXLONGDESC_2`, `OXACTIVE_3`, `OXTITLE_3`, `OXDESC_3`, `OXLONGDESC_3`, `OXICON`, `OXPROMOICON`, `OXVAT`, `OXSKIPDISCOUNTS`, `OXSHOWSUFFIX`, `OXTIMESTAMP`) VALUES
-('_pro_articles',	987,	'oxrootid',	1,	1,	'_pro_articles',	0,	1,	0,	1,	'PRO Artikel',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	0,	1,	'PRO Articles',	'',	'',	0,	'',	'',	'',	0,	'',	'',	'',	'',	'',	NULL,	0,	1,	'2023-02-24 12:04:15');
+('_pro_articles',	987,	'oxrootid',	1,	1,	'_pro_articles',	0,	1,	0,	1,	'PRO Artikel',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	0,	1,	'PRO Articles',	'',	'',	0,	'',	'',	'',	0,	'',	'',	'',	'',	'',	NULL,	0,	1,	'2023-02-24 12:04:15'),
+('_pants',	988,	'oxrootid',	1,	1,	'_pants',	0,	1,	0,	1,	'Hosen',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	0,	1,	'Pants',	'',	'',	0,	'',	'',	'',	0,	'',	'',	'',	'',	'',	NULL,	0,	1,	'2023-02-24 12:04:15');
 
 REPLACE INTO `oxcategories2shop` (`OXSHOPID`, `OXMAPOBJECTID`, `OXTIMESTAMP`) VALUES
-(1,	987,	'2023-04-26 10:13:29');
+(1,	987,	'2023-04-26 10:13:29'),
+(1,	988,	'2023-04-26 10:13:29');
 
 REPLACE INTO `oxattribute` (`OXID`, `OXMAPID`, `OXSHOPID`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXPOS`, `OXTIMESTAMP`, `OXDISPLAYINBASKET`) VALUES
 ('_test_attribute_one',	986,	1,	'Cooles Attribute',	'Cool Attribute',	'',	'',	0,	'2023-02-24 12:45:23',	0),

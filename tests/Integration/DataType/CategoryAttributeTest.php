@@ -26,7 +26,7 @@ final class CategoryAttributeTest extends TestCase
     use DemoData;
 
     const CATEGORY_ID = '_pro_articles';
-    const CATEGORY_WITHOUT_ATTRIBUTE_ID = '6f265749cbd4cd26f5d358b09a5e862b';
+    const CATEGORY_WITHOUT_ATTRIBUTES_ID = '_pants';
 
     public function testCategoryAttributeDataType(): void
     {
