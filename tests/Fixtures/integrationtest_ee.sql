@@ -2,6 +2,10 @@ SET @@session.sql_mode = '';
 
 UPDATE `oxcategories` SET `OXACTIVE` = 0, `OXACTIVE_1` = 0, `OXACTIVE_2` = 0, `OXACTIVE_3` = 0 WHERE `OXID` = 'd8665fef35f4d528e92c3d664f4a00c0';
 
+REPLACE INTO `oxcategory2attribute` (`OXID`, `OXOBJECTID`, `OXATTRID`, `OXSORT`, `OXTIMESTAMP`) VALUES
+('baf1bce77ed84549dddc73263062e31d',    '2b6711be251807f1bd0fa5b9e03398e2',    '65478f17a24677e720fa97c9b97ec4f4', 1, '2016-07-19 14:38:25'),
+('baf1bce77ed84549cefc73263062e31d',    '2b6711be251807f1bd0fa5b9e03398e2',    '7e82ed07d094113805b57ab5482a8840', 1, '2016-07-19 14:38:25');
+
 #banners
 UPDATE `oxactions` SET `OXTITLE_1` = 'Banner 1 en' WHERE `OXID` = 'b5639c6431b26687321f6ce654878fa5';
 UPDATE `oxactions` SET `OXTITLE_1` = 'Banner 4 en' WHERE `OXID` = 'cb34f86f56162d0c95890b5985693710';
