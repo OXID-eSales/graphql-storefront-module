@@ -25,9 +25,8 @@ final class CategoryAttributeTest extends TestCase
 {
     use DemoData;
 
-    const CATEGORY_ID = '2b6711be251807f1bd0fa5b9e03398e2';
+    const CATEGORY_ID = '_pro_articles';
     const CATEGORY_WITHOUT_ATTRIBUTE_ID = '6f265749cbd4cd26f5d358b09a5e862b';
-    const ATTRIBUTE_CONDITION_ID = 'attribute_condition';
 
     public function testCategoryAttributeDataType(): void
     {
@@ -53,12 +52,12 @@ final class CategoryAttributeTest extends TestCase
 
         $categoryInfrastructure = oxNew(CategoryInfrastructure::class);
         $attributes = $categoryInfrastructure->getAttributes($categoryDataType);
-        /** @var CategoryAttribute $attribute */
-        $attribute = current($attributes);
 
-        $this->assertCount(3, $attributes);
-        //Check why the other category2object relations are missing
-        $this->assertEquals('Material', $attribute->getAttribute()->getTitle());
+        $this->assertCount(2, $attributes);
+        $this->assertArrayHasKey('_test_attribute_one', $attributes);
+        $this->assertArrayHasKey('_test_attribute_two', $attributes);
+        $this->assertEquals('Cooles Attribute', $attributes['_test_attribute_one']->getAttribute()->getTitle());
+        $this->assertEquals('Noch Ein Cooles Attribute', $attributes['_test_attribute_two']->getAttribute()->getTitle());
     }
 
     public function testGetAttributesForCategoryWithoutAttributes(): void

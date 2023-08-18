@@ -2,9 +2,27 @@ SET @@session.sql_mode = '';
 
 UPDATE `oxcategories` SET `OXACTIVE` = 0, `OXACTIVE_1` = 0, `OXACTIVE_2` = 0, `OXACTIVE_3` = 0 WHERE `OXID` = 'd8665fef35f4d528e92c3d664f4a00c0';
 
+REPLACE INTO `oxcategories` (`OXID`, `OXMAPID`, `OXPARENTID`, `OXLEFT`, `OXRIGHT`, `OXROOTID`, `OXSORT`, `OXACTIVE`, `OXHIDDEN`, `OXSHOPID`, `OXTITLE`, `OXDESC`, `OXLONGDESC`, `OXTHUMB`, `OXTHUMB_1`, `OXTHUMB_2`, `OXTHUMB_3`, `OXEXTLINK`, `OXTEMPLATE`, `OXDEFSORT`, `OXDEFSORTMODE`, `OXPRICEFROM`, `OXPRICETO`, `OXACTIVE_1`, `OXTITLE_1`, `OXDESC_1`, `OXLONGDESC_1`, `OXACTIVE_2`, `OXTITLE_2`, `OXDESC_2`, `OXLONGDESC_2`, `OXACTIVE_3`, `OXTITLE_3`, `OXDESC_3`, `OXLONGDESC_3`, `OXICON`, `OXPROMOICON`, `OXVAT`, `OXSKIPDISCOUNTS`, `OXSHOWSUFFIX`, `OXTIMESTAMP`) VALUES
+('_pro_articles',	987,	'oxrootid',	1,	1,	'_pro_articles',	0,	1,	0,	1,	'PRO Artikel',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	0,	1,	'PRO Articles',	'',	'',	0,	'',	'',	'',	0,	'',	'',	'',	'',	'',	NULL,	0,	1,	'2023-02-24 12:04:15');
+
+REPLACE INTO `oxcategories2shop` (`OXSHOPID`, `OXMAPOBJECTID`, `OXTIMESTAMP`) VALUES
+(1,	987,	'2023-04-26 10:13:29');
+
+REPLACE INTO `oxattribute` (`OXID`, `OXMAPID`, `OXSHOPID`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXPOS`, `OXTIMESTAMP`, `OXDISPLAYINBASKET`) VALUES
+('_test_attribute_one',	986,	1,	'Cooles Attribute',	'Cool Attribute',	'',	'',	0,	'2023-02-24 12:45:23',	0),
+('_test_attribute_two',	987,	1,	'Noch Ein Cooles Attribute',	'Another Cool Attribute',	'',	'',	0,	'2023-02-24 12:45:23',	0);
+
+REPLACE INTO `oxattribute2shop` (`OXSHOPID`, `OXMAPOBJECTID`, `OXTIMESTAMP`) VALUES
+(1,	986,	'2023-04-26 10:13:29'),
+(1,	987,	'2023-04-26 10:13:29');
+
 REPLACE INTO `oxcategory2attribute` (`OXID`, `OXOBJECTID`, `OXATTRID`, `OXSORT`, `OXTIMESTAMP`) VALUES
-('baf1bce77ed84549dddc73263062e31d',    '2b6711be251807f1bd0fa5b9e03398e2',    '65478f17a24677e720fa97c9b97ec4f4', 1, '2016-07-19 14:38:25'),
-('baf1bce77ed84549cefc73263062e31d',    '2b6711be251807f1bd0fa5b9e03398e2',    '7e82ed07d094113805b57ab5482a8840', 1, '2016-07-19 14:38:25');
+('baf1bce77ed84549dddc73263062e31d',    '_pro_articles',    '_test_attribute_one', 1, '2016-07-19 14:38:25'),
+('baf1bce77ed84549cefc73263062e31d',    '_pro_articles',    '_test_attribute_two', 1, '2016-07-19 14:38:25');
+
+REPLACE INTO `oxobject2attribute` (`OXID`, `OXOBJECTID`, `OXATTRID`, `OXVALUE`, `OXPOS`, `OXVALUE_1`, `OXVALUE_2`, `OXVALUE_3`, `OXTIMESTAMP`) VALUES
+('01548c6a15853fc1a0f0891c8e504b69',	'_awesome_article',	'_test_attribute_one',	'Wahnsinn',	9999,	'Awesome',	'',	'',	'2022-11-22 10:44:50'),
+('01548c6a15853fc1a0f0891c8e504b70',	'_awesome_article',	'_test_attribute_two',	'Auch Wahnsinn',	9999,	'Also Awesome',	'',	'',	'2022-11-22 10:44:50');
 
 #banners
 UPDATE `oxactions` SET `OXTITLE_1` = 'Banner 1 en' WHERE `OXID` = 'b5639c6431b26687321f6ce654878fa5';
@@ -29,6 +47,9 @@ REPLACE INTO `oxactions` (`OXID`, `OXSHOPID`, `OXTYPE`, `OXTITLE`, `OXTITLE_1`, 
 ('test_inactive_promotion_1',	1,	2,	'Upcoming promotion DE',	'Upcoming promotion EN',	'',	'',	'Long description 3 DE',	'Long description 3 EN',	'',	'',	0,	'2010-01-01 00:00:00',	'2010-02-01 00:00:00',	'',	'',	'',	'',	'',	'',	'',	'',	1,	'2020-04-23 12:07:10'),
 ('test_inactive_promotion_2',	1,	2,	'Expired promotion DE',	    'Expired promotion EN',	    '',	'',	'Long description 4 DE',	'Long description 4 EN',	'',	'',	0,	'2010-01-01 00:00:00',	'2010-02-01 00:00:00',	'',	'',	'',	'',	'',	'',	'',	'',	1,	'2020-04-23 12:07:10'),
 ('oxstart',	1,	0,	'Startseite unten',	'Start page bottom',	'',	'',	'',	'',	'',	'',	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	'',	'',	'',	'',	'',	'',	'',	'',	0,	'2021-02-09 16:58:43');
+
+REPLACE INTO `oxarticles` (`OXID`, `OXMAPID`, `OXSHOPID`, `OXPARENTID`, `OXACTIVE`, `OXHIDDEN`, `OXACTIVEFROM`, `OXACTIVETO`, `OXARTNUM`, `OXEAN`, `OXDISTEAN`, `OXMPN`, `OXTITLE`, `OXSHORTDESC`, `OXPRICE`, `OXBLFIXEDPRICE`, `OXPRICEA`, `OXPRICEB`, `OXPRICEC`, `OXBPRICE`, `OXTPRICE`, `OXUNITNAME`, `OXUNITQUANTITY`, `OXEXTURL`, `OXURLDESC`, `OXURLIMG`, `OXVAT`, `OXTHUMB`, `OXICON`, `OXPIC1`, `OXPIC2`, `OXPIC3`, `OXPIC4`, `OXPIC5`, `OXPIC6`, `OXPIC7`, `OXPIC8`, `OXPIC9`, `OXPIC10`, `OXPIC11`, `OXPIC12`, `OXWEIGHT`, `OXSTOCK`, `OXSTOCKFLAG`, `OXSTOCKTEXT`, `OXNOSTOCKTEXT`, `OXDELIVERY`, `OXINSERT`, `OXTIMESTAMP`, `OXLENGTH`, `OXWIDTH`, `OXHEIGHT`, `OXFILE`, `OXSEARCHKEYS`, `OXTEMPLATE`, `OXQUESTIONEMAIL`, `OXISSEARCH`, `OXISCONFIGURABLE`, `OXVARNAME`, `OXVARSTOCK`, `OXVARCOUNT`, `OXVARSELECT`, `OXVARMINPRICE`, `OXVARMAXPRICE`, `OXVARNAME_1`, `OXVARSELECT_1`, `OXVARNAME_2`, `OXVARSELECT_2`, `OXVARNAME_3`, `OXVARSELECT_3`, `OXTITLE_1`, `OXSHORTDESC_1`, `OXURLDESC_1`, `OXSEARCHKEYS_1`, `OXTITLE_2`, `OXSHORTDESC_2`, `OXURLDESC_2`, `OXSEARCHKEYS_2`, `OXTITLE_3`, `OXSHORTDESC_3`, `OXURLDESC_3`, `OXSEARCHKEYS_3`, `OXBUNDLEID`, `OXFOLDER`, `OXSUBCLASS`, `OXSTOCKTEXT_1`, `OXSTOCKTEXT_2`, `OXSTOCKTEXT_3`, `OXNOSTOCKTEXT_1`, `OXNOSTOCKTEXT_2`, `OXNOSTOCKTEXT_3`, `OXSORT`, `OXSOLDAMOUNT`, `OXNONMATERIAL`, `OXFREESHIPPING`, `OXREMINDACTIVE`, `OXREMINDAMOUNT`, `OXAMITEMID`, `OXAMTASKID`, `OXVENDORID`, `OXMANUFACTURERID`, `OXSKIPDISCOUNTS`, `OXORDERINFO`, `OXPIXIEXPORT`, `OXPIXIEXPORTED`, `OXVPE`, `OXRATING`, `OXRATINGCNT`, `OXMINDELTIME`, `OXMAXDELTIME`, `OXDELTIMEUNIT`, `OXUPDATEPRICE`, `OXUPDATEPRICEA`, `OXUPDATEPRICEB`, `OXUPDATEPRICEC`, `OXUPDATEPRICETIME`, `OXISDOWNLOADABLE`, `OXSHOWCUSTOMAGREEMENT`) VALUES
+('_awesome_article',	980,	1,	'',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	'awsome-1',	'',	'',	'',	'',	'',	123,	0,	0,	0,	0,	0,	0,	'',	0,	'',	'',	'',	NULL,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	10,	1,	'',	'',	'0000-00-00',	'2022-11-22',	'2023-02-24 11:44:34',	0,	0,	0,	'',	'',	'',	'',	1,	0,	'',	0,	0,	'',	0,	0,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'oxarticle',	'',	'',	'',	'',	'',	'',	700,	0,	0,	0,	0,	0,	'',	'0',	'',	'',	0,	'',	0,	'0000-00-00 00:00:00',	1,	0,	0,	0,	0,	'',	0,	0,	0,	0,	'0000-00-00 00:00:00',	0,	1);
 
 UPDATE `oxarticles` SET `OXVENDORID` = 'fe07958b49de225bd1dbc7594fb9a6b0' where `OXID` = '10049f9322cf8852f8d567e9662cb12c';
 UPDATE `oxarticles` SET `OXVENDORID` = 'fe07958b49de225bd1dbc7594fb9a6b0' where `OXID` = '10067ab25bf275b7e68bc0431b204d24';
@@ -90,7 +111,9 @@ REPLACE INTO `oxactions` (`OXID`, `OXSHOPID`, `OXTYPE`, `OXTITLE`, `OXTITLE_1`, 
 REPLACE INTO `oxarticles2shop` (`OXSHOPID`, `OXMAPOBJECTID`) VALUES
 (2, 933),
 (2, 1088),
-(2, 1094);
+(2, 1094),
+(1, 980),
+(1, 981);
 
 # Category for fast sorting
 REPLACE INTO `oxcategories` (`OXID`, `OXMAPID`, `OXPARENTID`,   `OXLEFT`, `OXRIGHT`, `OXROOTID`,     `OXSORT`, `OXACTIVE`, `OXSHOPID`,   `OXTITLE`,                    `OXDESC`,                    `OXLONGDESC`,                `OXDEFSORT`, `OXDEFSORTMODE`, `OXPRICEFROM`, `OXPRICETO`, `OXACTIVE_1`, `OXTITLE_1`,                  `OXDESC_1`,                        `OXLONGDESC_1`,                    `OXVAT`, `OXSHOWSUFFIX`) VALUES
@@ -100,7 +123,8 @@ REPLACE INTO `oxobject2category` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXCATNID`, 
 ('28819912f2c4febde1c3987de797635a',	2,	'd861ad687c60820255dbf8f88516f24d',	'e7d257920a5369cd8d7db52485491d54',	0,	0),
 ('85fc3e4814da77dcc3abab31163f52da',	2,	'd86f775338da3228bec9e968f02e7551',	'e7d257920a5369cd8d7db52485491d54',	0,	0),
 ('94d865bf075725341cafa4bd45941032',	2,	'd86236918e1533cccb679208628eda32',	'e7d257920a5369cd8d7db52485491d54',	0,	999999999),
-('article2category', 1, 'b56164c54701f07df14b141da197c207', 'fc7e7bd8403448f00a363f60f44da8f2', 0, 9999999999);
+('article2category', 1, 'b56164c54701f07df14b141da197c207', 'fc7e7bd8403448f00a363f60f44da8f2', 0, 9999999999),
+('article2category2', 1, '_awesome_article', '_pro_articles', 0, 9999999999);
 
 REPLACE INTO `oxratings` (`OXID`, `OXUSERID`, `OXTYPE`, `OXOBJECTID`, `OXRATING`) VALUES
 ('_test_wrong_user', 'wronguserid', 'oxarticle', 'b56597806428de2f58b1c6c7d3e0e093', 4),
