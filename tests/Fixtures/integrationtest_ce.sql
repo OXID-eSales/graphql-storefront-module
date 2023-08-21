@@ -156,4 +156,5 @@ REPLACE INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`, `
 ('adminrights',	1,	'oxdefaultadmin',	'oxidadmin',	'2021-03-16 10:35:52');
 
 REPLACE INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXTIME`) VALUES
-('article2category', 'b56164c54701f07df14b141da197c207', 'fc7e7bd8403448f00a363f60f44da8f2', 9999999999);
+('article2category', 'b56164c54701f07df14b141da197c207', 'fc7e7bd8403448f00a363f60f44da8f2', 9999999999),
+('article2category2', '_awesome_article', '_pro_articles', 9999999999);
