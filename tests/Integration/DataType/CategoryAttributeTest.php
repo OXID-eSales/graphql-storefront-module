@@ -63,7 +63,7 @@ final class CategoryAttributeTest extends TestCase
     public function testGetAttributesForCategoryWithoutAttributes(): void
     {
         $category = oxNew(Category::class);
-        $category->load(self::CATEGORY_WITHOUT_ATTRIBUTE_ID);
+        $category->load(self::CATEGORY_WITHOUT_ATTRIBUTES_ID);
 
         $categoryDataType = new CategoryDataType($category);
 
