@@ -12,7 +12,6 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  */
 class CategoryCest extends BaseCest
 {
-
     public function testGetCategoryAttributes(AcceptanceTester $I): void
     {
         $I->sendGQLQuery(

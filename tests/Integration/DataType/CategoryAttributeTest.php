@@ -25,8 +25,8 @@ final class CategoryAttributeTest extends TestCase
 {
     use DemoData;
 
-    const CATEGORY_ID = '_pro_articles';
-    const CATEGORY_WITHOUT_ATTRIBUTES_ID = '_pants';
+    private const CATEGORY_ID = '_pro_articles';
+    private const CATEGORY_WITHOUT_ATTRIBUTES_ID = '_pants';
 
     public function testCategoryAttributeDataType(): void
     {
@@ -52,12 +52,14 @@ final class CategoryAttributeTest extends TestCase
 
         $categoryInfrastructure = oxNew(CategoryInfrastructure::class);
         $attributes = $categoryInfrastructure->getAttributes($categoryDataType);
+        $attributeOne = $attributes['_test_attribute_one']->getAttribute();
+        $attributeTwo = $attributes['_test_attribute_two']->getAttribute();
 
         $this->assertCount(2, $attributes);
         $this->assertArrayHasKey('_test_attribute_one', $attributes);
         $this->assertArrayHasKey('_test_attribute_two', $attributes);
-        $this->assertEquals('Cooles Attribute', $attributes['_test_attribute_one']->getAttribute()->getTitle());
-        $this->assertEquals('Noch Ein Cooles Attribute', $attributes['_test_attribute_two']->getAttribute()->getTitle());
+        $this->assertEquals('Cooles Attribute', $attributeOne->getTitle());
+        $this->assertEquals('Noch Ein Cooles Attribute', $attributeTwo->getTitle());
     }
 
     public function testGetAttributesForCategoryWithoutAttributes(): void
@@ -73,10 +75,3 @@ final class CategoryAttributeTest extends TestCase
         $this->assertEquals([], $attributes);
     }
 }
-
-
-
-
-
-
-
