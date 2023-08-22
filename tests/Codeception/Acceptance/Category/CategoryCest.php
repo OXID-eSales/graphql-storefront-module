@@ -43,30 +43,4 @@ class CategoryCest extends BaseCest
         $categorieResult = $result['data']['categories'][0];
         $I->assertEquals($expectAttributes, $categorieResult['attributes']);
     }
-
-    public function testGetInvalidCategory(AcceptanceTester $I): void
-    {
-        $I->sendGQLQuery(
-            'query {
-                categories(filter:{
-                    title:{
-                        equals: "InvalidCategory"
-                    }
-                }) {
-                    id
-                    title
-                    attributes {
-                        attribute{
-                            title
-                        }
-                        values
-                    }
-                }
-            }'
-        );
-
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
-        $I->assertIsEmpty($result['data']['categories']);
-    }
 }

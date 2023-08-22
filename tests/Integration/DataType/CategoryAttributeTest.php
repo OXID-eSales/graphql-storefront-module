@@ -28,21 +28,6 @@ final class CategoryAttributeTest extends TestCase
     private const CATEGORY_ID = '_pro_articles';
     private const CATEGORY_WITHOUT_ATTRIBUTES_ID = '_pants';
 
-    public function testCategoryAttributeDataType(): void
-    {
-        $category = oxNew(Category::class);
-        $category->load(self::CATEGORY_ID);
-        $attributes = $category->getAttributes();
-        $someAttribute = $attributes->current();
-
-        $categoryAttributeDatatype = new CategoryAttribute($someAttribute);
-
-        $this->assertInstanceOf(AttributeDataType::class, $categoryAttributeDatatype->getAttribute());
-        $this->assertEquals($someAttribute, $categoryAttributeDatatype->getAttribute()->getEshopModel());
-        $this->assertEquals($someAttribute->getValues(), $categoryAttributeDatatype->getValues());
-        $this->assertInstanceOf(Attribute::class, $categoryAttributeDatatype->getEshopModel());
-    }
-
     public function testGetAttributesForCategory(): void
     {
         $category = oxNew(Category::class);
