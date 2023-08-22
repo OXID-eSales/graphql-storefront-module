@@ -55,4 +55,3 @@ final class CategoryAttributeTest extends TestCase
         $this->assertEquals(EshopAttributeModel::class, $modelClass);
     }
 }
-
