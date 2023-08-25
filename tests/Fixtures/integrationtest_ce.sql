@@ -33,6 +33,22 @@ REPLACE INTO oxseo (OXOBJECTID,OXIDENT,OXSHOPID,OXLANG,OXSTDURL,OXSEOURL,OXTYPE,
 
 UPDATE `oxcategories` SET `OXACTIVE` = 0, `OXACTIVE_1` = 0, `OXACTIVE_2` = 0, `OXACTIVE_3` = 0 WHERE `OXID` = 'd8665fef35f4d528e92c3d664f4a00c0';
 
+REPLACE INTO `oxcategories` (`OXID`, `OXPARENTID`, `OXLEFT`, `OXRIGHT`, `OXROOTID`, `OXSORT`, `OXACTIVE`, `OXHIDDEN`, `OXSHOPID`, `OXTITLE`, `OXDESC`, `OXLONGDESC`, `OXTHUMB`, `OXTHUMB_1`, `OXTHUMB_2`, `OXTHUMB_3`, `OXEXTLINK`, `OXTEMPLATE`, `OXDEFSORT`, `OXDEFSORTMODE`, `OXPRICEFROM`, `OXPRICETO`, `OXACTIVE_1`, `OXTITLE_1`, `OXDESC_1`, `OXLONGDESC_1`, `OXACTIVE_2`, `OXTITLE_2`, `OXDESC_2`, `OXLONGDESC_2`, `OXACTIVE_3`, `OXTITLE_3`, `OXDESC_3`, `OXLONGDESC_3`, `OXICON`, `OXPROMOICON`, `OXVAT`, `OXSKIPDISCOUNTS`, `OXSHOWSUFFIX`, `OXTIMESTAMP`) VALUES
+('_pro_articles',	'oxrootid',	1,	1,	'_pro_articles',	0,	1,	0,	1,	'PRO Artikel',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	0,	1,	'PRO Articles',	'',	'',	0,	'',	'',	'',	0,	'',	'',	'',	'',	'',	NULL,	0,	1,	'2023-02-24 12:04:15'),
+('_pants',	'oxrootid',	1,	1,	'_pants',	0,	1,	0,	1,	'Hosen',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	0,	0,	1,	'Pants',	'',	'',	0,	'',	'',	'',	0,	'',	'',	'',	'',	'',	NULL,	0,	1,	'2023-02-24 12:04:15');
+
+REPLACE INTO `oxattribute` (`OXID`, `OXSHOPID`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_2`, `OXTITLE_3`, `OXPOS`, `OXTIMESTAMP`, `OXDISPLAYINBASKET`) VALUES
+('_test_attribute_one',	1,	'Cooles Attribute',	'Cool Attribute',	'',	'',	0,	'2023-02-24 12:45:23',	0),
+('_test_attribute_two',	1,	'Noch Ein Cooles Attribute',	'Another Cool Attribute',	'',	'',	0,	'2023-02-24 12:45:23',	0);
+
+REPLACE INTO `oxcategory2attribute` (`OXID`, `OXOBJECTID`, `OXATTRID`, `OXSORT`, `OXTIMESTAMP`) VALUES
+('baf1bce77ed84549dddc73263062e31d',    '_pro_articles',    '_test_attribute_one', 1, '2016-07-19 14:38:25'),
+('baf1bce77ed84549cefc73263062e31d',    '_pro_articles',    '_test_attribute_two', 1, '2016-07-19 14:38:25');
+
+REPLACE INTO `oxobject2attribute` (`OXID`, `OXOBJECTID`, `OXATTRID`, `OXVALUE`, `OXPOS`, `OXVALUE_1`, `OXVALUE_2`, `OXVALUE_3`, `OXTIMESTAMP`) VALUES
+('01548c6a15853fc1a0f0891c8e504b69',	'_awesome_article',	'_test_attribute_one',	'Wahnsinn',	9999,	'Awesome',	'',	'',	'2022-11-22 10:44:50'),
+('01548c6a15853fc1a0f0891c8e504b70',	'_awesome_article',	'_test_attribute_two',	'Auch Wahnsinn',	9999,	'Also Awesome',	'',	'',	'2022-11-22 10:44:50');
+
 REPLACE INTO `oxobject2seodata` (`OXOBJECTID`, `OXSHOPID`, `OXLANG`, `OXKEYWORDS`, `OXDESCRIPTION`) VALUES
 ('058de8224773a1d5fd54d523f0c823e0', 1, 0, 'german seo keywords', 'german seo description'),
 ('058de8224773a1d5fd54d523f0c823e0', 1, 1, 'english seo keywords', 'english seo description'),
@@ -76,6 +92,9 @@ REPLACE INTO `oxlinks` (`OXID`, `OXSHOPID`, `OXACTIVE`, `OXURL`, `OXURLDESC`, `O
 ('test_active_2', 1, 1, 'http://www.oxid-esales.com', '<p>Aktiv link</p>', '<p>Active link</p>', '', '', '2012-06-04 07:04:54'),
 ('test_inactive', 1, 0, 'http://www.oxid-esales.com', '<p>Deutsche Beschreibung inakitv</p>', '<p>English Description inactive</p>', '', '', '2012-06-04 07:04:54'),
 ('test_inactive_2', 1, 0, 'http://www.oxid-esales-inactive.com', '<p>Inaktiv link</p>', '<p>Incative link</p>', '', '', '2012-06-05 07:04:54');
+
+REPLACE INTO `oxarticles` (`OXID`, `OXSHOPID`, `OXPARENTID`, `OXACTIVE`, `OXHIDDEN`, `OXACTIVEFROM`, `OXACTIVETO`, `OXARTNUM`, `OXEAN`, `OXDISTEAN`, `OXMPN`, `OXTITLE`, `OXSHORTDESC`, `OXPRICE`, `OXBLFIXEDPRICE`, `OXPRICEA`, `OXPRICEB`, `OXPRICEC`, `OXBPRICE`, `OXTPRICE`, `OXUNITNAME`, `OXUNITQUANTITY`, `OXEXTURL`, `OXURLDESC`, `OXURLIMG`, `OXVAT`, `OXTHUMB`, `OXICON`, `OXPIC1`, `OXPIC2`, `OXPIC3`, `OXPIC4`, `OXPIC5`, `OXPIC6`, `OXPIC7`, `OXPIC8`, `OXPIC9`, `OXPIC10`, `OXPIC11`, `OXPIC12`, `OXWEIGHT`, `OXSTOCK`, `OXSTOCKFLAG`, `OXSTOCKTEXT`, `OXNOSTOCKTEXT`, `OXDELIVERY`, `OXINSERT`, `OXTIMESTAMP`, `OXLENGTH`, `OXWIDTH`, `OXHEIGHT`, `OXFILE`, `OXSEARCHKEYS`, `OXTEMPLATE`, `OXQUESTIONEMAIL`, `OXISSEARCH`, `OXISCONFIGURABLE`, `OXVARNAME`, `OXVARSTOCK`, `OXVARCOUNT`, `OXVARSELECT`, `OXVARMINPRICE`, `OXVARMAXPRICE`, `OXVARNAME_1`, `OXVARSELECT_1`, `OXVARNAME_2`, `OXVARSELECT_2`, `OXVARNAME_3`, `OXVARSELECT_3`, `OXTITLE_1`, `OXSHORTDESC_1`, `OXURLDESC_1`, `OXSEARCHKEYS_1`, `OXTITLE_2`, `OXSHORTDESC_2`, `OXURLDESC_2`, `OXSEARCHKEYS_2`, `OXTITLE_3`, `OXSHORTDESC_3`, `OXURLDESC_3`, `OXSEARCHKEYS_3`, `OXBUNDLEID`, `OXFOLDER`, `OXSUBCLASS`, `OXSTOCKTEXT_1`, `OXSTOCKTEXT_2`, `OXSTOCKTEXT_3`, `OXNOSTOCKTEXT_1`, `OXNOSTOCKTEXT_2`, `OXNOSTOCKTEXT_3`, `OXSORT`, `OXSOLDAMOUNT`, `OXNONMATERIAL`, `OXFREESHIPPING`, `OXREMINDACTIVE`, `OXREMINDAMOUNT`, `OXAMITEMID`, `OXAMTASKID`, `OXVENDORID`, `OXMANUFACTURERID`, `OXSKIPDISCOUNTS`, `OXRATING`, `OXRATINGCNT`, `OXMINDELTIME`, `OXMAXDELTIME`, `OXDELTIMEUNIT`, `OXUPDATEPRICE`, `OXUPDATEPRICEA`, `OXUPDATEPRICEB`, `OXUPDATEPRICEC`, `OXUPDATEPRICETIME`, `OXISDOWNLOADABLE`, `OXSHOWCUSTOMAGREEMENT`) VALUES
+('_awesome_article',	1,	'',	1,	0,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00',	'awsome-1',	'',	'',	'',	'',	'',	123,	0,	0,	0,	0,	0,	0,	'',	0,	'',	'',	'',	NULL,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	0,	10,	1,	'',	'',	'0000-00-00',	'2022-11-22',	'2023-02-24 11:44:34',	0,	0,	0,	'',	'',	'',	'',	1,	0,	'',	0,	0,	'',	0,	0,	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'',	'oxarticle',	'',	'',	'',	'',	'',	'',	700,	0,	0,	0,	0,	0,	'',	'0',	'',	'',	0,	0,	0,	0,	0,	'',	0,	0,	0,	0,	'0000-00-00 00:00:00',	0,	1);
 
 UPDATE oxarticles SET oxdelivery = '2999-12-31' WHERE oxid = 'f4fe754e1692b9f79f2a7b1a01bb8dee';
 UPDATE oxarticles SET oxtitle = 'Kitefix Kleber GLUFIX' WHERE oxid = 'f33d5bcc7135908fd36fc736c643aa1c';
@@ -137,4 +156,5 @@ REPLACE INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`, `
 ('adminrights',	1,	'oxdefaultadmin',	'oxidadmin',	'2021-03-16 10:35:52');
 
 REPLACE INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXTIME`) VALUES
-('article2category', 'b56164c54701f07df14b141da197c207', 'fc7e7bd8403448f00a363f60f44da8f2', 9999999999);
+('article2category', 'b56164c54701f07df14b141da197c207', 'fc7e7bd8403448f00a363f60f44da8f2', 9999999999),
+('article2category2', '_awesome_article', '_pro_articles', 9999999999);

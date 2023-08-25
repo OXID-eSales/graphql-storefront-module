@@ -113,7 +113,7 @@ final class AttributeTest extends BaseTestCase
         );
 
         $this->assertCount(
-            12,
+            14,
             $result['body']['data']['attributes']
         );
     }

@@ -53,6 +53,11 @@ INSERT INTO `oxattribute` (`OXID`, `OXSHOPID`, `OXTITLE`, `OXTITLE_1`, `OXTITLE_
 ('6b6bc9f9ab8b153d9bebc2ad6ca2aa13',1,'EU-Größe','EU-Size','','',0,'2021-06-01 10:22:48',1),
 ('6cf89d2d73e666457d167cebfc3eb492',1,'Lieferumfang','Included in delivery','','',0,'2021-06-01 10:22:48',1);
 
+REPLACE INTO `oxobject2attribute` (`OXID`, `OXOBJECTID`, `OXATTRID`, `OXVALUE`, `OXPOS`, `OXVALUE_1`, `OXVALUE_2`, `OXVALUE_3`, `OXTIMESTAMP`) VALUES
+('00548c6a19725fc1a0f0891c8e504b69',	'b56369b1fc9d7b97f9c5fc343b349ece',	'9438ac75bac3e344628b14bf7ed82c15',	'Blau',	9998,	'Blue',	'',	'',	'2022-11-22 10:44:50'),
+('00548c6a19725fc1a0f0891c8e504b70',	'b56369b1fc9d7b97f9c5fc343b349ece',	'8a142c3e9cd961518.80299776',	'Modern',	9999,	'Modern',	'',	'',	'2022-11-22 10:44:50'),
+('00548c6a19725fc1a0f0891c8e504b71',	'b56597806428de2f58b1c6c7d3e0e093',	'9438ac75bac3e344628b14bf7ed82c15',	'Grün',	9998,	'Green',	'',	'',	'2022-11-22 10:44:50');
+
 REPLACE INTO `oxconfig` (`OXID`, `OXSHOPID`, `OXMODULE`, `OXVARNAME`, `OXVARTYPE`, `OXVARVALUE`, `OXTIMESTAMP`) VALUES
 ('3c4f033dfb8fd4fe692715dda19ecdxx', 1, '', 'sTheme', 'string', 'twig', '2021-05-28 14:24:39'),
 ('2e244d9a2f7834a31.62749934',1,'','bl_perfLoadCurrency','bool','1','2021-05-28 14:24:39'),
@@ -100,8 +105,13 @@ INSERT INTO `oxcategories` (`OXID`, `OXPARENTID`, `OXLEFT`, `OXRIGHT`, `OXROOTID
 ('0f4fb00809cec9aa0910aa9c8fe36751','943a9ba3050e78b443c16e043ae60ef3',2,3,'943a9ba3050e78b443c16e043ae60ef3',101,1,0,1,'Kites','','','','','','','','','',0,0,0,1,'Kites','','',0,'','','',0,'','','','kites_1_cico.jpg','',NULL,0,1,'2021-06-01 10:22:48'),
 ('fad4d7e2b47d87bb6a2773d93d4ae9be','fad181ad64642b955becd0759345161e',25,26,'30e44ab83fdee7564.23264141',30203,1,0,1,'Accessoires','','','','','','','','','',0,0,0,1,'Accessories','','',0,'','','',0,'','','','access_1_cico.jpg','',NULL,0,1,'2021-06-01 10:22:48');
 
+REPLACE INTO `oxcategory2attribute` (`OXID`, `OXOBJECTID`, `OXATTRID`, `OXSORT`, `OXTIMESTAMP`) VALUES
+('6f21e4486448cfe0382cb074190f186d',	'0f4fb00809cec9aa0910aa9c8fe36751',	'9438ac75bac3e344628b14bf7ed82c15',	0,	'2023-02-17 10:53:28'),
+('6f21e4486448cfe0382cb074190f186f',	'0f4fb00809cec9aa0910aa9c8fe36751',	'8a142c3e9cd961518.80299776',	0,	'2023-02-17 10:53:28');
+
 INSERT INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXPOS`, `OXTIME`, `OXTIMESTAMP`) VALUES
 ('b56a5554a328d329aa2b2e65b6e870e0','b56369b1fc9d7b97f9c5fc343b349ece','0f4fb00809cec9aa0910aa9c8fe36751',0,1292398522,'2016-07-19 14:11:15'),
+('b56a5554a328d329aa2b2e65b6e870e1','b56597806428de2f58b1c6c7d3e0e093','0f4fb00809cec9aa0910aa9c8fe36751',0,1292398522,'2016-07-19 14:38:26'),
 ('b27b75b0a0706ef5d6ca5d75353a8c53','f4f981b0d9e34d2aeda82d79412480a4','fad4d7e2b47d87bb6a2773d93d4ae9be',0,1299483314,'2016-07-19 14:11:15'),
 ('dc5ccdc702cd905d24a58b1c1d26e4ab','dc55b2b2e633527f9a8b2408a032f28f','fad4d7e2b47d87bb6a2773d93d4ae9be',0,1291971010,'2016-07-19 14:11:15'),
 ('dc5fe9b7d8c00d060f6a629e15fedaf0','dc5ffdf380e15674b56dd562a7cb6aec','fad4d7e2b47d87bb6a2773d93d4ae9be',0,1291970285,'2016-07-19 14:11:15');

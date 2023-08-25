@@ -104,7 +104,7 @@ final class ProductWithTokenTest extends BaseTestCase
         );
 
         $this->assertCount(
-            52,
+            53,
             $result['body']['data']['products']
         );
     }
