@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `variantSelections` query for fetching multidimensional variants [PR-11](https://github.com/OXID-eSales/graphql-storefront-module/pull/11)
+- Add the `CategoryAttribute` data type and possibility to get Attributes for category [PR-13](https://github.com/OXID-eSales/graphql-storefront-module/pull/13)
 
 ## [3.0.0] - 2023-06-08
 
