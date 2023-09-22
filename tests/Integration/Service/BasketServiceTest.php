@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Service;
 
+use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
 use TheCodingMachine\GraphQLite\Types\ID;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
@@ -58,7 +59,7 @@ final class BasketServiceTest extends TestCase
             $container->get(BasketRepository::class),
             $container->get(Authentication::class),
             new Authorization(),
-            $container->get(Legacy::class),
+            new Legacy($container->get(ContextInterface::class)),
             $container->get(BasketInfrastructure::class),
             $container->get(ProductService::class),
             $container->get(SharedInfrastructure::class),

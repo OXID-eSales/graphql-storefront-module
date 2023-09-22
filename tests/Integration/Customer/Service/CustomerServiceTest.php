@@ -101,7 +101,7 @@ final class CustomerServiceTest extends TestCase
             $container->get(CustomerRepository::class),
             $authenticationMock,
             $legacyServiceMock,
-            $container->get(Authorization::class)
+            new Authorization()
         );
 
         $this->expectException(CustomerNotDeletable::class);
