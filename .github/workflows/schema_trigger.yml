@@ -2,9 +2,7 @@ name: Trigger schema workflow for storefront
 
 on:
     push:
-        #tags: [ v3.* ]
-        branches:
-            - b-7.0.x-*
+        tags: [ v3.* ]
 
 jobs:
     documentation_schema:
@@ -19,4 +17,3 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: schema.yml
                   ref: "8.0-en"
-                  client_payload: "{\"storefront_version\":  \"dev-${{ github.ref_name }}\"}"
