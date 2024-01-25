@@ -1,0 +1,31 @@
+name: Trigger schema workflow
+
+on:
+    push:
+        tags:
+            - v2.0.*
+            - v2.1.*
+
+jobs:
+    documentation_schema:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Set documentation branch for 2.0
+              if: startsWith(github.event.ref, 'refs/tags/v2.0')
+              run: |
+                echo "DOCUMENTATION_BRANCH=6.0-en" >> $GITHUB_ENV
+
+            - name: Set documentation branch for 2.1
+              if: startsWith(github.event.ref, 'refs/tags/v2.1')
+              run: |
+                echo "DOCUMENTATION_BRANCH=7.0-en" >> $GITHUB_ENV
+
+            - name: Trigger schema generation in documentation
+              uses: convictional/trigger-workflow-and-wait@v1.6.5
+              with:
+                  owner: oxid-esales
+                  repo: oxapi-documentation
+                  github_user: ${{ secrets.CI_USER }}
+                  github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
+                  workflow_file_name: schema.yml
+                  ref: ${{ env.DOCUMENTATION_BRANCH }}
