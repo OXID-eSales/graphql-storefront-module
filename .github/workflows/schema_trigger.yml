@@ -2,12 +2,30 @@ name: Trigger schema workflow
 
 on:
     push:
-        tags: [ v0.1.* ]
+        tags:
+            - v0.*
+            - v1.*
+            - v2.0.*
 
 jobs:
     documentation_schema:
         runs-on: ubuntu-latest
         steps:
+            - name: Set documentation branch for v0.*
+              if: startsWith(github.event.ref, 'refs/tags/v0')
+              run: |
+                  echo "DOCUMENTATION_BRANCH=5.0-en" >> $GITHUB_ENV
+
+            - name: Set documentation branch for v1.*
+              if: startsWith(github.event.ref, 'refs/tags/v1')
+              run: |
+                  echo "DOCUMENTATION_BRANCH=5.1-en" >> $GITHUB_ENV
+
+            - name: Set documentation branch for v2.0.*
+              if: startsWith(github.event.ref, 'refs/tags/v2.0')
+              run: |
+                  echo "DOCUMENTATION_BRANCH=6.0-en" >> $GITHUB_ENV
+
             - name: Trigger schema generation in documentation
               uses: convictional/trigger-workflow-and-wait@v1.6.5
               with:
@@ -16,4 +34,4 @@ jobs:
                   github_user: ${{ secrets.CI_USER }}
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: schema.yml
-                  ref: "5.1-en"
+                  ref: ${{ env.DOCUMENTATION_BRANCH }}
