@@ -28,6 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - ``OxidEsales\GraphQL\Storefront\Basket\Service\BasketRelationService::owner()`` return value will be null for anonymous user.
 
+## [2.0.2] - Unreleased
+
+### Added
+- Workflow trigger to update schema in documentation
+
 ## [2.0.1] - 2022-01-03
 
 ### Added
