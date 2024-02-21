@@ -1,27 +1,22 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          backupGlobals="true"
-         backupStaticAttributes="false"
-         convertErrorsToExceptions="true"
-         convertNoticesToExceptions="true"
-         convertWarningsToExceptions="true"
-         forceCoversAnnotation="false"
-         processIsolation="false"
-         stopOnError="false"
-         stopOnFailure="false"
-         stopOnIncomplete="false"
-         stopOnSkipped="false"
          beStrictAboutTestsThatDoNotTestAnything="false"
-         verbose="false"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
-    <coverage includeUncoveredFiles="true" processUncoveredFiles="false">
-        <include>
-            <directory suffix=".php">../src</directory>
-        </include>
-    </coverage>
+         cacheDirectory=".phpunit.cache"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+>
     <testsuites>
         <testsuite name="Unit">
             <directory>Unit/</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">../src</directory>
+        </include>
+        <exclude>
+            <directory suffix=".php">../tests</directory>
+        </exclude>
+    </source>
 </phpunit>

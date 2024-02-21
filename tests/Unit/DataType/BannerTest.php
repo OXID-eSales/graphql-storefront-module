@@ -39,7 +39,7 @@ final class BannerTest extends TestCase
         $this->assertSame($expected, $banner->isActive($now));
     }
 
-    public function activeDataProvider()
+    public static function activeDataProvider()
     {
         return [
             [

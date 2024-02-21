@@ -67,8 +67,7 @@ REPLACE INTO `oxconfig` (`OXID`, `OXSHOPID`, `OXMODULE`, `OXVARNAME`, `OXVARTYPE
 
 INSERT INTO `oxcontents` (`OXID`, `OXLOADID`, `OXSHOPID`, `OXSNIPPET`, `OXTYPE`, `OXACTIVE`, `OXACTIVE_1`, `OXPOSITION`, `OXTITLE`, `OXCONTENT`, `OXTITLE_1`, `OXCONTENT_1`, `OXACTIVE_2`, `OXTITLE_2`, `OXCONTENT_2`, `OXACTIVE_3`, `OXTITLE_3`, `OXCONTENT_3`, `OXCATID`, `OXFOLDER`, `OXTERMVERSION`, `OXTIMESTAMP`) VALUES
 ('4d4106027b63b623b2c4ee1ea6838d7f', 'graphqlcontenttemplate', 1, 1, 0, 1, 1, '', 'GraphQL content with template DE', 'GraphQL {% if true %}rendered {% endif %}content DE',	'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32'),
-('9f825347decfdb7008d162700be95dc1', 'graphqlcontentvcms', 1, 1, 0, 1, 1, '', 'GraphQL content with VCMS template DE', '{% veparse %}[row][col size="12" offset="0" class=""][text]GraphQL VCMS {% if true %}rendered {% endif %}content DE[/text][/col][/row][{% endveparse %}', 'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32'),
-('4d4106027b63b623b2c4ee1ea6838d7g', 'graphqlcontenttemplatesmarty', 1, 1, 0, 1, 1, '', 'GraphQL content with template DE', 'GraphQL [{ if true }]rendered [{ /if }]content DE',	'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32');
+('9f825347decfdb7008d162700be95dc1', 'graphqlcontentvcms', 1, 1, 0, 1, 1, '', 'GraphQL content with VCMS template DE', '{% veparse %}[row][col size="12" offset="0" class=""][text]GraphQL VCMS {% if true %}rendered {% endif %}content DE[/text][/col][/row][{% endveparse %}', 'GraphQL content with template EN', '', 0, '', '', 0, '', '', NULL, 'CMSFOLDER_USERINFO', '', '2020-05-20 11:08:32');
 
 UPDATE `oxcountry` SET `oxorder` = 1, `oxactive` = 1 where `OXID` = 'a7c40f631fc920687.20179984';
 UPDATE `oxcountry` SET `oxorder` = 2, `oxactive` = 1 where `OXID` = '8f241f11096877ac0.98748826';

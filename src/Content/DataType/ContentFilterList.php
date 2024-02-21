@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Content\DataType;
 
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Transition\Utility\ContextInterface;
 use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
@@ -27,8 +28,7 @@ final class ContentFilterList extends FilterList
         ?StringFilter $folder = null
     ) {
         $this->folder = $folder;
-        $container = ContainerFactory::getInstance()->getContainer();
-        $this->shopid = new StringFilter((string)$container->get(ContextInterface::class)->getCurrentShopId());
+        $this->shopid = new StringFilter((string) ContainerFacade::get(ContextInterface::class)->getCurrentShopId());
         parent::__construct();
     }
 

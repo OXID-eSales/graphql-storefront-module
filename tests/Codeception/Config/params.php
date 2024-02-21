@@ -36,12 +36,12 @@ return [
 
 function getTestDataDumpFilePath(): string
 {
-    return Path::join(__DIR__, '/../', '_data', 'generated', 'dump.sql');
+    return Path::join(__DIR__, '..', 'Data', 'generated', 'dump.sql');
 }
 
 function getModuleTestDataDumpFilePath()
 {
-    return Path::join(__DIR__, '/../', '_data', 'testdata.sql');
+    return Path::join(__DIR__, '..', 'Data', 'testdata.sql');
 }
 
 function getTestFixtureSqlFilePath(): string

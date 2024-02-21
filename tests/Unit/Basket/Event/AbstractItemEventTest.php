@@ -20,7 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
  * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem
  * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem
  */
-abstract class AbstractItemEventTest extends TestCase
+class AbstractItemEventTest extends TestCase
 {
     protected const BASKET_ID = 'basketId';
 

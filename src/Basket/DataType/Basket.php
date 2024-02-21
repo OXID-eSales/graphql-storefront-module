@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\DataType;
 
 use OxidEsales\Eshop\Application\Model\UserBasket as BasketModel;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BasketAuthorization;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -64,9 +64,7 @@ final class Basket extends AbstractBasket implements ShopModelAwareInterface
 
     public function belongsToUser(string $userId): bool
     {
-        $eventDispatcher = ContainerFactory::getInstance()
-            ->getContainer()
-            ->get(EventDispatcherInterface::class);
+        $eventDispatcher = ContainerFacade::get(EventDispatcherInterface::class);
         $event = new BasketAuthorization($this, new Id($userId));
         $eventDispatcher->dispatch(
             $event,

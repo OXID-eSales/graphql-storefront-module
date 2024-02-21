@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Content\DataType;
 use OxidEsales\Eshop\Application\Controller\FrontendController;
 use OxidEsales\Eshop\Application\Model\Content as EshopContentModel;
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererInterface;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
@@ -75,10 +75,8 @@ final class Content implements ShopModelAwareInterface
         $oActView = oxNew(FrontendController::class);
         $oActView->addGlobalParams();
 
-        $container = ContainerFactory::getInstance()->getContainer();
-
         /** @var TemplateRendererInterface $templateRenderer */
-        $templateRenderer = $container->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
+        $templateRenderer = ContainerFacade::get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
 
         $activeLanguageId = Registry::getLang()->getTplLanguage();
         $contentId = $this->content->getId();
