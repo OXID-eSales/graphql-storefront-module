@@ -65,7 +65,7 @@ final class VendorMultiLanguageTest extends MultiLanguageTestCase
         );
     }
 
-    public function providerGetVendorListWithFilterMultiLanguage(): array
+    public static function providerGetVendorListWithFilterMultiLanguage(): array
     {
         return [
             'de' => [
@@ -127,7 +127,7 @@ final class VendorMultiLanguageTest extends MultiLanguageTestCase
         );
     }
 
-    public function providerGetVendorMultiLanguage()
+    public static function providerGetVendorMultiLanguage()
     {
         return [
             'de' => [
@@ -143,7 +143,7 @@ final class VendorMultiLanguageTest extends MultiLanguageTestCase
         ];
     }
 
-    public function providerGetVendorListMultilanguage()
+    public static function providerGetVendorListMultilanguage()
     {
         return [
             'de' => [
@@ -176,8 +176,6 @@ final class VendorMultiLanguageTest extends MultiLanguageTestCase
 
         $sortedVendors = $result['body']['data']['vendors'];
         $expected = $sortedVendors;
-
-        asort($expected, SORT_STRING | SORT_FLAG_CASE);
 
         $this->assertSame($expected, $sortedVendors);
     }

@@ -26,6 +26,9 @@ final class ShopBasketTest extends TestCase
     public function testCreateBasketModelFromUserBasket(): void
     {
         $user = oxNew(EshopUserModel::class);
+        $user->assign([
+           'oxcountryid' => 'a7c40f631fc920687.20179984'
+        ]);
         $user->load(self::TEST_USER_ID);
 
         //create EshopBasketModel

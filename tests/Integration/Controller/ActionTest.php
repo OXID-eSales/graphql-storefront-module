@@ -271,7 +271,7 @@ final class ActionTest extends BaseTestCase
         $this->assertEquals($expected, $result['body']['data']['actions']);
     }
 
-    public function actionsListFilterProvider(): array
+    public static function actionsListFilterProvider(): array
     {
         return [
             [
@@ -341,7 +341,7 @@ final class ActionTest extends BaseTestCase
         ];
     }
 
-    public function getActionProductListWithToken()
+    public static function getActionProductListWithToken()
     {
         return [
             [
@@ -458,7 +458,7 @@ final class ActionTest extends BaseTestCase
         );
     }
 
-    public function filterActionsByIdProvider(): array
+    public static function filterActionsByIdProvider(): array
     {
         return [
             [

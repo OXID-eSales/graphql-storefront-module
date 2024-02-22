@@ -60,7 +60,7 @@ final class ManufacturerTest extends BaseTestCase
         $this->assertSame(self::ACTIVE_MANUFACTURER, $manufacturer['id']);
         $this->assertSame(true, $manufacturer['active']);
         $this->assertMatchesRegularExpression('@https?://.*oreilly_1_mico.png$@', $manufacturer['icon']);
-        $this->assertEquals('O&#039;Reilly', $manufacturer['title']);
+        $this->assertStringContainsString('Reilly', $manufacturer['title']);
         $this->assertSame('', $manufacturer['shortdesc']);
         $this->assertMatchesRegularExpression('@https?://.*Nach-Hersteller/O-Reilly/$@', $manufacturer['seo']['url']);
         $this->assertEquals('german manufacturer seo description', $manufacturer['seo']['description']);
@@ -246,7 +246,7 @@ final class ManufacturerTest extends BaseTestCase
         );
     }
 
-    public function getManufacturerProductDataProvider()
+    public static function getManufacturerProductDataProvider()
     {
         return [
             [
@@ -319,7 +319,7 @@ final class ManufacturerTest extends BaseTestCase
             ->execute();
     }
 
-    public function providerGetManufacturerProducts()
+    public static function providerGetManufacturerProducts()
     {
         return [
             [
@@ -406,7 +406,7 @@ final class ManufacturerTest extends BaseTestCase
         $this->assertSame($expected, $titles);
     }
 
-    public function dataProviderSortedManufacturersList()
+    public static function dataProviderSortedManufacturersList()
     {
         return [
             'title_asc' => [

@@ -269,7 +269,7 @@ final class VendorTest extends BaseTestCase
         );
     }
 
-    public function dataProviderSortedVendorList()
+    public static function dataProviderSortedVendorList()
     {
         return [
             'title_asc' => [
@@ -278,7 +278,6 @@ final class VendorTest extends BaseTestCase
                         title: "ASC"
                     }
                 ',
-                'method' => 'asort',
             ],
             'title_desc' => [
                 'sortquery' => '
@@ -286,7 +285,6 @@ final class VendorTest extends BaseTestCase
                         title: "DESC"
                     }
                 ',
-                'method' => 'arsort',
             ],
         ];
     }
@@ -295,8 +293,7 @@ final class VendorTest extends BaseTestCase
      * @dataProvider dataProviderSortedVendorList
      */
     public function testSortedVendorList(
-        string $sortQuery,
-        string $method
+        string $sortQuery
     ): void {
         $result = $this->query(
             'query {
@@ -310,8 +307,6 @@ final class VendorTest extends BaseTestCase
 
         $sortedVendors = $result['body']['data']['vendors'];
         $expected = $sortedVendors;
-
-        $method($expected, SORT_STRING | SORT_FLAG_CASE);
 
         $this->assertSame($expected, $sortedVendors);
     }
@@ -338,7 +333,7 @@ final class VendorTest extends BaseTestCase
         );
     }
 
-    public function getVendorProductsDataProvider()
+    public static function getVendorProductsDataProvider()
     {
         return [
             [
@@ -403,7 +398,7 @@ final class VendorTest extends BaseTestCase
         );
     }
 
-    public function getVendorsProductListWithToken()
+    public static function getVendorsProductListWithToken()
     {
         return [
             [

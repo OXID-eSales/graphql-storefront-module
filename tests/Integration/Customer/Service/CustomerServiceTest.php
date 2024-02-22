@@ -61,6 +61,11 @@ final class CustomerServiceTest extends TestCase
 
         $user = oxNew(EshopModelUser::class);
         $user->setId('_userid');
+        $user->assign([
+            'oxusername' => '',
+            'oxpassword' => '',
+            'oxregister' => '',
+        ]);
         $user->save();
 
         $userMock = $this

@@ -24,6 +24,11 @@ final class DeliveryAddressTest extends TestCase
         $deliveryAddressFactory = new DeliveryAddressFactory();
 
         $user = oxNew(User::class);
+        $user->assign([
+            'oxusername' => '',
+            'oxpassword' => '',
+            'oxregister' => '',
+        ]);
         $user->save();
 
         $this->expectException(AddressMissingFields::class);

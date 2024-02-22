@@ -15,7 +15,7 @@ final class ManufacturerMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_MULTILANGUAGE_MANUFACTURER = 'adc6df0977329923a6330cc8f3c0a906';
 
-    public function providerGetManufacturerMultilanguage()
+    public static function providerGetManufacturerMultilanguage()
     {
         return [
             'de' => [
@@ -70,7 +70,7 @@ final class ManufacturerMultiLanguageTest extends MultiLanguageTestCase
         $this->assertSame($productDescription, $manufacturer['products'][0]['shortDescription']);
     }
 
-    public function providerGetManufacturerListWithFilterMultilanguage()
+    public static function providerGetManufacturerListWithFilterMultilanguage()
     {
         return [
             'de' => [
@@ -112,7 +112,7 @@ final class ManufacturerMultiLanguageTest extends MultiLanguageTestCase
         );
     }
 
-    public function providerGetManufacturersMultilanguage()
+    public static function providerGetManufacturersMultilanguage()
     {
         return [
             'de' => [

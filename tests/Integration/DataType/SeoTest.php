@@ -29,7 +29,7 @@ final class SeoTest extends BaseTestCase
         EshopRegistry::set(EshopLanguage::class, oxNew(EshopLanguage::class));
     }
 
-    public function providerProductSeo()
+    public static function providerProductSeo()
     {
         return [
             'de_seo_active' => [

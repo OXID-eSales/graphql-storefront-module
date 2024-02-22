@@ -51,7 +51,7 @@ final class ContentMultiLanguageTest extends MultiLanguageTestCase
         $this->assertMatchesRegularExpression('@https?://.*/' . $seo . '/$@', $content['seo']['url']);
     }
 
-    public function providerGetContentMultiLanguage()
+    public static function providerGetContentMultiLanguage()
     {
         return [
             'de' => [

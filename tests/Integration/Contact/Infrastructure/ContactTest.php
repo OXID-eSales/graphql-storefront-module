@@ -28,7 +28,6 @@ final class ContactTest extends TestCase
         /** @var Email $mailer */
         $mailer = $this->getMockBuilder(Email::class)
             ->disableOriginalConstructor()
-            ->setMethods(['sendContactMail'])
             ->getMock();
         $mailer->expects($this->once())
             ->method('sendContactMail')
@@ -43,7 +42,6 @@ final class ContactTest extends TestCase
         $legacyServiceMock = $this
             ->getMockBuilder(Legacy::class)
             ->disableOriginalConstructor()
-            ->setMethods(['getEmail'])
             ->getMock();
         $legacyServiceMock->expects($this->any())
             ->method('getEmail')

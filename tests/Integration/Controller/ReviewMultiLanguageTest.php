@@ -43,7 +43,7 @@ final class ReviewMultiLanguageTest extends MultiLanguageTestCase
         $this->assertSame($expectedLanguage, $review['language']);
     }
 
-    public function multipleLanguageReviewsDataProvider()
+    public static function multipleLanguageReviewsDataProvider()
     {
         return [
             [

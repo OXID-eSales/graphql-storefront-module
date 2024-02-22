@@ -226,7 +226,7 @@ final class ProductTest extends BaseTestCase
 
         $this->assertSame(['id' => self::ACTIVE_PRODUCT_MANUFACTURER], $product['manufacturer']);
         $this->assertNull($product['vendor']);
-        $this->assertNull($product['bundle']);
+        $this->assertNull($product['bundleProduct']);
 
         $currency = $price['currency'];
         $expectedCurrency = Registry::getConfig()->getActShopCurrencyObject();
@@ -512,7 +512,7 @@ final class ProductTest extends BaseTestCase
         );
     }
 
-    public function dataProviderSortedProductsList()
+    public static function dataProviderSortedProductsList()
     {
         return [
             'min_price_variant_asc' => [
@@ -733,7 +733,7 @@ final class ProductTest extends BaseTestCase
     /**
      * @return array[]
      */
-    public function productsOffsetAndLimitDataProvider()
+    public static function productsOffsetAndLimitDataProvider()
     {
         return [
             [
@@ -799,7 +799,7 @@ final class ProductTest extends BaseTestCase
     /**
      * @return array[]
      */
-    public function productsByManufacturerProvider()
+    public static function productsByManufacturerProvider()
     {
         return [
             ['9434afb379a46d6c141de9c9e5b94fcf', 10],
@@ -841,7 +841,7 @@ final class ProductTest extends BaseTestCase
     /**
      * @return array[]
      */
-    public function productsByVendorProvider()
+    public static function productsByVendorProvider()
     {
         return [
             ['a57c56e3ba710eafb2225e98f058d989', 13],
@@ -888,18 +888,17 @@ final class ProductTest extends BaseTestCase
             }'
         );
 
-        $category = $result['body']['data']['products'][0]['categories'][0];
-        $this->assertNull($category);
+        $this->assertEmpty($result['body']['data']['products'][0]['categories']);
         // TODO: Using a valid token, this list should also contain inactive category
         //$this->assertFalse($category['active']);
 
-        $queryBuilder = ContainerFactory::getInstance()
+        ContainerFactory::getInstance()
             ->getContainer()
             ->get(QueryBuilderFactoryInterface::class)
             ->create();
     }
 
-    public function productsByCategoryDataProvider()
+    public static function productsByCategoryDataProvider()
     {
         return [
             ['0f41a4463b227c437f6e6bf57b1697c4', 2],
@@ -966,7 +965,7 @@ final class ProductTest extends BaseTestCase
         );
     }
 
-    public function productVendorWithTokenProvider()
+    public static function productVendorWithTokenProvider()
     {
         return [
             [
@@ -1034,7 +1033,7 @@ final class ProductTest extends BaseTestCase
         $this->assertSame($expectedVendor, $productVendor);
     }
 
-    public function productManufacturerWithTokenProvider()
+    public static function productManufacturerWithTokenProvider()
     {
         return [
             [
@@ -1102,7 +1101,7 @@ final class ProductTest extends BaseTestCase
         $this->assertSame($expectedManufacturer, $productManufacturer);
     }
 
-    public function productCrossSellingWithTokenProvider()
+    public static function productCrossSellingWithTokenProvider()
     {
         return [
             [
@@ -1182,7 +1181,7 @@ final class ProductTest extends BaseTestCase
         $this->assertSame($expectedCrossSelling, $filteredCrossSelling);
     }
 
-    public function productMainCategoryWithTokenProvider()
+    public static function productMainCategoryWithTokenProvider()
     {
         return [
             [
@@ -1242,9 +1241,12 @@ final class ProductTest extends BaseTestCase
         );
 
         $this->assertCount($expectedCategory ? 1 : 0, $result['body']['data']['product']['categories']);
-        $productMainCategory = $result['body']['data']['product']['categories'][0];
 
-        $this->assertSame($expectedCategory, $productMainCategory);
+        if ($expectedCategory) {
+            $this->assertSame($expectedCategory, $result['body']['data']['product']['categories'][0]);
+        } else {
+            $this->assertEmpty($result['body']['data']['product']['categories']);
+        }
     }
 
     public function testGetProductAllCategories(): void
@@ -1277,7 +1279,7 @@ final class ProductTest extends BaseTestCase
         $this->assertSame($expectedCategories, $productAllCategory);
     }
 
-    public function filterProductsByCategoryProvider()
+    public static function filterProductsByCategoryProvider()
     {
         return [
             [
@@ -1381,7 +1383,7 @@ final class ProductTest extends BaseTestCase
         $this->assertEquals($expectedProducts, $actualProducts);
     }
 
-    public function filterProductsByManufacturerProvider()
+    public static function filterProductsByManufacturerProvider()
     {
         return [
             [
@@ -1481,7 +1483,7 @@ final class ProductTest extends BaseTestCase
         $this->assertEquals($expectedProducts, $actualProducts);
     }
 
-    public function filterProductsByVendorProvider()
+    public static function filterProductsByVendorProvider()
     {
         return [
             [

@@ -18,7 +18,7 @@ final class PromotionMultiLanguageTest extends MultiLanguageTestCase
     /**
      * @return array
      */
-    public function providerGetPromotionMultilanguage()
+    public static function providerGetPromotionMultilanguage()
     {
         return [
             'shop_1_de' => [

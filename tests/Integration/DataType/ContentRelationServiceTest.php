@@ -64,7 +64,7 @@ final class ContentRelationServiceTest extends BaseTestCase
         $this->assertSame('Kites', $content['category']['title']);
     }
 
-    public function contentIdsWithoutCategoryProvider()
+    public static function contentIdsWithoutCategoryProvider()
     {
         return [
             [self::ACTIVE_CONTENT_WITHOUT_CATEGORY_1],

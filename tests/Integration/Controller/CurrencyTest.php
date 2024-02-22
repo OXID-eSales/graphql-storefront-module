@@ -96,7 +96,7 @@ final class CurrencyTest extends BaseTestCase
         );
     }
 
-    public function currencyNames(): array
+    public static function currencyNames(): array
     {
         return [
             ['EUR'],
@@ -133,7 +133,7 @@ final class CurrencyTest extends BaseTestCase
         );
     }
 
-    public function incorrectCurrencyNames(): array
+    public static function incorrectCurrencyNames(): array
     {
         return [
             ['US'],

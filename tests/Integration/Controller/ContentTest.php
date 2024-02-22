@@ -273,7 +273,7 @@ final class ContentTest extends BaseTestCase
         );
     }
 
-    public function useTokenDataProvider()
+    public static function useTokenDataProvider()
     {
         return [
             ['withToken' => false],

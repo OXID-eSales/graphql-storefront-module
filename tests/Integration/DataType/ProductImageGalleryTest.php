@@ -96,7 +96,7 @@ final class ProductImageGalleryTest extends TestCase
         $this->assertMatchesRegularExpression($zoom, $images[$key]->getZoom());
     }
 
-    public function getImageGalleryImagesContentDataProvider()
+    public static function getImageGalleryImagesContentDataProvider()
     {
         return [
             [

@@ -47,7 +47,7 @@ final class ActionMultiLanguageTest extends MultiLanguageTestCase
         );
     }
 
-    public function providerGetActionWithFilterMultiLanguage(): array
+    public static function providerGetActionWithFilterMultiLanguage(): array
     {
         return [
             'de' => [

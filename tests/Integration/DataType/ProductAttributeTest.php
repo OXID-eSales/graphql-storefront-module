@@ -62,7 +62,7 @@ final class ProductAttributeTest extends TestCase
         $this->assertEquals($value, $productAttributes[$key]->getValue());
     }
 
-    public function getProductAttributesContentDataProvider(): array
+    public static function getProductAttributesContentDataProvider(): array
     {
         return [
             [
@@ -103,12 +103,7 @@ final class ProductAttributeTest extends TestCase
                 $repo,
                 new Authorization()
             ),
-            new ProductInfrastructure(
-                new CategoryService(
-                    $repo,
-                    new Authorization()
-                )
-            )
+            new ProductInfrastructure()
         );
     }
 }

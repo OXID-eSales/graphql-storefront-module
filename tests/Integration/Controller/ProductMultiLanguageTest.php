@@ -17,7 +17,7 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
 
     private const ACTIVE_PRODUCT_WITH_VARIANTS = '531b537118f5f4d7a427cdb825440922';
 
-    public function providerGetProductMultilanguage()
+    public static function providerGetProductMultilanguage()
     {
         return [
             'de' => [
@@ -113,7 +113,7 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
         );
     }
 
-    public function providerGetProductVariantsMultilanguage()
+    public static function providerGetProductVariantsMultilanguage()
     {
         return [
             'de' => [

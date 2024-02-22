@@ -62,7 +62,7 @@ final class AttributeTest extends BaseTestCase
         );
     }
 
-    public function providerGetAttributeMultilanguage(): array
+    public static function providerGetAttributeMultilanguage(): array
     {
         return [
             'de' => [
@@ -164,7 +164,7 @@ final class AttributeTest extends BaseTestCase
         }
     }
 
-    public function providerGetAttributesMultilanguage(): array
+    public static function providerGetAttributesMultilanguage(): array
     {
         return [
             'de' => [

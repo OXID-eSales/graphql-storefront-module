@@ -149,7 +149,7 @@ final class ReviewTest extends BaseTestCase
         }
     }
 
-    public function getInactiveReviewDataProvider()
+    public static function getInactiveReviewDataProvider()
     {
         return [
             [
@@ -195,7 +195,7 @@ final class ReviewTest extends BaseTestCase
         );
     }
 
-    public function providerGetReviewFromNotExistingReviewer()
+    public static function providerGetReviewFromNotExistingReviewer()
     {
         return [
             'admin' => [
@@ -261,7 +261,7 @@ final class ReviewTest extends BaseTestCase
         ], $review);
     }
 
-    public function nullProductIdsDataProvider()
+    public static function nullProductIdsDataProvider()
     {
         return [
             'admin_wrong_product' => [
@@ -330,7 +330,7 @@ final class ReviewTest extends BaseTestCase
         ], $result['body']['data']['review']);
     }
 
-    public function getReviewProductDataProvider()
+    public static function getReviewProductDataProvider()
     {
         return [
             [

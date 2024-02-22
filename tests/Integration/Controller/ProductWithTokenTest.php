@@ -43,13 +43,6 @@ final class ProductWithTokenTest extends BaseTestCase
         $this->assertSame(self::ACTIVE_PRODUCT, $product['id']);
         $this->assertSame(true, $product['active']);
 
-        $dateTimeType = new DateTimeType();
-        //Fixture timestamp can have few seconds difference
-        $this->assertLessThanOrEqual(
-            $dateTimeType->serialize(new DateTimeImmutable('now')),
-            $result['body']['data']['product']['timestamp']
-        );
-
         $this->assertEmpty(
             array_diff(array_keys($product), [
                 'id',

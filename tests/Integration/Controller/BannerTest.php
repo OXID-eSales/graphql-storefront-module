@@ -281,7 +281,7 @@ final class BannerTest extends BaseTestCase
         ], $result['body']['data']['banners']);
     }
 
-    public function bannerProductWithTokenProvider()
+    public static function bannerProductWithTokenProvider()
     {
         return [
             [
@@ -358,7 +358,7 @@ final class BannerTest extends BaseTestCase
         $this->assertSame($expectedProduct, $bannerProduct);
     }
 
-    public function bannersProductWithTokenProvider()
+    public static function bannersProductWithTokenProvider()
     {
         return [
             [
