@@ -423,6 +423,7 @@ final class WishedPriceCest extends BaseCest
     }
 
     /**
+     * @group testy
      * @dataProvider wishedPriceSetWithMissingEntitiesProvider
      */
     public function testWishedPriceSetWithMissingEntities(AcceptanceTester $I, Example $data): void
@@ -473,8 +474,7 @@ final class WishedPriceCest extends BaseCest
                 'productId' => self::PRODUCT_ID,
                 'currency' => 'EUR',
                 'price' => 'this_is_not_a_vald_price',
-                'message' => 'Field "wishedPriceSet" argument "wishedPrice" requires type Float!, '
-                    . 'found this_is_not_a_vald_price.',
+                'message' => 'Float cannot represent non numeric value: this_is_not_a_vald_price',
             ],
             'negative_price' => [
                 'productId' => self::PRODUCT_ID,
