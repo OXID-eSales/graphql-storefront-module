@@ -17,17 +17,12 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class WishedPriceFactory
 {
-    /** @var Repository */
-    private $repository;
-
     /** @var CurrencyRepository */
     private $currencyRepository;
 
     public function __construct(
-        Repository $repository,
         CurrencyRepository $currencyRepository
     ) {
-        $this->repository = $repository;
         $this->currencyRepository = $currencyRepository;
     }
 

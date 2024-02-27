@@ -25,17 +25,12 @@ use TheCodingMachine\GraphQLite\Types\ID;
  */
 final class RelationService
 {
-    /** @var Repository */
-    private $repository;
-
     /** @var CategoryService */
     private $categoryService;
 
     public function __construct(
-        Repository $repository,
         CategoryService $categoryService
     ) {
-        $this->repository = $repository;
         $this->categoryService = $categoryService;
     }
 

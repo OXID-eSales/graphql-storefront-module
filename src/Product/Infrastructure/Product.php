@@ -49,7 +49,8 @@ final class Product
             throw new NotFound($id);
         }
 
-        if ($parentId = $article->getFieldData('oxparentid')) {
+        $parentId = $article->getFieldData('oxparentid');
+        if ($parentId) {
             if (!$article->load($parentId) || (method_exists($article, 'canView') && !$article->canView())) {
                 throw new NotFound($parentId);
             }

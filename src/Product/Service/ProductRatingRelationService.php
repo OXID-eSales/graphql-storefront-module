@@ -19,7 +19,9 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
  */
 final class ProductRatingRelationService
 {
-    /** @var Repository */
+    /**
+     * @var Repository
+     */
     private $repository;
 
     public function __construct(

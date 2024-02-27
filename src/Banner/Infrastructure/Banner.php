@@ -36,7 +36,8 @@ final class Banner
 
         $result = [];
 
-        if ($banners = $actionList->getArray()) {
+        $banners = $actionList->getArray();
+        if ($banners) {
             foreach ($banners as $oneBannerModelItem) {
                 $result[] = new BannerDataType($oneBannerModelItem);
             }

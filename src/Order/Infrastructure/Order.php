@@ -100,7 +100,8 @@ final class Order
         $orderFileList->loadOrderFiles((string)$order->getId());
         $result = [];
 
-        if ($orderFiles = $orderFileList->getArray()) {
+        $orderFiles = $orderFileList->getArray();
+        if ($orderFiles) {
             foreach ($orderFiles as $orderFile) {
                 $result[] = new OrderFile($orderFile);
             }

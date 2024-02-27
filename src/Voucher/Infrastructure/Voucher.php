@@ -82,14 +82,14 @@ final class Voucher
         $voucherId = (string)$voucherDataType->id();
         $activeVouchers = $this->repository->getBasketVouchers((string)$userBasket->id());
 
-        if (in_array($voucherId, $this->getActiveVouchersIds($activeVouchers))) {
-            $voucherModel = $voucherDataType->getEshopModel();
-            $voucherModel->load($voucherId);
-            $voucherModel->unMarkAsReserved();
-            $this->repository->removeBasketIdFromVoucher($voucherId);
-        } else {
+        if (!in_array($voucherId, $this->getActiveVouchersIds($activeVouchers))) {
             throw new VoucherNotApplied($voucherId, (string)$userBasket->id());
         }
+
+        $voucherModel = $voucherDataType->getEshopModel();
+        $voucherModel->load($voucherId);
+        $voucherModel->unMarkAsReserved();
+        $this->repository->removeBasketIdFromVoucher($voucherId);
     }
 
     public function isVoucherSerieUsableInCurrentShop(VoucherDataType $voucherDataType): bool

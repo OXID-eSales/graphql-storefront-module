@@ -657,22 +657,22 @@ final class ProductRelationServiceTest extends TokenTestCase
         );
     }
 
-//    public function testGetProductCategoryRelation(): void
-//    {
-//        $result = $this->query(
-//            'query {
-//            product (productId: "' . self::ACTIVE_PRODUCT . '") {
-//                id
-//                categories {
-//                    id
-//                }
-//            }
-//        }'
-//        );
-//
-//        $this->assertSame(
-//            '0f40c6a077b68c21f164767c4a903fd2',
-//            $result['body']['data']['product']['categories'][0]['id']
-//        );
-//    }
+    public function testGetProductCategoryRelation(): void
+    {
+        $result = $this->query(
+            'query {
+            product (productId: "' . self::ACTIVE_PRODUCT . '") {
+                id
+                categories {
+                    id
+                }
+            }
+        }'
+        );
+
+        $this->assertSame(
+            '0f40c6a077b68c21f164767c4a903fd2',
+            $result['body']['data']['product']['categories'][0]['id']
+        );
+    }
 }

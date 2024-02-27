@@ -423,7 +423,6 @@ final class WishedPriceCest extends BaseCest
     }
 
     /**
-     * @group testy
      * @dataProvider wishedPriceSetWithMissingEntitiesProvider
      */
     public function testWishedPriceSetWithMissingEntities(AcceptanceTester $I, Example $data): void

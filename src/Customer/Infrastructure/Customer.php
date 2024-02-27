@@ -40,16 +40,9 @@ final class Customer
         /** @var EshopUserModel $customerModel */
         $customerModel = $customer->getEshopModel();
 
-        if ($limit) {
-            /** @var EshopListModel $ordersList */
-            $ordersList = $customerModel->getOrders($limit, $page);
-        } else {
-            /** @var EshopListModel $ordersList */
-            $ordersList = $customerModel->getOrders();
-        }
+        $ordersList = $customerModel->getOrders($limit, $page);
 
         $orders = [];
-
         foreach ($ordersList->getArray() as $orderModel) {
             /** @var EshopOrderModel $orderModel */
             $orders[] = new OrderDataType($orderModel);
@@ -65,7 +58,8 @@ final class Customer
         $orderFileList->loadUserFiles((string)$customer->getId());
         $result = [];
 
-        if ($orderFiles = $orderFileList->getArray()) {
+        $orderFiles = $orderFileList->getArray();
+        if ($orderFiles) {
             foreach ($orderFiles as $orderFile) {
                 $result[] = new OrderFile($orderFile);
             }

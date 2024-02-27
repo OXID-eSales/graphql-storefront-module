@@ -189,8 +189,6 @@ final class RelationService
         Product $product,
         bool $onlyMainCategory = true
     ): array {
-        $categories = [];
-
         if ($onlyMainCategory) {
             $category = $this->productInfrastructure->getMainCategory($product);
 
@@ -198,14 +196,17 @@ final class RelationService
                 return [];
             }
 
-            $categories[] = new Category($category);
-        } else {
-            /** @var array $categoryIds */
-            $categoryIds = $this->productInfrastructure->getCategories($product);
+            return [
+                new Category($category)
+            ];
+        }
 
-            foreach ($categoryIds as $categoryId) {
-                $categories[] = $this->categoryService->category(new ID($categoryId));
-            }
+        /** @var array $categoryIds */
+        $categoryIds = $this->productInfrastructure->getCategories($product);
+
+        $categories = [];
+        foreach ($categoryIds as $categoryId) {
+            $categories[] = $this->categoryService->category(new ID($categoryId));
         }
 
         return $categories;

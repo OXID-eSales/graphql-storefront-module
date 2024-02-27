@@ -42,9 +42,9 @@ final class NewsletterSubscribeInput extends AbstractNewsletterInput
         if (!$email && $this->authenticationService->isLogged()) {
             $email = $this->authenticationService->getUser()->email();
             $userId = (string)$this->authenticationService->getUser()->id();
-        } else {
-            $this->assertValidEmail((string)$email);
         }
+
+        $this->assertValidEmail((string)$email);
 
         return new NewsletterStatusSubscribe(
             (string)$firstName,

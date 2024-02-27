@@ -25,7 +25,8 @@ final class Promotion
 
         $result = [];
 
-        if ($promotions = $actionList->getArray()) {
+        $promotions = $actionList->getArray();
+        if ($promotions) {
             foreach ($promotions as $promotion) {
                 $result[] = new PromotionDataType($promotion);
             }

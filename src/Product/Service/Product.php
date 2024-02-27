@@ -106,7 +106,8 @@ final class Product extends AbstractActiveFilterService
         $this->productInfrastructure->setLoadVariants();
 
         if ($product->isActive() || $this->authorizationService->isAllowed('VIEW_INACTIVE_PRODUCT')) {
-            if ($variantSelections = $product->getEshopModel()->getVariantSelections($varSelIds, $childId)) {
+            $variantSelections = $product->getEshopModel()->getVariantSelections($varSelIds, $childId);
+            if ($variantSelections) {
                 return new VariantSelections($variantSelections);
             }
 
