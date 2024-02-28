@@ -39,6 +39,7 @@ final class SelectionList
 
     /**
      * @Field()
+     * @SuppressWarnings(PHPMD.ErrorControlOperator)
      *
      * @return Selection[]
      */
@@ -46,7 +47,8 @@ final class SelectionList
     {
         $fields = [];
 
-        foreach ($this->selectionList->getSelections() as $field) {
+        /** TODO: error suppression must be removed when deprecation warning is fixed in shop */
+        foreach (@$this->selectionList->getSelections() as $field) {
             $fields[] = new Selection($field);
         }
 

@@ -13,7 +13,7 @@ use OxidEsales\GraphQL\Base\Exception\Error;
 
 final class AddressMissingFields extends Error
 {
-    protected $category = 'validation';
+    protected string $category = 'validation';
 
     public function __construct(
         string $addressName,

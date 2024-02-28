@@ -21,6 +21,7 @@ final class ProductRatingRelationService
 {
     /**
      * @var Repository
+     * @phpstan-ignore-next-line
      */
     private $repository;
 
@@ -30,6 +31,7 @@ final class ProductRatingRelationService
         $this->repository = $repository;
     }
 
+    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
     public function getRatings(ProductRating $rating): array
     {
         return [];

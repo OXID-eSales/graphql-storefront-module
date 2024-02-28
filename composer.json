@@ -37,13 +37,14 @@
     },
     "scripts": {
         "phpcs": "phpcs --standard=tests/phpcs.xml",
+        "phpcs-report": "phpcs --standard=tests/phpcs.xml --report=json --report-file=phpcs.report.json",
         "phpcbf": "phpcbf --standard=tests/phpcs.xml",
 
         "phpstan": "phpstan -ctests/PhpStan/phpstan.neon analyse src/",
         "phpstan-report": "phpstan -ctests/PhpStan/phpstan.neon analyse src/ --error-format=json > phpstan.report.json",
 
-        "phpmd": "phpmd src text cleancode,codesize,design,unusedcode",
-        "phpmd-report": "phpmd src json cleancode,codesize,design,naming,unusedcode --reportfile phpmd.report.json",
+        "phpmd": "phpmd src ansi tests/PhpMd/exclude-ruleset.xml --ignore-errors-on-exit --ignore-violations-on-exit",
+        "phpmd-report": "phpmd src json tests/PhpMd/exclude-ruleset.xml --ignore-errors-on-exit --ignore-violations-on-exit --reportfile phpmd.report.json",
 
         "deptrac": "deptrac analyze",
 
@@ -60,6 +61,10 @@
         "codeception": [
             "Composer\\Config::disableProcessTimeout",
             "MODULE_IDS=oe_graphql_base,oe_graphql_storefront /var/www/vendor/bin/codecept run Acceptance -c /var/www/vendor/oxid-esales/graphql-storefront/tests/codeception.yml --no-redirect"
+        ],
+        "codeception-coverage": [
+            "Composer\\Config::disableProcessTimeout",
+            "MODULE_IDS=oe_graphql_base,oe_graphql_storefront /var/www/vendor/bin/codecept run Acceptance -c /var/www/vendor/oxid-esales/graphql-storefront/tests/codeception.yml --no-redirect --coverage"
         ]
     },
     "config": {

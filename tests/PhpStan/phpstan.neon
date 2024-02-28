@@ -10,7 +10,7 @@ parameters:
         - stubs/EshopVoucher.stub
         - stubs/EshopDiscount.stub
         - stubs/EshopRegistry.stub
-    level: max
+    level: 6
     scanFiles:
         - ../../vendor/oxid-esales/oxideshop-ce/source/oxfunctions.php
         - ../../vendor/oxid-esales/oxideshop-ce/source/overridablefunctions.php

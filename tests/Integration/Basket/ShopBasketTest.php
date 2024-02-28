@@ -37,7 +37,7 @@ final class ShopBasketTest extends TestCase
         $basketModel->addToBasket(self::PERSONALIZABLE_PRODUCT_ID, 1, null, ['details' => 'first']);
         $basketModel->addToBasket(self::PERSONALIZABLE_PRODUCT_ID, 2, null, ['details' => 'second']);
         $basketModel->addToBasket(self::PERSONALIZABLE_PRODUCT_ID, 3, null, ['details' => 'third']);
-        $basketModel->calculateBasket(true);
+        @$basketModel->calculateBasket(true); //TODO: error suppression must be removed when issue is fixed in shop
         $userBasketId = $basketModel->saveAsUserBasket('mycart');
 
         $original = $basketModel->getContents();
