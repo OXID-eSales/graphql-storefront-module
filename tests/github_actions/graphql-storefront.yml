@@ -60,16 +60,9 @@ codeception:
     load_shop: *install_module_prefix
     title: codeception
     container:
-        options: '-e SELENIUM_SERVER_HOST=selenium -e BROWSER_NAME=chrome -e XDEBUG_MODE=coverage -e THEME_ID=apex'
+        options: '-e SELENIUM_SERVER_HOST=selenium -e BROWSER_NAME=chrome -e -e THEME_ID=apex'
     configuration: '/var/www/vendor/oxid-esales/graphql-storefront/tests/codeception.yml'
     suite: 'Acceptance'
-    additional_options: '--coverage-xml=/var/www/codeception_coverage.xml'
-    logfile:
-        prefix: 'codeception'
-    output:
-        prefix: 'codeception-artifacts'
-    coverage:
-        path: 'source/codeception_coverage.xml'
     custom_script: |
         perl -pi -e 'print "SetEnvIf Authorization \"(.*)\" HTTP_AUTHORIZATION=\$1\n\n" if $. == 1' source/source/.htaccess
         sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' source/source/bootstrap.php
