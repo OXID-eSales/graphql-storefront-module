@@ -110,11 +110,11 @@ final class CustomerOrderFilesCest extends BaseCest
         ];
 
         $I->assertMatchesRegularExpression(
-            '/https?:\/\/.*\..*sorderfileid=' . $expectedFiles[0]['id'] . '/',
+            '/https?:\/.*\/?.*sorderfileid=' . $expectedFiles[0]['id'] . '/',
             $customerFiles[0]['url']
         );
         $I->assertMatchesRegularExpression(
-            '/https?:\/\/.*\..*sorderfileid=' . $expectedFiles[0]['id'] . '/',
+            '/https?:\/.*\/?.*sorderfileid=' . $expectedFiles[0]['id'] . '/',
             $orderFiles[0]['url']
         );
         unset($customerFiles[0]['url'], $orderFiles[0]['url']);

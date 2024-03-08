@@ -364,6 +364,14 @@ final class CustomerCest extends BaseCest
      */
     public function testBaskets(AcceptanceTester $I): void
     {
+        //Remove leftover basket from previous tests
+        $I->deleteFromDatabase(
+            'oxuserbaskets',
+            [
+                'OXTITLE' => 'savedbasket',
+            ]
+        );
+
         $I->login(self::USERNAME, self::PASSWORD);
 
         $I->sendGQLQuery(

@@ -1,17 +1,18 @@
-name: Automatically triggered on push
+name: Auto trigger on PR to 7.1.x*
 
 on:
-    push:
+    pull_request:
         branches:
-            - 'b-7.1.x*'
+            - 'b-7.1.x**'
 
 jobs:
-    call_matrix:
-        uses: OXID-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v3
+    pull_module:
+        uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
         with:
-            testplan: 'tests/github_actions/defaults/7.1.x.yml,tests/github_actions/graphql-storefront.yml'
+            testplan: '~/defaults/7.1.x.yml,~/defaults/php8.1_mysql8.0_only.yml,~/graphql-storefront.yml'
             runs_on: '"ubuntu-latest"'
-            defaults: 'v3'
+            defaults: 'v4'
+            plan_folder: '.github/oxid-esales'
         secrets:
             DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
             DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
