@@ -12,3 +12,4 @@ codeception:
         prefix: 'codeception-{{ print $group }}'
     coverage:
         path: 'source/codeception_coverage_{{ print $group }}.xml'
+        prefix: 'codeception_coverage_{{ print $group }}'
