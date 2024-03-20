@@ -5,11 +5,30 @@
 codeception:
     title: '{{ print $order }}-{{ print $name }}'
     configuration: '/var/www/vendor/{{ print $org }}/{{ print $name }}/tests/codeception.yml'
-    additional_options: '--bootstrap=/var/www/source/bootstrap.php -g {{ print $group }} --coverage-xml=/var/www/codeception_coverage_{{ print $group }}.xml'
+    additional_options: '--bootstrap=/var/www/source/bootstrap.php -g {{ print $group }} --coverage-xml=/var/www/coverage_codeception_{{ print $group }}.xml'
     output:
         prefix: 'codeception_artifacts_{{ print $group }}'
     logfile:
         prefix: 'codeception-{{ print $group }}'
     coverage:
-        path: 'source/codeception_coverage_{{ print $group }}.xml'
-        prefix: 'codeception_coverage_{{ print $group }}'
+        path: 'source/coverage_codeception_{{ print $group }}.xml'
+        prefix: 'coverage-reports-{{ print $group }}'
+    failure_pattern: &failure_pattern |
+        fail
+        \\.\\=\\=
+        Warning
+        Notice
+        Deprecated
+        Fatal
+        [[:space:]]Error
+        ^Error
+        DID NOT FINISH
+        Test file ".+" not found
+        Cannot open file
+        No tests executed
+        Could not read
+        Warnings: [1-9][0-9]*
+        Errors: [1-9][0-9]*
+        Failed: [1-9][0-9]*
+        Deprecations: [1-9][0-9]*
+        Risky: [1-9][0-9]*
