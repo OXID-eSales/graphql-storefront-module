@@ -10,9 +10,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `variantSelections` query for fetching multidimensional variants [PR-11](https://github.com/OXID-eSales/graphql-storefront-module/pull/11)
 - Add the `CategoryAttribute` data type and possibility to get Attributes for category [PR-13](https://github.com/OXID-eSales/graphql-storefront-module/pull/13)
 - Workflow trigger to update schema in documentation
+- Shop 7.1 dependencies match
+- PHP 8.2 support
 
 ### Changed
 - Replace webmozart/path-util usage with symfony/filesystem
+- New module logo
+- Updated the structure to Codeception 5
+- Modify github workflows to use new universal workflow
+
+### Removed
+- PHP 8.0 support
 
 ## [3.0.0] - 2023-06-08
 
