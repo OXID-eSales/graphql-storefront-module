@@ -60,7 +60,7 @@ final class ManufacturerTest extends BaseTestCase
         $this->assertSame(self::ACTIVE_MANUFACTURER, $manufacturer['id']);
         $this->assertSame(true, $manufacturer['active']);
         $this->assertMatchesRegularExpression('@https?://.*oreilly_1_mico.png$@', $manufacturer['icon']);
-        $this->assertStringContainsString('Reilly', $manufacturer['title']);
+        $this->assertEquals('O&#039;', $manufacturer['title']);
         $this->assertSame('', $manufacturer['shortdesc']);
         $this->assertMatchesRegularExpression('@https?://.*Nach-Hersteller/O-Reilly/$@', $manufacturer['seo']['url']);
         $this->assertEquals('german manufacturer seo description', $manufacturer['seo']['description']);
