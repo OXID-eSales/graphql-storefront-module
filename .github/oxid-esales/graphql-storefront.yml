@@ -57,7 +57,6 @@ phpunit:
 runtest:
     matrix:
         testplan: 'skip'
-    load_shop: *install_module_prefix
 
 codeception:
     matrix:
@@ -79,7 +78,10 @@ codeception:
         sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' source/source/bootstrap.php
 
 phpcs_tests:
-    skip: true
+    matrix:
+        testplan: '["~/defaults/module_codeception_Acceptance_71x.yml"]'
+    load_shop: *install_module_prefix
+    additional_options: '--standard=tests/phpcs.xml --report=json --report-file=tests/reports/phpcs.report.json'
 
 styles:
     matrix:
