@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         bootstrap="../../../../bootstrap.php"
+         colors="true"
          backupGlobals="true"
          beStrictAboutTestsThatDoNotTestAnything="false"
          cacheDirectory=".phpunit.cache"
@@ -10,7 +12,7 @@
         <testsuite name="Unit">
             <directory>Unit/</directory>
         </testsuite>
-        <testsuite name="IntegrationTests">
+        <testsuite name="Integration">
             <directory>Integration</directory>
         </testsuite>
     </testsuites>
