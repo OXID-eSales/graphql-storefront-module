@@ -9,7 +9,7 @@ jobs:
     push_module:
         uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
         with:
-            testplan: '~/defaults/7.1.x.yml,~/defaults/php8.1_mysql8.0_only.yml,~/graphql-storefront.yml'
+            testplan: '~/defaults/7.1.x.yml,~/defaults/php8.2_mysql8.0_only.yml,~/graphql-storefront.yml'
             runs_on: '"ubuntu-latest"'
             defaults: 'v4'
             plan_folder: '.github/oxid-esales'
