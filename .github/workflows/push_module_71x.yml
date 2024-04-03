@@ -22,3 +22,17 @@ jobs:
             enterprise_github_token: ${{ secrets.enterprise_github_token }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+    push_module_ee:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Trigger EE workflow and wait for results
+              uses: convictional/trigger-workflow-and-wait@v1.6.5
+              with:
+                  owner: oxid-esales
+                  repo: module-workflows
+                  github_user: ${{ secrets.CI_USER }}
+                  github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
+                  workflow_file_name: storefront_workflow.yml
+                  ref: "b-7.1.x-storefront_7.1-OXDEV-7728"
+                  client_payload: "{\"ref\": \"${{ github.ref_name }}\"}"
