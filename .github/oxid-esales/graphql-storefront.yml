@@ -39,7 +39,7 @@ install_module:
     ids: &ids '{{ print $ids }}'
     git:
         module:
-            url: &git_module_url '{{ .Github.Repository }}'
+            url: '{{ .Github.Repository }}'
             ref: '{{ .Github.RefName }}'
     package_name: &package_name '{{ print $org }}/{{ print $name }}'
     path: *ids
@@ -63,7 +63,7 @@ runtest:
 
 codeception:
     matrix:
-        testplan: &module_testplan '
+        testplan: '
       [
         "~/graphql-storefront-address.yml",
         "~/graphql-storefront-basket.yml",
