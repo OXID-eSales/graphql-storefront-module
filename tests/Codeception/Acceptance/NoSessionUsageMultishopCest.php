@@ -52,6 +52,8 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
+        var_dump($result);
+
         $I->assertSame(
             self::SUBSHOP_PRODUCT_ID,
             $result['data']['product']['id']
