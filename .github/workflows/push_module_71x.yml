@@ -7,7 +7,7 @@ on:
 
 jobs:
     push_module:
-        uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
+        uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v0
         with:
             testplan: '~/defaults/7.1.x.yml,~/defaults/php8.2_mysql8.0_only.yml,~/graphql-storefront.yml'
             runs_on: '"ubuntu-latest"'
