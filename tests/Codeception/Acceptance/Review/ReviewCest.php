@@ -17,7 +17,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group review
  * @group oe_graphql_storefront
- * @group other
+ * @group memory_intense
  */
 final class ReviewCest extends BaseCest
 {
