@@ -13,7 +13,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
- * @group graphql_session_multishop
+ * @group memory_intense
  * @group oe_graphql_storefront
  * @group other
  */
@@ -51,8 +51,6 @@ final class NoSessionUsageMultishopCest extends MultishopBaseCest
 
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
-
-        var_dump($result);
 
         $I->assertSame(
             self::SUBSHOP_PRODUCT_ID,
