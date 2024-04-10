@@ -3,7 +3,7 @@ name: Trigger schema workflow
 on:
     push:
         tags:
-            - 'v3.*'
+            - 'v3.1.*'
 
 jobs:
     documentation_schema:
@@ -17,4 +17,4 @@ jobs:
                   github_user: ${{ secrets.CI_USER }}
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: schema.yml
-                  ref: "8.0-en"
+                  ref: "9.0-en"
