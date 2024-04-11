@@ -2,9 +2,6 @@
 # {{ $org := "oxid-esales" }}organisation: {{ print $org }}
 # {{ $name := "graphql-storefront" }}name: {{ print $name }}
 prepare_shop:
-    specific: &specific_matrix
-        php: '["8.2"]'
-        mysql: '["8.0"]'
     git:
         shop_ref: '{{ .Data.global.git.default_ref }}'
     custom_ini:
@@ -82,7 +79,6 @@ phpcs_tests:
 
 styles:
     matrix:
-        <<: *specific_matrix
         testplan: '["-"]'
     load_shop: *install_module_prefix
     path: "{{ print $ids }}"
@@ -90,7 +86,6 @@ styles:
 
 sonarcloud:
     matrix:
-        <<: *specific_matrix
         testplan: '["-"]'
     project_key: 'OXID-eSales_graphql-storefront-module'
     project_name: *package_name
