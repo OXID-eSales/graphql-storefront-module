@@ -13,7 +13,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\MultishopBaseCest
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
- * @group basket
+ * @group basket_1
  * @group basket_access
  * @group oe_graphql_storefront
  */

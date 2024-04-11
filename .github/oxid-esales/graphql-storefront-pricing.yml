@@ -1,4 +1,4 @@
-# {{ $order := "06" }}order: {{ print $order }}
+# {{ $order := "07" }}order: {{ print $order }}
 # {{ $org := "oxid-esales" }}organisation: {{ print $org }}
 # {{ $name := "graphql-storefront" }}name: {{ print $name }}
 # {{ $group := "pricing" }}group: {{ print $group }}

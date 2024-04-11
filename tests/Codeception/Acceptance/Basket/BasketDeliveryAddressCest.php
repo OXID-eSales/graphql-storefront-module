@@ -19,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group oe_graphql_checkout
  * @group address
- * @group basket
+ * @group basket_1
  * @group oe_graphql_storefront
  */
 final class BasketDeliveryAddressCest extends BaseCest

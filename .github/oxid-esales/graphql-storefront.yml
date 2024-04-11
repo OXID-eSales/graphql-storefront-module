@@ -62,9 +62,12 @@ codeception:
     matrix:
         testplan: '
       [
+        "~/graphql-storefront-address.yml",
         "~/graphql-storefront-basket.yml",
+        "~/graphql-storefront-customer.yml",
+        "~/graphql-storefront-order.yml",
         "~/graphql-storefront-other.yml"
-        "~/graphql-storefront-intense.yml"
+        "~/graphql-storefront-pricing.yml"
       ]'
     load_shop: *install_module_prefix
     container:

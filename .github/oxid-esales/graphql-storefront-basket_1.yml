@@ -1,7 +1,7 @@
-# {{ $order := "07" }}order: {{ print $order }}
+# {{ $order := "03" }}order: {{ print $order }}
 # {{ $org := "oxid-esales" }}organisation: {{ print $org }}
 # {{ $name := "graphql-storefront" }}name: {{ print $name }}
-# {{ $group := "memory_intense" }}group: {{ print $group }}
+# {{ $group := "basket_1" }}group: {{ print $group }}
 codeception:
     title: '{{ print $order }}-{{ print $name }}'
     configuration: '/var/www/vendor/{{ print $org }}/{{ print $name }}/tests/codeception.yml'
