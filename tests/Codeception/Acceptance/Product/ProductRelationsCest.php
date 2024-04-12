@@ -14,7 +14,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
  * @group product
- * @group other
+ * @group other_1
  * @group oe_graphql_storefront
  */
 final class ProductRelationsCest extends BaseCest

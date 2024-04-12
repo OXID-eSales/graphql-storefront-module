@@ -17,7 +17,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group product
  * @group product_variants
- * @group other
+ * @group other_1
  * @group oe_graphql_storefront
  */
 final class VariantSelectionsCest extends BaseCest
