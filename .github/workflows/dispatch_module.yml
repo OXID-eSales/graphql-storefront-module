@@ -23,7 +23,7 @@ on:
 
 jobs:
     build_testplan:
-        runs-on: "ubuntu-latest"
+        runs-on: ubuntu-latest
         outputs:
             testplan: '${{ steps.build.outputs.testplan }}'
         steps:
@@ -59,7 +59,7 @@ jobs:
         uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
         with:
             testplan: ${{ needs.build_testplan.outputs.testplan }}
-            runs_on: "ubuntu-latest"
+            runs_on: '"ubuntu-latest"'
             defaults: 'v4'
             plan_folder: '.github/oxid-esales'
         secrets:
