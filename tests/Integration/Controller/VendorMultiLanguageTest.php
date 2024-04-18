@@ -72,7 +72,7 @@ final class VendorMultiLanguageTest extends MultiLanguageTestCase
                 'languageId' => '0',
                 'contains' => 'de',
                 'count' => 1,
-                'result' => [
+                'expectedVendors' => [
                     [
                         'title' => 'https://fashioncity.com/de',
                         'url' => '/Nach-Lieferant/https-fashioncity-com-de/',
@@ -83,7 +83,7 @@ final class VendorMultiLanguageTest extends MultiLanguageTestCase
                 'languageId' => '1',
                 'contains' => 'en',
                 'count' => 1,
-                'result' => [
+                'expectedVendors' => [
                     [
                         'title' => 'https://fashioncity.com/en',
                         'url' => '/en/By-distributor/https-fashioncity-com-en/',

@@ -114,9 +114,9 @@ final class ReviewTest extends BaseTestCase
      * @param bool $moderation
      * @param bool $withToken
      * @param bool $expectError
-     * @param bool $active
+     * @param bool $expectedActive
      */
-    public function testGetInactiveReview($moderation, $withToken, $expectError, $active): void
+    public function testGetInactiveReview($moderation, $withToken, $expectError, $expectedActive): void
     {
         Registry::getConfig()->saveShopConfVar('bool', 'blGBModerate', $moderation);
 
@@ -142,7 +142,7 @@ final class ReviewTest extends BaseTestCase
             $this->assertEquals(
                 [
                     'id' => self::INACTIVE_REVIEW,
-                    'active' => $active,
+                    'active' => $expectedActive,
                 ],
                 $result['body']['data']['review']
             );
@@ -267,22 +267,22 @@ final class ReviewTest extends BaseTestCase
             'admin_wrong_product' => [
                 'username' => 'admin@admin.com',
                 'password' => 'admin',
-                'oxid' => self::WRONG_PRODUCT,
+                'id' => self::WRONG_PRODUCT,
             ],
             'user_wrong_product' => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
-                'oxid' => self::WRONG_PRODUCT,
+                'id' => self::WRONG_PRODUCT,
             ],
             'admin_wrong_type' => [
                 'username' => 'admin@admin.com',
                 'password' => 'admin',
-                'oxid' => self::WRONG_OBJECT_TYPE,
+                'id' => self::WRONG_OBJECT_TYPE,
             ],
             'user_wrong_type' => [
                 'username' => 'user@oxid-esales.com',
                 'password' => 'useruser',
-                'oxid' => self::WRONG_OBJECT_TYPE,
+                'id' => self::WRONG_OBJECT_TYPE,
             ],
         ];
     }
@@ -291,9 +291,9 @@ final class ReviewTest extends BaseTestCase
      * @dataProvider getReviewProductDataProvider
      *
      * @param array $token
-     * @param mixed $product
+     * @param mixed $expectedProduct
      */
-    public function testReviewWithInactiveProduct($token, $product): void
+    public function testReviewWithInactiveProduct(?array $token, ?array $expectedProduct): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()
             ->getContainer()
@@ -326,7 +326,7 @@ final class ReviewTest extends BaseTestCase
 
         $this->assertSame([
             'id' => self::ACTIVE_REVIEW,
-            'product' => $product,
+            'product' => $expectedProduct,
         ], $result['body']['data']['review']);
     }
 

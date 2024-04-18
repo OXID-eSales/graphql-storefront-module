@@ -251,12 +251,12 @@ final class ManufacturerTest extends BaseTestCase
         return [
             [
                 'withToken' => false,
-                'expectedProductsCount' => 1,
+                'productCount' => 1,
                 'active' => true,
             ],
             [
                 'withToken' => true,
-                'expectedProductsCount' => 2,
+                'productCount' => 2,
                 'active' => false,
             ],
         ];
@@ -325,27 +325,27 @@ final class ManufacturerTest extends BaseTestCase
             [
                 'offset' => 1,
                 'limit' => null,
-                '$numberOfExpectedProducts' => 6,
+                'numberOfExpectedProducts' => 6,
             ],
             [
                 'offset' => 5,
                 'limit' => null,
-                '$numberOfExpectedProducts' => 2,
+                'numberOfExpectedProducts' => 2,
             ],
             [
                 'offset' => null,
                 'limit' => 1,
-                '$numberOfExpectedProducts' => 1,
+                'numberOfExpectedProducts' => 1,
             ],
             [
                 'offset' => 1,
                 'limit' => 2,
-                '$numberOfExpectedProducts' => 2,
+                'numberOfExpectedProducts' => 2,
             ],
             [
                 'offset' => 9,
                 'limit' => 9,
-                '$numberOfExpectedProducts' => 0,
+                'numberOfExpectedProducts' => 0,
             ],
         ];
     }
@@ -410,7 +410,7 @@ final class ManufacturerTest extends BaseTestCase
     {
         return [
             'title_asc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         title: "ASC"
                     }
@@ -419,7 +419,7 @@ final class ManufacturerTest extends BaseTestCase
                 'field' => 'title',
             ],
             'title_desc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         title: "DESC"
                     }

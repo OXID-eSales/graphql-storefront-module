@@ -110,12 +110,12 @@ final class ProductRelationServiceTest extends TokenTestCase
     /**
      * @dataProvider productWithATtributesProvider
      */
-    public function testGetProductAttributesRelation(string $productId, array $expected): void
+    public function testGetProductAttributesRelation(string $product, array $expected): void
     {
         $result = $this->query(
             '
             query{
-                product(productId: "' . $productId . '" ){
+                product(productId: "' . $product . '" ){
                     attributes {
                         value
                         attribute {
