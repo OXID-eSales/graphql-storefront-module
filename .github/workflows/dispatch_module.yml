@@ -4,13 +4,6 @@ name: Manual trigger
 on:
     workflow_dispatch:
         inputs:
-            scenario:
-                type: choice
-                options:
-                    - 7.1.x
-                    - use custom testplan
-                default: '7.1.x'
-                description: 'Choose test scenario'
             limit:
                 type: choice
                 options:
@@ -21,15 +14,10 @@ on:
                     - 'PHP8.2/MySQL8.0'
                 default: 'PHP8.1/MySQL5.7'
                 description: 'Limit to one PHP/MySQL combination'
-            custom_testplan:
-                type: string
-                required: true
-                description: 'URL/PATH of the testplan to run'
-                default: '~/defaults/7.1.x.yml,~/graphql-storefront.yml'
 
 jobs:
     build_testplan:
-        runs-on: "ubuntu-latest"
+        runs-on: ubuntu-latest
         outputs:
             testplan: '${{ steps.build.outputs.testplan }}'
         steps:
@@ -48,20 +36,8 @@ jobs:
                        exit 1
                        ;;
                   esac
-                  case '${{ inputs.scenario}}' in
-                    "7.1.x")
-                      # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
-                      TESTPLAN="~/defaults/7.1.x.yml,${LIMIT}~/graphql-storefront.yml"
-                      ;;
-                    "use custom testplan")
-                      # shellcheck disable=SC2088 # Tilde expansion happens in the workflow and not by bash
-                      TESTPLAN="${{ inputs.custom_testplan }}"
-                      ;;
-                    *)
-                      echo "Illegal choice, fix the workflow"
-                      exit 1
-                      ;;
-                  esac
+                  # shellcheck disable=SC2088
+                  TESTPLAN="~/defaults/7.1.x.yml,${LIMIT}~/graphql-storefront.yml"
                   echo "testplan=${TESTPLAN}" | tee -a "${GITHUB_OUTPUT}"
 
     dispatch_stable:
@@ -69,7 +45,7 @@ jobs:
         uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
         with:
             testplan: ${{ needs.build_testplan.outputs.testplan }}
-            runs_on: "ubuntu-latest"
+            runs_on: '"ubuntu-latest"'
             defaults: 'v4'
             plan_folder: '.github/oxid-esales'
         secrets:

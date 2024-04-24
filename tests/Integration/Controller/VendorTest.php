@@ -273,14 +273,14 @@ final class VendorTest extends BaseTestCase
     {
         return [
             'title_asc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         title: "ASC"
                     }
                 ',
             ],
             'title_desc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         title: "DESC"
                     }
@@ -353,10 +353,10 @@ final class VendorTest extends BaseTestCase
      * @dataProvider getVendorProductsDataProvider
      *
      * @param mixed $withToken
-     * @param mixed $productCount
+     * @param mixed $expectedProductsCount
      * @param mixed $active
      */
-    public function testVendorProducts($withToken, $productCount, $active): void
+    public function testVendorProducts($withToken, $expectedProductsCount, $active): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()
             ->getContainer()
@@ -387,7 +387,7 @@ final class VendorTest extends BaseTestCase
         );
 
         $this->assertCount(
-            $productCount,
+            $expectedProductsCount,
             $result['body']['data']['vendor']['products']
         );
 
@@ -418,10 +418,10 @@ final class VendorTest extends BaseTestCase
      * @dataProvider getVendorsProductListWithToken
      *
      * @param mixed $withToken
-     * @param mixed $productCount
+     * @param mixed $expectedProductsCount
      * @param mixed $active
      */
-    public function testVendorsProductList($withToken, $productCount, $active): void
+    public function testVendorsProductList($withToken, $expectedProductsCount, $active): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()
             ->getContainer()
@@ -456,7 +456,7 @@ final class VendorTest extends BaseTestCase
         );
 
         $this->assertCount(
-            $productCount,
+            $expectedProductsCount,
             $result['body']['data']['vendors'][0]['products']
         );
 

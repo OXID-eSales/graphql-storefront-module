@@ -39,7 +39,7 @@ final class ManufacturerMultiLanguageTest extends MultiLanguageTestCase
     public function testGetManufacturerMultilanguage(
         string $languageId,
         string $title,
-        string $seoUrl,
+        string $url,
         string $productDescription
     ): void {
         $query = 'query {
@@ -66,7 +66,7 @@ final class ManufacturerMultiLanguageTest extends MultiLanguageTestCase
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_MANUFACTURER, $manufacturer['id']);
         $this->assertEquals($title, $manufacturer['title']);
-        $this->assertMatchesRegularExpression('@https?://.*' . $seoUrl . '$@', $manufacturer['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*' . $url . '$@', $manufacturer['seo']['url']);
         $this->assertSame($productDescription, $manufacturer['products'][0]['shortDescription']);
     }
 

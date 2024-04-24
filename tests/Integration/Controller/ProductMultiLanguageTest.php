@@ -36,7 +36,7 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
     /**
      * @dataProvider providerGetProductMultilanguage
      */
-    public function testGetProductMultilanguage(string $languageId, string $title, string $seoUrl): void
+    public function testGetProductMultilanguage(string $languageId, string $title, string $url): void
     {
         $query = 'query {
             product (productId: "' . self::ACTIVE_MULTILANGUAGE_PRODUCT . '") {
@@ -58,7 +58,7 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
 
         $this->assertSame(self::ACTIVE_MULTILANGUAGE_PRODUCT, $product['id']);
         $this->assertEquals($title, $product['title']);
-        $this->assertMatchesRegularExpression('@https?://.*' . $seoUrl . '.*@', $product['seo']['url']);
+        $this->assertMatchesRegularExpression('@https?://.*' . $url . '.*@', $product['seo']['url']);
     }
 
     public function providerGetProductListWithFilterMultilanguage()
@@ -118,11 +118,11 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'labels' => [
+                'expectedLabels' => [
                     'Größe',
                     'Farbe',
                 ],
-                'variants' => [
+                'expectedVariants' => [
                     'id' => '6b6efaa522be53c3e86fdb41f0542a8a',
                     'variantValues' => [
                         'W 30/L 30',
@@ -132,11 +132,11 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
             ],
             'en' => [
                 'languageId' => '1',
-                'labels' => [
+                'expectedLabels' => [
                     'Size',
                     'Color',
                 ],
-                'values' => [
+                'expectedVariants' => [
                     'id' => '6b6efaa522be53c3e86fdb41f0542a8a',
                     'variantValues' => [
                         'W 30/L 30',
@@ -150,8 +150,11 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
     /**
      * @dataProvider providerGetProductVariantsMultilanguage
      */
-    public function testSortedProductListByTitle(string $languageId): void
-    {
+    public function testSortedProductListByTitle(
+        string $languageId,
+        array $expectedLabels = [],
+        array $expectedVariants = []
+    ): void {
         $this->setGETRequestParameter('lang', $languageId);
 
         $result = $this->query(

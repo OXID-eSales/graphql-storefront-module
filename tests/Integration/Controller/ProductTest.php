@@ -516,7 +516,7 @@ final class ProductTest extends BaseTestCase
     {
         return [
             'min_price_variant_asc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         minPriceVariant: "ASC"
@@ -527,7 +527,7 @@ final class ProductTest extends BaseTestCase
                 'mode' => SORT_NUMERIC,
             ],
             'min_price_variant_desc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         minPriceVariant: "DESC"
@@ -537,7 +537,7 @@ final class ProductTest extends BaseTestCase
                 'field' => 'varMinPrice',
             ],
             'product_number_asc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         productNumber: "ASC"
@@ -548,7 +548,7 @@ final class ProductTest extends BaseTestCase
                 'mode' => SORT_STRING,
             ],
             'product_number_desc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         productNumber: "DESC"
@@ -559,7 +559,7 @@ final class ProductTest extends BaseTestCase
                 'mode' => SORT_STRING,
             ],
             'price_asc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         price: "ASC"
@@ -570,7 +570,7 @@ final class ProductTest extends BaseTestCase
                 'field' => 'price',
             ],
             'price_desc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         price: "DESC"
@@ -581,7 +581,7 @@ final class ProductTest extends BaseTestCase
                 'field' => 'price',
             ],
             'rating_asc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         rating: "ASC"
@@ -592,7 +592,7 @@ final class ProductTest extends BaseTestCase
                 'field' => 'rating',
             ],
             'rating_desc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         rating: "DESC"
@@ -603,7 +603,7 @@ final class ProductTest extends BaseTestCase
                 'field' => 'rating',
             ],
             'stock_asc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         stock: "ASC"
@@ -614,7 +614,7 @@ final class ProductTest extends BaseTestCase
                 'field' => 'stock',
             ],
             'stock_desc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         stock: "DESC"
@@ -625,7 +625,7 @@ final class ProductTest extends BaseTestCase
                 'field' => 'stock',
             ],
             'title_asc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         title: "ASC"
@@ -635,7 +635,7 @@ final class ProductTest extends BaseTestCase
                 'field' => 'title',
             ],
             'title_desc' => [
-                'sortquery' => '
+                'sortQuery' => '
                     sort: {
                         position: ""
                         title: "DESC"

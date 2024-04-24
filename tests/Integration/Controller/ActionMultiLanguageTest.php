@@ -52,7 +52,7 @@ final class ActionMultiLanguageTest extends MultiLanguageTestCase
         return [
             'de' => [
                 'languageId' => '0',
-                'result' => [
+                'action' => [
                     'title' => 'Angebote der Woche',
                     'products' => [
                         [
@@ -72,7 +72,7 @@ final class ActionMultiLanguageTest extends MultiLanguageTestCase
             ],
             'en' => [
                 'languageId' => '1',
-                'result' => [
+                'action' => [
                     'title' => 'Week\'s Special',
                     'products' => [
                         [

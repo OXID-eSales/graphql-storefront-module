@@ -25,9 +25,9 @@ final class BannerTest extends TestCase
      * @param mixed $from
      * @param mixed $to
      * @param mixed $now
-     * @param mixed $expected
+     * @param mixed $result
      */
-    public function testActive($active, $from, $to, $now, $expected): void
+    public function testActive($active, $from, $to, $now, $result): void
     {
         $banner = new Banner(
             $this->getModelStub(
@@ -36,7 +36,7 @@ final class BannerTest extends TestCase
                 $to
             )
         );
-        $this->assertSame($expected, $banner->isActive($now));
+        $this->assertSame($result, $banner->isActive($now));
     }
 
     public static function activeDataProvider()
