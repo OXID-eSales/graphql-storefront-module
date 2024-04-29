@@ -29,14 +29,16 @@ Switch to the shop root directory (the file `composer.json` and the directories 
 ```bash
 # Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 3.x version
 $ composer require oxid-esales/graphql-storefront ^3.0.0
-
-$ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-base
-$ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-storefront
-
-$ ./vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
 ```
 
 If you didn't have the `oxid-esales/graphql-base` module installed, composer will do that for you.
+
+You need to run migrations after the installation was successfully executed:
+
+```bash
+$ vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_base
+$ vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
+```
 
 After installing the module, you need to activate it, either via OXID eShop admin or CLI.
 
