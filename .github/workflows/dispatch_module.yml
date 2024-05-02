@@ -42,7 +42,7 @@ jobs:
 
     dispatch_stable:
         needs: build_testplan
-        uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
+        uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yml@v4
         with:
             testplan: ${{ needs.build_testplan.outputs.testplan }}
             runs_on: '"ubuntu-latest"'
