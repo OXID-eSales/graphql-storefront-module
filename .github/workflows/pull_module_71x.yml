@@ -24,6 +24,7 @@ jobs:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
     push_module_ee:
+        if: false
         runs-on: ubuntu-latest
         steps:
             - name: Trigger EE workflow and wait for results

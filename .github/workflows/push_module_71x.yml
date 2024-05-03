@@ -7,7 +7,7 @@ on:
 
 jobs:
     push_module:
-        uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
+        uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yml@v4
         with:
             testplan: '~/defaults/7.1.x.yml,~/defaults/php8.2_mysql8.0_only.yml,~/graphql-storefront.yml'
             runs_on: '"ubuntu-latest"'
@@ -24,6 +24,7 @@ jobs:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
     push_module_ee:
+        if: false
         runs-on: ubuntu-latest
         steps:
             - name: Trigger EE workflow and wait for results
