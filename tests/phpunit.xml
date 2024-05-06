@@ -1,13 +1,21 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         bootstrap="../../../../bootstrap.php"
-         colors="true"
          backupGlobals="true"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
          beStrictAboutTestsThatDoNotTestAnything="false"
-         cacheDirectory=".phpunit.cache"
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         cacheDirectory=".phpunit.cache"
+         backupStaticProperties="false"
+         requireCoverageMetadata="false"
          displayDetailsOnTestsThatTriggerWarnings="true"
->
+         displayDetailsOnTestsThatTriggerNotices="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         colors="true">
     <testsuites>
         <testsuite name="Unit">
             <directory>Unit/</directory>
@@ -20,8 +28,5 @@
         <include>
             <directory suffix=".php">../src</directory>
         </include>
-        <exclude>
-            <directory suffix=".php">../tests</directory>
-        </exclude>
     </source>
 </phpunit>
