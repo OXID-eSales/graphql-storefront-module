@@ -1,9 +1,8 @@
-name: Auto trigger on Push to 7.1.x*
+name: Auto trigger on push or pull requests
 
 on:
-    push:
-        branches:
-            - 'b-7.1.x**'
+    pull_request: {}
+    push: {}
 
 jobs:
     push_module:
@@ -24,7 +23,6 @@ jobs:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
     push_module_ee:
-        if: false
         runs-on: ubuntu-latest
         steps:
             - name: Trigger EE workflow and wait for results
@@ -36,4 +34,4 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yml
                   ref: "b-7.1.x"
-                  client_payload: "{\"php\": \"8.1\", \"mysql\": \"5.7\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
+                  client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
