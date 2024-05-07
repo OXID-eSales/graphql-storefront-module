@@ -34,7 +34,7 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yml
                   ref: "b-7.1.x"
-                  client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"pe\", \"ref\": \"${{ github.ref_name }}\"}"
+                  client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
 
     push_module_ee:
         runs-on: ubuntu-latest
@@ -48,4 +48,4 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yml
                   ref: "b-7.1.x"
-                  client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
+                  client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
