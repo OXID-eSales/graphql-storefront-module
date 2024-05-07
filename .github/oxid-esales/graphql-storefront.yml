@@ -1,7 +1,6 @@
 # {{ $ids := "oe_graphql_storefront" }}ids: {{ $ids }}
 # {{ $org := "oxid-esales" }}organisation: {{ $org }}
 # {{ $name := "graphql-storefront" }}name: {{ $name }}
-# {{ $repo := "OXID-eSales/graphql-storefront-module" }}repo: {{ $repo }}
 
 install_shop_with_modules:
     cache:
@@ -21,7 +20,7 @@ install_shop_with_modules:
                 "repositories": {
                   "{{ $org }}/{{ $name }}": {
                     "type": "git",
-                    "url": "https://github.com/{{ $repo }}.git"
+                    "url": "https://github.com/OXID-eSales/graphql-storefront-module.git"
                   }
                 }
             }
