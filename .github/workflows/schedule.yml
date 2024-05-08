@@ -6,9 +6,9 @@ on:
 
 jobs:
     call_matrix:
-        uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yml@v4
+        uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
         with:
-            testplan: '~/defaults/7.1.x.yml,~/defaults/php8.1_mysql5.7_only.yml,~/graphql-storefront.yml'
+            testplan: '~/defaults/7.1.x.yaml,~/defaults/php8.1_mysql5.7_only.yaml,~/graphql-storefront.yaml'
             runs_on: '"ubuntu-latest"'
             defaults: 'v4'
             plan_folder: '.github/oxid-esales'
