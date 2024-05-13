@@ -40,12 +40,12 @@ runscript: &runscript
               "graphql_storefront:tests-unit",
               "graphql_storefront:tests-integration",
               "graphql_storefront:tests-codeception -- -g address",
-              "graphql_storefront:tests-codeception -- -g basket",
-              "graphql_storefront:tests-codeception -- -g basket_1",
-              "graphql_storefront:tests-codeception -- -g basket_2",
-              "graphql_storefront:tests-codeception -- -g order",
-              "graphql_storefront:tests-codeception -- -g other",
-              "graphql_storefront:tests-codeception -- -g other_1",
+              "graphql_storefront:tests-codeception -- -g basket --shard 1/2",
+              "graphql_storefront:tests-codeception -- -g basket --shard 2/2",
+              "graphql_storefront:tests-codeception -- -g other --shard 1/4",
+              "graphql_storefront:tests-codeception -- -g other --shard 2/4",
+              "graphql_storefront:tests-codeception -- -g other --shard 3/4",
+              "graphql_storefront:tests-codeception -- -g other --shard 4/4",
               "graphql_storefront:tests-codeception -- -g pricing"
             ]
     graphql_storefront:

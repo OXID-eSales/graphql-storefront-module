@@ -33,5 +33,5 @@ jobs:
                   github_user: ${{ secrets.CI_USER }}
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yml
-                  ref: "b-7.1.x-fix-action-lint-errors-OXDEV-8324"
+                  ref: "b-7.1.x"
                   client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
