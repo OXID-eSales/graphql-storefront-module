@@ -158,3 +158,5 @@ REPLACE INTO `oxobject2group` (`OXID`, `OXSHOPID`, `OXOBJECTID`, `OXGROUPSID`, `
 REPLACE INTO `oxobject2category` (`OXID`, `OXOBJECTID`, `OXCATNID`, `OXTIME`) VALUES
 ('article2category', 'b56164c54701f07df14b141da197c207', 'fc7e7bd8403448f00a363f60f44da8f2', 9999999999),
 ('article2category2', '_awesome_article', '_pro_articles', 9999999999);
+
+UPDATE `oxmanufacturers` SET OXICON_ALT = 'oreilly_1_alt_icon.png', OXPICTURE = 'oreilly_1_picture.png', OXTHUMBNAIL = 'oreilly_1_thumbnail.png', OXPROMOTION_ICON = 'oreilly_1_promo.png' WHERE oxid = 'oiaf6ab7e12e86291e86dd3ff891fe40';
