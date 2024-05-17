@@ -13,7 +13,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
- * @group memory_intense
+ * @group graphql_session_multishop
  * @group oe_graphql_storefront
  * @group other
  */
