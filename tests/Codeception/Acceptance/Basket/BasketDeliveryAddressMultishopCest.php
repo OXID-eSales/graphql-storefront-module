@@ -15,10 +15,10 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group oe_graphql_checkout
  * @group address
- * @group basket_1
+ * @group basket
  * @group oe_graphql_storefront
  */
-final class BasketDeliveryAddressMultishopCest extends MultishopBaseCest
+final class BasketDeliveryAddressMultiShopCest extends MultishopBaseCest
 {
     private const USERNAME = 'standarduser@oxid-esales.com';
 

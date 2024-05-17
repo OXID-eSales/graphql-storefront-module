@@ -14,7 +14,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
- * @group basket
+ * @group memory_intense
  * @group oe_graphql_storefront
  */
 final class BasketsCest extends BaseCest
