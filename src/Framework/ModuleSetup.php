@@ -19,8 +19,5 @@ final class ModuleSetup
 {
     public static function onActivate(): void
     {
-        $migrations = (new MigrationsBuilder())->build();
-
-        $migrations->execute(Migrations::MIGRATE_COMMAND, 'oe_graphql_storefront');
     }
 }

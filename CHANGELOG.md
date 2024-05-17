@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Workflow trigger to update schema in documentation
 - Shop 7.1 dependencies match
 - PHP 8.2 support
+- Classes
+    - `OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerImage`
 
 ### Changed
 - Replace webmozart/path-util usage with symfony/filesystem
@@ -21,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - PHP 8.0 support
+- Migration trigger on module activation
 
 ## [3.0.0] - 2023-06-08
 

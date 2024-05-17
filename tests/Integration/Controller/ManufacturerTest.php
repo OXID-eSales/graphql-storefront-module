@@ -461,4 +461,102 @@ final class ManufacturerTest extends BaseTestCase
 
         $this->assertSame($expected, $sortedManufacturers);
     }
+
+    public function testManufacturerPictures(): void
+    {
+        $this->copyAssets();
+
+        $result = $this->query(
+            'query {
+              manufacturer (manufacturerId: "' . self::ACTIVE_MANUFACTURER . '") {
+                id
+                title
+                icon
+                images {
+                    alt
+                    picture
+                    promotion
+                    thumbnail
+                }
+              }
+            }'
+        );
+
+        $manufacturer = $result['body']['data']['manufacturer'];
+
+        $this->assertSame(self::ACTIVE_MANUFACTURER, $manufacturer['id']);
+        $this->assertStringContainsString(
+            'O\'Reilly',
+            htmlspecialchars_decode($manufacturer['title'], ENT_QUOTES)
+        );
+        $this->checkImages([
+            'icon'      => $manufacturer['icon'],
+            'alt'       => $manufacturer['images']['alt'],
+            'picture'   => $manufacturer['images']['picture'],
+            'promotion' => $manufacturer['images']['promotion'],
+            'thumbnail' => $manufacturer['images']['thumbnail'],
+        ]);
+    }
+
+    public function testManufacturersPictures(): void
+    {
+        $this->copyAssets();
+
+        $result = $this->query(
+            'query {
+                manufacturers(filter: {
+                    title: {
+                        contains: "l"
+                    }
+                }) {
+                id
+                title
+                icon
+                images {
+                    alt
+                    picture
+                    promotion
+                    thumbnail
+                }
+              }
+            }'
+        );
+
+        $manufacturers = $result['body']['data']['manufacturers'];
+
+        //Check manufacturer with only icon
+        $this->assertSame(self::ACTIVE_MULTILANGUAGE_MANUFACTURER, $manufacturers[1]['id']);
+        $this->assertStringContainsString(
+            'Liquid Force',
+            htmlspecialchars_decode($manufacturers[1]['title'], ENT_QUOTES)
+        );
+        $this->assertMatchesRegularExpression('@https?://.*lf_kite_logo_1_mico.png$@', $manufacturers[1]['icon']);
+        $this->assertSame('', $manufacturers[1]['images']['alt']);
+        $this->assertSame('', $manufacturers[1]['images']['picture']);
+        $this->assertSame('', $manufacturers[1]['images']['promotion']);
+        $this->assertSame('', $manufacturers[1]['images']['thumbnail']);
+
+        //Check manufacturer with all images set
+        $this->assertSame(self::ACTIVE_MANUFACTURER, $manufacturers[2]['id']);
+        $this->assertStringContainsString(
+            'O\'Reilly',
+            htmlspecialchars_decode($manufacturers[2]['title'], ENT_QUOTES)
+        );
+        $this->checkImages([
+            'icon'      => $manufacturers[2]['icon'],
+            'alt'       => $manufacturers[2]['images']['alt'],
+            'picture'   => $manufacturers[2]['images']['picture'],
+            'promotion' => $manufacturers[2]['images']['promotion'],
+            'thumbnail' => $manufacturers[2]['images']['thumbnail'],
+        ]);
+    }
+
+    private function checkImages(array $manufacturerData = []): void
+    {
+        $this->assertMatchesRegularExpression('@https?://.*oreilly_1_mico.png$@', $manufacturerData['icon']);
+        $this->assertMatchesRegularExpression('@https?://.*oreilly_1_alt_icon.png$@', $manufacturerData['alt']);
+        $this->assertMatchesRegularExpression('@https?://.*oreilly_1_picture.png$@', $manufacturerData['picture']);
+        $this->assertMatchesRegularExpression('@https?://.*oreilly_1_promo.png$@', $manufacturerData['promotion']);
+        $this->assertMatchesRegularExpression('@https?://.*oreilly_1_thumbnail.png$@', $manufacturerData['thumbnail']);
+    }
 }

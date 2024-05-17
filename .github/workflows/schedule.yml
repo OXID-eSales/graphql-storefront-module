@@ -6,9 +6,9 @@ on:
 
 jobs:
     call_matrix:
-        uses: oxid-eSales/github-actions/.github/workflows/call-universal_test_workflow.yml@v4
+        uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
         with:
-            testplan: '~/defaults/7.2.x.yml,~/defaults/php8.1_mysql5.7_only.yml,~/graphql-storefront.yml'
+            testplan: '~/defaults/7.2.x.yaml,~/defaults/php8.1_mysql5.7_only.yaml,~/graphql-storefront.yaml'
             runs_on: '"ubuntu-latest"'
             defaults: 'v4'
             plan_folder: '.github/oxid-esales'
@@ -34,7 +34,7 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yml
                   ref: "b-7.2.x"
-                  client_payload: "{\"php\": \"8.1\", \"mysql\": \"8.0\", \"edition\": \"pe\", \"ref\": \"${{ github.ref_name }}\"}"
+                  client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
 
     push_module_ee:
         runs-on: ubuntu-latest
@@ -48,4 +48,4 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yml
                   ref: "b-7.2.x"
-                  client_payload: "{\"php\": \"8.2\", \"mysql\": \"8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
+                  client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"

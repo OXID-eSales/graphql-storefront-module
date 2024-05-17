@@ -1,0 +1,77 @@
+# {{ $ids := "oe_graphql_storefront" }}ids: {{ $ids }}
+# {{ $org := "oxid-esales" }}organisation: {{ $org }}
+# {{ $name := "graphql-storefront" }}name: {{ $name }}
+
+install_shop_with_modules:
+    cache:
+        prepared_shop: false
+    composer:
+        transform: |
+            {
+                "require": {
+                    "oxid-esales/oxideshop-ce": "{{ .Data.global.composer.dev_ref }}",
+                    "oxid-esales/twig-component": "{{ .Data.global.composer.dev_ref }}",
+                    "oxid-esales/twig-admin-theme": "{{ .Data.global.composer.dev_ref }}",
+                    "oxid-esales/apex-theme": "{{ .Data.global.composer.dev_ref }}",
+                    "oxid-esales/developer-tools": "{{ .Data.global.composer.dev_ref }}",
+                    "oxid-esales/oxideshop-demodata-ce": "dev-master",
+                    "{{ $org }}/{{ $name }}": "{{ .Data.global.composer.ref_name }}"
+                },
+                "repositories": {
+                  "{{ $org }}/{{ $name }}": {
+                    "type": "git",
+                    "url": "https://github.com/OXID-eSales/graphql-storefront-module.git"
+                  }
+                }
+            }
+    custom_script_container: |
+        sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' vendor/oxid-esales/oxideshop-ce/source/bootstrap.php
+        perl -pi -e 'print "SetEnvIf Authorization \"(.*)\" HTTP_AUTHORIZATION=\$1\n\n" if $. == 1' source/.htaccess
+        vendor/bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
+        vendor/bin/oe-console oe:module:activate oe_graphql_base
+        vendor/bin/oe-console oe:module:activate "{{ $ids }}"
+        vendor/bin/oe-console oe:theme:activate apex
+        vendor/bin/oe-console oe:setup:demodata
+
+runscript: &runscript
+    matrix:
+        script: |
+            [
+              "graphql_storefront:tests-unit",
+              "graphql_storefront:tests-integration",
+              "graphql_storefront:tests-codeception -- -g address",
+              "graphql_storefront:tests-codeception -- -g basket",
+              "graphql_storefront:tests-codeception -- -g basket_1",
+              "graphql_storefront:tests-codeception -- -g basket_2",
+              "graphql_storefront:tests-codeception -- -g order",
+              "graphql_storefront:tests-codeception -- -g other",
+              "graphql_storefront:tests-codeception -- -g other_1",
+              "graphql_storefront:tests-codeception -- -g pricing"
+            ]
+    graphql_storefront:
+        path: 'vendor/{{ $org}}/{{ $name }}'
+
+runslim:
+    <<: *runscript
+    matrix:
+        script: |
+            [
+              "graphql_storefront:phpcs",
+              "graphql_storefront:phpstan",
+              "graphql_storefront:phpmd"
+            ]
+
+sonarcloud:
+    matrix:
+        testplan: '["-"]'
+    strip_path: '/var/www/vendor/{{ print $org }}/{{ print $name}}/'
+    project_key: 'OXID-eSales_graphql-storefront-module'
+    project_name: '{{ $org}}/{{ $name }}'
+    parameters: |
+        -Dsonar.language=php
+        -Dsonar.scm.provider=git
+        -Dsonar.sources=src
+        -Dsonar.tests=tests
+
+finish:
+    slack_title: '{{ print $name }} ({{ .Data.global.git.shop_ref }}) by {{ .Github.Actor }}'

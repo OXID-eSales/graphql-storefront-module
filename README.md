@@ -17,6 +17,7 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.0.0` co
 
 ## Branch compatibility
 
+* b-7.1.x branch is compatible with OXID eShop compilation b-7.1.x (which uses `graphql-base` b-7.1.x branch)
 * 3.x versions (or b-7.0.x branch) are compatible with OXID eShop compilation b-7.0.x (which uses `graphql-base` b-7.0.x branch)
 * ^2.1 versions (b-6.5.x branch) are compatible with OXID eShop compilation b-6.5.x (which uses `graphql-base` 7.x version resp. b-6.5.x branch)
 * 2.0.x versions (b-6.4.x branch) are compatible with OXID eShop compilation b-6.4.x (which uses `graphql-base` 6.x version resp. b-6.4.x branch)
@@ -29,14 +30,16 @@ Switch to the shop root directory (the file `composer.json` and the directories 
 ```bash
 # Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 3.x version
 $ composer require oxid-esales/graphql-storefront ^3.0.0
-
-$ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-base
-$ vendor/bin/oe-console oe:module:install-configuration source/modules/oe/graphql-storefront
-
-$ ./vendor/bin/oe-eshop-doctrine_migration migration:migrate oe_graphql_storefront
 ```
 
 If you didn't have the `oxid-esales/graphql-base` module installed, composer will do that for you.
+
+You should run migrations both after installing the module and after each module update:
+
+```bash
+$ vendor/bin/oe-eshop-doctrine_migration migrations:migrate oe_graphql_base
+$ vendor/bin/oe-eshop-doctrine_migration migrations:migrate oe_graphql_storefront
+```
 
 After installing the module, you need to activate it, either via OXID eShop admin or CLI.
 

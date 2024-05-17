@@ -191,3 +191,5 @@ REPLACE INTO `oxobject2seodata` (`OXOBJECTID`, `OXSHOPID`, `OXLANG`, `OXKEYWORDS
 ('oiaf6ab7e12e86291e86dd3ff891fe40', 1, 1, 'english manufacturer seo keywords', 'english manufacturer seo description'),
 ('058e613db53d782adfc9f2ccb43c45fe', 1, 0, 'german product seo keywords', 'german product seo description'),
 ('058e613db53d782adfc9f2ccb43c45fe', 1, 1, 'english product seo keywords', 'english product seo description');
+
+UPDATE `oxmanufacturers` SET OXICON_ALT = 'oreilly_1_alt_icon.png', OXPICTURE = 'oreilly_1_picture.png', OXTHUMBNAIL = 'oreilly_1_thumbnail.png', OXPROMOTION_ICON = 'oreilly_1_promo.png' WHERE oxid = 'oiaf6ab7e12e86291e86dd3ff891fe40';
