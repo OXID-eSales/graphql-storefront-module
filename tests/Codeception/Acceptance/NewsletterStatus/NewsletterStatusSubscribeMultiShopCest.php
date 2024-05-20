@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\NewsletterStatus;
+namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\NewsletterStatus;
 
 use Codeception\Example;
 use Codeception\Scenario;
@@ -17,7 +17,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group newsletterstatus
  * @group oe_graphql_storefront
- * @group other_1
+ * @group other
  */
 final class NewsletterStatusSubscribeMultiShopCest extends MultishopBaseCest
 {

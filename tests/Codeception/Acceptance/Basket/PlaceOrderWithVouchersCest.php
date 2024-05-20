@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  * @group oe_graphql_checkout
  * @group place_order
  * @group place_order_with_vouchers
- * @group basket_2
+ * @group basket
  * @group oe_graphql_storefront
  */
 final class PlaceOrderWithVouchersCest extends PlaceOrderBaseCest

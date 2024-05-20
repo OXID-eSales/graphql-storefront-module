@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 /**
  * @group newsletterstatus
  * @group oe_graphql_storefront
- * @group other_1
+ * @group other
  */
 final class NewsletterStatusCest extends BaseCest
 {
