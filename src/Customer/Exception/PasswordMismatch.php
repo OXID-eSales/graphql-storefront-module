@@ -28,4 +28,9 @@ final class PasswordMismatch extends Error
     {
         return new self('Password does not match length requirements');
     }
+
+    public static function byMismatch(): self
+    {
+        return new self('Passwords do not match');
+    }
 }

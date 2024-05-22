@@ -34,4 +34,16 @@ final class Password
     {
         return $this->passwordService->change($old, $new);
     }
+
+    #[Mutation]
+    public function customerPasswordForgotRequest(string $email): bool
+    {
+        return $this->passwordService->sendPasswordForgotEmail($email);
+    }
+
+    #[Mutation]
+    public function customerPasswordReset(string $updateId, string $newPassword, string $repeatPassword): bool
+    {
+        return $this->passwordService->resetPassword($updateId, $newPassword, $repeatPassword);
+    }
 }

@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHP 8.2 support
 - Classes
     - `OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerImage`
+- Password forgotten feature
+  - Mutations:
+    - `customerPasswordForgotRequest`
+    - `customerPasswordReset`
+  - Class `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password`
 
 ### Changed
 - Replace webmozart/path-util usage with symfony/filesystem
