@@ -28,10 +28,10 @@ install_shop_with_modules:
         sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' vendor/oxid-esales/oxideshop-ce/source/bootstrap.php
         perl -pi -e 'print "SetEnvIf Authorization \"(.*)\" HTTP_AUTHORIZATION=\$1\n\n" if $. == 1' source/.htaccess
         vendor/bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
+        vendor/bin/oe-console oe:setup:demodata
         vendor/bin/oe-console oe:module:activate oe_graphql_base
         vendor/bin/oe-console oe:module:activate "{{ $ids }}"
         vendor/bin/oe-console oe:theme:activate apex
-        vendor/bin/oe-console oe:setup:demodata
 
 runscript: &runscript
     matrix:
