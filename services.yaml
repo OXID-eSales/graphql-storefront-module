@@ -1,6 +1,9 @@
 parameters:
   oxidesales.graphqlstorefront.depends_on_modules: [ 'oe_graphql_base' ]
 
+imports:
+  - { resource: src/Customer/services.yaml }
+
 services:
 
   _defaults:
