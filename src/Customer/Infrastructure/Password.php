@@ -11,78 +11,32 @@ namespace OxidEsales\GraphQL\Storefront\Customer\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Email;
-use OxidEsales\Eshop\Core\Exception\StandardException;
-use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
+use OxidEsales\Eshop\Core\InputValidator;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
 
-final class Password
+final class Password implements PasswordInterface
 {
+    public function __construct(
+        private readonly InputValidator $inputValidator
+    ) {
+    }
+
     public function sendPasswordForgotEmail(string $email): bool|int
     {
         $emailService = oxNew(Email::class);
         return $emailService->sendForgotPwdEmail($email);
     }
 
-    public function checkPassword(string $newPassword, string $repeatPassword): bool
+    /**
+     * @throws PasswordValidationException
+     */
+    public function validatePassword(User $customer, string $newPassword, string $repeatPassword): void
     {
-        try {
-            $this->validatePassword($newPassword, $repeatPassword);
-        } catch (StandardException $exception) {
-            $graphqlException = $this->convertException($exception);
-            if ($graphqlException) {
-                throw $graphqlException;
-            }
-
-            return false;
-        }
-
-        return true;
-    }
-
-    private function validatePassword(string $newPassword, string $repeatPassword): void
-    {
-        $user = oxNew(User::class);
-        $inputValidator = Registry::getInputValidator();
-        $exception = $inputValidator->checkPassword($user, $newPassword, $repeatPassword, true);
+        $exception = $this->inputValidator->checkPassword(
+            $customer, $newPassword, $repeatPassword, true);
 
         if ($exception) {
-            throw $exception;
+            throw new PasswordValidationException($exception->getMessage());
         }
-    }
-
-    private function convertException(StandardException $exception): ?PasswordMismatch
-    {
-        if (
-            $exception->getMessage() == $this->translate('ERROR_MESSAGE_INPUT_EMPTYPASS')
-            || $exception->getMessage() == $this->translate('ERROR_MESSAGE_PASSWORD_TOO_SHORT')
-        ) {
-            return PasswordMismatch::byLength();
-        }
-
-        if ($exception->getMessage() == $this->translate('ERROR_MESSAGE_PASSWORD_DO_NOT_MATCH')) {
-            return PasswordMismatch::byMismatch();
-        }
-
-        return null;
-    }
-
-    private function translate(string $string): string
-    {
-        return Registry::getLang()->translateString($string);
-    }
-
-    public function resetPassword(string $updateId, string $newPassword): bool
-    {
-        $user = oxNew(User::class);
-        $user->loadUserByUpdateId($updateId);
-        if (!$user->isLoaded()) {
-            return false;
-        }
-
-        $user->setPassword($newPassword);
-        $user->setUpdateKey(true);
-        $user->save();
-
-        return true;
     }
 }

@@ -13,17 +13,22 @@ use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateId;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface as SharedRepositoryInterface;
 
-final class Repository
+final class Repository implements RepositoryInterface
 {
     /** @var SharedRepository */
     private $repository;
 
     public function __construct(
-        SharedRepository $repository
+        SharedRepositoryInterface $repository,
+        OxNewFactoryInterface $oxNewFactory
     ) {
         $this->repository = $repository;
+        $this->oxNewFactory = $oxNewFactory;
     }
 
     /**
@@ -70,5 +75,26 @@ final class Repository
         $customerModel = oxNew(CustomerDataType::getModelClass());
 
         return (bool)$customerModel->checkIfEmailExists($email);
+    }
+
+    public function saveNewPasswordForCustomer(EshopUserModel $customer, string $newPassword): bool
+    {
+        $customer->setPassword($newPassword);
+        $customer->setUpdateKey(true);
+        return $this->repository->saveModel($customer);
+    }
+
+    /**
+     * @throws CustomerNotFoundByUpdateId
+     */
+    public function getCustomerByPasswordUpdateId(string $passwordUpdateId): EshopUserModel
+    {
+        $user = $this->oxNewFactory->getModel(EshopUserModel::class);
+        $user = $user->loadUserByUpdateId($passwordUpdateId);
+        if (!$user->isLoaded()) {
+            throw new CustomerNotFoundByUpdateId($passwordUpdateId);
+        }
+
+        return $user;
     }
 }

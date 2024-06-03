@@ -23,7 +23,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use OxidEsales\GraphQL\Storefront\Shared\Exception\Repository as RepositoryException;
 use PDO;
 
-final class Repository
+final class Repository implements RepositoryInterface
 {
     /** @var QueryBuilderFactoryInterface */
     private $queryBuilderFactory;
