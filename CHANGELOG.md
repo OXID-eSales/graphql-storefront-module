@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.1.0-rc.1] - Unreleased
+## [3.1.0-rc.1] - 2024-06-12
 
 ### Added
 - `variantSelections` query for fetching multidimensional variants [PR-11](https://github.com/OXID-eSales/graphql-storefront-module/pull/11)
@@ -199,6 +199,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
+[3.1.0-rc.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v3.0.0...v3.1.0-rc.1
 [3.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.1.0...v3.0.0
 [2.2.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.1.0...b-6.5.x
 [2.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.0.1...v2.1.0
