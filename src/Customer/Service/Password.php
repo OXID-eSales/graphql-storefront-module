@@ -9,20 +9,19 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Customer\Service;
 
-use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
-use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password as PasswordInfrastructure;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as PasswordInfrastructuredInterface;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface;
+use TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface;
 
-final class Password
+final class Password implements PasswordInterface
 {
     public function __construct(
-        private readonly Repository $repository,
-        private readonly CustomerService $customerService,
-        private readonly Authentication $authenticationService,
-        private readonly PasswordInfrastructure $passwordInfrastructure,
+        private readonly RepositoryInterface $repository,
+        private readonly CustomerInterface $customerService,
+        private readonly AuthenticationServiceInterface $authenticationService,
+        private readonly PasswordInfrastructuredInterface $passwordInfrastructure,
     ) {
     }
 
@@ -38,9 +37,7 @@ final class Password
             throw PasswordMismatch::byOldPassword();
         }
 
-        $customerModel->setPassword($new);
-
-        return $this->repository->saveModel($customerModel);
+        return $this->repository->saveNewPasswordForCustomer($customerModel, $new);
     }
 
     public function sendPasswordForgotEmail(string $email): bool
@@ -54,12 +51,10 @@ final class Password
         return $isSuccess;
     }
 
-    public function resetPassword(string $updateId, string $newPassword, string $repeatPassword): bool
+    public function resetPasswordByUpdateId(string $updateId, string $newPassword, string $repeatPassword): bool
     {
-        if (!$this->passwordInfrastructure->checkPassword($newPassword, $repeatPassword)) {
-            return false;
-        }
-
-        return $this->passwordInfrastructure->resetPassword($updateId, $newPassword);
+        $customer = $this->repository->getCustomerByPasswordUpdateId($updateId);
+        $this->passwordInfrastructure->validatePassword($customer, $newPassword, $repeatPassword);
+        return $this->repository->saveNewPasswordForCustomer($customer, $newPassword);
     }
 }

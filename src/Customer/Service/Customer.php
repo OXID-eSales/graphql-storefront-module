@@ -21,9 +21,9 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository as CustomerRepository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use TheCodingMachine\GraphQLite\Security\AuthorizationServiceInterface;
 
-final class Customer
+final class Customer implements CustomerInterface
 {
     /** @var Repository */
     private $repository;
@@ -37,7 +37,7 @@ final class Customer
     /** @var Legacy */
     private $legacyService;
 
-    /** @var Authorization */
+    /** @var AuthorizationServiceInterface */
     private $authorizationService;
 
     public function __construct(
@@ -45,7 +45,7 @@ final class Customer
         CustomerRepository $customerRepository,
         Authentication $authenticationService,
         Legacy $legacyService,
-        Authorization $authorizationService
+        AuthorizationServiceInterface $authorizationService
     ) {
         $this->repository = $repository;
         $this->customerRepository = $customerRepository;
