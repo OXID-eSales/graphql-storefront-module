@@ -91,7 +91,7 @@ final class Repository implements RepositoryInterface
     {
         $user = $this->oxNewFactory->getModel(EshopUserModel::class);
         $user = $user->loadUserByUpdateId($passwordUpdateId);
-        if (!$user->isLoaded()) {
+        if (!$user instanceof EshopUserModel || !$user->isLoaded()) {
             throw new CustomerNotFoundByUpdateId($passwordUpdateId);
         }
 

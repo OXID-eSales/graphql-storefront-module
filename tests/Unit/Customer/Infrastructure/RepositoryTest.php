@@ -58,13 +58,31 @@ class RepositoryTest extends TestCase
         $repository->getCustomerByPasswordUpdateId($passwordUpdateId);
     }
 
-    public function testCustomerByPasswordUpdateIdNotFound(): void
+    public function testCustomerByPasswordUpdateIdNotLoaded(): void
     {
         $passwordUpdateId = 'wrongId';
 
         $userMock = $this->createMock(User::class);
         $userMock->expects($this->once())->method('loadUserByUpdateId')->with($passwordUpdateId)->willReturn($userMock);
         $userMock->expects($this->once())->method('isLoaded')->willReturn(false);
+
+        $sharedRepository = $this->createMock(RepositoryInterface::class);
+        $oxNewFactory = $this->createMock(OxNewFactoryInterface::class);
+        $oxNewFactory->expects($this->once())->method('getModel')->with(User::class)->willReturn($userMock);
+
+        $this->expectException(CustomerNotFoundByUpdateId::class);
+        $this->expectExceptionMessage('No customer was found by update id: "wrongId".');
+
+        $repository = new Repository($sharedRepository, $oxNewFactory);
+        $repository->getCustomerByPasswordUpdateId($passwordUpdateId);
+    }
+
+    public function testCustomerByPasswordUpdateIdNotFound(): void
+    {
+        $passwordUpdateId = 'wrongId';
+
+        $userMock = $this->createMock(User::class);
+        $userMock->expects($this->once())->method('loadUserByUpdateId')->with($passwordUpdateId)->willReturn(null);
 
         $sharedRepository = $this->createMock(RepositoryInterface::class);
         $oxNewFactory = $this->createMock(OxNewFactoryInterface::class);
