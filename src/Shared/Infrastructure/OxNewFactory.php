@@ -9,14 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 
-use OxidEsales\Eshop\Core\Model\BaseModel;
-
 class OxNewFactory implements OxNewFactoryInterface
 {
     /**
      * @inheritDoc
      */
-    public function getModel(string $class): BaseModel
+    public function getModel(string $class): object
     {
         return oxNew($class);
     }

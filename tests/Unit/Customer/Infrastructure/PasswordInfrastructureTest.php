@@ -10,10 +10,13 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Customer\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Core\Email;
 use OxidEsales\Eshop\Core\Exception\StandardException;
 use OxidEsales\Eshop\Core\InputValidator;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerEmailNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -32,17 +35,17 @@ class PasswordInfrastructureTest extends TestCase
             ->with($customer, $newPassword, $newPasswordRepeated, true)
             ->willReturn(null);
 
-        $passwordInfrastructure = new Password($inputValidator);
+        $passwordInfrastructure = $this->getSut(inputValidator: $inputValidator);
         $passwordInfrastructure->validatePassword($customer, $newPassword, $newPasswordRepeated);
     }
 
     /**
      * @dataProvider exceptionsDataProvider
      */
-    public function testValidatePasswordException(string $message, string $password, string $passwordRepeated): void
+    public function testValidatePasswordException(string $exceptionMessage, string $password, string $passwordRepeated): void
     {
         $customer = $this->createStub(User::class);
-        $standardException = new StandardException($message);
+        $standardException = new StandardException($exceptionMessage);
 
         $inputValidator = $this->createMock(InputValidator::class);
         $inputValidator->expects($this->once())
@@ -51,34 +54,101 @@ class PasswordInfrastructureTest extends TestCase
             ->willReturn($standardException);
 
         $this->expectException(PasswordValidationException::class);
-        $this->expectExceptionMessage($message);
+        $this->expectExceptionMessage($exceptionMessage);
 
-        $passwordInfrastructure = new Password($inputValidator);
+        $passwordInfrastructure = $this->getSut(inputValidator: $inputValidator);
         $passwordInfrastructure->validatePassword($customer, $password, $passwordRepeated);
+    }
+
+    public function testSendPasswordForgotEmailSuccessful(): void
+    {
+        $email = 'test@email.com';
+
+        $emailService = $this->createMock(Email::class);
+        $emailService->expects($this->once())
+            ->method('sendForgotPwdEmail')
+            ->with($email)
+            ->willReturn(true);
+        $oxNewFactory = $this->getOxNewFactoryByClass(Email::class, $emailService);
+
+        $passwordInfrastructure = $this->getSut(oxNewFactory: $oxNewFactory);
+
+        $this->assertTrue($passwordInfrastructure->sendPasswordForgotEmail($email));
+    }
+
+    public function testSendPasswordForgotEmailCustomerNotFound(): void
+    {
+        $email = 'test@email.com';
+
+        $emailService = $this->createMock(Email::class);
+        $emailService->expects($this->once())
+            ->method('sendForgotPwdEmail')
+            ->with($email)
+            ->willReturn(false);
+        $oxNewFactory = $this->getOxNewFactoryByClass(Email::class, $emailService);
+
+        $passwordInfrastructure = $this->getSut(oxNewFactory: $oxNewFactory);
+
+        $this->expectException(CustomerEmailNotFound::class);
+        $this->expectExceptionMessage('Customer was not found for: test@email.com');
+        $this->assertTrue($passwordInfrastructure->sendPasswordForgotEmail($email));
+    }
+
+    public function testSendPasswordForgotEmailNotSend(): void
+    {
+        $email = 'test@email.com';
+
+        $emailService = $this->createMock(Email::class);
+        $emailService->expects($this->once())
+            ->method('sendForgotPwdEmail')
+            ->with($email)
+            ->willReturn(-1);
+        $oxNewFactory = $this->getOxNewFactoryByClass(Email::class, $emailService);
+
+        $passwordInfrastructure = $this->getSut(oxNewFactory: $oxNewFactory);
+
+        $this->assertFalse($passwordInfrastructure->sendPasswordForgotEmail($email));
     }
 
     public static function exceptionsDataProvider(): \Generator
     {
         yield [
-            'exceptionClass' => PasswordValidationException::class,
             'exceptionMessage' => 'Please enter a password.',
             'password' => '',
             'passwordRepeated' => ''
         ];
 
         yield [
-            'exceptionClass' => PasswordValidationException::class,
             'exceptionMessage' => 'Error: your password is too short.',
             'password' => 'abc',
             'passwordRepeated' => 'abc'
         ];
 
         yield [
-            'exceptionClass' => PasswordValidationException::class,
             'exceptionMessage' => 'Error: passwords don\'t match.',
             'password' => 'niceAndCoolPassword',
             'passwordRepeated' => 'niceAndCoolPasswort'
         ];
     }
 
+    private function getSut(
+        OxNewFactoryInterface $oxNewFactory = null,
+        InputValidator $inputValidator = null,
+    ): Password
+    {
+        return new Password(
+            oxNewFactory: $oxNewFactory ?? $this->createStub(OxNewFactoryInterface::class),
+            inputValidator: $inputValidator ?? $this->createStub(InputValidator::class)
+        );
+    }
+
+    private function getOxNewFactoryByClass(string $class, mixed $returnValue): OxNewFactoryInterface
+    {
+        $oxNewFactory = $this->createMock(OxNewFactoryInterface::class);
+        $oxNewFactory->expects($this->once())
+            ->method('getModel')
+            ->with($class)
+            ->willReturn($returnValue);
+        return $oxNewFactory;
+    }
 }

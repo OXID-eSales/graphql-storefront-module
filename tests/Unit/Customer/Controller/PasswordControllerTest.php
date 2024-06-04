@@ -38,7 +38,7 @@ class PasswordControllerTest extends TestCase
     public function testCustomerPasswordResetFailing(): void
     {
         $passwordService = $this->createMock(PasswordServiceInterface::class);
-        $passwordService->expects($this->once())->method('resetPasswordByUpdateId')->with(
+        $passwordService->expects($this->once())->method('resetPasswordByUpdateHash')->with(
             '1234',
             'newPassword',
             'anotherNewPassword'
@@ -49,6 +49,32 @@ class PasswordControllerTest extends TestCase
             '1234',
             'newPassword',
             'anotherNewPassword'
+        );
+    }
+
+    public function testCustomerPasswordForgotRequestSuccessful(): void
+    {
+        $passwordService = $this->createMock(PasswordServiceInterface::class);
+        $passwordService->expects($this->once())->method('sendPasswordForgotEmail')->with(
+            'test@email.com'
+        )->willReturn(true);
+
+        $passwordController = new Password($passwordService);
+        $passwordController->customerPasswordForgotRequest(
+            'test@email.com',
+        );
+    }
+
+    public function testCustomerPasswordForgotRequestFailing(): void
+    {
+        $passwordService = $this->createMock(PasswordServiceInterface::class);
+        $passwordService->expects($this->once())->method('sendPasswordForgotEmail')->with(
+            'test@email.com'
+        )->willReturn(false);
+
+        $passwordController = new Password($passwordService);
+        $passwordController->customerPasswordForgotRequest(
+            'test@email.com',
         );
     }
 }

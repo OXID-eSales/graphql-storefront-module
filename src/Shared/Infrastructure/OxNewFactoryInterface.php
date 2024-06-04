@@ -9,15 +9,15 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 
-use OxidEsales\Eshop\Core\Model\BaseModel;
-
 interface OxNewFactoryInterface
 {
     /**
-     * @param class-string<BaseModel> $class
+     * @template T
      *
-     * @return BaseModel
+     * @param class-string<T> $class
+     *
+     * @return T
      */
-    public function getModel(string $class): BaseModel;
+    public function getModel(string $class): object;
 
 }

@@ -9,12 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Customer\Exception;
 
-use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateId;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateId
+ * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash
  * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException
  */
 class ExceptionsTest extends TestCase

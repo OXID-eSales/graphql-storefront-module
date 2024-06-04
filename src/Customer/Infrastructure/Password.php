@@ -12,19 +12,30 @@ namespace OxidEsales\GraphQL\Storefront\Customer\Infrastructure;
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Core\Email;
 use OxidEsales\Eshop\Core\InputValidator;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerEmailNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
 
 final class Password implements PasswordInterface
 {
     public function __construct(
+        private readonly OxNewFactoryInterface $oxNewFactory,
         private readonly InputValidator $inputValidator
     ) {
     }
 
-    public function sendPasswordForgotEmail(string $email): bool|int
+    public function sendPasswordForgotEmail(string $email): bool
     {
-        $emailService = oxNew(Email::class);
-        return $emailService->sendForgotPwdEmail($email);
+        $emailService = $this->oxNewFactory->getModel(Email::class);
+        $wasSend = $emailService->sendForgotPwdEmail($email);
+
+        if ($wasSend == false) {
+            throw new CustomerEmailNotFound($email);
+        } elseif ($wasSend === -1) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
