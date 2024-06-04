@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Customer;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
 /**
- * @group customer_test
+ * @group customer
  * @group oe_graphql_storefront
  */
 final class PasswordAuthorizedCustomerCest extends CustomerBaseCest

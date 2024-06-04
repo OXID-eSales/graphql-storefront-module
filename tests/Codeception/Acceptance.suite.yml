@@ -29,6 +29,13 @@ modules:
             depends:
                 - \OxidEsales\Codeception\Module\Database
                 - Db
+        - \OxidEsales\Codeception\Module\Email:
+              depends:
+                  - Mailpit
+              deleteEmailsAfterTest: false
+        - Mailpit:
+              url: '%MAIL_HOST%'
+              port: '%MAIL_WEB_PORT%'
         - REST:
             url: '%SHOP_URL%'
             depends: PhpBrowser
