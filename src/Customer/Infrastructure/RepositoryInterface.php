@@ -5,12 +5,12 @@ namespace OxidEsales\GraphQL\Storefront\Customer\Infrastructure;
 use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
-use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateId;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash;
 
 interface RepositoryInterface
 {
     /**
-     * @throws CustomerNotFoundByUpdateId
+     * @throws CustomerNotFoundByUpdateHash
      */
     public function createUser(EshopUserModel $user): CustomerDataType;
 
@@ -23,5 +23,5 @@ interface RepositoryInterface
 
     public function saveNewPasswordForCustomer(EshopUserModel $customer, string $newPassword): bool;
 
-    public function getCustomerByPasswordUpdateId(string $passwordUpdateId): EshopUserModel;
+    public function getCustomerByPasswordUpdateHash(string $passwordUpdateId): EshopUserModel;
 }

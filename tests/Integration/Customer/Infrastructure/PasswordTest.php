@@ -40,12 +40,13 @@ final class PasswordTest extends BaseTestCase
     #[Test]
     public function testGetCustomerByPasswordUpdateId(): void
     {
-        $customer = $this->createTestUserWithUpdateKey('coolUpdateKey_123');
+        $customer = $this->createTestUserWithUpdateKey('blabla');
 
         /** @var Repository $customerRepository */
         $customerRepository = $this->get(Repository::class);
-        $customerByUpdateId = $customerRepository->getCustomerByPasswordUpdateId('coolUpdateKey_123');
-        $this->assertSame($customer, $customerByUpdateId);
+        $updateHash = md5($customer->getId().$customer->getShopId().'blabla');
+        $customerByUpdateId = $customerRepository->getCustomerByPasswordUpdateHash($updateHash);
+        $this->assertEquals($customer->getId(), $customerByUpdateId->getId());
     }
 
     private function createTestUserWithUpdateKey(string $passwordUpdateKey): EshopModelUser
@@ -56,6 +57,7 @@ final class PasswordTest extends BaseTestCase
             'oxusername' => '',
             'oxpassword' => '',
             'oxregister' => '',
+            'oxupdateexp' => time()+60,
             'oxupdatekey' => $passwordUpdateKey
         ]);
         $user->save();

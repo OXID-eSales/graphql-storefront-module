@@ -18,11 +18,10 @@ use PHPUnit\Framework\TestCase;
  */
 class PasswordControllerTest extends TestCase
 {
-
-    public function testCustomerPasswordResetSuccessfull(): void
+    public function testCustomerPasswordResetSuccessful(): void
     {
         $passwordService = $this->createMock(PasswordServiceInterface::class);
-        $passwordService->expects($this->once())->method('resetPasswordByUpdateId')->with(
+        $passwordService->expects($this->once())->method('resetPasswordByUpdateHash')->with(
             '1234',
             'newPassword',
             'newPassword'

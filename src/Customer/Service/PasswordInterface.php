@@ -8,5 +8,5 @@ interface PasswordInterface
 
     public function sendPasswordForgotEmail(string $email): bool;
 
-    public function resetPasswordByUpdateId(string $updateId, string $newPassword, string $repeatPassword): bool;
+    public function resetPasswordByUpdateHash(string $updateHash, string $newPassword, string $repeatPassword): bool;
 }

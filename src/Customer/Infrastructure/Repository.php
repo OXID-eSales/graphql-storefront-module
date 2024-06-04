@@ -13,7 +13,7 @@ use OxidEsales\Eshop\Application\Model\User as EshopUserModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
-use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateId;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface as SharedRepositoryInterface;
@@ -85,14 +85,14 @@ final class Repository implements RepositoryInterface
     }
 
     /**
-     * @throws CustomerNotFoundByUpdateId
+     * @throws CustomerNotFoundByUpdateHash
      */
-    public function getCustomerByPasswordUpdateId(string $passwordUpdateId): EshopUserModel
+    public function getCustomerByPasswordUpdateHash(string $passwordUpdateId): EshopUserModel
     {
         $user = $this->oxNewFactory->getModel(EshopUserModel::class);
-        $user = $user->loadUserByUpdateId($passwordUpdateId);
-        if (!$user instanceof EshopUserModel || !$user->isLoaded()) {
-            throw new CustomerNotFoundByUpdateId($passwordUpdateId);
+        $userWasLoaded = $user->loadUserByUpdateId($passwordUpdateId);
+        if (!$userWasLoaded) {
+            throw new CustomerNotFoundByUpdateHash($passwordUpdateId);
         }
 
         return $user;

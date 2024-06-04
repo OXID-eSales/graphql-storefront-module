@@ -22,8 +22,8 @@ class ExceptionsTest extends TestCase
 
     public function testCustomerNotFoundByUpdateIdException(): void
     {
-        $exception = new CustomerNotFoundByUpdateId('1234');
-        $this->assertSame('No customer was found by update id: "1234".', $exception->getMessage());
+        $exception = new CustomerNotFoundByUpdateHash('1234');
+        $this->assertSame('No customer was found by update hash: "1234".', $exception->getMessage());
     }
 
     public function testGetCustomerByPasswordUpdateId(): void

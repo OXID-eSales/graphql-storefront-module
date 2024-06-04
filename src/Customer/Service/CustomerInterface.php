@@ -6,13 +6,13 @@ use DateTimeInterface;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotDeletable;
-use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateId;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash;
 
 interface CustomerInterface
 {
     /**
      * @throws InvalidLogin
-     * @throws CustomerNotFoundByUpdateId
+     * @throws CustomerNotFoundByUpdateHash
      */
     public function customer(string $id): CustomerDataType;
 

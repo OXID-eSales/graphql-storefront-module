@@ -51,9 +51,9 @@ final class Password implements PasswordInterface
         return $isSuccess;
     }
 
-    public function resetPasswordByUpdateId(string $updateId, string $newPassword, string $repeatPassword): bool
+    public function resetPasswordByUpdateHash(string $updateHash, string $newPassword, string $repeatPassword): bool
     {
-        $customer = $this->repository->getCustomerByPasswordUpdateId($updateId);
+        $customer = $this->repository->getCustomerByPasswordUpdateHash($updateHash);
         $this->passwordInfrastructure->validatePassword($customer, $newPassword, $repeatPassword);
         return $this->repository->saveNewPasswordForCustomer($customer, $newPassword);
     }

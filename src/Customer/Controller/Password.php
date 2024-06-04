@@ -43,8 +43,8 @@ final class Password
     }
 
     #[Mutation]
-    public function customerPasswordReset(string $updateId, string $newPassword, string $repeatPassword): bool
+    public function customerPasswordReset(string $updateHash, string $newPassword, string $repeatPassword): bool
     {
-        return $this->passwordService->resetPasswordByUpdateId($updateId, $newPassword, $repeatPassword);
+        return $this->passwordService->resetPasswordByUpdateHash($updateHash, $newPassword, $repeatPassword);
     }
 }
