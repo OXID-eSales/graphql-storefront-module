@@ -40,11 +40,12 @@ final class PasswordTest extends BaseTestCase
     #[Test]
     public function testGetCustomerByPasswordUpdateId(): void
     {
-        $customer = $this->createTestUserWithUpdateKey('blabla');
+        $updateId = 'foobar';
+        $customer = $this->createTestUserWithUpdateKey($updateId);
 
         /** @var Repository $customerRepository */
         $customerRepository = $this->get(Repository::class);
-        $updateHash = md5($customer->getId().$customer->getShopId().'blabla');
+        $updateHash = md5($customer->getId().$customer->getShopId().$updateId);
         $customerByUpdateId = $customerRepository->getCustomerByPasswordUpdateHash($updateHash);
         $this->assertEquals($customer->getId(), $customerByUpdateId->getId());
     }

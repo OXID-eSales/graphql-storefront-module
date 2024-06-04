@@ -87,12 +87,12 @@ final class Repository implements RepositoryInterface
     /**
      * @throws CustomerNotFoundByUpdateHash
      */
-    public function getCustomerByPasswordUpdateHash(string $passwordUpdateId): EshopUserModel
+    public function getCustomerByPasswordUpdateHash(string $passwordUpdateHash): EshopUserModel
     {
         $user = $this->oxNewFactory->getModel(EshopUserModel::class);
-        $userWasLoaded = $user->loadUserByUpdateId($passwordUpdateId);
+        $userWasLoaded = $user->loadUserByUpdateId($passwordUpdateHash);
         if (!$userWasLoaded) {
-            throw new CustomerNotFoundByUpdateHash($passwordUpdateId);
+            throw new CustomerNotFoundByUpdateHash($passwordUpdateHash);
         }
 
         return $user;

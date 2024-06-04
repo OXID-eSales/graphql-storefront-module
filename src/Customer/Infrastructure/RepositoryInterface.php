@@ -23,5 +23,5 @@ interface RepositoryInterface
 
     public function saveNewPasswordForCustomer(EshopUserModel $customer, string $newPassword): bool;
 
-    public function getCustomerByPasswordUpdateHash(string $passwordUpdateId): EshopUserModel;
+    public function getCustomerByPasswordUpdateHash(string $passwordUpdateHash): EshopUserModel;
 }
