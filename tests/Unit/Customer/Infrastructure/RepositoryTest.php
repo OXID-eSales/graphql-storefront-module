@@ -21,7 +21,6 @@ use PHPUnit\Framework\TestCase;
  */
 class RepositoryTest extends TestCase
 {
-
     public function testSaveNewPasswordForCustomer(): void
     {
         $newPassword = 'password';

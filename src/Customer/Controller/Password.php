@@ -9,7 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Customer\Controller;
 
-use OxidEsales\GraphQL\Storefront\Customer\Service\Password as PasswordService;
 use OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface;
 use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
@@ -17,7 +16,7 @@ use TheCodingMachine\GraphQLite\Annotations\Mutation;
 
 final class Password
 {
-    /** @var PasswordService */
+    /** @var PasswordInterface */
     private $passwordService;
 
     public function __construct(

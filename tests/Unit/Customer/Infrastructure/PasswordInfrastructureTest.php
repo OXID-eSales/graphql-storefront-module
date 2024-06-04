@@ -42,7 +42,11 @@ class PasswordInfrastructureTest extends TestCase
     /**
      * @dataProvider exceptionsDataProvider
      */
-    public function testValidatePasswordException(string $exceptionMessage, string $password, string $passwordRepeated): void
+    public function testValidatePasswordException(
+        string $exceptionMessage,
+        string $password,
+        string $passwordRepeated
+    ): void
     {
         $customer = $this->createStub(User::class);
         $standardException = new StandardException($exceptionMessage);
@@ -134,8 +138,7 @@ class PasswordInfrastructureTest extends TestCase
     private function getSut(
         OxNewFactoryInterface $oxNewFactory = null,
         InputValidator $inputValidator = null,
-    ): Password
-    {
+    ): Password {
         return new Password(
             oxNewFactory: $oxNewFactory ?? $this->createStub(OxNewFactoryInterface::class),
             inputValidator: $inputValidator ?? $this->createStub(InputValidator::class)

@@ -23,5 +23,4 @@ final class CustomerNotFoundByUpdateHash extends Error
     {
         return ErrorCategories::REQUESTERROR;
     }
-
 }

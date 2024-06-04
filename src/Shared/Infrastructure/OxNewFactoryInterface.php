@@ -12,12 +12,11 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Infrastructure;
 interface OxNewFactoryInterface
 {
     /**
-     * @template T
+     * @template T of object
      *
      * @param class-string<T> $class
      *
      * @return T
      */
     public function getModel(string $class): object;
-
 }

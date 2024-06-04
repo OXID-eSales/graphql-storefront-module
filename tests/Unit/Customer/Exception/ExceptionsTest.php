@@ -19,7 +19,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ExceptionsTest extends TestCase
 {
-
     public function testCustomerNotFoundByUpdateIdException(): void
     {
         $exception = new CustomerNotFoundByUpdateHash('1234');

@@ -128,13 +128,12 @@ class PasswordServiceTest extends TestCase
         CustomerInterface $customerService = null,
         AuthenticationServiceInterface $authenticationService = null,
         PasswordInfrastructureInterface $passwordInfrastructure = null
-    ): PasswordService
-    {
+    ): PasswordService {
         return new PasswordService(
-           repository: $customerRepository ?? $this->createStub(CustomerRepositoryInterface::class),
-           customerService: $customerService ?? $this->createStub(CustomerInterface::class),
-           authenticationService: $authenticationService ?? $this->createStub(AuthenticationServiceInterface::class),
-           passwordInfrastructure: $passwordInfrastructure ?? $this->createStub(PasswordInfrastructureInterface::class)
+            repository: $customerRepository ?? $this->createStub(CustomerRepositoryInterface::class),
+            customerService: $customerService ?? $this->createStub(CustomerInterface::class),
+            authenticationService: $authenticationService ?? $this->createStub(AuthenticationServiceInterface::class),
+            passwordInfrastructure: $passwordInfrastructure ?? $this->createStub(PasswordInfrastructureInterface::class)
         );
     }
 }

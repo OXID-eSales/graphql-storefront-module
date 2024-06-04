@@ -44,7 +44,11 @@ final class Password implements PasswordInterface
     public function validatePassword(User $customer, string $newPassword, string $repeatPassword): void
     {
         $exception = $this->inputValidator->checkPassword(
-            $customer, $newPassword, $repeatPassword, true);
+            $customer,
+            $newPassword,
+            $repeatPassword,
+            true
+        );
 
         if ($exception) {
             throw new PasswordValidationException($exception->getMessage());

@@ -15,13 +15,12 @@ use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface as SharedRepositoryInterface;
 
 final class Repository implements RepositoryInterface
 {
-    /** @var SharedRepository */
-    private $repository;
+    private SharedRepositoryInterface $repository;
+    private OxNewFactoryInterface $oxNewFactory;
 
     public function __construct(
         SharedRepositoryInterface $repository,

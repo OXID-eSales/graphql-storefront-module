@@ -22,7 +22,10 @@ final class PasswordAuthorizedCustomerCest extends CustomerBaseCest
         $I->login($this->getAdminUsername(), $this->getAdminPassword());
 
         $result = $this->runCustomerPasswordReset($I);
-        $I->assertSame('No customer was found by update hash: "testUpdateHash".', $result['errors'][0]['message']);
+        $I->assertSame(
+            'No customer was found by update hash: "testUpdateHash".',
+            $result['errors'][0]['message']
+        );
     }
 
     public function testCustomerPasswordResetAuthorizedIfAgent(AcceptanceTester $I): void
@@ -30,14 +33,21 @@ final class PasswordAuthorizedCustomerCest extends CustomerBaseCest
         $I->login($this->getAgentUsername(), $this->getAgentPassword());
 
         $result = $this->runCustomerPasswordReset($I);
-        $I->assertSame('No customer was found by update hash: "testUpdateHash".', $result['errors'][0]['message']);
+        $I->assertSame(
+            'No customer was found by update hash: "testUpdateHash".',
+            $result['errors'][0]['message']
+        );
     }
 
     private function runCustomerPasswordReset(AcceptanceTester $I): array
     {
         $I->sendGQLQuery(
             'mutation q($updateHash: String!, $newPassword: String!, $repeatPassword: String!){
-                customerPasswordReset(updateHash: $updateHash, newPassword: $newPassword, repeatPassword: $repeatPassword)
+                customerPasswordReset(
+                    updateHash: $updateHash,
+                    newPassword: $newPassword,
+                    repeatPassword: $repeatPassword
+                )
             }',
             [
                 'updateHash' => 'testUpdateHash',
