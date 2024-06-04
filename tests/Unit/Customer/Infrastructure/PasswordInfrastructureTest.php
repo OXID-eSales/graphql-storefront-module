@@ -46,8 +46,7 @@ class PasswordInfrastructureTest extends TestCase
         string $exceptionMessage,
         string $password,
         string $passwordRepeated
-    ): void
-    {
+    ): void {
         $customer = $this->createStub(User::class);
         $standardException = new StandardException($exceptionMessage);
 

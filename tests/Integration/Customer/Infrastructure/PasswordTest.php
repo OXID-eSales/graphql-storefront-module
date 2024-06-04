@@ -45,7 +45,7 @@ final class PasswordTest extends BaseTestCase
 
         /** @var Repository $customerRepository */
         $customerRepository = $this->get(Repository::class);
-        $updateHash = md5($customer->getId().$customer->getShopId().$updateId);
+        $updateHash = md5($customer->getId() . $customer->getShopId() . $updateId);
         $customerByUpdateId = $customerRepository->getCustomerByPasswordUpdateHash($updateHash);
         $this->assertEquals($customer->getId(), $customerByUpdateId->getId());
     }
@@ -58,7 +58,7 @@ final class PasswordTest extends BaseTestCase
             'oxusername' => '',
             'oxpassword' => '',
             'oxregister' => '',
-            'oxupdateexp' => time()+60,
+            'oxupdateexp' => time() + 60,
             'oxupdatekey' => $passwordUpdateKey
         ]);
         $user->save();

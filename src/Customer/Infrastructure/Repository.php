@@ -89,8 +89,8 @@ final class Repository implements RepositoryInterface
     public function getCustomerByPasswordUpdateHash(string $passwordUpdateHash): EshopUserModel
     {
         $user = $this->oxNewFactory->getModel(EshopUserModel::class);
-        $userWasLoaded = $user->loadUserByUpdateId($passwordUpdateHash);
-        if (!$userWasLoaded) {
+        $user->loadUserByUpdateId($passwordUpdateHash);
+        if (!$user->isLoaded()) {
             throw new CustomerNotFoundByUpdateHash($passwordUpdateHash);
         }
 

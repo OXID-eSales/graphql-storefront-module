@@ -23,5 +23,4 @@ final class PasswordValidationException extends Error
     {
         return ErrorCategories::REQUESTERROR;
     }
-
 }
