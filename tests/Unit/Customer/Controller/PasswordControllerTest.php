@@ -18,63 +18,61 @@ use PHPUnit\Framework\TestCase;
  */
 class PasswordControllerTest extends TestCase
 {
-    public function testCustomerPasswordResetSuccessful(): void
+    public function testCustomerPasswordChangeMethodReturnsServiceResult(): void
     {
-        $passwordService = $this->createMock(PasswordServiceInterface::class);
-        $passwordService->expects($this->once())->method('resetPasswordByUpdateHash')->with(
-            '1234',
-            'newPassword',
-            'newPassword'
-        )->willReturn(true);
+        $expectedReturn = (bool)random_int(0, 1);
+        $password1 = uniqid();
+        $password2 = uniqid();
 
-        $passwordController = new Password($passwordService);
-        $passwordController->customerPasswordReset(
-            '1234',
-            'newPassword',
-            'newPassword'
-        );
+        $serviceSpy = $this->createMock(PasswordServiceInterface::class);
+        $serviceSpy->expects($this->once())
+            ->method('change')
+            ->with(
+                $password1,
+                $password2
+            )
+            ->willReturn($expectedReturn);
+
+        $passwordController = new Password(passwordService: $serviceSpy);
+        $this->assertSame($expectedReturn, $passwordController->customerPasswordChange($password1, $password2));
     }
 
-    public function testCustomerPasswordResetFailing(): void
+    public function testCustomerPasswordForgotRequestMethodReturnsServiceResult(): void
     {
-        $passwordService = $this->createMock(PasswordServiceInterface::class);
-        $passwordService->expects($this->once())->method('resetPasswordByUpdateHash')->with(
-            '1234',
-            'newPassword',
-            'anotherNewPassword'
-        )->willReturn(false);
+        $expectedReturn = (bool)random_int(0, 1);
+        $exampleEmail = uniqid();
 
-        $passwordController = new Password($passwordService);
-        $passwordController->customerPasswordReset(
-            '1234',
-            'newPassword',
-            'anotherNewPassword'
-        );
+        $serviceSpy = $this->createMock(PasswordServiceInterface::class);
+        $serviceSpy->expects($this->once())
+            ->method('sendPasswordForgotEmail')
+            ->with($exampleEmail)
+            ->willReturn($expectedReturn);
+
+        $passwordController = new Password(passwordService: $serviceSpy);
+        $this->assertSame($expectedReturn, $passwordController->customerPasswordForgotRequest($exampleEmail));
     }
 
-    public function testCustomerPasswordForgotRequestSuccessful(): void
+    public function testCustomerPasswordResetMethodReturnsServiceResult(): void
     {
-        $passwordService = $this->createMock(PasswordServiceInterface::class);
-        $passwordService->expects($this->once())->method('sendPasswordForgotEmail')->with(
-            'test@email.com'
-        )->willReturn(true);
+        $expectedReturn = (bool)random_int(0, 1);
+        $exampleHash = uniqid();
+        $password1 = uniqid();
+        $password2 = uniqid();
 
-        $passwordController = new Password($passwordService);
-        $passwordController->customerPasswordForgotRequest(
-            'test@email.com',
-        );
-    }
+        $serviceSpy = $this->createMock(PasswordServiceInterface::class);
+        $serviceSpy->expects($this->once())
+            ->method('resetPasswordByUpdateHash')
+            ->with(
+                $exampleHash,
+                $password1,
+                $password2
+            )
+            ->willReturn($expectedReturn);
 
-    public function testCustomerPasswordForgotRequestFailing(): void
-    {
-        $passwordService = $this->createMock(PasswordServiceInterface::class);
-        $passwordService->expects($this->once())->method('sendPasswordForgotEmail')->with(
-            'test@email.com'
-        )->willReturn(false);
-
-        $passwordController = new Password($passwordService);
-        $passwordController->customerPasswordForgotRequest(
-            'test@email.com',
+        $passwordController = new Password(passwordService: $serviceSpy);
+        $this->assertSame(
+            $expectedReturn,
+            $passwordController->customerPasswordReset($exampleHash, $password1, $password2)
         );
     }
 }
