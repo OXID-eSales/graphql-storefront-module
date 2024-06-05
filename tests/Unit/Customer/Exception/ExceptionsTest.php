@@ -9,28 +9,58 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Customer\Exception;
 
+use GraphQL\Error\Error;
+use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash
  * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException
+ * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch
  */
 class ExceptionsTest extends TestCase
 {
-    public function testCustomerNotFoundByUpdateIdException(): void
+    public function testCustomerNotFoundByUpdateHashException(): void
     {
-        $exception = new CustomerNotFoundByUpdateHash('1234');
-        $this->assertSame('No customer was found by update hash: "1234".', $exception->getMessage());
+        $passwordUpdateId = uniqid();
+        $exception = new CustomerNotFoundByUpdateHash($passwordUpdateId);
+        $this->assertSame(
+            'No customer was found by update hash: "' . $passwordUpdateId . '".',
+            $exception->getMessage()
+        );
     }
 
     public function testGetCustomerByPasswordUpdateId(): void
     {
-        $exception = new PasswordValidationException('Password is not long enough.');
-        $this->assertSame('Password is not long enough.', $exception->getMessage());
+        $expectedMessage = uniqid();
+        $exception = new PasswordValidationException($expectedMessage);
+        $this->assertSame($expectedMessage, $exception->getMessage());
+    }
 
-        $exception = new PasswordValidationException('Password does not match with th repeated password.');
-        $this->assertSame('Password does not match with th repeated password.', $exception->getMessage());
+    /** @dataProvider exceptionTypesDataProvider */
+    public function testExceptionsHaveCorrectTypes(Error $exception, string $expectedCategory): void
+    {
+        $this->assertSame($expectedCategory, $exception->getCategory());
+    }
+
+    public static function exceptionTypesDataProvider(): \Generator
+    {
+        yield [
+            'exception' => new CustomerNotFoundByUpdateHash(uniqid()),
+            'expectedCategory' => ErrorCategories::REQUESTERROR
+        ];
+
+        yield [
+            'exception' => new PasswordValidationException(uniqid()),
+            'expectedCategory' => ErrorCategories::REQUESTERROR
+        ];
+
+        yield [
+            'exception' => new PasswordMismatch(uniqid()),
+            'expectedCategory' => ErrorCategories::REQUESTERROR
+        ];
     }
 }
