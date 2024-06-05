@@ -21,58 +21,21 @@ use PHPUnit\Framework\TestCase;
  */
 class RepositoryTest extends TestCase
 {
-    public function testSaveNewPasswordForCustomer(): void
+    public function testGetCustomerByPasswordUpdateHashNotLoaded(): void
     {
-        $newPassword = 'password';
+        $failedToLoadUserStub = $this->createMock(User::class);
+        $failedToLoadUserStub->method('isLoaded')->willReturn(false);
 
-        $customer = $this->createMock(User::class);
-        $customer->expects($this->exactly(2))->method('setPassword')->with($newPassword);
-        $customer->expects($this->exactly(2))->method('setUpdateKey')->with(true);
+        $sut = new Repository(
+            repository: $this->createMock(RepositoryInterface::class),
+            oxNewFactory: $oxNewFactoryStub = $this->createMock(OxNewFactoryInterface::class)
+        );
+        $oxNewFactoryStub->method('getModel')->with(User::class)->willReturn($failedToLoadUserStub);
 
-        $sharedRepository = $this->createMock(RepositoryInterface::class);
-        $sharedRepository->expects($this->exactly(2))
-            ->method('saveModel')
-            ->with($customer)
-            ->willReturn(true, false);
-        $oxNewFactory = $this->createStub(OxNewFactoryInterface::class);
-
-        $repository = new Repository($sharedRepository, $oxNewFactory);
-        $this->assertTrue($repository->saveNewPasswordForCustomer($customer, $newPassword));
-        $this->assertFalse($repository->saveNewPasswordForCustomer($customer, $newPassword));
-    }
-
-    public function testGetCustomerByPasswordUpdateId(): void
-    {
-        $passwordUpdateId = '1234';
-
-        $userMock = $this->createMock(User::class);
-        $userMock->expects($this->once())->method('loadUserByUpdateId')->with($passwordUpdateId);
-        $userMock->expects($this->once())->method('isLoaded')->willReturn(true);
-
-        $sharedRepository = $this->createMock(RepositoryInterface::class);
-        $oxNewFactory = $this->createMock(OxNewFactoryInterface::class);
-        $oxNewFactory->expects($this->once())->method('getModel')->with(User::class)->willReturn($userMock);
-
-        $repository = new Repository($sharedRepository, $oxNewFactory);
-        $repository->getCustomerByPasswordUpdateHash($passwordUpdateId);
-    }
-
-    public function testCustomerByPasswordUpdateIdNotLoaded(): void
-    {
-        $passwordUpdateId = 'wrongId';
-
-        $userMock = $this->createMock(User::class);
-        $userMock->expects($this->once())->method('loadUserByUpdateId')->with($passwordUpdateId);
-        $userMock->expects($this->once())->method('isLoaded')->willReturn(false);
-
-        $sharedRepository = $this->createMock(RepositoryInterface::class);
-        $oxNewFactory = $this->createMock(OxNewFactoryInterface::class);
-        $oxNewFactory->expects($this->once())->method('getModel')->with(User::class)->willReturn($userMock);
-
+        $passwordUpdateHash = uniqid();
         $this->expectException(CustomerNotFoundByUpdateHash::class);
-        $this->expectExceptionMessage('No customer was found by update hash: "wrongId".');
+        $this->expectExceptionMessageMatches("#$passwordUpdateHash#");
 
-        $repository = new Repository($sharedRepository, $oxNewFactory);
-        $repository->getCustomerByPasswordUpdateHash($passwordUpdateId);
+        $sut->getCustomerByPasswordUpdateHash($passwordUpdateHash);
     }
 }

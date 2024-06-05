@@ -18,16 +18,16 @@ use PHPUnit\Framework\Attributes\Test;
 /**
  * @covers \OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository
  */
-final class PasswordTest extends BaseTestCase
+final class RepositoryTest extends BaseTestCase
 {
     #[Test]
     public function testChangePassword(): void
     {
         $customer = $this->createTestUserWithUpdateKey('coolUpdateKey_123');
 
-        /** @var Repository $customerRepository */
-        $customerRepository = $this->get(Repository::class);
-        $customerRepository->saveNewPasswordForCustomer($customer, 'newPassword');
+        /** @var Repository $sut */
+        $sut = $this->get(Repository::class);
+        $sut->saveNewPasswordForCustomer($customer, 'newPassword');
 
         $customerAfterSave = oxNew(User::class);
         $customerAfterSave->load($customer->getId());
@@ -38,15 +38,16 @@ final class PasswordTest extends BaseTestCase
     }
 
     #[Test]
-    public function testGetCustomerByPasswordUpdateId(): void
+    public function testGetCustomerByPasswordUpdateHashReturnsUser(): void
     {
         $updateId = 'foobar';
         $customer = $this->createTestUserWithUpdateKey($updateId);
 
-        /** @var Repository $customerRepository */
-        $customerRepository = $this->get(Repository::class);
+        /** @var Repository $sut */
+        $sut = $this->get(Repository::class);
         $updateHash = md5($customer->getId() . $customer->getShopId() . $updateId);
-        $customerByUpdateId = $customerRepository->getCustomerByPasswordUpdateHash($updateHash);
+        $customerByUpdateId = $sut->getCustomerByPasswordUpdateHash($updateHash);
+
         $this->assertEquals($customer->getId(), $customerByUpdateId->getId());
     }
 
