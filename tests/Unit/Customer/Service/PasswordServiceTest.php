@@ -23,104 +23,72 @@ use TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface;
  */
 class PasswordServiceTest extends TestCase
 {
-    public function testResetPasswordByUpdateIdSuccessful(): void
+    public function testResetPasswordByUpdateHashSuccessful(): void
     {
-        $customer = $this->createStub(User::class);
-        $password = 'password';
-        $passwordRepeated = 'password';
+        $customerStub = $this->createStub(User::class);
+        $password = uniqid();
+        $passwordRepeated = uniqid();
 
-        $passwordInfrastructure = $this->createMock(PasswordInfrastructureInterface::class);
-        $passwordInfrastructure->expects($this->once())
+        $passwordInfrastructureSpy = $this->createMock(PasswordInfrastructureInterface::class);
+        $passwordInfrastructureSpy->expects($this->once())
             ->method('validatePassword')
             ->with(
-                $customer,
+                $customerStub,
                 $password,
                 $passwordRepeated
             );
-        $customerRepository = $this->createMock(CustomerRepositoryInterface::class);
-        $customerRepository->expects($this->once())
-            ->method('getCustomerByPasswordUpdateHash')
-            ->with('1234')
-            ->willReturn($customer);
-        $customerRepository->expects($this->once())
-            ->method('saveNewPasswordForCustomer')
-            ->with($customer, $password)
-            ->willReturn(true);
 
-        $passwordService = $this->getSut(
-            customerRepository: $customerRepository,
-            passwordInfrastructure: $passwordInfrastructure
+        $expectedSaveResult = (bool)random_int(0, 1);
+        $exampleHash = uniqid();
+        $customerRepositoryMock = $this->createMock(CustomerRepositoryInterface::class);
+        $customerRepositoryMock->method('getCustomerByPasswordUpdateHash')
+            ->with($exampleHash)
+            ->willReturn($customerStub);
+        $customerRepositoryMock->method('saveNewPasswordForCustomer')
+            ->with($customerStub, $password)
+            ->willReturn($expectedSaveResult);
+
+        $sut = $this->getSut(
+            customerRepository: $customerRepositoryMock,
+            passwordInfrastructure: $passwordInfrastructureSpy
         );
 
-        $passwordService->resetPasswordByUpdateHash('1234', $password, $passwordRepeated);
-    }
-
-    public function testResetPasswordByUpdateIdFailing(): void
-    {
-        $customer = $this->createStub(User::class);
-        $password = 'password';
-        $passwordRepeated = 'password';
-
-        $passwordInfrastructure = $this->createMock(PasswordInfrastructureInterface::class);
-        $passwordInfrastructure->expects($this->once())
-            ->method('validatePassword')
-            ->with(
-                $customer,
-                $password,
-                $passwordRepeated
-            );
-        $customerRepository = $this->createMock(CustomerRepositoryInterface::class);
-        $customerRepository->expects($this->once())
-            ->method('getCustomerByPasswordUpdateHash')
-            ->with('1234')
-            ->willReturn($customer);
-        $customerRepository->expects($this->once())
-            ->method('saveNewPasswordForCustomer')
-            ->with($customer, $password)
-            ->willReturn(false);
-
-        $passwordService = $this->getSut(
-            customerRepository: $customerRepository,
-            passwordInfrastructure: $passwordInfrastructure
+        $this->assertSame(
+            $expectedSaveResult,
+            $sut->resetPasswordByUpdateHash($exampleHash, $password, $passwordRepeated)
         );
-
-        $passwordService->resetPasswordByUpdateHash('1234', $password, $passwordRepeated);
     }
-
 
     public function testSendPasswordForgotEmailSuccessfull(): void
     {
-        $email = 'test@email.com';
+        $email = uniqid();
 
-        $passwordInfrastructure = $this->createMock(PasswordInfrastructureInterface::class);
-        $passwordInfrastructure->expects($this->once())
-            ->method('sendPasswordForgotEmail')
+        $passwordInfrastructureStub = $this->createMock(PasswordInfrastructureInterface::class);
+        $passwordInfrastructureStub->method('sendPasswordForgotEmail')
             ->with($email)
             ->willReturn(true);
 
-        $passwordService = $this->getSut(
-            passwordInfrastructure: $passwordInfrastructure
+        $sut = $this->getSut(
+            passwordInfrastructure: $passwordInfrastructureStub
         );
-        $this->assertTrue($passwordService->sendPasswordForgotEmail($email));
+        $this->assertTrue($sut->sendPasswordForgotEmail($email));
     }
 
     public function testSendPasswordForgotEmailNoCustomerFound(): void
     {
-        $email = 'test@email.com';
+        $email = uniqid();
 
-        $passwordInfrastructure = $this->createMock(PasswordInfrastructureInterface::class);
-        $passwordInfrastructure->expects($this->once())
-            ->method('sendPasswordForgotEmail')
-            ->with($email)
-            ->willReturn(false);
+        $passwordInfrastructureStub = $this->createMock(PasswordInfrastructureInterface::class);
+        $passwordInfrastructureStub->method('sendPasswordForgotEmail')->willReturn(false);
 
-        $passwordService = $this->getSut(
-            passwordInfrastructure: $passwordInfrastructure
+        $sut = $this->getSut(
+            passwordInfrastructure: $passwordInfrastructureStub
         );
 
         $this->expectException(InvalidEmail::class);
-        $this->expectExceptionMessage("This e-mail address 'test@email.com' is invalid!");
-        $passwordService->sendPasswordForgotEmail($email);
+        $this->expectExceptionMessageMatches("#$email#");
+
+        $sut->sendPasswordForgotEmail($email);
     }
 
     private function getSut(
