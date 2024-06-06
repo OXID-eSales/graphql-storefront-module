@@ -17,7 +17,7 @@ use OxidEsales\GraphQL\Storefront\Basket\Exception\PlaceOrder as PlaceOrderExcep
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as BasketService;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
+use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\DeliveryMethod as DeliveryMethodDataType;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\MissingDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;

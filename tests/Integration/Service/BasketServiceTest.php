@@ -22,7 +22,7 @@ use OxidEsales\GraphQL\Storefront\Basket\Service\Basket as StorefrontBasketServi
 use OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder;
 use OxidEsales\GraphQL\Storefront\Country\Service\Country as CountryService;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer as CustomerInfrastructure;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
+use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;

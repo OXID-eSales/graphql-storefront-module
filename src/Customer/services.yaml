@@ -1,0 +1,43 @@
+services:
+  _defaults:
+    public: false
+    autowire: true
+    bind:
+      OxidEsales\Eshop\Core\InputValidator: '@=service("OxidEsales\\Storefront\\Core\\Registry").getInputValidator()'
+
+  OxidEsales\GraphQL\Storefront\Customer\Controller\:
+    resource: 'Controller'
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Infrastructure\CustomerRegisterFactory:
+
+  OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface:
+    class: OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password
+
+  OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface:
+    class: OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface:
+    class: OxidEsales\GraphQL\Storefront\Customer\Service\Customer
+    public: true
+    arguments:
+      TheCodingMachine\GraphQLite\Security\AuthorizationServiceInterface: '@OxidEsales\GraphQL\Base\Service\Authorization'
+
+  OxidEsales\GraphQL\Storefront\Customer\Service\CustomerRegisterInput:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface:
+    class: OxidEsales\GraphQL\Storefront\Customer\Service\Password
+    arguments:
+      TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface: '@OxidEsales\GraphQL\Base\Service\Authentication'
+
+  OxidEsales\GraphQL\Storefront\Customer\Service\RelationService:
+    public: true
+
+  OxidEsales\Storefront\Core\Registry:
+    class: OxidEsales\Eshop\Core\Registry
+    public: true

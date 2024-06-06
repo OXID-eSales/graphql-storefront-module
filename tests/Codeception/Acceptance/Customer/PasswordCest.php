@@ -92,4 +92,25 @@ final class PasswordCest extends BaseCest
             $result['data']['customerPasswordChange']
         );
     }
+
+    /**
+     * @param AcceptanceTester $I
+     * @group customer
+     * @return void
+     */
+    public function testCustomerPasswordForgotRequest(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            '
+            mutation {
+                customerPasswordForgotRequest(email: "user@oxid-esales.com")
+            }
+        '
+        );
+
+        $I->openRecentEmail();
+        $I->amGoingTo('Check Email subject');
+        $title = $I->grabFromDatabase('oxshops', 'OXFORGOTPWDSUBJECT', ['oxid' => '1']);
+        $I->seeInOpenedEmailSubject($title);
+    }
 }
