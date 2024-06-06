@@ -18,7 +18,9 @@ services:
 
   OxidEsales\GraphQL\Storefront\:
     resource: 'src/*'
-    exclude: 'src/**/{DataType,Exception,Shop,Event,Subscriber}'
+    exclude:
+      - 'src/**/{DataType,Exception,Shop,Event,Subscriber}'
+      - 'src/Customer'
     public: true
 
   OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper:

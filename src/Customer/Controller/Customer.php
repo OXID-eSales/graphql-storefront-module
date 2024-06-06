@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Customer\Controller;
 use DateTimeInterface;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
+use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;

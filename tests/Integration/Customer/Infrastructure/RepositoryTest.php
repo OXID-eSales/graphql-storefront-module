@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Customer\Infrastructur
 
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\Eshop\Application\Model\User as EshopModelUser;
-use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -25,8 +25,8 @@ final class RepositoryTest extends BaseTestCase
     {
         $customer = $this->createTestUserWithUpdateKey('coolUpdateKey_123');
 
-        /** @var Repository $sut */
-        $sut = $this->get(Repository::class);
+        /** @var RepositoryInterface $sut */
+        $sut = $this->get(RepositoryInterface::class);
         $sut->saveNewPasswordForCustomer($customer, 'newPassword');
 
         $customerAfterSave = oxNew(User::class);
@@ -43,8 +43,8 @@ final class RepositoryTest extends BaseTestCase
         $updateId = 'foobar';
         $customer = $this->createTestUserWithUpdateKey($updateId);
 
-        /** @var Repository $sut */
-        $sut = $this->get(Repository::class);
+        /** @var RepositoryInterface $sut */
+        $sut = $this->get(RepositoryInterface::class);
         $updateHash = md5($customer->getId() . $customer->getShopId() . $updateId);
         $customerByUpdateId = $sut->getCustomerByPasswordUpdateHash($updateHash);
 

@@ -2,18 +2,37 @@ services:
   _defaults:
     public: false
     autowire: true
-#    bind:
-#      OxidEsales\Eshop\Core\InputValidator: '@=service("OxidEsales\\Storefront\\Core\\Registry").getInputValidator()'
-#
+    bind:
+      OxidEsales\Eshop\Core\InputValidator: '@=service("OxidEsales\\Storefront\\Core\\Registry").getInputValidator()'
 
-  OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface:
-    class: OxidEsales\GraphQL\Storefront\Customer\Service\Password
+  OxidEsales\GraphQL\Storefront\Customer\Controller\:
+    resource: 'Controller'
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Infrastructure\CustomerRegisterFactory:
 
   OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface:
     class: OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password
 
+  OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface:
+    class: OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository
+    public: true
+
   OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface:
     class: OxidEsales\GraphQL\Storefront\Customer\Service\Customer
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Service\CustomerRegisterInput:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface:
+    class: OxidEsales\GraphQL\Storefront\Customer\Service\Password
+
+  OxidEsales\GraphQL\Storefront\Customer\Service\RelationService:
+    public: true
 
   TheCodingMachine\GraphQLite\Security\AuthorizationServiceInterface:
     class: OxidEsales\GraphQL\Storefront\Shared\Service\Authorization
@@ -24,8 +43,3 @@ services:
   OxidEsales\Storefront\Core\Registry:
     class: OxidEsales\Eshop\Core\Registry
     public: true
-
-  OxidEsales\Eshop\Core\InputValidator:
-    # the first argument is the class and the second argument is the static method
-    factory: [ '@OxidEsales\Storefront\Core\Registry', 'getInputValidator' ]
-

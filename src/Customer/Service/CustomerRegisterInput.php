@@ -16,12 +16,12 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerExists;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\CustomerRegisterFactory;
-use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class CustomerRegisterInput
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var Legacy */
@@ -31,7 +31,7 @@ final class CustomerRegisterInput
     private $customerRegisterFactory;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Legacy $legacyService,
         CustomerRegisterFactory $customerRegisterFactory
     ) {

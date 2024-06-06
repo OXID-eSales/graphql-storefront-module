@@ -19,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerExists;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotDeletable;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
-use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository as CustomerRepository;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as CustomerRepository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use TheCodingMachine\GraphQLite\Security\AuthorizationServiceInterface;
 

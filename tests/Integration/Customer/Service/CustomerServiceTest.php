@@ -17,9 +17,10 @@ use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotDeletable;
+use OxidEsales\GraphQL\Storefront\Customer\Service\Customer;
 use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
-use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository as CustomerRepository;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as CustomerRepository;
+use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
@@ -102,7 +103,7 @@ final class CustomerServiceTest extends TestCase
             ->method('getUser')
             ->willReturn($userDataType);
 
-        $customerService = new CustomerService(
+        $customerService = new Customer(
             new Repository(
                 $container->get(QueryBuilderFactoryInterface::class),
                 new ListConfiguration()

@@ -37,7 +37,7 @@ use OxidEsales\GraphQL\Storefront\Country\DataType\Country as CountryDataType;
 use OxidEsales\GraphQL\Storefront\Country\Service\Country as CountryService;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer as CustomerInfrastructure;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
+use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
