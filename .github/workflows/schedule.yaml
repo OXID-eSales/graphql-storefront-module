@@ -32,7 +32,7 @@ jobs:
                   repo: module-workflows
                   github_user: ${{ secrets.CI_USER }}
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
-                  workflow_file_name: storefront_workflow.yml
+                  workflow_file_name: storefront_workflow.yaml
                   ref: "b-7.1.x"
                   client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
 
@@ -46,6 +46,6 @@ jobs:
                   repo: module-workflows
                   github_user: ${{ secrets.CI_USER }}
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
-                  workflow_file_name: storefront_workflow.yml
+                  workflow_file_name: storefront_workflow.yaml
                   ref: "b-7.1.x"
                   client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
