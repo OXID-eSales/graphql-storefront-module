@@ -24,21 +24,19 @@ services:
   OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface:
     class: OxidEsales\GraphQL\Storefront\Customer\Service\Customer
     public: true
+    arguments:
+      TheCodingMachine\GraphQLite\Security\AuthorizationServiceInterface: '@OxidEsales\GraphQL\Base\Service\Authorization'
 
   OxidEsales\GraphQL\Storefront\Customer\Service\CustomerRegisterInput:
     public: true
 
   OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface:
     class: OxidEsales\GraphQL\Storefront\Customer\Service\Password
+    arguments:
+      TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface: '@OxidEsales\GraphQL\Base\Service\Authentication'
 
   OxidEsales\GraphQL\Storefront\Customer\Service\RelationService:
     public: true
-
-  TheCodingMachine\GraphQLite\Security\AuthorizationServiceInterface:
-    class: OxidEsales\GraphQL\Storefront\Shared\Service\Authorization
-
-  TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface:
-    class: OxidEsales\GraphQL\Base\Service\Authentication
 
   OxidEsales\Storefront\Core\Registry:
     class: OxidEsales\Eshop\Core\Registry
