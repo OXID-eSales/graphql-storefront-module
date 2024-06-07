@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Base\Exception\InvalidToken;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice as WishedPriceDataType;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPriceFilterList;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Exception\WishedPriceNotFound;

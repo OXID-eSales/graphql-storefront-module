@@ -46,7 +46,7 @@ use OxidEsales\GraphQL\Storefront\Payment\Exception\UnavailablePayment;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRepository;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Voucher as VoucherInfrastructure;

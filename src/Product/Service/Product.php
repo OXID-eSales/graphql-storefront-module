@@ -20,7 +20,7 @@ use OxidEsales\GraphQL\Storefront\Product\DataType\VariantSelections;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Product extends AbstractActiveFilterService

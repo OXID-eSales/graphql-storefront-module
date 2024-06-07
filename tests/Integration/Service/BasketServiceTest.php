@@ -26,7 +26,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as Customer
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRepository;
 use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Voucher as VoucherInfrastructure;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -56,7 +56,7 @@ final class BasketServiceTest extends TestCase
             ),
             $container->get(BasketRepository::class),
             $container->get(Authentication::class),
-            new Authorization(),
+            $this->createStub(Authorization::class),
             $this->get(Legacy::class),
             $container->get(SharedBasketInfrastructure::class),
             $container->get(VoucherInfrastructure::class),

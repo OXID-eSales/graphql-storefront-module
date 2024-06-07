@@ -18,7 +18,7 @@ use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInt
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotDeletable;
 use OxidEsales\GraphQL\Storefront\Customer\Service\Customer;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as CustomerRepository;
 use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
@@ -111,7 +111,7 @@ final class CustomerServiceTest extends TestCase
             $container->get(CustomerRepository::class),
             $authenticationMock,
             $legacyServiceMock,
-            new Authorization()
+            $this->createStub(Authorization::class)
         );
 
         $this->expectException(CustomerNotDeletable::class);

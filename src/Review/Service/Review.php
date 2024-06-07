@@ -19,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewAlreadyExists;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewNotFound;
 use OxidEsales\GraphQL\Storefront\Review\Infrastructure\Repository as ReviewRepository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Review

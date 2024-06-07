@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Shared\Service;
 
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 
