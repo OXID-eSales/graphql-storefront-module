@@ -18,9 +18,20 @@ use PHPUnit\Framework\TestCase;
  */
 class PasswordControllerTest extends TestCase
 {
-    public function testCustomerPasswordChangeMethodReturnsServiceResult(): void
+    public static function booleanDataProvider(): \Generator
     {
-        $expectedReturn = (bool)random_int(0, 1);
+        yield [
+            'expectedBoolean' => true
+        ];
+
+        yield [
+            'expectedBoolean' => false
+        ];
+    }
+
+    /** @dataProvider booleanDataProvider */
+    public function testCustomerPasswordChangeMethodReturnsServiceResult(bool $expectedBoolean): void
+    {
         $password1 = uniqid();
         $password2 = uniqid();
 
@@ -31,30 +42,30 @@ class PasswordControllerTest extends TestCase
                 $password1,
                 $password2
             )
-            ->willReturn($expectedReturn);
+            ->willReturn($expectedBoolean);
 
         $passwordController = new Password(passwordService: $serviceSpy);
-        $this->assertSame($expectedReturn, $passwordController->customerPasswordChange($password1, $password2));
+        $this->assertSame($expectedBoolean, $passwordController->customerPasswordChange($password1, $password2));
     }
 
-    public function testCustomerPasswordForgotRequestMethodReturnsServiceResult(): void
+    /** @dataProvider booleanDataProvider */
+    public function testCustomerPasswordForgotRequestMethodReturnsServiceResult(bool $expectedBoolean): void
     {
-        $expectedReturn = (bool)random_int(0, 1);
         $exampleEmail = uniqid();
 
         $serviceSpy = $this->createMock(PasswordServiceInterface::class);
         $serviceSpy->expects($this->once())
             ->method('sendPasswordForgotEmail')
             ->with($exampleEmail)
-            ->willReturn($expectedReturn);
+            ->willReturn($expectedBoolean);
 
         $passwordController = new Password(passwordService: $serviceSpy);
-        $this->assertSame($expectedReturn, $passwordController->customerPasswordForgotRequest($exampleEmail));
+        $this->assertSame($expectedBoolean, $passwordController->customerPasswordForgotRequest($exampleEmail));
     }
 
-    public function testCustomerPasswordResetMethodReturnsServiceResult(): void
+    /** @dataProvider booleanDataProvider */
+    public function testCustomerPasswordResetMethodReturnsServiceResult(bool $expectedBoolean): void
     {
-        $expectedReturn = (bool)random_int(0, 1);
         $exampleHash = uniqid();
         $password1 = uniqid();
         $password2 = uniqid();
@@ -67,11 +78,11 @@ class PasswordControllerTest extends TestCase
                 $password1,
                 $password2
             )
-            ->willReturn($expectedReturn);
+            ->willReturn($expectedBoolean);
 
         $passwordController = new Password(passwordService: $serviceSpy);
         $this->assertSame(
-            $expectedReturn,
+            $expectedBoolean,
             $passwordController->customerPasswordReset($exampleHash, $password1, $password2)
         );
     }
