@@ -92,18 +92,14 @@ final class ProductRelationServiceTest extends TestCase
         return new RelationService(
             new ProductService(
                 $repo,
-                new Authorization(),
+                $this->createStub(Authorization::class),
                 new ProductInfrastructure()
             ),
             new CategoryService(
                 $repo,
-                new Authorization()
+                $this->createStub(Authorization::class)
             ),
             new ProductInfrastructure(
-                new CategoryService(
-                    $repo,
-                    new Authorization()
-                )
             )
         );
     }
