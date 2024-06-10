@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.1.0] - Unreleased
+## [4.0.0] - Unreleased
 
 ### Added
 - `variantSelections` query for fetching multidimensional variants [PR-11](https://github.com/OXID-eSales/graphql-storefront-module/pull/11)
@@ -14,21 +14,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PHP 8.2 support
 - Classes
     - `OxidEsales\GraphQL\Storefront\Manufacturer\DataType\ManufacturerImage`
+    - `OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactory`
+    - `OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface`
 - Password forgotten feature
   - Mutations:
     - `customerPasswordForgotRequest`
     - `customerPasswordReset`
-  - Class `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password`
+  - Classes:
+    - `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password`
+    - `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface`
+    - `OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash`
+    - `OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException`
+    - `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface`
+    - `OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface`
+    - `OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface`
+    - `OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface`
+  - Methods:
+    - `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository::saveNewPasswordForCustomer`
+    - `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository::getCustomerByPasswordUpdateHash`
+    - `OxidEsales\GraphQL\Storefront\Customer\Service\Password::sendPasswordForgotEmail`
+    - `OxidEsales\GraphQL\Storefront\Customer\Service\Password::resetPasswordByUpdateHash`
 
 ### Changed
 - Replace webmozart/path-util usage with symfony/filesystem
 - New module logo
 - Updated the structure to Codeception 5
 - Modify github workflows to use new universal workflow
+- Use new interfaces instead of direct classes
 
 ### Removed
 - PHP 8.0 support
 - Migration trigger on module activation
+- `OxidEsales\GraphQL\Base\Service\Authorization`
+- `byLength`in `OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch`
 
 ### Fixed
 - Add error message to product response when variant loading is disabled [#0007421](https://bugs.oxid-esales.com/view.php?id=7421)
