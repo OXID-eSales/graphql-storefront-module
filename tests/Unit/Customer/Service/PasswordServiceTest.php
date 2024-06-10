@@ -23,7 +23,19 @@ use TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface;
  */
 class PasswordServiceTest extends TestCase
 {
-    public function testResetPasswordByUpdateHashSuccessful(): void
+    public static function booleanDataProvider(): \Generator
+    {
+        yield [
+            'expectedBoolean' => true
+        ];
+
+        yield [
+            'expectedBoolean' => false
+        ];
+    }
+
+    /** @dataProvider booleanDataProvider */
+    public function testResetPasswordByUpdateHashSuccessful(bool $expectedBoolean): void
     {
         $customerStub = $this->createStub(User::class);
         $password = uniqid();
@@ -38,7 +50,6 @@ class PasswordServiceTest extends TestCase
                 $passwordRepeated
             );
 
-        $expectedSaveResult = (bool)random_int(0, 1);
         $exampleHash = uniqid();
         $customerRepositoryMock = $this->createMock(CustomerRepositoryInterface::class);
         $customerRepositoryMock->method('getCustomerByPasswordUpdateHash')
@@ -46,7 +57,7 @@ class PasswordServiceTest extends TestCase
             ->willReturn($customerStub);
         $customerRepositoryMock->method('saveNewPasswordForCustomer')
             ->with($customerStub, $password)
-            ->willReturn($expectedSaveResult);
+            ->willReturn($expectedBoolean);
 
         $sut = $this->getSut(
             customerRepository: $customerRepositoryMock,
@@ -54,7 +65,7 @@ class PasswordServiceTest extends TestCase
         );
 
         $this->assertSame(
-            $expectedSaveResult,
+            $expectedBoolean,
             $sut->resetPasswordByUpdateHash($exampleHash, $password, $passwordRepeated)
         );
     }

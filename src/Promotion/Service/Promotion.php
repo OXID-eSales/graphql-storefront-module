@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Promotion\DataType\Promotion as PromotionDataT
 use OxidEsales\GraphQL\Storefront\Promotion\Exception\PromotionNotFound;
 use OxidEsales\GraphQL\Storefront\Promotion\Infrastructure\Promotion as PromotionInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Promotion

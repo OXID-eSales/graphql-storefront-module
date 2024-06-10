@@ -19,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use OxidEsales\GraphQL\Storefront\Product\Service\RelationService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -92,18 +92,14 @@ final class ProductRelationServiceTest extends TestCase
         return new RelationService(
             new ProductService(
                 $repo,
-                new Authorization(),
+                $this->createStub(Authorization::class),
                 new ProductInfrastructure()
             ),
             new CategoryService(
                 $repo,
-                new Authorization()
+                $this->createStub(Authorization::class)
             ),
             new ProductInfrastructure(
-                new CategoryService(
-                    $repo,
-                    new Authorization()
-                )
             )
         );
     }

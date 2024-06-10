@@ -35,9 +35,6 @@ services:
     class: OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization
     tags: [ 'kernel.event_subscriber' ]
 
-  OxidEsales\GraphQL\Storefront\Shared\Service\Authorization:
-    class: OxidEsales\GraphQL\Storefront\Shared\Service\Authorization
-
   OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration:
     class: OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration
     arguments:

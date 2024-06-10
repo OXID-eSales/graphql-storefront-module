@@ -18,7 +18,7 @@ use OxidEsales\GraphQL\Storefront\Address\DataType\AddressFilterList;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress as DeliveryAddressDataType;
 use OxidEsales\GraphQL\Storefront\Address\Exception\DeliveryAddressNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class DeliveryAddress
