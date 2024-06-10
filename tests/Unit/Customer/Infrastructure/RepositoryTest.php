@@ -21,6 +21,52 @@ use PHPUnit\Framework\TestCase;
  */
 class RepositoryTest extends TestCase
 {
+    public static function booleanDataProvider(): \Generator
+    {
+        yield [
+            'expectedBoolean' => true
+        ];
+
+        yield [
+            'expectedBoolean' => false
+        ];
+    }
+
+    /** @dataProvider booleanDataProvider */
+    public function testSaveNewPasswordResultBasedOnSaveModel(bool $expectedBoolean): void
+    {
+        $customerStub = $this->createStub(User::class);
+
+        $sharedRepositorySpy = $this->createMock(RepositoryInterface::class);
+        $sharedRepositorySpy->expects($this->once())
+            ->method('saveModel')
+            ->with($customerStub)
+            ->willReturn($expectedBoolean);
+
+        $sut = new Repository(
+            repository: $sharedRepositorySpy,
+            oxNewFactory: $this->createStub(OxNewFactoryInterface::class)
+        );
+
+        $this->assertSame($expectedBoolean, $sut->saveNewPasswordForCustomer($customerStub, 'anything'));
+    }
+
+    public function testPasswordChangingCoreFunctionalityTriggered(): void
+    {
+        $newPassword = uniqid();
+
+        $customerSpy = $this->createMock(User::class);
+        $customerSpy->expects($this->once())->method('setPassword')->with($newPassword);
+        $customerSpy->expects($this->once())->method('setUpdateKey')->with(true);
+
+        $sut = new Repository(
+            repository: $this->createStub(RepositoryInterface::class),
+            oxNewFactory: $this->createStub(OxNewFactoryInterface::class)
+        );
+
+        $sut->saveNewPasswordForCustomer($customerSpy, $newPassword);
+    }
+
     public function testGetCustomerByPasswordUpdateHashNotLoaded(): void
     {
         $failedToLoadUserStub = $this->createMock(User::class);
