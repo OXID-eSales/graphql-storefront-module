@@ -21,12 +21,16 @@ services:
     class: OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository
     public: true
 
+  # deprecated
+  OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository: '@OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface'
+
   OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface:
     class: OxidEsales\GraphQL\Storefront\Customer\Service\Customer
     public: true
     arguments:
       TheCodingMachine\GraphQLite\Security\AuthorizationServiceInterface: '@OxidEsales\GraphQL\Base\Service\Authorization'
 
+  # deprecated
   OxidEsales\GraphQL\Storefront\Customer\Service\Customer: '@OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface'
 
   OxidEsales\GraphQL\Storefront\Customer\Service\CustomerRegisterInput:
