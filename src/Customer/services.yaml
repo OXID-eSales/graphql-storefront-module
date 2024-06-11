@@ -27,6 +27,8 @@ services:
     arguments:
       TheCodingMachine\GraphQLite\Security\AuthorizationServiceInterface: '@OxidEsales\GraphQL\Base\Service\Authorization'
 
+  OxidEsales\GraphQL\Storefront\Customer\Service\Customer: '@OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface'
+
   OxidEsales\GraphQL\Storefront\Customer\Service\CustomerRegisterInput:
     public: true
 
