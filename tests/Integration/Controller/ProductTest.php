@@ -254,23 +254,23 @@ final class ProductTest extends BaseTestCase
         $imageGallery = $product['imageGallery'];
         $images = $imageGallery['images'][0];
         $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/540_340_75/obrien_decade_ct_boot_2010_1.jpg@',
+            '@https?://.*/out/pictures/generated/product/1/800_600_75/obrien_decade_ct_boot_2010_1.jpg@',
             $images['image']
         );
         $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/87_87_75/obrien_decade_ct_boot_2010_1.jpg@',
+            '@https?://.*/out/pictures/generated/product/1/100_100_75/obrien_decade_ct_boot_2010_1.jpg@',
             $images['icon']
         );
         $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/665_665_75/obrien_decade_ct_boot_2010_1.jpg@',
+            '@https?://.*/out/pictures/generated/product/1/1200_1200_75/obrien_decade_ct_boot_2010_1.jpg@',
             $images['zoom']
         );
         $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/87_87_75/obrien_decade_ct_boot_2010_1.jpg@',
+            '@https?://.*/out/pictures/generated/product/1/100_100_75/obrien_decade_ct_boot_2010_1.jpg@',
             $imageGallery['icon']
         );
         $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/390_245_75/obrien_decade_ct_boot_2010_1.jpg@',
+            '@https?://.*/out/pictures/generated/product/1/500_500_75/obrien_decade_ct_boot_2010_1.jpg@',
             $imageGallery['thumb']
         );
 

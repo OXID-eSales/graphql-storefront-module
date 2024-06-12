@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Address\Service;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress;
 use OxidEsales\GraphQL\Storefront\Address\Infrastructure\InvoiceAddressFactory;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
+use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 use TheCodingMachine\GraphQLite\Types\ID;
 

@@ -19,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
 use OxidEsales\GraphQL\Storefront\Product\Service\RelationService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
-use OxidEsales\GraphQL\Storefront\Shared\Service\Authorization;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,12 +40,12 @@ final class ProductImageGalleryTest extends TestCase
         $imageGallery = $productRelation->getImageGallery($product);
 
         $this->assertMatchesRegularExpression(
-            '@^http.*?/out/pictures/generated/product/1/390_245_75/cabrinha_caliber_2011.jpg$@msi',
+            '@^http.*?/out/pictures/generated/product/1/500_500_75/cabrinha_caliber_2011.jpg$@msi',
             $imageGallery->getThumb()
         );
 
         $this->assertMatchesRegularExpression(
-            '@^http.*?/out/pictures/generated/product/1/87_87_75/cabrinha_caliber_2011.jpg$@msi',
+            '@^http.*?/out/pictures/generated/product/1/100_100_75/cabrinha_caliber_2011.jpg$@msi',
             $imageGallery->getIcon()
         );
     }
@@ -101,21 +101,21 @@ final class ProductImageGalleryTest extends TestCase
         return [
             [
                 1,
-                '@^http.*?/out/pictures/generated/product/1/540_340_75/cabrinha_caliber_2011.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/1/87_87_75/cabrinha_caliber_2011.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/1/665_665_75/cabrinha_caliber_2011.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/1/800_600_75/cabrinha_caliber_2011.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/1/100_100_75/cabrinha_caliber_2011.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/1/1200_1200_75/cabrinha_caliber_2011.jpg$@msi',
             ],
             [
                 2,
-                '@^http.*?/out/pictures/generated/product/2/540_340_75/cabrinha_caliber_2011_deck.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/2/87_87_75/cabrinha_caliber_2011_deck.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/2/665_665_75/cabrinha_caliber_2011_deck.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/2/800_600_75/cabrinha_caliber_2011_deck.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/2/100_100_75/cabrinha_caliber_2011_deck.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/2/1200_1200_75/cabrinha_caliber_2011_deck.jpg$@msi',
             ],
             [
                 3,
-                '@^http.*?/out/pictures/generated/product/3/540_340_75/cabrinha_caliber_2011_bottom.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/3/87_87_75/cabrinha_caliber_2011_bottom.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/3/665_665_75/cabrinha_caliber_2011_bottom.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/3/800_600_75/cabrinha_caliber_2011_bottom.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/3/100_100_75/cabrinha_caliber_2011_bottom.jpg$@msi',
+                '@^http.*?/out/pictures/generated/product/3/1200_1200_75/cabrinha_caliber_2011_bottom.jpg$@msi',
             ],
         ];
     }
@@ -130,19 +130,14 @@ final class ProductImageGalleryTest extends TestCase
         return new RelationService(
             new ProductService(
                 $repo,
-                new Authorization(),
+                $this->createStub(Authorization::class),
                 new ProductInfrastructure()
             ),
             new CategoryService(
                 $repo,
-                new Authorization()
+                $this->createStub(Authorization::class),
             ),
-            new ProductInfrastructure(
-                new CategoryService(
-                    $repo,
-                    new Authorization()
-                )
-            )
+            new ProductInfrastructure()
         );
     }
 }

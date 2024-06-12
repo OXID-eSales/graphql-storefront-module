@@ -9,30 +9,20 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Customer\Service;
 
-use OxidEsales\GraphQL\Base\Service\Authentication;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
-use OxidEsales\GraphQL\Storefront\Customer\Service\Customer as CustomerService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as PasswordInfrastructuredInterface;
+use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface;
+use TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface;
 
-final class Password
+final class Password implements PasswordInterface
 {
-    /** @var Repository */
-    private $repository;
-
-    /** @var CustomerService */
-    private $customerService;
-
-    /** @var Authentication */
-    private $authenticationService;
-
     public function __construct(
-        Repository $repository,
-        CustomerService $customerService,
-        Authentication $authenticationService
+        private readonly RepositoryInterface $repository,
+        private readonly CustomerInterface $customerService,
+        private readonly AuthenticationServiceInterface $authenticationService,
+        private readonly PasswordInfrastructuredInterface $passwordInfrastructure,
     ) {
-        $this->repository = $repository;
-        $this->customerService = $customerService;
-        $this->authenticationService = $authenticationService;
     }
 
     public function change(string $old, string $new): bool
@@ -47,8 +37,24 @@ final class Password
             throw PasswordMismatch::byOldPassword();
         }
 
-        $customerModel->setPassword($new);
+        return $this->repository->saveNewPasswordForCustomer($customerModel, $new);
+    }
 
-        return $this->repository->saveModel($customerModel);
+    public function sendPasswordForgotEmail(string $email): bool
+    {
+        $isSuccess = $this->passwordInfrastructure->sendPasswordForgotEmail($email);
+
+        if ($isSuccess === false) {
+            throw InvalidEmail::byString($email);
+        }
+
+        return $isSuccess;
+    }
+
+    public function resetPasswordByUpdateHash(string $updateHash, string $newPassword, string $repeatPassword): bool
+    {
+        $customer = $this->repository->getCustomerByPasswordUpdateHash($updateHash);
+        $this->passwordInfrastructure->validatePassword($customer, $newPassword, $repeatPassword);
+        return $this->repository->saveNewPasswordForCustomer($customer, $newPassword);
     }
 }

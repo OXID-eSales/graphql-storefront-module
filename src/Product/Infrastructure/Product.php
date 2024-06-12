@@ -20,11 +20,13 @@ use OxidEsales\Eshop\Application\Model\Review as EshopReviewModel;
 use OxidEsales\Eshop\Application\Model\SelectList as EshopSelectionListModel;
 use OxidEsales\Eshop\Application\Model\Vendor as EshopVendorModel;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
+use OxidEsales\GraphQL\Base\Framework\GraphQLQueryHandler;
 use OxidEsales\GraphQL\Storefront\Manufacturer\DataType\Manufacturer as ManufacturerDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductAttribute as ProductAttributeDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductScalePrice as ProductScalePriceDataType;
 use OxidEsales\GraphQL\Storefront\Product\DataType\SelectionList as SelectionListDataType;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductVariant;
 use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
 use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor as VendorDataType;
 
@@ -249,6 +251,18 @@ final class Product
     {
         // when using getVariants() product relations are returned as SimpleVariant type
         $productVariants = $product->getEshopModel()->getFullVariants();
+
+        //Display error only when variant loading is disabled and product has variants
+        if (
+            !Registry::getConfig()->getConfigParam('blLoadVariants') &&
+            $product->getEshopModel()->getVariantsCount() > 0
+        ) {
+            GraphQLQueryHandler::addError(
+                ProductVariant::loadingDisabled(
+                    (string) $product->getId()
+                )
+            );
+        }
 
         if (!is_iterable($productVariants) || count($productVariants) === 0) {
             return [];

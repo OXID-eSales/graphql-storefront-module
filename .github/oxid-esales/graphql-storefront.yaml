@@ -28,10 +28,10 @@ install_shop_with_modules:
         sed -i 's/<?php/<?php\n\nrequire(__DIR__ . "\/..\/c3.php");/' vendor/oxid-esales/oxideshop-ce/source/bootstrap.php
         perl -pi -e 'print "SetEnvIf Authorization \"(.*)\" HTTP_AUTHORIZATION=\$1\n\n" if $. == 1' source/.htaccess
         vendor/bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
+        vendor/bin/oe-console oe:setup:demodata
         vendor/bin/oe-console oe:module:activate oe_graphql_base
         vendor/bin/oe-console oe:module:activate "{{ $ids }}"
         vendor/bin/oe-console oe:theme:activate apex
-        vendor/bin/oe-console oe:setup:demodata
 
 runscript: &runscript
     matrix:
@@ -40,12 +40,12 @@ runscript: &runscript
               "graphql_storefront:tests-unit",
               "graphql_storefront:tests-integration",
               "graphql_storefront:tests-codeception -- -g address",
-              "graphql_storefront:tests-codeception -- -g basket",
-              "graphql_storefront:tests-codeception -- -g basket_1",
-              "graphql_storefront:tests-codeception -- -g basket_2",
-              "graphql_storefront:tests-codeception -- -g order",
-              "graphql_storefront:tests-codeception -- -g other",
-              "graphql_storefront:tests-codeception -- -g other_1",
+              "graphql_storefront:tests-codeception -- -g basket --shard 1/2",
+              "graphql_storefront:tests-codeception -- -g basket --shard 2/2",
+              "graphql_storefront:tests-codeception -- -g other --shard 1/4",
+              "graphql_storefront:tests-codeception -- -g other --shard 2/4",
+              "graphql_storefront:tests-codeception -- -g other --shard 3/4",
+              "graphql_storefront:tests-codeception -- -g other --shard 4/4",
               "graphql_storefront:tests-codeception -- -g pricing"
             ]
     graphql_storefront:

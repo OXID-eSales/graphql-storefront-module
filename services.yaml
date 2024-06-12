@@ -1,6 +1,9 @@
 parameters:
   oxidesales.graphqlstorefront.depends_on_modules: [ 'oe_graphql_base' ]
 
+imports:
+  - { resource: src/Customer/services.yaml }
+
 services:
 
   _defaults:
@@ -15,7 +18,9 @@ services:
 
   OxidEsales\GraphQL\Storefront\:
     resource: 'src/*'
-    exclude: 'src/**/{DataType,Exception,Shop,Event,Subscriber}'
+    exclude:
+      - 'src/**/{DataType,Exception,Shop,Event,Subscriber}'
+      - 'src/Customer'
     public: true
 
   OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper:
@@ -29,9 +34,6 @@ services:
   OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization:
     class: OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization
     tags: [ 'kernel.event_subscriber' ]
-
-  OxidEsales\GraphQL\Storefront\Shared\Service\Authorization:
-    class: OxidEsales\GraphQL\Storefront\Shared\Service\Authorization
 
   OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration:
     class: OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration

@@ -18,7 +18,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use TheCodingMachine\GraphQLite\Middlewares\MissingAuthorizationException as MissingAuthorizationExceptionAlias;
 
 /**
- * @group basket_1
+ * @group basket
  * @group oe_graphql_storefront
  * @group oe_graphql_storefront_basket_add_item
  */

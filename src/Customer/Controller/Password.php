@@ -9,18 +9,18 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Customer\Controller;
 
-use OxidEsales\GraphQL\Storefront\Customer\Service\Password as PasswordService;
+use OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface;
 use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 
 final class Password
 {
-    /** @var PasswordService */
+    /** @var PasswordInterface */
     private $passwordService;
 
     public function __construct(
-        PasswordService $passwordService
+        PasswordInterface $passwordService
     ) {
         $this->passwordService = $passwordService;
     }
@@ -33,5 +33,17 @@ final class Password
     public function customerPasswordChange(string $old, string $new): bool
     {
         return $this->passwordService->change($old, $new);
+    }
+
+    #[Mutation]
+    public function customerPasswordForgotRequest(string $email): bool
+    {
+        return $this->passwordService->sendPasswordForgotEmail($email);
+    }
+
+    #[Mutation]
+    public function customerPasswordReset(string $updateHash, string $newPassword, string $repeatPassword): bool
+    {
+        return $this->passwordService->resetPasswordByUpdateHash($updateHash, $newPassword, $repeatPassword);
     }
 }
