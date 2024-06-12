@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.1.0] - Unreleased
+## [3.1.0-rc.1] - Unreleased
 
 ### Added
 - `variantSelections` query for fetching multidimensional variants [PR-11](https://github.com/OXID-eSales/graphql-storefront-module/pull/11)
@@ -34,7 +34,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository::getCustomerByPasswordUpdateHash`
     - `OxidEsales\GraphQL\Storefront\Customer\Service\Password::sendPasswordForgotEmail`
     - `OxidEsales\GraphQL\Storefront\Customer\Service\Password::resetPasswordByUpdateHash`
-- Alias for `OxidEsales\GraphQL\Storefront\Customer\Service\Customer` for DI compatibility
+
+### Deprecated
+- Aliases for Dependency Injection
+    - `OxidEsales\GraphQL\Storefront\Customer\Service\Customer`
+    - `OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository`
 
 ### Changed
 - Replace webmozart/path-util usage with symfony/filesystem
