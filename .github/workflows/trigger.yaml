@@ -3,8 +3,8 @@ name: Auto trigger on push or pull requests
 on:
     pull_request: {}
     push:
-      branches:
-        - '**'
+        branches:
+            - '**'
 
 jobs:
     push_module:

@@ -202,6 +202,7 @@ This is stable release for v3.1.0. No changes have been made since v3.1.0-rc.1.
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
+[3.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v3.1.0-rc.1...v3.1.0
 [3.1.0-rc.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v3.0.0...v3.1.0-rc.1
 [3.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.1.0...v3.0.0
 [2.2.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v2.1.0...b-6.5.x
