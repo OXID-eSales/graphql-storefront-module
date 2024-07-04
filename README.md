@@ -17,8 +17,8 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.0.0` co
 
 ## Branch compatibility
 
-* b-7.1.x branch is compatible with OXID eShop compilation b-7.1.x (which uses `graphql-base` b-7.1.x branch)
-* 3.x versions (or b-7.0.x branch) are compatible with OXID eShop compilation b-7.0.x (which uses `graphql-base` b-7.0.x branch)
+* 3.1.x versions (or b-7.1.x branch) are compatible with OXID eShop compilation b-7.1.x (which uses `graphql-base` 9.x version resp. b-7.1.x branch)
+* 3.x versions (or b-7.0.x branch) are compatible with OXID eShop compilation b-7.0.x (which uses `graphql-base` 8.x version resp. b-7.0.x branch)
 * ^2.1 versions (b-6.5.x branch) are compatible with OXID eShop compilation b-6.5.x (which uses `graphql-base` 7.x version resp. b-6.5.x branch)
 * 2.0.x versions (b-6.4.x branch) are compatible with OXID eShop compilation b-6.4.x (which uses `graphql-base` 6.x version resp. b-6.4.x branch)
 * 1.x versions (b-6.3.x branch) are compatible with OXID eShop compilation 6.3.x (no PHP8 support)
