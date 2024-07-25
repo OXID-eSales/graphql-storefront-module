@@ -1,14 +1,16 @@
-name: schedule
+name: Auto trigger on push or pull requests
 
 on:
-    schedule:
-        - cron: '47 4 */7 * *'
+    pull_request: {}
+    push:
+        branches:
+            - '**'
 
 jobs:
-    call_matrix:
+    push_module:
         uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
         with:
-            testplan: '~/defaults/7.2.x.yaml,~/defaults/php8.1_mysql5.7_only.yaml,~/graphql-storefront.yaml'
+            testplan: '~/defaults/7.2.x.yaml,~/defaults/php8.2_mysql8.0_only.yaml,~/graphql-storefront.yaml'
             runs_on: '"ubuntu-latest"'
             defaults: 'v4'
             plan_folder: '.github/oxid-esales'
@@ -22,20 +24,6 @@ jobs:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-    push_module_pe:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Trigger PE workflow and wait for results
-              uses: convictional/trigger-workflow-and-wait@v1.6.5
-              with:
-                  owner: oxid-esales
-                  repo: module-workflows
-                  github_user: ${{ secrets.CI_USER }}
-                  github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
-                  workflow_file_name: storefront_workflow.yml
-                  ref: "b-7.2.x"
-                  client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
-
     push_module_ee:
         runs-on: ubuntu-latest
         steps:
@@ -46,6 +34,6 @@ jobs:
                   repo: module-workflows
                   github_user: ${{ secrets.CI_USER }}
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
-                  workflow_file_name: storefront_workflow.yml
+                  workflow_file_name: storefront_workflow.yaml
                   ref: "b-7.2.x"
                   client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
