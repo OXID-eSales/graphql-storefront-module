@@ -23,7 +23,10 @@ final class PasswordCest extends BaseCest
         $I->sendGQLQuery(
             '
             mutation {
-                customerPasswordChange(old: "foobar", new: "foobaz")
+                customerPasswordChange(old: "foobar", new: "foobaz") {
+                    refreshToken
+                    accessToken
+                }
             }
         '
         );
@@ -44,7 +47,10 @@ final class PasswordCest extends BaseCest
         $I->sendGQLQuery(
             '
             mutation {
-                customerPasswordChange(old: "foobar", new: "foobaz")
+                customerPasswordChange(old: "foobar", new: "foobaz") {
+                    refreshToken
+                    accessToken
+                }
             }
         '
         );
@@ -65,7 +71,10 @@ final class PasswordCest extends BaseCest
         $I->sendGQLQuery(
             '
             mutation {
-                customerPasswordChange(old: "admin", new: "foobar")
+                customerPasswordChange(old: "admin", new: "foobar") {
+                    refreshToken
+                    accessToken
+                }
             }
         '
         );
@@ -80,7 +89,10 @@ final class PasswordCest extends BaseCest
         $I->sendGQLQuery(
             '
             mutation {
-                customerPasswordChange(old: "foobar", new: "admin")
+                customerPasswordChange(old: "foobar", new: "admin") {
+                    refreshToken
+                    accessToken
+                }
             }
         '
         );

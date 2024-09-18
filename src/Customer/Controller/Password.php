@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Customer\Controller;
 
+use OxidEsales\GraphQL\Base\DataType\Login as LoginDatatype;
+use OxidEsales\GraphQL\Base\Service\LoginServiceInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface;
 use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
@@ -16,13 +18,10 @@ use TheCodingMachine\GraphQLite\Annotations\Mutation;
 
 final class Password
 {
-    /** @var PasswordInterface */
-    private $passwordService;
-
     public function __construct(
-        PasswordInterface $passwordService
+        protected PasswordInterface $passwordService,
+        private readonly LoginServiceInterface $loginService,
     ) {
-        $this->passwordService = $passwordService;
     }
 
     /**
@@ -30,9 +29,11 @@ final class Password
      * @Logged()
      * @HideIfUnauthorized()
      */
-    public function customerPasswordChange(string $old, string $new): bool
+    public function customerPasswordChange(string $old, string $new): LoginDatatype
     {
-        return $this->passwordService->change($old, $new);
+        $customer = $this->passwordService->change($old, $new);
+
+        return $this->loginService->login($customer->getEmail(), $new);
     }
 
     #[Mutation]

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Customer\Service;
 
+use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as PasswordInfrastructuredInterface;
@@ -25,19 +26,21 @@ final class Password implements PasswordInterface
     ) {
     }
 
-    public function change(string $old, string $new): bool
+    public function change(string $old, string $new): CustomerDataType
     {
-        $customerModel = $this->customerService
+        $customer = $this->customerService
             ->customer(
                 (string)$this->authenticationService->getUser()->id()
-            )
-            ->getEshopModel();
+            );
+        $customerModel = $customer->getEshopModel();
 
         if (!$customerModel->isSamePassword($old)) {
             throw PasswordMismatch::byOldPassword();
         }
 
-        return $this->repository->saveNewPasswordForCustomer($customerModel, $new);
+        $this->repository->saveNewPasswordForCustomer($customerModel, $new);
+
+        return $customer;
     }
 
     public function sendPasswordForgotEmail(string $email): bool

@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Customer\Controller;
 
+use OxidEsales\GraphQL\Base\Service\LoginServiceInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Controller\Password;
 use OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface as PasswordServiceInterface;
 use PHPUnit\Framework\TestCase;
@@ -30,25 +31,6 @@ class PasswordControllerTest extends TestCase
     }
 
     /** @dataProvider booleanDataProvider */
-    public function testCustomerPasswordChangeMethodReturnsServiceResult(bool $expectedBoolean): void
-    {
-        $password1 = uniqid();
-        $password2 = uniqid();
-
-        $serviceSpy = $this->createMock(PasswordServiceInterface::class);
-        $serviceSpy->expects($this->once())
-            ->method('change')
-            ->with(
-                $password1,
-                $password2
-            )
-            ->willReturn($expectedBoolean);
-
-        $passwordController = new Password(passwordService: $serviceSpy);
-        $this->assertSame($expectedBoolean, $passwordController->customerPasswordChange($password1, $password2));
-    }
-
-    /** @dataProvider booleanDataProvider */
     public function testCustomerPasswordForgotRequestMethodReturnsServiceResult(bool $expectedBoolean): void
     {
         $exampleEmail = uniqid();
@@ -59,7 +41,10 @@ class PasswordControllerTest extends TestCase
             ->with($exampleEmail)
             ->willReturn($expectedBoolean);
 
-        $passwordController = new Password(passwordService: $serviceSpy);
+        $passwordController = new Password(
+            passwordService: $serviceSpy,
+            loginService: $this->createMock(LoginServiceInterface::class)
+        );
         $this->assertSame($expectedBoolean, $passwordController->customerPasswordForgotRequest($exampleEmail));
     }
 
@@ -80,7 +65,10 @@ class PasswordControllerTest extends TestCase
             )
             ->willReturn($expectedBoolean);
 
-        $passwordController = new Password(passwordService: $serviceSpy);
+        $passwordController = new Password(
+            passwordService: $serviceSpy,
+            loginService: $this->createMock(LoginServiceInterface::class)
+        );
         $this->assertSame(
             $expectedBoolean,
             $passwordController->customerPasswordReset($exampleHash, $password1, $password2)
