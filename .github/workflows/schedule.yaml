@@ -8,7 +8,7 @@ jobs:
     call_matrix:
         uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
         with:
-            testplan: '~/defaults/7.2.x.yaml,~/defaults/php8.1_mysql5.7_only.yaml,~/graphql-storefront.yaml'
+            testplan: '~/defaults/7.2.x.yaml,~/defaults/php8.2_mysql5.7_only.yaml,~/graphql-storefront.yaml'
             runs_on: '"ubuntu-latest"'
             defaults: 'v4'
             plan_folder: '.github/oxid-esales'
@@ -50,4 +50,4 @@ jobs:
                   github_token: ${{ secrets.GH_CI_JENKINS_TOKEN }}
                   workflow_file_name: storefront_workflow.yaml
                   ref: "b-7.2.x"
-                  client_payload: "{\"limit\": \"PHP8.2/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
+                  client_payload: "{\"limit\": \"PHP8.3/MySQL8.0\", \"edition\": \"ee\", \"ref\": \"${{ github.ref_name }}\"}"
