@@ -199,7 +199,7 @@ final class ReviewTest extends BaseTestCase
     {
         return [
             'admin' => [
-                'username' => 'admin@admin.com',
+                'username' => 'noreply@oxid-esales.com',
                 'password' => 'admin',
             ],
             'user' => [
@@ -265,7 +265,7 @@ final class ReviewTest extends BaseTestCase
     {
         return [
             'admin_wrong_product' => [
-                'username' => 'admin@admin.com',
+                'username' => 'noreply@oxid-esales.com',
                 'password' => 'admin',
                 'id' => self::WRONG_PRODUCT,
             ],
@@ -275,7 +275,7 @@ final class ReviewTest extends BaseTestCase
                 'id' => self::WRONG_PRODUCT,
             ],
             'admin_wrong_type' => [
-                'username' => 'admin@admin.com',
+                'username' => 'noreply@oxid-esales.com',
                 'password' => 'admin',
                 'id' => self::WRONG_OBJECT_TYPE,
             ],
@@ -346,7 +346,7 @@ final class ReviewTest extends BaseTestCase
             ],
             [
                 'token' => [
-                    'username' => 'admin@admin.com',
+                    'username' => 'noreply@oxid-esales.com',
                     'password' => 'admin',
                 ],
                 'expectedProduct' => [
