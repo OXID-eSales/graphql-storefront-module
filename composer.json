@@ -6,7 +6,7 @@
     "homepage": "https://www.oxid-esales.com",
     "license": ["proprietary"],
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "doctrine/dbal": "^v2.7",
         "oxid-esales/graphql-base": "dev-b-7.2.x"
     },
