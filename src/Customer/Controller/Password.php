@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Customer\Controller;
 
 use OxidEsales\GraphQL\Base\DataType\Login as LoginDatatype;
+use OxidEsales\GraphQL\Base\DataType\LoginInterface;
 use OxidEsales\GraphQL\Base\Service\LoginServiceInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface;
 use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
@@ -29,7 +30,7 @@ final class Password
      * @Logged()
      * @HideIfUnauthorized()
      */
-    public function customerPasswordChange(string $old, string $new): LoginDatatype
+    public function customerPasswordChange(string $old, string $new): LoginInterface
     {
         $customer = $this->passwordService->change($old, $new);
 
