@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - unreleased
+
+### Changed
+- ``customerPasswordChange`` mutation
+  - On a successful password change, all old tokens are invalidated, and new ones are returned
+  - Return type was changed from `bool` to `OxidEsales\GraphQL\Base\DataType\LoginInterface`
+- Return type of `OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface::change` was changed from `bool` to `OxidEsales\GraphQL\Storefront\Customer\DataType\Customer`
+
 ## [3.1.0] - 2024-07-05
 This is stable release for v3.1.0. No changes have been made since v3.1.0-rc.1.
 
