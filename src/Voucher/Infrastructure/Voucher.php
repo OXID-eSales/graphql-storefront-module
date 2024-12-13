@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Voucher\Infrastructure;
 use Exception;
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Core\Exception\ObjectException as EshopObjectException;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\TransactionServiceInterface as EshopTransactionService;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\ConnectionFactoryInterface as EshopConnectionFactory;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\Basket as BasketDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Shared\Shop\Voucher as StorefrontVoucherModel;
@@ -29,24 +29,25 @@ final class Voucher
     /** @var SharedBasketInfrastructure */
     private $sharedBasketInfrastructure;
 
-    /** @var EshopTransactionService */
-    private $transactionService;
+    /** @var EshopConnectionFactory */
+    private $connectionService;
 
     public function __construct(
         Repository $repository,
         SharedBasketInfrastructure $sharedBasketInfrastructure,
-        EshopTransactionService $transactionService
+        EshopConnectionFactory $connectionService
     ) {
         $this->repository = $repository;
         $this->sharedBasketInfrastructure = $sharedBasketInfrastructure;
-        $this->transactionService = $transactionService;
+        $this->connectionService = $connectionService;
     }
 
     public function addVoucher(
         VoucherDataType $voucher,
         BasketDataType $basket
     ): void {
-        $this->transactionService->begin();
+        $connection = $this->connectionService->create();
+        $connection->beginTransaction();
 
         try {
             $basketModel = $this->sharedBasketInfrastructure->getCalculatedBasket($basket);
@@ -68,11 +69,11 @@ final class Voucher
 
             $this->repository->addBasketIdToVoucher($basket->id(), $voucherModel->getId());
         } catch (Exception $exception) {
-            $this->transactionService->rollback();
+            $connection->rollBack();
 
             throw VoucherNotUsable::withMessage($exception->getMessage());
         }
-        $this->transactionService->commit();
+        $connection->commit();
     }
 
     public function removeVoucher(
