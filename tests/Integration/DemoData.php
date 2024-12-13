@@ -11,14 +11,13 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration;
 
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\Facts\Facts;
+use OxidEsales\EshopCommunity\Internal\Framework\Edition\Edition;
+use OxidEsales\EshopCommunity\Internal\Framework\Edition\EditionDirectoriesLocator;
 
 trait DemoData
 {
     public function setUp(): void
     {
-        $facts = new Facts();
-
         $connection = ContainerFactory::getInstance()
             ->getContainer()
             ->get(QueryBuilderFactoryInterface::class)
@@ -26,7 +25,8 @@ trait DemoData
             ->getConnection();
 
         $path = __DIR__ . '/../Fixtures/integrationtest_ce.sql';
-        if ($facts->getEdition() == 'EE') {
+
+        if ((new EditionDirectoriesLocator())->getEditionRootPath(Edition::Enterprise)){
             $path = __DIR__ . '/../Fixtures/integrationtest_ee.sql';
         }
 

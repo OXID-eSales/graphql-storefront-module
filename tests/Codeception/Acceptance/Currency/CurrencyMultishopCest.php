@@ -18,6 +18,7 @@ use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
  * @group currency
  * @group oe_graphql_storefront
  * @group other
+ * @group oe_graphql_storefront_multishop
  */
 final class CurrencyMultishopCest extends MultishopBaseCest
 {

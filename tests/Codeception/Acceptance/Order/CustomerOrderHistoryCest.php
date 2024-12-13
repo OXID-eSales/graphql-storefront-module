@@ -12,7 +12,8 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\Order;
 use Codeception\Example;
 use Codeception\Scenario;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
-use OxidEsales\Facts\Facts;
+use OxidEsales\EshopCommunity\Internal\Framework\Edition\Edition;
+use OxidEsales\EshopCommunity\Internal\Framework\Edition\EditionDirectoriesLocator;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance\BaseCest;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 
@@ -500,9 +501,7 @@ final class CustomerOrderHistoryCest extends BaseCest
             'state' => null,
         ];
 
-        $facts = new Facts();
-
-        if ($facts->getEdition() !== 'EE') {
+        if (!(new EditionDirectoriesLocator())->getEditionRootPath(Edition::Enterprise)){
             $expected['vatID'] = '';
         }
 
