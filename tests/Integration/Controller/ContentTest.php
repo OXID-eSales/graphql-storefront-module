@@ -9,9 +9,10 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
+use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
-use OxidEsales\Facts\Facts;
+use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 
 final class ContentTest extends BaseTestCase
@@ -222,8 +223,7 @@ final class ContentTest extends BaseTestCase
         $expectedCount = 25;
 
         // Due to demodata for EE been different
-        $facts = new Facts();
-        if ($facts->getEdition() == 'EE') {
+        if (ContainerFacade::get(BasicContextInterface::class)->getEdition() == Edition::Enterprise){
             $expectedCount = 24;
         }
 

@@ -63,7 +63,7 @@ class CodeceptionParametersProvider
 
     private function getCodeceptionSpecificFixtureFilePath(): string
     {
-        return Path::join(__DIR__, '../Support/Data', 'dump.sql');
+        return Path::join(__DIR__, '../Data', 'testdata.sql');
     }
 
     private function getTestDataDumpFilePath(): string

@@ -12,20 +12,19 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Codeception\Acceptance;
 
 use Codeception\Scenario;
 use OxidEsales\Eshop\Application\Model\Shop;
-use OxidEsales\Eshop\Core\DatabaseProvider;
-use OxidEsales\Eshop\Core\Model\ListModel;
+use OxidEsales\Eshop\Core\Exception\DatabaseErrorException;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Edition\Edition;
-use OxidEsales\EshopCommunity\Internal\Framework\Edition\EditionDirectoriesLocator;
 use OxidEsales\EshopCommunity\Internal\Framework\FileSystem\ProjectDirectoriesLocator;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationDaoBridgeInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Module\Setup\Bridge\ModuleActivationBridgeInterface;
-use OxidEsales\EshopEnterprise\Application\Controller\Admin\ShopMain;
+use OxidEsales\EshopCommunity\Internal\Transition\Utility\BasicContextInterface;
 use OxidEsales\EshopEnterprise\Internal\Framework\Module\Configuration\Bridge\ShopConfigurationGeneratorBridgeInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Codeception\AcceptanceTester;
 use Psr\Container\ContainerInterface;
+use OxidEsales\EshopEnterprise\Application\Controller\Admin\ShopMain;
 
 abstract class MultishopBaseCest extends BaseCest
 {
@@ -33,7 +32,7 @@ abstract class MultishopBaseCest extends BaseCest
 
     public function _before(AcceptanceTester $I, Scenario $scenario): void
     {
-        if (!(new EditionDirectoriesLocator())->getEditionRootPath(Edition::Enterprise)){
+        if (ContainerFacade::get(BasicContextInterface::class)->getEdition() !== Edition::Enterprise){
             $scenario->skip('Skip EE related tests for CE/PE edition');
 
             return;
@@ -48,30 +47,39 @@ abstract class MultishopBaseCest extends BaseCest
     {
         parent::_after($I);
 
-        if ((new EditionDirectoriesLocator())->getEditionRootPath(Edition::Enterprise)){
+        if (ContainerFacade::get(BasicContextInterface::class)->getEdition() === Edition::Enterprise){
             $I->updateInDatabase('oxconfig', ['oxvarvalue' => false], ['oxvarname' => 'blMallUsers']);
         }
     }
 
     private function ensureSubshop(): void
     {
-        $container = ContainerFactory::getInstance()->getContainer();
-        $shopConfiguration = $container->get(ShopConfigurationDaoBridgeInterface::class)->get();
-        Registry::getConfig()->setShopId(self::SUBSHOP_ID);
-        $container->get(ShopConfigurationDaoBridgeInterface::class)->save($shopConfiguration);
-        $container->get(ShopConfigurationGeneratorBridgeInterface::class)->generateForShop(self::SUBSHOP_ID);
+        ContainerFacade::get(ShopConfigurationGeneratorBridgeInterface::class)
+            ->generateForShop(self::SUBSHOP_ID);
 
         $shop = oxNew(Shop::class);
         $shop->load(1);
         $shop->assign(
-            [
-                'oxid' => self::SUBSHOP_ID
-            ]
+            ['oxid' => self::SUBSHOP_ID]
         );
         $shop->save();
 
-        #$this->copyConfig();
-        $this->copyContent();
+        $shopMain = oxNew(ShopMain::class);
+        $copyConfigVars = (new \ReflectionClass($shopMain))->getMethod('copyConfigVars');
+        $copyConfigVars->setAccessible(true);
+        $copyConfigVars->invokeArgs($shopMain, [$shop]);
+
+        $container = ContainerFactory::getInstance()->getContainer();
+        $shopConfiguration = $container->get(ShopConfigurationDaoBridgeInterface::class)->get();
+
+        Registry::getConfig()->setShopId(self::SUBSHOP_ID);
+        $container->get(ShopConfigurationDaoBridgeInterface::class)->save($shopConfiguration);
+
+
+
+
+
+    #    $this->copyContent();
         $this->regenerateDatabaseViews();
         $this->activateModule($container);
 
@@ -80,7 +88,8 @@ abstract class MultishopBaseCest extends BaseCest
 
     private function regenerateDatabaseViews(): void
     {
-        exec((new ProjectDirectoriesLocator())->getVendorPath() . '/bin/oe-eshop-db_views_generate');
+        $vendorPath = (new ProjectDirectoriesLocator())->getVendorPath();
+        exec($vendorPath . '/bin/oe-eshop-db_views_generate');
     }
 
     private function activateModule(ContainerInterface $container)
@@ -96,44 +105,20 @@ abstract class MultishopBaseCest extends BaseCest
     private function copyContent()
     {
         //copy contents
-        $shopContentList = oxNew(ListModel::class);
+        $shopContentList = oxNew(\OxidEsales\Eshop\Core\Model\ListModel::class);
         $shopContentList->init("oxi18n", 'oxcontents');
         $shopContentList->getBaseObject()->setEnableMultilang(false);
 
         $shopContentList->selectString("select * from oxcontents where oxshopid = '1'");
         foreach ($shopContentList as $shopContent) {
-            $shopContent->oxcontents__oxshopid->setValue(self::SUBSHOP_ID);
-            $shopContent->setId();
-            $shopContent->save();
-        }
-    }
-
-    private function copyConfig(): void
-    {
-        $utilsObject = Registry::getUtilsObject();
-        $db = DatabaseProvider::getDb();
-
-        $selectShopConfigurationQuery =
-            "select oxvarname, oxvartype, oxvarvalue, oxmodule
-            from oxconfig where oxshopid = '1'";
-
-        $shopConfiguration = $db->select($selectShopConfigurationQuery);
-        if ($shopConfiguration != false && $shopConfiguration->count() > 0) {
-            while (!$shopConfiguration->EOF) {
-                $newId = $utilsObject->generateUID();
-                $insertNewConfigQuery =
-                    "insert into oxconfig (oxid, oxshopid, oxvarname, oxvartype, oxvarvalue, oxmodule)
-                     values (:oxid, :oxshopid, :oxvarname, :oxvartype, :value, :oxmodule)";
-                $db->execute($insertNewConfigQuery, [
-                    ':oxid' => $newId,
-                    ':oxshopid' => self::SUBSHOP_ID,
-                    ':oxvarname' => $shopConfiguration->fields[0],
-                    ':oxvartype' => $shopConfiguration->fields[1],
-                    ':value' => $shopConfiguration->fields[2],
-                    ':oxmodule' => $shopConfiguration->fields[3],
-                ]);
+            try {
+                $shopContent->oxcontents__oxshopid->setValue(self::SUBSHOP_ID);
+                $shopContent->delete();
+                $shopContent->setId();
+                $shopContent->save();
+            } catch (DatabaseErrorException $e) {
+                // This happen on executing multiple tests
             }
-            $shopConfiguration->fetchRow();
         }
     }
 }

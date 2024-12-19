@@ -7,6 +7,6 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\Graphql\Base\Tests\Codeception\Config;
+namespace OxidEsales\Graphql\Storefront\Tests\Codeception\Config;
 
 return (new CodeceptionParametersProvider())->getParameters();
