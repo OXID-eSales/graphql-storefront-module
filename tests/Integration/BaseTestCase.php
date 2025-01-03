@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\FileSystem\ProjectRootLocator;
 use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
@@ -41,7 +42,7 @@ abstract class BaseTestCase extends TokenTestCase
     protected function copyAssets(): void
     {
         $shopAssetDir = Path::join(
-            Registry::getConfig()->getConfigParam('sShopDir'),
+            Path::join((new ProjectRootLocator())->getProjectRoot(), 'source'),
             self::MANUFACTURER_MEDIA_PATH
         );
 
