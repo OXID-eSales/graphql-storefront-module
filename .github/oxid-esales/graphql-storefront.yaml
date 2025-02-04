@@ -67,7 +67,7 @@ sonarcloud:
     strip_path: '/var/www/vendor/{{ print $org }}/{{ print $name}}/'
     project_key: 'OXID-eSales_graphql-storefront-module'
     project_name: '{{ $org}}/{{ $name }}'
-    parameters: |
+    parameters: >
         -Dsonar.language=php
         -Dsonar.scm.provider=git
         -Dsonar.sources=src

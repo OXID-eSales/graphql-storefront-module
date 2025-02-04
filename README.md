@@ -17,6 +17,7 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.0.0` co
 
 ## Branch compatibility
 
+* b-7.3.x branch is compatible with OXID eShop compilation b-7.3.x (which uses `graphql-base` b-7.3.x branch)
 * 4.0.x versions (or b-7.2.x branch) are compatible with OXID eShop compilation b-7.2.x (which uses `graphql-base` 10.x version resp. b-7.2.x branch)
 * 3.1.x versions (or b-7.1.x branch) are compatible with OXID eShop compilation b-7.1.x (which uses `graphql-base` 9.x version resp. b-7.1.x branch)
 * 3.x versions (or b-7.0.x branch) are compatible with OXID eShop compilation b-7.0.x (which uses `graphql-base` 8.x version resp. b-7.0.x branch)
@@ -83,6 +84,48 @@ $ ./vendor/bin/phpunit --bootstrap=./source/bootstrap.php -c vendor/oxid-esales/
 ```bash
 $ SELENIUM_SERVER_HOST=selenium MODULE_IDS=oe_graphql_storefront vendor/bin/codecept run acceptance -c vendor/oxid-esales/graphql-storefront/tests/codeception.yml
 ```
+
+# Development installation on OXID eShop SDK
+
+The installation instructions below are shown for the current [SDK](https://github.com/OXID-eSales/docker-eshop-sdk)
+for shop 7.3. Make sure your system meets the requirements of the SDK.
+
+0. Ensure all docker containers are down to avoid port conflicts
+
+1. Clone the SDK for the new project
+```shell
+echo MyProject && git clone https://github.com/OXID-eSales/docker-eshop-sdk.git $_ && cd $_
+```
+
+2. Clone the repository to the source directory
+```shell
+git clone --recurse-submodules https://github.com/OXID-eSales/graphql-storefront-module.git --branch=b-7.3.x ./source
+```
+
+3. Run the recipe to setup the development environment
+```shell
+./source/recipes/setup-development.sh
+```
+
+You should be able to access the shop with http://localhost.local and the admin panel with http://localhost.local/admin
+(credentials: noreply@oxid-esales.com / admin)
+
+### Running tests locally
+
+Check the "scripts" section in the `composer.json` file for the available commands. Those commands can be executed
+by connecting to the php container and running the command from there, example:
+
+```shell
+make php
+composer tests-coverage
+```
+
+Commands can be also triggered directly on the container with docker compose, example:
+
+```shell
+docker compose exec -T php composer tests-coverage
+```
+
 
 ## Contributing
 
