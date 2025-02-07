@@ -21,7 +21,7 @@
             <directory>Unit/</directory>
         </testsuite>
         <testsuite name="Integration">
-            <directory>Integration</directory>
+            <directory>Integration/</directory>
         </testsuite>
     </testsuites>
     <source>

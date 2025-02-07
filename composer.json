@@ -78,7 +78,7 @@
     "config": {
         "allow-plugins": {
             "oxid-esales/oxideshop-unified-namespace-generator": true,
-            "oxid-esales/oxideshop-composer-plugin": false,
+            "oxid-esales/oxideshop-composer-plugin": true,
             "codeception/c3": true
         }
     }
