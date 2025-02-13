@@ -16,11 +16,11 @@ on:
                     - 'PHP8.3/MariaDb11'
                 default: 'PHP8.2/MySQL8.0'
                 description: 'Limit to one PHP/MySQL combination'
-        use_dev_version:
-          type: choice
-          options: [ 'no', 'v0' ]
-          description: 'Use the dev version of github actions'
-          default: 'no'
+            use_dev_version:
+              type: choice
+              options: [ 'no', 'v0' ]
+              description: 'Use the dev version of github actions'
+              default: 'no'
 
 jobs:
     build_testplan:
