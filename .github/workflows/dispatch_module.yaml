@@ -74,7 +74,7 @@ jobs:
       uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v0
       with:
         testplan: ${{ needs.build_testplan.outputs.testplan }}
-        runs_on: ${{ inputs.runs_on }}
+        runs_on: '"ubuntu-latest"'
         defaults: 'v0'
         plan_folder: '.github/oxid-esales'
       secrets:
