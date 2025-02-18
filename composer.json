@@ -27,7 +27,7 @@
         "codeception/module-rest": "^3.3",
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-db": "*",
-        "codeception/codeception": "^5.0",
+        "codeception/codeception": "5.1",
         "oxid-esales/codeception-modules": "dev-b-7.2.x",
         "codeception/module-asserts": "^3.0",
         "codeception/c3": "^2.9"
