@@ -2,13 +2,11 @@ name: Auto trigger on push or pull requests
 
 on:
     pull_request: {}
-    push:
-        branches:
-            - '**'
+    push: {}
 
 jobs:
     push_module:
-        uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
+        uses: OXID-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
         with:
             testplan: '~/defaults/7.3.x.yaml,~/defaults/php8.3_mysql8.0_only.yaml,~/graphql-storefront.yaml'
             runs_on: '"ubuntu-latest"'

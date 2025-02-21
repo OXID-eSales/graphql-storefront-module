@@ -1,12 +1,13 @@
 # {{ $ids := "oe_graphql_storefront" }}ids: {{ $ids }}
 # {{ $org := "oxid-esales" }}organisation: {{ $org }}
 # {{ $name := "graphql-storefront" }}name: {{ $name }}
+# {{ $repo := "OXID-eSales/graphql-storefront-module" }}repo: {{ $repo }}
 
 install:
   cache:
     prepared_shop: false
   git:
-    repository: 'OXID-eSales/graphql-storefront-module'
+    repository: '{{ $repo }}'
     ref: &ref '{{ .Github.RefName }}'
     shop_url: 'https://github.com/OXID-eSales/graphql-storefront-module.git'
     shop_ref: *ref
@@ -14,12 +15,27 @@ install:
       root_url: ''
       transform: |
         {
-          "require": {
+          "require-dev": {
+              "phpunit/phpunit": "^10.4",
+              "phpstan/phpstan": "^1.10.58",
+              "squizlabs/php_codesniffer": "3.*",
+              "phpmd/phpmd": "^2.11",
+              "mikey179/vfsstream": "^1.6",
+              "qossmic/deptrac-shim": "^1.0.2",
+              "codeception/module-rest": "^3.3",
+              "codeception/module-phpbrowser": "^3.0",
+              "codeception/module-db": "*",
+              "codeception/codeception": "5.1",
+              "oxid-esales/codeception-modules": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/developer-tools": "{{ .Data.global.composer.dev_ref }}",
+              "codeception/module-asserts": "^3.0",
+              "codeception/c3": "^2.9",
               "oxid-esales/oxideshop-ce": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/twig-component": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/twig-admin-theme": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/apex-theme": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/developer-tools": "{{ .Data.global.composer.dev_ref }}",
+              "oxid-esales/oxideshop-doctrine-migration-wrapper": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/oxideshop-demodata-ce": "dev-master"
           }
         }
@@ -28,10 +44,10 @@ install:
     perl -pi -e 'print "SetEnvIf Authorization \"(.*)\" HTTP_AUTHORIZATION=\$1\n\n" if $. == 1' source/.htaccess
 
     vendor/bin/oe-console oe:database:reset --db-host=mysql --db-port=3306 --db-name=example --db-user=root --db-password=root --force
+    vendor/bin/oe-console oe:module:install ./
     vendor/bin/oe-eshop-doctrine_migration migrations:migrate
     vendor/bin/oe-eshop-db_views_generate
     vendor/bin/oe-console oe:setup:demodata
-    vendor/bin/oe-console oe:module:install ./
 
     vendor/bin/oe-console oe:module:activate oe_graphql_base
     vendor/bin/oe-console oe:module:activate "{{ $ids }}"

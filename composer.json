@@ -28,9 +28,12 @@
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-db": "*",
         "codeception/codeception": "5.1",
-        "oxid-esales/codeception-modules": "dev-b-7.2.x",
+        "oxid-esales/codeception-modules": "dev-b-7.3.x",
         "codeception/module-asserts": "^3.0",
-        "codeception/c3": "^2.9"
+        "codeception/c3": "^2.9",
+        "oxid-esales/developer-tools": "dev-b-7.3.x",
+        "oxid-esales/oxideshop-doctrine-migration-wrapper": "dev-b-7.3.x",
+        "oxid-esales/oxideshop-demodata-ce": "dev-master"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
