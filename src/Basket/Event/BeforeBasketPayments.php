@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Basket\Event;
 
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
+use OxidEsales\GraphQL\Storefront\Payment\DataType\Payment;
 use Symfony\Contracts\EventDispatcher\Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -42,6 +43,9 @@ final class BeforeBasketPayments extends Event implements BasketModifyInterface
         return $this->payments;
     }
 
+    /**
+     * @param array<int, BasketPayment>|null $payments
+     */
     public function setPayments(?array $payments = null): void
     {
         $this->payments = $payments;

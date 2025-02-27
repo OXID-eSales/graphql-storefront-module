@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Vendor\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\Filter\BoolFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
 use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
@@ -29,9 +30,7 @@ final class VendorFilterList extends FilterList
     }
 
     /**
-     * @return array{
-     *                oxtitle: ?StringFilter
-     *                }
+     * @return  array<string, FilterInterface>
      */
     public function getFilters(): array
     {

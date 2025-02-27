@@ -15,7 +15,7 @@ use function sprintf;
 
 final class CurrencyNotFound extends NotFound
 {
-    public function __construct(string $name = null)
+    public function __construct(?string $name = null)
     {
         $message = 'No active currency was found';
 

@@ -15,6 +15,10 @@ final class AddressMissingFields extends Error
 {
     protected string $category = 'validation';
 
+
+    /**
+     * @param array<string, string>$missingFields
+     */
     public function __construct(
         string $addressName,
         array $missingFields

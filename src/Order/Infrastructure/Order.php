@@ -72,6 +72,9 @@ final class Order
         return $usedVouchers;
     }
 
+    /**
+     * @return array<int, OrderItem>
+     */
     public function getOrderItems(OrderDataType $order): array
     {
         /** @var Iterator<OrderArticle> $orderArticles */
@@ -93,6 +96,9 @@ final class Order
         return $payment ? new OrderPayment($payment) : null;
     }
 
+    /**
+     * @return array<int, OrderFile>
+     */
     public function getOrderFiles(OrderDataType $order): array
     {
         /** @var OrderFileListModel $orderFileList */

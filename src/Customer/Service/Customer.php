@@ -159,6 +159,9 @@ final class Customer implements CustomerInterface
         return $customer;
     }
 
+    /**
+     * @param array <string, mixed>$data
+     */
     private function updateCustomer(CustomerDataType $customer, array $data = []): CustomerDataType
     {
         $customerModel = $customer->getEshopModel();

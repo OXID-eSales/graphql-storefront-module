@@ -169,6 +169,11 @@ final class Voucher
         }
     }
 
+    /**
+     * @param array<int, VoucherDataType> $activeVouchers
+     *
+     * @return array<int, string>
+     */
     private function getActiveVouchersIds(array $activeVouchers): array
     {
         $ids = [];
@@ -196,6 +201,11 @@ final class Voucher
         return $productsPrice;
     }
 
+    /**
+     * @param array<int, VoucherDataType> $activeVouchers
+     *
+     * @return array<string, string>
+     */
     private function getActiveVouchersNumbers(array $activeVouchers): array
     {
         $vouchersNr = [];

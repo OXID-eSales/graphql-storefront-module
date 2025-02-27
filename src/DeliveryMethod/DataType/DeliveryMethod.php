@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType;
 
 use OxidEsales\Eshop\Application\Model\DeliverySet as EshopDeliverySetModel;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
+use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment as BasketPaymentDataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -28,6 +29,9 @@ class DeliveryMethod implements ShopModelAwareInterface
     /** @var BasketPaymentDataType[] */
     private $basketPaymentTypes;
 
+    /**
+     * @param array<int, BasketPayment> $basketPaymentTypes
+     */
     public function __construct(
         EshopDeliverySetModel $deliverySetModel,
         array $basketPaymentTypes = []

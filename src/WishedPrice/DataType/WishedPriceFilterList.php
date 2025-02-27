@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\WishedPrice\DataType;
 
+use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
 use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
@@ -33,9 +34,7 @@ final class WishedPriceFilterList extends FilterList
     }
 
     /**
-     * @return array{
-     *                oxuserid: ?IDFilter
-     *                }
+     * @return  array<string, FilterInterface>
      */
     public function getFilters(): array
     {

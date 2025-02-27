@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Shop;
 
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\Discount as EshopDiscountModel;
+use OxidEsales\Eshop\Application\Model\UserBasketItem;
 use OxidEsales\Eshop\Core\Exception\ObjectException as EshopObjectException;
 use OxidEsales\EshopCommunity\Core\Di\ContainerFacade;
 use OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder as BasketFinderService;
@@ -68,6 +69,9 @@ class Voucher extends Voucher_parent
         return $this->getSerieDiscount();
     }
 
+    /**
+     * @return array<string, UserBasketItem>
+     */
     protected function getBasketItems($oDiscount = null): array
     {
         $items = parent::getBasketItems($oDiscount);
@@ -84,6 +88,8 @@ class Voucher extends Voucher_parent
      * In GraphQL module we don't have session, that's why we need to get GraphQL basket.
      *
      * @param null|mixed $oDiscount
+     *
+     * @return  array<int<0, max>, array<string, mixed>>
      */
     protected function getGraphQLBasketItems($oDiscount = null): array
     {

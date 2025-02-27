@@ -42,6 +42,9 @@ final class BeforeBasketDeliveryMethods extends Event implements BasketModifyInt
         return $this->deliveryMethods;
     }
 
+    /**
+     * @param array<int, BasketDeliveryMethod>|null $deliveryMethods
+     */
     public function setDeliveryMethods(?array $deliveryMethods = null): void
     {
         $this->deliveryMethods = $deliveryMethods;

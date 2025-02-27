@@ -31,7 +31,11 @@ final class ProductRatingRelationService
         $this->repository = $repository;
     }
 
-    /** @SuppressWarnings(PHPMD.UnusedFormalParameter) */
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     *
+     * @return array<int, mixed>
+     */
     public function getRatings(ProductRating $rating): array
     {
         return [];

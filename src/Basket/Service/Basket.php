@@ -39,6 +39,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Customer as CustomerInfrastructure;
 use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\BasketDeliveryMethod as BasketDeliveryMethodDataType;
+use OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType\DeliveryMethod;
 use OxidEsales\GraphQL\Storefront\DeliveryMethod\Exception\UnavailableDeliveryMethod;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use OxidEsales\GraphQL\Storefront\Payment\Exception\PaymentValidationFailed;
@@ -420,6 +421,9 @@ final class Basket
         return array_unique($result, SORT_REGULAR);
     }
 
+    /**
+     * @return array<int|string,BasketDeliveryMethodDataType>
+     */
     private function getAvailableDeliveries(ID $basketId): array
     {
         $basket = $this->basketFinderService->getAuthenticatedCustomerBasket($basketId);

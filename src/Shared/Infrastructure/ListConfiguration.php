@@ -26,15 +26,21 @@ use OxidEsales\Eshop\Core\Model\BaseModel;
 final class ListConfiguration
 {
     /**
-     * @var array
+     * @var array<int, mixed>>
      */
     private $map;
 
+    /**
+     * @param array<int, mixed> $map
+     */
     public function __construct(array $map = [])
     {
         $this->map = $map;
     }
 
+    /**
+     * @return array<int, mixed> $map
+     */
     public function getMap(): array
     {
         return $this->map;

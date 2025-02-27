@@ -51,6 +51,9 @@ final class Customer
         return $orders;
     }
 
+    /**
+     * @return array<int, OrderFile>
+     */
     public function getOrderFiles(CustomerDataType $customer): array
     {
         /** @var OrderFileListModel $orderFileList */

@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\DeliveryMethod\DataType;
 
 use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\DeliverySet as EshopDeliverySetModel;
+use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
 /**
@@ -21,6 +22,9 @@ final class BasketDeliveryMethod extends DeliveryMethod
     /** @var EshopBasketModel */
     private $basketModel;
 
+    /**
+     * @param array<int, BasketPayment> $paymentTypes
+     */
     public function __construct(
         EshopDeliverySetModel $deliverySetModel,
         EshopBasketModel $basketModel,

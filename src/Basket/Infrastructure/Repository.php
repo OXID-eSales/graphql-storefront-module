@@ -165,12 +165,15 @@ final class Repository
         return $baskets;
     }
 
+    /**
+     * @return array <mixed, mixed>
+     * @throws \Doctrine\DBAL\Exception
+     */
     private function getCustomerBasketIds(ID $customerId): array
     {
         $queryBuilder = $this->queryBuilderFactory->create();
         $tableViewNameGenerator = oxNew(TableViewNameGenerator::class);
 
-        /** @var \Doctrine\DBAL\Driver\Statement $execute */
         $execute = $queryBuilder
             ->select('oxid')
             ->from($tableViewNameGenerator->getViewName('oxuserbaskets'), 'userbaskets')

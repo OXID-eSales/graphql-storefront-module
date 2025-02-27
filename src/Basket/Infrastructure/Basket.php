@@ -63,6 +63,10 @@ final class Basket
         $this->eventDispatcher = $eventDispatcher;
     }
 
+    /**
+     * @param array<int, mixed>|null $persParams
+     * @param array<int, mixed>|null $select
+     */
     public function addBasketItem(
         BasketDataType $basket,
         ID $productId,
@@ -164,6 +168,9 @@ final class Basket
         return true;
     }
 
+    /**
+     * @param array<string, mixed> $assignValues
+     */
     public function assignAndSave(BasketDataType $basket, array $assignValues): bool
     {
         $model = $basket->getEshopModel();

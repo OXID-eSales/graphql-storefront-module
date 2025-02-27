@@ -30,7 +30,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
 
     private const DEFAULT_STATUS = 0;
 
-    /** @var array */
+    /** @var array<int, string> */
     private $statusMapping = [
         0 => self::STATUS_0,
         1 => self::STATUS_1,

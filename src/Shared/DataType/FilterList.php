@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Shared\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\Filter\BoolFilter;
+use OxidEsales\GraphQL\Base\DataType\Filter\FilterInterface;
 
 abstract class FilterList
 {
@@ -21,6 +22,9 @@ abstract class FilterList
         $this->active = new BoolFilter(true);
     }
 
+    /**
+     * @return  array<string, FilterInterface>
+     */
     abstract public function getFilters(): array;
 
     public function withActiveFilter(?BoolFilter $active): self

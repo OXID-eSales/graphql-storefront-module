@@ -130,6 +130,9 @@ final class Product
         return $category;
     }
 
+    /**
+     * @return array <int, string>
+     */
     public function getCategories(
         ProductDataType $product
     ): array {

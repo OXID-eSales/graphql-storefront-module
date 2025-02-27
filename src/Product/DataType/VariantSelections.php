@@ -17,10 +17,13 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
  */
 class VariantSelections
 {
+    /**
+     * @var array <mixed, mixed>
+     */
     private array $variantSelections;
 
     /**
-     * @param array $variantSelections
+     * @param array <mixed, mixed>$variantSelections
      */
     public function __construct(array $variantSelections)
     {
