@@ -4,10 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Undecided] - unreleased
 
 ### Changed
 - Updated GHA workflow to run with shop 7.3.x
+## [4.0.1] - unreleased
 
 ### Added
 - OXID SDK recipe for development setup
@@ -221,6 +221,7 @@ This is stable release for v3.1.0. No changes have been made since v3.1.0-rc.1.
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
+[4.0.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.0.0...b-7.3.x
 [4.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.0.0-rc.1...v4.0.0
 [4.0.0-rc.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v3.1.0...v4.0.0-rc.1
 [3.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v3.1.0-rc.1...v3.1.0
