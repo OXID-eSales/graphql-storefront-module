@@ -73,7 +73,7 @@ final class Order
     }
 
     /**
-     * @return array<int, OrderItem>
+     * @return OrderItem[]
      */
     public function getOrderItems(OrderDataType $order): array
     {

@@ -170,9 +170,9 @@ final class Voucher
     }
 
     /**
-     * @param array<int, VoucherDataType> $activeVouchers
+     * @param VoucherDataType[] $activeVouchers
      *
-     * @return array<int, string>
+     * @return string[]
      */
     private function getActiveVouchersIds(array $activeVouchers): array
     {
@@ -202,7 +202,7 @@ final class Voucher
     }
 
     /**
-     * @param array<int, VoucherDataType> $activeVouchers
+     * @param VoucherDataType[] $activeVouchers
      *
      * @return array<string, string>
      */

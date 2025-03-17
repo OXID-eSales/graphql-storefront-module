@@ -30,7 +30,7 @@ class DeliveryMethod implements ShopModelAwareInterface
     private $basketPaymentTypes;
 
     /**
-     * @param array<int, BasketPayment> $basketPaymentTypes
+     * @param BasketPaymentDataType[] $basketPaymentTypes
      */
     public function __construct(
         EshopDeliverySetModel $deliverySetModel,

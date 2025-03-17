@@ -52,7 +52,7 @@ final class Customer
     }
 
     /**
-     * @return array<int, OrderFile>
+     * @return OrderFile[]
      */
     public function getOrderFiles(CustomerDataType $customer): array
     {

@@ -70,7 +70,7 @@ class Voucher extends Voucher_parent
     }
 
     /**
-     * @return array<string, UserBasketItem>
+     * @return array<int, array<string, mixed>>
      */
     protected function getBasketItems($oDiscount = null): array
     {
@@ -89,7 +89,7 @@ class Voucher extends Voucher_parent
      *
      * @param null|mixed $oDiscount
      *
-     * @return  array<int<0, max>, array<string, mixed>>
+     * @return  array<int, array<string, mixed>>
      */
     protected function getGraphQLBasketItems($oDiscount = null): array
     {

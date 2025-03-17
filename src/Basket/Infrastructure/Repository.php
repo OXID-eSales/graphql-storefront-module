@@ -166,7 +166,7 @@ final class Repository
     }
 
     /**
-     * @return array <mixed, mixed>
+     * @return string[]
      * @throws \Doctrine\DBAL\Exception
      */
     private function getCustomerBasketIds(ID $customerId): array

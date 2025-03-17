@@ -17,7 +17,7 @@ final class AddressMissingFields extends Error
 
 
     /**
-     * @param array<string, string>$missingFields
+     * @param string[] $missingFields
      */
     public function __construct(
         string $addressName,

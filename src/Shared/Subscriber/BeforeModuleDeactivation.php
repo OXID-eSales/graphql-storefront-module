@@ -17,12 +17,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 final class BeforeModuleDeactivation implements EventSubscriberInterface
 {
     /**
-     * @var array<int, string>
+     * @var string[]
      */
     private array $dependencies;
 
     /**
-     * @param array<int, string> $dependencies
+     * @param string[] $dependencies
      */
     public function __construct(array $dependencies)
     {

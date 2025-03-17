@@ -201,7 +201,6 @@ final class RelationService
             ];
         }
 
-        /** @var array <int, string>$categoryIds */
         $categoryIds = $this->productInfrastructure->getCategories($product);
 
         $categories = [];

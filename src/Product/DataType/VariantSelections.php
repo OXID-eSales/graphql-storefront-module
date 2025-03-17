@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 
+use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Application\Model\VariantSelectList;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
@@ -18,12 +20,20 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 class VariantSelections
 {
     /**
-     * @var array <mixed, mixed>
+     * @var array{
+     *     selections: null|VariantSelectList[],
+     *     oActiveVariant: Article,
+     *     blPerfectFit: bool
+     * }
      */
     private array $variantSelections;
 
     /**
-     * @param array <mixed, mixed>$variantSelections
+     * @param array{
+     *     selections: null|VariantSelectList[],
+     *     oActiveVariant: Article,
+     *     blPerfectFit: bool
+     * } $variantSelections
      */
     public function __construct(array $variantSelections)
     {

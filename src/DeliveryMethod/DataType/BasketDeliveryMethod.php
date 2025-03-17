@@ -23,7 +23,7 @@ final class BasketDeliveryMethod extends DeliveryMethod
     private $basketModel;
 
     /**
-     * @param array<int, BasketPayment> $paymentTypes
+     * @param BasketPayment[] $paymentTypes
      */
     public function __construct(
         EshopDeliverySetModel $deliverySetModel,

@@ -44,7 +44,7 @@ final class BeforeBasketPayments extends Event implements BasketModifyInterface
     }
 
     /**
-     * @param array<int, BasketPayment>|null $payments
+     * @param null|BasketPayment[] $payments
      */
     public function setPayments(?array $payments = null): void
     {

@@ -422,7 +422,7 @@ final class Basket
     }
 
     /**
-     * @return array<int|string,BasketDeliveryMethodDataType>
+     * @return BasketDeliveryMethodDataType[]
      */
     private function getAvailableDeliveries(ID $basketId): array
     {

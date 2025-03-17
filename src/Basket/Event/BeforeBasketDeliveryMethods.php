@@ -43,7 +43,7 @@ final class BeforeBasketDeliveryMethods extends Event implements BasketModifyInt
     }
 
     /**
-     * @param array<int, BasketDeliveryMethod>|null $deliveryMethods
+     * @param null|BasketDeliveryMethod[] $deliveryMethods
      */
     public function setDeliveryMethods(?array $deliveryMethods = null): void
     {

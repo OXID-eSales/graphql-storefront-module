@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Order\DataType\OrderPaymentValue;
 final class OrderPayment
 {
     /**
-     * @return array<int, OrderPaymentValue>
+     * @return OrderPaymentValue[]
      */
     public function getPaymentValues(OrderPaymentDataType $orderPayment): array
     {
