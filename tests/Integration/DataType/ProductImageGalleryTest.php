@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\Eshop\Application\Model\Article as EshopArticle;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
+use OxidEsales\EshopCommunity\Tests\Integration\IntegrationTestCase;
 use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage;
@@ -20,14 +21,16 @@ use OxidEsales\GraphQL\Storefront\Product\Service\RelationService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Base\Service\Authorization;
-use PHPUnit\Framework\TestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\ImageUrlAssertionTrait;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage
  * @covers OxidEsales\GraphQL\Storefront\Product\Service\RelationService
  */
-final class ProductImageGalleryTest extends TestCase
+final class ProductImageGalleryTest extends IntegrationTestCase
 {
+    use ImageUrlAssertionTrait;
+
     public function testGetImageGalleryIconAndThumb(): void
     {
         $article = oxNew(EshopArticle::class);
@@ -39,15 +42,8 @@ final class ProductImageGalleryTest extends TestCase
 
         $imageGallery = $productRelation->getImageGallery($product);
 
-        $this->assertMatchesRegularExpression(
-            '@^http.*?/out/pictures/generated/product/1/500_500_75/cabrinha_caliber_2011.jpg$@msi',
-            $imageGallery->getThumb()
-        );
-
-        $this->assertMatchesRegularExpression(
-            '@^http.*?/out/pictures/generated/product/1/100_100_75/cabrinha_caliber_2011.jpg$@msi',
-            $imageGallery->getIcon()
-        );
+        $this->assertUrlIsProductImageUrl($imageGallery->getThumb(), 'cabrinha_caliber_2011.jpg', 'thumb');
+        $this->assertUrlIsProductImageUrl($imageGallery->getIcon(), 'cabrinha_caliber_2011.jpg', 'icon');
     }
 
     public function testGetImageGalleryImagesTypeAndCount(): void
@@ -70,14 +66,9 @@ final class ProductImageGalleryTest extends TestCase
     }
 
     /**
-     * @param $key
-     * @param $image
-     * @param $icon
-     * @param $zoom
-     *
      * @dataProvider getImageGalleryImagesContentDataProvider
      */
-    public function testGetImageGalleryImagesContent($key, $image, $icon, $zoom): void
+    public function testGetImageGalleryImagesContent(int $key, string $fileName): void
     {
         $article = oxNew(EshopArticle::class);
         $article->load('058de8224773a1d5fd54d523f0c823e0');
@@ -87,36 +78,19 @@ final class ProductImageGalleryTest extends TestCase
         $productRelation = $this->productRelationService();
 
         $imageGallery = $productRelation->getImageGallery($product);
-
-        /** @var ProductImage[] $images */
         $images = $imageGallery->getImages();
 
-        $this->assertMatchesRegularExpression($image, $images[$key]->getImage());
-        $this->assertMatchesRegularExpression($icon, $images[$key]->getIcon());
-        $this->assertMatchesRegularExpression($zoom, $images[$key]->getZoom());
+        $this->assertUrlIsProductImageUrl($images[$key]->getImage(), $fileName, 'image', $key);
+        $this->assertUrlIsProductImageUrl($images[$key]->getIcon(), $fileName, 'icon', $key);
+        $this->assertUrlIsProductImageUrl($images[$key]->getZoom(), $fileName, 'zoom', $key);
     }
 
-    public static function getImageGalleryImagesContentDataProvider()
+    public static function getImageGalleryImagesContentDataProvider(): array
     {
         return [
-            [
-                1,
-                '@^http.*?/out/pictures/generated/product/1/800_600_75/cabrinha_caliber_2011.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/1/100_100_75/cabrinha_caliber_2011.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/1/1200_1200_75/cabrinha_caliber_2011.jpg$@msi',
-            ],
-            [
-                2,
-                '@^http.*?/out/pictures/generated/product/2/800_600_75/cabrinha_caliber_2011_deck.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/2/100_100_75/cabrinha_caliber_2011_deck.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/2/1200_1200_75/cabrinha_caliber_2011_deck.jpg$@msi',
-            ],
-            [
-                3,
-                '@^http.*?/out/pictures/generated/product/3/800_600_75/cabrinha_caliber_2011_bottom.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/3/100_100_75/cabrinha_caliber_2011_bottom.jpg$@msi',
-                '@^http.*?/out/pictures/generated/product/3/1200_1200_75/cabrinha_caliber_2011_bottom.jpg$@msi',
-            ],
+            [1, 'cabrinha_caliber_2011.jpg'],
+            [2, 'cabrinha_caliber_2011_deck.jpg'],
+            [3, 'cabrinha_caliber_2011_bottom.jpg'],
         ];
     }
 

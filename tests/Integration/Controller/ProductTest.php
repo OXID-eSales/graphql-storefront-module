@@ -14,12 +14,15 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use OxidEsales\GraphQL\Storefront\Tests\Integration\ImageUrlAssertionTrait;
 use ReflectionClass;
 
 use function version_compare;
 
 final class ProductTest extends BaseTestCase
 {
+    use ImageUrlAssertionTrait;
+
     private const ACTIVE_PRODUCT = '058e613db53d782adfc9f2ccb43c45fe';
 
     private const ACTIVE_PRODUCT_WITH_MORE_CATEGORIES = 'b56164c54701f07df14b141da197c207';
@@ -253,26 +256,12 @@ final class ProductTest extends BaseTestCase
 
         $imageGallery = $product['imageGallery'];
         $images = $imageGallery['images'][0];
-        $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/800_600_75/obrien_decade_ct_boot_2010_1.jpg@',
-            $images['image']
-        );
-        $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/100_100_75/obrien_decade_ct_boot_2010_1.jpg@',
-            $images['icon']
-        );
-        $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/1200_1200_75/obrien_decade_ct_boot_2010_1.jpg@',
-            $images['zoom']
-        );
-        $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/100_100_75/obrien_decade_ct_boot_2010_1.jpg@',
-            $imageGallery['icon']
-        );
-        $this->assertMatchesRegularExpression(
-            '@https?://.*/out/pictures/generated/product/1/500_500_75/obrien_decade_ct_boot_2010_1.jpg@',
-            $imageGallery['thumb']
-        );
+        $fileName = 'obrien_decade_ct_boot_2010_1.jpg';
+        $this->assertUrlIsProductImageUrl($images['image'], $fileName, 'image');
+        $this->assertUrlIsProductImageUrl($images['icon'], $fileName, 'icon');
+        $this->assertUrlIsProductImageUrl($images['zoom'], $fileName, 'zoom');
+        $this->assertUrlIsProductImageUrl($imageGallery['icon'], $fileName, 'icon');
+        $this->assertUrlIsProductImageUrl($imageGallery['thumb'], $fileName, 'thumb');
 
         $rating = $product['rating'];
         $this->assertSame(0.0, $rating['rating']);
