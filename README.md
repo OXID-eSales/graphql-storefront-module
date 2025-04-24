@@ -13,11 +13,11 @@ This module provides [GraphQL](https://www.graphql.org) queries and mutations fo
 
 ## Usage
 
-This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.0.0` component, which is part of the `v7.0.0` compilation) up and running.
+This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.3.0` component, which is part of the `v7.3.0` compilation) up and running.
 
 ## Branch compatibility
 
-* b-7.3.x branch is compatible with OXID eShop compilation b-7.3.x (which uses `graphql-base` b-7.3.x branch)
+* 4.1.x version (or b-7.3.x branch) are compatible with OXID eShop compilation b-7.3.x (which uses `graphql-base` 11.x version resp.b-7.3.x branch)
 * 4.0.x versions (or b-7.2.x branch) are compatible with OXID eShop compilation b-7.2.x (which uses `graphql-base` 10.x version resp. b-7.2.x branch)
 * 3.1.x versions (or b-7.1.x branch) are compatible with OXID eShop compilation b-7.1.x (which uses `graphql-base` 9.x version resp. b-7.1.x branch)
 * 3.x versions (or b-7.0.x branch) are compatible with OXID eShop compilation b-7.0.x (which uses `graphql-base` 8.x version resp. b-7.0.x branch)
