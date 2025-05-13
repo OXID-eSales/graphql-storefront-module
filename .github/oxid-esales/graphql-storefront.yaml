@@ -25,7 +25,7 @@ install:
               "codeception/module-rest": "^3.3",
               "codeception/module-phpbrowser": "^3.0",
               "codeception/module-db": "*",
-              "codeception/codeception": "5.1",
+              "codeception/codeception": "^5.1",
               "oxid-esales/codeception-modules": "{{ .Data.global.composer.dev_ref }}",
               "oxid-esales/developer-tools": "{{ .Data.global.composer.dev_ref }}",
               "codeception/module-asserts": "^3.0",
