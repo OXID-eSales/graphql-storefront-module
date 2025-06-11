@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0] - 2025-06-11
+This is stable release for v4.1.0. No changes have been made since v4.1.0-rc.1.
+
 ## [4.1.0-rc.1] - 2025-04-25
 
 ### Added
@@ -219,6 +222,7 @@ This is stable release for v3.1.0. No changes have been made since v3.1.0-rc.1.
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
+[4.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.1.0-rc.1...v4.1.0
 [4.1.0-rc.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.0.0...v4.1.0-rc.1
 [4.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.0.0-rc.1...v4.0.0
 [4.0.0-rc.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v3.1.0...v4.0.0-rc.1
