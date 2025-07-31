@@ -23,7 +23,6 @@
         "phpmd/phpmd": "^2.11",
         "mikey179/vfsstream": "^1.6",
         "oxid-esales/oxideshop-ce": "dev-b-7.4.x",
-        "qossmic/deptrac-shim": "^1.0.2",
         "codeception/module-rest": "^3.3",
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-db": "*",
@@ -33,7 +32,8 @@
         "codeception/c3": "^2.9",
         "oxid-esales/developer-tools": "dev-b-7.4.x",
         "oxid-esales/oxideshop-doctrine-migration-wrapper": "dev-b-7.4.x",
-        "oxid-esales/oxideshop-demodata-ce": "dev-master"
+        "oxid-esales/oxideshop-demodata-ce": "dev-master",
+        "deptrac/deptrac": "^3.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
