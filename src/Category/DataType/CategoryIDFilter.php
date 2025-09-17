@@ -33,6 +33,15 @@ final class CategoryIDFilter implements FilterInterface
         return $this->equals;
     }
 
+    public function matches(mixed $value): bool
+    {
+        if (!is_string($value)) {
+            return false;
+        }
+
+        return $value === (string)$this->equals;
+    }
+
     public function addToQuery(QueryBuilder $builder, string $field): void
     {
         $from = $builder->getQueryPart('from');
