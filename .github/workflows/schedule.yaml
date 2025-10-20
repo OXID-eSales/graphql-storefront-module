@@ -6,11 +6,11 @@ on:
 
 jobs:
     call_matrix:
-        uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v4
+        uses: oxid-eSales/github-actions/.github/workflows/universal_workflow_light.yaml@v5
         with:
             testplan: '~/defaults/7.4.x.yaml,~/defaults/php8.2_mysql5.7_only.yaml,~/graphql-storefront.yaml'
             runs_on: '"ubuntu-latest"'
-            defaults: 'v4'
+            defaults: 'v5'
             plan_folder: '.github/oxid-esales'
             use_scheduled_slack_channel: true
         secrets:
