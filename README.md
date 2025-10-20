@@ -13,7 +13,7 @@ This module provides [GraphQL](https://www.graphql.org) queries and mutations fo
 
 ## Usage
 
-This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.3.0` component, which is part of the `v7.3.0` compilation) up and running.
+This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.4.0` component, which is part of the `v7.4.0` compilation) up and running.
 
 ## Branch compatibility
 
