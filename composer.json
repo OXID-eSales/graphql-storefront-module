@@ -33,11 +33,8 @@
         "oxid-esales/codeception-modules": "dev-b-7.4.x",
         "codeception/module-asserts": "^3.0",
         "codeception/c3": "^2.9",
-        "oxid-esales/oxideshop-doctrine-migration-wrapper": "dev-b-7.4.x",
         "oxid-esales/oxideshop-demodata-ce": "dev-master",
         "deptrac/deptrac": "^3.0",
-        "oxid-esales/oxideshop-db-views-generator": "dev-b-7.4.x",
-        "oxid-esales/oxideshop-unified-namespace-generator": "dev-b-7.4.x",
         "qossmic/deptrac-shim": "^1.0.2"
     },
     "minimum-stability": "dev",
