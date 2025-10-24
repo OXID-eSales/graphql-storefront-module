@@ -557,8 +557,6 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        // Different PHP/PHPMailer versions may return different error messages for invalid email
-        // Both "Invalid address" and "idn_to_ascii()" errors indicate the email validation failed
         $I->assertStringContainsString(
             'Failed to send notification:',
             $result['errors']['0']['message']
