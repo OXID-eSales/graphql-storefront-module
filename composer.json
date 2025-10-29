@@ -23,9 +23,6 @@
         "phpmd/phpmd": "^2.11",
         "mikey179/vfsstream": "^1.6",
         "oxid-esales/oxideshop-ce": "dev-b-7.4.x",
-        "oxid-esales/twig-component": "dev-b-7.4.x",
-        "oxid-esales/twig-admin-theme": "dev-b-7.4.x",
-        "oxid-esales/apex-theme": "dev-b-7.4.x",
         "codeception/module-rest": "^3.3",
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-db": "*",
@@ -34,8 +31,7 @@
         "codeception/module-asserts": "^3.0",
         "codeception/c3": "^2.9",
         "oxid-esales/oxideshop-demodata-ce": "dev-master",
-        "deptrac/deptrac": "^3.0",
-        "qossmic/deptrac-shim": "^1.0.2"
+        "deptrac/deptrac": "^3.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
