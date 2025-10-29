@@ -3,6 +3,7 @@ parameters:
 
 imports:
   - { resource: src/Customer/services.yaml }
+  - { resource: src/WishedPrice/services.yaml }
 
 services:
 

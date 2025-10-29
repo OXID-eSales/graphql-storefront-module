@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    public: false
+    autowire: true
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Factory\EmailFactoryInterface:
+    class: OxidEsales\GraphQL\Storefront\WishedPrice\Factory\EmailFactory
+    public: true
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceNotification:
+    public: true
