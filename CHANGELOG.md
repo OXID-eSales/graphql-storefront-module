@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - update deptrac in composer to use new deptrac/deptrac package
+- WishedPrice notification sending now validates empty email addresses upfront,  throwing `NotificationSendFailure` exception instead of internal server errors. This improves PHP 8.4 compatibility and provides clearer error messages.
 
 ### Fixed
 - CategoryIdFilter didn't implemented matches method from FilterInterface
