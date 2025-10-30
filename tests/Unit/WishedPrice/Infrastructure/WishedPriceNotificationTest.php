@@ -11,9 +11,9 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\WishedPrice\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\PriceAlarm as WishedPriceModel;
 use OxidEsales\Eshop\Core\Email;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice as WishedPriceDataType;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Exception\NotificationSendFailure;
-use OxidEsales\GraphQL\Storefront\WishedPrice\Factory\EmailFactoryInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceNotification;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
@@ -27,9 +27,9 @@ final class WishedPriceNotificationTest extends TestCase
     {
         $wishedPrice = $this->createWishedPrice('');
 
-        $emailFactoryStub = $this->createStub(EmailFactoryInterface::class);
+        $oxNewFactoryStub = $this->createStub(OxNewFactoryInterface::class);
 
-        $sut = $this->getSut($emailFactoryStub);
+        $sut = $this->getSut($oxNewFactoryStub);
 
         $this->expectException(NotificationSendFailure::class);
         $this->expectExceptionMessage('Email address cannot be empty');
@@ -40,14 +40,14 @@ final class WishedPriceNotificationTest extends TestCase
     #[Test]
     public function sendsNotificationSuccessfully(): void
     {
-        $userEmail = uniqid() . '@example.com';
+        $userEmail = uniqid() . '@oxid-esales.com';
         $productId = uniqid();
 
         $wishedPrice = $this->createWishedPrice($userEmail, $productId);
         $wishedPriceModelStub = $wishedPrice->getEshopModel();
 
-        $emailSpy = $this->createMock(Email::class);
-        $emailSpy->expects($this->once())
+        $emailMock = $this->createMock(Email::class);
+        $emailMock->expects($this->once())
             ->method('sendPriceAlarmNotification')
             ->with(
                 [
@@ -58,10 +58,10 @@ final class WishedPriceNotificationTest extends TestCase
             )
             ->willReturn(true);
 
-        $emailFactoryStub = $this->createStub(EmailFactoryInterface::class);
-        $emailFactoryStub->method('create')->willReturn($emailSpy);
+        $oxNewFactoryStub = $this->createStub(OxNewFactoryInterface::class);
+        $oxNewFactoryStub->method('getModel')->willReturn($emailMock);
 
-        $sut = $this->getSut($emailFactoryStub);
+        $sut = $this->getSut($oxNewFactoryStub);
 
         $result = $sut->sendNotification($wishedPrice);
 
@@ -71,7 +71,7 @@ final class WishedPriceNotificationTest extends TestCase
     #[Test]
     public function sendNotificationThrowsExceptionWhenSendingFails(): void
     {
-        $userEmail = uniqid() . '@example.com';
+        $userEmail = uniqid() . '@oxid-esales.com';
         $productId = uniqid();
         $errorInfo = uniqid();
 
@@ -81,10 +81,10 @@ final class WishedPriceNotificationTest extends TestCase
         $emailStub->method('sendPriceAlarmNotification')->willReturn(false);
         $emailStub->ErrorInfo = $errorInfo;
 
-        $emailFactoryStub = $this->createStub(EmailFactoryInterface::class);
-        $emailFactoryStub->method('create')->willReturn($emailStub);
+        $oxNewFactoryStub = $this->createStub(OxNewFactoryInterface::class);
+        $oxNewFactoryStub->method('getModel')->willReturn($emailStub);
 
-        $sut = $this->getSut($emailFactoryStub);
+        $sut = $this->getSut($oxNewFactoryStub);
 
         $this->expectException(NotificationSendFailure::class);
         $this->expectExceptionMessage($errorInfo);
@@ -103,8 +103,8 @@ final class WishedPriceNotificationTest extends TestCase
         return new WishedPriceDataType($wishedPriceModelStub);
     }
 
-    private function getSut(EmailFactoryInterface $emailFactory): WishedPriceNotification
+    private function getSut(OxNewFactoryInterface $oxNewFactory): WishedPriceNotification
     {
-        return new WishedPriceNotification($emailFactory);
+        return new WishedPriceNotification($oxNewFactory);
     }
 }
