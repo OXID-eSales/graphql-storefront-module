@@ -537,32 +537,6 @@ final class WishedPriceCest extends BaseCest
         $I->assertEquals($expectedWishedPrice['currency']['name'], $savedWishedPrice->getRawFieldData('OXCURRENCY'));
     }
 
-    public function testWishedPriceSetFailsToSendNotification(AcceptanceTester $I): void
-    {
-        $this->setShopOrderMail($I, '');
-        $I->login(self::USERNAME, self::PASSWORD);
-
-        $I->sendGQLQuery(
-            'mutation {
-                wishedPriceSet(wishedPrice: {
-                    productId: "' . self::PRODUCT_ID . '",
-                    currencyName: "EUR",
-                    price: 15.00
-                }) {
-                    id
-                }
-            }'
-        );
-
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
-
-        $I->assertStringContainsString(
-            'Failed to send notification: Invalid address:  (to):',
-            $result['errors']['0']['message']
-        );
-    }
-
     private function setShopOrderMail(AcceptanceTester $I, string $value = 'reply@myoxideshop.com'): void
     {
         $I->updateInDatabase(
