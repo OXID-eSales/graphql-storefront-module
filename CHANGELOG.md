@@ -6,11 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [5.0.0] - Unreleased
 
-### Added
-- Support for OXID eShop 7.5
-
 ### Changed
-- Require PHP 8.3 or higher
+- Updated to work with OXID eShop 7.5.x
+- Minimum PHP version is now 8.3, tested up to PHP 8.5
+- Services are no longer auto-detected, explicit services.yaml files added per component
+
+### Added
+- Add interface aliases for OxNewFactoryInterface and RepositoryInterface
 
 ## [4.2.0] - 2025-11-04
 

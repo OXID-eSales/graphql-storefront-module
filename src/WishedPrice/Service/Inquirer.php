@@ -10,17 +10,17 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\WishedPrice\Service;
 
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\Inquirer as InquirerDataType;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Exception\InquirerNotFound;
 
 final class Inquirer
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     public function __construct(
-        Repository $repository
+        RepositoryInterface $repository
     ) {
         $this->repository = $repository;
     }

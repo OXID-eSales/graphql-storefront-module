@@ -1,0 +1,19 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\NewsletterOptInInput:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\NewsletterStatus:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\NewsletterSubscribeInput:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\NewsletterUnsubscribeInput:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber:
+    public: true

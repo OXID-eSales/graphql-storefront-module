@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Contact\Service\ContactRequest:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Contact\Service\ContactRequestInput:
+    public: true

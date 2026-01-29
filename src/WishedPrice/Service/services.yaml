@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Service\Inquirer:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Service\RelationService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPrice:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPriceInput:
+    public: true

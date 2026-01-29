@@ -12,15 +12,15 @@ namespace OxidEsales\GraphQL\Storefront\Payment\Service;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\Payment as PaymentDataType;
 use OxidEsales\GraphQL\Storefront\Payment\Exception\PaymentNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 
 final class Payment
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     public function __construct(
-        Repository $repository
+        RepositoryInterface $repository
     ) {
         $this->repository = $repository;
     }

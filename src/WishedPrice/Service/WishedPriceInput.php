@@ -13,7 +13,7 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Exception\WishedPriceOutOfBounds;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceFactory;
@@ -25,7 +25,7 @@ final class WishedPriceInput
     /** @var Authentication */
     private $authentication;
 
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var WishedPriceFactory */
@@ -33,7 +33,7 @@ final class WishedPriceInput
 
     public function __construct(
         Authentication $authentication,
-        Repository $repository,
+        RepositoryInterface $repository,
         WishedPriceFactory $wishedPriceFactory
     ) {
         $this->authentication = $authentication;

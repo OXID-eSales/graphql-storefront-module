@@ -38,13 +38,13 @@ use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotOrderable;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Price as PriceDataType;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Basket as SharedBasketInfrastructure;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Basket
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var SharedBasketInfrastructure */
@@ -54,7 +54,7 @@ final class Basket
     private $eventDispatcher;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         SharedBasketInfrastructure $sharedBasketInfrastructure,
         EventDispatcherInterface $eventDispatcher
     ) {

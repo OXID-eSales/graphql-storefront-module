@@ -19,13 +19,13 @@ use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeAddItem;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket as BasketInfrastructure;
 use OxidEsales\GraphQL\Storefront\Product\Service\Product as ProductService;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class BasketItem
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     private EventDispatcherInterface $eventDispatcher;
@@ -37,7 +37,7 @@ final class BasketItem
     private BasketInfrastructure $basketInfrastructure;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         EventDispatcherInterface $eventDispatcher,
         BasketFinder $basketFinderService,
         ProductService $productService,

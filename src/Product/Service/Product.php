@@ -18,7 +18,7 @@ use OxidEsales\GraphQL\Storefront\Product\Infrastructure\Product as ProductInfra
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
 use OxidEsales\GraphQL\Storefront\Product\DataType\VariantSelections;
 use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -29,7 +29,7 @@ final class Product extends AbstractActiveFilterService
     private $productInfrastructure;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Authorization $authorizationService,
         ProductInfrastructure $productInfrastructure
     ) {

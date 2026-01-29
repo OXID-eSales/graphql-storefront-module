@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Product\Service;
 
 use OxidEsales\GraphQL\Base\DataType\Filter\StringFilter;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductRating;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 
 /**
  * @deprecated not used for storefront, we keep the code and later move it to admin
@@ -20,13 +20,13 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 final class ProductRatingRelationService
 {
     /**
-     * @var Repository
+     * @var RepositoryInterface
      * @phpstan-ignore-next-line
      */
     private $repository;
 
     public function __construct(
-        Repository $repository
+        RepositoryInterface $repository
     ) {
         $this->repository = $repository;
     }

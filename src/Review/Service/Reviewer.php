@@ -12,15 +12,15 @@ namespace OxidEsales\GraphQL\Storefront\Review\Service;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Review\DataType\Reviewer as ReviewerDataType;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewerNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 
 final class Reviewer
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     public function __construct(
-        Repository $repository
+        RepositoryInterface $repository
     ) {
         $this->repository = $repository;
     }

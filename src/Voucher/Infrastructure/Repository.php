@@ -16,7 +16,7 @@ use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Basket\DataType\BasketVoucherFilterList;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface as SharedRepository;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher as VoucherDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Exception\VoucherNotFound;

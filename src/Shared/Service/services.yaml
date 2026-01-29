@@ -1,0 +1,16 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Shared\Service\LanguageRelationService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper:
+    tags: [ 'graphql_namespace_mapper' ]
+
+  OxidEsales\GraphQL\Storefront\Shared\Service\PermissionProvider:
+    tags: [ 'graphql_permission_provider' ]
+
+  OxidEsales\GraphQL\Storefront\Shared\Service\PriceRelationService:
+    public: true

@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Address\Controller\DeliveryAddress:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Address\Controller\InvoiceAddress:
+    public: true

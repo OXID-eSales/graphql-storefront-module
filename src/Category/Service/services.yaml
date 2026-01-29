@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Category\Service\Category:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Category\Service\RelationService:
+    public: true

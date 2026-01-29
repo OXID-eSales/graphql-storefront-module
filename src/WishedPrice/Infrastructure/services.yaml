@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\PriceFactory:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceFactory:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceNotification:
+    public: true

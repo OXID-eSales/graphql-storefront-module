@@ -1,0 +1,31 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderCostRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderDeliveryAddressRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderDeliveryRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderFileRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderInvoiceAddressRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderItemRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderPaymentRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderProductGrossRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Service\OrderRelations:
+    public: true

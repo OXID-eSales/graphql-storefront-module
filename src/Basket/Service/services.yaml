@@ -1,0 +1,40 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\Basket:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketCostRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketFinder:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketInput:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketItem:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketItemRelationService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketPaymentService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketProductBruttoSumRelations:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketRelationService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\BasketVoucher:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\PlaceOrder:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Service\PublicBasketRelationService:
+    public: true

@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType
 use OxidEsales\GraphQL\Storefront\Category\Service\Category as CategoryService;
 use OxidEsales\GraphQL\Storefront\Content\DataType\Content;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;

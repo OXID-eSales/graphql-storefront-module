@@ -15,8 +15,9 @@ use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category as CategoryDataType;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryFilterList;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Sorting;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as StorefrontRepository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use PHPUnit\Framework\TestCase;
 
 final class RepositoryTest extends TestCase
@@ -25,7 +26,7 @@ final class RepositoryTest extends TestCase
     {
         $repository = ContainerFactory::getInstance()
             ->getContainer()
-            ->get(StorefrontRepository::class);
+            ->get(RepositoryInterface::class);
 
         $list = $repository->getList(
             CategoryDataType::class,
@@ -50,7 +51,7 @@ final class RepositoryTest extends TestCase
 
         $listConfiguration = new ListConfiguration(['oxcategories' => 'oxcategories']);
 
-        $repository = new StorefrontRepository($queryBuilder, $listConfiguration);
+        $repository = new Repository($queryBuilder, $listConfiguration);
 
         $list = $repository->getList(
             CategoryDataType::class,

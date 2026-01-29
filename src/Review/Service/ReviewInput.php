@@ -17,7 +17,7 @@ use OxidEsales\GraphQL\Storefront\Review\DataType\Review;
 use OxidEsales\GraphQL\Storefront\Review\Exception\RatingOutOfBounds;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewInputInvalid;
 use OxidEsales\GraphQL\Storefront\Review\Infrastructure\ReviewFactory;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class ReviewInput
@@ -25,7 +25,7 @@ final class ReviewInput
     /** @var Authentication */
     private $authentication;
 
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var ReviewFactory */
@@ -33,7 +33,7 @@ final class ReviewInput
 
     public function __construct(
         Authentication $authentication,
-        Repository $repository,
+        RepositoryInterface $repository,
         ReviewFactory $reviewFactory
     ) {
         $this->authentication = $authentication;

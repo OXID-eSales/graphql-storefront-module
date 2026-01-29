@@ -1,0 +1,19 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Order\Infrastructure\Order:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Infrastructure\OrderCost:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Infrastructure\OrderDelivery:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Infrastructure\OrderPayment:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Order\Infrastructure\OrderProduct:
+    public: true

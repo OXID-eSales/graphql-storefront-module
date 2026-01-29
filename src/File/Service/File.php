@@ -12,15 +12,15 @@ namespace OxidEsales\GraphQL\Storefront\File\Service;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\File\DataType\File as FileDataType;
 use OxidEsales\GraphQL\Storefront\File\Exception\FileNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 
 final class File
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     public function __construct(
-        Repository $repository
+        RepositoryInterface $repository
     ) {
         $this->repository = $repository;
     }

@@ -26,11 +26,11 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Basket
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     public function __construct(
-        Repository $repository
+        RepositoryInterface $repository
     ) {
         $this->repository = $repository;
     }

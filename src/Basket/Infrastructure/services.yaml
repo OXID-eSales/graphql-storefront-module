@@ -1,0 +1,22 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Basket:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Infrastructure\BasketCost:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Infrastructure\BasketFactory:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Infrastructure\BasketProduct:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Payment:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Repository:
+    public: true

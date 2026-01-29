@@ -17,13 +17,13 @@ use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Address\DataType\AddressFilterList;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress as DeliveryAddressDataType;
 use OxidEsales\GraphQL\Storefront\Address\Exception\DeliveryAddressNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class DeliveryAddress
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var Authentication */
@@ -33,7 +33,7 @@ final class DeliveryAddress
     private $authorizationService;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Authentication $authenticationService,
         Authorization $authorizationService
     ) {

@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\DeliveryMethod\Service\BasketDeliveryMethodRelationService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\DeliveryMethod\Service\DeliveryMethod:
+    public: true

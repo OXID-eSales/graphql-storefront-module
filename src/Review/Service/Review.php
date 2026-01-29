@@ -18,13 +18,13 @@ use OxidEsales\GraphQL\Storefront\Review\DataType\ReviewFilterList;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewAlreadyExists;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewNotFound;
 use OxidEsales\GraphQL\Storefront\Review\Infrastructure\Repository as ReviewRepository;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Review
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var ReviewRepository */
@@ -43,7 +43,7 @@ final class Review
     private $legacyService;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         ReviewRepository $reviewRepository,
         Authentication $authenticationService,
         Authorization $authorizationService,

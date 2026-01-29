@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Product\Service\Product:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Product\Service\ProductRatingRelationService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Product\Service\RelationService:
+    public: true

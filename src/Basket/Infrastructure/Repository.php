@@ -25,7 +25,7 @@ use OxidEsales\GraphQL\Storefront\Basket\DataType\Sorting;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketForUserNotFound;
 use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository as SharedRepository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface as SharedRepository;
 use PDO;
 use TheCodingMachine\GraphQLite\Types\ID;
 

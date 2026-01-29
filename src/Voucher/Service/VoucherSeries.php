@@ -10,16 +10,16 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Voucher\Service;
 
 use OxidEsales\GraphQL\Base\Exception\NotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Voucher\DataType\VoucherSeries as SeriesDataType;
 use OxidEsales\GraphQL\Storefront\Voucher\Exception\SeriesNotFound;
 
 final class VoucherSeries
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
-    public function __construct(Repository $repository)
+    public function __construct(RepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Voucher\Service\Voucher:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Voucher\Service\VoucherRelationService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Voucher\Service\VoucherSeries:
+    public: true

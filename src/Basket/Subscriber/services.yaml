@@ -1,0 +1,7 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization:
+    tags: [ 'kernel.event_subscriber' ]

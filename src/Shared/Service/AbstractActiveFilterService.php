@@ -11,18 +11,18 @@ namespace OxidEsales\GraphQL\Storefront\Shared\Service;
 
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\FilterList;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 
 abstract class AbstractActiveFilterService
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     protected $repository;
 
     /** @var Authorization */
     protected $authorizationService;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Authorization $authorizationService
     ) {
         $this->repository = $repository;

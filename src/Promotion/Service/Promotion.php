@@ -14,13 +14,13 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Promotion\DataType\Promotion as PromotionDataType;
 use OxidEsales\GraphQL\Storefront\Promotion\Exception\PromotionNotFound;
 use OxidEsales\GraphQL\Storefront\Promotion\Infrastructure\Promotion as PromotionInfrastructure;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Promotion
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var Authorization */
@@ -30,7 +30,7 @@ final class Promotion
     private $promotionInfrastructure;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Authorization $authorizationService,
         PromotionInfrastructure $promotionInfrastructure
     ) {

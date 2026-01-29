@@ -15,15 +15,15 @@ use OxidEsales\GraphQL\Storefront\Country\DataType\State as StateDataType;
 use OxidEsales\GraphQL\Storefront\Country\DataType\StateFilterList;
 use OxidEsales\GraphQL\Storefront\Country\DataType\StateSorting;
 use OxidEsales\GraphQL\Storefront\Country\Exception\StateNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 
 final class State
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     public function __construct(
-        Repository $repository
+        RepositoryInterface $repository
     ) {
         $this->repository = $repository;
     }

@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Review\Infrastructure\Repository:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Review\Infrastructure\Review:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Review\Infrastructure\ReviewFactory:
+    public: true

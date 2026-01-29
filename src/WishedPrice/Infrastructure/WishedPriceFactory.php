@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure;
 
 use OxidEsales\Eshop\Application\Model\PriceAlarm;
 use OxidEsales\GraphQL\Storefront\Currency\Infrastructure\Repository as CurrencyRepository;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice;
 use TheCodingMachine\GraphQLite\Types\ID;
 

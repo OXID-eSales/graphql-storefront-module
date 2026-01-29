@@ -14,7 +14,7 @@ use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\InvalidToken;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authentication;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice as WishedPriceDataType;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPriceFilterList;
@@ -24,7 +24,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 
 final class WishedPrice
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var Authentication */
@@ -40,7 +40,7 @@ final class WishedPrice
     private $wishedPriceNotificationInfrastructure;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Authentication $authenticationService,
         Authorization $authorizationService,
         RelationService $wishedPriceRelationService,

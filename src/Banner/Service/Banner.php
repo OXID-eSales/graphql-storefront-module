@@ -16,13 +16,13 @@ use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner as BannerDataType;
 use OxidEsales\GraphQL\Storefront\Banner\Exception\BannerNotFound;
 use OxidEsales\GraphQL\Storefront\Banner\Infrastructure\Banner as BannerInfrastructure;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Banner
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var Authorization */
@@ -35,7 +35,7 @@ final class Banner
     private $bannerInfrastructure;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Authorization $authorizationService,
         Authentication $authenticationService,
         BannerInfrastructure $bannerInfrastructure

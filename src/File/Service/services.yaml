@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\File\Service\File:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\File\Service\FileRelations:
+    public: true

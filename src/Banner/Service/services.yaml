@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Banner\Service\Banner:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Banner\Service\RelationService:
+    public: true

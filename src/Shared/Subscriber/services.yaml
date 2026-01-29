@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Shared\Subscriber\BeforeModuleDeactivation:
+    arguments: [ '%oxidesales.graphqlstorefront.depends_on_modules%' ]
+    tags: [ 'kernel.event_subscriber' ]
+    public: true

@@ -2,47 +2,43 @@ parameters:
   oxidesales.graphqlstorefront.depends_on_modules: [ 'oe_graphql_base' ]
 
 imports:
+  - { resource: src/Shared/services.yaml }
+  - { resource: src/Action/services.yaml }
+  - { resource: src/Address/services.yaml }
+  - { resource: src/Attribute/services.yaml }
+  - { resource: src/Banner/services.yaml }
+  - { resource: src/Basket/services.yaml }
+  - { resource: src/Category/services.yaml }
+  - { resource: src/Contact/services.yaml }
+  - { resource: src/Content/services.yaml }
+  - { resource: src/Country/services.yaml }
+  - { resource: src/Currency/services.yaml }
   - { resource: src/Customer/services.yaml }
+  - { resource: src/DeliveryMethod/services.yaml }
+  - { resource: src/File/services.yaml }
+  - { resource: src/Framework/services.yaml }
+  - { resource: src/Link/services.yaml }
+  - { resource: src/Manufacturer/services.yaml }
+  - { resource: src/NewsletterStatus/services.yaml }
+  - { resource: src/Order/services.yaml }
+  - { resource: src/Payment/services.yaml }
+  - { resource: src/Product/services.yaml }
+  - { resource: src/Promotion/services.yaml }
+  - { resource: src/Review/services.yaml }
+  - { resource: src/Translation/services.yaml }
+  - { resource: src/Vendor/services.yaml }
+  - { resource: src/Voucher/services.yaml }
+  - { resource: src/WishedPrice/services.yaml }
 
 services:
-
   _defaults:
-    public: false
     autowire: true
+    public: false
 
   OxidEsales\Eshop\Core\Registry:
     class: OxidEsales\Eshop\Core\Registry
+    public: true
 
   OxidEsales\Eshop\Core\Language:
     factory: [ '@OxidEsales\Eshop\Core\Registry', 'getLang' ]
-
-  OxidEsales\GraphQL\Storefront\:
-    resource: 'src/*'
-    exclude:
-      - 'src/**/{DataType,Exception,Shop,Event,Subscriber}'
-      - 'src/Customer'
-    public: true
-
-  OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper:
-    class: OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper
-    tags: [ 'graphql_namespace_mapper' ]
-
-  OxidEsales\GraphQL\Storefront\Shared\Service\PermissionProvider:
-    class: OxidEsales\GraphQL\Storefront\Shared\Service\PermissionProvider
-    tags: [ 'graphql_permission_provider' ]
-
-  OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization:
-    class: OxidEsales\GraphQL\Storefront\Basket\Subscriber\BasketAuthorization
-    tags: [ 'kernel.event_subscriber' ]
-
-  OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration:
-    class: OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration
-    arguments:
-      $map: { }
-    public: true
-
-  OxidEsales\GraphQL\Storefront\Shared\Subscriber\BeforeModuleDeactivation:
-    class: OxidEsales\GraphQL\Storefront\Shared\Subscriber\BeforeModuleDeactivation
-    arguments: [ '%oxidesales.graphqlstorefront.depends_on_modules%' ]
-    tags: [ 'kernel.event_subscriber' ]
     public: true

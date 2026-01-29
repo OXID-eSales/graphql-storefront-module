@@ -12,19 +12,19 @@ namespace OxidEsales\GraphQL\Storefront\Address\Service;
 use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress as InvoiceAddressDataType;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Shop\User;
 
 final class InvoiceAddress
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var Authentication */
     private $authenticationService;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Authentication $authenticationService
     ) {
         $this->repository = $repository;

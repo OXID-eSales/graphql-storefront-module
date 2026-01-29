@@ -1,0 +1,19 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Review\Service\ActivityService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Review\Service\RelationService:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Review\Service\Review:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Review\Service\ReviewInput:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Review\Service\Reviewer:
+    public: true

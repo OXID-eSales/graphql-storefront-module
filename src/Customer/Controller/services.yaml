@@ -1,0 +1,10 @@
+services:
+  _defaults:
+    autowire: true
+    public: false
+
+  OxidEsales\GraphQL\Storefront\Customer\Controller\Customer:
+    public: true
+
+  OxidEsales\GraphQL\Storefront\Customer\Controller\Password:
+    public: true

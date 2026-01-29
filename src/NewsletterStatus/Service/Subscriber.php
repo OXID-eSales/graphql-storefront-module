@@ -13,18 +13,18 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as SubscriberDataType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\SubscriberNotFound;
-use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 
 final class Subscriber
 {
-    /** @var Repository */
+    /** @var RepositoryInterface */
     private $repository;
 
     /** @var Legacy */
     private $legacyService;
 
     public function __construct(
-        Repository $repository,
+        RepositoryInterface $repository,
         Legacy $legacyService
     ) {
         $this->repository = $repository;

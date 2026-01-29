@@ -1,0 +1,4 @@
+imports:
+  - { resource: Controller/services.yaml }
+  - { resource: Infrastructure/services.yaml }
+  - { resource: Service/services.yaml }
