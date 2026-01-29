@@ -13,10 +13,11 @@ This module provides [GraphQL](https://www.graphql.org) queries and mutations fo
 
 ## Usage
 
-This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.4.0` component, which is part of the `v7.4.0` compilation) up and running.
+This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.5.0` component, which is part of the `v7.5.0` compilation) up and running.
 
 ## Branch compatibility
 
+* 5.x versions (or b-7.5.x branch) are compatible with OXID eShop compilation b-7.5.x (which uses `graphql-base` 13.x version resp. b-7.5.x branch)
 * 4.2.x versions (or b-7.4.x branch) are compatible with OXID eShop compilation b-7.4.x (which uses `graphql-base` 12.x version resp.b-7.4.x branch)
 * 4.1.x version (or b-7.3.x branch) are compatible with OXID eShop compilation b-7.3.x (which uses `graphql-base` 11.x version resp.b-7.3.x branch)
 * 4.0.x versions (or b-7.2.x branch) are compatible with OXID eShop compilation b-7.2.x (which uses `graphql-base` 10.x version resp. b-7.2.x branch)
@@ -31,8 +32,8 @@ This assumes you have OXID eShop (at least `oxid-esales/oxideshop_ce: v7.4.0` co
 Switch to the shop root directory (the file `composer.json` and the directories `source/` and `vendor/` are located there).
 
 ```bash
-# Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 4.x version
-$ composer require oxid-esales/graphql-storefront ^4.2.0
+# Install desired version of oxid-esales/graphql-storefront module, in this case - latest released 5.x version
+$ composer require oxid-esales/graphql-storefront ^5.0.0
 ```
 
 If you didn't have the `oxid-esales/graphql-base` module installed, composer will do that for you.
@@ -89,7 +90,7 @@ $ SELENIUM_SERVER_HOST=selenium MODULE_IDS=oe_graphql_storefront vendor/bin/code
 # Development installation on OXID eShop SDK
 
 The installation instructions below are shown for the current [SDK](https://github.com/OXID-eSales/docker-eshop-sdk)
-for shop 7.4. Make sure your system meets the requirements of the SDK.
+for shop 7.5. Make sure your system meets the requirements of the SDK.
 
 0. Ensure all docker containers are down to avoid port conflicts
 
@@ -100,7 +101,7 @@ echo MyProject && git clone https://github.com/OXID-eSales/docker-eshop-sdk.git 
 
 2. Clone the repository to the source directory
 ```shell
-git clone --recurse-submodules https://github.com/OXID-eSales/graphql-storefront-module.git --branch=b-7.4.x ./source
+git clone --recurse-submodules https://github.com/OXID-eSales/graphql-storefront-module.git --branch=b-7.5.x ./source
 ```
 
 3. Run the recipe to setup the development environment

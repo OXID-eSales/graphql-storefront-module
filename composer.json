@@ -6,12 +6,12 @@
     "homepage": "https://www.oxid-esales.com",
     "license": ["proprietary"],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-b-7.4.x"
+        "oxid-esales/graphql-base": "dev-b-7.5.x"
     },
     "conflict": {
-        "oxid-esales/oxideshop-ce": "<7.4",
+        "oxid-esales/oxideshop-ce": "<7.5",
         "oxid-esales/graphql-catalogue": "*",
         "oxid-esales/graphql-account": "*",
         "oxid-esales/graphql-checkout": "*"
@@ -22,12 +22,12 @@
         "squizlabs/php_codesniffer": "3.*",
         "phpmd/phpmd": "^2.11",
         "mikey179/vfsstream": "^1.6",
-        "oxid-esales/oxideshop-ce": "dev-b-7.4.x",
+        "oxid-esales/oxideshop-ce": "dev-b-7.5.x",
         "codeception/module-rest": "^3.3",
         "codeception/module-phpbrowser": "^3.0",
         "codeception/module-db": "*",
         "codeception/codeception": "^5.1",
-        "oxid-esales/codeception-modules": "dev-b-7.4.x",
+        "oxid-esales/codeception-modules": "dev-b-7.5.x",
         "codeception/module-asserts": "^3.0",
         "codeception/c3": "^2.9",
         "oxid-esales/oxideshop-demodata-ce": "dev-master",
