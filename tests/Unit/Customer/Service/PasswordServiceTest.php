@@ -103,10 +103,10 @@ class PasswordServiceTest extends TestCase
     }
 
     private function getSut(
-        CustomerRepositoryInterface $customerRepository = null,
-        CustomerInterface $customerService = null,
-        AuthenticationServiceInterface $authenticationService = null,
-        PasswordInfrastructureInterface $passwordInfrastructure = null
+        ?CustomerRepositoryInterface $customerRepository = null,
+        ?CustomerInterface $customerService = null,
+        ?AuthenticationServiceInterface $authenticationService = null,
+        ?PasswordInfrastructureInterface $passwordInfrastructure = null
     ): PasswordService {
         return new PasswordService(
             repository: $customerRepository ?? $this->createStub(CustomerRepositoryInterface::class),

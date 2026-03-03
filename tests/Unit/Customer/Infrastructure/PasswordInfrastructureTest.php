@@ -99,8 +99,8 @@ class PasswordInfrastructureTest extends TestCase
     }
 
     private function getSut(
-        OxNewFactoryInterface $oxNewFactory = null,
-        InputValidator $inputValidator = null,
+        ?OxNewFactoryInterface $oxNewFactory = null,
+        ?InputValidator $inputValidator = null,
     ): Password {
         return new Password(
             oxNewFactory: $oxNewFactory ?? $this->createStub(OxNewFactoryInterface::class),
