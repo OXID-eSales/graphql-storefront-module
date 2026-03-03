@@ -15,10 +15,12 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice as WishedPriceDataType;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Exception\NotificationSendFailure;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceNotification;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(WishedPriceNotification::class)]
 final class WishedPriceNotificationTest extends TestCase
 {

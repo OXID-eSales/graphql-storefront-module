@@ -11,10 +11,12 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
 use DateTimeImmutable;
 use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(\OxidEsales\GraphQL\Storefront\Banner\DataType\Banner::class)]
 final class BannerTest extends TestCase
 {

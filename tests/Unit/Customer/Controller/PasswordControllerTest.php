@@ -12,10 +12,12 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Customer\Controller;
 use OxidEsales\GraphQL\Base\Service\LoginServiceInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Controller\Password;
 use OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface as PasswordServiceInterface;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 #[CoversClass(\OxidEsales\GraphQL\Storefront\Customer\Controller\Password::class)]
 class PasswordControllerTest extends TestCase
 {

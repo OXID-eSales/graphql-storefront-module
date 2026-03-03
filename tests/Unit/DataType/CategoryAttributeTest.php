@@ -12,8 +12,10 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 use OxidEsales\Eshop\Application\Model\Attribute as EshopAttributeModel;
 use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryAttribute;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 
+#[AllowMockObjectsWithoutExpectations]
 final class CategoryAttributeTest extends TestCase
 {
     public function testGetEshopModel(): void
