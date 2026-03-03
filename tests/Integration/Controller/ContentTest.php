@@ -13,6 +13,7 @@ use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\Facts\Facts;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ContentTest extends BaseTestCase
 {
@@ -282,10 +283,9 @@ final class ContentTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider useTokenDataProvider
-     *
      * @param mixed $withToken
      */
+    #[DataProvider('useTokenDataProvider')]
     public function testContentCategory($withToken): void
     {
         // set category to inactive
@@ -324,10 +324,9 @@ final class ContentTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider useTokenDataProvider
-     *
      * @param mixed $withToken
      */
+    #[DataProvider('useTokenDataProvider')]
     public function testContentsCategory($withToken): void
     {
         // set category to inactive

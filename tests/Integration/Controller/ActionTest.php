@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ActionTest extends BaseTestCase
 {
@@ -252,9 +253,7 @@ final class ActionTest extends BaseTestCase
         ], $result['body']['data']['actions']);
     }
 
-    /**
-     * @dataProvider actionsListFilterProvider
-     */
+    #[DataProvider('actionsListFilterProvider')]
     public function testGetActionsListWithFilter(string $contains, array $expected): void
     {
         $result = $this->query(
@@ -379,11 +378,10 @@ final class ActionTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider getActionProductListWithToken
-     *
      * @param mixed $withToken
      * @param mixed $expectedProducts
      */
+    #[DataProvider('getActionProductListWithToken')]
     public function testActionsProductList($withToken, $expectedProducts): void
     {
         // set product to inactive
@@ -421,11 +419,10 @@ final class ActionTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider getActionProductListWithToken
-     *
      * @param mixed $withToken
      * @param mixed $expectedProducts
      */
+    #[DataProvider('getActionProductListWithToken')]
     public function testActionProductList($withToken, $expectedProducts): void
     {
         // set product to inactive
@@ -499,9 +496,7 @@ final class ActionTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider filterActionsByIdProvider
-     */
+    #[DataProvider('filterActionsByIdProvider')]
     public function testFilterActionsById(bool $withToken, bool $isActionActive, array $expected): void
     {
         if ($withToken) {

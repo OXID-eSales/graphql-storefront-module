@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * Class AttributeTest
@@ -76,9 +77,7 @@ final class AttributeTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetAttributeMultilanguage
-     */
+    #[DataProvider('providerGetAttributeMultilanguage')]
     public function testGetAttributeMultilanguage(string $languageId, string $title): void
     {
         $query = 'query {
@@ -139,11 +138,10 @@ final class AttributeTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider providerGetAttributesMultilanguage
-     *
      * @param string $languageId
      * @param array $attributes
      */
+    #[DataProvider('providerGetAttributesMultilanguage')]
     public function testAttributeListMultilanguage($languageId, $attributes): void
     {
         $this->setGETRequestParameter('lang', $languageId);

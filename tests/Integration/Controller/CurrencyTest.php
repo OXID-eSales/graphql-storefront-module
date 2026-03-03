@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Currency\DataType\Currency
@@ -54,9 +55,7 @@ final class CurrencyTest extends BaseTestCase
         );
     }
 
-    /**
-     * @dataProvider currencyNames
-     */
+    #[DataProvider('currencyNames')]
     public function testGetCurrencyByName(string $name): void
     {
         $result = $this->query(
@@ -106,9 +105,7 @@ final class CurrencyTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider incorrectCurrencyNames
-     */
+    #[DataProvider('incorrectCurrencyNames')]
     public function testGetCurrencyByNameShouldFail(string $name): void
     {
         $result = $this->query(

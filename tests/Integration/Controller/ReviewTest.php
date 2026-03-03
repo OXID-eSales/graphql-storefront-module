@@ -10,9 +10,8 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
-use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
-use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ReviewTest extends BaseTestCase
 {
@@ -109,13 +108,12 @@ final class ReviewTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider getInactiveReviewDataProvider
-     *
      * @param bool $moderation
      * @param bool $withToken
      * @param bool $expectError
      * @param bool $expectedActive
      */
+    #[DataProvider('getInactiveReviewDataProvider')]
     public function testGetInactiveReview($moderation, $withToken, $expectError, $expectedActive): void
     {
         Registry::getConfig()->saveShopConfVar('bool', 'blGBModerate', $moderation);
@@ -212,9 +210,8 @@ final class ReviewTest extends BaseTestCase
     /**
      * Case that the user related to review does not exist (inconsistent data).
      * Normal user is not allowed to query user data.
-     *
-     * @dataProvider providerGetReviewFromNotExistingReviewer
      */
+    #[DataProvider('providerGetReviewFromNotExistingReviewer')]
     public function testGetReviewFromNotExistingReviewer(string $username, string $password): void
     {
         $this->prepareToken($username, $password);
@@ -235,9 +232,7 @@ final class ReviewTest extends BaseTestCase
         );
     }
 
-    /**
-     * @dataProvider nullProductIdsDataProvider
-     */
+    #[DataProvider('nullProductIdsDataProvider')]
     public function testGetWrongProductCase(string $username, string $password, string $id): void
     {
         $this->prepareToken($username, $password);
@@ -288,11 +283,10 @@ final class ReviewTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider getReviewProductDataProvider
-     *
      * @param array $token
      * @param mixed $expectedProduct
      */
+    #[DataProvider('getReviewProductDataProvider')]
     public function testReviewWithInactiveProduct(?array $token, ?array $expectedProduct): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()

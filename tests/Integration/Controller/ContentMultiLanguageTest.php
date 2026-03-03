@@ -10,14 +10,13 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ContentMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_CONTENT = 'e6fc3fe89d5da58da9bfcfba451fd365';
 
-    /**
-     * @dataProvider providerGetContentMultiLanguage
-     */
+    #[DataProvider('providerGetContentMultiLanguage')]
     public function testGetContentMultiLanguage(
         string $languageId,
         string $title,

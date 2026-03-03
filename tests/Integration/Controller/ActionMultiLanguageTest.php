@@ -10,17 +10,17 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ActionMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_ACTION_WITH_PRODUCTS = 'oxbargain';
 
     /**
-     * @dataProvider providerGetActionWithFilterMultiLanguage
-     *
      * @param string $languageId
      * @param array $action
      */
+    #[DataProvider('providerGetActionWithFilterMultiLanguage')]
     public function testGetSingleActiveActionMultilanguage($languageId, $action): void
     {
         $query = 'query {

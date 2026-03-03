@@ -13,6 +13,7 @@ use DateTimeImmutable;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use TheCodingMachine\GraphQLite\Types\DateTimeType;
 
 final class VendorTest extends BaseTestCase
@@ -289,9 +290,7 @@ final class VendorTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderSortedVendorList
-     */
+    #[DataProvider('dataProviderSortedVendorList')]
     public function testSortedVendorList(
         string $sortQuery
     ): void {
@@ -350,12 +349,11 @@ final class VendorTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider getVendorProductsDataProvider
-     *
      * @param mixed $withToken
      * @param mixed $expectedProductsCount
      * @param mixed $active
      */
+    #[DataProvider('getVendorProductsDataProvider')]
     public function testVendorProducts($withToken, $expectedProductsCount, $active): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()
@@ -415,12 +413,11 @@ final class VendorTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider getVendorsProductListWithToken
-     *
      * @param mixed $withToken
      * @param mixed $expectedProductsCount
      * @param mixed $active
      */
+    #[DataProvider('getVendorsProductListWithToken')]
     public function testVendorsProductList($withToken, $expectedProductsCount, $active): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()

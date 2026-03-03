@@ -10,14 +10,13 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class VendorMultiLanguageTest extends MultiLanguageTestCase
 {
     private const ACTIVE_VENDOR = 'a57c56e3ba710eafb2225e98f058d989';
 
-    /**
-     * @dataProvider providerGetVendorListWithFilterMultiLanguage
-     */
+    #[DataProvider('providerGetVendorListWithFilterMultiLanguage')]
     public function testGetVendorListWithFilterMultiLanguage(
         string $languageId,
         string $contains,
@@ -93,9 +92,7 @@ final class VendorMultiLanguageTest extends MultiLanguageTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetVendorMultiLanguage
-     */
+    #[DataProvider('providerGetVendorMultiLanguage')]
     public function testGetVendorMultiLanguage(string $languageId, string $title, string $productShortDescription): void
     {
         $query = 'query {
@@ -155,9 +152,7 @@ final class VendorMultiLanguageTest extends MultiLanguageTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetVendorListMultilanguage
-     */
+    #[DataProvider('providerGetVendorListMultilanguage')]
     public function testSortedVendorList(string $languageId): void
     {
         $this->setGETRequestParameter('lang', $languageId);

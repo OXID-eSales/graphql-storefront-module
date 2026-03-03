@@ -14,6 +14,7 @@ use OxidEsales\Eshop\Core\Language as EshopLanguage;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Shared\DataType\Seo
@@ -48,13 +49,12 @@ final class SeoTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider providerProductSeo
-     *
      * @param mixed $languageId
      * @param mixed $description
      * @param mixed $keywords
      * @param mixed $url
      */
+    #[DataProvider('providerProductSeo')]
     public function testProductSeo($languageId, $description, $keywords, $url): void
     {
         $this->setGETRequestParameter(

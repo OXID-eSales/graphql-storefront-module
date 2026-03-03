@@ -10,15 +10,15 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ReviewMultiLanguageTest extends MultiLanguageTestCase
 {
     /**
      * @param $languageId
      * @param $expectedLanguage
-     *
-     * @dataProvider multipleLanguageReviewsDataProvider
      */
+    #[DataProvider('multipleLanguageReviewsDataProvider')]
     public function testMultipleLanguageReviews($languageId, $expectedLanguage): void
     {
         // Ensure we dont have shop and lang params affecting our review data

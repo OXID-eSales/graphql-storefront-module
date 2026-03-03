@@ -14,6 +14,7 @@ use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Base\Tests\Integration\TokenTestCase;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\DemoData;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Product\Service\RelationService
@@ -107,9 +108,7 @@ final class ProductRelationServiceTest extends TokenTestCase
         );
     }
 
-    /**
-     * @dataProvider productWithATtributesProvider
-     */
+    #[DataProvider('productWithATtributesProvider')]
     public function testGetProductAttributesRelation(string $product, array $expected): void
     {
         $result = $this->query(
@@ -220,11 +219,10 @@ final class ProductRelationServiceTest extends TokenTestCase
     }
 
     /**
-     * @dataProvider getReviewsConfigDataProvider
-     *
      * @param mixed $configValue
      * @param mixed $expectedIds
      */
+    #[DataProvider('getReviewsConfigDataProvider')]
     public function testGetReviewsRelation($configValue, $expectedIds): void
     {
         Registry::getConfig()->saveShopConfVar('bool', 'blGBModerate', $configValue);

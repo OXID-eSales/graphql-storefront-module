@@ -15,6 +15,7 @@ use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\ImageUrlAssertionTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 use ReflectionClass;
 
 use function version_compare;
@@ -636,9 +637,7 @@ final class ProductTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderSortedProductsList
-     */
+    #[DataProvider('dataProviderSortedProductsList')]
     public function testSortedProducts(
         string $sortQuery,
         string $method,
@@ -703,9 +702,7 @@ final class ProductTest extends BaseTestCase
         $this->assertSame($expected, $orderedProducts);
     }
 
-    /**
-     * @dataProvider productsOffsetAndLimitDataProvider
-     */
+    #[DataProvider('productsOffsetAndLimitDataProvider')]
     public function testProductsOffsetAndLimit(int $offset, int $limit, array $expectedProducts): void
     {
         $result = $this->query(
@@ -755,9 +752,7 @@ final class ProductTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider productsByManufacturerProvider
-     */
+    #[DataProvider('productsByManufacturerProvider')]
     public function testProductsByManufacturer(string $manufacturerId, int $expectedCount): void
     {
         $result = $this->query(
@@ -797,9 +792,7 @@ final class ProductTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider productsByVendorProvider
-     */
+    #[DataProvider('productsByVendorProvider')]
     public function testProductsByVendor(string $vendorId, int $expectedCount): void
     {
         $result = $this->query(
@@ -838,9 +831,7 @@ final class ProductTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider productsByCategoryDataProvider
-     */
+    #[DataProvider('productsByCategoryDataProvider')]
     public function testProductsByCategory(string $categoryId, int $expectedCount): void
     {
         $result = $this->query(
@@ -992,12 +983,11 @@ final class ProductTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider productVendorWithTokenProvider
-     *
      * @param mixed $isVendorActive
      * @param mixed $withToken
      * @param mixed $expectedVendor
      */
+    #[DataProvider('productVendorWithTokenProvider')]
     public function testGetProductVendor($isVendorActive, $withToken, $expectedVendor): void
     {
         $oxactive = $isVendorActive ? 1 : 0;
@@ -1060,12 +1050,11 @@ final class ProductTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider productManufacturerWithTokenProvider
-     *
      * @param mixed $isManufacturerActive
      * @param mixed $withToken
      * @param mixed $expectedManufacturer
      */
+    #[DataProvider('productManufacturerWithTokenProvider')]
     public function testGetProductManufacturer($isManufacturerActive, $withToken, $expectedManufacturer): void
     {
         $oxactive = $isManufacturerActive ? 1 : 0;
@@ -1133,12 +1122,11 @@ final class ProductTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider productCrossSellingWithTokenProvider
-     *
      * @param mixed $isCSProductActive
      * @param mixed $withToken
      * @param mixed $expectedCrossSelling
      */
+    #[DataProvider('productCrossSellingWithTokenProvider')]
     public function testGetProductCrossSelling($isCSProductActive, $withToken, $expectedCrossSelling): void
     {
         $oxactive = $isCSProductActive ? 1 : 0;
@@ -1207,9 +1195,7 @@ final class ProductTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider productMainCategoryWithTokenProvider
-     */
+    #[DataProvider('productMainCategoryWithTokenProvider')]
     public function testGetProductMainCategory(int $isCategoryActive, bool $withToken, ?array $expectedCategory): void
     {
         $this->setActiveState(self::ACTIVE_PRODUCT_CATEGORY, 'oxcategories', $isCategoryActive);
@@ -1331,12 +1317,11 @@ final class ProductTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider filterProductsByCategoryProvider
-     *
      * @param mixed $isCategoryActive
      * @param mixed $withToken
      * @param mixed $expectedProducts
      */
+    #[DataProvider('filterProductsByCategoryProvider')]
     public function testFilterProductsByCategory($isCategoryActive, $withToken, $expectedProducts): void
     {
         $oxactive = $isCategoryActive ? 1 : 0;
@@ -1431,12 +1416,11 @@ final class ProductTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider filterProductsByManufacturerProvider
-     *
      * @param mixed $isManufacturerActive
      * @param mixed $withToken
      * @param mixed $expectedProducts
      */
+    #[DataProvider('filterProductsByManufacturerProvider')]
     public function testFilterProductsByManufacturer($isManufacturerActive, $withToken, $expectedProducts): void
     {
         $oxactive = $isManufacturerActive ? 1 : 0;
@@ -1531,12 +1515,11 @@ final class ProductTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider filterProductsByVendorProvider
-     *
      * @param mixed $isVendorActive
      * @param mixed $withToken
      * @param mixed $expectedProducts
      */
+    #[DataProvider('filterProductsByVendorProvider')]
     public function testFilterProductsByVendor($isVendorActive, $withToken, $expectedProducts): void
     {
         $oxactive = $isVendorActive ? 1 : 0;

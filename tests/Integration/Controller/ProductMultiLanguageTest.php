@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ProductMultiLanguageTest extends MultiLanguageTestCase
 {
@@ -33,9 +34,7 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetProductMultilanguage
-     */
+    #[DataProvider('providerGetProductMultilanguage')]
     public function testGetProductMultilanguage(string $languageId, string $title, string $url): void
     {
         $query = 'query {
@@ -75,9 +74,7 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetProductVariantsMultilanguage
-     */
+    #[DataProvider('providerGetProductVariantsMultilanguage')]
     public function testGetProductVariantsMultilanguage(
         string $languageId,
         array $expectedLabels,
@@ -147,9 +144,7 @@ final class ProductMultiLanguageTest extends MultiLanguageTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetProductVariantsMultilanguage
-     */
+    #[DataProvider('providerGetProductVariantsMultilanguage')]
     public function testSortedProductListByTitle(
         string $languageId,
         array $expectedLabels = [],

@@ -22,6 +22,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\ImageUrlAssertionTrait;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage
@@ -65,9 +66,7 @@ final class ProductImageGalleryTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @dataProvider getImageGalleryImagesContentDataProvider
-     */
+    #[DataProvider('getImageGalleryImagesContentDataProvider')]
     public function testGetImageGalleryImagesContent(int $key, string $fileName): void
     {
         $article = oxNew(EshopArticle::class);

@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\MultiLanguageTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class PromotionMultiLanguageTest extends MultiLanguageTestCase
 {
@@ -37,12 +38,11 @@ final class PromotionMultiLanguageTest extends MultiLanguageTestCase
     /**
      * Check multishop multilanguage data is accessible
      *
-     * @dataProvider providerGetPromotionMultilanguage
-     *
      * @param mixed $shopId
      * @param mixed $languageId
      * @param mixed $title
      */
+    #[DataProvider('providerGetPromotionMultilanguage')]
     public function testGetSingleTranslatedSecondShopPromotion($shopId, $languageId, $title): void
     {
         $this->setGETRequestParameter('shp', $shopId);
@@ -69,12 +69,11 @@ final class PromotionMultiLanguageTest extends MultiLanguageTestCase
     /**
      * Check multishop multilanguage data is accessible
      *
-     * @dataProvider providerGetPromotionMultilanguage
-     *
      * @param mixed $shopId
      * @param mixed $languageId
      * @param mixed $title
      */
+    #[DataProvider('providerGetPromotionMultilanguage')]
     public function testGetListTranslatedSecondShopPromotions($shopId, $languageId, $title): void
     {
         $this->setGETRequestParameter('shp', $shopId);

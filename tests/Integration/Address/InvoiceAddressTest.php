@@ -15,7 +15,6 @@ use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress;
 use OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields;
 use OxidEsales\GraphQL\Storefront\Address\Infrastructure\InvoiceAddressFactory;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer;
-use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -50,7 +49,7 @@ final class InvoiceAddressTest extends TestCase
         ];
 
         foreach ($fields as $field) {
-            $this->assertThat($dataType->$field(), $this->isType(IsType::TYPE_STRING));
+            $this->assertIsString($dataType->$field());
         }
     }
 

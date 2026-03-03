@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class ManufacturerTest extends BaseTestCase
 {
@@ -263,12 +264,11 @@ final class ManufacturerTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider getManufacturerProductDataProvider
-     *
      * @param mixed $withToken
      * @param mixed $productCount
      * @param mixed $active
      */
+    #[DataProvider('getManufacturerProductDataProvider')]
     public function testManufacturerProducts($withToken, $productCount, $active): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()
@@ -350,9 +350,7 @@ final class ManufacturerTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider providerGetManufacturerProducts
-     */
+    #[DataProvider('providerGetManufacturerProducts')]
     public function testGetManufacturerProducts(?int $offset, ?int $limit, ?int $numberOfExpectedProducts): void
     {
         $result = $this->query(
@@ -430,9 +428,7 @@ final class ManufacturerTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider dataProviderSortedManufacturersList
-     */
+    #[DataProvider('dataProviderSortedManufacturersList')]
     public function testSortedManufacturers(
         string $sortQuery,
         string $method,

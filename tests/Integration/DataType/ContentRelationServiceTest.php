@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
  * @covers OxidEsales\GraphQL\Storefront\Content\Service\RelationService
@@ -72,9 +73,7 @@ final class ContentRelationServiceTest extends BaseTestCase
         ];
     }
 
-    /**
-     * @dataProvider contentIdsWithoutCategoryProvider
-     */
+    #[DataProvider('contentIdsWithoutCategoryProvider')]
     public function testGetContentCategoryRelationWithoutCategory(string $categoryId): void
     {
         $result = $this->query(

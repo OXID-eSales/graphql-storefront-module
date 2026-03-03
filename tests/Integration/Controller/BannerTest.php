@@ -13,6 +13,7 @@ use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 final class BannerTest extends BaseTestCase
 {
@@ -317,12 +318,11 @@ final class BannerTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider bannerProductWithTokenProvider
-     *
      * @param mixed $isProductActive
      * @param mixed $withToken
      * @param mixed $expectedProduct
      */
+    #[DataProvider('bannerProductWithTokenProvider')]
     public function testGetBannerProduct($isProductActive, $withToken, $expectedProduct): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()
@@ -409,12 +409,11 @@ final class BannerTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider bannersProductWithTokenProvider
-     *
      * @param mixed $isProductActive
      * @param mixed $withToken
      * @param mixed $expectedBanners
      */
+    #[DataProvider('bannersProductWithTokenProvider')]
     public function testGetBannersProduct($isProductActive, $withToken, $expectedBanners): void
     {
         $queryBuilderFactory = ContainerFactory::getInstance()
