@@ -17,11 +17,10 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerEmailNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Password::class)]
 class PasswordInfrastructureTest extends TestCase
 {
     public function testValidatePasswordWithExpectedParametersThrowsNoExceptions(): void

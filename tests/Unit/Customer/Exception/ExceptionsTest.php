@@ -14,14 +14,13 @@ use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash
- * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException
- * @covers \OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash::class)]
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException::class)]
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch::class)]
 class ExceptionsTest extends TestCase
 {
     public function testCustomerNotFoundByUpdateHashException(): void

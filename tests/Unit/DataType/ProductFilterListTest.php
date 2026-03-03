@@ -11,12 +11,11 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\GraphQL\Base\DataType\Filter\IDFilter;
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Product\DataType\ProductFilterList::class)]
 final class ProductFilterListTest extends TestCase
 {
     public function testInputFilterDefaults(): void

@@ -12,11 +12,10 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Shared\Infrastructure;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository::class)]
 final class RepositoryTest extends TestCase
 {
     public function testFatalErrorOnWrongClassById(): void

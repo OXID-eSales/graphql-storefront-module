@@ -14,12 +14,11 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHas
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository::class)]
 class RepositoryTest extends TestCase
 {
     public static function booleanDataProvider(): \Generator

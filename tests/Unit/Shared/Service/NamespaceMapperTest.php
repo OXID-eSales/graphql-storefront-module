@@ -10,13 +10,12 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Shared\Service;
 
 use OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper::class)]
 final class NamespaceMapperTest extends TestCase
 {
-    /**
-     * @covers OxidEsales\GraphQL\Storefront\Shared\Service\NamespaceMapper
-     */
     public function testNamespaceCounts(): void
     {
         $namespaceMapper = new NamespaceMapper();

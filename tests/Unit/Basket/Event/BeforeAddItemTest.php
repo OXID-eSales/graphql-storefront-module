@@ -10,11 +10,10 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Basket\Event;
 
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeAddItem as Event;
+use PHPUnit\Framework\Attributes\CoversClass;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Basket\Event\BeforeAddItem
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Basket\Event\BeforeAddItem::class)]
 final class BeforeAddItemTest extends AbstractItemEventTest
 {
     public function testSetAmmount(): void

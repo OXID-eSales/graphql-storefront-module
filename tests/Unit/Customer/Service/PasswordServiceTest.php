@@ -15,13 +15,12 @@ use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as P
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as CustomerRepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Service\Password as PasswordService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Customer\Service\Password
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Customer\Service\Password::class)]
 class PasswordServiceTest extends TestCase
 {
     public static function booleanDataProvider(): \Generator

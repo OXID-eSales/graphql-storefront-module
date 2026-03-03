@@ -9,13 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Basket\Event;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketModify as Event;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketModify
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Basket\Event\BeforeBasketModify::class)]
 final class BeforeBasketModifyTest extends TestCase
 {
     protected const BASKET_ID = 'basketId';

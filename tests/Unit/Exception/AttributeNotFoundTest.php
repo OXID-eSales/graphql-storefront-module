@@ -10,11 +10,10 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Exception;
 
 use OxidEsales\GraphQL\Storefront\Attribute\Exception\AttributeNotFound;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Attribute\Exception\AttributeNotFound
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Attribute\Exception\AttributeNotFound::class)]
 final class AttributeNotFoundTest extends TestCase
 {
     public function testExceptionById(): void

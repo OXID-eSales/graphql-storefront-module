@@ -10,11 +10,10 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Basket\Event;
 
 use OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem as Event;
+use PHPUnit\Framework\Attributes\CoversClass;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Basket\Event\BeforeRemoveItem::class)]
 final class BeforeRemoveItemTest extends AbstractItemEventTest
 {
     public function testSetAmmount(): void

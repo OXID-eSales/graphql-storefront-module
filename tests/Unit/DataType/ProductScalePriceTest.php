@@ -10,11 +10,10 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductScalePrice;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductScalePrice
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Product\DataType\ProductScalePrice::class)]
 final class ProductScalePriceTest extends TestCase
 {
     public function testAbsoluteScalePrice(): void

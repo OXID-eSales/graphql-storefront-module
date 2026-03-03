@@ -15,15 +15,14 @@ use OxidEsales\GraphQL\Storefront\Currency\DataType\Currency as CurrencyDataType
 use OxidEsales\GraphQL\Storefront\Currency\Exception\CurrencyNotFound;
 use OxidEsales\GraphQL\Storefront\Currency\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Currency\Service\Currency as CurrencyService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Currency\Controller\Currency
- * @covers OxidEsales\GraphQL\Storefront\Currency\Infrastructure\Repository
- * @covers OxidEsales\GraphQL\Storefront\Currency\Service\Currency
- * @covers OxidEsales\GraphQL\Storefront\Currency\Exception\CurrencyNotFound
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Currency\Controller\Currency::class)]
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Currency\Infrastructure\Repository::class)]
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Currency\Service\Currency::class)]
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Currency\Exception\CurrencyNotFound::class)]
 final class CurrencyTest extends TestCase
 {
     public function testGetCurrencyFromController(): void

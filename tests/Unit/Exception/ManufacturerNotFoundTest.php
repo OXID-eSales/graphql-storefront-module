@@ -10,11 +10,10 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Exception;
 
 use OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Manufacturer\Exception\ManufacturerNotFound::class)]
 final class ManufacturerNotFoundTest extends TestCase
 {
     public function testExceptionById(): void

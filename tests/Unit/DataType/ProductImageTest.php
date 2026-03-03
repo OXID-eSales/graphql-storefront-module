@@ -10,11 +10,10 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\DataType;
 
 use OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage::class)]
 final class ProductImageTest extends TestCase
 {
     public function testProductImage(): void

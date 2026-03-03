@@ -10,12 +10,11 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Category\DataType;
 
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryIDFilter;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Category\DataType\CategoryIDFilter
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Category\DataType\CategoryIDFilter::class)]
 final class CategoryIDFilterTest extends TestCase
 {
     public function testMatches(): void

@@ -11,11 +11,10 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
 use DateTimeImmutable;
 use OxidEsales\GraphQL\Storefront\Category\DataType\Category;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Category\DataType\Category
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Category\DataType\Category::class)]
 final class CategoryTest extends TestCase
 {
     public function testIsActive(): void
