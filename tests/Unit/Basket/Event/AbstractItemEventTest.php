@@ -11,7 +11,6 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Basket\Event;
 
 use OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem;
 use OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem;
-use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\GraphQLite\Types\ID;
 
@@ -36,22 +35,13 @@ class AbstractItemEventTest extends TestCase
     {
         $event = $this->prepareAddEvent();
 
-        $this->assertThat(
-            $event->getBasketId(),
-            $this->isInstanceOf(ID::class)
-        );
+        $this->assertInstanceOf(ID::class, $event->getBasketId());
         $this->assertSame(self::BASKET_ID, (string)$event->getBasketId());
 
-        $this->assertThat(
-            $event->getProductId(),
-            $this->isInstanceOf(ID::class)
-        );
+        $this->assertInstanceOf(ID::class, $event->getProductId());
         $this->assertSame(self::PRODUCT_ID, (string)$event->getProductId());
 
-        $this->assertThat(
-            $event->getAmount(),
-            $this->isType('float')
-        );
+        $this->assertIsFloat($event->getAmount());
         $this->assertSame((float)self::AMMOUNT, $event->getAmount());
     }
 
@@ -59,22 +49,13 @@ class AbstractItemEventTest extends TestCase
     {
         $event = $this->prepareRemoveEvent();
 
-        $this->assertThat(
-            $event->getBasketId(),
-            $this->isInstanceOf(ID::class)
-        );
+        $this->assertInstanceOf(ID::class, $event->getBasketId());
         $this->assertSame(self::BASKET_ID, (string)$event->getBasketId());
 
-        $this->assertThat(
-            $event->getBasketItemId(),
-            $this->isInstanceOf(ID::class)
-        );
+        $this->assertInstanceOf(ID::class, $event->getBasketItemId());
         $this->assertSame(self::BASKET_ITEM_ID, (string)$event->getBasketItemId());
 
-        $this->assertThat(
-            $event->getAmount(),
-            $this->isType('float')
-        );
+        $this->assertIsFloat($event->getAmount());
         $this->assertSame((float)self::AMMOUNT, $event->getAmount());
     }
 

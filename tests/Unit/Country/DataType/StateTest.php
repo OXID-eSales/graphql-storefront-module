@@ -34,18 +34,9 @@ final class StateTest extends TestCase
             EshopStateModel::class,
             $dataType->getEshopModel()
         );
-        $this->assertThat(
-            $dataType->getTitle(),
-            $this->isType('string')
-        );
-        $this->assertThat(
-            $dataType->getIsoAlpha2(),
-            $this->isType('string')
-        );
-        $this->assertThat(
-            $dataType->getCreationDate(),
-            $this->isType('object')
-        );
+        $this->assertIsString($dataType->getTitle());
+        $this->assertIsString($dataType->getIsoAlpha2());
+        $this->assertIsObject($dataType->getCreationDate());
         $this->assertSame(
             $dataType->getTitle(),
             $model->getRawFieldData('oxtitle')
