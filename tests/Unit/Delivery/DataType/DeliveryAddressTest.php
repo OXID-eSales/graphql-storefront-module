@@ -11,12 +11,10 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Delivery\DataType;
 
 use OxidEsales\Eshop\Application\Model\Address as EshopAddressModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
-use PHPUnit\Framework\Constraint\IsType;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress::class)]
 final class DeliveryAddressTest extends TestCase
 {
     public function testEmptyDeliveryAddress(): void

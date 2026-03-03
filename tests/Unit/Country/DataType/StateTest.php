@@ -11,12 +11,10 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Country\DataType;
 
 use OxidEsales\Eshop\Application\Model\State as EshopStateModel;
 use OxidEsales\GraphQL\Storefront\Country\DataType\State;
-use PHPUnit\Framework\Constraint\IsType;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Country\DataType\State
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Country\DataType\State::class)]
 final class StateTest extends TestCase
 {
     public function testState(): void

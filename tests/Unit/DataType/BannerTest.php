@@ -15,9 +15,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Banner\DataType\Banner
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Banner\DataType\Banner::class)]
 final class BannerTest extends TestCase
 {
     #[DataProvider('activeDataProvider')]

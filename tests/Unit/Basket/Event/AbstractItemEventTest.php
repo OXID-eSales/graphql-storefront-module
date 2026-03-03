@@ -11,14 +11,13 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Basket\Event;
 
 use OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem;
 use OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AbstractItemEvent
- * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem
- * @covers OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem
- */
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Basket\Event\AbstractItemEvent::class)]
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Basket\Event\AfterAddItem::class)]
+#[CoversClass(\OxidEsales\GraphQL\Storefront\Basket\Event\AfterRemoveItem::class)]
 class AbstractItemEventTest extends TestCase
 {
     protected const BASKET_ID = 'basketId';
