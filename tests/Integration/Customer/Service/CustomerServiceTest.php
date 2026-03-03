@@ -14,11 +14,11 @@ use OxidEsales\Eshop\Application\Model\User as EshopModelUser;
 use OxidEsales\GraphQL\Base\DataType\User as UserDataType;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Base\Service\Authentication;
+use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotDeletable;
 use OxidEsales\GraphQL\Storefront\Customer\Service\Customer;
-use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as CustomerRepository;
 use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
@@ -51,14 +51,8 @@ final class CustomerServiceTest extends TestCase
         $container = ContainerFactory::getInstance()
             ->getContainer();
 
-        $legacyServiceMock = $this
-            ->getMockBuilder(Legacy::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getConfigParam'])
-            ->getMock();
-        $legacyServiceMock->expects($this->any())
-            ->method('getConfigParam')
-            ->willReturn(true);
+        $legacyServiceStub = $this->createStub(Legacy::class);
+        $legacyServiceStub->method('getConfigParam')->willReturn(true);
 
         $user = oxNew(EshopModelUser::class);
         $user->setId('_userid');
@@ -94,14 +88,8 @@ final class CustomerServiceTest extends TestCase
 
         $userDataType = new UserDataType($userMock);
 
-        $authenticationMock = $this
-            ->getMockBuilder(Authentication::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['getUser'])
-            ->getMock();
-        $authenticationMock->expects($this->any())
-            ->method('getUser')
-            ->willReturn($userDataType);
+        $authenticationStub = $this->createStub(Authentication::class);
+        $authenticationStub->method('getUser')->willReturn($userDataType);
 
         $customerService = new Customer(
             new Repository(
@@ -109,8 +97,8 @@ final class CustomerServiceTest extends TestCase
                 new ListConfiguration()
             ),
             $container->get(CustomerRepository::class),
-            $authenticationMock,
-            $legacyServiceMock,
+            $authenticationStub,
+            $legacyServiceStub,
             $this->createStub(Authorization::class)
         );
 

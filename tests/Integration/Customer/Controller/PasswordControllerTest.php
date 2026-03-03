@@ -17,10 +17,9 @@ use OxidEsales\GraphQL\Storefront\Customer\Controller\Password;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer;
 use OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface as PasswordServiceInterface;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
-/**
- * @covers \OxidEsales\GraphQL\Storefront\Customer\Controller\Password
- */
+#[AllowMockObjectsWithoutExpectations]
 class PasswordControllerTest extends TestCase
 {
     public function testCustomerPasswordChangeMethodReturnsServiceResult(): void

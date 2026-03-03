@@ -38,17 +38,11 @@ final class ContactTest extends TestCase
             )
             ->willReturn(true);
 
-        /** @var Legacy $legacyServiceMock */
-        $legacyServiceMock = $this
-            ->getMockBuilder(Legacy::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-        $legacyServiceMock->expects($this->any())
-            ->method('getEmail')
-            ->willReturn($mailer);
+        $legacyServiceStub = $this->createStub(Legacy::class);
+        $legacyServiceStub->method('getEmail')->willReturn($mailer);
 
         $contactInfrastructure = new Contact(
-            $legacyServiceMock,
+            $legacyServiceStub,
             $contactFormBridge
         );
 

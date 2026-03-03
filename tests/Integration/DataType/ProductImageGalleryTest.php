@@ -22,12 +22,10 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\ImageUrlAssertionTrait;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductImage
- * @covers OxidEsales\GraphQL\Storefront\Product\Service\RelationService
- */
+#[AllowMockObjectsWithoutExpectations]
 final class ProductImageGalleryTest extends IntegrationTestCase
 {
     use ImageUrlAssertionTrait;

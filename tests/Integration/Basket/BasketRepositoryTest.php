@@ -16,7 +16,9 @@ use OxidEsales\GraphQL\Storefront\Basket\Exception\BasketForUserNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\Repository;
 use OxidEsales\GraphQL\Base\Tests\Integration\TestCase;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
+#[AllowMockObjectsWithoutExpectations]
 final class BasketRepositoryTest extends TestCase
 {
     public function testCustomerBasketByTitleFails(): void

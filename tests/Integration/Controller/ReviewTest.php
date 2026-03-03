@@ -10,6 +10,8 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Integration\Controller;
 
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Container\ContainerFactory;
+use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Tests\Integration\BaseTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
 

@@ -21,12 +21,10 @@ use OxidEsales\GraphQL\Storefront\Product\Service\RelationService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\ListConfiguration;
 use OxidEsales\GraphQL\Base\Service\Authorization;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\Attributes\DataProvider;
 
-/**
- * @covers OxidEsales\GraphQL\Storefront\Product\DataType\ProductAttribute
- * @covers OxidEsales\GraphQL\Storefront\Product\Service\RelationService
- */
+#[AllowMockObjectsWithoutExpectations]
 final class ProductAttributeTest extends TestCase
 {
     public function testGetProductAttributesTypeAndCount(): void
