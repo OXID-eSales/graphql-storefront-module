@@ -43,7 +43,7 @@ final class DeliveryAddressTest extends TestCase
         ];
 
         foreach ($fields as $field) {
-            $this->assertThat($dataType->$field(), $this->isType(IsType::TYPE_STRING));
+            $this->assertThat($dataType->$field(), $this->isType('string'));
         }
     }
 

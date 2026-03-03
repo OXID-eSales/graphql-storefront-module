@@ -36,15 +36,15 @@ final class StateTest extends TestCase
         );
         $this->assertThat(
             $dataType->getTitle(),
-            $this->isType(IsType::TYPE_STRING)
+            $this->isType('string')
         );
         $this->assertThat(
             $dataType->getIsoAlpha2(),
-            $this->isType(IsType::TYPE_STRING)
+            $this->isType('string')
         );
         $this->assertThat(
             $dataType->getCreationDate(),
-            $this->isType(IsType::TYPE_OBJECT)
+            $this->isType('object')
         );
         $this->assertSame(
             $dataType->getTitle(),

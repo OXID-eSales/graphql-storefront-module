@@ -50,7 +50,7 @@ class AbstractItemEventTest extends TestCase
 
         $this->assertThat(
             $event->getAmount(),
-            $this->isType(IsType::TYPE_FLOAT)
+            $this->isType('float')
         );
         $this->assertSame((float)self::AMMOUNT, $event->getAmount());
     }
@@ -73,7 +73,7 @@ class AbstractItemEventTest extends TestCase
 
         $this->assertThat(
             $event->getAmount(),
-            $this->isType(IsType::TYPE_FLOAT)
+            $this->isType('float')
         );
         $this->assertSame((float)self::AMMOUNT, $event->getAmount());
     }
