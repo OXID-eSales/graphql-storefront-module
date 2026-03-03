@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Base\Exception\ErrorCategories;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHash;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordValidationException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -40,7 +41,7 @@ class ExceptionsTest extends TestCase
         $this->assertSame($expectedMessage, $exception->getMessage());
     }
 
-    /** @dataProvider exceptionTypesDataProvider */
+    #[DataProvider('exceptionTypesDataProvider')]
     public function testExceptionsHaveCorrectTypes(Error $exception, string $expectedCategory): void
     {
         $this->assertSame($expectedCategory, $exception->getCategory());

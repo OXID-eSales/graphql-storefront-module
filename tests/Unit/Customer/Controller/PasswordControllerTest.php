@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Customer\Controller;
 use OxidEsales\GraphQL\Base\Service\LoginServiceInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Controller\Password;
 use OxidEsales\GraphQL\Storefront\Customer\Service\PasswordInterface as PasswordServiceInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -30,7 +31,7 @@ class PasswordControllerTest extends TestCase
         ];
     }
 
-    /** @dataProvider booleanDataProvider */
+    #[DataProvider('booleanDataProvider')]
     public function testCustomerPasswordForgotRequestMethodReturnsServiceResult(bool $expectedBoolean): void
     {
         $exampleEmail = uniqid();
@@ -48,7 +49,7 @@ class PasswordControllerTest extends TestCase
         $this->assertSame($expectedBoolean, $passwordController->customerPasswordForgotRequest($exampleEmail));
     }
 
-    /** @dataProvider booleanDataProvider */
+    #[DataProvider('booleanDataProvider')]
     public function testCustomerPasswordResetMethodReturnsServiceResult(bool $expectedBoolean): void
     {
         $exampleHash = uniqid();

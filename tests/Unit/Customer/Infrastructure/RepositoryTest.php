@@ -14,6 +14,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerNotFoundByUpdateHas
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\Repository;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\OxNewFactoryInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -32,7 +33,7 @@ class RepositoryTest extends TestCase
         ];
     }
 
-    /** @dataProvider booleanDataProvider */
+    #[DataProvider('booleanDataProvider')]
     public function testSaveNewPasswordResultBasedOnSaveModel(bool $expectedBoolean): void
     {
         $customerStub = $this->createStub(User::class);

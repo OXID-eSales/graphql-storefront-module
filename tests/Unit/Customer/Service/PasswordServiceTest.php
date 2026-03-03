@@ -15,6 +15,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as P
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as CustomerRepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Service\Password as PasswordService;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TheCodingMachine\GraphQLite\Security\AuthenticationServiceInterface;
 
@@ -34,7 +35,7 @@ class PasswordServiceTest extends TestCase
         ];
     }
 
-    /** @dataProvider booleanDataProvider */
+    #[DataProvider('booleanDataProvider')]
     public function testResetPasswordByUpdateHashSuccessful(bool $expectedBoolean): void
     {
         $customerStub = $this->createStub(User::class);

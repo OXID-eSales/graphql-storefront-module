@@ -11,6 +11,8 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\DataType;
 
 use DateTimeImmutable;
 use OxidEsales\GraphQL\Storefront\Banner\DataType\Banner;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -18,15 +20,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class BannerTest extends TestCase
 {
-    /**
-     * @dataProvider activeDataProvider
-     *
-     * @param mixed $active
-     * @param mixed $from
-     * @param mixed $to
-     * @param mixed $now
-     * @param mixed $result
-     */
+    #[DataProvider('activeDataProvider')]
     public function testActive($active, $from, $to, $now, $result): void
     {
         $banner = new Banner(
