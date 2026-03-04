@@ -4,7 +4,6 @@
          processIsolation="false"
          stopOnError="false"
          stopOnFailure="false"
-         stopOnNotice="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
          beStrictAboutTestsThatDoNotTestAnything="false"
@@ -16,7 +15,6 @@
          displayDetailsOnTestsThatTriggerNotices="true"
          displayDetailsOnTestsThatTriggerErrors="true"
          displayDetailsOnTestsThatTriggerDeprecations="true"
-         displayDetailsOnPhpunitNotices="true"
          colors="true">
     <testsuites>
         <testsuite name="Unit">
