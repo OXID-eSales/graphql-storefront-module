@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated to work with OXID eShop 7.5.x
 - Minimum PHP version is now 8.3, tested up to PHP 8.5
 - Services are no longer auto-detected, explicit services.yaml files added per component
-- Updated tests for PHPUNit 12.5
+- Updated tests for PHPUnit 12.5
 
 ### Added
 - Add interface aliases for OxNewFactoryInterface and RepositoryInterface
@@ -245,6 +245,7 @@ This is stable release for v3.1.0. No changes have been made since v3.1.0-rc.1.
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
+[5.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.2.0...b-7.5.x-OXDEV-9642
 [4.2.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.1.0-rc.1...v4.1.0
 [4.1.0-rc.1]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.0.0...v4.1.0-rc.1
