@@ -31,7 +31,8 @@
         "codeception/module-asserts": "^3.0",
         "codeception/c3": "^2.9",
         "oxid-esales/oxideshop-demodata-ce": "dev-master",
-        "deptrac/deptrac": "^3.0"
+        "deptrac/deptrac": "^3.0",
+        "symfony/process": "^6.4"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
