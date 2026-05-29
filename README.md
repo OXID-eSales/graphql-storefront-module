@@ -91,7 +91,7 @@ $ SELENIUM_SERVER_HOST=selenium MODULE_IDS=oe_graphql_storefront vendor/bin/code
 # Development installation on OXID eShop SDK
 
 The installation instructions below are shown for the current [SDK](https://github.com/OXID-eSales/docker-eshop-sdk)
-for shop 7.5. Make sure your system meets the requirements of the SDK.
+for shop 7.6. Make sure your system meets the requirements of the SDK.
 
 0. Ensure all docker containers are down to avoid port conflicts
 
@@ -102,7 +102,7 @@ echo MyProject && git clone https://github.com/OXID-eSales/docker-eshop-sdk.git 
 
 2. Clone the repository to the source directory
 ```shell
-git clone --recurse-submodules https://github.com/OXID-eSales/graphql-storefront-module.git --branch=b-7.5.x ./source
+git clone --recurse-submodules https://github.com/OXID-eSales/graphql-storefront-module.git --branch=b-7.6.x ./source
 ```
 
 3. Run the recipe to setup the development environment
