@@ -14,7 +14,8 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class Sorting extends BaseSorting
 {
-    #[Factory(name: 'ProductSorting', default: true)] // By default the products will be sorted by their position ('oxsort' column).
+    // By default, the products will be sorted by their position ('oxsort' column).
+    #[Factory(name: 'ProductSorting', default: true)]
     public static function fromUserInput(
         ?string $position = self::SORTING_ASC,
         ?string $minPriceVariant = null,

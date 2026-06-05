@@ -14,7 +14,8 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class Sorting extends BaseSorting
 {
-    #[Factory(name: 'CategorySorting', default: true)] // By default the categories will be sorted by their position ('oxsort' column).
+    // By default, the categories will be sorted by their position ('oxsort' column).
+    #[Factory(name: 'CategorySorting', default: true)]
     public static function fromUserInput(
         ?string $position = self::SORTING_ASC,
         ?string $title = null
