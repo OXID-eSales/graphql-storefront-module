@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Promotion implements ShopModelAwareInterface
 {
     use ActiveStatus;
@@ -43,33 +41,25 @@ final class Promotion implements ShopModelAwareInterface
         return $this->actionsModel;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->actionsModel->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return (bool)$this->actionsModel->getRawFieldData('oxactive') && $this->isActiveNow();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return $this->actionsModel->getRawFieldData('oxtitle');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getText(): string
     {
         return $this->actionsModel->getRawFieldData('oxlongdesc');

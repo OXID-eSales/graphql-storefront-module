@@ -30,21 +30,20 @@ final class Vendor
     }
 
     /**
-     * @Query()
      *
      * @throws VendorNotFound
      * @throws InvalidLogin
      */
+    #[Query]
     public function vendor(ID $vendorId): VendorDataType
     {
         return $this->vendorService->vendor($vendorId);
     }
 
     /**
-     * @Query()
-     *
      * @return VendorDataType[]
      */
+    #[Query]
     public function vendors(
         ?VendorFilterList $filter = null,
         ?Sorting $sort = null

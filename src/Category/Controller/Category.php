@@ -27,19 +27,16 @@ final class Category
         $this->categoryService = $categoryService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function category(ID $categoryId): CategoryDataType
     {
         return $this->categoryService->category($categoryId);
     }
 
     /**
-     * @Query()
-     *
      * @return CategoryDataType[]
      */
+    #[Query]
     public function categories(
         ?CategoryFilterList $filter = null,
         ?Sorting $sort = null

@@ -22,9 +22,7 @@ use stdClass;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=WishedPrice::class)
- */
+#[ExtendType(class: WishedPrice::class)]
 final class RelationService
 {
     /** @var InquirerService */
@@ -46,9 +44,7 @@ final class RelationService
         $this->priceFactory = $priceFactory;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getInquirer(WishedPrice $wishedPrice): ?InquirerDataType
     {
         try {
@@ -58,9 +54,7 @@ final class RelationService
         }
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProduct(WishedPrice $wishedPrice): Product
     {
         return $this->productService->product(
@@ -68,17 +62,13 @@ final class RelationService
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPrice(WishedPrice $wishedPrice): Price
     {
         return $this->priceFactory->createPrice($wishedPrice);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCurrency(WishedPrice $wishedPrice): Currency
     {
         /** @var stdClass $currency */

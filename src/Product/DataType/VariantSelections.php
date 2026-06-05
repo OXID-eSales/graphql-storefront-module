@@ -14,9 +14,7 @@ use OxidEsales\Eshop\Application\Model\VariantSelectList;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 class VariantSelections
 {
     /**
@@ -41,10 +39,9 @@ class VariantSelections
     }
 
     /**
-     * @Field()
-     *
      * @return VariantSelectionList[]
      */
+    #[Field]
     public function getSelections(): array
     {
         $variantSelectionList = [];
@@ -61,10 +58,9 @@ class VariantSelections
     }
 
     /**
-     * @Field()
-     *
      * @return ?Product
      */
+    #[Field]
     public function getActiveVariant(): ?Product
     {
         if (!isset($this->variantSelections['oActiveVariant']) || !$this->variantSelections['blPerfectFit']) {

@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Order\Infrastructure\OrderProduct as OrderProd
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=OrderProductBruttoSum::class)
- */
+#[ExtendType(class: OrderProductBruttoSum::class)]
 final class OrderProductGrossRelations
 {
     /** @var OrderProductInfrastructure */
@@ -30,10 +28,9 @@ final class OrderProductGrossRelations
     }
 
     /**
-     * @Field()
-     *
      * @return OrderProductVats[]
      */
+    #[Field]
     public function getVats(OrderProductBruttoSum $orderProductGross): array
     {
         return $this->orderProductInfrastructure->getVats($orderProductGross);

@@ -13,9 +13,7 @@ use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class BasketCost
 {
     /** @var EshopBasketModel */
@@ -31,25 +29,19 @@ final class BasketCost
         return $this->basket;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVoucher(): float
     {
         return (float)$this->basket->getVoucherDiscount()->getPrice();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDiscount(): float
     {
         return (float)$this->basket->getTotalDiscountSum();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTotal(): float
     {
         return (float)$this->basket->getPrice()->getBruttoPrice();

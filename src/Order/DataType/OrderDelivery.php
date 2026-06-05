@@ -14,30 +14,22 @@ use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderDelivery extends AbstractOrderDataType
 {
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTrackingNumber(): string
     {
         return (string)$this->order->getTrackCode();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTrackingURL(): string
     {
         return (string)$this->order->getShipmentTrackingUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDispatched(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

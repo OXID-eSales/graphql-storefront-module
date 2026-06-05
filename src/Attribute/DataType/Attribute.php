@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class Attribute implements ShopModelAwareInterface
 {
     /** @var EshopAttributeModel */
@@ -32,9 +30,7 @@ final class Attribute implements ShopModelAwareInterface
         return $this->attribute;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)($this->attribute->getRawFieldData('oxtitle') ?? $this->attribute->getTitle());

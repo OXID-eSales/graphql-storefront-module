@@ -15,9 +15,7 @@ use OxidEsales\Eshop\Core\Registry as EshopRegistry;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class Seo
 {
     /** @var EshopModel */
@@ -29,25 +27,19 @@ final class Seo
         $this->eshopModel = $eshopModel;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDescription(): string
     {
         return $this->getMetaData('oxdescription');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getKeywords(): string
     {
         return $this->getMetaData('oxkeywords');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getUrl(): ?string
     {
         if ($this->eshopModel instanceof EshopContractUrl) {

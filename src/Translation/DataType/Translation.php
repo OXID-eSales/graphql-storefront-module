@@ -12,9 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Translation\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class Translation
 {
     /** @var string */
@@ -31,17 +29,13 @@ final class Translation
         $this->value = $value;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getKey(): string
     {
         return $this->key;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getValue(): string
     {
         return $this->value;

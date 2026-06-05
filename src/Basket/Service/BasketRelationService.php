@@ -33,9 +33,7 @@ use OxidEsales\GraphQL\Storefront\Voucher\Infrastructure\Repository as VoucherRe
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=Basket::class)
- */
+#[ExtendType(class: Basket::class)]
 final class BasketRelationService
 {
     /** @var BasketItemService */
@@ -77,9 +75,7 @@ final class BasketRelationService
         $this->authenticationService = $authenticationService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function owner(Basket $basket): ?BasketOwner
     {
         $owner = null;
@@ -92,10 +88,9 @@ final class BasketRelationService
     }
 
     /**
-     * @Field()
-     *
      * @return BasketItem[]
      */
+    #[Field]
     public function items(
         Basket $basket,
         ?PaginationFilter $pagination
@@ -108,27 +103,22 @@ final class BasketRelationService
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function cost(Basket $basket): BasketCost
     {
         return $this->basketService->basketCost($basket);
     }
 
     /**
-     * @Field()
-     *
      * @return Voucher[]
      */
+    #[Field]
     public function vouchers(Basket $basket): array
     {
         return $this->voucherRepository->getBasketVouchers((string)$basket->id());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function deliveryAddress(Basket $basket): ?DeliveryAddress
     {
         $addressId = $basket->getDeliveryAddressId();
@@ -148,9 +138,8 @@ final class BasketRelationService
 
     /**
      * Returns selected payment for current basket.
-     *
-     * @Field()
      */
+    #[Field]
     public function payment(Basket $basket): ?Payment
     {
         $paymentId = $basket->getPaymentId()->val();
@@ -170,9 +159,8 @@ final class BasketRelationService
 
     /**
      * Returns selected delivery method for current basket.
-     *
-     * @Field()
      */
+    #[Field]
     public function deliveryMethod(Basket $basket): ?DeliveryMethod
     {
         $deliveryMethodId = (string)$basket->getDeliveryMethodId();

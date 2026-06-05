@@ -13,9 +13,7 @@ use stdClass;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class Currency
 {
     /** @var stdClass */
@@ -26,33 +24,25 @@ final class Currency
         $this->currency = $currencyObject;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): int
     {
         return $this->currency->id;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getName(): string
     {
         return $this->currency->name;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getRate(): float
     {
         return (float)$this->currency->rate;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSign(): string
     {
         return $this->currency->sign;

@@ -16,9 +16,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class DeliveryAddress extends AbstractAddress
 {
     private EshopAddressModel $address;
@@ -34,9 +32,7 @@ final class DeliveryAddress extends AbstractAddress
         return $this->address;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID(
@@ -44,9 +40,7 @@ final class DeliveryAddress extends AbstractAddress
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString($this->getFieldValue('timestamp'));

@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=BasketDeliveryMethod::class)
- */
+#[ExtendType(class: BasketDeliveryMethod::class)]
 final class BasketDeliveryMethodRelationService
 {
     /** @var BasketInfrastructure */
@@ -28,9 +26,7 @@ final class BasketDeliveryMethodRelationService
         $this->basketInfrastructure = $basketInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function cost(BasketDeliveryMethod $basketDeliveryMethod): Price
     {
         return $this->basketInfrastructure->getDeliveryPrice($basketDeliveryMethod);

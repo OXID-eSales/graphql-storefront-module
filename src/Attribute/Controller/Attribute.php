@@ -26,19 +26,16 @@ final class Attribute
         $this->attributeService = $attributeService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function attribute(ID $attributeId): AttributeDataType
     {
         return $this->attributeService->attribute($attributeId);
     }
 
     /**
-     * @Query()
-     *
      * @return AttributeDataType[]
      */
+    #[Query]
     public function attributes(?AttributeFilterList $filter = null): array
     {
         return $this->attributeService->attributes(

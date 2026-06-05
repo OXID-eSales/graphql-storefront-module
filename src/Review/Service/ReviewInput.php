@@ -41,9 +41,7 @@ final class ReviewInput
         $this->reviewFactory = $reviewFactory;
     }
 
-    /**
-     * @Factory
-     */
+    #[Factory]
     public function fromUserInput(string $productId, ?string $text, ?int $rating): Review
     {
         $this->assertProductIdValue($productId);

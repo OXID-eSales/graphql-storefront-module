@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class ProductImageGallery implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
@@ -33,10 +31,9 @@ final class ProductImageGallery implements ShopModelAwareInterface
     }
 
     /**
-     * @Field()
-     *
      * @return ProductImage[]
      */
+    #[Field]
     public function getImages(): array
     {
         $gallery = $this->productModel->getPictureGallery();
@@ -53,17 +50,13 @@ final class ProductImageGallery implements ShopModelAwareInterface
         return $images;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getIcon(): string
     {
         return $this->productModel->getIconUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getThumb(): string
     {
         return $this->productModel->getThumbnailUrl();

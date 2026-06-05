@@ -37,9 +37,7 @@ final class BasketInput
         $this->basketFactory = $basketFactory;
     }
 
-    /**
-     * @Factory
-     */
+    #[Factory]
     public function fromUserInput(string $title, bool $public = false): BasketDataType
     {
         if ($this->doesBasketExist($title)) {

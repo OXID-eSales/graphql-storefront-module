@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class ProductDeliveryTime implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
@@ -33,17 +31,13 @@ final class ProductDeliveryTime implements ShopModelAwareInterface
         return $this->product;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getMinDeliveryTime(): int
     {
         return (int)$this->product->getRawFieldData('oxmindeltime');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getMaxDeliveryTime(): int
     {
         return (int)$this->product->getRawFieldData('oxmaxdeltime');
@@ -55,9 +49,9 @@ final class ProductDeliveryTime implements ShopModelAwareInterface
      * - WEEK
      * - MONTH
      *
-     * @Field
      * @TODO with the update to GraphQLite v4 update this to ENUM
      */
+    #[Field]
     public function getDeliveryTimeUnit(): string
     {
         return (string)$this->product->getRawFieldData('oxdeltimeunit');

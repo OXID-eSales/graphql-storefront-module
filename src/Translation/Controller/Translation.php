@@ -24,19 +24,16 @@ final class Translation
         $this->translationService = $translationService;
     }
 
-    /**
-     * @Query
-     */
+    #[Query]
     public function translation(string $key): TranslationDataType
     {
         return $this->translationService->getTranslation($key);
     }
 
     /**
-     * @Query
-     *
      * @return TranslationDataType[]
      */
+    #[Query]
     public function translations(): array
     {
         return $this->translationService->getTranslations();

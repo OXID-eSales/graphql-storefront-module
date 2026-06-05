@@ -29,9 +29,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 use OxidEsales\GraphQL\Storefront\Category\DataType\CategoryAttribute;
 
-/**
- * @ExtendType(class=Category::class)
- */
+#[ExtendType(class: Category::class)]
 final class RelationService
 {
     /** @var ProductService */
@@ -53,27 +51,22 @@ final class RelationService
         $this->categoryInfrastructure = $categoryInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getParent(Category $category): ?Category
     {
         return $this->getCategoryById($category->getParentId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getRoot(Category $category): ?Category
     {
         return $this->getCategoryById($category->getRootId());
     }
 
     /**
-     * @Field()
-     *
      * @return Category[]
      */
+    #[Field]
     public function getChildren(Category $category): array
     {
         return $this->categoryService->categories(
@@ -85,19 +78,16 @@ final class RelationService
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSeo(Category $category): Seo
     {
         return new Seo($category->getEshopModel());
     }
 
     /**
-     * @Field()
-     *
      * @return Product[]
      */
+    #[Field]
     public function getProducts(
         Category $category,
         ?PaginationFilter $pagination,
@@ -136,10 +126,9 @@ final class RelationService
     }
 
     /**
-     * @Field()
-     *
      * @return CategoryAttribute[]
      */
+    #[Field]
     public function getAttributes(Category $category): array
     {
         return $this->categoryInfrastructure->getAttributes($category);

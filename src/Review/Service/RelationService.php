@@ -22,9 +22,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @ExtendType(class=Review::class)
- */
+#[ExtendType(class: Review::class)]
 final class RelationService
 {
     /** @var ProductService */
@@ -46,9 +44,7 @@ final class RelationService
         $this->reviewInfrastructure = $reviewInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getReviewer(Review $review): ?Reviewer
     {
         $reviewerId = (string)$review->getReviewerId();
@@ -56,9 +52,7 @@ final class RelationService
         return $this->reviewerService->reviewer($reviewerId);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProduct(Review $review): ?Product
     {
         if (!$review->isArticleType()) {
@@ -73,9 +67,7 @@ final class RelationService
         }
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getLanguage(Review $review): Language
     {
         return $this->reviewInfrastructure->getLanguage($review);

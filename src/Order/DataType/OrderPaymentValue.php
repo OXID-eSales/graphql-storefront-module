@@ -13,9 +13,7 @@ use stdClass;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderPaymentValue
 {
     /** @var stdClass */
@@ -26,17 +24,13 @@ final class OrderPaymentValue
         $this->paymentValue = $paymentValue;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getKey(): string
     {
         return (string)$this->paymentValue->name;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getValue(): string
     {
         return (string)$this->paymentValue->value;

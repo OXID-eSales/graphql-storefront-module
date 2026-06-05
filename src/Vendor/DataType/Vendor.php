@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Vendor implements ShopModelAwareInterface
 {
     /** @var VendorModel */
@@ -36,49 +34,37 @@ final class Vendor implements ShopModelAwareInterface
         return $this->vendor;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->vendor->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return (bool)$this->vendor->getRawFieldData('oxactive');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getIcon(): ?string
     {
         return $this->vendor->getIconUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return $this->vendor->getTitle();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getShortdesc(): string
     {
         return $this->vendor->getShortDescription();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTimestamp(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString((string)$this->vendor->getRawFieldData('oxtimestamp'));

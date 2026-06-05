@@ -13,9 +13,7 @@ use OxidEsales\GraphQL\Storefront\Address\Service\AddressRelations;
 use OxidEsales\GraphQL\Storefront\Order\DataType\OrderInvoiceAddress;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 
-/**
- * @ExtendType(class=OrderInvoiceAddress::class)
- */
+#[ExtendType(class: OrderInvoiceAddress::class)]
 final class OrderInvoiceAddressRelations extends AddressRelations
 {
 }

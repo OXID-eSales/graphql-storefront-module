@@ -25,19 +25,16 @@ final class Promotion
         $this->promotionService = $promotionService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function promotion(ID $promotionId): PromotionDataType
     {
         return $this->promotionService->promotion($promotionId);
     }
 
     /**
-     * @Query()
-     *
      * @return PromotionDataType[]
      */
+    #[Query]
     public function promotions(): array
     {
         return $this->promotionService->promotions();

@@ -28,9 +28,7 @@ final class NewsletterSubscribeInput extends AbstractNewsletterInput
         parent::__construct($legacyService);
     }
 
-    /**
-     * @Factory
-     */
+    #[Factory]
     public function fromUserInput(
         ?string $firstName,
         ?string $lastName,

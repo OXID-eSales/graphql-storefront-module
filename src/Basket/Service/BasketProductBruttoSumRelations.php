@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Basket\Infrastructure\BasketProduct as BasketP
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=BasketProductBruttoSum::class)
- */
+#[ExtendType(class: BasketProductBruttoSum::class)]
 final class BasketProductBruttoSumRelations
 {
     /** @var BasketProductInfrastructure */
@@ -30,10 +28,9 @@ final class BasketProductBruttoSumRelations
     }
 
     /**
-     * @Field()
-     *
      * @return BasketProductVats[]
      */
+    #[Field]
     public function getVats(BasketProductBruttoSum $basketProductGross): array
     {
         return $this->basketProductInfrastructure->getVats($basketProductGross);

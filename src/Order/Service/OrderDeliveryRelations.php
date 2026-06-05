@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Order\Infrastructure\OrderDelivery as OrderDel
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=OrderDelivery::class)
- */
+#[ExtendType(class: OrderDelivery::class)]
 final class OrderDeliveryRelations
 {
     /** @var OrderDeliveryInfrastructure */
@@ -28,9 +26,7 @@ final class OrderDeliveryRelations
         $this->orderDeliveryInfrastructure = $orderDeliveryInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProvider(OrderDelivery $orderDelivery): DeliveryProvider
     {
         return $this->orderDeliveryInfrastructure->getDeliveryProvider($orderDelivery);

@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=BasketPayment::class)
- */
+#[ExtendType(class: BasketPayment::class)]
 final class BasketPaymentService
 {
     /** @var PaymentInfrastructure */
@@ -29,9 +27,7 @@ final class BasketPaymentService
         $this->paymentInfrastructure = $paymentInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function cost(BasketPayment $basketPayment): Price
     {
         return $this->paymentInfrastructure->getPaymentCost(

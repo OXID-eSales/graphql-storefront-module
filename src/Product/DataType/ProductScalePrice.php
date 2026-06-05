@@ -13,9 +13,7 @@ use OxidEsales\Eshop\Core\Model\BaseModel as EshopBaseModel;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class ProductScalePrice
 {
     /** @var EshopBaseModel */
@@ -31,17 +29,14 @@ final class ProductScalePrice
      * Whether the scale price is
      * - a new absolute price (you can query that in the `absolutePrice` field)
      * - or a percentage discount (you can query that in the `discount` field)
-     *
-     * @Field()
      */
+    #[Field]
     public function isAbsoluteScalePrice(): bool
     {
         return $this->getAbsolutePrice() !== null;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getAbsolutePrice(): ?float
     {
         $price = (float)$this->scalePrice->getRawFieldData('oxaddabs');
@@ -53,9 +48,7 @@ final class ProductScalePrice
         return $price;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getDiscount(): ?float
     {
         $percentage = (float)$this->scalePrice->getRawFieldData('oxaddperc');
@@ -67,17 +60,13 @@ final class ProductScalePrice
         return $percentage;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getAmountFrom(): int
     {
         return (int)$this->scalePrice->getRawFieldData('oxamount');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getAmountTo(): int
     {
         return (int)$this->scalePrice->getRawFieldData('oxamountto');

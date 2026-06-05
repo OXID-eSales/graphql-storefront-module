@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Attribute\DataType\Attribute;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class CategoryAttribute implements ShopModelAwareInterface
 {
     /** @var EshopAttributeModel */
@@ -33,19 +31,16 @@ final class CategoryAttribute implements ShopModelAwareInterface
         return $this->attribute;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getAttribute(): Attribute
     {
         return new Attribute($this->attribute);
     }
 
     /**
-     * @Field()
-     *
      * @return string[]
      */
+    #[Field]
     public function getValues(): array
     {
         return $this->attribute->getValues();

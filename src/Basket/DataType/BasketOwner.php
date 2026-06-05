@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class BasketOwner implements ShopModelAwareInterface
 {
     /** @var EshopUserModel */
@@ -33,17 +31,13 @@ final class BasketOwner implements ShopModelAwareInterface
         return $this->owner;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getFirstName(): string
     {
         return (string)$this->owner->getRawFieldData('oxfname');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getLastName(): string
     {
         return (string)$this->owner->getRawFieldData('oxlname');

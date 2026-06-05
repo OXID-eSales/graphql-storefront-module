@@ -17,9 +17,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=OrderCost::class)
- */
+#[ExtendType(class: OrderCost::class)]
 final class OrderCostRelations
 {
     /** @var OrderCostInfrastructure */
@@ -30,9 +28,7 @@ final class OrderCostRelations
         $this->orderCostInfrastructure = $orderCostInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDelivery(OrderCost $orderCost): Price
     {
         return new Price(
@@ -41,9 +37,7 @@ final class OrderCostRelations
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPayment(OrderCost $orderCost): Price
     {
         return new Price(
@@ -52,9 +46,7 @@ final class OrderCostRelations
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProductNet(OrderCost $orderCost): Price
     {
         return new Price(
@@ -63,17 +55,13 @@ final class OrderCostRelations
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProductGross(OrderCost $orderCost): OrderProductBruttoSum
     {
         return $this->orderCostInfrastructure->getProductGross($orderCost);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCurrency(OrderCost $orderCost): Currency
     {
         return new Currency($this->orderCostInfrastructure->getOrderCurrencyObject($orderCost));

@@ -12,30 +12,22 @@ namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderCost extends AbstractOrderDataType
 {
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTotal(): float
     {
         return (float)$this->order->getRawFieldData('oxtotalordersum');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVoucher(): float
     {
         return (float)$this->order->getRawFieldData('oxvoucherdiscount');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDiscount(): float
     {
         return (float)$this->order->getRawFieldData('oxdiscount');

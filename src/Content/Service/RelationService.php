@@ -20,9 +20,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @ExtendType(class=Content::class)
- */
+#[ExtendType(class: Content::class)]
 final class RelationService
 {
     /** @var CategoryService */
@@ -34,17 +32,13 @@ final class RelationService
         $this->categoryService = $categoryService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSeo(Content $content): Seo
     {
         return new Seo($content->getEshopModel());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCategory(Content $content): ?CategoryDataType
     {
         $id = (string)$content->getEshopModel()->getCategoryId();

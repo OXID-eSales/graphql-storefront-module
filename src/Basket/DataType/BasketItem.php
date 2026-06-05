@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class BasketItem implements ShopModelAwareInterface
 {
     /** @var EshopBasketItemModel */
@@ -35,9 +33,7 @@ final class BasketItem implements ShopModelAwareInterface
         return $this->basketItem;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID(
@@ -45,17 +41,13 @@ final class BasketItem implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function amount(): int
     {
         return (int)$this->basketItem->getRawFieldData('oxamount');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function lastUpdateDate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

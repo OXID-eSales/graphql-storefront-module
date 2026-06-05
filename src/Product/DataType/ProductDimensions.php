@@ -15,9 +15,7 @@ use OxidEsales\Eshop\Core\Model\BaseModel;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class ProductDimensions
 {
     /** @var EshopOrderArticleModel|EshopProductModel */
@@ -34,33 +32,25 @@ final class ProductDimensions
         $this->product = $product;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getLength(): float
     {
         return (float)$this->product->getRawFieldData('oxlength');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getWidth(): float
     {
         return (float)$this->product->getRawFieldData('oxwidth');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getHeight(): float
     {
         return (float)$this->product->getRawFieldData('oxheight');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getWeight(): float
     {
         return (float)$this->product->getRawFieldData('oxweight');

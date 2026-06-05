@@ -18,9 +18,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Banner implements ShopModelAwareInterface
 {
     use ActiveStatus;
@@ -44,52 +42,42 @@ final class Banner implements ShopModelAwareInterface
         return $this->actionsModel;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->actionsModel->getId());
     }
 
     /**
-     * @Field()
      *
      * @todo: remove $now param as its needed for tests only
      * @todo: extract this method as its duplicated
      */
+    #[Field]
     public function isActive(?DateTimeInterface $now = null): bool
     {
         return $this->active($now);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)$this->actionsModel->getRawFieldData('oxtitle');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPicture(): string
     {
         return (string)$this->actionsModel->getBannerPictureUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getLink(): string
     {
         return (string)$this->actionsModel->getBannerLink();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSorting(): int
     {
         return (int)$this->actionsModel->getRawFieldData('oxsort');

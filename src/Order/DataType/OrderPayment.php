@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderPayment implements ShopModelAwareInterface
 {
     /** @var EshopUserPaymentModel */
@@ -35,17 +33,13 @@ final class OrderPayment implements ShopModelAwareInterface
         return $this->payment;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->payment->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getUpdated(): ?DateTimeImmutable
     {
         $timestamp = $this->payment->getRawFieldData('oxtimestamp');

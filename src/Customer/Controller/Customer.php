@@ -34,11 +34,9 @@ final class Customer
         $this->authenticationService = $authenticationService;
     }
 
-    /**
-     * @Query()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Query]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customer(): CustomerDataType
     {
         return $this->customerService->customer(
@@ -46,39 +44,31 @@ final class Customer
         );
     }
 
-    /**
-     * @Mutation()
-     */
+    #[Mutation]
     public function customerRegister(CustomerDataType $customer): CustomerDataType
     {
         return $this->customerService->create($customer);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerEmailUpdate(string $email): CustomerDataType
     {
         return $this->customerService->changeEmail($email);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerBirthdateUpdate(DateTimeInterface $birthdate): CustomerDataType
     {
         return $this->customerService->changeBirthdate($birthdate);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerDelete(): bool
     {
         return $this->customerService->deleteCustomer();

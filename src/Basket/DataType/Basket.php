@@ -18,9 +18,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Basket extends AbstractBasket implements ShopModelAwareInterface
 {
     /** @var BasketModel */
@@ -33,9 +31,7 @@ final class Basket extends AbstractBasket implements ShopModelAwareInterface
         parent::__construct($basket);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function public(): bool
     {
         return (bool)$this->basket->getRawFieldData('oxpublic');

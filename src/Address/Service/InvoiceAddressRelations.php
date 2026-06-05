@@ -12,9 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Address\Service;
 use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 
-/**
- * @ExtendType(class=InvoiceAddress::class)
- */
+#[ExtendType(class: InvoiceAddress::class)]
 final class InvoiceAddressRelations extends AddressRelations
 {
 }

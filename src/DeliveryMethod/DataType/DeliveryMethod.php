@@ -18,9 +18,9 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
- * @Type()
  * @extendable-dataType
  */
+#[Type]
 class DeliveryMethod implements ShopModelAwareInterface
 {
     /** @var EshopDeliverySetModel */
@@ -45,9 +45,7 @@ class DeliveryMethod implements ShopModelAwareInterface
         return $this->deliverySetModel;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID(
@@ -55,27 +53,22 @@ class DeliveryMethod implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function title(): string
     {
         return (string)$this->deliverySetModel->getRawFieldData('oxtitle');
     }
 
     /**
-     * @Field()
-     *
      * @return BasketPaymentDataType[]
      */
+    #[Field]
     public function getPaymentTypes(): array
     {
         return $this->basketPaymentTypes;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPosition(): int
     {
         return (int)$this->deliverySetModel->getRawFieldData('oxpos');

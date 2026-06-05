@@ -21,9 +21,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Seo;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=Manufacturer::class)
- */
+#[ExtendType(class: Manufacturer::class)]
 final class RelationService
 {
     /** @var ProductService */
@@ -35,19 +33,16 @@ final class RelationService
         $this->productService = $productService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSeo(Manufacturer $manufacturer): Seo
     {
         return new Seo($manufacturer->getEshopModel());
     }
 
     /**
-     * @Field()
-     *
      * @return ManufacturerImage
      */
+    #[Field]
     public function getImages(Manufacturer $manufacturer): ManufacturerImage
     {
         return new ManufacturerImage(
@@ -56,10 +51,9 @@ final class RelationService
     }
 
     /**
-     * @Field()
-     *
      * @return ProductDataType[]
      */
+    #[Field]
     public function getProducts(
         Manufacturer $manufacturer,
         ?PaginationFilter $pagination,

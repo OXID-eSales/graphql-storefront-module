@@ -42,9 +42,7 @@ final class ActionFilterList extends FilterList
         ];
     }
 
-    /**
-     * @Factory(name="ActionFilterList", default=true)
-     */
+    #[Factory(name: 'ActionFilterList', default: true)]
     public static function createActionFilterList(?StringFilter $actionId = null): self
     {
         return new self(

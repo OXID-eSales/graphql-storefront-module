@@ -13,9 +13,7 @@ use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class BasketProductBruttoSum
 {
     /** @var EshopBasketModel */
@@ -32,9 +30,7 @@ final class BasketProductBruttoSum
         return $this->basket;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSum(): float
     {
         return (float)$this->basket->getBruttoSum();

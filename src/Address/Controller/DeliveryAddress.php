@@ -30,12 +30,12 @@ final class DeliveryAddress
     }
 
     /**
-     * @Query()
-     * @Logged()
-     * @HideIfUnauthorized()
      *
      * @return DeliveryAddressDataType[]
      */
+    #[Query]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerDeliveryAddresses(): array
     {
         return $this->deliveryAddressService->customerDeliveryAddresses(
@@ -43,21 +43,17 @@ final class DeliveryAddress
         );
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerDeliveryAddressDelete(ID $deliveryAddressId): bool
     {
         return $this->deliveryAddressService->delete($deliveryAddressId);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerDeliveryAddressAdd(DeliveryAddressDataType $deliveryAddress): DeliveryAddressDataType
     {
         return $this->deliveryAddressService->store($deliveryAddress);

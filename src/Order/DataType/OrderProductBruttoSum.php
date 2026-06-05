@@ -12,14 +12,10 @@ namespace OxidEsales\GraphQL\Storefront\Order\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderProductBruttoSum extends AbstractOrderDataType
 {
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSum(): float
     {
         return (float)($this->order->getRawFieldData('oxtotalbrutsum'));

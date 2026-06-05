@@ -66,9 +66,7 @@ final class CategoryIDFilter implements FilterInterface
             ->setParameter(":$field", $this->equals());
     }
 
-    /**
-     * @Factory(name="CategoryIDFilterInput", default=true)
-     */
+    #[Factory(name: 'CategoryIDFilterInput', default: true)]
     public static function fromUserInput(ID $equals): self
     {
         return new self($equals);

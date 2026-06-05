@@ -28,17 +28,13 @@ class ProductVat implements ProductVatsInterface
         $this->vatPrice = $vatPrice;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVatRate(): float
     {
         return (float)($this->vatRate);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVatPrice(): float
     {
         return (float)($this->vatPrice);

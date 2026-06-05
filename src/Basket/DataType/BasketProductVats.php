@@ -12,9 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Basket\DataType;
 use OxidEsales\GraphQL\Storefront\Shared\DataType\ProductVat;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class BasketProductVats extends ProductVat
 {
 }

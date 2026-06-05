@@ -19,9 +19,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @ExtendType(class=CountryDataType::class)
- */
+#[ExtendType(class: CountryDataType::class)]
 final class RelationService
 {
     /** @var StateService */
@@ -33,10 +31,9 @@ final class RelationService
     }
 
     /**
-     * @Field()
-     *
      * @return StateDataType[]
      */
+    #[Field]
     public function states(
         CountryDataType $country,
         ?StateSorting $sort

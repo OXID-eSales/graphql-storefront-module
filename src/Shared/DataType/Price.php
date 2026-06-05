@@ -14,9 +14,7 @@ use stdClass;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class Price
 {
     /** @var PriceModel */
@@ -31,33 +29,25 @@ final class Price
         $this->currency = $currency;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPrice(): float
     {
         return $this->price->getPrice();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVat(): float
     {
         return $this->price->getVat();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVatValue(): float
     {
         return $this->price->getVatValue();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isNettoPriceMode(): bool
     {
         return $this->price->isNettoMode();

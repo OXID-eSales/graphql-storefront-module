@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class ProductRating implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
@@ -33,17 +31,13 @@ final class ProductRating implements ShopModelAwareInterface
         return $this->product;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getRating(): float
     {
         return $this->product->getArticleRatingAverage(false);
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getCount(): int
     {
         /**

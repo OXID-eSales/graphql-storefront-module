@@ -31,9 +31,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @ExtendType(class=CustomerDataType::class)
- */
+#[ExtendType(class: CustomerDataType::class)]
 final class RelationService
 {
     /** @var ReviewService */
@@ -70,10 +68,9 @@ final class RelationService
     }
 
     /**
-     * @Field()
-     *
      * @return ReviewDataType[]
      */
+    #[Field]
     public function getReviews(CustomerDataType $customer): array
     {
         return $this->reviewService->reviews(
@@ -87,9 +84,7 @@ final class RelationService
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getNewsletterStatus(): ?NewsletterStatusType
     {
         try {
@@ -100,56 +95,48 @@ final class RelationService
     }
 
     /**
-     * @Field()
-     *
      * @return DeliveryAddress[]
      */
+    #[Field]
     public function deliveryAddresses(CustomerDataType $customer): array
     {
         return $this->customerRepository->addresses($customer);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function invoiceAddress(): InvoiceAddressDataType
     {
         return $this->invoiceAddressService->customerInvoiceAddress();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getBasket(CustomerDataType $customer, string $title): BasketDataType
     {
         return $this->basketFinderService->basketByOwnerAndTitle($customer, $title);
     }
 
     /**
-     * @Field()
-     *
      * @return BasketDataType[]
      */
+    #[Field]
     public function getBaskets(CustomerDataType $customer): array
     {
         return $this->basketFinderService->basketsByOwner($customer);
     }
 
     /**
-     * @Field()
-     *
      * @return OrderDataType[]
      */
+    #[Field]
     public function getOrders(CustomerDataType $customer, ?PaginationFilter $pagination = null): array
     {
         return $this->customerInfrastructure->getOrders($customer, $pagination);
     }
 
     /**
-     * @Field
-     *
      * @return OrderFile[]
      */
+    #[Field]
     public function getFiles(CustomerDataType $customer): array
     {
         return $this->customerInfrastructure->getOrderFiles($customer);

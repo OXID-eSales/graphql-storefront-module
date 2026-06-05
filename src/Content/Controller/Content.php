@@ -26,19 +26,16 @@ final class Content
         $this->contentService = $contentService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function content(ID $contentId): ContentDataType
     {
         return $this->contentService->content($contentId);
     }
 
     /**
-     * @Query()
-     *
      * @return ContentDataType[]
      */
+    #[Query]
     public function contents(?ContentFilterList $filter = null): array
     {
         return $this->contentService->contents(

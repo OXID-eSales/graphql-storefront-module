@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Base\DataType\DateTimeImmutableFactory;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class InvoiceAddress extends AbstractAddress
 {
     protected const PHONE_FIELD_NAME = 'privfon';
@@ -34,25 +32,19 @@ final class InvoiceAddress extends AbstractAddress
         return $this->customer;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function vatID(): string
     {
         return $this->getFieldValue('ustid');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function mobile(): string
     {
         return $this->getFieldValue('mobfon');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function created(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -60,9 +52,7 @@ final class InvoiceAddress extends AbstractAddress
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

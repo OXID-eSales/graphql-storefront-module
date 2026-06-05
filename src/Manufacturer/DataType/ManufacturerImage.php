@@ -13,9 +13,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use OxidEsales\Eshop\Application\Model\Manufacturer;
 
-/**
- * @Type()
- */
+#[Type]
 final class ManufacturerImage
 {
     /** @var Manufacturer */
@@ -26,33 +24,25 @@ final class ManufacturerImage
         $this->manufacturer = $manufacturer;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getAlt(): string
     {
         return $this->manufacturer->getIconAltUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPicture(): string
     {
         return $this->manufacturer->getPictureUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getThumbnail(): string
     {
         return $this->manufacturer->getThumbnailUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPromotion(): string
     {
         return $this->manufacturer->getPromotionIconUrl();

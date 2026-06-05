@@ -12,9 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Product\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class ProductImage
 {
     /** @var string */
@@ -33,25 +31,19 @@ final class ProductImage
         $this->zoom = $zoom;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getImage(): string
     {
         return $this->image;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getIcon(): string
     {
         return $this->icon;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getZoom(): string
     {
         return $this->zoom;

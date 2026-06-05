@@ -14,9 +14,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class VariantSelectionList
 {
     /** @var EshopVariantSelectionListModel */
@@ -30,17 +28,13 @@ final class VariantSelectionList
         $this->variantSelectList = $selectionList;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getLabel(): string
     {
         return (string) $this->variantSelectList->getLabel();
     }
 
-    /**
-     *  @Field()
-     */
+    #[Field]
     public function getActiveSelection(): ?Selection
     {
         /** @var \OxidEsales\Eshop\Application\Model\Selection|null $activeSelection */
@@ -50,10 +44,9 @@ final class VariantSelectionList
     }
 
     /**
-     * @Field()
-     *
      * @return Selection[]
      */
+    #[Field]
     public function getFields(): array
     {
         $fields = [];

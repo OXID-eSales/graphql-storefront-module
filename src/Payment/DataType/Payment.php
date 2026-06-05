@@ -18,9 +18,9 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 /**
- * @Type
  * @extendable-dataType
  */
+#[Type]
 class Payment implements ShopModelAwareInterface
 {
     /** @var EshopPaymentModel */
@@ -31,41 +31,31 @@ class Payment implements ShopModelAwareInterface
         $this->payment = $payment;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->payment->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return (bool)$this->payment->getRawFieldData('oxactive');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)$this->payment->getRawFieldData('oxdesc');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDescription(): string
     {
         return (string)$this->payment->getRawFieldData('oxlongdesc');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getUpdated(): ?DateTimeImmutable
     {
         return DateTimeImmutableFactory::fromString($this->payment->getRawFieldData('oxtimestamp'));

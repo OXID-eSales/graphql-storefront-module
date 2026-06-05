@@ -15,9 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class NewsletterStatusUnsubscribe implements ShopModelAwareInterface
 {
     /** @var EshopNewsletterSubscriptionStatusModel */
@@ -34,9 +32,7 @@ final class NewsletterStatusUnsubscribe implements ShopModelAwareInterface
         return $this->newsletterSubscriptionStatus;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function email(): string
     {
         return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxemail');

@@ -37,9 +37,7 @@ final class AttributeFilterList extends FilterList
         ];
     }
 
-    /**
-     * @Factory(name="AttributeFilterList", default=true)
-     */
+    #[Factory(name: 'AttributeFilterList', default: true)]
     public static function createAttributeFilterList(
         ?StringFilter $title = null
     ): self {

@@ -40,9 +40,7 @@ final class CustomerRegisterInput
         $this->customerRegisterFactory = $customerRegisterFactory;
     }
 
-    /**
-     * @Factory
-     */
+    #[Factory]
     public function fromUserInput(string $email, string $password, ?DateTimeInterface $birthdate): Customer
     {
         if (!strlen($email)) {

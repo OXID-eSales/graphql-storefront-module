@@ -14,9 +14,7 @@ use OxidEsales\Eshop\Application\Model\DeliverySet as EshopDeliverySetModel;
 use OxidEsales\GraphQL\Storefront\Payment\DataType\BasketPayment;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class BasketDeliveryMethod extends DeliveryMethod
 {
     /** @var EshopBasketModel */

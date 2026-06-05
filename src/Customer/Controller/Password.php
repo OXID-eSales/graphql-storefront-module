@@ -25,11 +25,9 @@ final class Password
     ) {
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerPasswordChange(string $old, string $new): LoginInterface
     {
         $customer = $this->passwordService->change($old, $new);

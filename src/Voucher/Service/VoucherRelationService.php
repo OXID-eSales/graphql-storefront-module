@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Voucher\Service\VoucherSeries as VoucherSeries
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=Voucher::class)
- */
+#[ExtendType(class: Voucher::class)]
 final class VoucherRelationService
 {
     /** @var VoucherSeriesService */
@@ -28,9 +26,7 @@ final class VoucherRelationService
         $this->voucherSeriesService = $voucherSeriesService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function series(Voucher $voucher): VoucherSeries
     {
         return $this->voucherSeriesService->series((string)$voucher->seriesId());

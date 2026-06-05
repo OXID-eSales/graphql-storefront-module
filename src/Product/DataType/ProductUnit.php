@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class ProductUnit implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
@@ -34,9 +32,7 @@ final class ProductUnit implements ShopModelAwareInterface
         return $this->product;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getPrice(): Price
     {
         /** @var \OxidEsales\Eshop\Core\Price */
@@ -47,9 +43,7 @@ final class ProductUnit implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getName(): string
     {
         return $this->product->getUnitName();
