@@ -47,14 +47,13 @@ final class InvoiceAddressRelationsCest extends BaseCest
         $this->setCountryActiveStatus(self::COUNTRY_ID, 0);
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $this->queryCountryRelation($I);
+        $result = $this->queryCountryRelation($I, 1);
 
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
+        $I->assertArrayNotHasKey('errors', $result);
 
         $I->assertSame(
-            'Unauthorized',
-            $result['errors'][0]['message']
+            'Germany',
+            $result['data']['customerInvoiceAddress']['country']['title']
         );
 
         $this->setCountryActiveStatus(self::COUNTRY_ID, 1);

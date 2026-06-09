@@ -12,6 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Address\Service;
 use OxidEsales\GraphQL\Storefront\Address\DataType\AbstractAddress;
 use OxidEsales\GraphQL\Storefront\Country\DataType\Country;
 use OxidEsales\GraphQL\Storefront\Country\DataType\State;
+use OxidEsales\GraphQL\Storefront\Country\Exception\CountryNotFound;
 use OxidEsales\GraphQL\Storefront\Country\Exception\StateNotFound;
 use OxidEsales\GraphQL\Storefront\Country\Service\Country as CountryService;
 use OxidEsales\GraphQL\Storefront\Country\Service\State as StateService;
@@ -38,9 +39,14 @@ abstract class AddressRelations
      */
     public function country(AbstractAddress $address): ?Country
     {
-        return $this->countryService->country(
-            $address->countryId()
-        );
+        try {
+            return $this->countryService->country(
+                id: $address->countryId(),
+                checkStatusPermission: false
+            );
+        } catch (CountryNotFound $e) {
+            return null;
+        }
     }
 
     /**

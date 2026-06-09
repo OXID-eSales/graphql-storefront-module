@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Update module to work with OXID eShop 7.6
+- Requesting an inactive country without permission now returns a dedicated "country is inactive" error instead of the generic `Unauthorized` error [#0007687](https://bugs.oxid-esales.com/view.php?id=7687)
+
+### Fixed
+- Country relation of delivery and invoice addresses now returns the assigned country even if it is inactive (matching the shop frontend) and `null` for deleted countries [#0007687](https://bugs.oxid-esales.com/view.php?id=7687)
 
 ## [5.0.0] - 2026-05-07
 

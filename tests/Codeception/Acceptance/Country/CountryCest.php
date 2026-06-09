@@ -93,7 +93,7 @@ final class CountryCest extends BaseCest
         $result = $I->grabJsonResponseAsArray();
 
         $I->assertSame(
-            'Unauthorized',
+            'Country is inactive: ' . self::INACTIVE_COUNTRY,
             $result['errors'][0]['message']
         );
     }

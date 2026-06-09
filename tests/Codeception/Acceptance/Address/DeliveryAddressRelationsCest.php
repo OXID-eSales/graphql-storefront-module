@@ -52,15 +52,16 @@ final class DeliveryAddressRelationsCest extends BaseCest
         $this->setCountryActiveStatus(self::COUNTRY_ID, 0);
         $I->login(self::USERNAME, self::PASSWORD);
 
-        $this->queryCountryRelation($I);
+        $result = $this->queryCountryRelation($I, 1);
 
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
+        $I->assertArrayNotHasKey('errors', $result);
 
-        $I->assertSame(
-            'Unauthorized',
-            $result['errors'][0]['message']
-        );
+        $deliveryAddresses = $result['data']['customerDeliveryAddresses'];
+        $I->assertEquals(2, count($deliveryAddresses));
+
+        [$deliveryAddress1, $deliveryAddress2] = $deliveryAddresses;
+        $I->assertSame('Germany', $deliveryAddress1['country']['title']);
+        $I->assertSame('Austria', $deliveryAddress2['country']['title']);
 
         $this->setCountryActiveStatus(self::COUNTRY_ID, 1);
     }

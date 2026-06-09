@@ -246,6 +246,43 @@ final class InvoiceAddressCest extends BaseCest
         );
     }
 
+    public function testCustomerInvoiceAddressSetWithInactiveCountry(AcceptanceTester $I): void
+    {
+        $inactiveCountryId = '8f241f1109621faf8.40135556'; // Philippinen, inactive in demodata
+
+        $I->login(self::USERNAME, self::PASSWORD);
+
+        $I->sendGQLQuery(
+            'mutation {
+                customerInvoiceAddressSet (
+                    invoiceAddress: {
+                        salutation: "Mrs."
+                        firstName: "First"
+                        lastName: "Last"
+                        street: "Another invoice street"
+                        streetNumber: "123"
+                        zipCode: "3210"
+                        city: "Another invoice city"
+                        countryId: "' . $inactiveCountryId . '"
+                    }
+                ){
+                    country {
+                        id
+                    }
+                }
+            }'
+        );
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertArrayNotHasKey('errors', $result);
+        $I->assertSame(
+            $inactiveCountryId,
+            $result['data']['customerInvoiceAddressSet']['country']['id']
+        );
+    }
+
     /**
      * @dataProvider customerInvoiceAddressProvider
      */
@@ -472,28 +509,6 @@ final class InvoiceAddressCest extends BaseCest
                 ],
                 'expectedError' =>
                     'Invoice address is missing required fields: fname, lname, street, streetnr, zip, city, countryid',
-            ],
-            'set2' => [
-                'invoiceData' => [
-                    'salutation' => 'Mrs.',
-                    'firstName' => 'First',
-                    'lastName' => 'Last',
-                    'company' => '',
-                    'additionalInfo' => '',
-                    'street' => 'Another invoice street',
-                    'streetNumber' => '123',
-                    'zipCode' => '3210',
-                    'city' => 'Another invoice city',
-                    'country' => [
-                        'id' => '8f241f1109621faf8.40135556', // invalid country
-                        'title' => 'Philippinen',
-                    ],
-                    'vatID' => '',
-                    'phone' => '',
-                    'mobile' => '',
-                    'fax' => '',
-                ],
-                'expectedError' => 'Unauthorized',
             ],
             'set3' => [
                 'invoiceData' => [

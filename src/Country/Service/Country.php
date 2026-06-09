@@ -10,11 +10,11 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Country\Service;
 
 use OxidEsales\GraphQL\Base\DataType\Pagination\Pagination as PaginationFilter;
-use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Storefront\Country\DataType\Country as CountryDataType;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountryFilterList;
 use OxidEsales\GraphQL\Storefront\Country\DataType\CountrySorting;
+use OxidEsales\GraphQL\Storefront\Country\Exception\CountryIsInactive;
 use OxidEsales\GraphQL\Storefront\Country\Exception\CountryNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Service\AbstractActiveFilterService;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -22,10 +22,10 @@ use TheCodingMachine\GraphQLite\Types\ID;
 final class Country extends AbstractActiveFilterService
 {
     /**
-     * @throws InvalidLogin
+     * @throws CountryIsInactive
      * @throws CountryNotFound
      */
-    public function country(ID $id): CountryDataType
+    public function country(ID $id, bool $checkStatusPermission = true): CountryDataType
     {
         try {
             /** @var CountryDataType $country */
@@ -42,8 +42,8 @@ final class Country extends AbstractActiveFilterService
             return $country;
         }
 
-        if (!$this->authorizationService->isAllowed($this->getInactivePermission())) {
-            throw new InvalidLogin('Unauthorized');
+        if ($checkStatusPermission && !$this->authorizationService->isAllowed($this->getInactivePermission())) {
+            throw new CountryIsInactive((string)$id);
         }
 
         return $country;
