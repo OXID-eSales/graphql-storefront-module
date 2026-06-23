@@ -39,7 +39,13 @@ abstract class AbstractBasket
         );
     }
 
-    #[Field] // Beware of the following values with special meaning
+    /**
+     * Beware of the following values with special meaning
+     * - wishList
+     * - noticeList
+     * - savedBasket
+     */
+    #[Field]
     public function title(): string
     {
         return (string)$this->basket->getRawFieldData('oxtitle');
