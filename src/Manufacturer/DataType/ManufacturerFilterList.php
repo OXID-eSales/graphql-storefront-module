@@ -40,9 +40,7 @@ final class ManufacturerFilterList extends FilterList
         ];
     }
 
-    /**
-     * @Factory(name="ManufacturerFilterList", default=true)
-     */
+    #[Factory(name: 'ManufacturerFilterList', default: true)]
     public static function createManufacturerFilterList(
         ?StringFilter $title = null
     ): self {

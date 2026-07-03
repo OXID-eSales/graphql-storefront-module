@@ -27,19 +27,16 @@ final class Country
         $this->countryService = $countryService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function country(ID $countryId): CountryDataType
     {
         return $this->countryService->country($countryId);
     }
 
     /**
-     * @Query()
-     *
      * @return CountryDataType[]
      */
+    #[Query]
     public function countries(
         ?CountryFilterList $filter = null,
         ?CountrySorting $sort = null

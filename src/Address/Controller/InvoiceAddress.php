@@ -27,22 +27,18 @@ final class InvoiceAddress
         $this->invoiceAddressService = $invoiceAddressService;
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerInvoiceAddressSet(
         InvoiceAddressDataType $invoiceAddress
     ): InvoiceAddressDataType {
         return $this->invoiceAddressService->updateInvoiceAddress($invoiceAddress);
     }
 
-    /**
-     * @Query()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Query]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function customerInvoiceAddress(): InvoiceAddressDataType
     {
         return $this->invoiceAddressService->customerInvoiceAddress();

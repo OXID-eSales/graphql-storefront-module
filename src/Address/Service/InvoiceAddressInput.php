@@ -37,9 +37,7 @@ final class InvoiceAddressInput
         $this->customerService = $customerService;
     }
 
-    /**
-     * @Factory(name="InvoiceAddressInput", default=true)
-     */
+    #[Factory(name: 'InvoiceAddressInput', default: true)]
     public function fromUserInput(
         ?string $salutation = null,
         ?string $firstName = null,

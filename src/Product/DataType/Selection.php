@@ -13,9 +13,7 @@ use OxidEsales\Eshop\Application\Model\Selection as EshopSelectionModel;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class Selection
 {
     /** @var EshopSelectionModel */
@@ -29,33 +27,25 @@ final class Selection
         $this->selection = $selection;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getValue(): string
     {
         return (string)$this->selection->getValue();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getName(): string
     {
         return (string)$this->selection->getName();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return (bool)$this->selection->isActive();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isDisabled(): bool
     {
         return (bool)$this->selection->isDisabled();

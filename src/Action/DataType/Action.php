@@ -19,9 +19,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Action implements ShopModelAwareInterface
 {
     public const ACTION_TYPE = [0, 1];
@@ -43,35 +41,28 @@ final class Action implements ShopModelAwareInterface
         return $this->action;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->action->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return (bool)$this->action->getRawFieldData('oxactive');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)$this->action->getRawFieldData('oxtitle');
     }
 
     /**
-     * @Field
-     *
      * @return Product[]
      */
+    #[Field]
     public function getProducts(): array
     {
         /** @var ArticleList $oArtList */

@@ -19,9 +19,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderFile implements ShopModelAwareInterface
 {
     /** @var OrderFileModel */
@@ -33,25 +31,19 @@ final class OrderFile implements ShopModelAwareInterface
         $this->orderFile = $orderFile;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID($this->orderFile->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function filename(): string
     {
         return (string)$this->orderFile->getRawFieldData('OXFILENAME');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function firstDownload(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -59,9 +51,7 @@ final class OrderFile implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function latestDownload(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -69,25 +59,19 @@ final class OrderFile implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function downloadCount(): int
     {
         return (int)$this->orderFile->getRawFieldData('OXDOWNLOADCOUNT');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function maxDownloadCount(): int
     {
         return (int)$this->orderFile->getRawFieldData('OXMAXDOWNLOADCOUNT');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function validUntil(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -95,17 +79,13 @@ final class OrderFile implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function valid(): bool
     {
         return (bool)$this->orderFile->isValid();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function url(): string
     {
         /** @var EshopSeoEncoder $seoEncoder */

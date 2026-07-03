@@ -38,9 +38,7 @@ final class NewsletterOptInInput extends AbstractNewsletterInput
         parent::__construct($legacyService);
     }
 
-    /**
-     * @Factory
-     */
+    #[Factory]
     public function fromUserInput(string $email, string $confirmCode): NewsletterStatusType
     {
         $this->assertValidEmail($email);

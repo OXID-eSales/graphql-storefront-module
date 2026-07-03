@@ -15,38 +15,28 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Order extends AbstractOrderDataType
 {
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->order->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getOrderNumber(): int
     {
         return (int)($this->order->getRawFieldData('oxordernr'));
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getInvoiceNumber(): int
     {
         return (int)($this->order->getInvoiceNum());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPaid(): ?DateTimeInterface
     {
         $paid = (string)$this->order->getRawFieldData('oxpaid');
@@ -54,25 +44,19 @@ final class Order extends AbstractOrderDataType
         return DateTimeImmutableFactory::fromString($paid);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getRemark(): string
     {
         return (string)($this->order->getRawFieldData('oxremark'));
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCancelled(): bool
     {
         return (bool)($this->order->getRawFieldData('oxstorno'));
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getInvoiced(): ?DateTimeInterface
     {
         $invoiceDate = (string)$this->order->getRawFieldData('oxbilldate');
@@ -80,9 +64,7 @@ final class Order extends AbstractOrderDataType
         return DateTimeImmutableFactory::fromString($invoiceDate);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getOrdered(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -90,9 +72,7 @@ final class Order extends AbstractOrderDataType
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getUpdated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

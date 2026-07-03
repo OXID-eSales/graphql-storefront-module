@@ -40,9 +40,7 @@ final class LinkFilterList extends FilterList
         ];
     }
 
-    /**
-     * @Factory(name="LinkFilterList", default=true)
-     */
+    #[Factory(name: 'LinkFilterList', default: true)]
     public static function createLinkFilterList(
         ?StringFilter $description = null
     ): self {

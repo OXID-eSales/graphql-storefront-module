@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\LanguageInfrastructure;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=Language::class)
- */
+#[ExtendType(class: Language::class)]
 final class LanguageRelationService
 {
     /** @var LanguageInfrastructure */
@@ -28,17 +26,13 @@ final class LanguageRelationService
         $this->languageInfrastructure = $languageInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCode(Language $language): string
     {
         return $this->languageInfrastructure->getLanguageCode($language->getLanguageId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getLanguage(Language $language): string
     {
         return $this->languageInfrastructure->getLanguageName($language->getLanguageId());

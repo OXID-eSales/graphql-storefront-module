@@ -28,29 +28,23 @@ final class Review
         $this->reviewService = $reviewService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function review(ID $reviewId): ReviewDataType
     {
         return $this->reviewService->review($reviewId);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function reviewSet(ReviewDataType $review): ReviewDataType
     {
         return $this->reviewService->save($review);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function reviewDelete(ID $reviewId): bool
     {
         return $this->reviewService->delete($reviewId);

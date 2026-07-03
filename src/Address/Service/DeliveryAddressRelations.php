@@ -12,9 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Address\Service;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 
-/**
- * @ExtendType(class=DeliveryAddress::class)
- */
+#[ExtendType(class: DeliveryAddress::class)]
 final class DeliveryAddressRelations extends AddressRelations
 {
 }

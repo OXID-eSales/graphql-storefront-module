@@ -26,19 +26,17 @@ final class Currency
 
     /**
      * If `name` is ommited, gives you the currently active currency
-     *
-     * @Query()
      */
+    #[Query]
     public function currency(?string $name = null): CurrencyDataType
     {
         return $this->currencyService->getByName($name);
     }
 
     /**
-     * @Query()
-     *
      * @return CurrencyDataType[]
      */
+    #[Query]
     public function currencies(): array
     {
         return $this->currencyService->getAll();

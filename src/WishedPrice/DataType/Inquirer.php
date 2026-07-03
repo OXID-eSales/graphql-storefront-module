@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class Inquirer implements ShopModelAwareInterface
 {
     /** @var EshopUserModel */
@@ -32,9 +30,7 @@ final class Inquirer implements ShopModelAwareInterface
         return $this->inquirer;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getFirstName(): string
     {
         return (string)$this->inquirer->getRawFieldData('oxfname');

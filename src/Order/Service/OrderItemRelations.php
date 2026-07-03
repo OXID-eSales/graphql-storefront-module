@@ -18,9 +18,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @ExtendType(class=OrderItem::class)
- */
+#[ExtendType(class: OrderItem::class)]
 final class OrderItemRelations
 {
     /** @var ProductService */
@@ -32,9 +30,7 @@ final class OrderItemRelations
         $this->productService = $productService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProduct(OrderItem $orderItem): ?Product
     {
         try {

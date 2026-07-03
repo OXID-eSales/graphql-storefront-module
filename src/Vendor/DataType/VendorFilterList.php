@@ -39,9 +39,7 @@ final class VendorFilterList extends FilterList
         ];
     }
 
-    /**
-     * @Factory(name="VendorFilterList", default=true)
-     */
+    #[Factory(name: 'VendorFilterList', default: true)]
     public static function createVendorFilterList(
         ?StringFilter $title = null
     ): self {

@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Country implements ShopModelAwareInterface
 {
     /** @var EshopCountryModel */
@@ -35,81 +33,61 @@ final class Country implements ShopModelAwareInterface
         return $this->country;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->country->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPosition(): int
     {
         return (int)$this->country->getRawFieldData('oxorder');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return (bool)$this->country->getRawFieldData('oxactive');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)$this->country->getRawFieldData('oxtitle');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getIsoAlpha2(): string
     {
         return (string)$this->country->getRawFieldData('oxisoalpha2');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getIsoAlpha3(): string
     {
         return (string)$this->country->getRawFieldData('oxisoalpha3');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getIsoNumeric(): string
     {
         return (string)$this->country->getRawFieldData('oxunnum3');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getShortDescription(): string
     {
         return $this->country->getRawFieldData('oxshortdesc');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDescription(): string
     {
         return $this->country->getRawFieldData('oxlongdesc');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCreationDate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString((string)$this->country->getRawFieldData('oxtimestamp'));

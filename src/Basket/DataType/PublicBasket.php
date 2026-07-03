@@ -13,9 +13,7 @@ use OxidEsales\Eshop\Application\Model\UserBasket as BasketModel;
 use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class PublicBasket extends AbstractBasket implements ShopModelAwareInterface
 {
     /**

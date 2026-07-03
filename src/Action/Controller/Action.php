@@ -26,19 +26,16 @@ final class Action
         $this->actionService = $actionService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function action(ID $actionId): ActionDataType
     {
         return $this->actionService->action($actionId);
     }
 
     /**
-     * @Query()
-     *
      * @return ActionDataType[]
      */
+    #[Query]
     public function actions(?ActionFilterList $filter = null): array
     {
         return $this->actionService->actions(

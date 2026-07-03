@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class VoucherSeries implements ShopModelAwareInterface
 {
     /** @var EshopVoucherModel */
@@ -36,33 +34,25 @@ final class VoucherSeries implements ShopModelAwareInterface
         return $this->voucherSeriesModel;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID($this->getEshopModel()->getId());
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function title(): string
     {
         return (string)$this->getEshopModel()->getRawFieldData('OXSERIENR');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function description(): string
     {
         return (string)$this->getEshopModel()->getRawFieldData('OXSERIEDESCRIPTION');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function validFrom(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -70,9 +60,7 @@ final class VoucherSeries implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function validTo(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -80,17 +68,13 @@ final class VoucherSeries implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function discount(): float
     {
         return (float)$this->getEshopModel()->getRawFieldData('OXDISCOUNT');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function discountType(): string
     {
         return (string)$this->getEshopModel()->getRawFieldData('OXDISCOUNTTYPE');

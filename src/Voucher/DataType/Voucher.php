@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Voucher implements ShopModelAwareInterface
 {
     /** @var EshopVoucherModel */
@@ -35,33 +33,25 @@ final class Voucher implements ShopModelAwareInterface
         return $this->voucherModel;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID($this->getEshopModel()->getId());
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function voucher(): string
     {
         return $this->getEshopModel()->getRawFieldData('OXVOUCHERNR');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function number(): string
     {
         return (string)$this->getEshopModel()->getRawFieldData('OXVOUCHERNR');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function reserved(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromTimeStamp(
@@ -69,9 +59,7 @@ final class Voucher implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function discount(): ?float
     {
         return $this->getEshopModel()->getRawFieldData('OXORDERID')
@@ -79,9 +67,7 @@ final class Voucher implements ShopModelAwareInterface
             : null;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function redeemedAt(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

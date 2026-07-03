@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class State implements ShopModelAwareInterface
 {
     /** @var EshopStateModel */
@@ -35,33 +33,25 @@ final class State implements ShopModelAwareInterface
         return $this->state;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->state->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)$this->state->getRawFieldData('oxtitle');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getIsoAlpha2(): string
     {
         return (string)$this->state->getRawFieldData('oxisoalpha2');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCreationDate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString((string)$this->state->getRawFieldData('oxtimestamp'));

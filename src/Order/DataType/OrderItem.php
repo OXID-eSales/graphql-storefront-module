@@ -19,9 +19,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderItem implements ShopModelAwareInterface
 {
     /** @var EshopOrderArticleModel */
@@ -37,49 +35,37 @@ final class OrderItem implements ShopModelAwareInterface
         return $this->orderArticle;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID($this->orderArticle->getId());
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function amount(): float
     {
         return (float)$this->orderArticle->getRawFieldData('OXAMOUNT');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function sku(): string
     {
         return (string)$this->orderArticle->getRawFieldData('OXARTNUM');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function title(): string
     {
         return (string)$this->orderArticle->getRawFieldData('OXTITLE');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function shortDescription(): string
     {
         return (string)$this->orderArticle->getRawFieldData('OXSHORTDESC');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPrice(): Price
     {
         /** @var \OxidEsales\Eshop\Core\Price $totalPrice */
@@ -88,9 +74,7 @@ final class OrderItem implements ShopModelAwareInterface
         return new Price($totalPrice);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getItemPrice(): Price
     {
         /** @var \OxidEsales\Eshop\Core\Price $itemPrice */
@@ -99,17 +83,13 @@ final class OrderItem implements ShopModelAwareInterface
         return new Price($itemPrice);
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getDimensions(): ProductDimensions
     {
         return new ProductDimensions($this->orderArticle);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getInsert(): DateTimeInterface
     {
         return new DateTimeImmutable(
@@ -117,9 +97,7 @@ final class OrderItem implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTimestamp(): DateTimeInterface
     {
         return new DateTimeImmutable(
@@ -127,17 +105,13 @@ final class OrderItem implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isCancelled(): bool
     {
         return (bool)$this->orderArticle->getRawFieldData('OXSTORNO');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isBundle(): bool
     {
         return (bool)$this->orderArticle->getRawFieldData('OXISBUNDLE');

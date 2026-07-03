@@ -26,19 +26,16 @@ final class Link
         $this->linkService = $linkService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function link(ID $linkId): LinkDataType
     {
         return $this->linkService->link($linkId);
     }
 
     /**
-     * @Query()
-     *
      * @return LinkDataType[]
      */
+    #[Query]
     public function links(?LinkFilterList $filter = null): array
     {
         return $this->linkService->links(

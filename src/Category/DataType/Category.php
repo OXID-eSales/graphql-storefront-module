@@ -19,9 +19,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Category implements ShopModelAwareInterface
 {
     use ActiveStatus;
@@ -39,9 +37,7 @@ final class Category implements ShopModelAwareInterface
         return $this->category;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID(
@@ -67,17 +63,14 @@ final class Category implements ShopModelAwareInterface
      * Defines the order in which categories are displayed:
      * The category with the lowest number is displayed at the top,
      * and the category with the highest number at the bottom
-     *
-     * @Field()
      */
+    #[Field]
     public function getPosition(): int
     {
         return (int)$this->category->getRawFieldData('oxsort');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(?DateTimeInterface $now = null): bool
     {
         return $this->active($now);
@@ -86,41 +79,32 @@ final class Category implements ShopModelAwareInterface
     /**
      * Hidden categories are not visible in lists and menu,
      * but can be accessed by direct link
-     *
-     * @Field()
      */
+    #[Field]
     public function isHidden(): bool
     {
         return !$this->category->getIsVisible();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return $this->category->getTitle();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getShortDescription(): string
     {
         return $this->category->getShortDescription();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getLongDescription(): string
     {
         return $this->category->getRawFieldData('oxlongdesc');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getThumbnail(): ?string
     {
         return $this->category->getThumbUrl();
@@ -128,17 +112,14 @@ final class Category implements ShopModelAwareInterface
 
     /**
      * If the external link is specified it will be opened instead of category content
-     *
-     * @Field()
      */
+    #[Field]
     public function getExternalLink(): string
     {
         return (string)$this->category->getRawFieldData('oxextlink');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTemplate(): string
     {
         return (string)$this->category->getRawFieldData('oxtemplate');
@@ -147,9 +128,8 @@ final class Category implements ShopModelAwareInterface
     /**
      * If specified, all products, with price higher than specified,
      * will be shown in this category
-     *
-     * @Field()
      */
+    #[Field]
     public function getPriceFrom(): float
     {
         return (float)$this->category->getRawFieldData('oxpricefrom');
@@ -158,33 +138,26 @@ final class Category implements ShopModelAwareInterface
     /**
      * If specified, all products, with price lower than specified,
      * will be shown in this category
-     *
-     * @Field()
      */
+    #[Field]
     public function getPriceTo(): float
     {
         return (float)$this->category->getRawFieldData('oxpriceto');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getIcon(): ?string
     {
         return $this->category->getIconUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPromotionIcon(): ?string
     {
         return $this->category->getPromotionIconUrl();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVat(): ?float
     {
         $vat = $this->category->getRawFieldData('oxvat');
@@ -195,27 +168,23 @@ final class Category implements ShopModelAwareInterface
     /**
      * Skip all negative discounts for products in this category
      * (Discounts, Vouchers, Delivery ...)
-     *
-     * @Field()
      */
+    #[Field]
     public function skipDiscount(): bool
     {
         return (bool)$this->category->getRawFieldData('oxskipdiscounts');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function showSuffix(): bool
     {
         return (bool)$this->category->getRawFieldData('oxshowsuffix');
     }
 
     /**
-     * @Field()
-     *
      * @throws Exception
      */
+    #[Field]
     public function getTimestamp(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

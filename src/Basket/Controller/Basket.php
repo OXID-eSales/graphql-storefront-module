@@ -63,10 +63,9 @@ final class Basket
 
     /**
      * Returns information for any basket the customer owns.
-     *
-     * @Query()
-     * @Right("VIEW_BASKET")
      */
+    #[Query]
+    #[Right('VIEW_BASKET')]
     public function basket(ID $basketId): BasketDataType
     {
         return $this->basketFinderService->basket($basketId);
@@ -74,66 +73,53 @@ final class Basket
 
     /**
      * Returns information for any basket marked as public.
-     *
-     * @Query()
      */
+    #[Query]
     public function publicBasket(ID $basketId): PublicBasketDataType
     {
         return $this->basketFinderService->publicBasket($basketId);
     }
 
-    /**
-     * @Mutation()
-     * @Right("ADD_PRODUCT_TO_BASKET")
-     */
+    #[Mutation]
+    #[Right('ADD_PRODUCT_TO_BASKET')]
     public function basketAddItem(ID $basketId, ID $productId, float $amount): BasketDataType
     {
         return $this->basketItemService->addItemToBasket($basketId, $productId, $amount);
     }
 
-    /**
-     * @Mutation()
-     * @Right("REMOVE_BASKET_PRODUCT")
-     */
+    #[Mutation]
+    #[Right('REMOVE_BASKET_PRODUCT')]
     public function basketRemoveItem(ID $basketId, ID $basketItemId, float $amount): BasketDataType
     {
         return $this->basketItemService->removeItemFromBasket($basketId, $basketItemId, $amount);
     }
 
-    /**
-     * @Mutation()
-     * @Right("CREATE_BASKET")
-     */
+    #[Mutation]
+    #[Right('CREATE_BASKET')]
     public function basketCreate(BasketDataType $basket): BasketDataType
     {
         return $this->basketService->store($basket);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function basketRemove(ID $basketId): bool
     {
         return $this->basketService->remove($basketId);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function basketMakePublic(ID $basketId): BasketDataType
     {
         return $this->basketService->makePublic($basketId);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function basketMakePrivate(ID $basketId): BasketDataType
     {
         return $this->basketService->makePrivate($basketId);
@@ -143,10 +129,10 @@ final class Basket
      * Argument `owner` will be matched exactly against lastname and / or email
      * Query for public baskets by owner.
      *
-     * @Query()
      *
      * @return PublicBasketDataType[]
      */
+    #[Query]
     public function baskets(string $owner): array
     {
         return $this->basketService->publicBasketsByOwnerNameOrEmail(
@@ -154,10 +140,8 @@ final class Basket
         );
     }
 
-    /**
-     * @Mutation()
-     * @Right("ADD_VOUCHER")
-     */
+    #[Mutation]
+    #[Right('ADD_VOUCHER')]
     public function basketAddVoucher(ID $basketId, string $voucherNumber): BasketDataType
     {
         $basket = $this->basketFinderService->getAuthenticatedCustomerBasket($basketId);
@@ -166,10 +150,8 @@ final class Basket
         return $basket;
     }
 
-    /**
-     * @Mutation()
-     * @Right("REMOVE_VOUCHER")
-     */
+    #[Mutation]
+    #[Right('REMOVE_VOUCHER')]
     public function basketRemoveVoucher(ID $basketId, ID $voucherId): BasketDataType
     {
         $basket = $this->basketFinderService->getAuthenticatedCustomerBasket($basketId);
@@ -178,11 +160,9 @@ final class Basket
         return $basket;
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function basketSetDeliveryAddress(ID $basketId, ?ID $deliveryAddressId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_ADDRESS);
@@ -191,11 +171,9 @@ final class Basket
         return $this->basketService->setDeliveryAddress($basketId, $deliveryAddressId);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function basketSetPayment(ID $basketId, ID $paymentId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_PAYMENT_METHOD);
@@ -204,11 +182,9 @@ final class Basket
         return $this->basketService->setPayment($basketId, $paymentId);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function basketSetDeliveryMethod(ID $basketId, ID $deliveryMethodId): BasketDataType
     {
         $event = new BeforeBasketModify($basketId, BeforeBasketModify::TYPE_SET_DELIVERY_METHOD);
@@ -218,12 +194,12 @@ final class Basket
     }
 
     /**
-     * @Query
-     * @Logged()
-     * @HideIfUnauthorized()
      *
      * @return BasketDeliveryMethodDataType[]
      */
+    #[Query]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function basketDeliveryMethods(ID $basketId): array
     {
         return $this->basketService->getBasketDeliveryMethods($basketId);
@@ -232,21 +208,19 @@ final class Basket
     /**
      * Returns all payments that can be used for particular basket.
      *
-     * @Query
-     * @Logged()
-     * @HideIfUnauthorized()
      *
      * @return BasketPayment[]
      */
+    #[Query]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function basketPayments(ID $basketId): array
     {
         return $this->basketService->getBasketPayments($basketId);
     }
 
-    /**
-     * @Mutation()
-     * @Right("PLACE_ORDER")
-     */
+    #[Mutation]
+    #[Right('PLACE_ORDER')]
     public function placeOrder(
         ID $basketId,
         ?bool $confirmTermsAndConditions = null,

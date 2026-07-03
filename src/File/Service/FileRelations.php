@@ -16,9 +16,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @ExtendType(class=File::class)
- */
+#[ExtendType(class: File::class)]
 final class FileRelations
 {
     /** @var ProductService */
@@ -30,9 +28,7 @@ final class FileRelations
         $this->productService = $productService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProduct(File $file): Product
     {
         return $this->productService->product(

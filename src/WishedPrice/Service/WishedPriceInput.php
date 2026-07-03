@@ -41,9 +41,7 @@ final class WishedPriceInput
         $this->wishedPriceFactory = $wishedPriceFactory;
     }
 
-    /**
-     * @Factory
-     */
+    #[Factory]
     public function fromUserInput(ID $productId, string $currencyName, float $price): WishedPrice
     {
         $this->assertProductWishedPriceIsPossible($productId);

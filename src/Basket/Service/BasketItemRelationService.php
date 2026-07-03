@@ -18,9 +18,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @ExtendType(class=BasketItem::class)
- */
+#[ExtendType(class: BasketItem::class)]
 final class BasketItemRelationService
 {
     /** @var ProductService */
@@ -32,9 +30,7 @@ final class BasketItemRelationService
         $this->productService = $productService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function product(BasketItem $basketItem): ?Product
     {
         $basketItemModel = $basketItem->getEshopModel();

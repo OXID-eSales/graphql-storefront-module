@@ -14,9 +14,7 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class ContactRequestInput extends ContactInfrastructureAwareService
 {
-    /**
-     * @Factory
-     */
+    #[Factory]
     public function fromUserInput(
         string $email = '',
         string $firstName = '',

@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class NewsletterStatus implements ShopModelAwareInterface
 {
     private const STATUS_0 = 'UNSUBSCRIBED';
@@ -51,41 +49,31 @@ final class NewsletterStatus implements ShopModelAwareInterface
         return $this->newsletterSubscriptionStatus;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function salutation(): string
     {
         return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxsal');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function firstName(): string
     {
         return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxfname');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function lastName(): string
     {
         return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxlname');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function email(): string
     {
         return (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxemail');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function status(): string
     {
         $status = $this->newsletterSubscriptionStatus->getOptInStatus();
@@ -97,17 +85,13 @@ final class NewsletterStatus implements ShopModelAwareInterface
         return $this->statusMapping[$status];
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function failedEmailCount(): int
     {
         return (int)$this->newsletterSubscriptionStatus->getRawFieldData('oxemailfailed');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function subscribed(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -115,9 +99,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function unsubscribed(): ?DateTimeInterface
     {
         $dateTime = (string)$this->newsletterSubscriptionStatus->getRawFieldData('oxunsubscribed');
@@ -127,9 +109,7 @@ final class NewsletterStatus implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function updated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

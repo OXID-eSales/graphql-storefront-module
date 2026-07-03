@@ -13,9 +13,7 @@ use OxidEsales\Eshop\Application\Model\Basket as EshopBasketModel;
 use OxidEsales\Eshop\Application\Model\Payment as EshopPaymentModel;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class BasketPayment extends Payment
 {
     /** @var EshopBasketModel */

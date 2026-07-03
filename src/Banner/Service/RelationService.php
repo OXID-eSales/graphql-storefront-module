@@ -19,9 +19,7 @@ use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @ExtendType(class=Banner::class)
- */
+#[ExtendType(class: Banner::class)]
 final class RelationService
 {
     /** @var ProductService */
@@ -38,9 +36,7 @@ final class RelationService
         $this->bannerInfrastructure = $bannerInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProduct(Banner $banner): ?Product
     {
         $productId = $this->bannerInfrastructure->getProductId($banner);

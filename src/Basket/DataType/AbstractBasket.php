@@ -31,9 +31,7 @@ abstract class AbstractBasket
         return $this->basket;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID(
@@ -42,28 +40,24 @@ abstract class AbstractBasket
     }
 
     /**
-     * @Field()
      * Beware of the following values with special meaning
      * - wishList
      * - noticeList
      * - savedBasket
      */
+    #[Field]
     public function title(): string
     {
         return (string)$this->basket->getRawFieldData('oxtitle');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function creationDate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString((string)$this->basket->getRawFieldData('oxtimestamp'));
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function lastUpdateDate(): ?DateTimeInterface
     {
         $timeStamp = (int)$this->basket->getRawFieldData('oxupdate');

@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Storefront\Address\DataType\AbstractAddress;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderInvoiceAddress extends AbstractAddress
 {
     private EshopOrderModel $order;
@@ -32,17 +30,13 @@ final class OrderInvoiceAddress extends AbstractAddress
         return $this->order;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function email(): string
     {
         return $this->getFieldValue('email');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function vatID(): string
     {
         return $this->getFieldValue('ustid');

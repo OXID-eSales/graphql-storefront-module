@@ -30,19 +30,16 @@ final class Product
         $this->productService = $productService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function product(ID $productId): ProductDataType
     {
         return $this->productService->product($productId);
     }
 
     /**
-     * @Query()
-     *
      * @return ProductDataType[]
      */
+    #[Query]
     public function products(
         ?ProductFilterList $filter = null,
         ?PaginationFilter $pagination = null,
@@ -56,12 +53,12 @@ final class Product
     }
 
     /**
-     * @Query()
      *
      * @param string $productId
      * @param ?string[] $varSelIds
      * @return ?VariantSelections
      */
+    #[Query]
     public function variantSelections(string $productId, ?array $varSelIds): ?VariantSelections
     {
         return $this->productService->variantSelections($productId, $varSelIds);

@@ -17,9 +17,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=BasketCost::class)
- */
+#[ExtendType(class: BasketCost::class)]
 final class BasketCostRelations
 {
     /** @var BasketCostInfrastructure */
@@ -30,9 +28,7 @@ final class BasketCostRelations
         $this->basketCostInfrastructure = $basketCostInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProductNet(BasketCost $basketCost): Price
     {
         return new Price(
@@ -41,17 +37,13 @@ final class BasketCostRelations
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getProductGross(BasketCost $basketCost): BasketProductBruttoSum
     {
         return $this->basketCostInfrastructure->getProductGross($basketCost);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPayment(BasketCost $basketCost): Price
     {
         return new Price(
@@ -60,17 +52,13 @@ final class BasketCostRelations
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCurrency(BasketCost $basketCost): Currency
     {
         return new Currency($this->basketCostInfrastructure->getBasketCurrencyObject($basketCost));
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDelivery(BasketCost $basketCost): Price
     {
         return $this->basketCostInfrastructure->getDeliveryPrice($basketCost);

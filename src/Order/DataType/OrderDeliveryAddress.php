@@ -13,9 +13,7 @@ use OxidEsales\Eshop\Application\Model\Order as EshopOrderModel;
 use OxidEsales\GraphQL\Storefront\Address\DataType\AbstractAddress;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class OrderDeliveryAddress extends AbstractAddress
 {
     private EshopOrderModel $order;

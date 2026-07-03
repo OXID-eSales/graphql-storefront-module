@@ -16,9 +16,7 @@ use OxidEsales\GraphQL\Storefront\Order\DataType\OrderFile;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=OrderFile::class)
- */
+#[ExtendType(class: OrderFile::class)]
 final class OrderFileRelations
 {
     /** @var FileService */
@@ -30,9 +28,7 @@ final class OrderFileRelations
         $this->fileService = $fileService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function file(OrderFile $orderFile): ?FileDataType
     {
         try {

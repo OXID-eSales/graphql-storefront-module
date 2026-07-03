@@ -16,9 +16,7 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class ProductStock implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
@@ -35,9 +33,7 @@ final class ProductStock implements ShopModelAwareInterface
         return $this->product;
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getStock(): float
     {
         return $this->product->getStock();
@@ -49,17 +45,15 @@ final class ProductStock implements ShopModelAwareInterface
      *  1 -> (orange) deliverable, but only a few left
      * -1 -> (red) not stock
      *
-     * @Field
      * @TODO with the update to GraphQLite v4 update this to ENUM
      */
+    #[Field]
     public function getStockStatus(): int
     {
         return $this->product->getStockStatus();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getRestockDate(): ?DateTimeInterface
     {
         /** @var false|string */

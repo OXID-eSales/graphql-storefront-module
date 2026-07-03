@@ -70,9 +70,7 @@ final class ProductFilterList extends FilterList
         ];
     }
 
-    /**
-     * @Factory(name="ProductFilterList", default=true)
-     */
+    #[Factory(name: 'ProductFilterList', default: true)]
     public static function createProductFilterList(
         ?StringFilter $title = null,
         ?CategoryIDFilter $category = null,

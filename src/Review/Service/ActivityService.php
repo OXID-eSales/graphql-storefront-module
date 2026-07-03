@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Storefront\Review\DataType\Review;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=Review::class)
- */
+#[ExtendType(class: Review::class)]
 final class ActivityService
 {
     /** @var Legacy */
@@ -27,9 +25,7 @@ final class ActivityService
         $this->legacyService = $legacyService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(Review $review): bool
     {
         $reviewModel = $review->getEshopModel();

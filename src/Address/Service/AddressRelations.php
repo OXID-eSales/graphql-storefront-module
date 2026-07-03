@@ -34,9 +34,7 @@ abstract class AddressRelations
         $this->stateService = $stateService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function country(AbstractAddress $address): ?Country
     {
         try {
@@ -49,9 +47,7 @@ abstract class AddressRelations
         }
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function state(AbstractAddress $address): ?State
     {
         try {

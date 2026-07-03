@@ -12,9 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class NewsletterStatusSubscribe
 {
     /** @var string */
@@ -46,33 +44,25 @@ final class NewsletterStatusSubscribe
         $this->userId = $userId;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function salutation(): string
     {
         return $this->salutation;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function firstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function lastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function email(): string
     {
         return $this->email;

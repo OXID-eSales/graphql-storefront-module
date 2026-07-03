@@ -18,9 +18,7 @@ use OxidEsales\GraphQL\Storefront\Payment\Service\Payment as PaymentService;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=OrderPayment::class)
- */
+#[ExtendType(class: OrderPayment::class)]
 final class OrderPaymentRelations
 {
     /** @var PaymentService */
@@ -37,9 +35,7 @@ final class OrderPaymentRelations
         $this->orderPaymentInfrastructure = $orderPaymentInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPayment(OrderPayment $orderPayment): ?Payment
     {
         try {
@@ -52,10 +48,9 @@ final class OrderPaymentRelations
     }
 
     /**
-     * @Field()
-     *
      * @return OrderPaymentValue[]
      */
+    #[Field]
     public function getValues(OrderPayment $orderPayment): array
     {
         return $this->orderPaymentInfrastructure->getPaymentValues($orderPayment);

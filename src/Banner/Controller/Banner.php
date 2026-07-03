@@ -28,21 +28,20 @@ final class Banner
     }
 
     /**
-     * @Query()
      *
      * @throws BannerNotFound
      * @throws InvalidLogin
      */
+    #[Query]
     public function banner(ID $bannerId): BannerDataType
     {
         return $this->bannerService->banner($bannerId);
     }
 
     /**
-     * @Query()
-     *
      * @return BannerDataType[]
      */
+    #[Query]
     public function banners(): array
     {
         return $this->bannerService->banners();

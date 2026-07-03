@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Link implements ShopModelAwareInterface
 {
     /** @var LinkModel */
@@ -36,49 +34,37 @@ final class Link implements ShopModelAwareInterface
         return $this->link;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->link->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return (bool)$this->link->getRawFieldData('oxactive');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTimestamp(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString((string)$this->link->getRawFieldData('oxtimestamp'));
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getDescription(): string
     {
         return $this->link->getRawFieldData('oxurldesc');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getUrl(): string
     {
         return $this->link->getRawFieldData('oxurl');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCreationDate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString((string)$this->link->getRawFieldData('oxinsert'));

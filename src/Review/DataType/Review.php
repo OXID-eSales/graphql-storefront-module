@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Review implements ShopModelAwareInterface
 {
     /** @var EshopReviewModel */
@@ -35,33 +33,25 @@ final class Review implements ShopModelAwareInterface
         return $this->review;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->review->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getText(): string
     {
         return (string)$this->review->getRawFieldData('oxtext');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getRating(): int
     {
         return (int)$this->review->getRawFieldData('oxrating');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCreateAt(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

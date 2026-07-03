@@ -20,9 +20,7 @@ use TheCodingMachine\GraphQLite\Types\ID;
 use function array_filter;
 use function explode;
 
-/**
- * @Type()
- */
+#[Type]
 final class Product implements ShopModelAwareInterface
 {
     /** @var EshopProductModel */
@@ -39,89 +37,67 @@ final class Product implements ShopModelAwareInterface
         return $this->product;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->product->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return $this->product->isVisible();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSku(): ?string
     {
         return (string)$this->product->getRawFieldData('oxartnum');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getEan(): string
     {
         return (string)$this->product->getRawFieldData('oxean');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getManufacturerEan(): string
     {
         return (string)$this->product->getRawFieldData('oxdistean');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getMpn(): string
     {
         return (string)$this->product->getRawFieldData('oxmpn');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)$this->product->getRawFieldData('oxtitle');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getShortDescription(): string
     {
         return (string)$this->product->getRawFieldData('oxshortdesc');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getLongDescription(): string
     {
         return (string)$this->product->getLongDescription();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVat(): float
     {
         return (float)$this->product->getArticleVat();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getInsert(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -129,17 +105,13 @@ final class Product implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isFreeShipping(): bool
     {
         return (bool)$this->product->getRawFieldData('oxfreeshipping');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTimestamp(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -148,10 +120,9 @@ final class Product implements ShopModelAwareInterface
     }
 
     /**
-     * @Field()
-     *
      * @return string[]
      */
+    #[Field]
     public function getVariantLabels(): array
     {
         return array_filter(
@@ -163,10 +134,9 @@ final class Product implements ShopModelAwareInterface
     }
 
     /**
-     * @Field()
-     *
      * @return string[]
      */
+    #[Field]
     public function getVariantValues(): array
     {
         return array_filter(
@@ -177,17 +147,13 @@ final class Product implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function wishedPriceEnabled(): bool
     {
         return !(bool)$this->product->getRawFieldData('oxblfixedprice');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVarMinPrice(): float
     {
         return (float)$this->product->getRawFieldData('oxvarminprice');

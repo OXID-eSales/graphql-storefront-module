@@ -20,9 +20,7 @@ use OxidEsales\GraphQL\Storefront\Basket\Service\BasketItem as BasketItemService
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=PublicBasketDataType::class)
- */
+#[ExtendType(class: PublicBasketDataType::class)]
 final class PublicBasketRelationService
 {
     /** @var BasketItemService */
@@ -39,19 +37,16 @@ final class PublicBasketRelationService
         $this->basketService = $basketService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function owner(PublicBasketDataType $basket): BasketOwner
     {
         return $this->basketService->basketOwner((string)$basket->getUserId());
     }
 
     /**
-     * @Field()
-     *
      * @return BasketItem[]
      */
+    #[Field]
     public function items(
         PublicBasketDataType $basket,
         ?Pagination $pagination

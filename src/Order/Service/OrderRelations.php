@@ -22,9 +22,7 @@ use OxidEsales\GraphQL\Storefront\Voucher\DataType\Voucher;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=OrderDataType::class)
- */
+#[ExtendType(class: OrderDataType::class)]
 final class OrderRelations
 {
     /** @var OrderInfrastructure */
@@ -36,71 +34,58 @@ final class OrderRelations
         $this->orderInfrastructure = $orderInfrastructure;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function invoiceAddress(OrderDataType $order): OrderInvoiceAddress
     {
         return $this->orderInfrastructure->invoiceAddress($order);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function deliveryAddress(OrderDataType $order): ?OrderDeliveryAddress
     {
         return $this->orderInfrastructure->deliveryAddress($order);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function cost(OrderDataType $order): OrderCost
     {
         return new OrderCost($order->getEshopModel());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function delivery(OrderDataType $order): OrderDelivery
     {
         return $this->orderInfrastructure->delivery($order);
     }
 
     /**
-     * @Field
-     *
      * @return Voucher[]
      */
+    #[Field]
     public function vouchers(OrderDataType $order): array
     {
         return $this->orderInfrastructure->getOrderVouchers($order);
     }
 
     /**
-     * @Field
-     *
      * @return OrderItem[]
      */
+    #[Field]
     public function getItems(OrderDataType $order): array
     {
         return $this->orderInfrastructure->getOrderItems($order);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPayment(OrderDataType $order): ?OrderPayment
     {
         return $this->orderInfrastructure->getOrderPayment($order);
     }
 
     /**
-     * @Field
-     *
      * @return OrderFile[]
      */
+    #[Field]
     public function getFiles(OrderDataType $order): array
     {
         return $this->orderInfrastructure->getOrderFiles($order);

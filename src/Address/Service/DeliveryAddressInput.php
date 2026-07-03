@@ -31,9 +31,7 @@ final class DeliveryAddressInput
         $this->authenticationService = $authenticationService;
     }
 
-    /**
-     * @Factory(name="DeliveryAddressInput", default=true)
-     */
+    #[Factory(name: 'DeliveryAddressInput', default: true)]
     public function fromUserInput(
         ?string $salutation = null,
         ?string $firstName = null,

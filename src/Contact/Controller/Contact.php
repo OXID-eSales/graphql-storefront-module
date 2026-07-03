@@ -26,9 +26,7 @@ final class Contact
         $this->contactRequestService = $contactRequestService;
     }
 
-    /**
-     * @Mutation()
-     */
+    #[Mutation]
     public function contactRequest(ContactRequest $request): bool
     {
         return $this->contactRequestService->sendContactRequest($request);

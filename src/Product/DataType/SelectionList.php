@@ -13,9 +13,7 @@ use OxidEsales\Eshop\Application\Model\SelectList as EshopSelectionListModel;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class SelectionList
 {
     /** @var EshopSelectionListModel */
@@ -29,20 +27,17 @@ final class SelectionList
         $this->selectionList = $selectionList;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)$this->selectionList->getRawFieldData('oxtitle');
     }
 
     /**
-     * @Field()
      * @SuppressWarnings(PHPMD.ErrorControlOperator)
-     *
      * @return Selection[]
      */
+    #[Field]
     public function getFields(): array
     {
         $fields = [];

@@ -15,9 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 final class CountrySorting extends BaseSorting
 {
     /**
-     * @Factory(name="CountrySorting", default=true)
-     *
-     * By default the countries will be sorted by their position ('oxorder' column).
+     * By default, the countries will be sorted by their position ('oxorder' column).
      * In case you want to sort them by other field, like title for example,
      * you should set the position as an empty string.
      *
@@ -32,6 +30,7 @@ final class CountrySorting extends BaseSorting
      *      }
      * }
      */
+    #[Factory(name: 'CountrySorting', default: true)]
     public static function fromUserInput(
         ?string $position = self::SORTING_ASC,
         ?string $title = null

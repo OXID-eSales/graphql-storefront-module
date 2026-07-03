@@ -20,9 +20,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Content implements ShopModelAwareInterface
 {
     public const TYPE_CATEGORY = 2;
@@ -41,25 +39,19 @@ final class Content implements ShopModelAwareInterface
         return $this->content;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->content->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function isActive(): bool
     {
         return (bool)$this->content->isActive();
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return $this->content->getTitle();
@@ -67,9 +59,8 @@ final class Content implements ShopModelAwareInterface
 
     /**
      * Returns rendered HTML string that might contain script and style tags
-     *
-     * @Field()
      */
+    #[Field]
     public function getContent(): string
     {
         $oActView = oxNew(FrontendController::class);
@@ -90,25 +81,20 @@ final class Content implements ShopModelAwareInterface
 
     /**
      * Return not rendered, raw content
-     *
-     * @Field()
      */
+    #[Field]
     public function getRawContent(): string
     {
         return $this->content->getRawFieldData('oxcontent');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getFolder(): string
     {
         return $this->content->getRawFieldData('oxfolder');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getVersion(): string
     {
         return $this->content->getRawFieldData('oxtermversion');

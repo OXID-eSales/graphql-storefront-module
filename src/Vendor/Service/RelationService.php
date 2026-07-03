@@ -20,9 +20,7 @@ use OxidEsales\GraphQL\Storefront\Vendor\DataType\Vendor;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=Vendor::class)
- */
+#[ExtendType(class: Vendor::class)]
 final class RelationService
 {
     /** @var ProductService */
@@ -34,19 +32,16 @@ final class RelationService
         $this->productService = $productService;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getSeo(Vendor $vendor): Seo
     {
         return new Seo($vendor->getEshopModel());
     }
 
     /**
-     * @Field()
-     *
      * @return Product[]
      */
+    #[Field]
     public function getProducts(
         Vendor $vendor,
         ?PaginationFilter $pagination,

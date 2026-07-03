@@ -26,9 +26,7 @@ final class NewsletterStatus
         $this->newsletterStatusService = $newsletterStatusService;
     }
 
-    /**
-     * @Mutation()
-     */
+    #[Mutation]
     public function newsletterOptIn(NewsletterStatusType $newsletterStatus): NewsletterStatusType
     {
         return $this->newsletterStatusService->optIn($newsletterStatus);
@@ -38,9 +36,8 @@ final class NewsletterStatus
      * NewsletterStatusUnsubscribeInput email field is optional.
      * In case of missing input email but available token, newsletter will be unsubscribed for token email.
      * Input email is preferred over token email.
-     *
-     * @Mutation()
      */
+    #[Mutation]
     public function newsletterUnsubscribe(
         ?NewsletterStatusUnsubscribe $newsletterStatus
     ): bool {
@@ -60,9 +57,8 @@ final class NewsletterStatus
      *
      * If user account for email and shop exists, input fields are overruled by existing user data.
      * If user account for email and shop does not exist, new user will be created (no password, mininal data)
-     *
-     * @Mutation()
      */
+    #[Mutation]
     public function newsletterSubscribe(
         NewsletterStatusSubscribe $newsletterStatus
     ): NewsletterStatusType {

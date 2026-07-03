@@ -30,21 +30,19 @@ final class WishedPrice
         $this->wishedPriceService = $wishedPriceService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function wishedPrice(ID $wishedPriceId): WishedPriceDataType
     {
         return $this->wishedPriceService->wishedPrice($wishedPriceId);
     }
 
     /**
-     * @Query()
      *
      * @return WishedPriceDataType[]
      * @throws InvalidToken
      *
      */
+    #[Query]
     public function wishedPrices(): array
     {
         return $this->wishedPriceService->wishedPrices(
@@ -52,21 +50,17 @@ final class WishedPrice
         );
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function wishedPriceSet(WishedPriceDataType $wishedPrice): WishedPriceDataType
     {
         return $this->wishedPriceService->save($wishedPrice);
     }
 
-    /**
-     * @Mutation()
-     * @Logged()
-     * @HideIfUnauthorized()
-     */
+    #[Mutation]
+    #[Logged]
+    #[HideIfUnauthorized]
     public function wishedPriceDelete(ID $wishedPriceId): bool
     {
         return $this->wishedPriceService->delete($wishedPriceId);

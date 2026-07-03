@@ -15,9 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class File implements ShopModelAwareInterface
 {
     /** @var FileModel */
@@ -29,25 +27,19 @@ final class File implements ShopModelAwareInterface
         $this->file = $file;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function id(): ID
     {
         return new ID($this->file->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function filename(): string
     {
         return (string)$this->file->getRawFieldData('OXFILENAME');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function onlyPaidDownload(): bool
     {
         return (bool)$this->file->getRawFieldData('OXPURCHASEDONLY');

@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class Customer implements ShopModelAwareInterface
 {
     /** @var EshopUserModel */
@@ -35,49 +33,37 @@ final class Customer implements ShopModelAwareInterface
         return $this->customer;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID($this->customer->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getFirstName(): string
     {
         return (string)$this->customer->getRawFieldData('oxfname');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getLastName(): string
     {
         return (string)$this->customer->getRawFieldData('oxlname');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getEmail(): string
     {
         return (string)$this->customer->getRawFieldData('oxusername');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCustomerNumber(): string
     {
         return (string)$this->customer->getRawFieldData('oxcustnr');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getBirthdate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -85,17 +71,13 @@ final class Customer implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getPoints(): int
     {
         return (int)$this->customer->getRawFieldData('oxpoints');
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getRegistered(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -103,9 +85,7 @@ final class Customer implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCreated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(
@@ -113,9 +93,7 @@ final class Customer implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getUpdated(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString(

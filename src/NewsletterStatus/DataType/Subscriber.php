@@ -14,9 +14,7 @@ use OxidEsales\GraphQL\Base\DataType\ShopModelAwareInterface;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 
-/**
- * @Type()
- */
+#[Type]
 final class Subscriber implements ShopModelAwareInterface
 {
     /** @var EshopUserModel */
@@ -37,9 +35,7 @@ final class Subscriber implements ShopModelAwareInterface
         return (string)$this->subscriber->getRawFieldData('oxid');
     }
 
-    /**
-     * @Field
-     */
+    #[Field]
     public function getUserName(): string
     {
         return (string)$this->subscriber->getRawFieldData('oxusername');

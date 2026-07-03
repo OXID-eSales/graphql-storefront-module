@@ -36,89 +36,67 @@ abstract class AbstractAddress implements ShopModelAwareInterface
         $this->prefix = $prefix;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function salutation(): string
     {
         return $this->getFieldValue(static::SAL_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function firstName(): string
     {
         return $this->getFieldValue(static::FNAME_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function lastName(): string
     {
         return $this->getFieldValue(static::LNAME_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function company(): string
     {
         return $this->getFieldValue(static::COMPANY_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function additionalInfo(): string
     {
         return $this->getFieldValue(static::INFO_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function street(): string
     {
         return $this->getFieldValue(static::STREET_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function streetNumber(): string
     {
         return $this->getFieldValue(static::STREETNR_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function zipCode(): string
     {
         return $this->getFieldValue(static::ZIP_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function city(): string
     {
         return $this->getFieldValue(static::CITY_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function phone(): string
     {
         return $this->getFieldValue(static::PHONE_FIELD_NAME);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function fax(): string
     {
         return $this->getFieldValue(static::FAX_FIELD_NAME);

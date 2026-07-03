@@ -27,19 +27,16 @@ final class Manufacturer
         $this->manufacturerService = $manufacturerService;
     }
 
-    /**
-     * @Query()
-     */
+    #[Query]
     public function manufacturer(ID $manufacturerId): ManufacturerDataType
     {
         return $this->manufacturerService->manufacturer($manufacturerId);
     }
 
     /**
-     * @Query()
-     *
      * @return ManufacturerDataType[]
      */
+    #[Query]
     public function manufacturers(
         ?ManufacturerFilterList $filter = null,
         ?Sorting $sort = null

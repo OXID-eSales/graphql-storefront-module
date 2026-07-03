@@ -333,7 +333,7 @@ final class ManufacturerTest extends BaseTestCase
                 'numberOfExpectedProducts' => 2,
             ],
             [
-                'offset' => null,
+                'offset' => 0,
                 'limit' => 1,
                 'numberOfExpectedProducts' => 1,
             ],

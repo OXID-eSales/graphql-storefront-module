@@ -17,9 +17,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class WishedPrice implements ShopModelAwareInterface
 {
     /** @var WishedPriceModel */
@@ -36,9 +34,7 @@ final class WishedPrice implements ShopModelAwareInterface
         return $this->wishedPrice;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID(
@@ -60,9 +56,7 @@ final class WishedPrice implements ShopModelAwareInterface
         );
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getEmail(): string
     {
         return $this->wishedPrice->getRawFieldData('oxemail');
@@ -71,9 +65,8 @@ final class WishedPrice implements ShopModelAwareInterface
     /**
      * This field gives us information about the last sent notification email.
      * When it is null it states that no notification email was sent.
-     *
-     * @Field()
      */
+    #[Field]
     public function getNotificationDate(): ?DateTimeInterface
     {
         $notificationDate = (string)$this->wishedPrice->getRawFieldData('oxsended');
@@ -81,9 +74,7 @@ final class WishedPrice implements ShopModelAwareInterface
         return DateTimeImmutableFactory::fromString($notificationDate);
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCreationDate(): ?DateTimeInterface
     {
         return DateTimeImmutableFactory::fromString((string)$this->wishedPrice->getRawFieldData('oxinsert'));

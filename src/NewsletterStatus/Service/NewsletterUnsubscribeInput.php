@@ -28,9 +28,7 @@ final class NewsletterUnsubscribeInput extends AbstractNewsletterInput
         parent::__construct($legacyService);
     }
 
-    /**
-     * @Factory
-     */
+    #[Factory]
     public function fromUserInput(string $email): NewsletterStatusUnsubscribe
     {
         $this->assertValidEmail($email);

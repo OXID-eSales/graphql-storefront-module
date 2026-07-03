@@ -15,9 +15,7 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-/**
- * @Type()
- */
+#[Type]
 final class DeliveryProvider implements ShopModelAwareInterface
 {
     /** @var EshopDeliveryProviderModel */
@@ -33,25 +31,19 @@ final class DeliveryProvider implements ShopModelAwareInterface
         return $this->order;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getId(): ID
     {
         return new ID((string)$this->order->getId());
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getActive(): bool
     {
         return (bool)($this->order->getRawFieldData('oxactive'));
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getTitle(): string
     {
         return (string)($this->order->getRawFieldData('oxtitle'));

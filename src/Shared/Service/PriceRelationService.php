@@ -15,9 +15,7 @@ use OxidEsales\GraphQL\Storefront\Shared\DataType\Price;
 use TheCodingMachine\GraphQLite\Annotations\ExtendType;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 
-/**
- * @ExtendType(class=Price::class)
- */
+#[ExtendType(class: Price::class)]
 final class PriceRelationService
 {
     /** @var Repository */
@@ -29,9 +27,7 @@ final class PriceRelationService
         $this->currencyRepository = $currencyRepository;
     }
 
-    /**
-     * @Field()
-     */
+    #[Field]
     public function getCurrency(Price $price): Currency
     {
         $currencyObject = $price->getCurrencyObject();
