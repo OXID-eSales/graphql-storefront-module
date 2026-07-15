@@ -38,6 +38,7 @@ final class InvoiceAddressFactory
         ?string $vatID = null,
         ?string $phone = null,
         ?string $mobile = null,
+        ?string $workPhone = null,
         ?string $fax = null
     ): InvoiceAddressDataType {
         /** @var EshopUserModel $customer */
@@ -59,6 +60,7 @@ final class InvoiceAddressFactory
                 'oxustid' => $vatID ?: $customer->getRawFieldData('oxustid'),
                 'oxprivfon' => $phone ?: $customer->getRawFieldData('oxprivfon'),
                 'oxmobfon' => $mobile ?: $customer->getRawFieldData('oxmobfon'),
+                'oxfon' => $workPhone ?: $customer->getRawFieldData('oxfon'),
                 'oxfax' => $fax ?: $customer->getRawFieldData('oxfax'),
             ]
         );

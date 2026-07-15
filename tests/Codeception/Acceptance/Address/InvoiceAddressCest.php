@@ -372,6 +372,7 @@ final class InvoiceAddressCest extends BaseCest
                     vatID
                     phone
                     mobile
+                    workPhone
                     fax
                 }
             }'
@@ -567,6 +568,7 @@ final class InvoiceAddressCest extends BaseCest
                     'vatID' => '0987654321',
                     'phone' => '1234567890',
                     'mobile' => '01234567890',
+                    'workPhone' => '09876543210',
                     'fax' => '12345678900',
                 ],
             ],

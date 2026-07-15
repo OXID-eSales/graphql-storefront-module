@@ -19,6 +19,7 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
 final class InvoiceAddress extends AbstractAddress
 {
     protected const PHONE_FIELD_NAME = 'privfon';
+    protected const WORKPHONE_FIELD_NAME = 'fon';
     private EshopUserModel $customer;
 
     public function __construct(EshopUserModel $customer)
@@ -42,6 +43,12 @@ final class InvoiceAddress extends AbstractAddress
     public function mobile(): string
     {
         return $this->getFieldValue('mobfon');
+    }
+
+    #[Field]
+    public function workPhone(): string
+    {
+        return $this->getFieldValue(static::WORKPHONE_FIELD_NAME);
     }
 
     #[Field]

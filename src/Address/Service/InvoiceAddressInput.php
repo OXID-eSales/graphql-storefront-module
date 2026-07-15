@@ -53,6 +53,7 @@ final class InvoiceAddressInput
         ?string $vatID = null,
         ?string $phone = null,
         ?string $mobile = null,
+        ?string $workPhone = null,
         ?string $fax = null
     ): InvoiceAddress {
         $customer = $this->customerService
@@ -74,6 +75,7 @@ final class InvoiceAddressInput
             $vatID,
             $phone,
             $mobile,
+            $workPhone,
             $fax
         );
     }
