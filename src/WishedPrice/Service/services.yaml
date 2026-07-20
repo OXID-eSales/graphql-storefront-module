@@ -12,5 +12,8 @@ services:
   OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPrice:
     public: true
 
-  OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPriceInput:
-    public: true
+  OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPriceInputValidatorInterface:
+    class: OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPriceInputValidator
+
+  OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceFactoryInterface:
+    class: OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceFactory

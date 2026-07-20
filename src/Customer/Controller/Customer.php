@@ -13,7 +13,6 @@ use DateTimeInterface;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
-use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
@@ -36,7 +35,6 @@ final class Customer
 
     #[Query]
     #[Logged]
-    #[HideIfUnauthorized]
     public function customer(): CustomerDataType
     {
         return $this->customerService->customer(
@@ -52,7 +50,6 @@ final class Customer
 
     #[Mutation]
     #[Logged]
-    #[HideIfUnauthorized]
     public function customerEmailUpdate(string $email): CustomerDataType
     {
         return $this->customerService->changeEmail($email);
@@ -60,7 +57,6 @@ final class Customer
 
     #[Mutation]
     #[Logged]
-    #[HideIfUnauthorized]
     public function customerBirthdateUpdate(DateTimeInterface $birthdate): CustomerDataType
     {
         return $this->customerService->changeBirthdate($birthdate);
@@ -68,7 +64,6 @@ final class Customer
 
     #[Mutation]
     #[Logged]
-    #[HideIfUnauthorized]
     public function customerDelete(): bool
     {
         return $this->customerService->deleteCustomer();

@@ -58,8 +58,8 @@ final class BasketDeliveryAddressCest extends BaseCest
     {
         $result = $this->basketSetDeliveryAddress($I, 'some-basket-id', self::DELIVERY_ADDRESS_ID);
 
-        $I->assertStringStartsWith(
-            'Cannot query field "basketSetDeliveryAddress" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }

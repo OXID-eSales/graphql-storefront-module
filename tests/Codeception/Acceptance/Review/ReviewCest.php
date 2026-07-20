@@ -84,8 +84,32 @@ final class ReviewCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "reviewSet" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
+            $result['errors'][0]['message']
+        );
+    }
+
+    public function testSetReviewWithoutTokenBogusProductDoesNotLeak(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'mutation {
+                reviewSet(review: {
+                    rating: 5,
+                    text: "' . self::TEXT . '",
+                    productId: "some_not_existing_product"
+                }){
+                    id
+                }
+            }'
+        );
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        //auth is enforced pre-side-effect: no product lookup happens, so no leak
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -319,8 +343,8 @@ final class ReviewCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "reviewDelete" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }

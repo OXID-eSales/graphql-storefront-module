@@ -12,7 +12,7 @@ namespace OxidEsales\GraphQL\Storefront\Review\Infrastructure;
 use OxidEsales\Eshop\Application\Model\Review as EshopReviewModel;
 use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
 
-final class ReviewFactory
+final class ReviewFactory implements ReviewFactoryInterface
 {
     public function createProductReview(
         string $userId,

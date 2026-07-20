@@ -10,11 +10,12 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Review\Controller;
 
 use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
+use OxidEsales\GraphQL\Storefront\Review\Input\ReviewInputInterface;
 use OxidEsales\GraphQL\Storefront\Review\Service\Review as ReviewService;
-use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Annotations\UseInputType;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class Review
@@ -36,15 +37,15 @@ final class Review
 
     #[Mutation]
     #[Logged]
-    #[HideIfUnauthorized]
-    public function reviewSet(ReviewDataType $review): ReviewDataType
-    {
-        return $this->reviewService->save($review);
+    public function reviewSet(
+        #[UseInputType("ReviewInput!")]
+        ReviewInputInterface $review
+    ): ReviewDataType {
+        return $this->reviewService->set($review);
     }
 
     #[Mutation]
     #[Logged]
-    #[HideIfUnauthorized]
     public function reviewDelete(ID $reviewId): bool
     {
         return $this->reviewService->delete($reviewId);

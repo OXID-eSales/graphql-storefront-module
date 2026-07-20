@@ -262,8 +262,8 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "wishedPriceDelete" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -416,8 +416,32 @@ final class WishedPriceCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "wishedPriceSet" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
+            $result['errors'][0]['message']
+        );
+    }
+
+    public function testWishedPriceSetWithoutTokenBogusProductDoesNotLeak(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'mutation {
+                wishedPriceSet(wishedPrice: {
+                    productId: "some_not_existing_product",
+                    currencyName: "EUR",
+                    price: 15.00
+                }) {
+                    id
+                }
+            }'
+        );
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        //auth is enforced pre-side-effect: no product lookup happens, so no leak
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }

@@ -74,8 +74,29 @@ final class DeliveryAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "customerDeliveryAddressAdd" on type "Mutation"',
+        $I->assertSame(
+            'You need to be logged to access this field',
+            $result['errors'][0]['message']
+        );
+    }
+
+    public function testAddDeliveryAddressForNotLoggedInUserMissingInputDoesNotLeak(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'mutation {
+                customerDeliveryAddressAdd(deliveryAddress: {})
+                {
+                    salutation
+                }
+            }'
+        );
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        //auth is enforced pre-side-effect: no validation happens, so no AddressMissingFields leak
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -258,8 +279,8 @@ final class DeliveryAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "customerDeliveryAddresses" on type "Query".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -324,8 +345,8 @@ final class DeliveryAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "customerDeliveryAddressDelete" on type "Mutation',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }

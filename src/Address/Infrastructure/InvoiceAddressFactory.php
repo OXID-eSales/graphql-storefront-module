@@ -20,7 +20,7 @@ use OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields;
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class InvoiceAddressFactory
+final class InvoiceAddressFactory implements InvoiceAddressFactoryInterface
 {
     public function createValidInvoiceAddressType(
         CustomerDataType $customerDataType,

@@ -12,8 +12,11 @@ services:
   OxidEsales\GraphQL\Storefront\Review\Service\Review:
     public: true
 
-  OxidEsales\GraphQL\Storefront\Review\Service\ReviewInput:
-    public: true
+  OxidEsales\GraphQL\Storefront\Review\Service\ReviewInputValidatorInterface:
+    class: OxidEsales\GraphQL\Storefront\Review\Service\ReviewInputValidator
+
+  OxidEsales\GraphQL\Storefront\Review\Infrastructure\ReviewFactoryInterface:
+    class: OxidEsales\GraphQL\Storefront\Review\Infrastructure\ReviewFactory
 
   OxidEsales\GraphQL\Storefront\Review\Service\Reviewer:
     public: true

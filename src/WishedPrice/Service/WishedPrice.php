@@ -16,10 +16,14 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product as ProductDataType;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice as WishedPriceDataType;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPriceFilterList;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Exception\WishedPriceNotFound;
+use OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceFactoryInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Infrastructure\WishedPriceNotification as WishedPriceNotificationInfrastructure; // phpcs:ignore
+use OxidEsales\GraphQL\Storefront\WishedPrice\Input\WishedPriceInputInterface;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class WishedPrice
@@ -39,18 +43,50 @@ final class WishedPrice
     /** @var WishedPriceNotificationInfrastructure */
     private $wishedPriceNotificationInfrastructure;
 
+    /** @var WishedPriceInputValidatorInterface */
+    private $wishedPriceInputValidator;
+
+    /** @var WishedPriceFactoryInterface */
+    private $wishedPriceFactory;
+
     public function __construct(
         RepositoryInterface $repository,
         Authentication $authenticationService,
         Authorization $authorizationService,
         RelationService $wishedPriceRelationService,
-        WishedPriceNotificationInfrastructure $wishedPriceNotificationInfrastructure
+        WishedPriceNotificationInfrastructure $wishedPriceNotificationInfrastructure,
+        WishedPriceInputValidatorInterface $wishedPriceInputValidator,
+        WishedPriceFactoryInterface $wishedPriceFactory
     ) {
         $this->repository = $repository;
         $this->authenticationService = $authenticationService;
         $this->authorizationService = $authorizationService;
         $this->wishedPriceRelationService = $wishedPriceRelationService;
         $this->wishedPriceNotificationInfrastructure = $wishedPriceNotificationInfrastructure;
+        $this->wishedPriceInputValidator = $wishedPriceInputValidator;
+        $this->wishedPriceFactory = $wishedPriceFactory;
+    }
+
+    /**
+     * @throws ProductNotFound
+     */
+    public function set(WishedPriceInputInterface $wishedPrice): WishedPriceDataType
+    {
+        $this->wishedPriceInputValidator->validatePrice($wishedPrice->getPrice());
+
+        $this->assertProductWishedPriceIsPossible($wishedPrice->getProductId());
+
+        $user = $this->authenticationService->getUser();
+
+        $wishedPriceDataType = $this->wishedPriceFactory->createWishedPrice(
+            (string)$user->id(),
+            $user->email(),
+            $wishedPrice->getProductId(),
+            $wishedPrice->getCurrencyName(),
+            $wishedPrice->getPrice()
+        );
+
+        return $this->save($wishedPriceDataType);
     }
 
     /**
@@ -109,7 +145,7 @@ final class WishedPrice
         );
     }
 
-    public function save(WishedPriceDataType $wishedPrice): WishedPriceDataType
+    private function save(WishedPriceDataType $wishedPrice): WishedPriceDataType
     {
         $modelItem = $wishedPrice->getEshopModel();
         $this->wishedPriceNotificationInfrastructure->sendNotification($wishedPrice);
@@ -120,6 +156,29 @@ final class WishedPrice
             $modelItem->getId(),
             WishedPriceDataType::class
         );
+    }
+
+    /**
+     * @return true
+     * @throws ProductNotFound
+     */
+    private function assertProductWishedPriceIsPossible(ID $productId): bool
+    {
+        $id = (string)$productId->val();
+
+        try {
+            /** @var ProductDataType $product */
+            $product = $this->repository->getById($id, ProductDataType::class);
+        } catch (NotFound $e) {
+            throw new ProductNotFound($id);
+        }
+
+        // Throw 404 if product has wished prices disabled
+        if (!$product->getEshopModel()->isPriceAlarm()) {
+            throw new ProductNotFound($id);
+        }
+
+        return true;
     }
 
     /**

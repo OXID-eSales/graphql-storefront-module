@@ -37,8 +37,8 @@ final class BasketRemoveCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "basketRemove" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
 

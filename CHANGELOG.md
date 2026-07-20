@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Update module to work with OXID eShop 7.6
 - Requesting an inactive country without permission now returns a dedicated "country is inactive" error instead of the generic `Unauthorized` error [#0007687](https://bugs.oxid-esales.com/view.php?id=7687)
+- All previously hidden storefront operations are now introspectable.
+- `reviewSet`, `wishedPriceSet`, `customerDeliveryAddressAdd` and `customerInvoiceAddressSet` now use passive `#[Input]` DTOs
+
+### Removed
+- Removed `#[HideIfUnauthorized]` annotations from the storefront controllers
 
 ### Fixed
 - It was not possible to set the general phone number (`oxuser.oxfon`); the invoice address now exposes a `workPhone` field settable via the `customerInvoiceAddressSet` mutation [#0007395](https://bugs.oxid-esales.com/view.php?id=7395)

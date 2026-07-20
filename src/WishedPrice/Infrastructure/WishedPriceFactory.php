@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class WishedPriceFactory
+final class WishedPriceFactory implements WishedPriceFactoryInterface
 {
     /** @var CurrencyRepository */
     private $currencyRepository;
