@@ -41,5 +41,7 @@ interface InvoiceAddressInputInterface
 
     public function getMobile(): ?string;
 
+    public function getWorkPhone(): ?string;
+
     public function getFax(): ?string;
 }

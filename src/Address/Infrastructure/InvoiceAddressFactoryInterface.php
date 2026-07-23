@@ -31,6 +31,7 @@ interface InvoiceAddressFactoryInterface
         ?string $vatID = null,
         ?string $phone = null,
         ?string $mobile = null,
+        ?string $workPhone = null,
         ?string $fax = null
     ): InvoiceAddressDataType;
 }

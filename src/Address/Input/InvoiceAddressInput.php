@@ -13,6 +13,9 @@ use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Input;
 use TheCodingMachine\GraphQLite\Types\ID;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ */
 #[Input(name: 'InvoiceAddressInput', default: true)]
 final class InvoiceAddressInput implements InvoiceAddressInputInterface
 {
@@ -59,6 +62,9 @@ final class InvoiceAddressInput implements InvoiceAddressInputInterface
     private ?string $mobile;
 
     #[Field]
+    private ?string $workPhone;
+
+    #[Field]
     private ?string $fax;
 
     public function __construct(
@@ -76,6 +82,7 @@ final class InvoiceAddressInput implements InvoiceAddressInputInterface
         ?string $vatID = null,
         ?string $phone = null,
         ?string $mobile = null,
+        ?string $workPhone = null,
         ?string $fax = null
     ) {
         $this->salutation = $salutation;
@@ -92,6 +99,7 @@ final class InvoiceAddressInput implements InvoiceAddressInputInterface
         $this->vatID = $vatID;
         $this->phone = $phone;
         $this->mobile = $mobile;
+        $this->workPhone = $workPhone;
         $this->fax = $fax;
     }
 
@@ -163,6 +171,11 @@ final class InvoiceAddressInput implements InvoiceAddressInputInterface
     public function getMobile(): ?string
     {
         return $this->mobile;
+    }
+
+    public function getWorkPhone(): ?string
+    {
+        return $this->workPhone;
     }
 
     public function getFax(): ?string

@@ -101,6 +101,7 @@ final class InvoiceAddressServiceTest extends TestCase
                 'DE123456789',
                 '123',
                 '456',
+                '654',
                 '789'
             )
             ->willReturn($createdAddress);
@@ -143,6 +144,7 @@ final class InvoiceAddressServiceTest extends TestCase
         $input->method('getVatID')->willReturn('DE123456789');
         $input->method('getPhone')->willReturn('123');
         $input->method('getMobile')->willReturn('456');
+        $input->method('getWorkPhone')->willReturn('654');
         $input->method('getFax')->willReturn('789');
 
         return $input;

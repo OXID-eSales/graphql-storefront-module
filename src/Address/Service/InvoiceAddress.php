@@ -77,6 +77,7 @@ final class InvoiceAddress
             $invoiceAddress->getVatID(),
             $invoiceAddress->getPhone(),
             $invoiceAddress->getMobile(),
+            $invoiceAddress->getWorkPhone(),
             $invoiceAddress->getFax()
         );
 
