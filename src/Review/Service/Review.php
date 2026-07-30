@@ -13,11 +13,15 @@ use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Base\Service\Authentication;
+use OxidEsales\GraphQL\Storefront\Product\DataType\Product;
+use OxidEsales\GraphQL\Storefront\Product\Exception\ProductNotFound;
 use OxidEsales\GraphQL\Storefront\Review\DataType\Review as ReviewDataType;
 use OxidEsales\GraphQL\Storefront\Review\DataType\ReviewFilterList;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewAlreadyExists;
 use OxidEsales\GraphQL\Storefront\Review\Exception\ReviewNotFound;
 use OxidEsales\GraphQL\Storefront\Review\Infrastructure\Repository as ReviewRepository;
+use OxidEsales\GraphQL\Storefront\Review\Infrastructure\ReviewFactoryInterface;
+use OxidEsales\GraphQL\Storefront\Review\Input\ReviewInputInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -42,13 +46,21 @@ final class Review
     /** @var Legacy */
     private $legacyService;
 
+    /** @var ReviewInputValidatorInterface */
+    private $reviewInputValidator;
+
+    /** @var ReviewFactoryInterface */
+    private $reviewFactory;
+
     public function __construct(
         RepositoryInterface $repository,
         ReviewRepository $reviewRepository,
         Authentication $authenticationService,
         Authorization $authorizationService,
         ActivityService $reviewActivityService,
-        Legacy $legacyService
+        Legacy $legacyService,
+        ReviewInputValidatorInterface $reviewInputValidator,
+        ReviewFactoryInterface $reviewFactory
     ) {
         $this->repository = $repository;
         $this->reviewRepository = $reviewRepository;
@@ -56,6 +68,33 @@ final class Review
         $this->authorizationService = $authorizationService;
         $this->reviewActivityService = $reviewActivityService;
         $this->legacyService = $legacyService;
+        $this->reviewInputValidator = $reviewInputValidator;
+        $this->reviewFactory = $reviewFactory;
+    }
+
+    /**
+     * @throws ProductNotFound
+     * @throws ReviewAlreadyExists
+     */
+    public function set(ReviewInputInterface $input): ReviewDataType
+    {
+        $this->reviewInputValidator->validateRating($input->getRating());
+        $this->reviewInputValidator->validateReviewInput($input);
+
+        try {
+            $this->repository->getById($input->getProductId(), Product::class);
+        } catch (NotFound $e) {
+            throw new ProductNotFound($input->getProductId());
+        }
+
+        $review = $this->reviewFactory->createProductReview(
+            (string)$this->authenticationService->getUser()->id(),
+            $input->getProductId(),
+            (string)$input->getText(),
+            (string)$input->getRating()
+        );
+
+        return $this->save($review);
     }
 
     /**
@@ -108,7 +147,7 @@ final class Review
         );
     }
 
-    public function save(ReviewDataType $review): ReviewDataType
+    private function save(ReviewDataType $review): ReviewDataType
     {
         if ($this->reviewRepository->doesReviewExist((string)$this->authenticationService->getUser()->id(), $review)) {
             throw ReviewAlreadyExists::byObjectId($review->getObjectId());

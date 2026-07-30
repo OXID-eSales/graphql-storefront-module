@@ -19,7 +19,7 @@ use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress as DeliveryAd
 use OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields;
 use TheCodingMachine\GraphQLite\Types\ID;
 
-final class DeliveryAddressFactory
+final class DeliveryAddressFactory implements DeliveryAddressFactoryInterface
 {
     public function createValidAddressType(
         string $userid,

@@ -49,8 +49,8 @@ final class BasketRemoveMultishopCest extends MultishopBaseCest
     {
         $result = $this->removeBasket($I, self::PUBLIC_BASKET, 2);
 
-        $I->assertStringStartsWith(
-            'Cannot query field "basketRemove" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }

@@ -9,9 +9,12 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Address\Service;
 
-use OxidEsales\GraphQL\Base\Exception\InvalidLogin;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Address\DataType\InvoiceAddress as InvoiceAddressDataType;
+use OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields;
+use OxidEsales\GraphQL\Storefront\Address\Infrastructure\InvoiceAddressFactoryInterface;
+use OxidEsales\GraphQL\Storefront\Address\Input\InvoiceAddressInputInterface;
+use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface as CustomerService;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Shop\User;
 
@@ -23,12 +26,22 @@ final class InvoiceAddress
     /** @var Authentication */
     private $authenticationService;
 
+    /** @var InvoiceAddressFactoryInterface */
+    private $invoiceAddressFactory;
+
+    /** @var CustomerService */
+    private $customerService;
+
     public function __construct(
         RepositoryInterface $repository,
-        Authentication $authenticationService
+        Authentication $authenticationService,
+        InvoiceAddressFactoryInterface $invoiceAddressFactory,
+        CustomerService $customerService
     ) {
         $this->repository = $repository;
         $this->authenticationService = $authenticationService;
+        $this->invoiceAddressFactory = $invoiceAddressFactory;
+        $this->customerService = $customerService;
     }
 
     public function customerInvoiceAddress(): InvoiceAddressDataType
@@ -39,13 +52,36 @@ final class InvoiceAddress
         );
     }
 
-    public function updateInvoiceAddress(InvoiceAddressDataType $invoiceAddress): InvoiceAddressDataType
+    /**
+     * @throws AddressMissingFields
+     */
+    public function updateInvoiceAddress(InvoiceAddressInputInterface $invoiceAddress): InvoiceAddressDataType
     {
-        if (!(string)$this->authenticationService->getUser()->id()) {
-            throw new InvalidLogin('Unauthorized');
-        }
+        $customer = $this->customerService->customer(
+            (string)$this->authenticationService->getUser()->id()
+        );
 
-        $userModel = $invoiceAddress->getEshopModel();
+        $address = $this->invoiceAddressFactory->createValidInvoiceAddressType(
+            $customer,
+            $invoiceAddress->getSalutation(),
+            $invoiceAddress->getFirstName(),
+            $invoiceAddress->getLastName(),
+            $invoiceAddress->getCompany(),
+            $invoiceAddress->getAdditionalInfo(),
+            $invoiceAddress->getStreet(),
+            $invoiceAddress->getStreetNumber(),
+            $invoiceAddress->getZipCode(),
+            $invoiceAddress->getCity(),
+            $invoiceAddress->getCountryId(),
+            $invoiceAddress->getStateId(),
+            $invoiceAddress->getVatID(),
+            $invoiceAddress->getPhone(),
+            $invoiceAddress->getMobile(),
+            $invoiceAddress->getWorkPhone(),
+            $invoiceAddress->getFax()
+        );
+
+        $userModel = $address->getEshopModel();
         $this->repository->saveModel($userModel);
 
         /** @var User $userModel */

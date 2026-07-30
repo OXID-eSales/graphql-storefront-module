@@ -12,11 +12,12 @@ namespace OxidEsales\GraphQL\Storefront\WishedPrice\Controller;
 use OxidEsales\GraphQL\Base\Exception\InvalidToken;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPrice as WishedPriceDataType;
 use OxidEsales\GraphQL\Storefront\WishedPrice\DataType\WishedPriceFilterList;
+use OxidEsales\GraphQL\Storefront\WishedPrice\Input\WishedPriceInputInterface;
 use OxidEsales\GraphQL\Storefront\WishedPrice\Service\WishedPrice as WishedPriceService;
-use TheCodingMachine\GraphQLite\Annotations\HideIfUnauthorized;
 use TheCodingMachine\GraphQLite\Annotations\Logged;
 use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
+use TheCodingMachine\GraphQLite\Annotations\UseInputType;
 use TheCodingMachine\GraphQLite\Types\ID;
 
 final class WishedPrice
@@ -52,15 +53,15 @@ final class WishedPrice
 
     #[Mutation]
     #[Logged]
-    #[HideIfUnauthorized]
-    public function wishedPriceSet(WishedPriceDataType $wishedPrice): WishedPriceDataType
-    {
-        return $this->wishedPriceService->save($wishedPrice);
+    public function wishedPriceSet(
+        #[UseInputType("WishedPriceInput!")]
+        WishedPriceInputInterface $wishedPrice
+    ): WishedPriceDataType {
+        return $this->wishedPriceService->set($wishedPrice);
     }
 
     #[Mutation]
     #[Logged]
-    #[HideIfUnauthorized]
     public function wishedPriceDelete(ID $wishedPriceId): bool
     {
         return $this->wishedPriceService->delete($wishedPriceId);

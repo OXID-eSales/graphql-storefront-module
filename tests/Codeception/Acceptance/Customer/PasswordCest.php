@@ -34,8 +34,8 @@ final class PasswordCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "customerPasswordChange" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }

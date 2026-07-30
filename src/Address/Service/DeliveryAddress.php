@@ -16,7 +16,10 @@ use OxidEsales\GraphQL\Base\Exception\NotFound;
 use OxidEsales\GraphQL\Base\Service\Authentication;
 use OxidEsales\GraphQL\Storefront\Address\DataType\AddressFilterList;
 use OxidEsales\GraphQL\Storefront\Address\DataType\DeliveryAddress as DeliveryAddressDataType;
+use OxidEsales\GraphQL\Storefront\Address\Exception\AddressMissingFields;
 use OxidEsales\GraphQL\Storefront\Address\Exception\DeliveryAddressNotFound;
+use OxidEsales\GraphQL\Storefront\Address\Infrastructure\DeliveryAddressFactoryInterface;
+use OxidEsales\GraphQL\Storefront\Address\Input\DeliveryAddressInputInterface;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Base\Service\Authorization;
 use TheCodingMachine\GraphQLite\Types\ID;
@@ -32,14 +35,19 @@ final class DeliveryAddress
     /** @var Authorization */
     private $authorizationService;
 
+    /** @var DeliveryAddressFactoryInterface */
+    private $deliveryAddressFactory;
+
     public function __construct(
         RepositoryInterface $repository,
         Authentication $authenticationService,
-        Authorization $authorizationService
+        Authorization $authorizationService,
+        DeliveryAddressFactoryInterface $deliveryAddressFactory
     ) {
         $this->repository = $repository;
         $this->authenticationService = $authenticationService;
         $this->authorizationService = $authorizationService;
+        $this->deliveryAddressFactory = $deliveryAddressFactory;
     }
 
     /**
@@ -77,8 +85,28 @@ final class DeliveryAddress
         throw new InvalidLogin('Unauthorized');
     }
 
-    public function store(DeliveryAddressDataType $address): DeliveryAddressDataType
+    /**
+     * @throws AddressMissingFields
+     */
+    public function store(DeliveryAddressInputInterface $deliveryAddress): DeliveryAddressDataType
     {
+        $address = $this->deliveryAddressFactory->createValidAddressType(
+            (string)$this->authenticationService->getUser()->id(),
+            $deliveryAddress->getSalutation(),
+            $deliveryAddress->getFirstName(),
+            $deliveryAddress->getLastName(),
+            $deliveryAddress->getCompany(),
+            $deliveryAddress->getAdditionalInfo(),
+            $deliveryAddress->getStreet(),
+            $deliveryAddress->getStreetNumber(),
+            $deliveryAddress->getZipCode(),
+            $deliveryAddress->getCity(),
+            $deliveryAddress->getCountryId(),
+            $deliveryAddress->getStateId(),
+            $deliveryAddress->getPhone(),
+            $deliveryAddress->getFax()
+        );
+
         $this->repository->saveModel(
             $address->getEshopModel()
         );

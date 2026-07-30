@@ -75,8 +75,8 @@ final class InvoiceAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "customerInvoiceAddress" on type "Query".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -326,8 +326,29 @@ final class InvoiceAddressCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "customerInvoiceAddressSet" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
+            $result['errors'][0]['message']
+        );
+    }
+
+    public function testCustomerInvoiceAddressSetForNotLoggedInUserMissingInputDoesNotLeak(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'mutation {
+                customerInvoiceAddressSet(invoiceAddress: {})
+                {
+                    salutation
+                }
+            }'
+        );
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        //auth is enforced pre-side-effect: no validation happens, so no AddressMissingFields leak
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }

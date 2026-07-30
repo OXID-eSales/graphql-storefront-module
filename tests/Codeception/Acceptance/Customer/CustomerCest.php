@@ -53,8 +53,8 @@ final class CustomerCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "customer" on type "Query".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
@@ -312,6 +312,26 @@ final class CustomerCest extends BaseCest
         }
     }
 
+    public function testCustomerEmailUpdateWithoutToken(AcceptanceTester $I): void
+    {
+        $I->sendGQLQuery(
+            'mutation {
+                customerEmailUpdate(email: "anonymous@oxid-esales.com") {
+                    id
+                    email
+                }
+            }'
+        );
+
+        $I->seeResponseIsJson();
+        $result = $I->grabJsonResponseAsArray();
+
+        $I->assertSame(
+            'You need to be logged to access this field',
+            $result['errors'][0]['message']
+        );
+    }
+
     public function testCustomerBirthdateUpdateWithoutToken(AcceptanceTester $I): void
     {
         $I->sendGQLQuery(
@@ -328,8 +348,8 @@ final class CustomerCest extends BaseCest
         $I->seeResponseIsJson();
         $result = $I->grabJsonResponseAsArray();
 
-        $I->assertStringStartsWith(
-            'Cannot query field "customerBirthdateUpdate" on type "Mutation".',
+        $I->assertSame(
+            'You need to be logged to access this field',
             $result['errors'][0]['message']
         );
     }
