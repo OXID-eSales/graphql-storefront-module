@@ -120,11 +120,13 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
         $this->prepareTestdata($I, 2);
         $this->assignUserToShop($I, 1);
 
+        $confirmCode = md5(self::OTHER_USERNAME . self::OTHER_USER_OXPASSALT);
+
         $I->sendGQLQuery(
             'mutation{
                 newsletterOptIn(newsletterStatus: {
                     email:"' . self::OTHER_USERNAME . '",
-                    confirmCode:"' . md5(self::OTHER_USERNAME . self::OTHER_USER_OXPASSALT) . '"
+                    confirmCode:"' . $confirmCode . '"
                 }){
                     email
                     status
@@ -140,7 +142,7 @@ final class NewsletterStatusMultiShopCest extends MultishopBaseCest
 
         if ($data['expectedFailure'] === true) {
             $I->assertSame(
-                'Newsletter subscription status was not found for: ' . self::OTHER_USERNAME,
+                "Wrong e-mail confirmation code '" . $confirmCode . "'!",
                 $result['errors'][0]['message']
             );
         } else {
