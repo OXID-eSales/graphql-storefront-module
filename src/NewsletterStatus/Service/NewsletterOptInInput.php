@@ -42,13 +42,13 @@ final class NewsletterOptInInput extends AbstractNewsletterInput
     public function fromUserInput(string $email, string $confirmCode): NewsletterStatusType
     {
         $this->assertValidEmail($email);
-        $newsletterStatus = $this->newsletterStatusRepository->getByEmail($email);
 
         try {
+            $newsletterStatus = $this->newsletterStatusRepository->getByEmail($email);
             /** @var SubscriberType $subscriber */
             $subscriber = $this->subscriberService->subscriber((string)$newsletterStatus->userId());
-        } catch (SubscriberNotFound $exception) {
-            throw new NewsletterStatusNotFound($email);
+        } catch (NewsletterStatusNotFound | SubscriberNotFound $exception) {
+            throw InvalidEmail::byConfirmationCode($confirmCode);
         }
 
         $this->verifyConfirmCode($subscriber, $confirmCode);

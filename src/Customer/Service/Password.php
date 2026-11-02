@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Customer\Service;
 
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
-use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerEmailNotFound;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as PasswordInfrastructuredInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface;
@@ -45,13 +45,13 @@ final class Password implements PasswordInterface
 
     public function sendPasswordForgotEmail(string $email): bool
     {
-        $isSuccess = $this->passwordInfrastructure->sendPasswordForgotEmail($email);
-
-        if ($isSuccess === false) {
-            throw InvalidEmail::byString($email);
+        try {
+            $this->passwordInfrastructure->sendPasswordForgotEmail($email);
+        } catch (CustomerEmailNotFound) {
+            return true;
         }
 
-        return $isSuccess;
+        return true;
     }
 
     public function resetPasswordByUpdateHash(string $updateHash, string $newPassword, string $repeatPassword): bool

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - It was not possible to set the general phone number (`oxuser.oxfon`); the invoice address now exposes a `workPhone` field settable via the `customerInvoiceAddressSet` mutation [#0007395](https://bugs.oxid-esales.com/view.php?id=7395)
 - Country relation of delivery and invoice addresses now returns the assigned country even if it is inactive (matching the shop frontend) and `null` for deleted countries [#0007687](https://bugs.oxid-esales.com/view.php?id=7687)
+- `customerPasswordForgotRequest` and `newsletterOptIn` now return the same response for known and unknown addresses
 
 ## [5.0.0] - 2026-05-07
 
