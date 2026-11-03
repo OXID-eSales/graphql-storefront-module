@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Requesting an inactive country without permission now returns a dedicated "country is inactive" error instead of the generic `Unauthorized` error [#0007687](https://bugs.oxid-esales.com/view.php?id=7687)
 - All previously hidden storefront operations are now introspectable.
 - `reviewSet`, `wishedPriceSet`, `customerDeliveryAddressAdd` and `customerInvoiceAddressSet` now use passive `#[Input]` DTOs
+- `customerPasswordForgotRequest` now raises a generic server error when the email could not be sent
 
 ### Removed
 - Removed `#[HideIfUnauthorized]` annotations from the storefront controllers

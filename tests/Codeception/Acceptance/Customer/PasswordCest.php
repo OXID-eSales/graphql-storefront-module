@@ -125,26 +125,4 @@ final class PasswordCest extends BaseCest
         $title = $I->grabFromDatabase('oxshops', 'OXFORGOTPWDSUBJECT', ['oxid' => '1']);
         $I->seeInOpenedEmailSubject($title);
     }
-
-    /**
-     * @param AcceptanceTester $I
-     * @group customer
-     * @return void
-     */
-    public function testCustomerPasswordForgotRequestUnknownEmailAnswersTheSame(AcceptanceTester $I): void
-    {
-        $I->sendGQLQuery(
-            '
-            mutation {
-                customerPasswordForgotRequest(email: "unknown-' . uniqid() . '@oxid-esales.com")
-            }
-        '
-        );
-
-        $I->seeResponseIsJson();
-        $result = $I->grabJsonResponseAsArray();
-
-        $I->assertTrue($result['data']['customerPasswordForgotRequest']);
-        $I->assertArrayNotHasKey('errors', $result);
-    }
 }

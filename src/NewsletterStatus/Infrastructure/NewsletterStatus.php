@@ -18,7 +18,7 @@ use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as NewsletterStatusType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusSubscribe as NewsletterStatusSubscribeType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as SubscriberDataType;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository as NewsletterStatusRepository;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface as NewsletterStatusRepository;
 
 final class NewsletterStatus
 {

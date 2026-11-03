@@ -15,5 +15,6 @@ services:
   OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\NewsletterUnsubscribeInput:
     public: true
 
-  OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber:
+  OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\SubscriberInterface:
+    class: OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber
     public: true

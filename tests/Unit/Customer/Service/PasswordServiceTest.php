@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Customer\Service;
 
 use OxidEsales\Eshop\Application\Model\User;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerEmailNotFound;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordForgotEmailNotSent;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as PasswordInfrastructureInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as CustomerRepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface;
@@ -103,7 +104,7 @@ class PasswordServiceTest extends TestCase
         $this->assertTrue($sut->sendPasswordForgotEmail($email));
     }
 
-    public function testSendPasswordForgotEmailReturnsTrueWhenEmailNotSent(): void
+    public function testSendPasswordForgotEmailThrowsWhenEmailNotSent(): void
     {
         $email = uniqid();
 
@@ -116,7 +117,9 @@ class PasswordServiceTest extends TestCase
             passwordInfrastructure: $passwordInfrastructureStub
         );
 
-        $this->assertTrue($sut->sendPasswordForgotEmail($email));
+        $this->expectException(PasswordForgotEmailNotSent::class);
+
+        $sut->sendPasswordForgotEmail($email);
     }
 
     private function getSut(

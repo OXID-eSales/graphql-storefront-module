@@ -11,6 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\Customer\Service;
 
 use OxidEsales\GraphQL\Storefront\Customer\DataType\Customer as CustomerDataType;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerEmailNotFound;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordForgotEmailNotSent;
 use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordMismatch;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as PasswordInfrastructuredInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface;
@@ -46,9 +47,13 @@ final class Password implements PasswordInterface
     public function sendPasswordForgotEmail(string $email): bool
     {
         try {
-            $this->passwordInfrastructure->sendPasswordForgotEmail($email);
+            $wasSent = $this->passwordInfrastructure->sendPasswordForgotEmail($email);
         } catch (CustomerEmailNotFound) {
             return true;
+        }
+
+        if ($wasSent === false) {
+            throw new PasswordForgotEmailNotSent();
         }
 
         return true;

@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsu
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusForUserNotFound;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusNotFound;
 
-final class Repository
+final class Repository implements RepositoryInterface
 {
     /**
      * @throws NewsletterStatusForUserNotFound

@@ -11,7 +11,7 @@ namespace OxidEsales\GraphQL\Storefront\NewsletterStatus\Service;
 
 use OxidEsales\GraphQL\Base\Infrastructure\Legacy;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository as NewsletterStatusRepository;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface as NewsletterStatusRepository;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class NewsletterUnsubscribeInput extends AbstractNewsletterInput
