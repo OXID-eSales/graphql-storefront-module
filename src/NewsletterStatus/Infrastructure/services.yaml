@@ -8,4 +8,3 @@ services:
 
   OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface:
     class: OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository
-    public: true

@@ -15,7 +15,7 @@ use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as Subscr
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\SubscriberNotFound;
 use OxidEsales\GraphQL\Storefront\Shared\Infrastructure\RepositoryInterface;
 
-final class Subscriber implements SubscriberInterface
+final class Subscriber implements SubscriberServiceInterface
 {
     /** @var RepositoryInterface */
     private $repository;

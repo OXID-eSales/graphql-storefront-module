@@ -18,7 +18,6 @@ use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsu
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as SubscriberType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\NewsletterStatus as NewsletterStatusRepository;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface as SubscriptionRepository;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\SubscriberInterface as SubscriberService;
 
 final class NewsletterStatus
 {
@@ -28,7 +27,7 @@ final class NewsletterStatus
     /** @var NewsletterStatusRepository */
     private $newsletterStatusRepository;
 
-    /** @var SubscriberService */
+    /** @var SubscriberServiceInterface */
     private $subscriberService;
 
     /** @var Authentication */
@@ -38,7 +37,7 @@ final class NewsletterStatus
         SubscriptionRepository $SubscriptionRepository,
         NewsletterStatusRepository $NewsletterStatusRepository,
         Authentication $authenticationService,
-        SubscriberService $subscriberService
+        SubscriberServiceInterface $subscriberService
     ) {
         $this->newsletterSubscriptionRepository = $SubscriptionRepository;
         $this->newsletterStatusRepository = $NewsletterStatusRepository;

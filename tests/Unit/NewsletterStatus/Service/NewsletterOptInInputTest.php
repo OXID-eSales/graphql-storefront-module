@@ -19,127 +19,196 @@ use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusNot
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\SubscriberNotFound;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\NewsletterOptInInput;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\SubscriberInterface;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\SubscriberServiceInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use TheCodingMachine\GraphQLite\Types\ID;
 
 #[CoversClass(NewsletterOptInInput::class)]
 final class NewsletterOptInInputTest extends TestCase
 {
     #[Test]
-    public function returnsNewsletterStatusWhenConfirmationCodeMatches(): void
-    {
-        $username = uniqid();
-        $passSalt = uniqid();
-        $newsletterStatus = $this->newsletterStatus(uniqid());
-
-        $repository = $this->createStub(RepositoryInterface::class);
-        $repository->method('getByEmail')->willReturn($newsletterStatus);
-
-        $subscriberService = $this->createStub(SubscriberInterface::class);
-        $subscriberService->method('subscriber')->willReturn($this->subscriber($username, $passSalt));
-
-        $result = $this->getSut(subscriberService: $subscriberService, repository: $repository)
-            ->fromUserInput(uniqid(), md5($username . $passSalt));
-
-        $this->assertSame($newsletterStatus, $result);
-    }
-
-    #[Test]
-    public function throwsInvalidEmailForMalformedAddress(): void
-    {
-        $this->expectException(InvalidEmail::class);
-
-        $this->getSut(validEmail: false)->fromUserInput(uniqid(), uniqid());
-    }
-
-    #[Test]
-    public function throwsWrongConfirmationCodeForUnknownEmail(): void
+    public function fromUserInputReturnsNewsletterStatusWhenConfirmationCodeMatches(): void
     {
         $email = uniqid();
-        $confirmCode = uniqid();
+        $userId = new ID(uniqid());
+        $username = uniqid();
+        $passSalt = uniqid();
 
-        $repository = $this->createStub(RepositoryInterface::class);
-        $repository->method('getByEmail')->willThrowException(new NewsletterStatusNotFound($email));
+        $legacyMock = $this->createMock(Legacy::class);
+        $legacyMock->method('isValidEmail')
+            ->with($email)
+            ->willReturn(true);
 
-        $this->expectWrongConfirmationCode($confirmCode);
+        $newsletterStatusModelStub = $this->createStub(EshopNewsletterSubscriptionStatusModel::class);
+        $newsletterStatusModelStub->method('getRawFieldData')->willReturnMap([
+            ['oxuserid', $userId],
+        ]);
+        $newsletterStatus = new NewsletterStatusType($newsletterStatusModelStub);
 
-        $this->getSut(repository: $repository)->fromUserInput($email, $confirmCode);
-    }
+        $repositoryMock = $this->createMock(RepositoryInterface::class);
+        $repositoryMock->method('getByEmail')
+            ->with($email)
+            ->willReturn($newsletterStatus);
 
-    #[Test]
-    public function throwsWrongConfirmationCodeWhenSubscriberMissing(): void
-    {
-        $confirmCode = uniqid();
-
-        $repository = $this->createStub(RepositoryInterface::class);
-        $repository->method('getByEmail')->willReturn($this->newsletterStatus(uniqid()));
-
-        $subscriberService = $this->createStub(SubscriberInterface::class);
-        $subscriberService->method('subscriber')->willThrowException(new SubscriberNotFound(uniqid()));
-
-        $this->expectWrongConfirmationCode($confirmCode);
-
-        $this->getSut(subscriberService: $subscriberService, repository: $repository)
-            ->fromUserInput(uniqid(), $confirmCode);
-    }
-
-    #[Test]
-    public function throwsWrongConfirmationCodeForMismatchedCode(): void
-    {
-        $wrongCode = uniqid();
-
-        $repository = $this->createStub(RepositoryInterface::class);
-        $repository->method('getByEmail')->willReturn($this->newsletterStatus(uniqid()));
-
-        $subscriberService = $this->createStub(SubscriberInterface::class);
-        $subscriberService->method('subscriber')->willReturn($this->subscriber(uniqid(), uniqid()));
-
-        $this->expectWrongConfirmationCode($wrongCode);
-
-        $this->getSut(subscriberService: $subscriberService, repository: $repository)
-            ->fromUserInput(uniqid(), $wrongCode);
-    }
-
-    private function expectWrongConfirmationCode(string $code): void
-    {
-        $this->expectException(InvalidEmail::class);
-        $this->expectExceptionMessage(sprintf("Wrong e-mail confirmation code '%s'!", $code));
-    }
-
-    private function newsletterStatus(string $userId): NewsletterStatusType
-    {
-        return new NewsletterStatusType(
-            $this->createConfiguredStub(EshopNewsletterSubscriptionStatusModel::class, [
-                'getRawFieldData' => $userId,
-            ])
-        );
-    }
-
-    private function subscriber(string $username, string $passSalt): SubscriberDataType
-    {
-        $model = $this->createStub(EshopUserModel::class);
-        $model->method('getRawFieldData')->willReturnMap([
+        $subscriberModelStub = $this->createStub(EshopUserModel::class);
+        $subscriberModelStub->method('getRawFieldData')->willReturnMap([
             ['oxusername', $username],
             ['oxpasssalt', $passSalt],
         ]);
 
-        return new SubscriberDataType($model);
+        $subscriberServiceMock = $this->createMock(SubscriberServiceInterface::class);
+        $subscriberServiceMock->method('subscriber')
+            ->with((string)$userId)
+            ->willReturn(new SubscriberDataType($subscriberModelStub));
+
+        $sut = $this->getSut(
+            subscriberService: $subscriberServiceMock,
+            newsletterStatusRepository: $repositoryMock,
+            legacyService: $legacyMock,
+        );
+
+        $this->assertSame($newsletterStatus, $sut->fromUserInput($email, md5($username . $passSalt)));
+    }
+
+    #[Test]
+    public function fromUserInputThrowsInvalidEmailForMalformedEmail(): void
+    {
+        $email = uniqid();
+
+        $legacyMock = $this->createMock(Legacy::class);
+        $legacyMock->method('isValidEmail')
+            ->with($email)
+            ->willReturn(false);
+
+        $repositorySpy = $this->createMock(RepositoryInterface::class);
+        $repositorySpy->expects($this->never())->method('getByEmail');
+
+        $sut = $this->getSut(newsletterStatusRepository: $repositorySpy, legacyService: $legacyMock);
+
+        $this->expectExceptionObject(InvalidEmail::byString($email));
+
+        $sut->fromUserInput($email, uniqid());
+    }
+
+    #[Test]
+    public function fromUserInputThrowsInvalidEmailWhenNewsletterStatusNotFound(): void
+    {
+        $email = uniqid();
+        $confirmCode = uniqid();
+
+        $legacyMock = $this->createMock(Legacy::class);
+        $legacyMock->method('isValidEmail')
+            ->with($email)
+            ->willReturn(true);
+
+        $repositoryMock = $this->createMock(RepositoryInterface::class);
+        $repositoryMock->method('getByEmail')
+            ->with($email)
+            ->willThrowException(new NewsletterStatusNotFound($email));
+
+        $sut = $this->getSut(
+            newsletterStatusRepository: $repositoryMock,
+            legacyService: $legacyMock,
+        );
+
+        $this->expectExceptionObject(InvalidEmail::byConfirmationCode($confirmCode));
+
+        $sut->fromUserInput($email, $confirmCode);
+    }
+
+    #[Test]
+    public function fromUserInputThrowsInvalidEmailWhenSubscriberNotFound(): void
+    {
+        $email = uniqid();
+        $userId = uniqid();
+        $confirmCode = uniqid();
+
+        $legacyMock = $this->createMock(Legacy::class);
+        $legacyMock->method('isValidEmail')
+            ->with($email)
+            ->willReturn(true);
+
+        $newsletterStatusModelStub = $this->createStub(EshopNewsletterSubscriptionStatusModel::class);
+        $newsletterStatusModelStub->method('getRawFieldData')->willReturnMap([
+            ['oxuserid', $userId],
+        ]);
+
+        $repositoryMock = $this->createMock(RepositoryInterface::class);
+        $repositoryMock->method('getByEmail')
+            ->with($email)
+            ->willReturn(new NewsletterStatusType($newsletterStatusModelStub));
+
+        $subscriberServiceMock = $this->createMock(SubscriberServiceInterface::class);
+        $subscriberServiceMock->method('subscriber')
+            ->with($userId)
+            ->willThrowException(new SubscriberNotFound($userId));
+
+        $sut = $this->getSut(
+            subscriberService: $subscriberServiceMock,
+            newsletterStatusRepository: $repositoryMock,
+            legacyService: $legacyMock,
+        );
+
+        $this->expectExceptionObject(InvalidEmail::byConfirmationCode($confirmCode));
+
+        $sut->fromUserInput($email, $confirmCode);
+    }
+
+    #[Test]
+    public function fromUserInputThrowsInvalidEmailWhenConfirmationCodeDoesNotMatch(): void
+    {
+        $email = uniqid();
+        $userId = uniqid();
+        $wrongConfirmCode = uniqid();
+
+        $legacyMock = $this->createMock(Legacy::class);
+        $legacyMock->method('isValidEmail')
+            ->with($email)
+            ->willReturn(true);
+
+        $newsletterStatusModelStub = $this->createStub(EshopNewsletterSubscriptionStatusModel::class);
+        $newsletterStatusModelStub->method('getRawFieldData')->willReturnMap([
+            ['oxuserid', $userId],
+        ]);
+
+        $repositoryMock = $this->createMock(RepositoryInterface::class);
+        $repositoryMock->method('getByEmail')
+            ->with($email)
+            ->willReturn(new NewsletterStatusType($newsletterStatusModelStub));
+
+        $subscriberModelStub = $this->createStub(EshopUserModel::class);
+        $subscriberModelStub->method('getRawFieldData')->willReturnMap([
+            ['oxusername', uniqid()],
+            ['oxpasssalt', uniqid()],
+        ]);
+
+        $subscriberServiceMock = $this->createMock(SubscriberServiceInterface::class);
+        $subscriberServiceMock->method('subscriber')
+            ->with($userId)
+            ->willReturn(new SubscriberDataType($subscriberModelStub));
+
+        $sut = $this->getSut(
+            subscriberService: $subscriberServiceMock,
+            newsletterStatusRepository: $repositoryMock,
+            legacyService: $legacyMock,
+        );
+
+        $this->expectExceptionObject(InvalidEmail::byConfirmationCode($wrongConfirmCode));
+
+        $sut->fromUserInput($email, $wrongConfirmCode);
     }
 
     private function getSut(
-        ?SubscriberInterface $subscriberService = null,
-        ?RepositoryInterface $repository = null,
-        bool $validEmail = true,
+        ?SubscriberServiceInterface $subscriberService = null,
+        ?RepositoryInterface $newsletterStatusRepository = null,
+        ?Legacy $legacyService = null,
     ): NewsletterOptInInput {
-        $legacy = $this->createStub(Legacy::class);
-        $legacy->method('isValidEmail')->willReturn($validEmail);
-
         return new NewsletterOptInInput(
-            $subscriberService ?? $this->createStub(SubscriberInterface::class),
-            $repository ?? $this->createStub(RepositoryInterface::class),
-            $legacy,
+            subscriberService: $subscriberService ?? $this->createStub(SubscriberServiceInterface::class),
+            newsletterStatusRepository: $newsletterStatusRepository ?? $this->createStub(RepositoryInterface::class),
+            legacyService: $legacyService ?? $this->createStub(Legacy::class),
         );
     }
 }

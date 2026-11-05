@@ -20,14 +20,14 @@ use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class NewsletterOptInInput extends AbstractNewsletterInput
 {
-    /** @var SubscriberInterface */
+    /** @var SubscriberServiceInterface */
     private $subscriberService;
 
     /** @var NewsletterStatusRepository */
     private $newsletterStatusRepository;
 
     public function __construct(
-        SubscriberInterface $subscriberService,
+        SubscriberServiceInterface $subscriberService,
         NewsletterStatusRepository $newsletterStatusRepository,
         Legacy $legacyService
     ) {

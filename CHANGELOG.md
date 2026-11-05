@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.1.0] - unreleased
+## [6.0.0] - unreleased
 
 ### Changed
 - Update module to work with OXID eShop 7.6
@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - All previously hidden storefront operations are now introspectable.
 - `reviewSet`, `wishedPriceSet`, `customerDeliveryAddressAdd` and `customerInvoiceAddressSet` now use passive `#[Input]` DTOs
 - `customerPasswordForgotRequest` now raises a generic server error when the email could not be sent
+- The service `OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository` was replaced by `OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface` and is no longer public in the DI container
+- The service `OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber` was replaced by `OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\SubscriberServiceInterface` and is no longer public in the DI container
 
 ### Removed
 - Removed `#[HideIfUnauthorized]` annotations from the storefront controllers
