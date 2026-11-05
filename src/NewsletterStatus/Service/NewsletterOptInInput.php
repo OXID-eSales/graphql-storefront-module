@@ -15,20 +15,19 @@ use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatus as 
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as SubscriberType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\NewsletterStatusNotFound;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Exception\SubscriberNotFound;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository as NewsletterStatusRepository;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber as SubscriberService;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface as NewsletterStatusRepository;
 use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class NewsletterOptInInput extends AbstractNewsletterInput
 {
-    /** @var SubscriberService */
+    /** @var SubscriberServiceInterface */
     private $subscriberService;
 
     /** @var NewsletterStatusRepository */
     private $newsletterStatusRepository;
 
     public function __construct(
-        SubscriberService $subscriberService,
+        SubscriberServiceInterface $subscriberService,
         NewsletterStatusRepository $newsletterStatusRepository,
         Legacy $legacyService
     ) {
@@ -42,13 +41,13 @@ final class NewsletterOptInInput extends AbstractNewsletterInput
     public function fromUserInput(string $email, string $confirmCode): NewsletterStatusType
     {
         $this->assertValidEmail($email);
-        $newsletterStatus = $this->newsletterStatusRepository->getByEmail($email);
 
         try {
+            $newsletterStatus = $this->newsletterStatusRepository->getByEmail($email);
             /** @var SubscriberType $subscriber */
             $subscriber = $this->subscriberService->subscriber((string)$newsletterStatus->userId());
-        } catch (SubscriberNotFound $exception) {
-            throw new NewsletterStatusNotFound($email);
+        } catch (NewsletterStatusNotFound | SubscriberNotFound $exception) {
+            throw InvalidEmail::byConfirmationCode($confirmCode);
         }
 
         $this->verifyConfirmCode($subscriber, $confirmCode);

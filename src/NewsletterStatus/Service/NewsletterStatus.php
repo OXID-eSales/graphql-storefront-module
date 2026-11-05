@@ -17,30 +17,29 @@ use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusSubs
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\NewsletterStatusUnsubscribe;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\DataType\Subscriber as SubscriberType;
 use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\NewsletterStatus as NewsletterStatusRepository;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository as NewsletterSubscriptionRepository;
-use OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber as SubscriberService;
+use OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface as SubscriptionRepository;
 
 final class NewsletterStatus
 {
-    /** @var NewsletterSubscriptionRepository */
+    /** @var SubscriptionRepository */
     private $newsletterSubscriptionRepository;
 
     /** @var NewsletterStatusRepository */
     private $newsletterStatusRepository;
 
-    /** @var SubscriberService */
+    /** @var SubscriberServiceInterface */
     private $subscriberService;
 
     /** @var Authentication */
     private $authenticationService;
 
     public function __construct(
-        NewsletterSubscriptionRepository $NewsletterSubscriptionRepository,
+        SubscriptionRepository $SubscriptionRepository,
         NewsletterStatusRepository $NewsletterStatusRepository,
         Authentication $authenticationService,
-        SubscriberService $subscriberService
+        SubscriberServiceInterface $subscriberService
     ) {
-        $this->newsletterSubscriptionRepository = $NewsletterSubscriptionRepository;
+        $this->newsletterSubscriptionRepository = $SubscriptionRepository;
         $this->newsletterStatusRepository = $NewsletterStatusRepository;
         $this->authenticationService = $authenticationService;
         $this->subscriberService = $subscriberService;

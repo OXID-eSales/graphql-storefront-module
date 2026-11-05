@@ -10,7 +10,8 @@ declare(strict_types=1);
 namespace OxidEsales\GraphQL\Storefront\Tests\Unit\Customer\Service;
 
 use OxidEsales\Eshop\Application\Model\User;
-use OxidEsales\GraphQL\Storefront\Customer\Exception\InvalidEmail;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\CustomerEmailNotFound;
+use OxidEsales\GraphQL\Storefront\Customer\Exception\PasswordForgotEmailNotSent;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\PasswordInterface as PasswordInfrastructureInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Infrastructure\RepositoryInterface as CustomerRepositoryInterface;
 use OxidEsales\GraphQL\Storefront\Customer\Service\CustomerInterface;
@@ -87,19 +88,36 @@ class PasswordServiceTest extends TestCase
         $this->assertTrue($sut->sendPasswordForgotEmail($email));
     }
 
-    public function testSendPasswordForgotEmailNoCustomerFound(): void
+    public function testSendPasswordForgotEmailReturnsTrueForUnknownEmail(): void
     {
         $email = uniqid();
 
         $passwordInfrastructureStub = $this->createMock(PasswordInfrastructureInterface::class);
-        $passwordInfrastructureStub->method('sendPasswordForgotEmail')->willReturn(false);
+        $passwordInfrastructureStub->method('sendPasswordForgotEmail')
+            ->with($email)
+            ->willThrowException(new CustomerEmailNotFound($email));
 
         $sut = $this->getSut(
             passwordInfrastructure: $passwordInfrastructureStub
         );
 
-        $this->expectException(InvalidEmail::class);
-        $this->expectExceptionMessageMatches("#$email#");
+        $this->assertTrue($sut->sendPasswordForgotEmail($email));
+    }
+
+    public function testSendPasswordForgotEmailThrowsWhenEmailNotSent(): void
+    {
+        $email = uniqid();
+
+        $passwordInfrastructureStub = $this->createMock(PasswordInfrastructureInterface::class);
+        $passwordInfrastructureStub->method('sendPasswordForgotEmail')
+            ->with($email)
+            ->willReturn(false);
+
+        $sut = $this->getSut(
+            passwordInfrastructure: $passwordInfrastructureStub
+        );
+
+        $this->expectException(PasswordForgotEmailNotSent::class);
 
         $sut->sendPasswordForgotEmail($email);
     }

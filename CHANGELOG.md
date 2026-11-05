@@ -4,13 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [5.1.0] - unreleased
+## [6.0.0] - unreleased
 
 ### Changed
 - Update module to work with OXID eShop 7.6
 - Requesting an inactive country without permission now returns a dedicated "country is inactive" error instead of the generic `Unauthorized` error [#0007687](https://bugs.oxid-esales.com/view.php?id=7687)
 - All previously hidden storefront operations are now introspectable.
 - `reviewSet`, `wishedPriceSet`, `customerDeliveryAddressAdd` and `customerInvoiceAddressSet` now use passive `#[Input]` DTOs
+- `customerPasswordForgotRequest` now raises a generic server error when the email could not be sent
+- The service `OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\Repository` was replaced by `OxidEsales\GraphQL\Storefront\NewsletterStatus\Infrastructure\RepositoryInterface` and is no longer public in the DI container
+- The service `OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\Subscriber` was replaced by `OxidEsales\GraphQL\Storefront\NewsletterStatus\Service\SubscriberServiceInterface` and is no longer public in the DI container
 
 ### Removed
 - Removed `#[HideIfUnauthorized]` annotations from the storefront controllers
@@ -18,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - It was not possible to set the general phone number (`oxuser.oxfon`); the invoice address now exposes a `workPhone` field settable via the `customerInvoiceAddressSet` mutation [#0007395](https://bugs.oxid-esales.com/view.php?id=7395)
 - Country relation of delivery and invoice addresses now returns the assigned country even if it is inactive (matching the shop frontend) and `null` for deleted countries [#0007687](https://bugs.oxid-esales.com/view.php?id=7687)
+- `customerPasswordForgotRequest` and `newsletterOptIn` now return the same response for known and unknown addresses
 
 ## [5.0.0] - 2026-05-07
 
