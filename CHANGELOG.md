@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [7.0.0] - unreleased
+
+### Changed
+- Update module to work with OXID eShop 7.7
+
 ## [6.0.0] - 2026-11-06
 
 ### Changed
@@ -264,6 +269,7 @@ This is stable release for v3.1.0. No changes have been made since v3.1.0-rc.1.
     - `oxid-esales/graphql-account`
     - `oxid-esales/graphql-checkout`
 
+[7.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v6.0.0...b-7.7.x
 [6.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v5.0.0...v6.0.0
 [5.0.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.2.0...v5.0.0
 [4.2.0]: https://github.com/OXID-eSales/graphql-storefront-module/compare/v4.1.0...v4.2.0
