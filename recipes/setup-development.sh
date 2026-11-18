@@ -40,7 +40,7 @@ docker compose exec -T php git config --global --add safe.directory /var/www
 
 $SCRIPT_PATH/parts/shared/require_shop_edition_packages.sh -e"${edition}" -v"dev-b-7.7.x"
 $SCRIPT_PATH/parts/shared/require_twig_components.sh -e"${edition}" -b"b-7.7.x"
-$SCRIPT_PATH/parts/shared/require.sh -n"oxid-esales/graphql-base" -g"https://github.com/OXID-eSales/graphql-base-module.git" -v"dev-b-7.7.x"
+$SCRIPT_PATH/parts/shared/require.sh -n"oxid-esales/graphql-base" -g"https://github.com/OXID-eSales/graphql-base-module.git" -v"dev-b-7.7-OXDEV-10593"
 $SCRIPT_PATH/parts/shared/require.sh -n"oxid-esales/developer-tools" -v"dev-b-7.7.x"
 $SCRIPT_PATH/parts/shared/require_demodata_package.sh -e"${edition}" -b"master"
 $SCRIPT_PATH/parts/shared/require_theme.sh -t"apex" -b"b-7.7.x"

@@ -8,7 +8,7 @@
     "require": {
         "php": "^8.4",
         "doctrine/dbal": "^v2.7",
-        "oxid-esales/graphql-base": "dev-b-7.7.x"
+        "oxid-esales/graphql-base": "dev-b-7.7-OXDEV-10593"
     },
     "conflict": {
         "oxid-esales/oxideshop-ce": "<7.7",

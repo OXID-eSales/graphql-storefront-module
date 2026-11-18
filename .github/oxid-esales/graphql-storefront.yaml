@@ -15,7 +15,7 @@ install:
           "oxid-esales/twig-component": "{{ .Data.install.composer.dev_ref }}",
           "oxid-esales/twig-admin-theme": "{{ .Data.install.composer.dev_ref }}",
           "oxid-esales/apex-theme": "{{ .Data.install.composer.dev_ref }}",
-          "oxid-esales/graphql-base": "{{ .Data.install.composer.dev_ref }}",
+          "oxid-esales/graphql-base": "dev-b-7.7-OXDEV-10593",
           "oxid-esales/developer-tools": "{{ .Data.install.composer.dev_ref }}"
         }
       }
