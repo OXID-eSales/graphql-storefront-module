@@ -9,8 +9,6 @@ declare(strict_types=1);
 
 namespace OxidEsales\GraphQL\Storefront\Framework;
 
-use OxidEsales\DoctrineMigrationWrapper\Migrations;
-use OxidEsales\DoctrineMigrationWrapper\MigrationsBuilder;
 
 /**
  * @codeCoverageIgnore

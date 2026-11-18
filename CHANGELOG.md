@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Update module to work with OXID eShop 7.7
+- Run module migrations with `oe-console oe:database:migrate` instead of the doctrine migration wrapper
 
 ## [6.0.0] - 2026-11-06
 

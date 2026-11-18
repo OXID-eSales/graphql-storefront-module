@@ -43,8 +43,7 @@ If you didn't have the `oxid-esales/graphql-base` module installed, composer wil
 You should run migrations both after installing the module and after each module update:
 
 ```bash
-$ vendor/bin/oe-eshop-doctrine_migration migrations:migrate oe_graphql_base
-$ vendor/bin/oe-eshop-doctrine_migration migrations:migrate oe_graphql_storefront
+$ vendor/bin/oe-console oe:database:migrate
 ```
 
 After installing the module, you need to activate it, either via OXID eShop admin or CLI.

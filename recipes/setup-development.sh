@@ -42,7 +42,6 @@ $SCRIPT_PATH/parts/shared/require_shop_edition_packages.sh -e"${edition}" -v"dev
 $SCRIPT_PATH/parts/shared/require_twig_components.sh -e"${edition}" -b"b-7.7.x"
 $SCRIPT_PATH/parts/shared/require.sh -n"oxid-esales/graphql-base" -g"https://github.com/OXID-eSales/graphql-base-module.git" -v"dev-b-7.7.x"
 $SCRIPT_PATH/parts/shared/require.sh -n"oxid-esales/developer-tools" -v"dev-b-7.7.x"
-$SCRIPT_PATH/parts/shared/require.sh -n"oxid-esales/oxideshop-doctrine-migration-wrapper" -v"dev-b-7.7.x"
 $SCRIPT_PATH/parts/shared/require_demodata_package.sh -e"${edition}" -b"master"
 $SCRIPT_PATH/parts/shared/require_theme.sh -t"apex" -b"b-7.7.x"
 
@@ -57,7 +56,7 @@ perl -pi\
 $SCRIPT_PATH/parts/shared/setup_database.sh
 
 docker compose exec -T php vendor/bin/oe-console oe:module:install ./
-docker compose exec -T php vendor/bin/oe-eshop-doctrine_migration migrations:migrate
+docker compose exec -T php vendor/bin/oe-console oe:database:migrate
 docker compose exec -T php vendor/bin/oe-eshop-db_views_generate
 docker compose exec -T php vendor/bin/oe-console oe:module:activate oe_graphql_base
 docker compose exec -T php vendor/bin/oe-console oe:module:activate oe_graphql_storefront
